@@ -1,3 +1,5 @@
+# $Id$
+
 all:
 	@echo "Nothing to be made.  Now type 'make test'."
 
