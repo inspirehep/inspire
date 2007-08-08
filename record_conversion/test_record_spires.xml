@@ -1,0 +1,183 @@
+<goal_record>
+ <irn>3418758</irn>
+ <doc-type>Preprint</doc-type>
+ <report-num>SLAC-PUB-9865</report-num>
+ <astr>
+  <astr1>
+   <author>Brooks, T.C.</author>
+  </astr1>
+  <astr1>
+   <author>Convery, M.E.</author>
+  </astr1>
+  <astr1>
+   <author>Davis, W.L.</author>
+  </astr1>
+  <astr1>
+   <author>DelSignore, K.W.</author>
+  </astr1>
+  <astr1>
+   <author>Jenkins, T.L.</author>
+  </astr1>
+  <astr1>
+   <author>Kangas, E.</author>
+  </astr1>
+  <astr1>
+   <author>Knepley, M.G.</author>
+  </astr1>
+  <astr1>
+   <author>Kowalski, K.L.</author>
+  </astr1>
+  <astr1>
+   <author>Taylor, C.C.</author>
+  </astr1>
+  <affiliation>Case Western Reserve U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Oh, S.H.</author>
+  </astr1>
+  <astr1>
+   <author>Walker, W.D.</author>
+  </astr1>
+  <affiliation>Duke U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Colestock, P.L.</author>
+  </astr1>
+  <astr1>
+   <author>Hanna, B.</author>
+  </astr1>
+  <astr1>
+   <author>Martens, M.</author>
+  </astr1>
+  <astr1>
+   <author>Steets, J.</author>
+  </astr1>
+  <affiliation>Fermilab</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Ball, R.</author>
+  </astr1>
+  <astr1>
+   <author>Gustafson, H.R.</author>
+  </astr1>
+  <astr1>
+   <author>Jones, L.W.</author>
+  </astr1>
+  <astr1>
+   <author>Longo, M.J.</author>
+  </astr1>
+  <affiliation>Michigan U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Bjorken, J.D.</author>
+  </astr1>
+  <affiliation>SLAC</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Abashian, A.</author>
+  </astr1>
+  <astr1>
+   <author>Morgan, N.</author>
+  </astr1>
+  <affiliation>Virginia Tech.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Pruneau, C.A.</author>
+  </astr1>
+  <affiliation>Wayne State U.</affiliation>
+ </astr>
+ <col-note>MiniMax Collaboration</col-note>
+ <title>Analysis of charged particle / photon correlations in hadronic
+multiparticle production</title>
+ <pub-note>Phys.Rev.D55:5667-5680,1997</pub-note>
+ <slac-topics>SLAC, there, 09/96</slac-topics>
+ <date>Sep 1996</date>
+ <jour-sub>Phys.Rev.D</jour-sub>
+ <ppf-subject>Experimental, S</ppf-subject>
+ <p>35</p>
+ <ppa>9716</ppa>
+ <ppf>9639</ppf>
+ <citation>PHLTA,B217,169</citation>
+ <citation>PHLTA,B266,482</citation>
+ <citation>IMPAE,A7,4189</citation>
+ <citation>APPOA,B23,561</citation>
+ <citation>PHRVA,D46,246</citation>
+ <citation>HEP-PH 9211282</citation>
+ <citation>NUPHA,B399,395</citation>
+ <citation>PHRVA,D51,2482</citation>
+ <citation>HEP-PH 9411329</citation>
+ <citation>HEP-PH 9501210</citation>
+ <citation>PRLTA,72,970</citation>
+ <citation>RPPHA,58,611</citation>
+ <citation>JTPLA,33,67</citation>
+ <citation>APNYA,66,509</citation>
+ <citation>IMPAE,A2,1447</citation>
+ <citation>IMPAE,A4,1527</citation>
+ <citation>MPLAE,A8,2747</citation>
+ <citation>JTPLA,59,585</citation>
+ <citation>PHRVA,D49,5805</citation>
+ <citation>HEP-PH 9503325</citation>
+ <citation>PHRVA,D9,3113</citation>
+ <citation>NUIMA,138,241</citation>
+ <citation>NUIMA,140,533</citation>
+ <citation>PHLTA,B206,707</citation>
+ <citation>ZEPYA,C43,75</citation>
+ <citation>HEP-PH 9309235</citation>
+ <citation>BAPSA,41,902</citation>
+ <citation>BAPSA,41,938</citation>
+ <citation>PHRVA,D50,6811</citation>
+ <citation>PRPLC,65,151</citation>
+ <citation>NUPHA,B370,365</citation>
+ <citation>PHRVA,D48,5</citation>
+ <citation>CPHCB,46,43</citation>
+ <experiment>FNAL-E-0864</experiment>
+ <ppfin-acct>LIRYG</ppfin-acct>
+ <desy-keywords>data analysis method</desy-keywords>
+ <desy-keywords>hadron hadron, interaction</desy-keywords>
+ <desy-keywords>anti-p p, annihilation</desy-keywords>
+ <desy-keywords>multiple production</desy-keywords>
+ <desy-keywords>charged particle, hadroproduction</desy-keywords>
+ <desy-keywords>photon, associated production</desy-keywords>
+ <desy-keywords>pi, charged particle</desy-keywords>
+ <desy-keywords>pi0</desy-keywords>
+ <desy-keywords>multiplicity, moment</desy-keywords>
+ <desy-keywords>symmetry, chiral</desy-keywords>
+ <desy-keywords>critical phenomena</desy-keywords>
+ <desy-keywords>pi, condensation</desy-keywords>
+ <desy-keywords>numerical calculations, Monte Carlo</desy-keywords>
+ <desy-abs-num>D96-20944</desy-abs-num>
+ <desy-class-code>G</desy-class-code>
+ <desy-class-code>D</desy-class-code>
+ <date-updated>07/08/2004</date-updated>
+ <account-upd>LI.KAL</account-upd>
+ <date-added>09/18/1996</date-added>
+ <acct-added>CITES</acct-added>
+ <tt>Analysis of charged-particle/photon correlations in hadronic  multiparticleproduction.</tt>
+ <bull>HEPPH-9609375</bull>
+ <url-str>
+  <url>ADSABS</url>
+  <urldoc>1997PhRvD..55.5667B</urldoc>
+ </url-str>
+ <url-str>
+  <url>PHRVA-D</url>
+  <urldoc>V55/P05667/</urldoc>
+ </url-str>
+ <url-str>
+  <url>SLACPUB</url>
+  <urldoc>9865</urldoc>
+ </url-str>
+ <time-upd>11:47:06</time-upd>
+ <pacs>13.87.Ce</pacs>
+ <pacs>14.40.Aq</pacs>
+ <pacs>14.70.Bh</pacs>
+ <new-desy-check>Preprint - Brooks, T.C. (rec.Sep.96) 35 p.</new-desy-check>
+ <catdate>09/20/1996</catdate>
+ <cattime>10:44:34</cattime>
+ <doi>10.1103/PhysRevD.55.5667</doi>
+</goal_record>

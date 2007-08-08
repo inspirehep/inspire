@@ -1,0 +1,11 @@
+$Id$ 
+
+This directory is dedicated to the conversion of records, notably to
+be able to import SPIRES records to Invenio.  See also
+<https://twiki.cern.ch/twiki/bin/view/Inspire/RecordComparison>.
+
+The conversion from SPIRES to Invenio is governed by the stylesheet
+SPIRES2MARC.xsl.  You may want to edit it and run 'make test' to see
+it in action.
+
+- end of file -
