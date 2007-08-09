@@ -1,0 +1,77 @@
+A summary of a rough roadmap for the first 6mos-year of the inspire
+project, as envisioned by Tim Smith, Annette Holtkamp, Salvatore Mele, and
+Travis Brooks at SLAC on 5/12/2007 (As interpreted and added to by TB):
+
+0: Set up mailing lists (at SLAC, this list, investigate archive
+accessibility..) and wiki (at CERN? Salvatore? Tibor?) that hsould hose
+this document and many others
+
+1: Compare internal record structure of SPIRES and Invenio records for
+bibliographic items.
+
+* Leads on this are almost certainly Tibor and Mike.  
+* Consider "external" files like Jobs and Inst which are needed for auth. control, but might not migrate...
+* Work starts now, possible face to face in early July.
+** Back and forth twisting Invenio to store our datastructures
+* Note major decision point early on: If invenio cannot store SPIRES records, we must consider other platforms
+
+
+1.5 Test loading of large chunk (.5MRecs) to test scalability.  Not to be
+  mistaken for any sort of test/demonstration  system.  Requires existence
+  of at least 1 new Invenio instance ready to store data.  One instance
+  already available at SLAC, and this might be most convenient...
+
+
+* Consider at this point the multiple mirror/master architecture (possibly
+* just 2 test sites..)
+* Purpose for this is in case Invenio modifications to accomodate SPIRES
+  records do not scale appropriately.  Again this is a major decision
+  point regarding the appropriateness of Invenio as the underlying system.
+
+
+2 Define desired inputs from repositories (journals/arXiv..) and determine
+influence on data structures  Leads (Annette/Travis? + Invenio person?)
+
+
+3. Possible 1-day workshop to agree on appropriateness of records.  (part
+   of step 1)
+
+4. Can the SPIRES (fussy) search syntax be reproduced by Invenio.
+   
+* Certainly not completely, however, the most used parts might be
+  acceptably translated to invenio search.
+* This is neccessary for branding purposes to make users confortable with
+  new system (choice will be offered) 
+** Also note that survey results show that comments about SPIRES syntax
+  were 70% negative and 40% positive (yes, some were both)
+
+
+5. Enrichment scripts.  SPIRES COllaboration currently has many (separate)
+   scripts for enriching data, both fully automatic, and manually
+   assisted.  Both the functionality and the ease of user interface (in
+   manual cases) should be reproduced in Invenio.  
+
+* Manual (manual assisted) scripts must function well or data quality will
+  suffer immediately!
+* Catalog of existing scripts (perl and SPIRES protocol) and functionality
+** May be useful for SPIRES groups to consolidate scripts and especially
+  SPIRES interfaces
+** Should consider whether SPIRES->Perl is worthwhile intermediate step
+  ,since SPIRES API exists in perl.
+* Perl->Python translation (SPIRES->Invenio API)  (or consider Perl
+  Invenio API?)  (Possible MC work)
+* SPIRES Protocol -> Python is only possible by a few cognoscenti...
+* CDS scripts must go through similar process
+
+
+6. Catalog and compare output formats from SPIRES and CDS.  Must make
+   invenio reproduce SPIRES output formats.  Use weblogs to determine
+   heavily used formats.  
+* Here no translation is possible, must go SPIRES->functionality-> Invenio
+
+
+
+
+
+
+
