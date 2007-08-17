@@ -4,4 +4,13 @@ This is a CVS space for the Inspire project.  It contains
 Inspire-specific code.  For generic Invenio CVS code, please see 
 the 'cds-invenio' CVS project.
 
+The goal of this repository is to install the Inspire instance of Invenio in the following way:
+
+  $ cd cds-invenio
+  $ make install
+  $ cd ../inspire
+  $ make install
+
+so that this repository can overwrite or supply additional files to the standard Invenio codebase.
+
 - end of file -
