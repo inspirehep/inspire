@@ -7,9 +7,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <collection xmlns="http://www.loc.gov/MARC21/slim">
         <xsl:for-each select="//goal_record">    
             <record>
-                <xsl:if test="./irn">
-                    <controlfield tag="001"><xsl:value-of select="./irn"/></controlfield>
-                </xsl:if>
                 <xsl:if test="./doc-type">
                     <datafield tag="690" ind1="C" ind2=" ">
                         <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
@@ -182,6 +179,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
                 </xsl:for-each>
+                <xsl:if test="./irn">
+                    <datafield tag="970" ind1=" " ind2=" ">
+                        <subfield code="a">SPIRES-<xsl:value-of select="./irn"/></subfield>
+                    </datafield>
+                </xsl:if>
             </record>
         </xsl:for-each> 
     </collection>
