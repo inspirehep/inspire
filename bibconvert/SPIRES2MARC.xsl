@@ -20,8 +20,13 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 <xsl:for-each select="./astr/astr1">
                     <datafield tag="100" ind1=" " ind2=" ">
                             <subfield code="a"><xsl:value-of select="./author"/></subfield>
-                            <xsl:if test="../affiliation">
-                                <subfield code="u"><xsl:value-of select="../affiliation"/></subfield>
+                            
+			<xsl:if test="../affiliation">
+				  <xsl:for-each select="../affiliation">
+                                <subfield code="u"><xsl:value-of select="."/>
+                            </subfield>
+                              </xsl:for-each>
+
                             </xsl:if>
                     </datafield>
                 </xsl:for-each>
