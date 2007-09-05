@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -30,7 +30,7 @@ def format(bfo, separator='; ', nbOnly='no'):
     Prints the records (or number of records) citing this record
 
     DO NOT USE > testing, not on cdsweb
-    
+
     @param separator a separator between citations
     """
     from urllib import quote
@@ -45,14 +45,13 @@ def format(bfo, separator='; ', nbOnly='no'):
 
     res = []
     for rep_num in report_numbers:
-        res.extend(search_pattern(p=rep_num, f='999C5r').tolist())
+        res.extend(list(search_pattern(p=rep_num, f='999C5r')))
 
     if nbOnly.lower() == 'yes':
         return str(len(res))
     else:
         from invenio.bibformat import format_records
         return '<br/>'.join(format_records(res, 'hs'))
-        
 
 def escape_values(bfo):
     """
