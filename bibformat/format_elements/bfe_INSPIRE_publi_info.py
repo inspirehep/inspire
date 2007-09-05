@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -41,7 +41,7 @@ def format(bfo):
 
     if publication_info:
         publication_info = publication_info[0]
-        journal_source = publication_info.get('p')
+        journal_source = publication_info.get('p', '')
         journal = bfo.kb('ejournals', journal_source)
         volume = publication_info.get('v')
         year = publication_info.get('y')
@@ -52,7 +52,7 @@ def format(bfo):
         for action_note in action_notes:
             if action_note == 'yes':
                 out += '<br /><small><img border="0" ' + \
-                       'src="/img/iconpen.gif" alt="open icon"/></small>' 
+                       'src="/img/iconpen.gif" alt="open icon"/></small>'
                 out += " - Submitted as a scientific note."
                 if journal_source:
                     out += 'After approval will be submitted to Journal ' + \
@@ -75,7 +75,7 @@ def format(bfo):
             out += cgi.escape(journal_source)
 
     else:
-        
+
         if journal:
             journal = cgi.escape(journal)
         if volume:
@@ -96,7 +96,7 @@ def format(bfo):
             url = ''
         if journal:
             if volume:
-            
+
                 out += 'Published in <b class="nounderline"><a href="http://weblib.cern.ch/cgi-bin/ejournals?publication='
                 out += journal_source.replace(' ', '+')
                 out += '&amp;volume=' + volume
@@ -118,14 +118,14 @@ def format(bfo):
                        number + '">' + cgi.escape(journal_source) + \
                        '</a></b>'
         else:
-            out += 'Published in ' 
+            out += 'Published in '
             if url:
                 out += """<b class="nounderline"><a href="%s">%s</a></b>""" % (url, journal_source)
             else:
-                out += journal_source 
-             
+                out += journal_source
+
             if volume:
-                out += ': ' + volume 
+                out += ': ' + volume
             if year:
                 out += ' (' + year + ') '
             if number:
@@ -133,9 +133,9 @@ def format(bfo):
             if pages:
                 out += 'pp. ' + pages
             out += publication_info.get('d', '')
-         
+
     return out
-      
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
