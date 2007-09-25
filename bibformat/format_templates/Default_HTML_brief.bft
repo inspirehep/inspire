@@ -32,7 +32,7 @@ color:#666666;
 </style>
 <div class="inspire">
 <BFE_CERN_TITLE_BRIEF prefix="<strong>" suffix="</strong><br />"/>
-<BFE_CERN_AUTHORS print_affiliations="yes" limit="10" extension="<i> et al.<i>" />
+<BFE_CERN_AUTHORS print_affiliations="yes" limit="10" extension="<i> et al.</i>" />
 <BFE_REPORT_NUMBERS separator=', '/><BFE_INSPIRE_IMPRINT prefix=", "/>
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />"/>
 
