@@ -19,16 +19,28 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:for-each>
                 <xsl:for-each select="./astr/astr1">
                     <datafield tag="100" ind1=" " ind2=" ">
-                            <subfield code="a"><xsl:value-of select="./author"/></subfield>
-                            
+                         <subfield code="a"><xsl:value-of select="./author"/></subfield>      
 			<xsl:if test="../affiliation">
-				  <xsl:for-each select="../affiliation">
-                                <subfield code="u"><xsl:value-of select="."/>
-                            </subfield>
+				<xsl:for-each select="../affiliation">
+					<xsl:if test="@type='AUTHAFF'">
+                                	<subfield code="u"><xsl:value-of select="."/>
+                            		</subfield>
+					</xsl:if>
                               </xsl:for-each>
-
-                            </xsl:if>
+                        </xsl:if>
                     </datafield>
+                </xsl:for-each>
+                <xsl:for-each select="./astr">                            
+			<xsl:if test="./affiliation">
+				<xsl:for-each select="./affiliation">
+					<xsl:if test="@type='RECAFF'">
+					<datafield tag="902" ind1=" " ind2=" ">
+                                	<subfield code="a"><xsl:value-of select="."/>
+                            		</subfield>
+					</datafield>
+					</xsl:if>
+                                </xsl:for-each>
+                        </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="./corp-author">
                     <datafield tag="110" ind1=" " ind2=" ">
@@ -170,8 +182,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:for-each>
                 <xsl:for-each select="./url-str">
                     <datafield tag="856" ind1="4" ind2=" ">
-                        <subfield code="u"><xsl:value-of select="./urldoc"/></subfield>
+                        <subfield code="x"><xsl:value-of select="./urldoc"/></subfield>
                         <subfield code="y"><xsl:value-of select="./url"/></subfield>
+		 	<subfield code="u"><xsl:value-of select="./turl"/></subfield>
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./free-keywords">
