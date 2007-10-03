@@ -12,8 +12,14 @@ getlarge:
 	wget $(SPIRESXML)
 
 convertlarge:  
-	/opt/cds-invenio/bin/bibconvert -c SPIRES2MARC.xsl < test100k.xml > 100k_converted.xml
-	xmllint --noout 100k_converted.xml
+	/opt/cds-invenio/bin/bibconvert -c SPIRES2MARC.xsl < large_test.xml > large_converted.xml
+	xmllint --noout large_converted.xml
+#
+#  PLease note, bibconvert and xmllint appear to fail on this large file.  
+#  It may be neccessary to use a different xslt engine or break up the 
+#  file.
+#
+
 
 testfullset: 
 	/opt/cds-invenio/bin/bibconvert -c SPIRES2MARC.xsl < inspire_set.xml > inspire_set_converted.xml
