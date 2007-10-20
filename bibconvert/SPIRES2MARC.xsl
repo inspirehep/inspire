@@ -18,12 +18,23 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./astr/astr1">
-                    <datafield tag="100" ind1=" " ind2=" ">
+                       <datafield  ind1=" " ind2=" ">
+		<xsl:choose>
+                   <xsl:when test="position()=1">
+			<xsl:attribute name="tag">100</xsl:attribute>
+		   </xsl:when>
+		   <xsl:otherwise>
+			<xsl:attribute name="tag">700</xsl:attribute>
+		   </xsl:otherwise>
+		   </xsl:choose>	
+                   
                          <subfield code="a"><xsl:value-of select="./author"/></subfield>      
 			<xsl:if test="../affiliation">
 				<xsl:for-each select="../affiliation">
 					<xsl:if test="@type='AUTHAFF'">
                                 	<subfield code="u"><xsl:value-of select="."/>
+                            		</subfield>
+                                	<subfield code="i"><xsl:value-of select="@key"/>
                             		</subfield>
 					</xsl:if>
                               </xsl:for-each>
@@ -34,8 +45,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 			<xsl:if test="./affiliation">
 				<xsl:for-each select="./affiliation">
 					<xsl:if test="@type='RECAFF'">
-					<datafield tag="902" ind1=" " ind2=" ">
+					 <datafield tag="902" ind1=" " ind2=" ">
                                 	<subfield code="a"><xsl:value-of select="."/>
+                            		</subfield>
+                                	<subfield code="i"><xsl:value-of select="@key"/>
                             		</subfield>
 					</datafield>
 					</xsl:if>
@@ -62,12 +75,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
                 </xsl:for-each>
-                <xsl:for-each select="./slac-topics">
-                    <datafield tag="650" ind1="2" ind2="7">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
-                        <subfield code="2">SLAC author</subfield>
-                    </datafield>
-                </xsl:for-each> 
                 <xsl:for-each select="./date">
                     <datafield tag="269" ind1=" " ind2=" ">
                         <subfield code="c"><xsl:value-of select="."/></subfield>
@@ -88,19 +95,24 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="./ppf-subject"/></subfield>
                     </datafield>
                 </xsl:if>
-                <xsl:if test="./holdings">
-                    <datafield tag="866" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="./holdings"/></subfield>
-                    </datafield>
-                </xsl:if>
                 <xsl:if test="./p">
                     <datafield tag="300" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="./p"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:for-each select="./citation">
-                    <datafield tag="999" ind1="C" ind2="5">
-                        <subfield code="m"><xsl:value-of select="."/></subfield>
+		   <datafield tag="999" ind1="C" ind2="5">
+  			 <xsl:if test="./fullref">
+	                    <subfield code="b"><xsl:value-of select="./fullref"/></subfield>
+	                </xsl:if>
+		 <xsl:if test="./aref">
+	                    <subfield code="r"><xsl:value-of select="./aref"/></subfield>
+	                </xsl:if>
+		 <xsl:if test="./jref">
+	                    <subfield code="t"><xsl:value-of select="./jref"/></subfield>
+	                </xsl:if>
+
+
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./meeting-note">
@@ -118,11 +130,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="c">DELETED</subfield>
                     </datafield>
                 </xsl:if>
-                <xsl:for-each select="./citation">
-                    <datafield tag="999" ind1="C" ind2="5">
-                        <subfield code="t"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
                 <xsl:if test="./experiment">
                     <datafield tag="693" ind1=" " ind2=" ">
                         <subfield code="e"><xsl:value-of select="./experiment"/></subfield>
@@ -166,8 +173,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./bull">
-                    <datafield tag="037" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
+                    <datafield tag="037" ind1="" ind2="">
+                        <subfield code="a"><xsl:value-of select="."/></subfield>			<subfield code="s">arxiv</subfield>
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./date-added">
@@ -178,6 +185,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 <xsl:for-each select="./date-updated">
                     <datafield tag="961" ind1=" " ind2=" ">
                         <subfield code="c"><xsl:value-of select="."/></subfield>
+                    </datafield>
+                </xsl:for-each>
+                <xsl:for-each select="./abstract">
+                    <datafield tag="520" ind1=" " ind2=" ">
+                        <subfield code="a">
+                           <xsl:value-of select="./abstract-text"/>
+                        </subfield>
+                        <subfield code="s">
+                           <xsl:value-of select="./abstract-source"/>
+                        </subfield>
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./url-str">

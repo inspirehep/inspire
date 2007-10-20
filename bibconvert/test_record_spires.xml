@@ -1,3 +1,586 @@
+<records>
+<goal_record>
+ <irn>7199236</irn>
+ <doc-type>Preprint</doc-type>
+ <report-num>SLAC-PUB-12507</report-num>
+ <astr>
+  <astr1>
+   <author>Brooks, Travis C.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
+ </astr>
+<abstract><abstract-text>
+ Open Access to particle physics literature does not sound particularly new or exciting, since particle physicists have been reading preprints for decades, and arXiv.org for 15 years. However new movements in Europe are attempting to
+make the peer-reviewed literature of the field fully Open Access. This is not a new movement, nor is it restricted to this field. However, given the field's history of preprints and eprints, it is well suited to a change to a fully
+Open Access publishing model. Data shows that 90% of HEP published literature is freely available online, meaning that HEP libraries have little need for expensive journal subscriptions. As libraries begin to cancel journal
+subscriptions, the peer review process will lose its primary source of funding. Open Access publishing models can potentially address this issue. European physicists and funding agencies are proposing a consortium, SCOAP3, that might
+solve many of the objections to traditional Open Access publishing models in Particle Physics. These proposed changes should be viewed as a starting point for a serious look at the field's publication model, and are at least worthy
+of attention, if not adoption.
+</abstract-text>
+</abstract>
+ <title>Open Access Publishing in Particle Physics: A Brief Introduction for the non-Expert</title>
+ <slac-topics>COMPUTING</slac-topics>
+ <slac-topics>C013C0</slac-topics>
+ <date>20070500</date>
+ <ppf-subject>Theoretical</ppf-subject>
+ <p>4</p>
+ <ppf>0723</ppf>
+ <citation><fullref>cs/0611130  JHEPA,0612,S01</fullref><jref>JHEP,0612,S01</jref><aref>cs/0611130</aref></citation>
+ <slac-dist>MISC</slac-dist>
+ <ppfin-acct>LI.ARW</ppfin-acct>
+ <xdrn>e23</xdrn>
+ <date-updated>20070613</date-updated>
+ <account-upd>LI.GMR</account-upd>
+ <date-added>20070530</date-added>
+ <acct-added>LI.TCB</acct-added>
+ <tt>Open Access Publishing in Particle Physics: A Brief Introduction for the   non-Expert</tt>
+ <bull>arXiv:0705.3466</bull>
+ <url-str>
+  <url>SLAC</url>
+  <urldoc>slac-pub-12507</urldoc>
+  <turl>http://www.slac.stanford.edu/cgi-wrap/pubpage?slac-pub-12507</turl>
+ </url-str>
+ <time-upd>16:01:12</time-upd>
+ <catdate>20070605</catdate>
+ <cattime>13:33:54</cattime>
+ <hidden-note>3 References from cites2 direct on 05/31/07</hidden-note>
+ <hidden-note>PPF.CHECKS done 13:48:02 06/05/07 by LI.ARW</hidden-note>
+ <field-code>Computing</field-code>
+ <slac-date>20070606</slac-date>
+ <uniquetex>Brooks:2007wu</uniquetex>
+</goal_record>
+ 
+
+<goal_record>
+ <irn>5640237</irn>
+ <doc-type>Conference Paper</doc-type>
+ <report-num>SLAC-PUB-10125</report-num>
+ <astr>
+  <astr1>
+   <author>Kreitz, Patricia A.</author>
+  </astr1>
+  <astr1>
+   <author>Brooks, Travis C.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
+ </astr>
+ <title>Subject access through community partnerships: A Case study</title>
+ <pub-note>Sci.Tech.Libraries 24:153-172,2003</pub-note>
+ <slac-topics>SLAC, 08/03</slac-topics>
+ <slac-topics>TIS, Library</slac-topics>
+ <slac-topics>SPIRES HEP, About</slac-topics>
+ <date>20030800</date>
+ <jour-sub>Sci.Tech.Libraries</jour-sub>
+ <ppf-subject>S, L</ppf-subject>
+ <p>17</p>
+ <ppf>0333</ppf>
+ <citation><fullref>CACMA,44,46</fullref><jref>Commun.ACM,44,46</jref></citation>
+ <citation><fullref>CACMA,44,73</fullref><jref>Commun.ACM,44,73</jref></citation>
+ <slac-dist>MISC</slac-dist>
+ <ppfin-acct>LI.VAN</ppfin-acct>
+ <date-updated>20051102</date-updated>
+ <account-upd>LI.GMR</account-upd>
+ <date-added>20030819</date-added>
+ <acct-added>LI.VAN</acct-added>
+ <bull>physics/0309027</bull>
+ <url-str>
+  <url>SLACPUB</url>
+  <urldoc>10125</urldoc>
+  <turl>http://www.slac.stanford.edu/cgi-wrap/pubpage?slac-pub-10125</turl>
+ </url-str>
+ <time-upd>13:57:26</time-upd>
+ <catdate>20030819</catdate>
+ <cattime>16:52:16</cattime>
+ <type-code>Published</type-code>
+ <slac-date>20030800</slac-date>
+ <uniquetex>Kreitz:2003ey</uniquetex>
+</goal_record>
+ 
+
+<goal_record>
+ <irn>4368983</irn>
+ <doc-type>Preprint</doc-type>
+ <report-num>SLAC-PUB-8435</report-num>
+ <astr>
+  <astr1>
+   <author>Brooks, Travis C.</author>
+  </astr1>
+  <astr1>
+   <author>Dixon, Lance J.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
+ </astr>
+<abstract><abstract-text>
+ At very high energy and wide angles, Compton scattering on the proton (gamma
+ p -&gt; gamma p) is described by perturbative QCD. The perturbative QCD
+ calculation has been performed several times previously, at leading twist and
+ at leading order in alpha_s, with mutually inconsistent results, even when the
+ same light-cone distribution amplitudes have been employed. We have
+ recalculated the helicity amplitudes for this process, using contour
+ deformations to evaluate the singular integrals over the light-cone momentum
+ fractions. We do not obtain complete agreement with any previous result. Our
+ results are closest to those of the most recent previous computation, differing
+ significantly for just one of the three independent helicity amplitudes, and
+ only for backward scattering angles. We present results for the unpolarized
+ cross section, and for three different polarization asymmetries. We compare the
+ perturbative QCD predictions for these observables with those of the handbag
+ and diquark models. In order to reduce uncertainties associated with alpha_s
+ and the three-quark wave function normalization, we have normalized the Compton
+ cross section using the proton elastic form factor. The theoretical predictions
+ for this ratio are about an order of magnitude below existing experimental
+ data.
+</abstract-text>
+</abstract>
+ <title>Recalculation of proton Compton scattering in perturbative QCD</title>
+ <pub-note>Phys.Rev.D62:114021,2000</pub-note>
+ <slac-topics>SLAC, 04/00</slac-topics>
+ <slac-topics>Theoretical Physics</slac-topics>
+ <date>20000400</date>
+ <jour-sub>Phys.Rev.D</jour-sub>
+ <ppf-subject>Experimental, Theoretical, S</ppf-subject>
+ <p>23</p>
+ <ppa>0051</ppa>
+ <ppf>0016</ppf>
+ <citation><fullref>PHRVA,D22,2157</fullref><jref>Phys.Rev.,D22,2157</jref></citation>
+ <citation><fullref>hep-ph/9803316  PHRVA,D58,114008</fullref><jref>Phys.Rev.,D58,114008</jref><aref>hep-ph/9803316</aref></citation>
+ <citation><fullref>hep-ph/9811253  EPHJA,C8,409</fullref><jref>Eur.Phys.J.,C8,409</jref><aref>hep-ph/9811253</aref></citation>
+ <citation><fullref>hep-ph/9903268  PHLTA,B460,204</fullref><jref>Phys.Lett.,B460,204</jref><aref>hep-ph/9903268</aref></citation>
+ <citation><fullref>IMPAE,A6,4107</fullref><jref>Int.J.Mod.Phys.,A6,4107</jref></citation>
+ <citation><fullref>NUPHA,B246,52</fullref><jref>Nucl.Phys.,B246,52</jref></citation>
+ <citation><fullref>PHLTA,B175,462</fullref><jref>Phys.Lett.,B175,462</jref></citation>
+ <citation><fullref>PHRVA,D35,1074</fullref><jref>Phys.Rev.,D35,1074</jref></citation>
+ <citation><fullref>NUPHA,B279,785</fullref><jref>Nucl.Phys.,B279,785</jref></citation>
+ <citation><fullref>SJNCA,48,536</fullref><jref>Sov.J.Nucl.Phys.,48,536</jref></citation>
+ <citation><fullref>ZEPYA,C42,569</fullref><jref>Z.Phys.,C42,569</jref></citation>
+ <citation><fullref>hep-ph/9211250  PHRVA,D47,3685</fullref><jref>Phys.Rev.,D47,3685</jref><aref>hep-ph/9211250</aref></citation>
+ <citation><fullref>hep-ph/9403209  PHLTA,B325,183</fullref><jref>Phys.Lett.,B325,183</jref><aref>hep-ph/9403209</aref></citation>
+ <citation><fullref>PHRVA,D50,26</fullref><jref>Phys.Rev.,D50,26</jref></citation>
+ <citation><fullref>hep-ph/9607380</fullref><aref>hep-ph/9607380</aref></citation>
+ <citation><fullref>PHLTA,B217,535</fullref><jref>Phys.Lett.,B217,535</jref></citation>
+ <citation><fullref>hep-ph/9603289  ZEPYA,A356,327</fullref><jref>Z.Phys.,A356,327</jref><aref>hep-ph/9603289</aref></citation>
+ <citation><fullref>PHLTA,B206,120</fullref><jref>Phys.Lett.,B206,120</jref></citation>
+ <citation><fullref>PHRVA,D41,3348</fullref><jref>Phys.Rev.,D41,3348</jref></citation>
+ <citation><fullref>PHRVA,D42,2413</fullref><jref>Phys.Rev.,D42,2413</jref></citation>
+ <citation><fullref>PRLTA,65,1721</fullref><jref>Phys.Rev.Lett.,65,1721</jref></citation>
+ <citation><fullref>PHRVA,D44,3445</fullref><jref>Phys.Rev.,D44,3445</jref></citation>
+ <citation><fullref>PHRVA,D46,2272</fullref><jref>Phys.Rev.,D46,2272</jref></citation>
+ <citation><fullref>NUPHA,A622,144C</fullref><jref>Nucl.Phys.,A622,144C</jref></citation>
+ <citation><fullref>hep-ph/9806305  PPNPD,41,125</fullref><jref>Prog.Part.Nucl.Phys.,41,125</jref><aref>hep-ph/9806305</aref></citation>
+ <citation><fullref>PHRVA,D19,1921</fullref><jref>Phys.Rev.,D19,1921</jref></citation>
+ <citation><fullref>hep-ph/9908522</fullref><aref>hep-ph/9908522</aref></citation>
+ <citation><fullref>NUPHA,A622,187C</fullref><jref>Nucl.Phys.,A622,187C</jref></citation>
+ <citation><fullref>hep-ph/9703462  NUPHA,A622,284C</fullref><jref>Nucl.Phys.,A622,284C</jref><aref>hep-ph/9703462</aref></citation>
+ <citation><fullref>hep-ph/9911486</fullref><aref>hep-ph/9911486</aref></citation>
+ <citation><fullref>PHLTA,130B,109</fullref><jref>Phys.Lett.,130B,109</jref></citation>
+ <citation><fullref>PHLTA,152B,443</fullref><jref>Phys.Lett.,152B,443</jref></citation>
+ <citation><fullref>JCTPA,27,192</fullref><jref>J.Comput.Phys.,27,192</jref></citation>
+ <citation><fullref>PHRVA,D60,032002</fullref><jref>Phys.Rev.,D60,032002</jref></citation>
+ <citation><fullref>PHRVA,D48,29</fullref><jref>Phys.Rev.,D48,29</jref></citation>
+ <citation><fullref>hep-ph/9403293  PHRVA,D51,15</fullref><jref>Phys.Rev.,D51,15</jref><aref>hep-ph/9403293</aref></citation>
+ <citation><fullref>ZEPYA,C42,583</fullref><jref>Z.Phys.,C42,583</jref></citation>
+ <citation><fullref>PHRVA,D36,165</fullref><jref>Phys.Rev.,D36,165</jref></citation>
+ <citation><fullref>PHRVA,D40,2305</fullref><jref>Phys.Rev.,D40,2305</jref></citation>
+ <citation><fullref>PHRVA,D36,2060</fullref><jref>Phys.Rev.,D36,2060</jref></citation>
+ <citation><fullref>ZEPYA,C67,433</fullref><jref>Z.Phys.,C67,433</jref></citation>
+ <citation><fullref>hep-ph/9508347  PHRVA,D53,4775</fullref><jref>Phys.Rev.,D53,4775</jref><aref>hep-ph/9508347</aref></citation>
+ <citation><fullref>PHLTA,B37,211</fullref><jref>Phys.Lett.,B37,211</jref></citation>
+ <slac-dist>TH</slac-dist>
+ <ppfin-acct>LI.ARA</ppfin-acct>
+ <desy-keywords>photon p, Compton scattering</desy-keywords>
+ <desy-keywords>quantum chromodynamics, perturbation theory</desy-keywords>
+ <desy-keywords>helicity, amplitude analysis</desy-keywords>
+ <desy-keywords>photon, polarized beam</desy-keywords>
+ <desy-keywords>polarized target</desy-keywords>
+ <desy-keywords>polarization, asymmetry</desy-keywords>
+ <desy-keywords>angular dependence</desy-keywords>
+ <desy-keywords>differential cross section</desy-keywords>
+ <desy-keywords>p, form factor</desy-keywords>
+ <desy-keywords>photon, polarization</desy-keywords>
+ <desy-keywords>numerical calculations, interpretation of experiments</desy-keywords>
+ <desy-abs-num>D00-07458</desy-abs-num>
+ <desy-class-code>V</desy-class-code>
+ <desy-class-code>W</desy-class-code>
+ <date-updated>20060913</date-updated>
+ <account-upd>LI.HOC</account-upd>
+ <title-variant>PERTURBATIVE QUANTUM CHROMODYNAMICS</title-variant>
+ <date-added>20000418</date-added>
+ <acct-added>LI.LIB</acct-added>
+ <tt>Recalculation of proton Compton scattering in perturbative QCD.</tt>
+ <bull>hep-ph/0004143</bull>
+ <desyr>SLAC-PUB-8435</desyr>
+ <url-str>
+  <url>ADSABS</url>
+  <urldoc>2000PhRvD..62k4021B</urldoc>
+  <turl>http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2000PhRvD..62k4021B</turl>
+ </url-str>
+ <url-str>
+  <url>CERNKEY</url>
+  <urldoc>2184605</urldoc>
+  <turl>http://alice.cern.ch/format/showfull?sysnb=2184605</turl>
+ </url-str>
+ <url-str>
+  <url>DOI</url>
+  <urldoc>10.1103/PhysRevD.62.114021</urldoc>
+  <turl>http://dx.doi.org/10.1103/PhysRevD.62.114021</turl>
+ </url-str>
+ <url-str>
+  <url>PHRVA-D</url>
+  <urldoc>V62/E114021/</urldoc>
+  <turl>http://link.aps.org/abstract/PRD/V62/E114021/</turl>
+ </url-str>
+ <url-str>
+  <url>SLACPUB</url>
+  <urldoc>8435</urldoc>
+  <turl>http://www.slac.stanford.edu/cgi-wrap/pubpage?slac-pub-8435</turl>
+ </url-str>
+ <time-upd>11:22:00</time-upd>
+ <new-desy-check>SLAC Stanford - SLAC-PUB-8435 (00/04,rec.Apr.) 23 p.</new-desy-check>
+ <catdate>20000418</catdate>
+ <cattime>10:49:10</cattime>
+ <hidden-note>References from LaTeX</hidden-note>
+ <hidden-note>Title standardized on 9/14/2006</hidden-note>
+ <cernkey>2184605</cernkey>
+ <field-code>Phenomenology-HEP</field-code>
+ <type-code>Published</type-code>
+ <doi>10.1103/PhysRevD.62.114021</doi>
+ <uniquetex>Brooks:2000nb</uniquetex>
+</goal_record>
+ 
+
+<goal_record>
+ <irn>4180828</irn>
+ <doc-type>PUBLISHED</doc-type>
+ <astr>
+  <astr1>
+   <author>Jachim, S.P.</author>
+  </astr1>
+  <astr1>
+   <author>Ziomek, C.</author>
+  </astr1>
+  <astr1>
+   <author>Natter, E.F.</author>
+  </astr1>
+  <astr1>
+   <author>Regan, A.H.</author>
+  </astr1>
+  <astr1>
+   <author>Hill, J.</author>
+  </astr1>
+  <astr1>
+   <author>Eaton, L.</author>
+  </astr1>
+  <astr1>
+   <author>Gutscher, W.D.</author>
+  </astr1>
+  <astr1>
+   <author>Curtin, M.</author>
+  </astr1>
+  <astr1>
+   <author>Denney, P.</author>
+  </astr1>
+  <astr1>
+   <author>Hansberry, E.</author>
+  </astr1>
+  <astr1>
+   <author>Brooks, T.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="3727"> Los Alamos</affiliation>
+ </astr>
+ <title>The Los Alamos VXI-based modular RF control system</title>
+ <date>19930000</date>
+ <ppf-subject>Instrumentation, D</ppf-subject>
+ <meeting-note>Prepared for 1993 IEEE Particle Accelerator Conference (PAC 93), Washington, DC, 17-20 May 1993</meeting-note>
+ <desy-pub-note>In *Washington 1993, Particle accelerator, vol. 2* 1154-1156</desy-pub-note>
+ <desy-keywords>talk, Washington 1993/05/17</desy-keywords>
+ <desy-abs-num>D97-11492</desy-abs-num>
+ <date-updated>19991007</date-updated>
+ <account-upd>LI.ADD</account-upd>
+ <date-added>19990913</date-added>
+ <acct-added>DESYHEPI</acct-added>
+ <time-upd>01:53:12</time-upd>
+ <conf-number>C93-05-17</conf-number>
+ <uniquetex>Jachim:1993wb</uniquetex>
+</goal_record>
+ 
+
+<goal_record>
+ <irn>4094875</irn>
+ <doc-type>Preprint</doc-type>
+ <report-num>SLAC-REPRINT-1999-091</report-num>
+ <astr>
+  <astr1>
+   <author>Brooks, T.C.</author>
+  </astr1>
+  <astr1>
+   <author>Convery, M.E.</author>
+  </astr1>
+  <astr1>
+   <author>Davis, W.L.</author>
+  </astr1>
+  <astr1>
+   <author>Del Signore, K.W.</author>
+  </astr1>
+  <astr1>
+   <author>Jenkins, T.L.</author>
+  </astr1>
+  <astr1>
+   <author>Kangas, E.</author>
+  </astr1>
+  <astr1>
+   <author>Knepley, M.G.</author>
+  </astr1>
+  <astr1>
+   <author>Kowalski, K.L.</author>
+  </astr1>
+  <astr1>
+   <author>Taylor, C.C.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="1090"> Case Western Reserve U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Oh, S.H.</author>
+  </astr1>
+  <astr1>
+   <author>Walker, W.D.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="1724"> Duke U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Colestock, P.L.</author>
+  </astr1>
+  <astr1>
+   <author>Hanna, B.</author>
+  </astr1>
+  <astr1>
+   <author>Martens, M.</author>
+  </astr1>
+  <astr1>
+   <author>Streets, Jonathan M.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="1899"> Fermilab</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Ball, R.C.</author>
+  </astr1>
+  <astr1>
+   <author>Gustafson, H.R.</author>
+  </astr1>
+  <astr1>
+   <author>Jones, L.W.</author>
+  </astr1>
+  <astr1>
+   <author>Longo, M.J.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="4138"> Michigan U.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Bjorken, J.D.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Abashian, A.</author>
+  </astr1>
+  <astr1>
+   <author>Morgan, N.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="7560"> Virginia Tech.</affiliation>
+ </astr>
+ <astr>
+  <astr1>
+   <author>Pruneau, C.A.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="7714"> Wayne State U.</affiliation>
+ </astr>
+<abstract><abstract-text>
+ We present results from MiniMax (Fermilab T-864), a small test/experiment at
+ the Tevatron designed to search for the production of disoriented chiral
+ condensate (DCC) in $p - \bar p$ collisions at $\sqrt{s} = 1.8$ TeV in the
+ forward direction, $\sim 3.4 &lt; \eta &lt; \sim 4.2$. Data, consisting of $1.3
+ \times 10^6$ events, are analyzed using the robust observables developed in an
+ earlier paper. The results are consistent with generic, binomial-distribution
+ partition of pions into charged and neutral species. Limits on DCC production
+ in various models are presented.
+</abstract-text>
+</abstract>
+ <col-note>MiniMax Collaboration</col-note>
+ <title>A Search for disoriented chiral condensate at the Fermilab Tevatron</title>
+ <pub-note>Phys.Rev.D61:032003,2000</pub-note>
+ <slac-topics>SLAC, there</slac-topics>
+ <date>19990600</date>
+ <ppf-subject>Experimental, S</ppf-subject>
+ <p>23</p>
+ <ppa>0003</ppa>
+ <ppf>9925</ppf>
+ <citation><fullref>hep-ph/9309235</fullref><aref>hep-ph/9309235</aref></citation>
+ <citation><fullref>BAPSA,41,902</fullref><jref>Bull.Am.Phys.Soc.,41,902</jref></citation>
+ <citation><fullref>BAPSA,41,938</fullref><jref>Bull.Am.Phys.Soc.,41,938</jref></citation>
+ <citation><fullref>hep-ex/9801020</fullref><aref>hep-ex/9801020</aref></citation>
+ <citation><fullref>PHLTA,B217,169</fullref><jref>Phys.Lett.,B217,169</jref></citation>
+ <citation><fullref>PHLTA,B266,482</fullref><jref>Phys.Lett.,B266,482</jref></citation>
+ <citation><fullref>IMPAE,A7,4189</fullref><jref>Int.J.Mod.Phys.,A7,4189</jref></citation>
+ <citation><fullref>APPOA,B23,561</fullref><jref>Acta Phys.Polon.,B23,561</jref></citation>
+ <citation><fullref>PHRVA,D46,246</fullref><jref>Phys.Rev.,D46,246</jref></citation>
+ <citation><fullref>hep-ph/9210253  NUPHA,B399,395</fullref><jref>Nucl.Phys.,B399,395</jref><aref>hep-ph/9210253</aref></citation>
+ <citation><fullref>hep-ph/9606263  APPOA,B27,1687</fullref><jref>Acta Phys.Polon.,B27,1687</jref><aref>hep-ph/9606263</aref></citation>
+ <citation><fullref>hep-ph/9703258</fullref><aref>hep-ph/9703258</aref></citation>
+ <citation><fullref>hep-ph/9712434  APPOA,B28,2773</fullref><jref>Acta Phys.Polon.,B28,2773</jref><aref>hep-ph/9712434</aref></citation>
+ <citation><fullref>APNYA,66,509</fullref><jref>Annals Phys.,66,509</jref></citation>
+ <citation><fullref>JTPLA,33,367</fullref><jref>JETP Lett.,33,367</jref></citation>
+ <citation><fullref>PHLTA,B301,159</fullref><jref>Phys.Lett.,B301,159</jref></citation>
+ <citation><fullref>nucl-th/9311020  PRLTA,72,970</fullref><jref>Phys.Rev.Lett.,72,970</jref><aref>nucl-th/9311020</aref></citation>
+ <citation><fullref>hep-ph/9411328  PHRVA,D51,2482</fullref><jref>Phys.Rev.,D51,2482</jref><aref>hep-ph/9411328</aref></citation>
+ <citation><fullref>hep-ph/9411329  PHRVA,C52,1073</fullref><jref>Phys.Rev.,C52,1073</jref><aref>hep-ph/9411329</aref></citation>
+ <citation><fullref>FZKAA,B133,197</fullref><jref>Fizika,B133,197</jref></citation>
+ <citation><fullref>hep-ph/9609375  PHRVA,D55,5667</fullref><jref>Phys.Rev.,D55,5667</jref><aref>hep-ph/9609375</aref></citation>
+ <citation><fullref>NUIMA,129,373</fullref><jref>Nucl.Instrum.Meth.,129,373</jref></citation>
+ <citation><fullref>PHRVA,D50,5550</fullref><jref>Phys.Rev.,D50,5550</jref></citation>
+ <citation><fullref>PHRVA,D50,5518</fullref><jref>Phys.Rev.,D50,5518</jref></citation>
+ <citation><fullref>PHRVA,D50,5535</fullref><jref>Phys.Rev.,D50,5535</jref></citation>
+ <citation><fullref>CPHCB,46,43</fullref><jref>Comput.Phys.Commun.,46,43</jref></citation>
+ <citation><fullref>CNPPA,17,195</fullref><jref>Comments Nucl.Part.Phys.,17,195</jref></citation>
+ <citation><fullref>hep-ph/9309235</fullref><aref>hep-ph/9309235</aref></citation>
+ <citation><fullref>hep-ex/9710015  PHLTA,B420,169</fullref><jref>Phys.Lett.,B420,169</jref><aref>hep-ex/9710015</aref></citation>
+ <citation><fullref>hep-ex/9802019  NUPHA,A638,249C</fullref><jref>Nucl.Phys.,A638,249C</jref><aref>hep-ex/9802019</aref></citation>
+ <slac-dist>MISC</slac-dist>
+ <experiment>FNAL-E-0864</experiment>
+ <ppfin-acct>LI.ARA</ppfin-acct>
+ <desy-keywords>anti-p p, colliding beams</desy-keywords>
+ <desy-keywords>pi, multiple production</desy-keywords>
+ <desy-keywords>production, small-angle</desy-keywords>
+ <desy-keywords>condensation, chiral</desy-keywords>
+ <desy-keywords>search for, condensation</desy-keywords>
+ <desy-keywords>charged particle, multiplicity</desy-keywords>
+ <desy-keywords>photon, multiplicity</desy-keywords>
+ <desy-keywords>correlation</desy-keywords>
+ <desy-keywords>magnetic spectrometer, experimental results</desy-keywords>
+ <desy-keywords>Batavia TEVATRON Coll</desy-keywords>
+ <desy-keywords>1800 GeV-cms</desy-keywords>
+ <desy-abs-num>D99-12573</desy-abs-num>
+ <desy-class-code>D</desy-class-code>
+ <energyrange-code>7</energyrange-code>
+ <date-updated>20060914</date-updated>
+ <account-upd>LI.FN6</account-upd>
+ <date-added>19990616</date-added>
+ <acct-added>LI.LIB</acct-added>
+ <tt>A search for disoriented chiral condensate at the Fermilab Tevatron.</tt>
+ <bull>hep-ex/9906026</bull>
+ <url-str>
+  <url>ADSABS</url>
+  <urldoc>2000PhRvD..61c2003B</urldoc>
+  <turl>http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2000PhRvD..61c2003B</turl>
+ </url-str>
+ <url-str>
+  <url>CERNKEY</url>
+  <urldoc>0316704</urldoc>
+  <turl>http://alice.cern.ch/format/showfull?sysnb=0316704</turl>
+ </url-str>
+ <url-str>
+  <url>DOI</url>
+  <urldoc>10.1103/PhysRevD.61.032003</urldoc>
+  <turl>http://dx.doi.org/10.1103/PhysRevD.61.032003</turl>
+ </url-str>
+ <url-str>
+  <url>PHRVA-D</url>
+  <urldoc>V61/E032003/</urldoc>
+  <turl>http://link.aps.org/abstract/PRD/V61/E032003/</turl>
+ </url-str>
+ <time-upd>09:20:30</time-upd>
+ <new-desy-check>Preprint - Brooks, T.C. (99/06,rec.Jun.) 23 p.</new-desy-check>
+ <catdate>19990616</catdate>
+ <cattime>08:51:04</cattime>
+ <hidden-note>Reported to OSTI for FY 2001</hidden-note>
+ <hidden-note>Reported to OSTI 9/17/04</hidden-note>
+ <hidden-note>doi from CrossRef</hidden-note>
+ <cernkey>0316704</cernkey>
+ <field-code>Experiment-HEP</field-code>
+ <type-code>Published</type-code>
+ <slac-date>20010921</slac-date>
+ <doi>10.1103/PhysRevD.61.032003</doi>
+ <uniquetex>Brooks:1999xy</uniquetex>
+</goal_record>
+ 
+
+<goal_record>
+ <irn>3631249</irn>
+ <doc-type>Preprint</doc-type>
+ <report-num>PRINT-97-258</report-num>
+ <astr>
+  <astr1>
+   <author>Brooks, T.C.</author>
+  </astr1>
+  <astr1>
+   <author>Kowalski, K.L.</author>
+  </astr1>
+  <astr1>
+   <author>Taylor, C.C.</author>
+  </astr1>
+  <affiliation type="AUTHAFF" key="1090"> Case Western Reserve U.</affiliation>
+ </astr>
+ <title>Generating function zeros for hadron multiparticle distributions</title>
+ <pub-note>Phys.Rev.D56:5857-5861,1997</pub-note>
+ <date>19970500</date>
+ <jour-sub>Phys.Rev.D</jour-sub>
+ <ppf-subject>Theoretical, S</ppf-subject>
+ <p>20</p>
+ <ppa>9744</ppa>
+ <ppf>9740</ppf>
+ <citation><fullref>IMPAE,A2,1447</fullref><jref>Int.J.Mod.Phys.,A2,1447</jref></citation>
+ <citation><fullref>hep-ph/9508325  PRPLC,270,1</fullref><jref>Phys.Rept.,270,1</jref><aref>hep-ph/9508325</aref></citation>
+ <citation><fullref>hep-ph/9410305  JTPLA,60,764</fullref><jref>JETP Lett.,60,764</jref><aref>hep-ph/9410305</aref></citation>
+ <citation><fullref>PHRVA,87,404</fullref><jref>Phys.Rev.,87,404</jref></citation>
+ <citation><fullref>PHRVA,87,410</fullref><jref>Phys.Rev.,87,410</jref></citation>
+ <citation><fullref>hep-ph/9511303</fullref><aref>hep-ph/9511303</aref></citation>
+ <citation><fullref>ZEPYA,C43,357</fullref><jref>Z.Phys.,C43,357</jref></citation>
+ <citation><fullref>CPHCB,46,43</fullref><jref>Comput.Phys.Commun.,46,43</jref></citation>
+ <citation><fullref>hep-ph/9612317</fullref><aref>hep-ph/9612317</aref></citation>
+ <citation><fullref>hep-ph/9604247  ZEPYA,C75,89</fullref><jref>Z.Phys.,C75,89</jref><aref>hep-ph/9604247</aref></citation>
+ <citation><fullref>hep-ph/9704318  PHLTA,B403,149</fullref><jref>Phys.Lett.,B403,149</jref><aref>hep-ph/9704318</aref></citation>
+ <citation><fullref>ZEPYA,C30,391</fullref><jref>Z.Phys.,C30,391</jref></citation>
+ <citation><fullref>IMPAE,A4,1527</fullref><jref>Int.J.Mod.Phys.,A4,1527</jref></citation>
+ <citation><fullref>hep-ph/9305226  PHRVA,D48,5127</fullref><jref>Phys.Rev.,D48,5127</jref><aref>hep-ph/9305226</aref></citation>
+ <citation><fullref>BSTJA,27,379</fullref><jref>Bell Syst.Tech.J.,27,379</jref></citation>
+ <citation><fullref>BSTJA,27,623</fullref><jref>Bell Syst.Tech.J.,27,623</jref></citation>
+ <citation><fullref>PHRVA,106,620</fullref><jref>Phys.Rev.,106,620</jref></citation>
+ <citation><fullref>hep-ph/9305226  PHRVA,D48,5127</fullref><jref>Phys.Rev.,D48,5127</jref><aref>hep-ph/9305226</aref></citation>
+ <ppfin-acct>LI.LST</ppfin-acct>
+ <desy-keywords>hadron, multiple production</desy-keywords>
+ <desy-keywords>hadron, charged particle</desy-keywords>
+ <desy-keywords>multiplicity, spectra</desy-keywords>
+ <desy-keywords>statistical analysis</desy-keywords>
+ <desy-keywords>numerical calculations</desy-keywords>
+ <desy-abs-num>D97-19491</desy-abs-num>
+ <desy-class-code>T</desy-class-code>
+ <desy-class-code>W</desy-class-code>
+ <date-updated>20020712</date-updated>
+ <account-upd>LI.TCB</account-upd>
+ <date-added>19970926</date-added>
+ <acct-added>LI.LST</acct-added>
+ <url-str>
+  <url>ADSABS</url>
+  <urldoc>1997PhRvD..56.5857B</urldoc>
+  <turl>http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1997PhRvD..56.5857B</turl>
+ </url-str>
+ <url-str>
+  <url>PHRVA-D</url>
+  <urldoc>V56/P05857/</urldoc>
+  <turl>http://link.aps.org/abstract/PRD/V56/P05857/</turl>
+ </url-str>
+ <time-upd>14:55:20</time-upd>
+ <pacs>13.65.+i</pacs>
+ <pacs>13.87.Ce</pacs>
+ <catdate>19970926</catdate>
+ <cattime>11:52:08</cattime>
+ <doi>10.1103/PhysRevD.56.5857</doi>
+ <uniquetex>Brooks:1997kd</uniquetex>
+</goal_record>
+ 
+
 <goal_record>
  <irn>3418758</irn>
  <doc-type>Preprint</doc-type>
@@ -30,8 +613,7 @@
   <astr1>
    <author>Taylor, C.C.</author>
   </astr1>
-  <affiliation>Case Western Reserve U.</affiliation>
-  <affiliation>SLAC</affiliation>
+  <affiliation type="AUTHAFF" key="1090"> Case Western Reserve U.</affiliation>
  </astr>
  <astr>
   <astr1>
@@ -40,7 +622,7 @@
   <astr1>
    <author>Walker, W.D.</author>
   </astr1>
-  <affiliation>Duke U.</affiliation>
+  <affiliation type="AUTHAFF" key="1724"> Duke U.</affiliation>
  </astr>
  <astr>
   <astr1>
@@ -55,7 +637,7 @@
   <astr1>
    <author>Steets, J.</author>
   </astr1>
-  <affiliation>Fermilab</affiliation>
+  <affiliation type="AUTHAFF" key="1899"> Fermilab</affiliation>
  </astr>
  <astr>
   <astr1>
@@ -70,13 +652,13 @@
   <astr1>
    <author>Longo, M.J.</author>
   </astr1>
-  <affiliation>Michigan U.</affiliation>
+  <affiliation type="AUTHAFF" key="4138"> Michigan U.</affiliation>
  </astr>
  <astr>
   <astr1>
    <author>Bjorken, J.D.</author>
   </astr1>
-  <affiliation>SLAC</affiliation>
+  <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
  </astr>
  <astr>
   <astr1>
@@ -85,58 +667,69 @@
   <astr1>
    <author>Morgan, N.</author>
   </astr1>
-  <affiliation>Virginia Tech.</affiliation>
+  <affiliation type="AUTHAFF" key="7560"> Virginia Tech.</affiliation>
  </astr>
  <astr>
   <astr1>
    <author>Pruneau, C.A.</author>
   </astr1>
-  <affiliation>Wayne State U.</affiliation>
+  <affiliation type="AUTHAFF" key="7714"> Wayne State U.</affiliation>
  </astr>
+<abstract><abstract-text>
+ In order to analyze data on joint charged-particle/photon distributions from
+ an experimental search (T-864, MiniMax) for disoriented chiral condensate (DCC)
+ at the Fermilab Tevatron collider, we have identified robust observables,
+ ratios of normalized bivariate factorial moments, with many desirable
+ properties. These include insensitivity to many efficiency corrections and the
+ details of the modeling of the primary pion production, and sensitivity to the
+ production of DCC, as opposed to the generic, binomial-distribution partition
+ of pions into charged and neutral species. The relevant formalism is developed
+ and tested in Monte-Carlo simulations of the MiniMax experimental conditions.
+</abstract-text>
+</abstract>
  <col-note>MiniMax Collaboration</col-note>
- <title>Analysis of charged particle / photon correlations in hadronic
-multiparticle production</title>
+ <title>Analysis of charged particle / photon correlations in hadronic multiparticle production</title>
  <pub-note>Phys.Rev.D55:5667-5680,1997</pub-note>
  <slac-topics>SLAC, there, 09/96</slac-topics>
- <date>Sep 1996</date>
+ <date>19960900</date>
  <jour-sub>Phys.Rev.D</jour-sub>
  <ppf-subject>Experimental, S</ppf-subject>
  <p>35</p>
  <ppa>9716</ppa>
  <ppf>9639</ppf>
- <citation>PHLTA,B217,169</citation>
- <citation>PHLTA,B266,482</citation>
- <citation>IMPAE,A7,4189</citation>
- <citation>APPOA,B23,561</citation>
- <citation>PHRVA,D46,246</citation>
- <citation>HEP-PH 9211282</citation>
- <citation>NUPHA,B399,395</citation>
- <citation>PHRVA,D51,2482</citation>
- <citation>HEP-PH 9411329</citation>
- <citation>HEP-PH 9501210</citation>
- <citation>PRLTA,72,970</citation>
- <citation>RPPHA,58,611</citation>
- <citation>JTPLA,33,67</citation>
- <citation>APNYA,66,509</citation>
- <citation>IMPAE,A2,1447</citation>
- <citation>IMPAE,A4,1527</citation>
- <citation>MPLAE,A8,2747</citation>
- <citation>JTPLA,59,585</citation>
- <citation>PHRVA,D49,5805</citation>
- <citation>HEP-PH 9503325</citation>
- <citation>PHRVA,D9,3113</citation>
- <citation>NUIMA,138,241</citation>
- <citation>NUIMA,140,533</citation>
- <citation>PHLTA,B206,707</citation>
- <citation>ZEPYA,C43,75</citation>
- <citation>HEP-PH 9309235</citation>
- <citation>BAPSA,41,902</citation>
- <citation>BAPSA,41,938</citation>
- <citation>PHRVA,D50,6811</citation>
- <citation>PRPLC,65,151</citation>
- <citation>NUPHA,B370,365</citation>
- <citation>PHRVA,D48,5</citation>
- <citation>CPHCB,46,43</citation>
+ <citation><fullref>PHLTA,B217,169</fullref><jref>Phys.Lett.,B217,169</jref></citation>
+ <citation><fullref>PHLTA,B266,482</fullref><jref>Phys.Lett.,B266,482</jref></citation>
+ <citation><fullref>IMPAE,A7,4189</fullref><jref>Int.J.Mod.Phys.,A7,4189</jref></citation>
+ <citation><fullref>APPOA,B23,561</fullref><jref>Acta Phys.Polon.,B23,561</jref></citation>
+ <citation><fullref>PHRVA,D46,246</fullref><jref>Phys.Rev.,D46,246</jref></citation>
+ <citation><fullref>hep-ph/9211282</fullref><aref>hep-ph/9211282</aref></citation>
+ <citation><fullref>hep-ph/9210253  NUPHA,B399,395</fullref><jref>Nucl.Phys.,B399,395</jref><aref>hep-ph/9210253</aref></citation>
+ <citation><fullref>hep-ph/9411328  PHRVA,D51,2482</fullref><jref>Phys.Rev.,D51,2482</jref><aref>hep-ph/9411328</aref></citation>
+ <citation><fullref>hep-ph/9411329  PHRVA,C52,1073</fullref><jref>Phys.Rev.,C52,1073</jref><aref>hep-ph/9411329</aref></citation>
+ <citation><fullref>hep-ph/9501210  FZKAA,B3,197</fullref><jref>Fizika,B3,197</jref><aref>hep-ph/9501210</aref></citation>
+ <citation><fullref>nucl-th/9311020  PRLTA,72,970</fullref><jref>Phys.Rev.Lett.,72,970</jref><aref>nucl-th/9311020</aref></citation>
+ <citation><fullref>nucl-th/9410005  RPPHA,58,611</fullref><jref>Rept.Prog.Phys.,58,611</jref><aref>nucl-th/9410005</aref></citation>
+ <citation><fullref>JTPLA,33,67</fullref><jref>JETP Lett.,33,67</jref></citation>
+ <citation><fullref>APNYA,66,509</fullref><jref>Annals Phys.,66,509</jref></citation>
+ <citation><fullref>IMPAE,A2,1447</fullref><jref>Int.J.Mod.Phys.,A2,1447</jref></citation>
+ <citation><fullref>IMPAE,A4,1527</fullref><jref>Int.J.Mod.Phys.,A4,1527</jref></citation>
+ <citation><fullref>MPLAE,A8,2747</fullref><jref>Mod.Phys.Lett.,A8,2747</jref></citation>
+ <citation><fullref>JTPLA,59,585</fullref><jref>JETP Lett.,59,585</jref></citation>
+ <citation><fullref>PHRVA,D49,5805</fullref><jref>Phys.Rev.,D49,5805</jref></citation>
+ <citation><fullref>hep-ph/9503325</fullref><aref>hep-ph/9503325</aref></citation>
+ <citation><fullref>PHRVA,D9,3113</fullref><jref>Phys.Rev.,D9,3113</jref></citation>
+ <citation><fullref>NUIMA,138,241</fullref><jref>Nucl.Instrum.Meth.,138,241</jref></citation>
+ <citation><fullref>NUIMA,140,533</fullref><jref>Nucl.Instrum.Meth.,140,533</jref></citation>
+ <citation><fullref>PHLTA,B206,707</fullref><jref>Phys.Lett.,B206,707</jref></citation>
+ <citation><fullref>ZEPYA,C43,75</fullref><jref>Z.Phys.,C43,75</jref></citation>
+ <citation><fullref>hep-ph/9309235</fullref><aref>hep-ph/9309235</aref></citation>
+ <citation><fullref>BAPSA,41,902</fullref><jref>Bull.Am.Phys.Soc.,41,902</jref></citation>
+ <citation><fullref>BAPSA,41,938</fullref><jref>Bull.Am.Phys.Soc.,41,938</jref></citation>
+ <citation><fullref>hep-ph/9407332  PHRVA,D50,6811</fullref><jref>Phys.Rev.,D50,6811</jref><aref>hep-ph/9407332</aref></citation>
+ <citation><fullref>PRPLC,65,151</fullref><jref>Phys.Rept.,65,151</jref></citation>
+ <citation><fullref>NUPHA,B370,365</fullref><jref>Nucl.Phys.,B370,365</jref></citation>
+ <citation><fullref>PHRVA,D48,5</fullref><jref>Phys.Rev.,D48,5</jref></citation>
+ <citation><fullref>CPHCB,46,43</fullref><jref>Comput.Phys.Commun.,46,43</jref></citation>
  <experiment>FNAL-E-0864</experiment>
  <ppfin-acct>LIRYG</ppfin-acct>
  <desy-keywords>data analysis method</desy-keywords>
@@ -155,30 +748,37 @@ multiparticle production</title>
  <desy-abs-num>D96-20944</desy-abs-num>
  <desy-class-code>G</desy-class-code>
  <desy-class-code>D</desy-class-code>
- <date-updated>07/08/2004</date-updated>
+ <date-updated>20040708</date-updated>
  <account-upd>LI.KAL</account-upd>
- <date-added>09/18/1996</date-added>
+ <date-added>19960918</date-added>
  <acct-added>CITES</acct-added>
- <tt>Analysis of charged-particle/photon correlations in hadronic  multiparticleproduction.</tt>
- <bull>HEPPH-9609375</bull>
+ <tt>Analysis of charged-particle/photon correlations in hadronic  multiparticle production.</tt>
+ <bull>hep-ph/9609375</bull>
  <url-str>
   <url>ADSABS</url>
   <urldoc>1997PhRvD..55.5667B</urldoc>
+  <turl>http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=1997PhRvD..55.5667B</turl>
  </url-str>
  <url-str>
   <url>PHRVA-D</url>
   <urldoc>V55/P05667/</urldoc>
+  <turl>http://link.aps.org/abstract/PRD/V55/P05667/</turl>
  </url-str>
  <url-str>
   <url>SLACPUB</url>
   <urldoc>9865</urldoc>
+  <turl>http://www.slac.stanford.edu/cgi-wrap/pubpage?slac-pub-9865</turl>
  </url-str>
  <time-upd>11:47:06</time-upd>
  <pacs>13.87.Ce</pacs>
  <pacs>14.40.Aq</pacs>
  <pacs>14.70.Bh</pacs>
  <new-desy-check>Preprint - Brooks, T.C. (rec.Sep.96) 35 p.</new-desy-check>
- <catdate>09/20/1996</catdate>
+ <catdate>19960920</catdate>
  <cattime>10:44:34</cattime>
  <doi>10.1103/PhysRevD.55.5667</doi>
+ <uniquetex>Brooks:1996nu</uniquetex>
 </goal_record>
+</records>
+ 
+
