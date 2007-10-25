@@ -1,3 +1,10 @@
+<?xml version="1.0" encoding='iso-8859-1'?>
+    <!DOCTYPE doc [
+    <!ELEMENT doc (test)+>
+    <!ELEMENT test (#PCDATA)>
+    <!ENTITY ccedil "&#231;">
+    <!ATTLIST test lang CDATA #IMPLIED>
+    ]>
 <records>
 <goal_record>
  <irn>7199236</irn>
@@ -5,7 +12,7 @@
  <report-num>SLAC-PUB-12507</report-num>
  <astr>
   <astr1>
-   <author>Brooks, Travis C.</author>
+   <author>Brooks, Travis ç.</author>
   </astr1>
   <affiliation type="AUTHAFF" key="6300"> SLAC</affiliation>
  </astr>
