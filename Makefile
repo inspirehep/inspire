@@ -21,6 +21,7 @@ reset-inspire-test-site-collection-configuration:
 	echo "DELETE FROM collection_collection" | $(BINDIR)/dbexec
 	echo "DELETE FROM collection WHERE id>1" | $(BINDIR)/dbexec
 	echo "UPDATE collection SET dbquery=\"970__a:'SPIRES'\"" | $(BINDIR)/dbexec
+	echo "UPDATE collection_rnkMETHOD SET id_collection=1" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 
 load-inspire-test-site-records:
