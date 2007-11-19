@@ -7,7 +7,8 @@ nb_records = 0
 nb_records_in_chunk = 1000
 input_filename = "large_test.xml"
 record = ""
-for line in open(input_filename, "r").readlines():
+f = open(input_filename, "r")
+for line in f:
 	record += line
 	if line.startswith("</goal_record>"):
 		print nb_records
@@ -15,5 +16,5 @@ for line in open(input_filename, "r").readlines():
 		if nb_records % nb_records_in_chunk == 0:
 			open("%s_%09d" % (input_filename, nb_records), "w").write(record + "\n</records>")
 			record = "<records>"
-
+f.close()
 open("%s_%09d" % (input_filename, nb_records+1), "w").write(record)
