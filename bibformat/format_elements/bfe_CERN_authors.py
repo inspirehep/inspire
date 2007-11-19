@@ -113,7 +113,7 @@ def format(bfo, limit, separator='; ',
 
         if print_affiliations == "yes":
             if author.has_key('e'):
-                author['e'] = affiliation_prefix + author['e'][0] + \
+                author['e'] = affiliation_prefix + affiliations_separator.join(author['e']) + \
                               affiliation_suffix
 
             if author.get('field') == '700__' and \

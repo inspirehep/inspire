@@ -24,6 +24,17 @@ reset-inspire-test-site-collection-configuration:
 	echo "UPDATE collection_rnkMETHOD SET id_collection=1" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 
+
 load-inspire-test-site-records:
 	(cd bibconvert && make)
 	$(BINDIR)/bibupload -ir bibconvert/test_record_spires_converted.xml
+
+load-all-inspire-test-site-records:
+	(cd bibconvert && make)
+	$(BINDIR)/bibupload -ir bibconvert/inspire_set_converted.xml
+
+load-large-inspire-test-site-records:
+	(cd bibconvert && make)
+	$(BINDIR)/bibupload -ir bibconvert/large_converted.xml
+
+

@@ -3,7 +3,7 @@
 include ../config.mk
 
 XSLFILES = SPIRES2MARC.xsl
-SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml
+SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
 
 all:
 	@echo "Done."
@@ -20,6 +20,8 @@ install:
 get-large:
 	@echo "* Downloading large file from SLAC FTP server, please be patient..."
 	wget $(SPIRESXML)
+	rm ./large_test.xml
+	gunzip ./large_test.xml.gz
 	#  Please note, bibconvert and xmllint appear to fail on this large file.  
 	#  It may be neccessary to use a different xslt engine or break up the 
 	#  file.

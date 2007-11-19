@@ -77,7 +77,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:for-each>
                 <xsl:for-each select="./date">
                     <datafield tag="269" ind1=" " ind2=" ">
-                        <subfield code="c"><xsl:value-of select="."/></subfield>
+                        <subfield code="c"><xsl:value-of select="."/>
+			</subfield>
                     </datafield>
                 </xsl:for-each>
                 <xsl:if test="./jour-sub">
@@ -136,7 +137,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:if>
                 <xsl:for-each select="./desy-pub-note">
-                    <datafield tag="500" ind1=" " ind2=" ">
+                    <datafield tag="773" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
                 </xsl:for-each>
@@ -217,6 +218,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 <xsl:if test="./irn">
                     <datafield tag="970" ind1=" " ind2=" ">
                         <subfield code="a">SPIRES-<xsl:value-of select="./irn"/></subfield>
+                    </datafield>
+                </xsl:if>
+                <xsl:if test="./uniquetex">
+                    <datafield tag="971" ind1=" " ind2=" ">
+                        <subfield code="a"><xsl:value-of select="."/></subfield
                     </datafield>
                 </xsl:if>
             </record>
