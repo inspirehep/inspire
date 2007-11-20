@@ -35,7 +35,7 @@
 			s/\s*$//;
 			$return .= "    AFF = $_;\n";
 		}
-		return('') if $return !~ m/A =/;
+		return('') if $return !~ m/AF?F? =/;
 		return ($return);
 	}
 
