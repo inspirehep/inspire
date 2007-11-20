@@ -20,7 +20,7 @@ install:
 get-large:
 	@echo "* Downloading large file from SLAC FTP server, please be patient..."
 	wget $(SPIRESXML)
-	rm ./large_test.xml
+	rm -f ./large_test.xml
 	gunzip ./large_test.xml.gz
 	#  Please note, bibconvert and xmllint appear to fail on this large file.  
 	#  It may be neccessary to use a different xslt engine or break up the 
