@@ -80,6 +80,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="c"><xsl:value-of select="."/>
 			</subfield>
                     </datafield>
+		    <datafield tag="260" ind1=" " ind2=" ">
+			<subfield code="c">
+			<xsl:value-of select='substring(., 1, 4)'/>
+                        </subfield>
+		     </datafield>
                 </xsl:for-each>
                 <xsl:if test="./jour-sub">
                     <datafield tag="773" ind1=" " ind2=" ">
@@ -222,7 +227,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:if>
                 <xsl:if test="./uniquetex">
                     <datafield tag="971" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield
+                        <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
                 </xsl:if>
             </record>
