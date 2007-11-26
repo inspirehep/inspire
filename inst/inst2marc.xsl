@@ -54,11 +54,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:if>
 
-
-
-
-
-
                 <xsl:for-each select="./address">
                     <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
@@ -133,10 +128,14 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
                 </xsl:for-each>
-	     <datafield tag="980" ind1=" " ind2=" ">
+   	        <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">DIRECTORY</subfield>
-                    </datafield>
+                </datafield>
 	    </record>
+	   <!--insert a blank line between records-->
+<xsl:text>
+
+</xsl:text>
         </xsl:for-each> 
     </collection>
 

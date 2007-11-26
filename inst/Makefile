@@ -19,13 +19,20 @@ install:
 get:
 	@echo "* Downloading large file from SLAC FTP server, please be patient..."
 	wget $(SPIRESXML)
-	rm ./inst.xml
+	rm -f ./inst.xml
 	gunzip ./inst.xml.gz
 	#  Please note, bibconvert and xmllint appear to fail on this large file.  
 	#  It may be neccessary to use a different xslt engine or break up the 
 	#  file.
-	@echo "* Done.  Please run 'make convert' now."
+	@echo "* Done.  Please run 'make utf8' now."
 
+
+utf8:
+	@echo "* Changing non-standard characters to UTF8 .."
+	mv inst.xml instn.xml
+	iconv -fLatin1 -tUTF8 instn.xml > inst.xml
+	rm -f instn.xml
+	@echo "* Done.  Please run 'make convert' now."
 
 convert:
 	@echo "* Converting  files, please be patient..."

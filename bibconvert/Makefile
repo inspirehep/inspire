@@ -37,7 +37,7 @@ convert-large:
 	@echo "* Converting split files, please be patient..."
 	for file in large_test.xml_*[0-9]; do \
 	   echo " ... converting file $${file}..." ;\
-	   $(BINDIR)/bibconvert -c SPIRES2MARC.xsl < $${file} > $${file}.marcxml ;\
+	   $(HOME)/invenio/bin/bibconvert -c SPIRES2MARC.xsl < $${file} > $${file}.marcxml ;\
         done
 	@echo "* Done.  Please run 'make test-large-with-xmllint' or 'make test-large-with-xmlmarclint' now."
 
@@ -58,7 +58,7 @@ test-large-with-xmlmarclint:
 upload-large:
 	@echo "* Uploading converted files..."
 	for file in large_test.xml_*[0-9].marcxml; do \
-	    $(BINDIR)/bibupload -ir $${file}; \
+	    $(HOME)/invenio/bin/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
