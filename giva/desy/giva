@@ -1,0 +1,510 @@
+#!/bin/sh
+# giba   ---  Gives the list of authors from an article in PostScript
+#             format
+#             This is the program to locate the PostScript file on the
+#             local or on remote computers and to extract the author pages.
+#             The translation to ASCII is done by ps2au.
+#             Extraction of the author pages is normally done manually
+#             using ghostview, but can be done by page numbers with the
+#             -p option (first page n, number of pages m (1 if omitted)),
+#              or can be skipped (for ready files) with the
+#             -r option.
+#    Syntax :
+#             giba [-p[n[,m]]/r] [<report-nr>/<LANL-nr>/<file>]
+#                  <report-nr>, <LANL-nr> must be given in the form
+#                  exemplified in the dialog.
+#    Subprograms:
+#             ps2au, joinau, compau
+#    Output :
+#             In $HOME/tmp, files  aui   and   aui1  ( aui1 for compare (diff))
+#    Temporary files :
+#             $HOME/tmp/g-a-tmp,  $HOME/tmp/g-a-tmp1
+#             and (ftp mode)      $HOME/tmp/g-a-tmp2,  $HOME/tmp/g-a-tmpps
+#             and (with translation by table in ps2au)
+#                                 $HOME/tmp/t\#ran,    $HOME/tmp/t\#ranx
+#
+#    11. 2.98   HTP   Status : only for non-embedded affiliations
+# ----------------------------------------------------------------------
+#
+# ------------------------- Functions ----------------------------------
+# part   ---  Function to echo part/word n contained in STRING
+#             when called:     part n STRING
+part () { shift $1
+          echo $1 ;}
+# -------------------------
+# echon  ---  Function to execute   echo -n   in all environments
+#             and sh flavors
+echon () { echo "$*" | tr '\012' ' ' ;}
+# -------------------------
+# filesel --- Function to select the proper ps file from a partial
+#             directory listing in $TFI (TFI defined in main).
+#             Sets the selected filename in the variable PSF.
+#             Returns with   1   for 1 file selected
+#                            0   for no file found
+#                            2   for abort request at dialog
+filesel () {
+    if [ ! -s $TFI ] ; then return 0 ; fi
+#  use sed to extract filename from dir list (remove link info, trailing
+#                              blanks, then everything up to last blank)
+#  and apply FILTERs  (prefixing original line numbers)
+    PSFt=`sed 's/^/ /
+               s/\-\>.*//
+               s/ *$//
+               s/.* //' $TFI | egrep -n $FILTER1 | egrep $FILTER2`
+#  standard post-weeding
+    PSF=`echo "$PSFt" | egrep -v '\~$|\~\.'` ;#  emacs backups
+    if [ "$PSF" != "" ] ; then PSFt=$PSF ; fi
+    PSF=`echo "$PSFt" | grep '\.gz$'` ;#         prefer compressed file
+    if [ "$PSF" = "" ]
+    then PSF=`echo "$PSFt" | grep '\.Z$'` ;#     also Z-compressed file
+    fi
+    if [ "$PSF" = "" ] ; then PSF=$PSFt ; fi
+#  file unique now ?
+    NFI=`echo "$PSF" | grep -c '.'`
+    if [ $NFI -eq 1 ]
+#  yes, recall original line number
+    then NFI=`expr "$PSF" : '\([0-9]\{1,2\}\):'`
+    else :
+#
+#  no, non-unique file, we need human help
+       NFI=`grep -c '.' $TFI`
+       echo "" >&2
+       echo '******* File nicht eindeutig *******' >&2
+       echo "Bitte waehlen Sie per Nummer :" >&2
+       echo "0:keinen" >&2
+       grep -n '.' $TFI >&2
+       echo "" >&2
+       ans=-1
+       while [ $ans -lt 0 ]
+       do echon "Nummer:" >&2
+          read ans 2>/dev/null
+          ans=`expr "$ans" : '\([0-9]*\)'`
+          if [ "$ans" = "" ] ; then ans=-1 ; fi
+          if [ $ans -gt $NFI ] ; then ans=-1 ; fi
+       done
+       NFI=$ans
+       if [ $ans = 0 ] ; then return 2 ; fi
+    fi
+#  extract file from dir by line number and discard everything but filename
+#          (for symbolic links use link)
+    PSF=`sed "$NFI !d" $TFI | sed 's/^/ /
+                              s/ *$//
+                              s/.* //'`
+    return 1
+}
+# -------------------------
+# ftpcmd --- writes ftp commands on standard output (for piping into ftp)
+#            Phase 1: connect, login and directory listing to local file
+#            Phase 2: local selection of file based on dir result, while
+#                     connection is still active
+#            Phase 3: file transfer
+#
+#            Creates file ${TFI}2 containing the last 3 characters of the
+#                 remote filename, to signal : unique file found, transfer
+#                 attempted. (Success of transfer must be tested outside).
+#            Creates empty file ${TFI}2 to signal : abort request.
+#            Uses variables ARDI, TFI, FTFI, PSF from main program, LOGNAME
+#                 from system
+#
+ftpcmd () {
+    if [ -f ${TFI}1 ] ; then rm ${TFI}1 ; fi
+    if [ -f ${TFI}2 ] ; then rm ${TFI}2 ; fi
+    if [ -f $FTFI ] ; then rm $FTFI ; fi
+#  Phase 1
+    echo user anonymous $LOGNAME@
+    echo cd $ARDI
+    echo prompt
+    echo ls "$PSF" $TFI
+#    synchronize: existence of ${TFI}1 signals completion of ls command
+    echo ! touch ${TFI}1
+    for ntry in 1 2 3 4 5 6 7 8 9 10
+    do sleep 3
+      if [ -f ${TFI}1 ] ; then break ; fi
+    done
+    if [ ! -f ${TFI}1 ]
+    then echo " ***** Local timeout on dir in ftp.   Exit." >&2
+#  Phase 2
+#  examine directory
+    else rm ${TFI}1
+      filesel
+      Fis=$?
+      if [ $Fis -eq 2 ] ; then touch ${TFI}2 ; fi
+      if [ $Fis -eq 1 ]
+#  one file selected
+      then PSDir=./`expr "$PSF" : '\(.*\)/'`
+        echo "    File:  $PSF" >&2
+#    if symbolic link, use link
+        if [ `expr "$PSDir" : '\(...\)'` = './/' ]
+        then PSDir=`expr "$PSDir" : '.*/ftp/'$ARDI'/\(.*\)'`
+        fi
+#  Phase 3
+        echo cd $PSDir
+        echo binary
+        echo get `expr "/$PSF" : '.*/\(.*\)'` $FTFI
+#    store last 3 chars of remote filename to recognize .gz files later
+        echo `expr "$PSF" : '.*\(...\)'` > ${TFI}2
+      fi
+    fi
+    echo quit
+}
+# ----------------------------------------------------------------------
+#
+# ------------------------- Start of program ---------------------------
+#
+# ------------------------- Table of archive sites ---------------------
+#      host/cluster site           ~ftp                    dir of archive
+  DESY="libi        desy.de        /home/data              preprints"
+  FNAL="fnalpubs    fnal.gov       .                       archive"
+  SLAC="preprint    slac.stanford.edu .                    preprints"
+# ------------------------- Init ---------------------------------------
+echo ""
+echo '---------------------- giba === gib Autorenliste -----------------------'
+#
+TFI=g-a-tmp
+FTFI=g-a-tmpps
+SDIR=`pwd`
+Zip=cat
+BL10="          "
+psmode=x
+REQ=$1
+if [ "`expr x$1 : '\(x.\)'`" = "x-" ]
+# ----- handle switch
+then REQ=$2
+   if [ $1 = -r ] ; then psmode=r ; fi
+   pspags=`expr x$1 : 'x-p.*'`
+   if [ $pspags -ge 3 ] ; then psmode=p ; fi
+   if [ $psmode = x ] ; then echo "$BL10 switch $1 ignored, proceeding" ; fi
+fi
+REQOK=""
+NEW=-1;#             skip dialog when called with argument
+if [ "$REQ" = "" ] ; then NEW=0 ; fi
+if [ ! -d $HOME/tmp ]
+then mkdir $HOME/tmp
+  if [ $? -ne 0 ] ; then echo '**** Cannot create ~/tmp.  Exit' ; exit 2 ; fi
+fi
+cd $HOME/tmp
+#
+# ------------------------- Establish ps source ------------------------
+while [ "$REQOK" = "" ]
+do :
+  if [ $NEW = 0 ]
+  then echo "$BL10                                             e fuer Ende"
+    echo "  Bitte eingeben,"
+    echo "  fuer DESY, CERN, die Preprint-Nr., z.B.  ppe97-141   desy97-158"
+    echo "  fuer FNAL, F und die Preprint-Nr., z.B.  Fconf-97-356 fpub-97-352"
+    echo "  fuer SLAC, s und die Preprint-Nr., z.B.  spub-7674"
+    echo "  fuer LANL,       die LANL-Nr.,     z.B.  hep-ex/9710018, 0704.0001"
+    echo "  oder Namen des Files mit ps-, ps.gz/Z-Daten"
+    echo "       (pwd=$SDIR)"
+    NEW=1
+  fi
+  while [ "$REQ" = "" ]
+  do echon "  ................................. ====> "
+     read REQ
+     if [ `expr "$REQ" : ' *[EQeq] *$'` -gt 0 ] ; then exit 1 ; fi
+  done
+# ------------------------- find ps file -------------------------------
+  REQ=`echo $REQ`
+  year2=`expr "$REQ" : '.*[/a-z]-*\([0-9][0-9]\)'`
+  year4=19$year2
+  if [ "$year2" = "" ] ; then year2=0 ; fi ;   # for Linux
+  if [ "$year2" -lt 80 ] ; then year4=20$year2 ; fi
+  ARCH=""
+  FIS=0
+  FILTER1='.'
+  FILTER2='.'
+  REQT=$REQ
+# --- DESY rep.
+  if [ `expr "$REQT" : desy` -eq 4 ]
+  then ARCH="$DESY"
+    PSF=desy/$year4/$REQT.ps*
+    REQT=x
+  fi
+# --- CERN rep.
+  if [ `expr "$REQT" : '[a-z]*[0-9][0-9]-'` -gt 4 ]
+  then ARCH="$DESY"
+    PSF=cern/`expr "$REQT" : '\([a-z]*\)'`/$REQT.ps*
+    REQT=x
+  fi
+# --- LANL arch.
+  if [ `expr "$REQT" : '.*/[0-9]\{7\}$'` -gt 8 ]
+  then ARCH="$DESY"
+    PSF=`expr "$REQT" : '\(.*\/[0-9]\{4\}\)'`/`expr "$REQT" : '.*/\(.*\)'`.ps*
+    REQT=x
+  fi
+# --- arXiv arch.
+  if [ `expr "$REQT" : '.*[0-9]\{4\}\.[0-9][0-9]'` -gt 0 ]
+  then ARCH="$DESY"
+    PSF=`expr "$REQT" : '[^0-9]*\([0-9]\{4\}\.[0-9]*\)'`
+    PSF=20`expr $PSF : '\(..\)'`/`expr $PSF : '\(....\)'`/$PSF.ps*
+    REQT=x
+  fi
+# --- FNAL rep.
+  FN=""
+  if [ `expr "$REQT" : '[fF].*pub-[0-9][0-9]-'` -gt 7 ] ; then FN=pub; fi
+  if [ `expr "$REQT" : '[fF].*conf-[0-9][0-9]-'` -gt 7 ] ; then FN=conf; fi
+  if [ "$FN" != "" ]
+  then ARCH="$FNAL"
+    RN=`expr "$REQT" : ".*$FN-\(.*\)"`
+    FNY=`expr "$RN" : ".\(.\)"`       ;# year last digit
+    FNY1=`echo $FNY | tr 0123456789 1234567890`
+    PSF=*[$FNY$FNY1]/$FN/*$RN*.ps*
+    FILTER1="-v fig|chap|cov|^c-|/c-"
+    REQT=x
+  fi
+# --- SLAC rep.
+  if [ `expr "$REQT" : '[sS].*pub-[0-9][0-9]*'` -gt 8 ]
+  then ARCH="$SLAC"
+    RN=`expr "$REQT" : '.*-\([0-9][0-9]*\)'`
+    PSF="slacpubs/`expr $RN / 250 \* 250`/slac-pub-$RN.ps*"
+    FILTER1="-v fig|ront|[0-9]a\."
+    REQT=x
+  fi
+# --- else PRIVate file
+#
+# ---------- local or remote (for non-private) ?
+  if [ "$ARCH" != "" ]
+  then :
+    if [ -f $TFI ] ; then rm $TFI ; fi
+    MACH=`part 1 $ARCH`
+    PLAC=`part 2 $ARCH`
+    if [ "$MACH" = $HOST ] || [ "$MACH" = "$CLUSTER" ] && [ "$PLAC" = $SITE ]
+# --- local file, prefix full path
+    then PSF=`part 3 $ARCH`/`part 4 $ARCH`/$PSF
+#     and, for consistency with ftp mode, write matching filename to file
+      ls -l $PSF > $TFI
+#     select file on multiple choice
+      filesel
+      FIS=$?
+      if [ $FIS -eq 2 ] ; then FIS=-1 ; fi
+# --- remote file, use ftp  (pipe technique for check of remote dir,
+#           local file selection and transfer with only 1 ftp connection)
+    else ARDI=`part 4 $ARCH`
+      MACH=$MACH.$PLAC
+      echo "... Starting ftp   to $MACH"
+#  ftpcmd, being in a pipe, will be executed in a subshell
+#          -> need a file to flag "file found"
+      ftpcmd | ftp -n $MACH
+      if [ -f ${TFI}2 ] ; then FIS=-1 ; fi
+      if [ -s ${TFI}2 ]
+#    ftp success
+      then FIS=1
+        PSF=$HOME/tmp/$FTFI
+        for ntry in 1 2 3 4 5 6 7 8 9 10
+        do sleep 3
+          if [ -f $FTFI ] ; then break ; fi
+        done
+        if [ ! -f $FTFI ]
+        then echo " ***** Local timeout on get in ftp."
+          FIS=-1
+        fi
+        FIty="`cat ${TFI}2`"
+        if [ "$FIty" = ".gz" ] ; then Zip="gunzip -c" ; fi
+        if [ `expr "$FIty" : '.\.Z$'` -gt 0 ] ; then Zip="gunzip -c" ; fi
+      fi
+      if [ -f ${TFI}2 ] ; then rm ${TFI}2 ; fi
+    fi
+  fi
+#
+# --- check status of file selection
+  if [ $FIS -eq 0 ]
+#     private file requested or no file found,
+#             try private file without multiple choice
+  then PSF=`part 1 $REQ`
+    if [ `expr "$PSF" : '\/'` -eq 0 ] ; then PSF=$SDIR/$PSF ; fi
+    if [ -s "$PSF" ] ; then FIS=1 ; fi
+  fi
+#
+  REQOK=y
+  if [ $FIS -gt 0 ]
+  then echo "    File:  $PSF"
+  else echo ""
+    if [ $FIS -eq 0 ] ; then echo "Habe keine PS-Datei fuer  $REQ  gefunden" ;fi
+    REQ=
+    REQOK=
+    if [ $NEW -eq -1 ] ; then NEW=0 ; fi
+    if [ -f $FTFI ] ; then rm $FTFI ; fi
+  fi
+done
+#
+#
+if [ $psmode = x ]
+# ------------------------- Inquire pages selection mode ---------------
+then psmode=g
+  pspags=0
+  echo ""
+  echo '--------------------------------------------------------------------'
+  echo "Zum Selektieren der Autorenseiten mittels Seitenzahl - tippen Sie  p"
+  echon 'Zum Selektieren mittels  ghostview - dru"cken Sie <ENTER> :'
+  read ans
+  if [ `expr "$ans" : '[pP]'` -gt 0 ] ; then psmode=p ; fi
+fi
+if [ $psmode = p ]
+# ------------------------- Establish pages selection ------------------
+then :
+  pspag1=""
+  if [ $pspags -gt 3 ]
+  then pspag1=`expr x$1 : 'x-p\([0-9].*\)'`
+    if [ "$pspag1" != "" ]
+    then pspags=`expr $pspag1 : '.*,\([0-9]*\)'`
+       pspag1=`expr $pspag1 : '\([0-9]*\)'`
+       if [ "$pspags" = "" ] ; then pspags=1 ; fi
+    fi
+  fi
+  if [ "$pspag1" = "" ]
+  then echo ""
+    echo "$BL10 $BL10                                      n fuer nein"
+    echo "  Selektieren Sie die Autorenseiten per Seitenzahl :"
+    while [ "$pspag1" = "" ]
+    do echon "  (Nummer der ersten Seite),(Zahl der Seiten), z.B.  1,3 :"
+      read pspag1
+      if [ "$pspag1" = "" ] ; then continue ; fi
+      if [ $pspag1 = n ] ; then break ; fi
+      pspags=`expr $pspag1 : '.*,\([0-9]*\)'`
+      pspag1=`expr $pspag1 : '\([0-9]*\)'`
+      if [ "$pspags" = "" ] ; then pspags=1 ; fi
+    done
+    if [ $pspag1 = n ]
+    then psmode=g
+        echo "$BL10 switch $1 ignored, proceeding"
+    fi
+  fi
+fi
+#
+if [ $psmode = g ]
+then :
+# ------------------------- Select author pages with ghostview ---------
+  echo ""
+  echo "       -----------------------------------------------------------"
+  echo "      |                                                           |"
+  echo "      |  Der Text des Preprints wird jetzt in Ghostview gezeigt.  |"
+  echo "      |                                                           |"
+  echo "      |         Bitte markieren Sie die Seiten mit Autoren        |"
+  echo "      |                    (mittlere Maustaste)                   |"
+  echo "      |                                 -------------             |"
+  echo "      |         Klicken Sie mit Maus   | Save Marked |            |"
+  echo "      |                                 -------------             |"
+  echo "      |                                 -------------------       |"
+  echo "      |         und im Save-Fenster    | Save Marked Pages |      |"
+  echo "      |                                 -------------------       |"
+  echo "      |         und schliessen Sie Ghostview   (z.B. mit q)       |"
+  echo "      |                                                           |"
+  echo "       -----------------------------------------------------------"
+  echo "                                             $BL10 e fuer Ende"
+  echon "      ====== weiter geht's mit <ENTER>"
+  if [ -f $TFI ] ; then rm $TFI ; fi
+  if [ -f ${TFI}1 ] ; then rm ${TFI}1 ; fi
+  read NEW
+  if [ "$NEW" = e ]
+  then :
+    if [ -f $FTFI ]
+    then FIty=""
+         if [ `expr "$Zip" : 'cat'` -eq 0 ] ; then FIty="  (ge-zip-t)" ; fi
+         echo ""
+         echo "---- PS-Daten sind noch auf tmp/$FTFI$FIty"
+    fi
+    exit 1
+  fi
+  echo ""
+  echo "  ... warten auf Ghostview"
+# ----- find out where ghostview saves marked pages
+  GDIR=$HOME
+  if [ -f $HOME/.gv ]
+  then GDIR=`fgrep defaultSaveDir $HOME/.gv`
+    GDIR=`echo $GDIR | sed 's/.* //' | sed 's:~/::'`
+    if [ `expr "$GDIR" : '\/'` -eq 0 ] ; then GDIR=$HOME/$GDIR ; fi
+    if [ ! -d $GDIR ] ; then GDIR=$HOME ; fi
+  fi
+  touch $TFI
+  touch ${TFI}1
+  ls -1 $GDIR >> $TFI
+  gv $PSF
+  if [ -f ${TFI}1 ] ; then rm ${TFI}1 ; fi
+  ls -1 $GDIR >> ${TFI}1
+#
+  PSF=`diff $TFI ${TFI}1 | fgrep '>'`
+  if [ -f $TFI ] ; then rm $TFI ; fi
+  if [ -f ${TFI}1 ] ; then rm ${TFI}1 ; fi
+  NEW=`echo $PSF | grep -c '.'`
+  if [ $NEW -ne 1 ]
+  then echo ""
+    echo ' ************* Keine   oder mehr als 1 Autorendatei *************'
+    echo ' ************* Ende.'
+    exit 2
+  fi
+  PSF=`expr "$PSF" : '.* \(.*\)'`
+#
+  if [ -f $TFI ] ; then rm $TFI ; fi
+  mv $GDIR/$PSF $TFI
+fi
+#
+if [ $psmode = p ]
+then :
+# ------------------------- Select author pages by page numbers --------
+  if [ -f $TFI ] ; then rm $TFI ; fi
+#    compressed file, pipe through gunzip
+  if [ `expr "$PSF" : '.*\.gz$'` -gt 0 ] ; then Zip="gunzip -c" ; fi
+  if [ `expr "$PSF" : '.*\.Z$'` -gt 0 ] ; then Zip="gunzip -c" ; fi
+#    sed cannot count, except by fingers. Prepare fingers f
+  pspags=`expr fffffffffffffffffffff : "\(f\{$pspags\}\)"`
+#    some ps files delimit lines by cr, we need nl
+  $Zip $PSF | tr '\015' '\012' | sed "
+#      line 1 : put fingers in hand buffer
+     1 { h
+         s/.*/$pspags/
+         x
+          }
+#      use section from first requested page to eof
+     \q^%%Page: $pspag1 q,\$ !d
+#      on newpage do :  get hand
+     \q^%%Page: q { g
+#                       remove 1 finger
+                    s/f//
+#                       test if there was any finger left
+                    t moref
+#                       no, quit
+                    q
+             :moref
+#                       more fingers, put back to hand
+                    h
+                    d
+                     }" >$TFI
+fi
+#
+if [ $psmode = r ]
+then :
+# ------------------------- Selection done before, ready file ----------
+  if [ -f $TFI ] ; then rm $TFI ; fi
+  cp $PSF $TFI
+  if [ $? -ne 0 ]
+  then echo '***** Kopieren von' $PSF "misslungen.   Ende."
+    exit 2
+  fi
+fi
+#
+# ------------------------- Extract authors ----------------------------
+if [ -f $FTFI ] ; then rm $FTFI ; fi
+if [ -f ${TFI}1 ] ; then rm ${TFI}1; fi
+#  make sure all cr are gone, then remove Prolog and Trailer
+tr '\015' '\012' < $TFI | sed 's/^bop/ bop/
+                               \q bopq,\q%Trailerq !d' > ${TFI}1
+rm $TFI
+#  do ps to ascii
+$HOME/bin/giv/ps2au ${TFI}1
+$HOME/bin/giv/joinau aui1 > ${TFI}1
+if [ -f aui ] ; then rm aui ; fi
+#
+if [ ! -s ${TFI}1 ]
+then echo '    ****** Extraction of authors failed ******'
+     if [ -f ${TFI}1 ] ; then rm ${TFI}1; fi
+     exit 1
+fi
+#
+# ----- Final customization of output
+sed 's/^/   AUTHOR = /' ${TFI}1 > aui
+if [ -f $TFI ] ; then rm $TFI; fi
+if [ -f ${TFI}1 ] ; then rm ${TFI}1; fi
+rm aui1
+echo ""
+echo " ----- List of authors is now on file   aui    in directory   tmp"
+$HOME/bin/giv/compau "$REQ"
