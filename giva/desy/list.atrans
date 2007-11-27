@@ -1,0 +1,80 @@
+$              Namens-Ersetzungs-Tabelle
+$ Regeln:
+$         $ - Zeilen sind Kommentarzeilen.
+$         Leerzeilen werden ignoriert.
+$         TABulator nicht (nicht) verwenden !
+$         Eine links gefundene Zeichenfolge wird durch die rechts
+$           stehende ersetzt, eventuell folgende Initialen bleiben
+$           erhalten.
+$           Z.B.   de Palma, M.  (links) ersetzt sowohl
+$                  de Palma, M.
+$         als auch de Palma, M.A.
+$           Ist dies nicht gewuenscht, so ist Semikolon zu verwenden
+$           (links und rechts !), z.B.
+$                  de Palma, M.;
+$         Sonderregel:   Name XXX  (rechts) bedeutet ignorieren.
+
+$ (ab Spalte 1)                     (ab Spalte 37)
+ III                                XXX
+III                                 XXX
+ II                                 XXX
+$   II - Reihenfolge ist relevant
+Jr                                  XXX
+Bardin, D.Y.                        Bardin, D.Yu.
+Bonushkin, Y.                       Bonushkin, Yu.
+Brons, St.                          Brons, S.
+D'Oliveira, A.                      d'Oliveira, A.
+de Groot, N.                        De Groot, N.
+dela Cruz, B.                       de la Cruz, B.
+De La Vaissiere, C.                 de la Vaissiere, C.
+de Palma, M.                        De Palma, M.
+de Roeck, A.                        De Roeck, A.
+de Tronconiz, J.F.                  de Troconiz, J.F.
+de Viviede Regie, J.                de Vivie de Regie, J.
+De Jongh, F.                        DeJongh, F.
+Del Prete, T.                       DelPrete, T.
+della Volpe, D.                     Della Volpe, D.
+De Schepper, D.                     DeSchepper, D.
+Di Bitonto, D.                      DiBitonto, D.
+Di Loreto, G.                       DiLoreto, G.
+do Coutoe Silva, E.                 do Couto e Silva, E.
+En'yo, H.                           Enyo, H.
+Fisyak, Y.                          Fisyak, Yu.
+Gershtein, Y.                       Gershtein, Yu.
+Gotra, Y.                           Gotra, Yu.
+Gru.newald, M.                      Gruenewald, M.
+Guimaraesda Costa, J.               Guimaraes da Costa, J.
+Gutnikov, Y.                        Gutnikov, Yu.
+Hausser, O.                         Haeusser, O.
+Ting Hu                             Hu, Ting;
+Tong Hu                             Hu, Tong;
+Kamyshkov, Y.                       Kamyshkov, Yu.
+Ladronde Guevara, P.                Ladron de Guevara, P.
+Le Compte, T.                       LeCompte, T.
+Lee IV,                             Lee,
+Lui, D.                             Liu, D.
+Martii Garcia, S.                   Marti i Garcia, S.
+McKigney, E.                        Mckigney, E.
+McNamaraI, P.                       McNamara, P.
+Naryshkin, Y.                       Naryshkin, Yu.
+Pintoda Cunha, J.                   Pinto da Cunha, J.
+Denis, R.St.                        St. Denis, R.
+St-Laurent, M.                      St. Laurent, M.
+Ting, Samuel C.C.                   Ting, S.C.C.
+Vande Vyver, R.                     Van de Vyver, R.
+vande Vyver, R.                     Van de Vyver, R.
+Vande Walle, R.T.                   Van de Walle, R.T.
+Vanden Boeck,                       Van Den Boeck,
+vanden Brand, J.                    van den Brand, J.
+vanden Brink,                       van den Brink,
+vander Aa,                          van der Aa,
+vander Steenhoven, G.               van der Steenhoven, G.
+Eijndhoven, N.v.                    Van Eijndhoven, N.
+Heeringen, W.H.v.                   Van Heeringen, W.H.
+Nieuwenhuizen, G.J.v.               van Nieuwenhuizen, G.J.
+van Remortel,                       Van Remortel,
+Va'vra, J.                          Vavra, J.
+Vazdik, Y.                          Vazdik, Ya.
+vonder Mey, M.                      von der Mey, M.
+Sau Lan Wu                          Wu, S.L.;
+Zalite, An.                         Zalite, A.

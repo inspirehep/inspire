@@ -1,0 +1,66 @@
+#!/bin/sh
+# compau --- Compare author list obtained by  giva  with spires hep
+#            entry.
+#   to be called from giva
+#
+# ------------------------- Compare authors ----------------------------
+#
+# ------------------------- Function -----------------------------------
+# part   ---  Function to echo part/word n contained in STRING
+#             when called:     part n STRING
+part () { shift $1
+          echo $1 ;}
+# -------------------------
+REQ="$1"
+FTFI=g-a-tmpps
+cd $HOME/tmp
+if [ -f $FTFI ] ; then rm $FTFI ; fi
+Spires=`which spires 2> /dev/null`
+if [ `expr "$Spires" : '/'` -eq 0 ] ; then Spires=/spires/spisys/spires ; fi
+if [ ! -x $Spires ] ; then Spires= ; fi
+#
+echo ""
+echo " ----- Comparison with the SPIRES HEP database ------"
+echo " To select a record in HEP,"
+echo "             enter the IRN"
+echo "                or the REPORT-NUMBER"
+echo "                or the BULL (in the format hep-xx/971002)"
+echo "                or any other FIND command with unique result"
+if [ `expr "$REQ" : '.*/[0-9]'` -gt 0 ]
+then echo " for $REQ you may enter a  *"
+fi
+while [ ! -f $FTFI ]
+do echo " Just <ENTER> for no compare :" | tr '\012' ' '
+  read REQt
+  if [ "$REQt" = "" ] ; then exit 1 ; fi
+  if [ "$REQt" = "*" ] ; then REQt="$REQ" ; fi
+#
+#  make a request to spires hep
+  REQ=""
+  if [ "`part 2 $REQt`" = "" ]
+  then :
+    if [ `expr "$REQt" : '.*/'` -gt 0 ] ; then REQ="bull $REQt"
+    elif [ `expr "$REQt" : '.*-'` -gt 0 ] ; then REQ="r $REQt" ; fi
+    if [ `expr "$REQt" : '[0-9]*$'` -gt 0 ] ; then REQ="irn $REQt" ; fi
+  else REQ=`expr "$REQt" : 'find* \(.*\)'`
+    if [ "$REQ" = "" ] ; then REQ=$REQt ; fi
+  fi
+#
+  if [ "$Spires" != "" ] ; then :
+    $Spires <<QUE
+    sel hep
+    use $HOME/tmp/$FTFI
+    fin $REQ
+    in act clr typ a
+    exit
+QUE
+  else lynx -dump 'http://www-library.desy.de/cgi-bin/spires.pl?select=hep&query=fin '"$REQ"'
+    typ a
+    exit' | grep '^ *AUTHOR = ' > $HOME/tmp/$FTFI
+  fi
+#
+  if [ ! -s $FTFI ] ; then echo '**** no result' ; rm $FTFI ; fi
+done
+#
+echo "--------  < : from ps file         > : in HEP database --------"
+diff -w aui $FTFI |sed '/^[<>]/ !d'

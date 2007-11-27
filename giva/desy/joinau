@@ -1,0 +1,50 @@
+#!/bin/sh
+# joinau --- join lines not delimited by a semicolon to lines of
+#            length 68.
+#
+# Syntax :   joinau <inputfile> [ > outfile ]
+#
+sed -n '
+# --- semicolon lines : retrieve buffer, replace <newline>s by blank
+#                       print, erase line to buffer
+   \q;$q { x
+           s/\n/ /g
+           p
+           s/.*//
+           x
+           p
+           d
+             }
+# --- other lines : append to buffer, retrieve buffer to test length
+   H
+   g
+   s/^.\{68\}.*//
+#     anything left - line not yet full
+#       not last line, then read next
+   \q..q { $ !d
+                }
+#       last line - retrieve, replace <newline>s and print
+   \q..q { g
+           s/\n/ /g
+           p
+           d
+             }
+#     length exceeded, restore destroyed line, hide last <newline> (by >)
+   g
+   s/\(.*\)\n/\1>/
+#     replace <newline>s
+   s/\n/ /g
+#     and restore marked <newline>  (Note: the next 2 lines are 1 command)
+   s/>/\
+/
+#     print first line, then delete it
+   P
+   s/.*\n//
+#     place second line in buffer
+   h
+#     at eof, print buffer
+   $ { g
+       p
+        }
+# --- and delete empty lines created by successive semicolon lines
+   ' $1 | grep '.'

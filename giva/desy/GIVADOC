@@ -1,0 +1,150 @@
+Installation and restrictions (as of Nov. 2007)
+-----------------------------
+The files (compau  giva  joinau  list.atrans  ps2au) should be copied to
+the directory
+ $HOME/bin/giv/
+Otherwise edit these lines :
+ giva:$HOME/bin/giv/ps2au ${TFI}1
+ giva:$HOME/bin/giv/joinau aui1 > ${TFI}1
+ giva:$HOME/bin/giv/compau "$REQ"
+ ps2au:AFI=$HOME/bin/giv/list.atrans
+
+giva uses $HOME/tmp as working and scratch directory, creates it if not
+existing.
+
+giva has been designed to fetch the PostScript source from various ftp
+servers. None of the former ftp servers operate any more (as far as I know),
+so the only mode to access the PostScript nowadays is via a locally stored
+copy and by giving its filename as argument (or in the dialog at
+  ................................ ====>     )
+
+Hartmut
+
+
+The head of the program giva:
+----------------------------
+
+# giva   ---  Gives the list of authors from an article in PostScript
+#             format
+#             This is the program to locate the PostScript file on the
+#             local or on remote computers and to extract the author pages.
+#             The translation to ASCII is done by ps2au.
+#             Extraction of the author pages is normally done manually
+#             using ghostview, but can be done by page numbers with the
+#             -p option (first page n, number of pages m (1 if omitted)),
+#              or can be skipped (for ready files) with the
+#             -r option.
+#    Syntax :
+#             giva [-p[n[,m]]/r] [<report-nr>/<LANL-nr>/<file>]
+#                  <report-nr>, <LANL-nr> must be given in the form
+#                  exemplified in the dialog.
+#    Subprograms:
+#             ps2au, joinau, compau
+#    Output :
+#             In $HOME/tmp, files  aui   and   aui1  (aui1 for compare (diff))
+#    Temporary files :
+#             $HOME/tmp/g-a-tmp,  $HOME/tmp/g-a-tmp1
+#             and (ftp mode)      $HOME/tmp/g-a-tmp2,  $HOME/tmp/g-a-tmpps
+#             and (with translation by table in ps2au)
+#                                 $HOME/tmp/t\#ran,    $HOME/tmp/t\#ranx
+#
+#    11. 2.98   HTP
+------------------------------------------------------------------------
+
+The dialog of the program giva (translated to English):
+------------------------------
+
+                                                       e for Exit
+  Please enter,
+  for DESY, CERN, the Preprint-Nr., e.g.  ppe97-141   desy97-158
+  for FNAL, F und the Preprint-Nr., e.g.  Fconf-97-356 fpub-97-352
+  for SLAC, s und the Preprint-Nr., e.g.  spub-7674
+  for LANL,       the LANL-Nr.,     e.g.  hep-ex/9710018
+  or the name of the file with ps-, ps.gz/Z-data
+       (pwd=/home/x4u/preisner)
+  ................................ ====>  
+------------------------------------------------------------------------
+
+A mail to CERN (on giva dialog) :
+--------------
+
+ A little remark on the filenames for the PostScript files :
+ If you supply
+ ppe97-141   (ep99-011, ps98-031, th99-001, ... (CERN))
+ desy97-158
+ fconf-97-356
+ fpub-97-352
+ spub-7674
+ hep-ex/9710018  (hep-ph/9812222, ...)
+
+ then GIVA will go to ftp-mode, i.e. it will try to get the proper
+ PostScript file from some preprint server.
+ If you want GIVA to use a file on your machine (directory) then the
+ name of the file must be different from the above examples, e.g.
+ for CERN-EP-99-011
+ ep99-011              - search on preprint server (currently at DESY)
+ ./ep99-011            - use file ep99-011 in current working directory
+ ep99-011.ps           - use file ep99-011.ps in cwd
+ ep-99-011             - use file ep-99-011   in cwd
+ $HOME/tmp/ep99-011    - use file ep99-011 in your tmp directory
+                             (note ~/tmp/ep99-011 does not work, because
+                              GIVA does not use the zsh (z-shell))
+ For your information, in the GIVA dialog, the cwd is displayed
+ by the unix command pwd, just before the prompt line :
+   ................................. ====>
+--------------------------------------------------------------------------
+
+Some lines copied from giva (at the beginning of MAIN) :
+---------------------------
+
+# ------------------------- Table of archive sites ---------------------
+#      host/cluster site              ~ftp                 dir of archive
+  CERN="preprints   cern.ch           .                    cern/preprints"
+  DESY="libi        desy.de        /home/data              preprints"
+  FNAL="fnalpubs    fnal.gov          .                    archive"
+  SLAC="preprint    slac.stanford.edu .                    preprints"
+--------------------------------------------------------------------------
+
+Some mail on installation :
+-------------------------
+
+The only really necessary change to the program is to provide the proper
+directory (path) in the places where giba/giva calls utility programs.
+giva uses $HOME/bin/giv - which could be ok.
+If you want to use author name translation by table, you must also make
+sure that the path used in ps2au (in pass 5) is correct.
+
+Note that ps2au works only on tex generated PS, not on html2ps files;
+the main reason is that tex has no blanks in its font and ps2au relies
+on this. In any case, the authors must be written with the initials
+in front and must be separated by commas. Hyphenation of author lines
+is bad style, but ps2au usually handles it correctly.
+--------------------------------------------------------------------------
+
+Some old mail to SLAC :
+---------------------
+
+2. SLAC version giva (itself)
+   The program giva ifself has nothing to do with postscript conversion.
+   It only deals with finding the postscript file and selecting the
+   relevant pages. To my opinion, this part of the package is relatively
+   stable (except for possibly adding more preprint server addresses).
+
+3. ps2au
+   For this routine I suggest a common version with a switch DESY/SLAC
+   (essentially for the umlauts). For the other differences ( Winston II,
+   Gates, A., Jr. ) we may even decide to adopt your conventions.
+   This routine will be subject to major changes in the (hopefully not
+   too far) future, with the final goal to also decode affiliations.
+
+4. joinau, compau
+   joinau was essentially written for our DESY input format, the SLAC
+   version serves only the purpose to collect as much as fits of the
+   undecoded affiliations' garbage into one line. It will be obsolete
+   when affiliations can be recognized.
+   compau is normally not used at DESY, I wrote it thinking that SLAC
+   might need it. (It can actually be called independently at any time
+   later, as long as the result aui exists).
+
+# compau --- Compare author list obtained by  giva  with spires hep
+#            entry.

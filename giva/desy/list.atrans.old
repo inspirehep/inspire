@@ -1,0 +1,204 @@
+$              Namens-Ersetzungs-Tabelle
+$ Regeln:
+$         $ - Zeilen sind Kommentarzeilen.
+$         Leerzeilen werden ignoriert.
+$         TABulator nicht (nicht) verwenden !
+$         Eine links gefundene Zeichenfolge wird durch die rechts
+$           stehende ersetzt, eventuell folgende Initialen bleiben
+$           erhalten.
+$           Z.B.   de Palma, M.  (links) ersetzt sowohl
+$                  de Palma, M.
+$         als auch de Palma, M.A.
+$           Ist dies nicht gewuenscht, so ist Semikolon zu verwenden
+$           (links und rechts !), z.B.
+$                  de Palma, M.;
+$         Sonderregel:   Name XXX  (rechts) bedeutet ignorieren.
+
+$ (ab Spalte 1)                     (ab Spalte 37)
+ III                                XXX
+III                                 XXX
+ II                                 XXX
+$   II - Reihenfolge ist relevant
+Jr                                  XXX
+$ Arefiev, A.                         Arefev, A.
+$ Arefiev, V.                         Arefev, V.
+$ Astvatsatourov,                     Astvatsaturov,
+$ Avdeitchikov, V.                    Avdeichikov, V.
+$ Avetissian, A.                      Avetisian, A.
+$ Ajinenko, I.                        Azhinenko, I.
+$ Baldine, A.                         Baldin, A.
+$ Barabach, L.                        Barabash, L.
+Bardin, D.Y.                        Bardin, D.Yu.
+$ Bashindzhagyan, G.L.                Bashindzhagian, G.L.
+$ Batiounia, B.                       Batyunya, B.
+$ Belostotski, St*.                   Belostotsky, S.
+$ Bilenky, M.S.                       Bilenkii, M.S.
+Bo<*hrer, A.                        Boehrer, A.
+Bonushkin, Y.                       Bonushkin, Yu.
+$ Borissov, A.                        Borisov, A.
+$ Bojko, N.                           Bozhko, N.
+Brons, St.                          Brons, S.
+$ Budagov, J.                         Budagov, Yu.
+$ Bunyatyan,                          Buniatian,
+Burgsmueller, T.                    Burgsmu<ller, T.
+$ Bytchkov, V.                        Bychkov, V.
+$ Tchetchelnitski, S.                 Chechelnitsky, S.
+$ Cherbatchev, R.                     Cherbachev, R.
+$ Tcherniaev, E.                      Chernyaev, E.  
+$ Tchernyshov, V.                     Chernyshov, V.
+$ Tchikilev, O.                       Chikilev, O.
+D'Oliveira, A.                      d'Oliveira, A.
+de Groot, N.                        De Groot, N.
+dela Cruz, B.                       de la Cruz, B.
+De La Vaissiere, C.                 de la Vaissiere, C.
+de Palma, M.                        De Palma, M.
+de Roeck, A.                        De Roeck, A.
+de Tronconiz, J.F.                  de Troconiz, J.F.
+de Viviede Regie, J.                de Vivie de Regie, J.
+De Jongh, F.                        DeJongh, F.
+Del Prete, T.                       DelPrete, T.
+della Volpe, D.                     Della Volpe, D.
+$ Demirchyan, R.                      Demirchian, R.
+$ Derevschikov, A.A.                  Derevshchikov, A.A.
+De Schepper, D.                     DeSchepper, D.
+Di Bitonto, D.                      DiBitonto, D.
+Di Loreto, G.                       DiLoreto, G.
+do Coutoe Silva, E.                 do Couto e Silva, E.
+$ Doubovik, I.                        Dubovik, I.
+$ Djordjadze, V.                      Dzhordzhadze, V.
+Ekelof, T.                          Ekelo<f, T.
+En'yo, H.                           Enyo, H.
+$ Fadeyev, V.                         Fadeev, V.
+$ Fechtchenko, A.                     Feshchenko, A.
+Fisyak, Y.                          Fisyak, Yu.
+Fruhwirth, R.                       Fru<hwirth, R.
+Gershtein, Y.                       Gershtein, Yu.
+$ Ghazaryan, S.                       Ghazarian, S.
+$ Golendoukhin, A.                    Golendukhin, A.
+Gotra, Y.                           Gotra, Yu.
+$ Grebeniouk, O.                      Grebenyuk, O.
+Gru.newald, M.                      Gruenewald, M.
+Guimaraesda Costa, J.               Guimaraes da Costa, J.
+$ Gurzhiev, S.N.                      Gurzhev, S.N.
+Gutnikov, Y.                        Gutnikov, Yu.
+$ Gouz, Y.                            Guz, Yu.
+$ Gouz, Yu.                           Guz, Yu.
+$ Gyurjyan, V.                        Gyurdzhian, V.
+Hausser, O.                         Haeusser, O.
+Ho<pfner, K.                        Hoepfner, K.
+Ting Hu                             Hu, Ting;
+Tong Hu                             Hu, Tong;
+Jonsson, L.                         Jo<nsson, L.
+Kamyshkov, Y.                       Kamyshkov, Yu.
+$ Kapichine, M.                       Kapishin, M.
+$ Karadjev, K.                        Karadzhev, K.
+$ Gharibyan, V.                       Karibian, V.
+Keranen, R.                         Kera<nen, R.
+$ Khovanski, N.N.                     Khovansky, N.N.
+$ Kisselev,                           Kiselev,
+$ Konopliannikov, A.                  Konoplyannikov, A.
+$ Kostritskiy, A.                     Kostritsky, A.
+$ Kostioukhine, V.                    Kostyukhin, V.
+$ Kozlovski, E.                       Kozlovsky, E.
+$ Krivokhijine, V.                    Krivokhizhin, V.
+$ Krivchitch, A.                      Krivshich, A.
+$ Krumstein, Z.                       Krumshtein, Z.
+$ Koutcheryaev, I.                    Kucheryaev, I.
+$ Kulchitsky, Y.                      Kulchitsky, Yu.
+$ Koutov, A.                          Kutov, A.
+$ Koutouev, R.                        Kutuev, R.
+$ Kouznetsov, O.                      Kuznetsov, O.
+Ladronde Guevara, P.                Ladron de Guevara, P.
+Le Compte, T.                       LeCompte, T.
+Lee IV,                             Lee,
+$ Levtchenko, P.                      Levchenko, P.
+Lindstroem,                         Lindstro<m,
+Lui, D.                             Liu, D.
+Loerstad, B.                        Lo<rstad, B.
+Lorstad, B.                         Lo<rstad, B.
+$ Malinovski, E.                      Malinovsky, E.
+$ Maximov, A.                         Maksimov, A.
+Martii Garcia, S.                   Marti i Garcia, S.
+McKigney, E.                        Mckigney, E.
+McNamaraI, P.                       McNamara, P.
+$ Mehdiyev, R.                        Mekhdiev, R.
+$ Meschanin, A.P.                     Meshchanin, A.P.
+$ Mgebrichvili, G.                    Mgebrishvili, G.
+$ Mikloukho, O.                       Miklukho, O.
+Mjoernmark, U.                      Mjo<rnmark, U.
+Mjornmark, U.                       Mjo<rnmark, U.
+Moller, R.                          Mo<ller, R.
+Moeller, R.                         Mo<ller, R.
+Monig, K.                           Mo<nig, K.
+Moenig, K.                          Mo<nig, K.
+Muller, U.                          Mu<ller, U.
+Mueller, U.                         Mu<ller, U.
+Munich, K.                          Mu<nich, K.
+Muenich, K.                         Mu<nich, K.
+$ Muraviev, S.                        Muravev, S.
+$ Miagkov, A.                         Myagkov, A.
+$ Myalkovski, V.                      Myalkovsky, V.
+Naryshkin, Y.                       Naryshkin, Yu.
+$ Nikitine, V.                        Nikitin, V.
+$ Nianine, A.                         Nyanin, A.
+$ Olshevski, A.G.                     Olshevsky, A.G.
+$ Pavliouk, S.                        Pavlyuk, S.
+$ Petrovyck, M.                       Petrovykh, M.
+Pintoda Cunha, J.                   Pinto da Cunha, J.
+$ Pischalnikov, Y.                    Pishchalnikov, Yu.
+$ Potachnikova, I.                    Potashnikova, I.
+$ Pozdniakov, V.                      Pozdnyakov, V.
+$ Pojidaev, V.                        Pozhidaev, V.
+$ Prokofiev, D.                       Prokofev, D.
+$ Roufanov, I.                        Rufanov, I.
+$ Russakovich, N.                     Rusakovich, N.
+$ Ryjov, V.                           Ryzhov, V.
+$ Sarkisyan, E.K.G.                   Sarkisian, E.K.G.
+$ Sedykh, Y.                          Sedykh, Yu.
+$ Schegelsky, V.                      Shchegelsky, V.
+$ Shekelyan, V.                       Shekelian, V.
+$ Sheviakov, I.                       Shevyakov, I.
+$ Chliapnikov, P.                     Shlyapnikov, P.
+$ Sibiriak, I.                        Sibiryak, I.
+$ Sissakian, A.                       Sisakian, A.
+$ Slavine, N.                         Slavin, N.
+$ Soloviev, Y.                        Solovev, Yu.
+$ Solovianov, A.                      Solovyanov, A.
+$ Solovyanov, O.                      Solovianov, O.
+$ Spassoff, T.                        Spassov, T.
+Denis, R.St.                        St. Denis, R.
+St-Laurent, M.                      St. Laurent, M.
+$ Stoianova, D.                       Stoyanova, D.
+Ting, Samuel C.C.                   Ting, S.C.C.
+$ Tkatchev,                           Tkachev,
+Uberschar, B.                       U<berscha<r, B.
+Ueberschaer, B.                     U<berscha<r, B.
+$ Oulianov, A.                        Ulyanov, A.
+Vande Vyver, R.                     Van de Vyver, R.
+vande Vyver, R.                     Van de Vyver, R.
+Vande Walle, R.T.                   Van de Walle, R.T.
+Vanden Boeck,                       Van Den Boeck,
+vanden Brand, J.                    van den Brand, J.
+vanden Brink,                       van den Brink,
+vander Aa,                          van der Aa,
+vander Steenhoven, G.               van der Steenhoven, G.
+Eijndhoven, N.v.                    Van Eijndhoven, N.
+Heeringen, W.H.v.                   Van Heeringen, W.H.
+Nieuwenhuizen, G.J.v.               van Nieuwenhuizen, G.J.
+van Remortel,                       Van Remortel,
+$ Vaniev, V.                          Vanev, V.
+Va'vra, J.                          Vavra, J.
+$ Vassiliev,                          Vasilev,
+$ Vasiliev, A.N.                      Vasilev, A.N.
+Vazdik, Y.                          Vazdik, Ya.
+$ Vichnevski,                         Vishnevsky,
+$ Vodopianov,                         Vodopyanov,
+$ Volobouev, I.                       Volobuev, I.
+vonder Mey, M.                      von der Mey, M.
+$ Vorobiev, A.                        Vorobev, A.
+$ Vorobiev, I.                        Vorobev, I.
+$ Vorobyov, A.A.                      Vorobov, A.A.
+Sau Lan Wu                          Wu, S.L.;
+Zalite, An.                         Zalite, A.
+$ Jemanov, V.                         Zhemanov, V.
+$ Zintchenko, A.                      Zinchenko, A.
