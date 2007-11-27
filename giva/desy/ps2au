@@ -1,0 +1,206 @@
+#!/bin/sh
+#  ps2au --- Postscript to author list conversion for HEP collaborations
+#            Warning : result on $HOME/tmp/aui1
+tfi=$HOME/tmp/g-a-tmp
+tfi2=$HOME/tmp/g-a-tmp1
+AFI=$HOME/bin/giv/list.atrans
+#
+   if [ -f $tfi ] ; then rm $tfi ; fi
+   if [ -f aui1 ] ; then rm aui1 ; fi
+#   ----------------------------------------------------
+#   sed pass 1: mark line feeds, recognized by stand-alone y ( + some general
+#               translations )
+   sed '
+#   Ligatur
+       s/\\013/ff/g
+       s/\\014/fi/g
+       s/\\015/fl/g
+       s/\\016/ffi/g
+#       some chaos collaborations allow hyphenation of authors, try the best
+#        1. negative x  2. small x  3. at end of line  -  mark by "--"
+       s/\([^(]\)-)-/\1--)-/
+       s/\([^(]\)-)[0-9]\{1,2\} /\1--)0 /
+       s/\([^(]\)-) *$/\1--)/
+#       CPLEARs special cedi : remove
+       s/\\020)-[0-9]/)-/g
+       s/\\020/i/g
+       s/\\021/i/g
+       s/\\031/ss/g
+#       an i-trema special (ALEPH) and A-o (DELPHI)
+       s/y *(\\177) *[0-9]* [0-9]* y/\\177/g
+       s/y *(\\027) *[0-9]* [0-9]* y/\\027/g
+#   PC accents and some others, translate
+       s/\\343/a/g
+       s/\\347/c/g
+       s/\\35[01]/e/g
+       s/\\326/\\177O/g
+       s/\\330/\\177O/g
+       s/\\366/\\177o/g
+       s/\\250/\\177/g
+       s/\\002/\\fi/g
+       s/\\003/\\fl/g
+       s/\\034/\\177o/g
+#   Umlaut
+       s/\\177/:/g
+#   other Akzente : kill
+       s/\\[0-9][0-9][0-9]//g
+       s/\(~\)//g
+#   kill parentesized strings
+       s/\\([^(]*\\)//g
+#   kill some other special characters
+       s/\\\\//g
+       s/\\(//g
+       s/\\)//g
+       s/\\//g
+       s/_//g
+#   footnote : kill, but mark new line 
+       s/(\#H*foot[^)]*)/(>)/g
+#   for Nomad-s pdfm : kill (#) strings and mark new line
+       s/ (#)[][ 0-9]*pdfm/(>)/
+#   stand alone y : new line - mark by ">"
+       s/[0-9] y/(>)/g
+       s/ y /(>)/g
+       s/^ *y /(>)/
+       s/ y$/(>)/
+       s/ bop /(>)/g' $1 > $tfi
+#
+#   ----------------------------------------------------
+#   sed pass 2: keep only text within parentheses, assuming no open ( in a line
+#
+# LI='270(>)Fr(R.)d(Barate,)j(D.)e(Buskulic,)i(D.)e'
+   if [ -f $tfi2 ] ; then rm $tfi2 ; fi
+   sed '
+#   kill lines without parentheses
+        \q[()]q !d
+#   kill )...(  but for ,)...( insert newline mark , leaving only the outer
+#        pair of (xxx) per line
+        s/)[^(]*(/Qq/g
+        s/,Qq/\>/g
+        s/Qq//g
+#   kill ...(
+        s/.*(//
+#   kill ,)...
+        s/,).*//
+#   kill other )... and mark continuation line possible (+)
+        s/).*/+/
+#   and clean up
+        s/,//g
+        s/ //g
+#     continuation veto
+        s/^>/_/g
+        s/>$//
+#   finally split lines at (>)  and pipe to sed to kill (+) on last line
+        s/>/\
+/g' $tfi | sed '$ s/+$//' > $tfi2
+#
+#   ----------------------------------------------------
+#   sed pass 3: join lines at + mark
+#               and mark for re-splitting if joined line says veto
+#
+while [ `grep -c '+$' $tfi2` -gt 0 ]
+do mv $tfi2 $tfi
+#   if marked : read and append next line
+   sed '\q+$q { N
+#   multi-continuations (just for speed-up)
+                \q+$q N
+                \q+$q N
+                \q+$q N
+                \q+$q N
+#   join
+                s/\n//g
+#   mark re-splitting
+                s/+_/>/g
+   }' $tfi | tr ">" "\012" > $tfi2
+done
+#
+#   ----------------------------------------------------
+#   sed pass 4:  place first initials behind family name
+sed '
+#   some clean-ups
+     s/+//g
+     s/_//g
+     s/Distiller.*page\.*[0-9]*//
+#   final umlaut setting
+#    s/:\([AOUaou]\)/\1e/g
+     s/:\([AOUaou]\)/\1/g
+     s/:i/i/g
+#   marked hyphened authors, try to resolve
+     /--$/ { N
+             s/\n//
+            }
+     s/--\([a-z]\)/\1/
+     s/--\([A-Z]\)/-\1/
+#   delete dot at end of line
+     s/\.$//
+#   keep only lines with at least 1 capital letter
+     \q[A-Z]q !d
+#   insert blanks between small (not c) and capital letter
+     s/\([abd-z]\)\([A-Z]\)/\1 \2/g
+#   for lines containing a dot do ...  save line in buffer
+     \q\.q { h
+#   delete initials up to last dot
+             s/.*\.//
+#   save last name and retrieve original
+             x
+#   delete last name
+#      mark last dot by .=
+             s/.*\./&=/
+#      and delete starting at =
+             s/\.=.*/./
+#   clean up initials  H.-J. , H-J. , Ch. , Ph. , Ll. , and
+             s/\.-/./
+             \q^[A-Z]-q s/-/./
+             s/h\././
+             s/l\././
+             s/and //
+#   append initials to buffer
+             H
+#   and get whole buffer
+             g
+#   join the lines inserting comma blank
+             s/\n/, /
+#   append semicolon
+             s/$/;/
+           }' $tfi2 > aui1
+   if [ -f $tfi2 ] ; then rm $tfi2 ; fi
+   if [ -f $tfi ] ; then rm $tfi ; fi
+#
+#   ----------------------------------------------------
+#   sed pass 5:  postludium, translation by table
+if [ ! -s $AFI ]
+then echo ' ***** Autoren-Ersetzungstabelle nicht gefunden'
+else :
+#
+  echo ...Starting phase 2
+  mv aui1 $tfi
+#   prepare translation table for sed
+  if [ -f t\#ranx ] ; then rm t\#ranx ; fi
+  if [ `grep -c '^//' $AFI` -gt 0 ]
+  then sed '1,\q^//q d' $AFI > t\#ranx
+  else cp $AFI t\#ranx
+  fi
+#  
+  if [ -f t\#ran ] ; then rm t\#ran ; fi
+  sed '
+#     remove comments and empty lines
+      \q^\$q d
+      \q^ *$q d
+#     mark column 36
+      s:^\(.\{35\}\) :\1|:
+#     make sed substitute command
+      s:^:s/:
+      s: *|:/:
+      s: *$::
+      s:$:/:
+#       special : XXX  = nothing
+      s:XXX::
+#       protect .
+      s/\./\\./g
+   ' t\#ranx > t\#ran
+#   table ready
+  rm t\#ranx
+  sed -f t\#ran $tfi > aui1
+  if [ $? -ne 0 ] ; then mv $tfi aui1 ; fi
+  if [ -f t\#ran ] ; then rm t\#ran ; fi
+  if [ -f $tfi ] ; then rm $tfi ; fi
+fi
