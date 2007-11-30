@@ -8,48 +8,48 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         <xsl:for-each select="//goal_record">    
             <record>
                 <xsl:if test="./inst">
-                    <datafield tag="970" ind1="" ind2=" ">
-                        <subfield code="b"><xsl:value-of select="./inst"/></subfield>
+                    <datafield tag="970" ind1=" " ind2=" ">
+                        <subfield code="b">INST-<xsl:value-of select="./inst"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./imc">
-                    <datafield tag="270" ind1="" ind2=" ">
+                    <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="z"><xsl:value-of select="./imc"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./country.code">
-                    <datafield tag="270" ind1="" ind2=" ">
+                    <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="c"><xsl:value-of select="./country.code"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./city">
-                    <datafield tag="270" ind1="" ind2=" ">
+                    <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="b"><xsl:value-of select="./city"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./state.code">
-                    <datafield tag="270" ind1="" ind2=" ">
+                    <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="s"><xsl:value-of select="./state-code"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./inst.catch.name">
-                    <datafield tag="110" ind1="" ind2=" ">
+                    <datafield tag="110" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="./inst.catch.name"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./director">
-                    <datafield tag="270" ind1="" ind2=" ">
+                    <datafield tag="270" ind1=" " ind2=" ">
                         <subfield code="p"><xsl:value-of select="./phone.number"/></subfield>
                     </datafield>
                 </xsl:if>
 
                 <xsl:if test="./date-updated">
-                    <datafield tag="961" ind1="" ind2=" ">
+                    <datafield tag="961" ind1=" " ind2=" ">
                         <subfield code="c"><xsl:value-of select="./phone.number"/></subfield>
                     </datafield>
                 </xsl:if>
                 <xsl:if test="./director">
-                    <datafield tag="961" ind1="" ind2=" ">
+                    <datafield tag="961" ind1=" " ind2=" ">
                         <subfield code="x"><xsl:value-of select="./phone.number"/></subfield>
                     </datafield>
                 </xsl:if>
