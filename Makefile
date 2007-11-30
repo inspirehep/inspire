@@ -18,10 +18,15 @@ install:
 	@echo "Done.  You may want to restart Apache now."
 
 reset-inspire-test-site-collection-configuration:
-	echo "DELETE FROM collection_collection" | $(BINDIR)/dbexec
-	echo "DELETE FROM collection WHERE id>1" | $(BINDIR)/dbexec
-	echo "UPDATE collection SET dbquery=\"970__a:'SPIRES'\"" | $(BINDIR)/dbexec
-	echo "UPDATE collection_rnkMETHOD SET id_collection=1" | $(BINDIR)/dbexec
+	echo "TRUNCATE collection" | $(BINDIR)/dbexec
+	echo "TRUNCATE collectionname" | $(BINDIR)/dbexec
+	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (1, 'Inspire Test Site', NULL, 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (2, 'HEP Literature', '970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (3, 'HEP Institutes', '980__a:"DIRECTORY"', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_collection VALUES (1, 2, 'r', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_collection VALUES (1, 3, 'r', 90)" | $(BINDIR)/dbexec
+	echo "UPDATE collection_rnkMETHOD SET id_collection=2" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 
 
