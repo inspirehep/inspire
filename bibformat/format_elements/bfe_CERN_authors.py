@@ -53,6 +53,9 @@ def format(bfo, limit, separator='; ',
     from urllib import quote
     from cgi import escape
     from invenio.config import weburl
+    # from invenio.config import instlink   ### FIXME
+    instlink = '<a HREF="http://www.slac.stanford.edu/spires/find/inst/www?key='
+
     from invenio.messages import gettext_set_language
 
     _ = gettext_set_language(bfo.lang)    # load the right message language
@@ -83,7 +86,7 @@ def format(bfo, limit, separator='; ',
     authors.extend(authors_1)
     authors.extend(authors_2)
 
-    # Keep real num of authors
+    # Keep real num of authorsfix + affiliations_separator.join(author['u']) + \
     nb_authors = len(authors)
 
     # Limit num of authors, so that we do not process
@@ -94,6 +97,7 @@ def format(bfo, limit, separator='; ',
            and interactive != "yes":
         authors = authors[:int(limit)]
 
+    lastpairs = ()
     # Process authors to add link, affiliation and highlight
     for author in authors:
         
@@ -123,11 +127,30 @@ def format(bfo, limit, separator='; ',
                               '%.9s' % author['u'][0] + 'iex">' + \
                               '<img src="http://cdsweb.cern.ch/img/iconhome.gif"' + \
                               'alt="institute" /></a>'''
+            elif author.has_key('i'):
+                pairs = zip(author['i'], author['u'])
+                author['i'] = [instlink+code+'">'+string+'</a>' for code,string in pairs]
+                author['u'] = affiliation_prefix + affiliations_separator.join(author['i']) + \
+                              affiliation_suffix
+                 
+
             elif author.has_key('u'):
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['u']) + \
                               affiliation_suffix
                 
 
+    last = ''
+
+    authors.reverse()
+    for author in authors:
+        #print 'this->'+ author['a']+'\n'
+        if last == author['u']:
+            author['u']=''
+        else:
+            last = author['u']
+
+    authors.reverse()
+    
     # Flatten author instances
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
