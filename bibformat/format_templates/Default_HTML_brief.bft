@@ -32,15 +32,15 @@ color:#666666;
 </style>
 <div class="inspire">
 <BFE_CERN_TITLE_BRIEF prefix="<strong>" suffix="</strong><br />"/>
-<BFE_CERN_AUTHORS print_affiliations="yes" limit="10" extension="<i> et al.</i>" />
-<BFE_REPORT_NUMBERS separator=', '/><BFE_INSPIRE_IMPRINT prefix=", "/>
+<BFE_CERN_AUTHORS print_affiliations="yes" affiliations_separator=', ' separator=', ' limit="10" extension="<i> et al.</i>" />
+<BFE_INSPIRE_IMPRINT prefix=", "/>
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />"/>
 
 
-<br /><BFE_PRIMARY_REPORT_NUMBER prefix="e-Print: <b>" suffix="</b>" />
+<br /><BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
 </p><dl>
 <dt></dt><dd style="margin-bottom:0"> 
-<BFE_PRIMARY_REPORT_NUMBER prefix='<a href="http://doc.cern.ch/ref/' suffix='.html">References</a> |'/>
+<BFE_PRIMARY_REPORT_NUMBER prefix='<a href="/ref/' suffix='.html">References</a> |'/>
 <a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibteX</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=hm">MARC</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xm">MARC XML</a>
@@ -50,7 +50,7 @@ color:#666666;
  | <a href="http://cdsweb.cern.ch/getkeywords.py?recid=<BFE_RECORD_ID/>">Keywords</a>
 
 | <BFE_INSPIRE_CITED_BY prefix='Cited <a href="">' suffix=" times</a>" nbOnly="yes"/>
-</dd><dt></dt><dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV_LINKS />
+</dd><dt></dt><dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV links='yes' />
 </dd><dt></dt><dd style="margin-bottom:0"><a href="http://dx.doi.org/10.1103/PhysRevD.67.123504">Journal Server</a></dd>
 
 <dt></dt><dd style="margin-bottom:0"><a class="" href="http://adsabs.harvard.edu/cgi-bin/nph-bib_query?bibcode=2003PhRvD..67l3504W">
@@ -64,7 +64,7 @@ Phys. Rev. D Server</a>
 <!--
 <BFE_FIELD tag="710__g" prefix="- <small>" suffix=".</small>">
 
-<small class="quicknote"><BFE_REPORT_NUMBERS separator="; " suffix=".- " />
+<small class="quicknote">
 <BFE_CERN_STANDARD_NUMBER suffix=".- ">
 </small>
 
@@ -81,6 +81,13 @@ Phys. Rev. D Server</a>
 
 
 </div>
+    
+    
+    
+    
+
+    
+    
     
     
     
