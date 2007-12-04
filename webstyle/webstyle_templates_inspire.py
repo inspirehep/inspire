@@ -1,5 +1,4 @@
 ## $Id$
-## CDS Invenio WebStyle templates.
 
 ## This file is part of CDS Invenio.
 ## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
@@ -132,9 +131,8 @@ class Template(DefaultTemplate):
 	text-decoration:underline;
 }
 </style>
-<span class="warning"><small>Welcome to the Inspire test server at CERN. Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a>
-if you are here by mistake.</small>
-</span>
+<span class="warning"><small>Welcome to an <a class="nearestterms" href="https://twiki.cern.ch/twiki/bin/view/Inspire/WebHome">Inspire</a> test server.
+Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
 <div style="color: #039; font-size: x-small; width: 150px; margin-bottom: 5px; float: right; margin-top: 25px;">%(userinfobox)s</div>
 <div><a href="%(weburl)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
 <div class="navbar">
