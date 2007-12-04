@@ -21,14 +21,15 @@ reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectionname" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (1, 'Inspire Test Site', NULL, 0, NULL, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (2, 'HEP Literature', '970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (3, 'HEP Institutes', '980__a:"DIRECTORY"', 0, NULL, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_collection VALUES (1, 2, 'r', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_collection VALUES (1, 3, 'r', 90)" | $(BINDIR)/dbexec
-	echo "UPDATE collection_rnkMETHOD SET id_collection=2" | $(BINDIR)/dbexec
+	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
+	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (1, 'Inspire Test Site', '970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:"DIRECTORY"', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "UPDATE collection_rnkMETHOD SET id_collection=1" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
-
+	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
 load-inspire-test-site-records:
 	(cd bibconvert && make)
