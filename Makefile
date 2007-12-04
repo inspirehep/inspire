@@ -2,7 +2,7 @@
 
 include config.mk
 
-SUBDIRS = bibconvert bibformat
+SUBDIRS = bibconvert bibformat webstyle
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
