@@ -43,7 +43,8 @@ def format(bfo, links="no", category="yes"):
 
     arxiv = [num.get('a','') for num in report_numbers if num.get('s') == 'arxiv']
     
-    
+    if not arxiv :
+        return('')
 
     out = ''
     if links == 'yes':
