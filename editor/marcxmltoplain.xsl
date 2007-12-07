@@ -26,7 +26,7 @@ later version.
     <xsl:for-each select="datafield">
 	<xsl:for-each select="subfield"> <!--a datafield can have multiple subfields-->
 	      <!--print everything-->
-              <xsl:text>datafield</xsl:text>	
+              <!-- <xsl:text>datafield</xsl:text> -->
 	      <xsl:value-of select="../@tag"/> <!--datafield tage value-->
 	      <xsl:choose> <!--datafield ind values or _-->
 	      <xsl:when test="../@ind1=' '">

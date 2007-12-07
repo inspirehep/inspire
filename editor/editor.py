@@ -41,9 +41,12 @@ import readline
 import sys
 import getopt
 import os
+import re
 from invenio.bibformat import format_record
 from invenio.bibupload import xml_marc_to_records, bibupload
-
+from invenio import bibconvert
+from invenio import bibconvert_xslt_engine
+from invenio.dbquery import run_sql
 
 def main(argv):
 
@@ -54,21 +57,61 @@ def main(argv):
             recID=arg
 
     result=format_record(recID=recID,of='xm')
-    tmpfile=tempfile.NamedTemporaryFile()
 
-    print tmpfile.name
-    tmpfile.write(result)
-    tmpfile.seek(0)
-    os.system("pico "+ tmpfile.name)
-    tmpfile.seek(0)
-    new=[]
-    for line in tmpfile:
-        new.append(line)  
-    if raw_input("Save to DB Y/N:") =='Y':        
-         recs=xml_marc_to_records(''.join(new))
-         response=bibupload(recs[0],opt_mode='replace')
-         if response[0]:print "Error updating record: "+response[0]
-    tmpfile.close
+    if result:
+	    #change the result to MARC by applying a template
+	    result = bibconvert_xslt_engine.convert(result, "marcxmltoplain.xsl")
+	    #get tag names from DB
+	    tags = run_sql("select name, value from tag");
+	    for t in tags:
+		(human, tag) = t
+		#remove % in tag if needed
+		tag = tag.replace("%",'')
+		#check the converted result, replace matching tags w values
+		result = result.replace("\n"+tag,"\n"+human)
+
+	    tmpfile=tempfile.NamedTemporaryFile()
+	    print tmpfile.name
+
+	    tmpfile.write(result)
+	    tmpfile.seek(0)
+	    os.system("pico "+ tmpfile.name)
+	    tmpfile.seek(0)
+
+	    new = tmpfile.read()
+
+	    #reverse the tag replacement
+	    for t in tags:
+		(human, tag) = t
+		#remove % in tag if needed
+		tag = tag.replace("%",'')
+		#check the converted result, replace matching tags w values
+		new = new.replace("\n"+human,"\n"+tag)
+
+	    #print new
+
+	    #create a MARCXML file using 'new' as source
+	    lines = new.split("\n")
+	    dbrec = ""
+	    for l in lines:
+		#if the line starts with 555xxx: it's a tag
+		p = re.compile('^\d\d\d...:')
+		if p.match(l):
+			#take the junk
+			dfieldtag = l[0:3]
+			dfieldind1 = l[3]
+			dfieldind2 = l[4]
+			subfieldc = l[5]
+			rest = l[7:]
+			dbrec = dbrec+'<datafield tag="'+dfieldtag+'" ind1="'+dfieldind1+'" ind2="'+dfieldind2+'">';
+			dbrec = dbrec+'<subfield code="'+subfieldc+'">'+rest
+			dbrec = dbrec+'</subfield><datafield>\n'
+            print dbrec
+	    #if raw_input("Save to DB Y/N:") =='Y':        
+        #	 recs=xml_marc_to_records(''.join(new))
+	 #        response=bibupload(recs[0],opt_mode='replace')
+	  #       if response[0]:print "Error updating record: "+response[0]
+	   # tmpfile.close
 
 if __name__ == "__main__":
     main(sys.argv[1:])
