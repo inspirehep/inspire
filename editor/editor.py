@@ -88,30 +88,56 @@ def main(argv):
 		#check the converted result, replace matching tags w values
 		new = new.replace("\n"+human,"\n"+tag)
 
-	    #print new
-
-	    #create a MARCXML file using 'new' as source
+	    #create a MARCXML hash using 'new' as source
 	    lines = new.split("\n")
-	    dbrec = ""
+	    cf = {} #controlfields
+	    dfsf = {} #datafield-subfield -dict
 	    for l in lines:
-		#if the line starts with 555xxx: it's a tag
-		p = re.compile('^\d\d\d...:')
+		#get the controlfield
+		if l.startswith("controlfield"):
+			cff = str(l[12:15])
+			cfv = l[16:18]
+			cf[cff]=cfv
+		sf={}	
+		dbrec = ''
+        	#if the line starts with 555xxx: it's a tag
+	        p = re.compile('^\d\d\d...:')
 		if p.match(l):
 			#take the junk
-			dfieldtag = l[0:3]
-			dfieldind1 = l[3]
+			dfieldtag = l[0:3] 
+			dfieldind1 = l[3] 
 			dfieldind2 = l[4]
-			subfieldc = l[5]
+			main = dfieldtag+dfieldind1+dfieldind2
+			subfieldc = l[5] 
 			rest = l[7:]
-			dbrec = dbrec+'<datafield tag="'+dfieldtag+'" ind1="'+dfieldind1+'" ind2="'+dfieldind2+'">';
-			dbrec = dbrec+'<subfield code="'+subfieldc+'">'+rest
-			dbrec = dbrec+'</subfield><datafield>\n'
-            print dbrec
-	    #if raw_input("Save to DB Y/N:") =='Y':        
-        #	 recs=xml_marc_to_records(''.join(new))
-	 #        response=bibupload(recs[0],opt_mode='replace')
-	  #       if response[0]:print "Error updating record: "+response[0]
-	   # tmpfile.close
+			#put in hash
+			if dfsf.has_key(main):
+				sf = dfsf[main]
+			sf[subfieldc] = rest
+			dfsf[main] = sf
+
+ 	    #go through the hash -- put stuff in newrcord
+	    newr = '<collection><record>'
+	    for i in cf.keys():
+                newr =newr+'<controlfield tag="'+i+'">'+cf[i]+'</controlfield>\n'
+	    for i in dfsf.keys():
+		#split again
+		dfieldtag = i[0:3] 
+		dfieldind1 = i[3] 
+		dfieldind2 = i[4]
+		newr = newr+'<datafield tag="'+dfieldtag+'" ind1="'+dfieldind1+'" ind2="'+dfieldind2+'">'
+		sf = dfsf[i]
+		for j in sf.keys():
+			newr=newr+'<subfield code="'+j+'">'+sf[j]+'</subfield>'
+		newr=newr+'</datafield>\n'
+            #close
+	    newr=newr+"</record></collection>"
+	    #print newr
+	    if raw_input("Save to DB Y/N:") =='Y':        
+        	 recs=xml_marc_to_records(''.join(new))
+	         response=bibupload(recs[0],opt_mode='replace')
+	         if response[0]:print "Error updating record: "+response[0]
+	    tmpfile.close
 
 if __name__ == "__main__":
     main(sys.argv[1:])
