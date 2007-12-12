@@ -36,12 +36,13 @@ later version.
 	      <xsl:value-of select="../@ind1"/>
               </xsl:otherwise>
 	      </xsl:choose>
+
 	      <xsl:choose>
 	      <xsl:when test="../@ind2=' '">
 		<xsl:text>_</xsl:text>	
 	      </xsl:when>
 	      <xsl:otherwise>
-	        <xsl:value-of select="@ind2"/>
+	        <xsl:value-of select="../@ind2"/>
 	      </xsl:otherwise>
 	      </xsl:choose>
 
