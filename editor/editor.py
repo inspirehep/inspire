@@ -61,8 +61,26 @@ def main(argv):
     if result:
 	    #change the result to MARC by applying a template
 	    result = bibconvert_xslt_engine.convert(result, "marcxmltoplain.xsl")
+            #call a sub that changes the stuff to editable form, calls editor,
+	    #returns a string
+	    new = convert_edit(result)	    
+	    newr = to_marc(new)
+	    #debug
+	    f=open('/tmp/debug', 'w')
+            f.write(new)
+            f.write(newr)
+            f.close()
+	    print newr
+	    if raw_input("Save to DB Y/N:") =='Y':        
+        	 recs=xml_marc_to_records(''.join(new))
+	         response=bibupload(recs[0],opt_mode='replace')
+	         if response[0]:print "Error updating record: "+response[0]
+
+def convert_edit(result):
 	    #get tag names from DB
 	    tags = run_sql("select name, value from tag");
+	    #print result
+	    #print str(tags)
 	    for t in tags:
 		(human, tag) = t
 		#remove % in tag if needed
@@ -70,6 +88,7 @@ def main(argv):
 		#check the converted result, replace matching tags w values
 		result = result.replace("\n"+tag,"\n"+human)
 
+	    print result
 	    tmpfile=tempfile.NamedTemporaryFile()
 	    print tmpfile.name
 
@@ -88,6 +107,10 @@ def main(argv):
 		#check the converted result, replace matching tags w values
 		new = new.replace("\n"+human,"\n"+tag)
 
+	    tmpfile.close
+	    return new
+
+def to_marc(new):
 	    #create a MARCXML hash using 'new' as source
 	    lines = new.split("\n")
 	    cf = {} #controlfields
@@ -96,8 +119,9 @@ def main(argv):
 		#get the controlfield
 		if l.startswith("controlfield"):
 			cff = str(l[12:15])
-			cfv = l[16:18]
+			cfv = l[16:]
 			cf[cff]=cfv
+
 		sf={}	
 		dbrec = ''
         	#if the line starts with 555xxx: it's a tag
@@ -114,30 +138,28 @@ def main(argv):
 			if dfsf.has_key(main):
 				sf = dfsf[main]
 			sf[subfieldc] = rest
-			dfsf[main] = sf
+			#TBD: check here if there is already a value for
+			#this -> create new key
+			dfsf[main] = sf 
 
- 	    #go through the hash -- put stuff in newrcord
-	    newr = '<collection><record>'
+ 	    #go through the hash -- put stuff in newrecord
+	    newr = '<collection>\n<record>\n'
 	    for i in cf.keys():
                 newr =newr+'<controlfield tag="'+i+'">'+cf[i]+'</controlfield>\n'
 	    for i in dfsf.keys():
 		#split again
-		dfieldtag = i[0:3] 
-		dfieldind1 = i[3] 
-		dfieldind2 = i[4]
+		dfieldtag = i[0:3]
+	        dfieldind1 = i[3]
+                dfieldind2 = i[4]
 		newr = newr+'<datafield tag="'+dfieldtag+'" ind1="'+dfieldind1+'" ind2="'+dfieldind2+'">'
 		sf = dfsf[i]
 		for j in sf.keys():
 			newr=newr+'<subfield code="'+j+'">'+sf[j]+'</subfield>'
 		newr=newr+'</datafield>\n'
+		
             #close
 	    newr=newr+"</record></collection>"
-	    #print newr
-	    if raw_input("Save to DB Y/N:") =='Y':        
-        	 recs=xml_marc_to_records(''.join(new))
-	         response=bibupload(recs[0],opt_mode='replace')
-	         if response[0]:print "Error updating record: "+response[0]
-	    tmpfile.close
+	    return newr
 
 if __name__ == "__main__":
     main(sys.argv[1:])
