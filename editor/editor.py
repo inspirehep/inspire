@@ -66,11 +66,11 @@ def main(argv):
 	    new = convert_edit(result)	    
 	    newr = to_marc(new)
 	    #debug
-	    f=open('/tmp/debug', 'w')
-            f.write(new)
-            f.write(newr)
-            f.close()
-	    print newr
+	    #f=open('/tmp/debug', 'w')
+            #f.write(new)
+            #f.write(newr)
+            #f.close()
+	    #print newr
 	    if raw_input("Save to DB Y/N:") =='Y':        
         	 recs=xml_marc_to_records(''.join(new))
 	         response=bibupload(recs[0],opt_mode='replace')
@@ -139,7 +139,7 @@ def to_marc(new):
 			if dfsf.has_key(main):
 				sf = dfsf[main]
 				if sf.has_key(subfieldc):
-					print "warning! "+main+" "+subfieldc+" IS "+sf[subfieldc]
+					#print "warning! "+main+" "+subfieldc+" IS "+sf[subfieldc]
 					#create a new record
 					rn = main
 					tmp = 0
@@ -152,14 +152,13 @@ def to_marc(new):
 								tmp = tmp+1
 							else:
 								main = rn
-								print "new record "+str(rn)
-								#sft = {}
+								#print "adding to existing record "+str(rn)
 								sft[subfieldc] = rest
 								sf = sft
 						#after while loop: now we are
 						#sure a new record can be created
 						main = rn
-						print "new record "+str(rn)
+						#print "new record "+str(rn)
 						sft = {}
 						sft[subfieldc] = rest
 						sf = sft
