@@ -115,6 +115,7 @@ def to_marc(new):
 	    lines = new.split("\n")
 	    cf = {} #controlfields
 	    dfsf = {} #datafield-subfield -dict
+	    rn = '' #record number in case new record needed
 	    for l in lines:
 		#get the controlfield
 		if l.startswith("controlfield"):
@@ -137,9 +138,32 @@ def to_marc(new):
 			#put in hash
 			if dfsf.has_key(main):
 				sf = dfsf[main]
+				if sf.has_key(subfieldc):
+					print "warning! "+main+" "+subfieldc+" IS "+sf[subfieldc]
+					#create a new record
+					rn = main
+					tmp = 0
+					if dfsf.has_key(rn):
+						while dfsf.has_key(rn):
+							sft = dfsf[rn]
+							if sft.has_key(subfieldc):
+								#increase tmp to check next
+								rn = rn+str(tmp)
+								tmp = tmp+1
+							else:
+								main = rn
+								print "new record "+str(rn)
+								#sft = {}
+								sft[subfieldc] = rest
+								sf = sft
+						#after while loop: now we are
+						#sure a new record can be created
+						main = rn
+						print "new record "+str(rn)
+						sft = {}
+						sft[subfieldc] = rest
+						sf = sft
 			sf[subfieldc] = rest
-			#TBD: check here if there is already a value for
-			#this -> create new key
 			dfsf[main] = sf 
 
  	    #go through the hash -- put stuff in newrecord
