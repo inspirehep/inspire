@@ -83,7 +83,7 @@ class Template(DefaultTemplate):
 <head>
  <title>%(sitename)s: %(headertitle)s</title>
  <link rev="made" href="mailto:%(supportemail)s" />
- <link rel="stylesheet" href="%(cssurl)s/img/cds.css" type="text/css" />
+ <link rel="stylesheet" href="%(cssurl)s/img/inspire.css" type="text/css" />
  <link rel="alternate" type="application/rss+xml" title="%(sitename)s RSS" href="%(weburl)s/rss" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta name="description" content="%(description)s" />
@@ -91,46 +91,6 @@ class Template(DefaultTemplate):
  %(metaheaderadd)s
 </head>
 <body>
-<style type="text/css">
-/* navbar class used for top and bottom nave bar, and the bar below forms*/
-
-.navbar{ 
-   color:#FFF;
-   background-color:#69C;
-   padding: 6px 6px 5px 6px;
-   border-bottom:4px solid #FC9;
-   text-align:center;
-   font-variant:small-caps;
-   font-size: 1.1em;
-}
-
-/* Nave bar links are different*/
-
-.navbar a{
-    font-weight:bold;
-    text-decoration:none;
-    padding: 5px 7px 5px 7px;
-    color:#FFF;
-
-}
-
-.navbar a:visited{
-    color:#FFF;
-}
-.navbar a:active{
-     color:#FFF;
-}
-.navbar a:hover{
-    border:1px solid #999;
-    border-bottom: 1px solid #fc9;
-    margin:0em;
-    padding:8px 6px 5px 6px;
-    background-color:#Fc9;
-    background-color:#FC9;
-    color:#69C;
-	text-decoration:underline;
-}
-</style>
 <span class="warning"><small>Welcome to an <a class="nearestterms" href="https://twiki.cern.ch/twiki/bin/view/Inspire/WebHome">Inspire</a> test server.
 Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
 <div style="color: #039; font-size: x-small; width: 150px; margin-bottom: 5px; float: right; margin-top: 25px;">%(userinfobox)s</div>
