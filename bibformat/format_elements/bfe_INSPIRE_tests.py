@@ -47,6 +47,15 @@ class filterTestclass(unittest.TestCase):        #
             from bfe_INSPIRE_arxiv import format
             self.bfo=BibFormatObject('82146')
             print format(self.bfo)
+
+                    #test INSPIRE_date
+        def testDate(self):
+
+            from bfe_INSPIRE_date import format
+            self.bfo=BibFormatObject('82146')
+            print format(self.bfo)
+
+
             
             
 unittest.main()

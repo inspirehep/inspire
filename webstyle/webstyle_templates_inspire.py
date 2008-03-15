@@ -31,7 +31,7 @@ class Template(DefaultTemplate):
     def tmpl_pageheader(self, req, ln=cdslang, headertitle="",
                         description="", keywords="", userinfobox="",
                         navtrailbox="", pageheaderadd="", uid=0,
-                        secure_page_p=0, navmenuid="admin", metaheaderadd=""):
+                        secure_page_p=0, navmenuid="admin", metaheaderadd="",rssurl=weburl+"/rss"):
 
         """Creates a page header
 
