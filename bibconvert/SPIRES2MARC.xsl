@@ -11,6 +11,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     <datafield tag="690" ind1="C" ind2=" ">
                         <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
                     </datafield>
+		    <!--same for collection id-->
+                    <datafield tag="980" ind1="C" ind2=" ">
+                        <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
+                    </datafield>
                 </xsl:if>
                 <xsl:for-each select="./report-num">
                     <datafield tag="037" ind1=" " ind2=" ">
@@ -18,17 +22,19 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./astr/astr1">
+		       <!--these are author entries so do stuff only if author exists and is not empty-->
+                       <xsl:if test="string(./author)">
                        <datafield  ind1=" " ind2=" ">
-		<xsl:choose>
-                   <xsl:when test="position()=1">
-			<xsl:attribute name="tag">100</xsl:attribute>
-		   </xsl:when>
-		   <xsl:otherwise>
-			<xsl:attribute name="tag">700</xsl:attribute>
-		   </xsl:otherwise>
-		   </xsl:choose>	
+		       <xsl:choose>
+                         <xsl:when test="position()=1">
+			  <xsl:attribute name="tag">100</xsl:attribute>
+		         </xsl:when>
+		         <xsl:otherwise>
+			  <xsl:attribute name="tag">700</xsl:attribute>
+		         </xsl:otherwise>
+		        </xsl:choose>	
                    
-                         <subfield code="a"><xsl:value-of select="./author"/></subfield>      
+                        <subfield code="a"><xsl:value-of select="./author"/></subfield>      
 			<xsl:if test="../affiliation">
 				<xsl:for-each select="../affiliation">
 					<xsl:if test="@type='AUTHAFF'">
@@ -39,7 +45,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					</xsl:if>
                               </xsl:for-each>
                         </xsl:if>
-                    </datafield>
+                        </datafield>
+                        </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="./astr">                            
 			<xsl:if test="./affiliation">
@@ -56,14 +63,18 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="./corp-author">
+                    <xsl:if test="string(.)">
                     <datafield tag="110" ind1=" " ind2=" ">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
+                    </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="./col-note">
+                    <xsl:if test="string(.)">
                     <datafield tag="710" ind1=" " ind2=" ">
                         <subfield code="g"><xsl:value-of select="."/></subfield>
                     </datafield>
+		    </xsl:if>
                 </xsl:for-each>
                 <xsl:if test="./title">
 		<!--this really should not be empty-->
@@ -285,7 +296,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 </xsl:if>
                 <xsl:if test="./uniquetex">
                     <datafield tag="971" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
+                        <subfield code="a"><xsl:value-of select="./uniquetex"/></subfield>
                     </datafield>
                 </xsl:if>
             </record>
