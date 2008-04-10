@@ -25,6 +25,12 @@ get-large:
 	#  Please note, bibconvert and xmllint appear to fail on this large file.  
 	#  It may be neccessary to use a different xslt engine or break up the 
 	#  file.
+	@echo "* Done.  Please run 'make split-large' or 'make clean-large' now."
+
+clean-large:
+	@echo "* Removing non-ascii chars in large file, please be patient..."
+	perl -i.bk -pe 's/[^[:ascii:]]//g;' large_test.xml
+	@echo "Please see clean-spires-data.sh if your input contains broken tags"
 	@echo "* Done.  Please run 'make split-large' now."
 
 split-large:
@@ -51,7 +57,8 @@ test-large-with-xmllint:
 test-large-with-xmlmarclint:
 	@echo "* Testing MARCXML correctness of converted files, please be patient..."
 	for file in large_test.xml_*[0-9].marcxml; do \
-	    $(BINDIR)/xmlmarclint --noout $${file}; \
+	    echo $(BINDIR)/xmlmarclint  $${file}; \
+	    $(BINDIR)/xmlmarclint  $${file}; \
         done
 	@echo "* Done.  Please run 'make upload-large' now."
 
