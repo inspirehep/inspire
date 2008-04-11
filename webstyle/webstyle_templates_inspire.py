@@ -21,37 +21,30 @@ __revision__ = \
     "$Id$"
 
 import cgi
-from invenio.config import cdslang, cdsname, cdsnameintl, weburl, sweburl, supportemail
+from invenio.config import CFG_SITE_LANG, CFG_SITE_NAME, CFG_SITE_NAME_INTL, CFG_SITE_URL, CFG_SITE_SECURE_URL, CFG_SITE_SUPPORT_EMAIL
 from invenio.messages import gettext_set_language
 from invenio.webstyle_templates import Template as DefaultTemplate
 
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
-    def tmpl_pageheader(self, req, ln=cdslang, headertitle="",
+    def tmpl_pageheader(self, req, ln=CFG_SITE_LANG, headertitle="",
                         description="", keywords="", userinfobox="",
                         navtrailbox="", pageheaderadd="", uid=0,
-                        secure_page_p=0, navmenuid="admin", metaheaderadd="",rssurl=weburl+"/rss"):
+                        secure_page_p=0, navmenuid="admin", metaheaderadd="",rssurl=CFG_SITE_URL+"/rss"):
 
         """Creates a page header
 
            Parameters:
 
-          - 'weburl' *string* - The base URL for the site
 
           - 'ln' *string* - The language to display
 
-          - 'sitename' *string* - the first part of the page HTML title
-
           - 'headertitle' *string* - the second part of the page HTML title
-
-          - 'supportemail' *string* - email of the support team
 
           - 'description' *string* - description goes to the metadata in the header of the HTML page
 
           - 'keywords' *string* - keywords goes to the metadata in the header of the HTML page
-
-          - 'metaheaderadd' *string* - list of further tags to add to the <HEAD></HEAD> part of the page
 
           - 'userinfobox' *string* - the HTML code for the user information box
 
@@ -59,11 +52,15 @@ class Template(DefaultTemplate):
 
           - 'pageheaderadd' *string* - additional page header HTML code
 
-          - 'languagebox' *string* - the HTML code for the language box
+          - 'uid' *int* - user ID
 
           - 'secure_page_p' *int* (0 or 1) - are we to use HTTPS friendly page elements or not?
 
           - 'navmenuid' *string* - the id of the navigation item to highlight for this page
+
+          - 'metaheaderadd' *string* - list of further tags to add to the <HEAD></HEAD> part of the page
+
+          - 'rssurl' *string* - the url of the RSS feed for this page
 
            Output:
 
@@ -73,7 +70,7 @@ class Template(DefaultTemplate):
         # load the right message language
         _ = gettext_set_language(ln)
 
-        if headertitle == cdsnameintl.get(ln, cdsname):
+        if headertitle == CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME):
             headertitle = _("Home")
 
         out = """\
@@ -82,12 +79,12 @@ class Template(DefaultTemplate):
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  <title>%(sitename)s: %(headertitle)s</title>
- <link rev="made" href="mailto:%(supportemail)s" />
+ <link rev="made" href="mailto:%(sitesupportemail)s" />
 
  <link rel="stylesheet" href="%(cssurl)s/img/cds.css" type="text/css" />
  <link rel="stylesheet" href="%(cssurl)s/img/inspire.css" type="text/css" />
 
- <link rel="alternate" type="application/rss+xml" title="%(sitename)s RSS" href="%(weburl)s/rss" />
+ <link rel="alternate" type="application/rss+xml" title="%(sitename)s RSS" href="%(siteurl)s/rss" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
@@ -97,15 +94,15 @@ class Template(DefaultTemplate):
 <span class="warning"><small>Welcome to an <a class="nearestterms" href="https://twiki.cern.ch/twiki/bin/view/Inspire/WebHome">Inspire</a> test server.
 Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
 <div style="color: #039; font-size: x-small; width: 150px; margin-bottom: 5px; float: right; margin-top: 25px;">%(userinfobox)s</div>
-<div><a href="%(weburl)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
+<div><a href="%(siteurl)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
 <div class="navbar">
-<a id="nav-hep" href="%(weburl)s">Hep</a>
+<a id="nav-hep" href="%(siteurl)s">Hep</a>
 ::
-<a id="nav-inst" href="%(weburl)s/collection/Institutions">Institutions</a>
+<a id="nav-inst" href="%(siteurl)s/collection/Institutions">Institutions</a>
 ::
-<a id="nav-exp" href="%(sweburl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>
+<a id="nav-exp" href="%(sitesecureurl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>
 ::
-<a id="nav-jobs" href="%(weburl)s/help/%(langlink)s">%(msg_help)s</a>
+<a id="nav-jobs" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
 </div>
 <table class="navtrailbox">
  <tr>
@@ -118,16 +115,16 @@ Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/"
 %(pageheaderadd)s
 </div>
         """ % {
-          'weburl' : weburl,
-          'sweburl' : sweburl,
-          'cssurl' : secure_page_p and sweburl or weburl,
+          'siteurl' : CFG_SITE_URL,
+          'sitesecureurl' : CFG_SITE_SECURE_URL,
+          'cssurl' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL,
           'ln' : ln,
-          'langlink': ln != cdslang and '?ln=' + ln or '',
+          'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
 
-          'sitename' : cdsnameintl.get(ln, cdsname),
+          'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
           'headertitle' : cgi.escape(headertitle),
 
-          'supportemail' : supportemail,
+          'sitesupportemail' : CFG_SITE_SUPPORT_EMAIL,
 
           'description' : cgi.escape(description),
           'keywords' : cgi.escape(keywords),
