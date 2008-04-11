@@ -6,6 +6,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
     <collection xmlns="http://www.loc.gov/MARC21/slim">
         <xsl:for-each select="//goal_record">    
+           <!-- xsl:sort select="date"/ -->
+           <!-- uncomment if you want to sort by insertion date-->
             <record>
                 <xsl:if test="./doc-type">
                     <datafield tag="690" ind1="C" ind2=" ">
