@@ -14,7 +14,6 @@ test:
 
 install:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
-	perl -pi -e 's,CFG_BIBINDEX_FULLTEXT_INDEX_LOCAL_FILES_ONLY = 0,CFG_BIBINDEX_FULLTEXT_INDEX_LOCAL_FILES_ONLY = 1,g' $(LIBDIR)/python/invenio/config.py
 	@echo "Done.  You may want to restart Apache now."
 
 reset-inspire-test-site-collection-configuration:
