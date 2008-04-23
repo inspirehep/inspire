@@ -27,7 +27,7 @@ from invenio.bibformat_utils import parse_tag
 import sre
 
 def format(bfo, tag, limit, instances_separator=" ",
-           subfields_separator=" ", filter_subcode='', filter_value=''):
+           subfields_separator=" ", filter_subcode='', filter_value='',prefix='',suffix=''):
     """
     Prints the given field of a record.
     If tag is in range [001, 010], this element assumes
@@ -39,7 +39,10 @@ def format(bfo, tag, limit, instances_separator=" ",
     @param subfields_separator a separator between subfields of an instance
     @param limit the maximum number of values to display.
     @param filter_subcode  if subcode exists will print tag
-    @param filter_value  compares tag value (or value of filter_subcode) to regexp
+    @param filter_value  compares tag value (or value of filter_subcode)
+    to regexp
+    @param prefix inserted before all instances
+    @param suffix inserted after all instances
     arg-prints val iff true 
     """
     # check if data or control field

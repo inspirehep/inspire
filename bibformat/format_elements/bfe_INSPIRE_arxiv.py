@@ -35,13 +35,7 @@ def format(bfo, links="no", category="yes"):
     
     """
 
-
-    primary_report_numbers = bfo.fields('037__')
-    additional_report_numbers = bfo.fields('088__')
-    report_numbers = primary_report_numbers
-    report_numbers.extend(additional_report_numbers)
-
-    arxiv = [num.get('a','') for num in report_numbers if num.get('s') == 'arxiv']
+    arxiv=get_arxiv(bfo, category="no")
     
     if not arxiv :
         return('')
@@ -77,10 +71,9 @@ def format(bfo, links="no", category="yes"):
 
 
     else:   # print only value
-        if category == 'yes':
-            cats = [num.get('c','') for num in report_numbers if num.get('s') == 'arxiv']
-            arxiv= map(lambda n,c:n+' ['+c+']',arxiv,cats)
-        out = ', '.join(arxiv)
+        
+        
+        out = ', '.join(get_arxiv(bfo,category))
         
     return(out)
 
@@ -90,3 +83,26 @@ def escape_values(bfo):
     should be escaped.
     """
     return 0
+
+
+def get_arxiv(bfo,category="yes"):
+    """
+    Takes a bfo and returns a list of arXiv ids found within the report
+    numbers
+    """
+
+    primary_report_numbers = bfo.fields('037__')
+    additional_report_numbers = bfo.fields('088__')
+    report_numbers = primary_report_numbers
+    report_numbers.extend(additional_report_numbers)
+
+    arxiv = [num.get('a','') for num in report_numbers if num.get('s') == 'arxiv']
+
+    if category=="yes":
+        cats = [num.get('c','') for num in report_numbers if num.get('s') == 'arxiv']
+        arxiv= map(lambda n,c:n+(c and ' ['+c+']' or ''),arxiv,cats)
+    
+
+        
+    return(arxiv)
+    

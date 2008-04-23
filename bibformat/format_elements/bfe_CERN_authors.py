@@ -95,7 +95,11 @@ def format(bfo, limit, separator='; ',
     # allows to show all of them.
     if limit.isdigit() and nb_authors > int(limit) \
            and interactive != "yes":
-        authors = authors[:int(limit)]
+        if bfo.field('710g'):   #check for colln note
+            authors = authors[:1]
+        else:               
+            authors = authors[:int(limit)]
+        
 
     lastpairs = ()
     # Process authors to add link, affiliation and highlight
@@ -137,12 +141,16 @@ def format(bfo, limit, separator='; ',
             elif author.has_key('u'):
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['u']) + \
                               affiliation_suffix
-                
+
+#
+#  Consolidate repeated affiliations 
+#
 
     last = ''
-
     authors.reverse()
     for author in authors:
+        if not author.has_key('u'):
+            author['u'] = ''
         #print 'this->'+ author['a']+'\n'
         if last == author['u']:
             author['u']=''

@@ -22,25 +22,40 @@
 """
 __revision__ = "$Id$"
 
-from invenio.dateutils import convert_datetext_to_dategui
+from invenio.dateutils import convert_datetext_to_datestruct
+from invenio.dateutils import convert_datestruct_to_dategui
 import re
 
-def format(bfo):
+
+def format(bfo, us="yes"):
     """
-    Prints best available date
+    returns dategui for the best available date, looking in several
+    locations for it (date, eprint, journal, date added)
+    @params us us style date Mon dd, yyyy (default)  otherwise dd mon yyyy
+    """
+    datestruct=get_date(bfo)
+    date= re.sub(',\s00:00$','',convert_datestruct_to_dategui(datestruct))
+    if us=="yes":
+        return(re.sub(r' 0(\d),',r' \1,',(re.sub(r'(\d{2})\s(\w{3})',r'\2 \1,',date))))
+    else:
+        return(date)
+    
+def get_date(bfo):
+    """
+    returns datestruct for best available date
 
     """
+    from invenio.bibformat_elements.bfe_INSPIRE_arxiv import get_arxiv
 
-    date = bfo.fields('269__c')
+    #true date
+    date = bfo.fields('269__c')[0]
     if date:
-        out=convert_datetext_to_dategui(date)
-        if out:
-            return(out)
-    primary_report_numbers = bfo.fields('037__')
-    additional_report_numbers = bfo.fields('088__')
-    report_numbers = primary_report_numbers
-    report_numbers.extend(additional_report_numbers)
-    arxiv = [num.get('a','') for num in report_numbers if num.get('s') == 'arxiv']
+        datestruct=parse_date(date)
+        if datestruct[1]:
+            return(datestruct)
+
+    #arxiv date        
+    arxiv = get_arxiv(bfo,category="no")
     if arxiv:
         date=re.search('(\d+)',arxiv[0]).groups()[0]
         if len(date) >=4:
@@ -49,12 +64,48 @@ def format(bfo):
                 year='19'+year
             else:
                 year='20'+year
-            date = year+'-'+date[2:4]
-            return convert_datetext_to_dategui(date)
-        
+            date = year+date[2:4]+'00'
+            date=parse_date(date)
+            if date[1]: return(date)
 
-    date = bfo.fields('961__x')
-    if date:
-        return convert_datetext_to_dategui(date)
+
+
+    #journal year    
+    date= parse_date(bfo.fields('773__y')[0]+'0000')
+    if date[0]:
+        return date
+            
+    #date added
+    date= parse_date(bfo.fields('961__x')[0])
+    if date[0]:
+        return date
+  
 
     return None
+
+
+
+def parse_date(datetext):
+    """
+    Reads in a date imported from SPRIES, returning the datestruct
+    accounts for either native spires (YYYYMMDD) or invenio style
+    (YYYY-MM-DD)
+    @param datetext: date from SPIRES record
+    """
+    import time
+    if re.search(r'\d+\-\d+\-\d+', datetext):
+        return(convert_datetext_to_datestruct(datetext))
+    if re.search(r'\d+\-\d+', datetext):
+        return(convert_datetext_to_datestruct(datetext+'-01'))
+    if re.search(r'\d+', datetext):
+        #Correct by hand spires convention of 00 for missing month and/or day
+        #use instead invenio convention of 0101  
+        datetext=re.sub('0000$','0101',datetext)
+        datetext=re.sub('00$','01',datetext)
+
+        try:
+            return time.strptime(datetext, "%Y%m%d")
+        except ValueError or TypeError:
+            return (0,0,0,0,0,0,0,0,0)
+    
+    return (0,0,0,0,0,0,0,0,0)

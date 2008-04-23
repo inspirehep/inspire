@@ -28,35 +28,53 @@ from invenio.bibformat_engine import BibFormatObject
 class filterTestclass(unittest.TestCase):        #
         # Test case depends on inspires test records
 
-      
-
-
         #test CERN_authors
         def testField(self):
+            print "testing bfeField"
             self.bfo=BibFormatObject('73740')
             self.assertEqual(self.bfo.field('100a'),"Dimitrijevic, M.")
         def testAff(self):
+            print "testing Affs"
             from bfe_CERN_authors import format
             self.bfo=BibFormatObject('73740')
             string =  format(self.bfo,limit="5",print_affiliations="yes")
+            print string
             self.assert_(re.search(r'Dimitrijevic, M.</a>;',string))
             self.assert_(re.search(r'Moller, L.</a> \(<a.*Zagreb',string))
 
         #test INSPIRE_arXiv
         def testarX(self):
+            print "testing arXiv"
             from bfe_INSPIRE_arxiv import format
             self.bfo=BibFormatObject('82146')
-            print format(self.bfo)
+            string=format(self.bfo)
+            print string
+            self.assert_(re.search(r'3478',string))
+            self.assert_(not re.search(r'CERN',string))
+            self.assert_(re.search(r'[hep-ph]',string))
+                       
 
                     #test INSPIRE_date
         def testDate(self):
-
+            print "testing date"
             from bfe_INSPIRE_date import format
-            self.bfo=BibFormatObject('82146')
-            print format(self.bfo)
+            self.bfo=BibFormatObject('619463')
+            string=format(self.bfo)
+            print string
+            string2=format(self.bfo,us="no")
+            print string2
+            self.assert_(re.search(r'Jun 1, 1974',string))
+            self.assert_(re.search(r'01 Jun 1974',string2))
 
-
-            
+            #test INSPIRE_links
+        def testLinks(self):
+            print "testing Links"
+            from bfe_INSPIRE_links import format
+            self.bfo=BibFormatObject('37650')
+            string= format(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
+            print string
+            self.assert_(re.search(r'00877">Journal',string))
+            self.assert_(re.search(r'5334">Link to slacpub',string))
             
 unittest.main()
 
