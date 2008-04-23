@@ -1,7 +1,14 @@
+#! /bin/bash 
+
+
 #this removes non-ascii characters from xml data and joins lines that have broken tags 
 #a broken tag example: line 1: <ta line 2: g>
 #usage sh clean-spires-data.sh < brokendata.xml > fixeddata.xml
-perl -ne 's/[^[:ascii:]]//g; print;' | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" | \
+
+while [ ! -z "$1" ]
+do
+
+perl -ne 's/[^[:ascii:]]//g; print;' $1 | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" | \
 sed ':a; $!N;s/\na/a/;ta;P;D' | \
 sed ':a; $!N;s/\nb/b/;ta;P;D' | \
 sed ':a; $!N;s/\nc/c/;ta;P;D' | \
@@ -71,4 +78,9 @@ sed ':a; $!N;s/\n\&/\&/;ta;P;D' | \
 sed ':a; $!N;s/\n>/>/;ta;P;D' | \
 sed ':a; $!N;s/\n\-/\-/;ta;P;D' | \
 sed ':a; $!N;s/\n?/?/;ta;P;D' | \
-sed ':a; $!N;s/\n\=/\=/;ta;P;D' 
+sed ':a; $!N;s/\n\=/\=/;ta;P;D' > .tmp_clean
+mv .tmp_clean $1
+shift
+done
+
+

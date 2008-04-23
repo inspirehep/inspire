@@ -8,12 +8,19 @@ SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
 all:
 	@echo "Done."
 
+convert-test:
 test:
 	$(BINDIR)/bibconvert -c SPIRES2MARC.xsl < test_record_spires.xml > test_record_spires_converted.xml
 	xmllint --format test_record_spires_converted.xml
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
+
+upload-test:
+	@echo "* Uploading converted files..."
+	$(BINDIR)/bibupload -ir test_record_spires_converted.xml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 
 # targets working with big SPIRES dump files follow:
 
@@ -47,6 +54,7 @@ convert-large:
         done
 	@echo "* Done.  Please run 'make test-large-with-xmllint' or 'make test-large-with-xmlmarclint' now."
 
+
 test-large-with-xmllint:
 	@echo "* Testing XML correctness of converted files, please be patient..."
 	for file in large_test.xml_*[0-9].marcxml; do \
@@ -65,7 +73,40 @@ test-large-with-xmlmarclint:
 upload-large:
 	@echo "* Uploading converted files..."
 	for file in large_test.xml_*[0-9].marcxml; do \
-	    $(HOME)/invenio/bin/bibupload -ir $${file}; \
+	    $(BINDIR)/bibupload -ir $${file}; \
+        done
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+
+
+
+convert-SPIRES:
+	@echo "* Converting split files, please be patient..."
+	for file in SPIRES_*.xml_*[0-9]; do \
+	   echo " ... converting file $${file}..." ;\
+	   $(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < $${file} > $${file}.marcxml ;\
+        done
+	@echo "* Done.  Please run 'make test-large-with-xmllint' or 'make test-large-with-xmlmarclint' now."
+
+
+test-SPIRES-with-xmllint:
+	@echo "* Testing XML correctness of converted files, please be patient..."
+	for file in SPIRES_*.xml_*[0-9].marcxml; do \
+	    xmllint --noout $${file}; \
+        done
+	@echo "* Done.  Please run 'make upload-large' now."
+
+test-SPIRES-with-xmlmarclint:
+	@echo "* Testing MARCXML correctness of converted files, please be patient..."
+	for file in SPIRES_*.xml_*[0-9].marcxml; do \
+	    $(BINDIR)/xmlmarclint --noout $${file}; \
+        done
+	@echo "* Done.  Please run 'make upload-large' now."
+
+upload-SPIRES:
+	@echo "* Uploading converted files..."
+	for file in SPIRES_*.xml_*[0-9].marcxml; do \
+	    $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
