@@ -18,15 +18,18 @@ def main(argv):
 	erase=0
 	input_filename = "large_test.xml"
 	try:                                
-		opts, args = getopt.getopt(argv, "f:X")
+		opts, args = getopt.getopt(argv, "f:Xc")
 	except getopt.GetoptError, err:
 		print str(err)
 		usage()                         
 		sys.exit(2)
 	opts.sort()
+	clean=0
        	for opt, val in opts:
 		if opt =='-f':
 			input_filename = val
+		if opt =='-c':
+			clean =1
 	       	if opt =='-X':
 			erase = 1
 				#sys.exit()
@@ -62,6 +65,8 @@ def main(argv):
 			if nb_records % nb_records_in_chunk == 0:
 				out.write("\n</records>")
 				out.close()
+				if clean:
+					os.system("sh clean-spires-data.sh<"+out.name+">"+out.name+".clean")
 				out=open("%s_%09d" % (input_filename, nb_records+nb_records_in_chunk), "w")
 				out.write( "<records>")
 	f.close()
