@@ -54,7 +54,7 @@ color:#666666;
 <dt></dt>
 <dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV links='yes' />
 </dd>
-<BFE_INSPIRE_LINKS prefix='<dt></dt><dd style="margin-bottom:0">',suffix='</dd>' separator='</dd><dt></dt><dd style="margin-bottom:0">'/>
+<BFE_INSPIRE_LINKS prefix='<dt></dt><dd style="margin-bottom:0">' suffix='</dd>' separator='</dd><dt></dt><dd style="margin-bottom:0">'/>
 <dt></dt>
 <dd style="margin-bottom:0"><a href="<BFE_SERVER_INFO var="recurl">">Bookmarkable Link to this record</a></dd>
 
