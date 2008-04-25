@@ -13,10 +13,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     <datafield tag="690" ind1="C" ind2=" ">
                         <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
                     </datafield>
-		    <!--same for collection id-->
-                    <datafield tag="980" ind1="C" ind2=" ">
-                        <subfield code="a"><xsl:value-of select="./doc-type"/></subfield>
-                    </datafield>
+
                 </xsl:if>
                 <xsl:for-each select="./report-num">
                     <datafield tag="037" ind1=" " ind2=" ">
