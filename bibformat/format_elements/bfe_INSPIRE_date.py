@@ -48,9 +48,9 @@ def get_date(bfo):
     from invenio.bibformat_elements.bfe_INSPIRE_arxiv import get_arxiv
 
     #true date
-    date = bfo.fields('269__c')[0]
+    date = bfo.fields('269__c')
     if date:
-        datestruct=parse_date(date)
+        datestruct=parse_date(date[0])
         if datestruct[1]:
             return(datestruct)
 
@@ -70,15 +70,17 @@ def get_date(bfo):
 
 
 
-    #journal year    
-    date= parse_date(bfo.fields('773__y')[0]+'0000')
-    if date[0]:
-        return date
+    #journal year
+    if bfo.fields('773__y'):
+        date= parse_date(bfo.fields('773__y')[0]+'0000')
+        if date[0]:
+            return date
             
     #date added
-    date= parse_date(bfo.fields('961__x')[0])
-    if date[0]:
-        return date
+    if bfo.fields('961__x'):
+        date= parse_date(bfo.fields('961__x')[0])
+        if date[0]:
+            return date
   
 
     return None
@@ -93,10 +95,15 @@ def parse_date(datetext):
     @param datetext: date from SPIRES record
     """
     import time
-    if re.search(r'\d+\-\d+\-\d+', datetext):
+    match=re.search(r'\d+\-\d+\-\d+ \d+:\d+:\d+', datetext)
+    if match:    
         return(convert_datetext_to_datestruct(datetext))
+
+    datetext=datetext.split(' ')[0]      
+    if re.search(r'\d+\-\d+\-\d+', datetext):
+        return(convert_datetext_to_datestruct(datetext+' 0:0:0'))
     if re.search(r'\d+\-\d+', datetext):
-        return(convert_datetext_to_datestruct(datetext+'-01'))
+        return(convert_datetext_to_datestruct(datetext+'-01 0:0:0'))
     if re.search(r'\d+', datetext):
         #Correct by hand spires convention of 00 for missing month and/or day
         #use instead invenio convention of 0101  

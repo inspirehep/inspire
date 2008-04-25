@@ -30,7 +30,7 @@ import cgi
 import re
 from urllib import quote
 
-def format(bfo, separator='; ',style='',prefix='',suffix='',):
+def format(bfo, separator='; ',style='', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
     @param prefix

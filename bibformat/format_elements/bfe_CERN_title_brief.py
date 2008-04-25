@@ -22,7 +22,11 @@
 """
 __revision__ = "$Id$"
 
-def format(bfo, highlight="no"):
+
+
+import re
+
+def format(bfo, highlight="no", force_title_case="no"):
     """
     Prints a short title, suitable for brief format.
     
@@ -45,10 +49,14 @@ def format(bfo, highlight="no"):
     field_245_X.extend(field_245_3)
     field_245_X.extend(field_245_4)
     field_245_X.extend(field_245_5)
+
+
+
     alt_titles = bfo.fields('246_1', 1)
     edition_statement = bfo.field('250__a', 1)
     
     out = ""
+
 
     if len(main_corporate_authors) > 0: # Why is this here?
         out += " : ".join(main_corporate_authors) + " : "
@@ -84,11 +92,16 @@ def format(bfo, highlight="no"):
     if out == '' and edition_statement != '':     
         out += " ; " + edition_statement
 
+
     if highlight == 'yes':
         from invenio import bibformat_utils
         out = bibformat_utils.highlight(out, bfo.search_pattern,
                                         prefix_tag="<span style='font-weight: bolder'>",
                                         suffix_tag='</style>')
+
+
+    if force_title_case.lower()=="yes" and (out.upper()==out or re.search('THE ',out)):   #title is allcaps
+        out=' '.join([word.capitalize() for word in out.split(' ')])   # should not cap 1 letter words...
 
     if bfo.field('960__a') == '40':
         out += "<br />"

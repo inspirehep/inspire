@@ -33,7 +33,9 @@ def format(bfo, limit, separator='; ',
            highlight="no",
            main_authors_only="no",
            main_and_sec_authors_sep="",
-           affiliations_separator=" ; "):
+           affiliations_separator=" ; ",
+           name_last_first="yes"
+           ):
     """
     Prints the list of authors of a record.
     
@@ -49,12 +51,15 @@ def format(bfo, limit, separator='; ',
     @param highlight highlights authors corresponding to search query if set to 'yes'
     @param main_authors_only If 'yes', only print main authors
     @param main_and_sec_authors_sep a separator printed between main authors (100__) and secondary authors (700__). If value is empty string, then 'separator' is used.
+    @param affiliations_separator separates affiliation groups
+    @param name_last_first if yes (default) print last, first  otherwise first last
     """
     from urllib import quote
     from cgi import escape
+    import re
     from invenio.config import weburl
     # from invenio.config import instlink   ### FIXME
-    instlink = '<a HREF="http://www.slac.stanford.edu/spires/find/inst/www?key='
+    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/www?key='
 
     from invenio.messages import gettext_set_language
 
@@ -113,11 +118,20 @@ def format(bfo, limit, separator='; ',
                 author['a'] = bibformat_utils.highlight(author['a'],
                                                         bfo.search_pattern)
 
+            #check if we need to reverse last, first
+            #we don't try to reverse it if it isn't stored with a comma.
+            display_name=author['a']
+            if name_last_first.lower()=="no":
+                match=re.search('^([^,]+)\s*,\s*(.*)$',author['a'])
+                if match:
+                    display_name=match.group(2)+' '+match.group(1)
+
+
             if print_links.lower() == "yes":
-                author['a'] = '<a href="' + weburl + \
+                author['a'] = '<a class="authorlink" href="' + weburl + \
                               '/search?f=author&amp;p='+ quote(author['a']) + \
                               '&amp;ln='+ bfo.lang + \
-                              '">'+escape(author['a'])+'</a>'
+                              '">'+escape(display_name)+'</a>'
 
         if print_affiliations == "yes":
             if author.has_key('e'):

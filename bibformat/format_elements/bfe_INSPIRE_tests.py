@@ -42,6 +42,9 @@ class filterTestclass(unittest.TestCase):        #
             self.assert_(re.search(r'Dimitrijevic, M.</a>;',string))
             self.assert_(re.search(r'Moller, L.</a> \(<a.*Zagreb',string))
 
+
+
+
         #test INSPIRE_arXiv
         def testarX(self):
             print "testing arXiv"
