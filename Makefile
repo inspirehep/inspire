@@ -28,6 +28,8 @@ reset-inspire-test-site-collection-configuration:
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 3, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "DELETE FROM collection_externalcollection WHERE id_collection > 2" | $(BINDIR)/dbexec
+	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
