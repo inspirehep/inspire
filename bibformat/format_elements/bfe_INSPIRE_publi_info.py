@@ -25,11 +25,12 @@ __revision__ = "$Id$"
 from urllib import quote
 import cgi
 
-def format(bfo):
+def format(bfo,style='us'):
     """
     Displays inline publication information with html link to ejournal
     (when available).
-    TODO: Complete element to display full publ. info.
+    @param style takes 'us'(default) or 'eu'  which changes date location
+    
     """
     out = ''
 
@@ -48,31 +49,10 @@ def format(bfo):
         number = publication_info.get('n')
         pages = publication_info.get('c')
         url = publication_info.get('u')
-    if action_notes:
-        for action_note in action_notes:
-            if action_note == 'yes':
-                out += '<br /><small><img border="0" ' + \
-                       'src="/img/iconpen.gif" alt="open icon"/></small>'
-                out += " - Submitted as a scientific note."
-                if journal_source:
-                    out += 'After approval will be submitted to Journal ' + \
-                           '<span style="color:#0A0">' + cgi.escape(journal_source) + \
-                           '</span> .'
-                out += 'All ATLAS members are invited to ' + \
-                       '<a href="http://doc.cern.ch/EDS/snotes/sendc.php?rn=' + \
-                        quote(bfo.field('037__a')) + \
-                        '''">send comments</a> within 4 weeks from the
-                        submission date (''' + bfo.field('961__x', 2) + ')'
 
-    elif bfo.field('960__a') in ['11', '10', '90', '91']:
-        out += " - Submitted to: "
-        if journal is not None:
-            journal = cgi.escape(journal)
-            out += '<i><a href="http://weblib.cern.ch/cgi-bin/ejournals?publication=' + \
-                   journal_source.replace(' ', '+') + '" >' + \
-                   cgi.escape(journal_source) + '</a></i>'
-        else:
-            out += cgi.escape(journal_source)
+    if bfo.field('960__a') in ['11', '10', '90', '91']:
+        out += " Submitted to: "
+        out += cgi.escape(journal_source)
 
     else:
 
@@ -90,40 +70,8 @@ def format(bfo):
             pages = cgi.escape(pages)
         else:
             pages = ''
-        if url:
-            url = cgi.escape(url)
-        else:
-            url = ''
-        if journal:
-            if volume:
-
-                out += 'Published in <b class="nounderline"><a href="http://weblib.cern.ch/cgi-bin/ejournals?publication='
-                out += journal_source.replace(' ', '+')
-                out += '&amp;volume=' + volume
-                if year:
-                    out += '&amp;year=' + year
-                if pages:
-                    out += '&amp;page='
-                    page = pages.split('-')# get first page from range
-                    if len(page) > 0:
-                        out += page[0]
-                out += '">%(journal)s %(volume)s (%(year)s) %(page)s</a></b>' % {'journal': journal,
-                                                                            'volume': volume,
-                                                                            'year': year,
-                                                                            'page': pages}
-            elif number and \
-                     bfo.kb('ejournals_base', journal_source) is not None:
-                out += 'Published in <b class="nounderline"><a href="' + \
-                       bfo.kb('ejournals_base', journal_source) + \
-                       number + '">' + cgi.escape(journal_source) + \
-                       '</a></b>'
-        else:
-            out += 'Published in '
-            if url:
-                out += """<b class="nounderline"><a href="%s">%s</a></b>""" % (url, journal_source)
-            else:
-                out += journal_source
-
+        out += journal_source
+        if style.lower() == 'eu':
             if volume:
                 out += ': ' + volume
             if year:
@@ -132,6 +80,16 @@ def format(bfo):
                 out += 'no. ' + number + ', '
             if pages:
                 out += 'pp. ' + pages
+            out += publication_info.get('d', '')
+        else:   #defaults to US style
+            if volume:
+                out +=  ' '+volume
+            if number:
+                out += ', no. ' + number 
+            if pages:
+                out += ': ' + pages
+            if year:
+                out +=  ', '+ year
             out += publication_info.get('d', '')
 
     return out

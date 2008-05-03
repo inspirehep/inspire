@@ -26,9 +26,10 @@ import cgi
 from urllib import quote
 from bfe_INSPIRE_arxiv import get_arxiv
 
-def format(bfo, links="no", incl_arxiv="no"):
+def format(bfo, links="no", arxiv="no"):
     """
-    Provides report numbers
+    Provides title  converts to title case (Upper Cased First Letters) if
+    the title is in all caps
 
     @param links yes(not implemented)->display links to repositories if known no(default)->  value only
     @param arxiv no (default)-> excludes arxiv numbers yes-> includes
@@ -41,15 +42,14 @@ def format(bfo, links="no", incl_arxiv="no"):
     report_numbers = primary_report_numbers
     report_numbers.extend(additional_report_numbers)
     report_numbers = [num.get('a','') for num in report_numbers]
-
-
-    if incl_arxiv.lower() == "no":
+    
+    if arxiv.lower == "no":
         arxiv=get_arxiv(bfo, category="no")
         report_numbers=filter(lambda x:x not in arxiv,report_numbers)
     
-   # if links.lower() == 'yes':
+   # if links.lower == 'yes':
         # nothing here...
-    out = ', '.join(report_numbers) 
+    out = ', '.join(report_numbers)
 
     return(out)
     

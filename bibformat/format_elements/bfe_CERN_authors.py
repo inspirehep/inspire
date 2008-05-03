@@ -57,7 +57,13 @@ def format(bfo, limit, separator='; ',
     from urllib import quote
     from cgi import escape
     import re
-    from invenio.config import weburl
+
+#FIXME temporary while some inspire sites migrating from .92->.99
+    try:
+        from invenio.config import CFG_SITE_URL
+    except:
+        from invenio.config import weburl as CFG_SITE_URL
+
     # from invenio.config import instlink   ### FIXME
     instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/www?key='
 
@@ -128,7 +134,8 @@ def format(bfo, limit, separator='; ',
 
 
             if print_links.lower() == "yes":
-                author['a'] = '<a class="authorlink" href="' + weburl + \
+                from bfe_server_info import format as bfe_server
+                author['a'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
                               '/search?f=author&amp;p='+ quote(author['a']) + \
                               '&amp;ln='+ bfo.lang + \
                               '">'+escape(display_name)+'</a>'
@@ -138,14 +145,7 @@ def format(bfo, limit, separator='; ',
                 author['e'] = affiliation_prefix + affiliations_separator.join(author['e']) + \
                               affiliation_suffix
 
-            if author.get('field') == '700__' and \
-               coll.upper() == "GREYBOOK" and author.has_key('u') and \
-               print_links.lower() == "yes":
-                author['u'] =  '<a class="img" href="/search?sysno=' + \
-                              '%.9s' % author['u'][0] + 'iex">' + \
-                              '<img src="http://cdsweb.cern.ch/img/iconhome.gif"' + \
-                              'alt="institute" /></a>'''
-            elif author.has_key('i'):
+            if author.has_key('i'):
                 pairs = zip(author['i'], author['u'])
                 author['i'] = [instlink+code+'">'+string+'</a>' for code,string in pairs]
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['i']) + \

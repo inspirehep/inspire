@@ -30,8 +30,8 @@ def format(bfo, links="no", category="yes"):
     Provides arXiv number in format for display or links
 
     @param links yes->display links to arXiv only no(default)-> display value of arxiv number only
-    @param category -> displays category in '[]' after number, as in new
-    style ids
+    @param category -> displays category in '[]' after number (only if not redundant)
+
     
     """
 
@@ -96,13 +96,20 @@ def get_arxiv(bfo,category="yes"):
     report_numbers = primary_report_numbers
     report_numbers.extend(additional_report_numbers)
 
-    arxiv = [num.get('a','') for num in report_numbers if num.get('s') == 'arxiv']
+    arxiv = [num.get('a','') for num in report_numbers if num.get('9') ==
+    'arxiv' or num.get('s')=='arxiv']
 
     if category=="yes":
-        cats = [num.get('c','') for num in report_numbers if num.get('s') == 'arxiv']
-        arxiv= map(lambda n,c:n+(c and ' ['+c+']' or ''),arxiv,cats)
-    
-
+        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arxiv' or num.get('9')=='arxiv']
+        arxiv=map(append_cat,arxiv,cats)
         
     return(arxiv)
-    
+
+
+def append_cat(number,cat):
+    import re
+    if not cat:
+        return(number)
+    if not re.match(cat,number):
+        return(number+(' ['+cat+']'))
+    return(number)           

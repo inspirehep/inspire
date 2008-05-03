@@ -25,17 +25,26 @@ __revision__ = "$Id$"
 import cgi
 from invenio.search_engine import search_pattern
 
-def format(bfo, separator='; ', nbOnly='no'):
+
+
+def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
     Prints the records (or number of records) citing this record
 
     DO NOT USE > testing, not on cdsweb
-
+    @param nbOnly  only print number
+    @param searchlink print number (if nbOnly) as a link to the search to find these items
     @param separator a separator between citations
     """
     from urllib import quote
-    from invenio.config import weburl
 
+
+   #FIXME temporary while some inspire sites migrating from .92->.99 
+    try:
+        from invenio.config import CFG_SITE_URL
+    except:
+        from invenio.config import weburl as CFG_SITE_URL
+        
     primary_report_numbers = bfo.fields('037__a')
     additional_report_numbers = bfo.fields('088__a')
 
@@ -48,7 +57,11 @@ def format(bfo, separator='; ', nbOnly='no'):
         res.extend(list(search_pattern(p=rep_num, f='999C5r')))
 
     if nbOnly.lower() == 'yes':
-        return str(len(res))
+        if searchlink.lower()=='yes':
+            from bfe_server_info import format as bfe_server
+            return '<a href="'+CFG_SITE_URL+'/search?p=recid:'+bfo.control_field('001')+'&rm=citation">'+str(len(res))+'</a>'
+        else:
+            return str(len(res))
     else:
         from invenio.bibformat import format_records
         return '<br/>'.join(format_records(res, 'hs'))

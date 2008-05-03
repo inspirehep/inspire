@@ -38,24 +38,23 @@ color:#666666;
 </style>
 <div class="inspire">
 <BFE_CERN_TITLE_BRIEF prefix="<strong>" suffix=".</strong><br />" force_title_case="yes"/>
-<BFE_CERN_AUTHORS print_affiliations="yes" affiliations_separator=' & ' separator=', ' limit="10" extension="<i> et al.</i>" suffix=". " />
-<BFE_INSPIRE_report links="no" arxiv="no" suffix='. ' />
+<BFE_CERN_AUTHORS print_affiliations="yes" affiliations_separator=' & ' separator=', ' limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"/>
+<BFE_INSPIRE_report links="no" incl_arxiv="no" suffix='. ' />
 <BFE_INSPIRE_date suffix=". " /> <BFE_FIELD tag="300a" suffix=" pp." />
-<BFE_INSPIRE_PUBLI_INFO prefix="<br />"/>
-
+<BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" />
 
 <br /><BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
 </p><dl>
 <dt></dt>
 <dd style="margin-bottom:0"> 
-<BFE_PRIMARY_REPORT_NUMBER prefix='<a href="/ref/' suffix='.html">References</a> |'/>
-<a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibteX</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=xm">MARC XML</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=xd">DC</a>
+ <a href="<BFE_SERVER_INFO var="recurl">?of=ref">References</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibTeX</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">?of=LXU">LaTeX(US)</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">?of=LXE">LaTeX(EU)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xe">EndNote</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xn">NLM</a>
- | <a href="http://cdsweb.cern.ch/getkeywords.py?recid=<BFE_RECORD_ID/>">Keywords</a>
- | <BFE_INSPIRE_CITED_BY prefix='Cited <a href="">' suffix=" times</a>" nbOnly="yes"/>
+ | <a href="<BFE_SERVER_INFO var="recurl">?of=kw">Keywords</a>
+ | <BFE_INSPIRE_CITED_BY prefix='Cited ' suffix=" times" nbOnly="yes" searchlink="yes"/>
 </dd>
 <dt></dt>
 <dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV links='yes' />

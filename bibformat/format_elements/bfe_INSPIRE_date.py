@@ -89,7 +89,7 @@ def get_date(bfo):
 
 def parse_date(datetext):
     """
-    Reads in a date imported from SPRIES, returning the datestruct
+    Reads in a date imported from SPIRES, returning the datestruct
     accounts for either native spires (YYYYMMDD) or invenio style
     (YYYY-MM-DD)
     @param datetext: date from SPIRES record
@@ -103,16 +103,19 @@ def parse_date(datetext):
     if re.search(r'\d+\-\d+\-\d+', datetext):
         return(convert_datetext_to_datestruct(datetext+' 0:0:0'))
     if re.search(r'\d+\-\d+', datetext):
-        return(convert_datetext_to_datestruct(datetext+'-01 0:0:0'))
-    if re.search(r'\d+', datetext):
+        return(convert_datetext_to_datestruct(datetext+'-00 0:0:0'))
+
+#  Fixed this in dateutils.py
+#
+#    if re.search(r'\d+', datetext):
         #Correct by hand spires convention of 00 for missing month and/or day
         #use instead invenio convention of 0101  
-        datetext=re.sub('0000$','0101',datetext)
-        datetext=re.sub('00$','01',datetext)
+#        datetext=re.sub('0000$','0101',datetext)
+#        datetext=re.sub('00$','01',datetext)
 
-        try:
-            return time.strptime(datetext, "%Y%m%d")
-        except ValueError or TypeError:
-            return (0,0,0,0,0,0,0,0,0)
+#        try:
+#            return time.strptime(datetext, "%Y%m%d")
+#        except ValueError or TypeError:
+#            return (0,0,0,0,0,0,0,0,0)
     
     return (0,0,0,0,0,0,0,0,0)
