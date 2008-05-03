@@ -21,7 +21,10 @@ __revision__ = \
     "$Id$"
 
 import cgi
-from invenio.config import CFG_SITE_LANG, CFG_SITE_NAME, CFG_SITE_NAME_INTL, CFG_SITE_URL, CFG_SITE_SECURE_URL, CFG_SITE_SUPPORT_EMAIL
+
+from invenio.config import CFG_SITE_LANG, CFG_SITE_NAME,CFG_SITE_NAME_INTL, CFG_SITE_URL, CFG_SITE_SECURE_URL,CFG_SITE_SUPPORT_EMAIL
+
+
 from invenio.messages import gettext_set_language
 from invenio.webstyle_templates import Template as DefaultTemplate
 
@@ -93,7 +96,7 @@ class Template(DefaultTemplate):
 <body>
 <span class="warning"><small>Welcome to an <a class="nearestterms" href="https://twiki.cern.ch/twiki/bin/view/Inspire/WebHome">Inspire</a> test server.
 Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
-<div style="color: #039; font-size: x-small; width: 150px; margin-bottom: 5px; float: right; margin-top: 25px;">%(userinfobox)s</div>
+<div class="userinfobox">%(userinfobox)s</div>
 <div><a href="%(siteurl)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
 <div class="navbar">
 <a id="nav-hep" href="%(siteurl)s">Hep</a>
