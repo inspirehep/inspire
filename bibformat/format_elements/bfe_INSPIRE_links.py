@@ -30,6 +30,8 @@ import cgi
 import re
 from urllib import quote
 
+#from invenio.bibformat import kb
+
 def format(bfo, separator='; ',style='', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
@@ -41,28 +43,31 @@ def format(bfo, separator='; ',style='', prefix='', suffix=''):
     if style != "":
         style = 'class="'+style+'"'
 
-
     links=[]
 
 
     journals=bfo.fields('773')
-
     # trivially take care of dois
-    dois=[info.get('a') for info in journals if info.get('a')]
-    links.extend(['<a '+style+ 'href="http://dx.doi.org/'+doi+\
-                 '">Journal Server</a>' for doi in dois])
+    for journal in journals:
+        oa= bfo.kb('OALINKS',journal.get('n'),'').lower()
+        if oa:
+            final_style=style+' class="'+oa+'"'
+        else:
+            final_style=style
+        if journal.get('a'):
+            links.append('<a '+style+ 'href="http://dx.doi.org/'+journal.get('a')+\
+                 '">Journal Server</a>')
 
 
     # could look for other publication info and calculate URls here
-
 
     
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above... 
     urls = bfo.fields('8564_')
     links.extend(['<a '+ style + \
-            'href="' + url.get("u") + '">' + _lookup_url_name(url.get('y')) +'</a>'
-            for url in urls if url.get("u")])
+            'href="' + url.get("u") + '">' + _lookup_url_name(bfo,url.get('y')) +'</a>'
+            for url in urls if url.get("u") and url.get('y').upper() != "DOI"])
 
 
     #put it all together
@@ -74,11 +79,12 @@ def format(bfo, separator='; ',style='', prefix='', suffix=''):
     
 
 
-def _lookup_url_name(abbrev=''):
+def _lookup_url_name(bfo,abbrev=''):
     # Could open a kb here, but for now just pass through
     if abbrev==None:
         abbrev=''
-    return("Link to "+abbrev.lower())
+    return bfo.kb('WEBLINKS',abbrev,'Link to '+abbrev.lower())
+
 
 
 def escape_values(bfo):

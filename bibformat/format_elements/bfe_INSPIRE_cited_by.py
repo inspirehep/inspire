@@ -38,7 +38,6 @@ def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
     from urllib import quote
 
-
    #FIXME temporary while some inspire sites migrating from .92->.99 
     try:
         from invenio.config import CFG_SITE_URL

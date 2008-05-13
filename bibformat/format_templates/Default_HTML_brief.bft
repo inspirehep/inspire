@@ -1,5 +1,5 @@
 
-<name>Default HTML brief inspire</name>
+<name>Default HTML brief</name>
 <description>Prototype brief format for the Inspire project</description>
 <!C-START REC 11.Brief--!>
 <style>
@@ -47,41 +47,19 @@ color:#666666;
 </p><dl>
 <dt></dt>
 <dd style="margin-bottom:0"> 
- <a href="<BFE_SERVER_INFO var="recurl">?of=ref">References</a>
+ <a href="<BFE_SERVER_INFO var="recurl">/references">References</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibTeX</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=LXU">LaTeX(US)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=LXE">LaTeX(EU)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xe">EndNote</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=xn">NLM</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=kw">Keywords</a>
- | <BFE_INSPIRE_CITED_BY prefix='Cited ' suffix=" times" nbOnly="yes" searchlink="yes"/>
 </dd>
 <dt></dt>
 <dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV links='yes' />
 </dd>
 <BFE_INSPIRE_LINKS prefix='<dt></dt><dd style="margin-bottom:0">' suffix='</dd>' separator='</dd><dt></dt><dd style="margin-bottom:0">'/>
 <dt></dt>
-<dd style="margin-bottom:0"><a href="<BFE_SERVER_INFO var="recurl">">Bookmarkable Link to this record</a></dd>
+</dl>
 
-
-
-<!--
-<BFE_FIELD tag="710__g" prefix="- <small>" suffix=".</small>">
-
-<small class="quicknote">
-<BFE_CERN_STANDARD_NUMBER suffix=".- ">
-</small>
-
-<BFE_CERN_IMPRINT prefix="<small>" suffix="</small>" />
-
-<BFE_CERN_INDIS prefix=" " suffix=" - "/>
-
-<BFE_CERN_SERIES print_links="no" serie_prefix="" />
-
-<BFE_CERN_FULLTEXT prefix="   "/>
-
-<BFE_CERN_TALK_LINK />
--->
 
 
 </div>

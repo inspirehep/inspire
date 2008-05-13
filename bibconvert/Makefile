@@ -105,7 +105,7 @@ test-SPIRES-with-xmlmarclint:
 
 upload-SPIRES:
 	@echo "* Uploading converted files..."
-	for file in SPIRES_*.xml_*[0-9].marcxml; do \
+	for file in SPIRES_*.xml_*[0-9].clean.marcxml; do \
 	    $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."

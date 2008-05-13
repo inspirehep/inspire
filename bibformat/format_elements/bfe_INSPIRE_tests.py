@@ -31,16 +31,16 @@ class filterTestclass(unittest.TestCase):        #
         #test CERN_authors
         def testField(self):
             print "testing bfeField"
-            self.bfo=BibFormatObject('73740')
-            self.assertEqual(self.bfo.field('100a'),"Dimitrijevic, M.")
+            self.bfo=BibFormatObject('7374')
+            self.assertEqual(self.bfo.field('100a'),"Farhi, E.")
         def testAff(self):
             print "testing Affs"
             from bfe_CERN_authors import format
-            self.bfo=BibFormatObject('73740')
+            self.bfo=BibFormatObject('7374')
             string =  format(self.bfo,limit="5",print_affiliations="yes")
             print string
-            self.assert_(re.search(r'Dimitrijevic, M.</a>;',string))
-            self.assert_(re.search(r'Moller, L.</a> \(<a.*Zagreb',string))
+            self.assert_(re.search(r'Farhi, E.</a>',string))
+            self.assert_(re.search(r'</a> \(<a.*MIT',string))
 
 
 
@@ -49,7 +49,7 @@ class filterTestclass(unittest.TestCase):        #
         def testarX(self):
             print "testing arXiv"
             from bfe_INSPIRE_arxiv import format
-            self.bfo=BibFormatObject('82146')
+            self.bfo=BibFormatObject('8214')
             string=format(self.bfo)
             print string
             self.assert_(re.search(r'3478',string))
@@ -61,7 +61,7 @@ class filterTestclass(unittest.TestCase):        #
         def testDate(self):
             print "testing date"
             from bfe_INSPIRE_date import format
-            self.bfo=BibFormatObject('619463')
+            self.bfo=BibFormatObject('6194')
             string=format(self.bfo)
             print string
             string2=format(self.bfo,us="no")
@@ -76,8 +76,8 @@ class filterTestclass(unittest.TestCase):        #
             self.bfo=BibFormatObject('37650')
             string= format(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
             print string
-            self.assert_(re.search(r'00877">Journal',string))
-            self.assert_(re.search(r'5334">Link to slacpub',string))
+            self.assert_(re.search(r'065201">Journal',string))
+            self.assert_(re.search(r'\?bibcode=2004',string))
             
 unittest.main()
 

@@ -42,6 +42,7 @@ import sys
 import getopt
 import os
 import re
+from string import upper
 from invenio.bibformat import format_record
 from invenio.bibupload import xml_marc_to_records, bibupload
 from invenio import bibconvert
@@ -51,28 +52,36 @@ from invenio.dbquery import run_sql
 def main(argv):
 
     recID=0
-    opts,pargs=getopt.getopt(argv,'i:')
+    opts,pargs=getopt.getopt(argv,'di:')
+    verbose = False
     for opt, arg in opts:
+
         if opt == '-i':
             recID=arg
+        if opt == '-d':
+            verbose = True
 
     result=format_record(recID=recID,of='xm')
 
     if result:
 	    #change the result to MARC by applying a template
+            if verbose:
+                print result
+                raw_input("go on?")
 	    result = bibconvert_xslt_engine.convert(result, "marcxmltoplain.xsl")
             #call a sub that changes the stuff to editable form, calls editor,
 	    #returns a string
 	    new = convert_edit(result)	    
 	    newr = to_marc(new)
-	    #debug
-	    #f=open('/tmp/debug', 'w')
-            #f.write(new)
-            #f.write(newr)
-            #f.close()
-	    #print newr
-	    if raw_input("Save to DB Y/N:") =='Y':        
-        	 recs=xml_marc_to_records(''.join(new))
+            if verbose:                
+                #debug
+                f=open('/tmp/debug', 'w')
+                f.write(new)
+                f.write(newr)
+                f.close()
+                print newr
+	    if upper(raw_input("Save to DB Y/N:")) =='Y':        
+        	 recs=xml_marc_to_records(''.join(newr))
 	         response=bibupload(recs[0],opt_mode='replace')
 	         if response[0]:print "Error updating record: "+response[0]
 
@@ -94,7 +103,18 @@ def convert_edit(result):
 
 	    tmpfile.write(result)
 	    tmpfile.seek(0)
-	    os.system("pico "+ tmpfile.name)
+            if len(os.environ['EDITOR']) > 0:
+                editor= os.environ['EDITOR']
+            else:
+                editor="pico"
+            try:
+                os.system(editor+' '+tmpfile.name)
+            except OSError, e:
+                print "Editor Failed", e
+                sys.exit
+                
+
+
 	    tmpfile.seek(0)
 
 	    new = tmpfile.read()

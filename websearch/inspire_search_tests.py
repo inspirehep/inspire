@@ -74,7 +74,7 @@ class filterTestclass(unittest.TestCase):
             prints a message if both queries are parsed identically (a bonus...)
             """
             print "\n"+self.inv_search+" vs. "+self.spi_search
-            self.assertTrue(len(perform_request_search(p=self.spi_search))>0)
+            self.assert_(len(perform_request_search(p=self.spi_search))>0)
             print "non zero result:good"
             self.assertEqual(perform_request_search(p=self.inv_search),perform_request_search(p=self.spi_search))
             print "equal results: better"

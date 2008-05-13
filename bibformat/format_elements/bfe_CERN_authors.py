@@ -57,7 +57,6 @@ def format(bfo, limit, separator='; ',
     from urllib import quote
     from cgi import escape
     import re
-
 #FIXME temporary while some inspire sites migrating from .92->.99
     try:
         from invenio.config import CFG_SITE_URL
@@ -65,6 +64,7 @@ def format(bfo, limit, separator='; ',
         from invenio.config import weburl as CFG_SITE_URL
 
     # from invenio.config import instlink   ### FIXME
+
     instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/www?key='
 
     from invenio.messages import gettext_set_language
@@ -134,7 +134,8 @@ def format(bfo, limit, separator='; ',
 
 
             if print_links.lower() == "yes":
-                from bfe_server_info import format as bfe_server
+
+                from invenio.bibformat_elements.bfe_server_info import format as bfe_server
                 author['a'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
                               '/search?f=author&amp;p='+ quote(author['a']) + \
                               '&amp;ln='+ bfo.lang + \

@@ -2,7 +2,7 @@
 
 include config.mk
 
-SUBDIRS = bibconvert bibformat webstyle
+SUBDIRS = bibconvert bibformat webstyle kbs
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -26,7 +26,7 @@ reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (1, 'Inspire Test Site', '970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (1, 'Inspire', '970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:"DIRECTORY"', 0, NULL, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 200)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 3, 100)" | $(BINDIR)/dbexec
@@ -49,4 +49,7 @@ load-large-inspire-test-site-records:
 	(cd bibconvert && make)
 	$(BINDIR)/bibupload -ir bibconvert/large_converted.xml
 
+
+load-knowledge-base:
+	cd kbs && make && cd ..
 
