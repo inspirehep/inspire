@@ -16,6 +16,10 @@ install:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	@echo "Done.  You may want to restart Apache now."
 
+reset-inspire-test-site-field-configuration:
+	echo "UPDATE tag SET value='773__%' WHERE name='journal'" | $(BINDIR)/dbexec
+	echo "UPDATE tag SET value='260__c' WHERE name='year'" | $(BINDIR)/dbexec
+
 reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectionname" | $(BINDIR)/dbexec
