@@ -18,6 +18,8 @@
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """Testing SPIRES search syntax in Invenio
+test cases are ordered in priority of implementation, some useful info is directed to stdout rather
+than formally tested
 """
 
 
@@ -44,19 +46,21 @@ class filterTestclass(unittest.TestCase):
             self._compare_searches()
 
         def test_author_simple(self):    
-            self.inv_search='author:"brooks,t" or author:"brooks,t*"'
+            self.inv_search='author:"brooks,t." or author:"brooks,t*"'
             self.spi_search="find a brooks, t"
             self._compare_searches()
 
         def test_author_reverse(self):    
-            self.inv_search='author:"brooks,t"'
-            self.spi_search="find a t. brooks"
+            self.inv_search='author:"brooks,t" or author:"brooks,t*"'
+            self.spi_search="find a t brooks"
             self._compare_searches()
 
         def test_author_full_first(self):    
-            self.inv_search="author:'brooks, travis' or author:'brooks, t'"
+            self.inv_search="author:'brooks, travis' or author:'brooks, t.'"
             self.spi_search="find a brooks, travis"
             self._compare_searches()
+
+            
 
 
 
@@ -65,6 +69,10 @@ class filterTestclass(unittest.TestCase):
 
 
         def _compare_searches(self):
+            """Compare inv_search and spi_search for equivalence
+            tests that a non-trivial result is found, that the hitsets are equal
+            prints a message if both queries are parsed identically (a bonus...)
+            """
             print "\n"+self.inv_search+" vs. "+self.spi_search
             self.assertTrue(len(perform_request_search(p=self.spi_search))>0)
             print "non zero result:good"
