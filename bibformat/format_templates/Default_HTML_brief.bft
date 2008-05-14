@@ -10,21 +10,16 @@
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" />
 
 <br /><BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
-</p><dl>
-<dt></dt>
-<dd style="margin-bottom:0"> 
+</p><ul class="tight_list">
+<li>
  <a href="<BFE_SERVER_INFO var="recurl">/references">References</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibTeX</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=LXU">LaTeX(US)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=LXE">LaTeX(EU)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xe">EndNote</a>
-</dd>
-<dt></dt>
-<dd style="margin-bottom:0">
-</dd>
-<BFE_INSPIRE_LINKS prefix='<dt></dt><dd style="margin-bottom:0">' suffix='</dd>' separator='</dd><dt></dt><dd style="margin-bottom:0">'/>
-<dt></dt>
-</dl>
+</li>
+<BFE_INSPIRE_LINKS prefix='<li>' suffix='</li>' separator='</li><li>'/>
+</ul>
 </div>
     
 

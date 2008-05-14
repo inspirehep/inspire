@@ -26,47 +26,47 @@ or other similar information
 
 __revision__ = "$Id $"
 
-import cgi
-import re
+
 from urllib import quote
 from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
 
-def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_icons='no'):
+def format(bfo, default = '', separator = '; ', style = '', \
+           show_icons = 'no'):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
     @param prefix
     @param suffix
-    @param show_icons default=no  
+    @param show_icons default = no  
     @param style options CSS style for link
     """
     _ = gettext_set_language(bfo.lang)
     if style != "":
-        style = 'class="'+style+'"'
+        style = 'class = "'+style+'"'
 
-    links=[]
+    links = []
 
 
     from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format as arxiv
-    if show_icons.lower()=='yes':
-        mirrors="no"
+    if show_icons.lower() == 'yes':
+        mirrors = "no"
     else:
-        mirrors="yes"
-    arxiv_links=arxiv(bfo,links="yes", mirrors=mirrors)
+        mirrors = "yes"
+    arxiv_links = arxiv(bfo, links = "yes", mirrors = mirrors)
     if arxiv_links:
         links.append(arxiv_links)
 
-    journals=bfo.fields('773')
+    journals = bfo.fields('773')
     # trivially take care of dois
     for journal in journals:
-        oa= bfo.kb('OALINKS',journal.get('n'),'').lower()
-        if oa:
-            final_style=style+' class="'+oa+'"'
+        oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
+        if oa_type:
+            final_style = style+' class = "'+oa_type+'"'
         else:
-            final_style=style
+            final_style = style
         if journal.get('a'):
-            links.append('<a '+style+ 'href="http://dx.doi.org/'+journal.get('a')+\
-                 '">Journal Server</a>')
+            links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
+                         +journal.get('a')+'">Journal Server</a>')
 
 
     # could look for other publication info and calculate URls here
@@ -76,8 +76,10 @@ def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_
     # might want to check that we aren't repeating things from above... 
     urls = bfo.fields('8564_')
     links.extend(['<a '+ style + \
-            'href="' + url.get("u") + '">' + _lookup_url_name(bfo,url.get('y')) +'</a>'
-            for url in urls if url.get("u") and url.get('y').upper() != "DOI"])
+            'href="' + url.get("u") + '">' + \
+                  _lookup_url_name(bfo, url.get('y')) +'</a>'
+            for url in urls if url.get("u") and \
+                  url.get('y').upper() != "DOI"])
 
 
   
@@ -85,20 +87,26 @@ def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_
     #put it all together
     if links:
         if show_icons.lower() == 'yes':
-            img='<img style="border:none" src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' % (CFG_SITE_URL, _("Download fulltext"))
-            links=[img+'<small>'+link+'</small>' for link in links]
-        return prefix+separator.join(links)+suffix
+            img = '<img style="border:none" \
+            src="%s/img/file-icon-text-12x16.gif" alt="%s"/>'\
+            % (CFG_SITE_URL, _("Download fulltext"))
+            links = [img+'<small>'+link+'</small>' for link in links]
+        return separator.join(links)
     else:
         return default
 
     
 
 
-def _lookup_url_name(bfo,abbrev=''):
-    # Could open a kb here, but for now just pass through
-    if abbrev==None:
-        abbrev=''
-    return bfo.kb('WEBLINKS',abbrev,'Link to '+abbrev.lower())
+def _lookup_url_name(bfo, abbrev = ''):
+    """ Finds the display name for the url, based on an
+    abbrev in record.
+    Input:  bfo, abbrev  (abbrev is PHRVA-D, etc)
+    Output: display string  (Phys Rev D Server)
+    """
+    if abbrev == None:
+        abbrev = ''
+    return bfo.kb('WEBLINKS', abbrev, 'Link to '+abbrev.lower())
 
 
 

@@ -1645,6 +1645,12 @@ list-style-type:none;
 }
 
 
+/* only to override cds.css defn of dd*/
+dd{
+margin-bottom: 1px;
+}
+
+
 /*styles from brief format */
 
 
@@ -1656,6 +1662,12 @@ text-decoration:none;
 text-decoration:none;
 }
 
-
+ul.tight_list{
+list-style:none;
+} 
+tight_list li{
+margin:0;
+padding:0;
+}
 
 /* end of inspire.css */
