@@ -98,7 +98,9 @@ b.nounderline a:hover {
 background-color:#fff;
 }
 
-a {
+/* invenio makes use of the :link property so don't style a directly*/
+/*a {color:#0066CC;}*/
+a:link {
 color:#0066CC;
 }
 a:hover {
@@ -128,11 +130,11 @@ a.moreinfo:hover {
    background: transparent;
 }
 a.img:hover {
-   color: #00c;
+   color: #69c;
    background: transparent;
 }
 a.img:active {
-   color: #00c;
+   color: #69c;
    background: transparent;
    font-weight: normal;
 }
