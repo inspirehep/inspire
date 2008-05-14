@@ -30,7 +30,7 @@ def format(bfo, reference_prefix, reference_suffix):
     @param reference_suffix a suffix displayed after each reference
     """
     from invenio.config import CFG_SITE_URL
-    from invenio.search_engine import perform_request_search    
+    from invenio.search_engine import search_unit    
     from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
     out = ""
@@ -61,11 +61,11 @@ def format(bfo, reference_prefix, reference_suffix):
             display_report=reference['r']
             clean_report=reference['r']
         if clean_report:
-            hits=perform_request_search(f='reportnumber',p=clean_report,of='id')
+            hits=search_unit(f='reportnumber',p=clean_report)
         if clean_journal and len(hits)!=1:
-            hits=perform_request_search(f='journal',p=clean_journal,of='id')
+            hits=search_unit(f='journal',p=clean_journal)
         if len(hits)==1:
-            ref_out+='<small>'+format_record(hits[0],'hs')+'</small>'
+            ref_out+='<small>'+format_record(list(hits)[0],'hs')+'</small>'
 
 #  Silly stuff that can be used if there are a lot of multiple hits
 #   
