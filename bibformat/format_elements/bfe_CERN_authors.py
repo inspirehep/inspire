@@ -148,13 +148,13 @@ def format(bfo, limit, separator='; ',
 
             if author.has_key('i'):
                 pairs = zip(author['i'], author['u'])
-                author['i'] = [instlink+code+'">'+string+'</a>' for code,string in pairs]
+                author['i'] = [instlink+code+'">'+string.lstrip()+'</a>' for code,string in pairs]
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['i']) + \
                               affiliation_suffix
                  
 
             elif author.has_key('u'):
-                author['u'] = affiliation_prefix + affiliations_separator.join(author['u']) + \
+                author['u'] = affiliation_prefix + affiliations_separator.join(author['u'].lstrip()) + \
                               affiliation_suffix
 
 #
