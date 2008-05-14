@@ -128,9 +128,9 @@ def format(bfo, limit, separator='; ',
             #we don't try to reverse it if it isn't stored with a comma.
             display_name=author['a']
             if name_last_first.lower()=="no":
-                match=re.search('^([^,]+)\s*,\s*(.*)$',author['a'])
+                match=re.search('^([^,]+)\s*,\s*([^\,]*)(\,?.*)$',author['a'])
                 if match:
-                    display_name=match.group(2)+' '+match.group(1)
+                    display_name=match.group(2)+' '+match.group(1)+match.group(3)
 
 
             if print_links.lower() == "yes":

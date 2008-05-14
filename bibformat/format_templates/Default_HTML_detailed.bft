@@ -1,0 +1,44 @@
+<name>Default HTML detailed</name>
+<description>This is the default HTML detailed format.</description>
+
+<BFE_TOPBANNER
+prefix='<div style="padding-left:10px;padding-right:10px">'
+suffix='</div><hr/>'/>
+
+<div class="detailed_record_info">
+<BFE_CERN_TITLE_BRIEF prefix="<center><big><big><strong>" separator="<br /><br/>" suffix=".</strong></big></big></center>" force_title_case="yes"/>
+
+
+<p align="center">
+<BFE_CERN_AUTHORS suffix="<br />" limit=25 interactive="yes" print_affiliations="yes" affiliations_separator=' & ' separator=', ' limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"  affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
+<BFE_INSPIRE_DATE prefix="<br />" suffix="<br />"/>
+<BFE_INSPIRE_PUBLI_INFO prefix="<br /><br /><strong>Published in: </strong>"/>
+<BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
+<BFE_PUBLISHER prefix="<small>" suffix="</small>"/>
+<BFE_PLACE prefix="<small>" suffix="</small>"/>
+<BFE_ISBN prefix="<br />ISBN: " />
+
+</p>
+
+<p style="margin-left: 15%; width: 70%">
+
+<BFE_ABSTRACT
+prefix_en="<small><strong>Abstract: </strong>"
+prefix_fr="<small><strong>Résumé: </strong>"
+suffix_en="</small><br />"
+suffix_fr="</small><br />"
+/>
+
+
+<BFE_KEYWORDS
+prefix="<br /><small><strong>Keyword(s): </strong></small>"
+keyword_prefix="<small>"
+keyword_suffix="</small>" />
+
+<BFE_NOTES
+note_prefix="<br /><small><strong>Note: </strong>"
+note_suffix=" </small>"
+suffix="<br />" />
+
+<br />
+</div>

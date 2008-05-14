@@ -29,17 +29,18 @@ __revision__ = "$Id $"
 import cgi
 import re
 from urllib import quote
+from invenio.messages import gettext_set_language
+from invenio.config import CFG_SITE_URL
 
-#from invenio.bibformat import kb
-
-def format(bfo, separator='; ',style='', prefix='', suffix=''):
+def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_icons='no'):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
     @param prefix
     @param suffix
+    @param show_icons default=no  
     @param style options CSS style for link
     """
-    
+    _ = gettext_set_language(bfo.lang)
     if style != "":
         style = 'class="'+style+'"'
 
@@ -70,11 +71,16 @@ def format(bfo, separator='; ',style='', prefix='', suffix=''):
             for url in urls if url.get("u") and url.get('y').upper() != "DOI"])
 
 
+  
+        
     #put it all together
     if links:
+        if show_icons.lower() == 'yes':
+            img='<img style="border:none" src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' % (CFG_SITE_URL, _("Download fulltext"))
+            links=[img+link for link in links]
         return prefix+separator.join(links)+suffix
     else:
-        return ''
+        return default
 
     
 

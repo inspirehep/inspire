@@ -2,40 +2,6 @@
 <name>Default HTML brief</name>
 <description>Prototype brief format for the Inspire project</description>
 <!C-START REC 11.Brief--!>
-<style>
-<!--
-.inspire element.style {
-font-family:arial,verdana,sans-serif;
-}
-
-.inspire b.nounderline a {
-text-decoration:none;
-color:#000;
-}
-.inspire b.nounderline a:hover {
-background-color:#fff;
-
-}
-
-.authorlink{
-text-decoration:none;
-}
-.afflink{
-text-decoration:none;
-}
-
-.inspire a {
-color:#0066CC;
-}
-.inspire a:hover {
-background-color:#6699CC;
-color:#FFFFFF;
-}
-.inspire a:visited {
-color:#666666;
-}
--->
-</style>
 <div class="inspire">
 <BFE_CERN_TITLE_BRIEF prefix="<strong>" suffix=".</strong><br />" force_title_case="yes"/>
 <BFE_CERN_AUTHORS print_affiliations="yes" affiliations_separator=' & ' separator=', ' limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"/>
