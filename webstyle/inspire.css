@@ -87,22 +87,29 @@ h6 {
 
 
 
+element.style {
+font-family:arial,verdana,sans-serif;
+}
+b.nounderline a {
+text-decoration:none;
+color:#000;
+}
+b.nounderline a:hover {
+background-color:#fff;
+}
 
-a:link {
-   color: #00c;
-   background: transparent;
-}
-a:visited {
-   color: #006;
-   background: transparent;
-}
-a:active {
-   color: #00c;
-   background: transparent;
+a {
+color:#0066CC;
 }
 a:hover {
-   color: #00c;
-   background: transparent;
+background-color:#6699CC;
+color:#FFFFFF;
+}
+a:visited {
+color:#666666;
+
+
+
 }
 a.moreinfo:link {
    color: #060;
@@ -1623,4 +1630,30 @@ text-decoration: none;
 text-decoration:underline;
 }
 
-/* end of cds.css */
+
+/* styles for detailed format */
+
+div.detailed_record_info {
+padding-left:10px;
+padding-right:10px;
+}
+
+.detailed_record_info ul{
+list-style-type:none;
+}
+
+
+/*styles from brief format */
+
+
+
+.authorlink{
+text-decoration:none;
+}
+.afflink{
+text-decoration:none;
+}
+
+
+
+/* end of inspire.css */
