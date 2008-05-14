@@ -31,7 +31,7 @@ def format(bfo, reference_prefix, reference_suffix):
     """
     from invenio.config import CFG_SITE_URL
     from invenio.search_engine import perform_request_search    
-    from invenio.bibformat import format_records
+    from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
     out = ""
     
@@ -53,19 +53,19 @@ def format(bfo, reference_prefix, reference_suffix):
         display_report=''
         clean_report=''
         clean_journal=''
-                
+        hits=[]
         if reference.has_key('s'):
             display_journal=reference['s']
             clean_journal=reference['s'].replace(',',' ')
         if reference.has_key('r'):
             display_report=reference['r']
             clean_report=reference['r']
-        
-        hits=perform_request_search(f='reportnumber',p=clean_report,of='id')
-        if len(hits)!=1:
+        if clean_report:
+            hits=perform_request_search(f='reportnumber',p=clean_report,of='id')
+        if clean_journal and len(hits)!=1:
             hits=perform_request_search(f='journal',p=clean_journal,of='id')
         if len(hits)==1:
-            ref_out+='<small>'+format_records(hits,'hs')+'</small>'
+            ref_out+='<small>'+format_record(hits[0],'hs')+'</small>'
 
 #  Silly stuff that can be used if there are a lot of multiple hits
 #   

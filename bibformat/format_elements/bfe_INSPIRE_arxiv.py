@@ -25,13 +25,13 @@ __revision__ = "$Id$"
 import cgi
 from urllib import quote
 
-def format(bfo, links="no", category="yes"):
+def format(bfo, links="no", category="yes", mirrors="yes"):
     """
     Provides arXiv number in format for display or links
 
     @param links yes->display links to arXiv only no(default)-> display value of arxiv number only
     @param category -> displays category in '[]' after number (only if not redundant)
-
+    @param mirrors -> defautl yes  only relevant if links=yes
     
     """
 
@@ -44,9 +44,13 @@ def format(bfo, links="no", category="yes"):
     if links == 'yes':
         arxiv_ref = arxiv[0] # Take only first one
         out += '''
-<a href="http://arXiv.org/abs/%(ref)s"> Abstract </a> and
+<a href="http://arXiv.org/abs/%(ref)s">Abstract</a> and
 <a href="http://arXiv.org/ps/%(ref)s">Postscript</a>
- and <a href="http://arXiv.org/pdf/%(ref)s">PDF</a> from arXiv.org
+ and <a href="http://arXiv.org/pdf/%(ref)s">PDF</a> from arXiv.org'''% \
+        {'ref': arxiv_ref}
+
+        if mirrors.lower()=='yes':
+            out+='''
  (mirrors:
 <a href="http://au.arXiv.org/abs/%(ref)s">au</a>
 
@@ -59,14 +63,13 @@ def format(bfo, links="no", category="yes"):
 <a href="http://in.arXiv.org/abs/%(ref)s">in</a>
 <a href="http://it.arXiv.org/abs/%(ref)s">it</a>
 <a href="http://jp.arXiv.org/abs/%(ref)s">jp</a>
-
 <a href="http://kr.arXiv.org/abs/%(ref)s">kr</a>
 <a href="http://ru.arXiv.org/abs/%(ref)s">ru</a>
 <a href="http://tw.arXiv.org/abs/%(ref)s">tw</a>
 <a href="http://uk.arXiv.org/abs/%(ref)s">uk</a>
 <a href="http://za.arXiv.org/abs/%(ref)s">za</a>
 <a href="http://aps.arXiv.org/abs/%(ref)s">aps</a>
-<a href="http://lanl.arXiv.org/abs/%(ref)s">lanl</a>)''' % \
+<a href="http://lanl.arXiv.org/abs/%(ref)s">lanl</a>)'''  % \
         {'ref': arxiv_ref}
 
 

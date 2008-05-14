@@ -1,0 +1,21 @@
+<name>Actions HTML detailed</name>
+<description>Output the various actions available on a record</description>
+
+<ul class="detailedrecordactions">
+        <li><a href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>yourbaskets/add?ln=<BFE_SERVER_INFO var='lang'/>&amp;recid=<BFE_RECORD_ID/>">_(Add to personal basket)_</a></li>
+        <li>_(Export reference)_<br />
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hx">BibTeX</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xe">EndNote</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/lxu">LaTeX(US)</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/lxe">LaTeX(EU)</a>,
+</li>
+
+<li>_(Export data)_<br />
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xm">MARCXML</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xn">NLM</a>
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xd">DC</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hm">MARC</a>,
+</li>
+     
+   <BFE_EDIT_RECORD prefix="<li>" suffix="</li>" />
+</ul>

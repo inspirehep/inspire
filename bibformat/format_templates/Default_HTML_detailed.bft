@@ -1,9 +1,7 @@
 <name>Default HTML detailed</name>
 <description>This is the default HTML detailed format.</description>
 
-<BFE_TOPBANNER
-prefix='<div style="padding-left:10px;padding-right:10px">'
-suffix='</div><hr/>'/>
+
 
 <div class="detailed_record_info">
 <BFE_CERN_TITLE_BRIEF prefix="<center><big><big><strong>" separator="<br /><br/>" suffix=".</strong></big></big></center>" force_title_case="yes"/>

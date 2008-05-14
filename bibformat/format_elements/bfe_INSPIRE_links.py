@@ -47,6 +47,15 @@ def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_
     links=[]
 
 
+    from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format as arxiv
+    if show_icons.lower()=='yes':
+        mirrors="no"
+    else:
+        mirrors="yes"
+    arxiv_links=arxiv(bfo,links="yes", mirrors=mirrors)
+    if arxiv_links:
+        links.append(arxiv_links)
+
     journals=bfo.fields('773')
     # trivially take care of dois
     for journal in journals:
@@ -77,7 +86,7 @@ def format(bfo, default='', separator='; ',style='', prefix='', suffix='', show_
     if links:
         if show_icons.lower() == 'yes':
             img='<img style="border:none" src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' % (CFG_SITE_URL, _("Download fulltext"))
-            links=[img+link for link in links]
+            links=[img+'<small>'+link+'</small>' for link in links]
         return prefix+separator.join(links)+suffix
     else:
         return default

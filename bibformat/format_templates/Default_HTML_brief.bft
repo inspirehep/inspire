@@ -20,17 +20,14 @@
  | <a href="<BFE_SERVER_INFO var="recurl">?of=xe">EndNote</a>
 </dd>
 <dt></dt>
-<dd style="margin-bottom:0"> <BFE_INSPIRE_ARXIV links='yes' />
+<dd style="margin-bottom:0">
 </dd>
 <BFE_INSPIRE_LINKS prefix='<dt></dt><dd style="margin-bottom:0">' suffix='</dd>' separator='</dd><dt></dt><dd style="margin-bottom:0">'/>
 <dt></dt>
 </dl>
-
-
-
 </div>
     
-    
+
     
     
 
