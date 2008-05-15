@@ -101,11 +101,21 @@ Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/"
 <div class="navbar">
 <a id="nav-hep" href="%(siteurl)s">Hep</a>
 ::
-<a id="nav-inst" href="%(siteurl)s/collection/Institutions">Institutions</a>
-::
 <a id="nav-exp" href="%(sitesecureurl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>
 ::
 <a id="nav-jobs" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+&nbsp;&nbsp;&nbsp;
+..::..
+&nbsp;&nbsp;&nbsp;
+<a id="nav-hepnames" href="http://www.slac.stanford.edu/spires/hepnames/">HepNames</a>
+::
+<a id="nav-inst" href="http://www.slac.stanford.edu/spires/institutions/">Inst</a>
+::
+<a id="nav-conf" href="http://www.slac.stanford.edu/spires/conferences/">Conf</a>
+::
+<a id="nav-exp" href="http://www.slac.stanford.edu/spires/experiments/">Exp</a>
+::
+<a id="nav-jobs" href="http://www.slac.stanford.edu/spires/jobs/">Jobs</a>
 </div>
 <table class="navtrailbox">
  <tr>
