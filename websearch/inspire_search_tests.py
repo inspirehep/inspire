@@ -25,63 +25,13 @@ than formally tested
 
 import re
 import unittest
-from invenio.search_engine import perform_request_search
+
 from invenio.search_engine_query_parser import SpiresToInvenioSyntaxConverter 
 from invenio.search_engine_query_parser import SearchQueryParenthesisedParser 
 spires=SpiresToInvenioSyntaxConverter()
 parser=SearchQueryParenthesisedParser()
 
 class filterTestclass(unittest.TestCase):        
-
-
-        #test operator searching
-        def test_operators(self):    
-            self.inv_search="author:ellis and title:muon"
-            self.spi_search="find a ellis and t muon"
-            self._compare_searches()
-
-        def test_parens(self):    
-            self.inv_search="author:ellis and not (title:muon or title:kaon)"
-            self.spi_search="find a ellis and not t muon and not t kaon "
-            self._compare_searches()
-
-        def test_author_simple(self):    
-            self.inv_search='author:"brooks,t." or author:"brooks,t*"'
-            self.spi_search="find a brooks, t"
-            self._compare_searches()
-
-        def test_author_reverse(self):    
-            self.inv_search='author:"brooks,t" or author:"brooks,t*"'
-            self.spi_search="find a t brooks"
-            self._compare_searches()
-
-        def test_author_full_first(self):    
-            self.inv_search="author:'brooks, travis' or author:'brooks, t.'"
-            self.spi_search="find a brooks, travis"
-            self._compare_searches()
-
-            
-
-
-
-
-
-
-
-        def _compare_searches(self):
-            """Compare inv_search and spi_search for equivalence
-            tests that a non-trivial result is found, that the hitsets are equal
-            prints a message if both queries are parsed identically (a bonus...)
-            """
-            print "\n"+self.inv_search+" vs. "+self.spi_search
-            self.assert_(len(perform_request_search(p=self.spi_search))>0)
-            print "non zero result:good"
-            self.assertEqual(perform_request_search(p=self.inv_search),perform_request_search(p=self.spi_search))
-            print "equal results: better"
-            if parser.parse_query(self.inv_search)==parser.parse_query(spires.convertQuery(self.spi_search)):
-                print "identically parsed: best"
-            else:
-                print "non-identical parsing...otherwise ok"
     
             
 unittest.main()

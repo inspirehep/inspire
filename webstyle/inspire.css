@@ -103,13 +103,16 @@ background-color:#fff;
 a:link {
 color:#0066CC;
 }
+
+
+a:visited {
+color:#6699cc;
+}
 a:hover {
 background-color:#6699CC;
 color:#FFFFFF;
 }
-a:visited {
-color:#6699cc;
-}
+
 a.moreinfo:link {
    color: #060;
    background: transparent;
@@ -787,10 +790,10 @@ a.google:hover {
 }
 .searchresultsboxheader {
    color: #000;
-   background: #f1f3f5;
-   padding: 2px;
-   border-spacing: 0px;
-   text-align: left;
+   background: #fff1a8;
+   padding: 4px;
+   border-spacing: 0px;  
+ text-align: left;
    font-weight: normal;
 }
 .searchresultsboxbody {

@@ -29,7 +29,7 @@ def format(bfo, reference_prefix, reference_suffix):
     @param reference_prefix a prefix displayed before each reference
     @param reference_suffix a suffix displayed after each reference
     """
-    from invenio.config import CFG_SITE_URL
+
     from invenio.search_engine import search_unit    
     from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
@@ -41,7 +41,8 @@ def format(bfo, reference_prefix, reference_suffix):
         if reference.has_key('o'):
             if out != "":
                 ref_out = '</li>'
-            ref_out += "<li><small>"+ reference['o']+ "</small> "
+            ref_out += '<li><small>'+\
+                       reference['o']+ "</small> "
 #  LEAVE out full ref while we have spires import which does not store
 #  useful things here
 #        if reference.has_key('m'):
@@ -49,49 +50,52 @@ def format(bfo, reference_prefix, reference_suffix):
 
 
 
-        display_journal=''
-        display_report=''
-        clean_report=''
-        clean_journal=''
-        hits=[]
+        display_journal = ''
+        display_report = ''
+        clean_report = ''
+        clean_journal = ''
+        hits = []
         if reference.has_key('s'):
-            display_journal=reference['s']
-            clean_journal=reference['s'].replace(',',' ')
+            display_journal = reference['s']
+            clean_journal = reference['s'].replace(',',' ')
         if reference.has_key('r'):
-            display_report=reference['r']
-            clean_report=reference['r']
+            display_report = reference['r']
+            clean_report = reference['r']
         if clean_report:
-            hits=search_unit(f='reportnumber',p=clean_report)
+            hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
-            hits=search_unit(f='journal',p=clean_journal)
-        if len(hits)==1:
-            ref_out+='<small>'+format_record(list(hits)[0],'hs')+'</small>'
+            hits = search_unit(f='journal', p=clean_journal)
+        if len(hits) == 1:
+            ref_out += '<small>' +\
+                       format_record(list(hits)[0],'hs') + '</small>'
 
 #  Silly stuff that can be used if there are a lot of multiple hits
 #   
 #        elif len(hits)>1:
 #            if display_journal:
-#                ref_out += '<small><a href="'+CFG_SITE_URL+'/search?f=journal&amp;p='+ \
+#                ref_out += '<small><a href="'+CFG_SITE_URL+\
+#                           '/search?f=journal&amp;p='+ \
 #                           reference['s']+ \
 #                           '&amp;ln=' + bfo.lang + \
 #                           '">'+display_journal+"</a></small>"
 #            if display_report:    
-#                ref_out += ' <small><a href="'+CFG_SITE_URL+'/search?f=reportnumber&amp;p='+ \
+#                ref_out += ' <small><a href="'+CFG_SITE_URL+\
+#                           '/search?f=reportnumber&amp;p='+ \
 #                           reference['r']+ \
 #                           '&amp;ln=' + bfo.lang + \
 #                           '">'+display_report+"</a></small>"
                         
         else:
-            ref_out='<small>'
+            ref_out = '<small>'
             if display_journal:
-                ref_out +=display_journal
+                ref_out += display_journal
             if display_report:    
-                ref_out +=' '+display_report    
-            ref_out+=' (not in Inspire)</small>'
+                ref_out += ' '+display_report    
+            ref_out += ' (not in Inspire)</small>'
 
                 
 
-        ref_out+="<br />"
+        ref_out += "<br />"
 
 
 
@@ -101,7 +105,7 @@ def format(bfo, reference_prefix, reference_suffix):
             ref_out += reference_suffix
 
         out += ref_out
-
+        
     if out != '':
         out += '</li>'
 

@@ -55,24 +55,24 @@ def format(bfo, width="50"):
 
     #Print BibTeX key
     #
-    #Try to have: author_name:recID
-    #If author_name cannot be found, use primary_report_number
-    #If primary_report_number cannot be found, use additional_report_number
-    #If additional_report_number cannot be found, use title:recID
-    #If title cannot be found, use only recID
-    #
-    #The construction of this key is inherited from old BibTeX format
-    #written in EL, in old BibFormat.
-    key = recID
-    key = bfo.field("35")
-    
-
+    key = ''
+    for external_keys in bfo.fields("035"):
+        if external_keys['9'] == "SPIRESTeX" and external_keys['a']:
+            key = external_keys['a']
+    if not key:
+        #contruct key in spires like way  need to store an make unique
+        ####FIXME
+        key = bfo.field("100a").split(' ')[0].lower() + ":" + \
+              bfo.field("269c").split('-')[0] + \
+              chr((recID % 26) + 97) + chr(((recID / 26) % 26) + 97)
+    out += key
+        
         #If author cannot be found, print a field key=recID
-    import invenio.bibformat_elements.bfe_authors as bfe_authors
+    import invenio.bibformat_elements.bfe_CERN_authors as bfe_authors
     authors = bfe_authors.format(bfo=bfo,
-                                 limit="",
+                                 limit="5",
                                  separator=" and ",
-                                 extension="",
+                                 extension="et al.",
                                  print_links="no")
     if authors == "":
         out += format_bibtex_field("key",
@@ -87,7 +87,7 @@ def format(bfo, width="50"):
 
     #Print editors
     import invenio.bibformat_elements.bfe_editors as bfe_editors
-    editors = bfe_editors.format(bfo=bfo, limit="",
+    editors = bfe_editors.format(bfo=bfo, limit="10",
                                  separator=" and ",
                                  extension="",
                                  print_links="no")
@@ -444,7 +444,8 @@ def get_month(date, ln=CFG_SITE_LANG, default=""):
 
     #Look for month specified as number in the form 2004/03/08 or 17 02 2004
     #(always take second group of 2 or 1 digits separated by spaces or - etc.)
-    month_pattern = re.compile(r'\d([\s]|[-/.,])+(?P<month>(\d){1,2})([\s]|[-/.,])')
+    month_pattern = re.compile(r'\d([\s]|[-/.,])\
+    +(?P<month>(\d){1,2})([\s]|[-/.,])')
     result = month_pattern.search(date)
     if result is not None:
         try:

@@ -1,0 +1,9 @@
+<name>Default HTML similarity</name>
+<description>Small HTML record printed in "Similar Documents" section</description>
+<strong>
+<a href="/record/<BFE_FIELD tag="001" /><BFE_CLIENT_INFO var="ln" prefix="?ln=">"><BFE_CERN_TITLE_BRIEF force_title_case="yes"/></a></strong>
+<BFE_AUTHORS limit="1" prefix=" - " extension=" <em>et al</em>"/>
+<BFE_PUBLI_INFO prefix="  "/>
+<BFE_INSPIRE_ARXIV links="no" prefix="  " category="yes"/>
+<BFE_INSPIRE_REPORT prefix="  "/>
+    
