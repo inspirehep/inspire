@@ -32,7 +32,7 @@ from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
 
 def format(bfo, default = '', separator = '; ', style = '', \
-           show_icons = 'no'):
+           show_icons = 'no', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
     @param prefix
@@ -91,7 +91,7 @@ def format(bfo, default = '', separator = '; ', style = '', \
             src="%s/img/file-icon-text-12x16.gif" alt="%s"/>'\
             % (CFG_SITE_URL, _("Download fulltext"))
             links = [img+'<small>'+link+'</small>' for link in links]
-        return separator.join(links)
+        return prefix+separator.join(links)+suffix
     else:
         return default
 
