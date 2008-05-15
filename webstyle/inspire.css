@@ -32,21 +32,21 @@ h1 {
    font-weight: 700;
    margin-top: 5px;
    margin-left: 0px;
-   color: #36c;
+   color: #69c;
    background: transparent;
 }
 .h1 {
    font-size: 173%;
    font-weight: 700;
    margin-left: 0px;
-   color: #36c;
+   color: #69c;
    background: transparent;
 }
 h2 {
    font-size: 144%;
    font-weight: 700;
    margin-left: 0px;
-   color: #36c;
+   color: #69c;
    background: transparent;
 }
 h3 {
@@ -56,7 +56,7 @@ h3 {
    margin-top: 40px;
    margin-left: 0px;
    margin-bottom: 10px;
-   color: #36c;
+   color: #69c;
    background: transparent;
    border-bottom: dotted 2px #36c;
    width: 50%;
@@ -65,14 +65,14 @@ h4 {
    font-size: 110%;
    font-weight: 600;
    font-style: italic;
-   color: #36c;
+   color: #06c;
    margin-left: 0px;
    background: transparent;
 }
 h5 {
    font-size: 110%;
    font-weight: 400;
-   color: #36c;
+   color: #306c;
    margin-left: 0px;
    background: transparent;
 }
@@ -80,7 +80,7 @@ h6 {
    font-size: 110%;
    font-weight: 200;
    font-style: italic;
-   color: #36c;
+   color: #06c;
    margin-left: 0px;
    background: transparent;
 }
@@ -108,10 +108,7 @@ background-color:#6699CC;
 color:#FFFFFF;
 }
 a:visited {
-color:#666666;
-
-
-
+color:#6699cc;
 }
 a.moreinfo:link {
    color: #060;
@@ -239,7 +236,7 @@ clear:right;
    margin-top: 0px;
    margin-bottom: 0px;
    border-collapse: collapse;
-   border-bottom: 2px solid #3366cc;
+   border-bottom: 2px solid #0066cc;
 }
 .headerboxbody {
    color: #000;
@@ -264,7 +261,7 @@ clear:right;
 }
 .headermoduleboxbody {
    color: #000;
-   background: #36c;
+   background: #06c;
    font-size: x-small;
    font-weight: bold;
    text-align: center;
@@ -283,55 +280,55 @@ clear:right;
    font-size: x-small;
    font-weight: bold;
    text-align: center;
-   border-left: 2px solid #36c;
-   border-right: 2px solid #36c;
-   border-top: 2px solid #36c;
+   border-left: 2px solid #06c;
+   border-right: 2px solid #06c;
+   border-top: 2px solid #06c;
    margin: 5px;
    padding: 0px;
    width: 75px;
 }
 a.header:link {
    color: #fff;
-   background: #36c;
+   background: #06c;
    text-decoration: none;
 }
 a.header:visited {
    color: #fff;
-   background: #36c;
+   background: #06c;
    text-decoration: none;
 }
 a.header:active {
    color: #fff;
-   background: #36c;
+   background: #06c;
    text-decoration: none;
 }
 a.header:hover {
    color: #fff;
-   background: #36c;
+   background: #06c;
    text-decoration: none;
 }
 a.headerselected:link {
-   color: #36c;
+   color: #06c;
    background: #fff;
    text-decoration: none;
 }
 a.headerselected:visited {
-   color: #36c;
+   color: #06c;
    background: #fff;
    text-decoration: none;
 }
 a.headerselected:active {
-   color: #36c;
+   color: #06c;
    background: #fff;
    text-decoration: none;
 }
 a.headerselected:hover {
-   color: #36c;
+   color: #06c;
    background: #fff;
    text-decoration: none;
 }
 .navtrailbox {
-   color: #36c;
+   color: #06c;
    background: #fff;
    padding: 0px;
    margin-top: 7px;
@@ -340,26 +337,26 @@ a.headerselected:hover {
    font-size: x-small;
 }
 .navtrailboxbody {
-   color: #36c;
+   color: #06c;
    padding: 0px 0px 0px 10px;
    border-spacing: 0px;
    background: #fff;
    font-size: x-small;
 }
 a.navtrail:link {
-   color: #36c;
+   color: #06c;
    background: transparent;
 }
 a.navtrail:visited {
-   color: #36c;
+   color: #06c;
    background: transparent;
 }
 a.navtrail:active {
-   color: #36c;
+   color: #06c;
    background: transparent;
 }
 a.navtrail:hover {
-   color: #36c;
+   color: #06c;
    background: transparent;
 }
 .info {
@@ -517,11 +514,11 @@ a.footer:hover {
    padding: 1px;
    margin: 5px 0px 5px 0px;
    border-collapse: collapse;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .searchboxheader {
    color: #000;
-   background: #f1f1f1;
+   background: #f1f3f5;
    padding: 3px;
    border-spacing: 0px;
    font-size: small;
@@ -538,11 +535,11 @@ a.footer:hover {
    padding: 1px;
    margin: 20px 20px 5px 0px;
    border-collapse: collapse;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .narrowsearchboxheader {
    color: #000;
-   background: #f1f1f1;
+   background: #f1f3f5;
    padding: 3px;
    border-spacing: 0px;
    font-size: small;
@@ -555,15 +552,15 @@ a.footer:hover {
 }
 .focusonsearchbox {
    color: #000;
-   background: #f0f8ff;
+   background: #f1f3f5;
    padding: 1px;
    margin: 20px 20px 5px 0px;
    border-collapse: collapse;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .focusonsearchboxheader {
    color: #000;
-   background: #e6e6fa;
+   background: #f1f3f5;
    padding: 3px;
    border-spacing: 0px;
    font-size: small;
@@ -571,16 +568,16 @@ a.footer:hover {
 }
 .focusonsearchboxbody {
    color: #000;
-   background: #f0f8ff;
+   background: #f1f3f5;
    padding: 3px;
 }
 .searchalsosearchbox {
    color: #000;
-   background: #fffbf5;
+   background: #f1f3f5;
    padding: 1px;
    margin: 20px 20px 5px 0px;
    border-collapse: collapse;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .searchalsosearchboxheader {
    color: #000;
@@ -592,7 +589,7 @@ a.footer:hover {
 }
 .searchalsosearchboxbody {
    color: #444;
-   background: #fffbf5;
+   background: #f1f3f5;
    padding: 3px;
 }
 .latestadditionsbox {
@@ -630,7 +627,7 @@ a.footer:hover {
 }
 .portalboxheader {
    color: #000;
-   background: #f1f1f1;
+   background: #f1f3f5;
    padding: 2px;
    border-spacing: 0px;
    border-bottom: 1px solid #999;
@@ -785,12 +782,12 @@ a.google:hover {
    padding: 0px;
    margin-top: 15px;
    border-collapse: collapse;
-   border-top: 1px solid #fc0;
+   border-top: 1px solid #06c;
    width: 100%;
 }
 .searchresultsboxheader {
    color: #000;
-   background: #ffc;
+   background: #f1f3f5;
    padding: 2px;
    border-spacing: 0px;
    text-align: left;
@@ -799,8 +796,8 @@ a.google:hover {
 .searchresultsboxbody {
    color: #000;
    background: #ffe;
-   border-top: 1px dotted #fc0;
-   border-bottom: 1px dotted #fc0;
+   border-top: 1px dotted #06c;
+   border-bottom: 1px dotted #06c;
    padding: 2px;
 }
 .searchresultsboxrecords {
@@ -1663,11 +1660,17 @@ text-decoration:none;
 }
 
 ul.tight_list{
+ margin:.5ex 0 0 0;
 list-style:none;
 } 
 tight_list li{
 margin:0;
 padding:0;
 }
+ div.moreinfo{
+ margin:.5ex 0 1.5ex 0;
+ }
+
+
 
 /* end of inspire.css */
