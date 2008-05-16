@@ -58,7 +58,7 @@ h3 {
    margin-bottom: 10px;
    color: #69c;
    background: transparent;
-   border-bottom: dotted 2px #36c;
+   border-bottom: dotted 2px #06c;
    width: 50%;
 }
 h4 {
@@ -72,7 +72,7 @@ h4 {
 h5 {
    font-size: 110%;
    font-weight: 400;
-   color: #306c;
+   color: #06c;
    margin-left: 0px;
    background: transparent;
 }
@@ -249,7 +249,7 @@ clear:right;
 .headerboxbodylogo {
    width: 200px;
    padding-left: 5px;
-   color: #36c;
+   color: #06c;
    font-size: 20px;
    font-weight: bold;
    font-variant: small-caps;
@@ -649,7 +649,7 @@ a.footer:hover {
    padding: 1px;
    margin: 0px 0px 5px 20px;
    border-spacing: 0px;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .admin_w200 {
    width: 250px;
@@ -679,11 +679,11 @@ a.footer:hover {
 }
 .adminbutton {
    color: #fff;
-   background: #36c;
+   background: #69c;
    font-weight: bold;
    margin: 5px 10px 5px 10px;
    border-collapse: collapse;
-   border-top: 1px solid #36c;
+   border-top: 1px solid #06c;
 }
 .admintd, .admintdleft, .admintdright {
    font-size: small;
@@ -760,11 +760,11 @@ a.google:hover {
 }
 .formbutton {
    color: #fff;
-   background: #36c;
+   background: #69c;
    font-weight: bold;
 }
 .headline {
-   color: #36c;
+   color: #69c;
    background: transparent;
 }
 .quicknote {
@@ -876,39 +876,39 @@ a.nearesttermsselected:hover {
    background: transparent;
 }
 .userinfobox {
-   color: #039;
+   color: #06c;
    font-size: x-small;
    width: 150px;
    margin-bottom: 15px;
    float:right;
 }
 .userinfoboxheader {
-   color: #039;
+   color: #06c;
    font-size: x-small;
    font-weight: bold;
    border-top: 1px solid #060;
    border-bottom: 1px solid #060;
 }
 .userinfoboxbody {
-   color: #039;
+   color: #06c;
    padding: 0px 5px 2px 0px;
    font-size: x-small;
    font-weight: normal;
 }
 a.userinfo:link {
-   color: #039;
+   color: #06c;
    background: transparent;
 }
 a.userinfo:visited {
-   color: #039;
+   color: #69c;
    background: transparent;
 }
 a.userinfo:active {
-   color: #039;
+   color: #06c;
    background: transparent;
 }
 a.userinfo:hover {
-   color: #039;
+   color: #69c;
    background: transparent;
 }
 a.langinfo:link {
@@ -936,11 +936,11 @@ a.langinfo:hover {
    margin-right: 3%;
 }
 .exampleleader {
-   color: #060;
+   color: #06c;
    background: transparent;
 }
 .example {
-   color: #039;
+   color: #06c;
    background: transparent;
 }
 .blocknote {
@@ -1060,7 +1060,7 @@ input,select {
    font-size: 120%;
    font-weight: 600;
    font-variant: small-caps;
-   color: #36c;
+   color: #06c;
    margin-left: 10px;
    background: transparent;
 }
@@ -1074,7 +1074,7 @@ input,select {
    color: #000;
    width: 100%;
    padding: 0px 10px 10px 10px;
-   border-left: 2px solid #36c;
+   border-left: 2px solid #06c;
 }
 .warninggreen {
    color: #060;
@@ -1495,7 +1495,7 @@ div.detailed img, div.mini-panel img{
     border:none;
 }
 div.detailed div.content {
-   border: 1px solid #36c;
+   border: 1px solid #06c;
    padding-bottom:3px;
 }
 div.mini-panel {
@@ -1525,20 +1525,20 @@ ul.tabs{
    display:inline;
 }
 .tabs li a, .tabs li a:hover{
-   border-top: 1px solid #36c;
-   border-right: 1px solid #36c;
-   border-bottom: 1px solid #36c;
+   border-top: 1px solid #06c;
+   border-right: 1px solid #06c;
+   border-bottom: 1px solid #06c;
    border-left: none;
    background-color: #FFF;
    padding:4px;
-   color:#36c;
+   color:#06c;
    font-size:x-small;
    font-weight:bold;
    text-decoration:none;
    zoom:100%; /*We loose CSS validity here, but necessary because of ie7*/
 }
 .tabs li.on a, .tabs li.on a:hover{
-   background-color: #36c;
+   background-color: #69c;
    color: #FFF
 }
 .tabs li.disabled a{
@@ -1546,7 +1546,7 @@ ul.tabs{
    cursor:default;
 }
 .tabs li.first a, .tabs li.first a:hover{
-   border-left: 1px solid #36c;
+   border-left: 1px solid #06c;
 }
 
 /* Actions in mini-box in detailed view */
