@@ -57,7 +57,7 @@ def format(bfo, reference_prefix, reference_suffix):
         hits = []
         if reference.has_key('s'):
             display_journal = reference['s']
-            clean_journal = reference['s'].replace(',',' ')
+            clean_journal = reference['s']
         if reference.has_key('r'):
             display_report = reference['r']
             clean_report = reference['r']
