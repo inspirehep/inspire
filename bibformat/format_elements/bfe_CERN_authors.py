@@ -65,7 +65,7 @@ def format(bfo, limit, separator='; ',
 
     # from invenio.config import instlink   ### FIXME
 
-    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/www?key='
+    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/wwwinspire?key='
 
     from invenio.messages import gettext_set_language
 
