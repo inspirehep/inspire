@@ -92,8 +92,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                             	</subfield>
                                 <subfield code="y"><xsl:value-of select="./jyear"/>
                             	</subfield>
-
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
+	                        <subfield code="a"><xsl:value-of select="."/>
+				</subfield>
 
                 </xsl:for-each>
 
@@ -241,8 +241,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
 		        <subfield code="9">arxiv</subfield>              	
 		    </datafield>
-        	 
-	       	</xsl:for-each>
                 </xsl:for-each>
                 <xsl:for-each select="./url-str">
                     <datafield tag="856" ind1="4" ind2=" ">
