@@ -92,6 +92,12 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                             	</subfield>
                                 <subfield code="y"><xsl:value-of select="./jyear"/>
                             	</subfield>
+
+                        <subfield code="a"><xsl:value-of select="."/></subfield>
+
+                </xsl:for-each>
+
+
 			</datafield>
                 </xsl:for-each>
                 <xsl:for-each select="./conf">                            
@@ -249,13 +255,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     <datafield tag="653" ind1="1" ind2=" ">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
-                </xsl:for-each>
-                <xsl:for-each select="./doi">
-                   <xsl:if test="string(.)">
-                    <datafield tag="773" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                    </xsl:if>
                 </xsl:for-each>
                 <xsl:if test="./irn">
                     <datafield tag="970" ind1=" " ind2=" ">
