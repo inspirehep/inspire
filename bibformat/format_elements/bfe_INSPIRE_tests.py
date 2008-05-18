@@ -22,23 +22,29 @@
 """
 
 
+
 import re
 import unittest
+from invenio.testutils import make_test_suite, run_test_suite
 from invenio.bibformat_engine import BibFormatObject
-class filterTestclass(unittest.TestCase):        #
+
+
+
+
+class TestInspireFormatElements(unittest.TestCase):        #
         # Test case depends on inspires test records
 
         #test CERN_authors
         def testField(self):
-            print "testing bfeField"
+            print """testing bfeField"""
             self.bfo=BibFormatObject('7374')
             self.assertEqual(self.bfo.field('100a'),"Farhi, E.")
         def testAff(self):
-            print "testing Affs"
+            """testing Affs"""
             from bfe_CERN_authors import format
             self.bfo=BibFormatObject('7374')
             string =  format(self.bfo,limit="5",print_affiliations="yes")
-            print string
+
             self.assert_(re.search(r'Farhi, E.</a>',string))
             self.assert_(re.search(r'</a> \(<a.*MIT',string))
 
@@ -47,7 +53,7 @@ class filterTestclass(unittest.TestCase):        #
 
         #test INSPIRE_arXiv
         def testarX(self):
-            print "testing arXiv"
+            """testing arXiv"""
             from bfe_INSPIRE_arxiv import format
             self.bfo=BibFormatObject('37650')
             string=format(self.bfo)
@@ -59,7 +65,7 @@ class filterTestclass(unittest.TestCase):        #
 
                     #test INSPIRE_date
         def testDate(self):
-            print "testing date"
+            """testing date"""
             from bfe_INSPIRE_date import format
             self.bfo=BibFormatObject('6194')
             string=format(self.bfo)
@@ -71,7 +77,7 @@ class filterTestclass(unittest.TestCase):        #
 
             #test INSPIRE_links
         def testLinks(self):
-            print "testing Links"
+            """testing Links"""
             from bfe_INSPIRE_links import format
             self.bfo=BibFormatObject('37650')
             string= format(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
@@ -79,8 +85,12 @@ class filterTestclass(unittest.TestCase):        #
             self.assert_(re.search(r'065201">Journal',string))
             self.assert_(re.search(r'\?bibcode=2004',string))
             
-unittest.main()
 
+TEST_SUITE = make_test_suite(TestInspireFormatElements)
+
+
+if __name__ == "__main__":
+    run_test_suite(TEST_SUITE)
 
 
 
