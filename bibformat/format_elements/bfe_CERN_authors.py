@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -38,7 +38,7 @@ def format(bfo, limit, separator='; ',
            ):
     """
     Prints the list of authors of a record.
-    
+
     @param limit the maximum number of authors to display
     @param separator the separator between authors.
     @param extension a text printed if more authors than 'limit' exist
@@ -108,14 +108,14 @@ def format(bfo, limit, separator='; ',
            and interactive != "yes":
         if bfo.field('710g'):   #check for colln note
             authors = authors[:1]
-        else:               
+        else:
             authors = authors[:int(limit)]
-        
+
 
     lastpairs = ()
     # Process authors to add link, affiliation and highlight
     for author in authors:
-        
+
         if author.has_key('a'):
             author['a'] = author['a'][0] # There should not be
                                          # repeatable subfields here.
@@ -137,8 +137,8 @@ def format(bfo, limit, separator='; ',
 
                 from invenio.bibformat_elements.bfe_server_info import format as bfe_server
                 author['a'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
-                              '/search?f=author&amp;p='+ quote(author['a']) + \
-                              '&amp;ln='+ bfo.lang + \
+                              '/author/'+ quote(author['a']) + \
+                              '?amp;ln='+ bfo.lang + \
                               '">'+escape(display_name)+'</a>'
 
         if print_affiliations == "yes":
@@ -151,14 +151,14 @@ def format(bfo, limit, separator='; ',
                 author['i'] = [instlink+code+'">'+string.lstrip()+'</a>' for code,string in pairs]
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['i']) + \
                               affiliation_suffix
-                 
+
 
             elif author.has_key('u'):
                 author['u'] = affiliation_prefix + affiliations_separator.join(author['u'].lstrip()) + \
                               affiliation_suffix
 
 #
-#  Consolidate repeated affiliations 
+#  Consolidate repeated affiliations
 #
 
     last = ''
@@ -173,26 +173,26 @@ def format(bfo, limit, separator='; ',
             last = author['u']
 
     authors.reverse()
-    
+
     # Flatten author instances
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
         if print_affiliation_first.lower() != 'yes':
             authors = [author.get('a', '') + \
                        ((author['field'] == '700__' and author.get('e', '')) or '') +\
-                       author.get('u', '') 
+                       author.get('u', '')
                        for author in authors]
 
         else:
             authors = [author.get('e', '') + author.get('a', '') +\
-                       ((author['field'] == '700__' and author.get('u', '')) or '') 
+                       ((author['field'] == '700__' and author.get('u', '')) or '')
                        for author in authors]
 
-        
+
     else:
         authors = [author.get('a', '')
                    for author in authors]
-        
+
     if limit.isdigit() and nb_authors > int(limit) and interactive != "yes":
         if int(limit) <= len(authors_1):
             p_sep = ''
@@ -229,12 +229,12 @@ def format(bfo, limit, separator='; ',
             extension.innerHTML = "%(extension)s";
             toggle_authors_visibility();
         }
-        
+
         </script>
         '''%{'show_less':_("Hide"),
              'show_more':_("Show all %i authors") % nb_authors,
              'extension':extension}
-            
+
         out += '<a name="show_hide" />'
         if int(limit) > len(authors_1):
             # separator between main and sec authors is before
@@ -266,7 +266,7 @@ def format(bfo, limit, separator='; ',
                main_and_sec_authors_sep + \
                separator.join(authors[len(authors_1):])
         #return separator.join(authors)
-        
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
