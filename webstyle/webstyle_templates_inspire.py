@@ -97,13 +97,13 @@ class Template(DefaultTemplate):
 <span class="warning"><small>Welcome to an <a class="nearestterms" href="https://twiki.cern.ch/twiki/bin/view/Inspire/WebHome">Inspire</a> test server.
 Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
 <div class="userinfobox">%(userinfobox)s</div>
-<div><a href="%(siteurl)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
+<div><a href="%(siteurl)s?ln=%(ln)s"><img border="0" src="%(cssurl)s/img/inspire_logo.gif" alt="INSPIRE" /></a></div>
 <div class="navbar">
-<a id="nav-hep" href="%(siteurl)s">Hep</a>
+<a id="nav-hep" href="%(siteurl)s?ln=%(ln)s">Hep</a>
 ::
 <a id="nav-exp" href="%(sitesecureurl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>
 ::
-<a id="nav-jobs" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+<a id="nav-jobs" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
 &nbsp;&nbsp;&nbsp;
 ..::..
 &nbsp;&nbsp;&nbsp;
@@ -132,7 +132,6 @@ Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/"
           'sitesecureurl' : CFG_SITE_SECURE_URL,
           'cssurl' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL,
           'ln' : ln,
-          'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
 
           'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
           'headertitle' : cgi.escape(headertitle),
