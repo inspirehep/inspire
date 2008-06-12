@@ -1,4 +1,12 @@
 [Invenio]
+#CFG_SITE_URL = http://pcuds89.cern.ch
+#CFG_SITE_SECURE_URL = https://pcuds89.cern.ch
+#CFG_SITE_ADMIN_EMAIL = tibor.simko@cern.ch
+#CFG_SITE_SUPPORT_EMAIL = tibor.simko@cern.ch
+#CFG_DATABASE_HOST = localhost
+#CFG_DATABASE_NAME = inspiredev
+#CFG_DATABASE_USER = inspire
+#CFG_DATABASE_PASS = hidden123
 #CFG_SITE_LANG = en
 #CFG_SITE_LANGS = en,fr
 CFG_SITE_NAME = HEP
