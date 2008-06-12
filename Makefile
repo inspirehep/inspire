@@ -2,7 +2,7 @@
 
 include config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank
+SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -12,13 +12,17 @@ test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
 
-install:
-	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
-	@echo "Done.  You may want to restart Apache now."
+
 
 reset-inspire-test-site-field-configuration:
 	echo "UPDATE tag SET value='773__%' WHERE name='journal'" | $(BINDIR)/dbexec
 	echo "UPDATE tag SET value='260__c' WHERE name='year'" | $(BINDIR)/dbexec
+
+
+install: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
+	@echo "Done.  You may want to run inveniocfg  --update-all and restart Apache now."
+
 
 reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
