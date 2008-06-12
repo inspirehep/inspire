@@ -7,5 +7,5 @@ test:
 	@echo "Done."
 
 install:
-	$(INSTALL) -m 664 invenio-local.conf.inspire $(ETCDIR)
+	$(INSTALL) -m 664 invenio-local.conf-example $(ETCDIR)
 
