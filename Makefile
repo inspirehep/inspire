@@ -21,7 +21,7 @@ reset-inspire-test-site-field-configuration:
 
 install: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
-	@echo "Done.  You may want to run inveniocfg  --update-all and restart Apache now."
+	@echo "Done.  You may want to copy invenio-local.conf.inspire on invenio-local.conf, run inveniocfg  --update-all and restart Apache now."
 
 
 reset-inspire-test-site-collection-configuration:
