@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #usage: add_knowledge_base.py filename 
 #adds a knowledge base file into invenio database
 #knowledge base file format: xxx---yyy
@@ -8,10 +9,11 @@
 #create index mappingskey on fmtKNOWLEDGEBASEMAPPINGS(m_key)
 from invenio.bibformat_dblayer import add_kb, add_kb_mapping, kb_mapping_exists
 import sys
+import re
 
 ok_files = []
 #open the files given as parameters
-for arg in sys.argv:
+for arg in sys.argv[1:]:
     try:
         f=open(arg)
         ok_files.append(arg)
@@ -21,7 +23,10 @@ for arg in sys.argv:
 
 for file in ok_files:
     #create a corresponding kb
-    add_kb(file, file)
+    descr = file
+    descr=re.sub('\.kb.*','',descr)
+    print descr
+    add_kb(descr, descr)
     for line in open(file):
         line=line.rstrip('\n')
         #see if it contains ---
@@ -29,5 +34,5 @@ for file in ok_files:
             leftright = line.split("---")
             #if the mapping does not exist in the kb, add it
             if not kb_mapping_exists(file,leftright[0]):
-                add_kb_mapping(file, leftright[0], leftright[1])
+                add_kb_mapping(descr, leftright[0], leftright[1])
     f.close()
