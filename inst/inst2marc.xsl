@@ -28,9 +28,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="s"><xsl:value-of select="."/></subfield>
                     </xsl:if>
 
-	            <xsl:if test="name()='director'">
-                        <subfield code="p"><xsl:value-of select="phone.number"/></subfield>
-                    </xsl:if>
 	            <xsl:if test="name()='address'">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </xsl:if>
