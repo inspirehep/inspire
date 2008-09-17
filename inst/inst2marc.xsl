@@ -9,7 +9,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <record>
                 <xsl:if test="./inst">
                     <datafield tag="970" ind1=" " ind2=" ">
-                        <subfield code="b">INST-<xsl:value-of select="./inst"/></subfield>
+                        <subfield code="a">INST-<xsl:value-of select="./inst"/></subfield>
                     </datafield>
                 </xsl:if>
                 <!--print 270 - this will be there anyway-->
@@ -21,9 +21,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	            <xsl:if test="name()='country.code'">
                         <subfield code="c"><xsl:value-of select="."/></subfield>
                     </xsl:if>
-	            <xsl:if test="name()='city'">
-                        <subfield code="b"><xsl:value-of select="."/></subfield>
-                    </xsl:if>
+
 	            <xsl:if test="name()='state.code'">
                         <subfield code="s"><xsl:value-of select="."/></subfield>
                     </xsl:if>
