@@ -12,130 +12,56 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="b">INST-<xsl:value-of select="./inst"/></subfield>
                     </datafield>
                 </xsl:if>
-                <xsl:if test="./imc">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="z"><xsl:value-of select="./imc"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./country.code">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="c"><xsl:value-of select="./country.code"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./city">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="b"><xsl:value-of select="./city"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./state.code">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="s"><xsl:value-of select="./state-code"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./inst.catch.name">
-                    <datafield tag="110" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="./inst.catch.name"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./director">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="p"><xsl:value-of select="./phone.number"/></subfield>
-                    </datafield>
-                </xsl:if>
-
-                <xsl:if test="./date-updated">
-                    <datafield tag="961" ind1=" " ind2=" ">
-                        <subfield code="c"><xsl:value-of select="./phone.number"/></subfield>
-                    </datafield>
-                </xsl:if>
-                <xsl:if test="./director">
-                    <datafield tag="961" ind1=" " ind2=" ">
-                        <subfield code="x"><xsl:value-of select="./phone.number"/></subfield>
-                    </datafield>
-                </xsl:if>
-
-                <xsl:for-each select="./address">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./phone-number">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="l"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./director-note">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="n"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./director-date">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="d"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./desy.aff">
-                    <datafield tag="595" ind1=" " ind2=" ">
-                        <subfield code="d"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./type">
-                    <datafield tag="980" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-                <xsl:for-each select="./xtra-index">
-                    <datafield tag="500" ind1=" " ind2=" ">
+                <!--print 270 - this will be there anyway-->
+                <datafield tag="270" ind1=" " ind2=" ">
+                <xsl:for-each select="*">
+	            <xsl:if test="name()='imc'">
+                        <subfield code="z"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+	            <xsl:if test="name()='country.code'">
+                        <subfield code="c"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+	            <xsl:if test="name()='city'">
                         <subfield code="b"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
+                    </xsl:if>
+	            <xsl:if test="name()='state.code'">
+                        <subfield code="s"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
 
-                <xsl:for-each select="./desylookup">
-                    <datafield tag="500" ind1=" " ind2=" ">
-                        <subfield code="c"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-                <xsl:for-each select="./oaff-str/other.aff">
-                    <datafield tag="500" ind1=" " ind2=" ">
-                        <subfield code="c"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-
-
-                <xsl:for-each select="./email.contact">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="m"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-                <xsl:for-each select="./note1">
-                    <datafield tag="500" ind1=" " ind2=" ">
+	            <xsl:if test="name()='director'">
+                        <subfield code="p"><xsl:value-of select="phone.number"/></subfield>
+                    </xsl:if>
+	            <xsl:if test="name()='address'">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
-                    </datafield>
+                    </xsl:if>
+
+	            <xsl:if test="name()='phone-number'">
+                        <subfield code="l"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+
+	            <xsl:if test="name()='director-note'">
+                        <subfield code="n"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+
+	            <xsl:if test="name()='director-date'">
+                        <subfield code="d"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+
+	            <xsl:if test="name()='city'">
+                        <subfield code="b"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
+
                 </xsl:for-each>
-                <xsl:for-each select="./url">
-                    <datafield tag="856" ind1=" " ind2=" ">
-                        <subfield code="u"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-                <xsl:for-each select="./street-address">
-                    <datafield tag="270" ind1=" " ind2=" ">
-                        <subfield code="a"><xsl:value-of select="."/></subfield>
-                    </datafield>
-                </xsl:for-each>
-   	        <datafield tag="980" ind1=" " ind2=" ">
+                </datafield>
+               
+                <!--add collection id-->
+                <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">DIRECTORY</subfield>
                 </datafield>
-	    </record>
-	   <!--insert a blank line between records-->
+            </record>
 <xsl:text>
-
 </xsl:text>
+           
         </xsl:for-each> 
     </collection>
 
