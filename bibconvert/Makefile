@@ -2,33 +2,37 @@
 
 include ../config.mk
 
+SMALL = http://cdsware.cern.ch/download/invenio-demo-site-files/SPIRES_small_sample.xml.gz
+LARGE = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
 XSLFILES = SPIRES2MARC.xsl
-SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
+SPIRESDIR = ftp://ftp.slac.stanford.edu/groups/library/spires
+SPIRESFILES = SPIRES_pre_1975.xml.gz SPIRES_1975_1984.xml.gz SPIRES_1985_1994.xml.gz SPIRES_1995_1999.xml.gz SPIRES_2000_2002.xml.gz SPIRES_2003_2005.xml.gz SPIRES_post_2005.xml.gz
 
 all:
-	@echo "Done."
-
-convert-test:
-test:
-	$(BINDIR)/bibconvert -c SPIRES2MARC.xsl < test_record_spires.xml > test_record_spires_converted.xml
-	xmllint --format test_record_spires_converted.xml
+	@echo "The sequence is get-large, clean-large, split-large, convert-large or prepare-large or prepare-full"
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
-upload-test:
-	@echo "* Uploading converted files..."
-	$(BINDIR)/bibupload -ir test_record_spires_converted.xml
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-
-
 # targets working with big SPIRES dump files follow:
 
+get-small:
+	@echo "* Downloading the file please be patient..."
+	wget $(SMALL)
+	rm -f ./SPIRES_small_sample.xml
+	gunzip SPIRES_small_sample.xml.gz
+
 get-large:
-	@echo "* Downloading large file from SLAC FTP server, please be patient..."
-	wget $(SPIRESXML)
+	@echo "* Downloading files from SLAC FTP server, please be patient..."
+	wget $(LARGE)
 	rm -f ./large_test.xml
-	gunzip ./large_test.xml.gz
+	gunzip ./large_test.xml.gz        
+
+get-full:
+	@echo "* Downloading files from SLAC FTP server, please be patient..."
+	rm -rf ${SPIRESFILES} large_test.xml
+	for i in ${SPIRESFILES}; do wget -nc ${SPIRESDIR}/$${i}; done
+	for i in ${SPIRESFILES}; do gunzip -c $${i} >> large_test.xml; done
 	#  Please note, bibconvert and xmllint appear to fail on this large file.  
 	#  It may be neccessary to use a different xslt engine or break up the 
 	#  file.
@@ -37,6 +41,8 @@ get-large:
 clean-large:
 	@echo "* Removing non-ascii chars in large file, please be patient..."
 	perl -i.bk -pe 's/[^[:ascii:]]//g;' large_test.xml
+	cat large_test.xml | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" > large_test.x
+	mv  large_test.x large_test.xml
 	@echo "Please see clean-spires-data.sh if your input contains broken tags"
 	@echo "* Done.  Please run 'make split-large' now."
 
@@ -45,6 +51,9 @@ split-large:
 	@sleep 3
 	python ./split_large_spires_dump_file.py
 	@echo "* Done.  Please run 'make convert-large' now."
+
+convert-small:
+	$(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < SPIRES_small_sample.xml > SPIRES_small_sample.marcxml
 
 convert-large:
 	@echo "* Converting split files, please be patient..."
@@ -70,14 +79,17 @@ test-large-with-xmlmarclint:
         done
 	@echo "* Done.  Please run 'make upload-large' now."
 
+upload-small:
+	@echo "* Uploading converted files..."
+	$(BINDIR)/bibupload -ir SPIRES_small_sample.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 upload-large:
 	@echo "* Uploading converted files..."
 	for file in large_test.xml_*[0-9].marcxml; do \
 	    $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
-
-
 
 
 convert-SPIRES:
@@ -103,11 +115,27 @@ test-SPIRES-with-xmlmarclint:
         done
 	@echo "* Done.  Please run 'make upload-large' now."
 
-upload-SPIRES:
+upload:
 	@echo "* Uploading converted files..."
-	for file in SPIRES_*.xml_*[0-9].clean.marcxml; do \
+	for file in SPIRES_*.xml_*[0-9].marcxml; do \
 	    $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+prepare-and-upload-large:
+	@echo for calling large test from upper level Makefile
+	make get-large
+	make clean-large
+	make split-large
+	make convert-large
+	make upload
+
+prepare-and-upload-full:
+	@echo for calling full sample from upper level Makefile
+	make get-full
+	make clean-large
+	make split-large
+	make convert-large
+	make upload
 
 # end of file

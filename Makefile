@@ -56,3 +56,15 @@ load-large-inspire-test-site-records:
 
 load-knowledge-base:
 	cd kbs && make && cd ..
+
+load-small-sample-of-records:
+	@echo loading from a local source
+	$(BINDIR)/bibupload -ir small.marcxml
+
+load-large-sample-of-records:
+	@echo calling bibconvert
+	(cd bibconvert && make prepare-and-upload-large)
+
+load-full-sample-of-records:
+	@echo calling bibconvert
+	(cd bibconvert && make prepare-and-upload-full)

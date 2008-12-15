@@ -12,7 +12,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a">INST-<xsl:value-of select="./inst"/></subfield>
                     </datafield>
                 </xsl:if>
-                <!--print 270 - this will be there anyway-->
+
+                <!--print 270 - this will be there anyway unless there are no subtags-->
+               <xsl:if test="imc or country.code or state.code or address or phone-number or city">
                 <datafield tag="270" ind1=" " ind2=" ">
                 <xsl:for-each select="*">
 	            <xsl:if test="name()='imc'">
@@ -48,11 +50,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
                 </xsl:for-each>
                 </datafield>
-               
+               </xsl:if>
                 <!--add collection id-->
                 <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">DIRECTORY</subfield>
-                </datafield>
+                </datafield>         
             </record>
 <xsl:text>
 </xsl:text>
