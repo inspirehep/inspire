@@ -1,6 +1,6 @@
-# $Id$
-
 include ../config.mk
+
+# helper definitions:
 
 SMALL = http://cdsware.cern.ch/download/invenio-demo-site-files/SPIRES_small_sample.xml.gz
 LARGE = ftp://ftp.slac.stanford.edu/groups/library/spires/large_test.xml.gz
@@ -8,13 +8,21 @@ XSLFILES = SPIRES2MARC.xsl
 SPIRESDIR = ftp://ftp.slac.stanford.edu/groups/library/spires
 SPIRESFILES = SPIRES_pre_1975.xml.gz SPIRES_1975_1984.xml.gz SPIRES_1985_1994.xml.gz SPIRES_1995_1999.xml.gz SPIRES_2000_2002.xml.gz SPIRES_2003_2005.xml.gz SPIRES_post_2005.xml.gz
 
+# main targets:
+
 all:
-	@echo "The sequence is get-large, clean-large, split-large, convert-large or prepare-large or prepare-full"
+	@echo "Done."
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
-# targets working with big SPIRES dump files follow:
+load-small-sample-of-records: get-small convert-small upload-small
+
+load-large-sample-of-records: get-large clean-large split-large convert-large upload
+
+load-full-sample-of-records: get-full clean-large split-large convert-large upload
+
+# helper targets:
 
 get-small:
 	@echo "* Downloading the file please be patient..."
@@ -81,7 +89,9 @@ test-large-with-xmlmarclint:
 
 upload-small:
 	@echo "* Uploading converted files..."
-	$(BINDIR)/bibupload -ir SPIRES_small_sample.marcxml
+	cp SPIRES_small_sample.marcxml /tmp
+	chmod a+r /tmp/SPIRES_small_sample.marcxml
+	$(BINDIR)/bibupload -ir /tmp/SPIRES_small_sample.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 upload-large:
@@ -121,21 +131,5 @@ upload:
 	    $(BINDIR)/bibupload -ir $${file}; \
         done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
-
-prepare-and-upload-large:
-	@echo for calling large test from upper level Makefile
-	make get-large
-	make clean-large
-	make split-large
-	make convert-large
-	make upload
-
-prepare-and-upload-full:
-	@echo for calling full sample from upper level Makefile
-	make get-full
-	make clean-large
-	make split-large
-	make convert-large
-	make upload
 
 # end of file
