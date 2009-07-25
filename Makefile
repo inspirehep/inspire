@@ -1,6 +1,6 @@
 include config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf
+SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf editor
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)

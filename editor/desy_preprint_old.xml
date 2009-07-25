@@ -1,0 +1,40 @@
+<!-- BibEdit-Template-Name: desy_preprint_old -->
+<!-- BibEdit-Template-Description: old preprints - input test -->
+<record>
+  <datafield tag="037" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+    <subfield code="u"></subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+  </datafield>
+  <datafield tag="269" ind1=" " ind2=" ">
+    <subfield code="c"></subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">INSPIRE-INPUT-TEST-AUG-2009</subfield>
+  </datafield>
+  <datafield tag="690" ind1=" " ind2=" ">
+    <subfield code="a">Preprint</subfield>
+  </datafield>
+  <datafield tag="694" ind1=" " ind2=" ">
+    <subfield code="9">DESY</subfield>
+    <subfield code="a"></subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+    <subfield code="u"></subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a"></subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">Preprint</subfield>
+  </datafield>
+</record>
