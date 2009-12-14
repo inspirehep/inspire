@@ -374,7 +374,7 @@ a.navtrail:hover {
 }
 .pageheader {
    color: #999;
-   font-size: x-small;
+/*   font-size: x-small;*/
    background: transparent;
    padding: 0px;
    margin: 0px;
@@ -874,6 +874,17 @@ a.nearesttermsselected:hover {
    color: #666;
    font-size: x-small;
    background: transparent;
+}
+
+.feedbackbox {
+   background: #FC9;
+   color: #06c;
+   font-size: small;
+}
+
+.feedbackboxbody{
+  margin: 15px;
+   float:right
 }
 .userinfobox {
    color: #06c;
