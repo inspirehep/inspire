@@ -2,7 +2,7 @@
 
 include ../config.mk
 
-CFGFILES = *.cfg
+CFGFILES = citation.cfg wrd.cfg
 CFGDIR = $(ETCDIR)/bibrank
 
 all:
