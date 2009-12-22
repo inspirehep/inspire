@@ -154,7 +154,7 @@ def format(bfo, limit, separator='; ',
 
 
             elif author.has_key('u'):
-                author['u'] = affiliation_prefix + affiliations_separator.join(author['u'].lstrip()) + \
+                author['u'] = affiliation_prefix + affiliations_separator.join(author['u']) + \
                               affiliation_suffix
 
 #
