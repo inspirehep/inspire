@@ -136,9 +136,6 @@ template function generated it.
 <div class="pageheader">
 %(inspect_templates_message)s
  
-<span class="warning"><small>Welcome to an <a class="nearestterms" href="http://www.projecthepinspire.net">Inspire</a> test server.
-Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</small></span>
-
 
 <!-- replaced page header -->
 
@@ -158,6 +155,10 @@ Please go to <a class="nearestterms" href="http://www.slac.stanford.edu/spires/"
   </td>
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
+Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> beta.
+Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</br></br>
+
+
     %(feedback)s
    </div>
   </td>

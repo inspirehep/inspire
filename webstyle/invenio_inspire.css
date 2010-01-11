@@ -876,16 +876,17 @@ a.nearesttermsselected:hover {
    background: transparent;
 }
 
-.feedbackbox {
-   background: #FC9;
+
+.feedbackboxbody{
    color: #06c;
+   background: #FC9;
+   margin: 15px;
+   padding:10px;
+   float:right;   
    font-size: small;
 }
 
-.feedbackboxbody{
-  margin: 15px;
-   float:right
-}
+
 .userinfobox {
    color: #06c;
    font-size: x-small;
