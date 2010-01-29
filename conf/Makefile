@@ -4,7 +4,7 @@ all:
 	@echo "Done."
 
 test:
-	@echo "Done."
+	@echo "Not Implemented."
 
 install:
 	$(INSTALL) -m 664 invenio-local.conf-example $(ETCDIR)

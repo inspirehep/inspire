@@ -7,10 +7,15 @@ PWD=`pwd`
 install: all
 
 all:
+	@echo "Loading knowledge bases..."
 	make delete-weblinks
 	make delete-oalinks
 	make load-weblinks-knowledge-base
 	make load-oalinks-knowledge-base
+	@echo "Done."
+
+test:
+	@echo "Not Implemented."
 
 load-weblinks-knowledge-base:
 	echo "INSERT into fmtKNOWLEDGEBASES (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
