@@ -258,3 +258,91 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
             'feedback_address' : 'feedback@inspire-hep.net',
             }
         return out
+
+
+    def tmpl_pagefooter(self, req=None, ln=CFG_SITE_LANG, lastupdated=None,
+                        pagefooteradd=""):
+        """Creates a page footer
+        
+        Parameters:
+
+        - 'ln' *string* - The language to display
+        
+        - 'lastupdated' *string* - when the page was last updated
+        
+        - 'pagefooteradd' *string* - additional page footer HTML code
+        
+        Output:
+    
+        - HTML code of the page headers
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        if lastupdated:
+            if lastupdated.startswith("$Date: ") or \
+            lastupdated.startswith("$Id: "):
+                lastupdated = convert_datestruct_to_dategui(\
+                                 convert_datecvs_to_datestruct(lastupdated),
+                                 ln=ln)
+            msg_lastupdated = _("Last updated") + ": " + lastupdated
+        else:
+            msg_lastupdated = ""
+
+        out = """
+<div class="pagefooter">
+%(pagefooteradd)s
+<!-- replaced page footer -->
+ <div class="pagefooterstripeleft">
+  %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/submit?ln=%(ln)s">%(msg_submit)s</a>&nbsp;::&nbsp;<a class="footer" href="%(sitesecureurl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+  <br />
+  %(msg_poweredby)s <a class="footer" href="http://cdsware.cern.ch/">Invenio</a> v%(version)s
+  <br />
+  %(msg_maintainedby)s <a class="footer" href="mailto:%(sitesupportemail)s">%(sitesupportemail)s</a>
+  <br />
+  %(msg_lastupdated)s
+ </div>
+ <div class="pagefooterstriperight">
+  %(languagebox)s
+ </div>
+<!-- replaced page footer -->
+</div>
+</body>
+</html>
+        """ % {
+          'siteurl' : CFG_SITE_URL,
+          'sitesecureurl' : CFG_SITE_SECURE_URL,
+          'ln' : ln,
+          'langlink': '?ln=' + ln,
+
+          'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
+          'sitesupportemail' : CFG_SITE_SUPPORT_EMAIL,
+
+          'msg_search' : _("Search"),
+          'msg_submit' : _("Submit"),
+          'msg_personalize' : _("Personalize"),
+          'msg_help' : _("Help"),
+
+          'msg_poweredby' : _("Powered by"),
+          'msg_maintainedby' : _("Problems/Questions to"),
+
+          'msg_lastupdated' : msg_lastupdated,
+          'languagebox' : self.tmpl_language_selection_box(req, ln),
+          'version' : self.trim_version(CFG_VERSION),
+
+          'pagefooteradd' : pagefooteradd,
+
+          }
+        return out
+
+    def trim_version(self, version = CFG_VERSION):
+        """Take CFG_VERSION and return a sanitized version for display"""
+
+        try:
+            [major, minor]  = version.split('.')[:2]
+            return "%s.%s" % (major, minor)
+        except ValueError:
+            return version
+        
+
