@@ -1,4 +1,8 @@
 include config.mk
+-include config-local.mk
+#
+# Note that local makefile configurations can be defined in config-local.mk to override config.mk
+
 
 SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf editor
 
@@ -191,14 +195,27 @@ reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (1, 'HEP', '970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:"DIRECTORY"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (1, 'INSPIRE', NULL, 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (2, 'HEP','970__a:\'SPIRES\'', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (3,'Institutions','980__a:"INSTITUTIONS"', 0, NULL, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (4, 'Conferences','980__a:"CONFERENCES"', 0, NULL, NULL)" | $(BINDIR)/dbexec
+#	echo "INSERT INTO collection VALUES (5,'HEPNames','980__a:"AUTHORS"', 0, NULL, NULL)" | $(BINDIR)/dbexec
+
+	echo "INSERT INTO collection_collection VALUES (1 , 2, 'r', 4)"|$(BINDIR)/dbexec
+	echo "INSERT INTO collection_collection VALUES (1 , 3, 'r', 2)"|$(BINDIR)/dbexec
+	echo "INSERT INTO collection_collection VALUES (1 , 4, 'r', 1)"|$(BINDIR)/dbexec
+#	echo "INSERT INTO collection_collection VALUES (1 , 5, 'r', 3)"|$(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 200)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 3, 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
-	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'INSPIRE')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'INSPIRE')" |$(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (2, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (2, 'fr', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (4, 'fr', 'ln', 'Les Conférences')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (3, 'fr', 'ln', 'Les Institutions')" | $(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
+
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
