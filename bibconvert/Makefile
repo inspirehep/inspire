@@ -100,14 +100,6 @@ upload-small:
 	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
-upload-large: 
-	@echo "* Uploading converted files..."
-	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
-		echo "Uploading from " $${file} "..." ;\
-	    $(BINDIR)/bibupload -ir $${file}; \
-     done
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-
 # upload-small that uses sudo internally
 supload-small:
 	@echo "* Uploading converted files..."
@@ -116,6 +108,14 @@ supload-small:
 	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 		
+upload-large: 
+	@echo "* Uploading converted files..."
+	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
+		echo "Uploading from " $${file} "..." ;\
+	    $(BINDIR)/bibupload -ir $${file}; \
+     done
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
 # upload-large that uses sudo internally
 supload-large:
 	@echo "* Uploading converted files..."

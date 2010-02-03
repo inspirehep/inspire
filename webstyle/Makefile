@@ -5,7 +5,7 @@ include ../config.mk
 IMGFILES = inspire_logo.png invenio_inspire.css
 LIBFILES = webstyle_templates_inspire.py
 
-all:
+all: 
 	@echo "Done."
 
 test:
