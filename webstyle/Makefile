@@ -15,4 +15,7 @@ install:
 	$(INSTALL) -m 664 $(IMGFILES) $(WEBDIR)/img
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
 
+clean:
+	@rm -f *.orig *~
+
 # end of file

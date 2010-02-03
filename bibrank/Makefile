@@ -13,3 +13,6 @@ test:
 
 install:
 	$(INSTALL) -m 664 $(CFGFILES) $(CFGDIR)
+
+clean:
+	@rm -f *.orig *~

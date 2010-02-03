@@ -13,3 +13,6 @@ test:
 
 install:
 	$(INSTALL) -m 664 $(BFTFILES) $(BFTDIR)
+
+clean:
+	@rm -f *.orig *~

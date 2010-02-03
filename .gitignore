@@ -3,3 +3,5 @@ bibconvert/large_test*
 *#
 *.pyc
 *.bk
+*.orig
+config-local.mk

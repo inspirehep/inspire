@@ -11,3 +11,6 @@ test:
 
 install:
 	$(INSTALL) -m 664 $(XMLFILES) $(XMLDIR)
+
+clean:
+	@rm -f *.orig *~

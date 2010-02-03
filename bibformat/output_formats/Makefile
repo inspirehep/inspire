@@ -13,3 +13,6 @@ test:
 
 install:
 	$(INSTALL) -m 664 $(BFOFILES) $(BFODIR)
+
+clean:
+	@rm -f *.orig *~

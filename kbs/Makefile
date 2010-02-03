@@ -37,3 +37,6 @@ delete-weblinks:
 	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='WEBLINKS')" | $(BINDIR)/dbexec
 delete-oalinks:
 	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='OALINKS')" | $(BINDIR)/dbexec
+
+clean:
+	@rm -f *.orig *~
