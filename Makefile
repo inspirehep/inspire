@@ -93,6 +93,7 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (13, 'journal', 'journal')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (14, 'record ID', 'recid')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (15, 'affiliation', 'affiliation')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (16, 'collaboration', 'collaboration')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
@@ -156,6 +157,7 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 12, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 33, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 47, 80)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (16, 35, 100)" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table idxINDEX:"
 	echo "TRUNCATE idxINDEX" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (1, 'global', 'global', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
@@ -167,6 +169,8 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (7, 'title', 'title', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (8, 'year', 'year', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (9, 'journal', 'journal', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (10, 'affiliation', 'affiliation', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (11, 'collaboration', 'collaboration', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table idxINDEX_field:"
 	echo "TRUNCATE idxINDEX_field" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 1)" | $(BINDIR)/dbexec
@@ -178,6 +182,8 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (7, 2)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (8, 10)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (9, 13)" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (10, 15)" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (11, 16)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-test-site-field-configuration."
 	@echo ">>> You may want to run inveniocfg --reset-fieldnames now."
 
