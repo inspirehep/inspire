@@ -17,6 +17,12 @@ all:
 test:
 	@echo "Not Implemented."
 
+delete-weblinks:
+	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='WEBLINKS')" | $(BINDIR)/dbexec
+
+delete-oalinks:
+	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='OALINKS')" | $(BINDIR)/dbexec
+
 load-weblinks-knowledge-base:
 	echo "INSERT into fmtKNOWLEDGEBASES (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
 	echo " create temporary table templinks like fmtKNOWLEDGEBASEMAPPINGS;\
@@ -32,11 +38,6 @@ LOAD DATA LOCAL INFILE '$(PWD)/oalinks.dat' replace INTO TABLE templinks;\
 update templinks set id_fmtKNOWLEDGEBASES= (select id from fmtKNOWLEDGEBASES where name='WEBLINKS');\
 insert into  fmtKNOWLEDGEBASEMAPPINGS  (m_key,m_value,id_fmtKNOWLEDGEBASES) select m_key,m_value,id_fmtKNOWLEDGEBASES from templinks ;\
 "|$(BINDIR)/dbexec
-
-delete-weblinks:
-	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='WEBLINKS')" | $(BINDIR)/dbexec
-delete-oalinks:
-	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='OALINKS')" | $(BINDIR)/dbexec
 
 clean:
 	@rm -f *.orig *~

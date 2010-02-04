@@ -3,7 +3,7 @@ include config.mk
 #
 # Note that local makefile configurations can be defined in config-local.mk to override config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf editor
+SUBDIRS = bibconvert bibformat webstyle bibrank conf editor
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -13,9 +13,16 @@ test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
 
-install: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+install: 
+	@echo "Installing new code and support files..."
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	@echo "Done.  You may want to copy $(ETCDIR)/invenio-local.conf-example to $(ETCDIR)/invenio-local.conf, edit commented parts, run inveniocfg --update-all --reset-all and restart Apache now."
+	@echo "To install database changes, run 'make install-dbchanges'."
+
+install-dbchanges: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+	@echo "Installing database changes..."
+	@cd kbs && make install && cd ..
+	@echo "Done."
 
 clean:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
