@@ -4,19 +4,22 @@
 
 
 <div class="detailed_record_info">
-<BFE_INSPIRE_TITLE prefix="<center><big><big><strong>" suffix=".</strong></big></big></center>" force_title_case="yes"/>
+<BFE_INSPIRE_TITLE prefix="<center><big><big><strong>"
+suffix=".</strong></big></big></center>" force_title_case="yes"
+highlight="yes" />
 
 
 <p align="center">
 <BFE_CERN_AUTHORS suffix="<br />" limit=25 interactive="yes" print_affiliations="yes" affiliations_separator=' & ' separator=', ' limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"  affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <BFE_INSPIRE_DATE prefix="<br />" suffix="<br />"/>
-<BFE_INSPIRE_PUBLI_INFO prefix="<br /><br />Published in:<strong>" suffix="</strong><br />"/>
+<BFE_INSPIRE_PUBLI_INFO prefix="<br /><br /><strong>" suffix="</strong><br />"/>
 <BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
 <BFE_PUBLISHER prefix="<small>" suffix="</small>"/>
 <BFE_PLACE prefix="<small>" suffix="</small>"/>
 <BFE_ISBN prefix="<br />ISBN: " />
 
 </p>
+
 
 <p style="margin-left: 15%; width: 70%">
 
@@ -29,7 +32,7 @@ suffix_fr="</small><br />"
 
 
 <BFE_KEYWORDS
-prefix="<br /><small><strong>Keyword(s): </strong></small>"
+ prefix="<br /><small><strong>Keyword(s): </strong></small>"
 keyword_prefix="<small>"
 keyword_suffix="</small>" />
 

@@ -1428,6 +1428,26 @@ input.hyperlinkformSubmitButton {
     padding: 3px;
 }
 /* end of WebAlert module */
+/* BibClassify module */
+.tagCloud {
+    margin: auto;
+    clear: both;
+}
+.tagCloud span {
+    font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
+    margin-right: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding: 0;
+}
+.tagCloud a {
+    text-decoration: none;
+}
+.tagCloud a:hover {
+    text-decoration: underline;
+}
+/* end of BibClassify module */
 
 /* externalcollections */
 .externalcollectionsbox {
@@ -1493,29 +1513,43 @@ input.hyperlinkformSubmitButton {
 
 /* Start 'detailed record' boxes*/
 
-div.detailed, div.mini-panel {
+div.detailedrecordbox, div.detailedrecordminipanel {
     width:90%;
     margin:auto;
     position:relative;
     max-width: 1280px;
 }
-div.detailed div.content {
+div.detailedrecordbox img, div.detailedrecordminipanel img{
+   border:none;
+}
+div.detailedrecordtabs{
+   border-bottom: 2px solid #36c;
    position:relative;
-   top:1em;
 }
-div.detailed img, div.mini-panel img{
-    border:none;
+div.detailedrecordtabs div {
+   width:100%;
+   margin:0 auto;
+   position:relative;
+   z-index:1;
+   width:100%;
+   padding:0;
+   bottom:-2px;
 }
-div.detailed div.content {
-   border: 1px solid #06c;
+div.detailedrecordbox div.detailedrecordboxcontent{
+   border-bottom: 2px solid #36c;
+   border-right: 2px solid #36c;
+   border-left: 2px solid #36c;
    padding-bottom:3px;
+   padding-top:1px; /* Needed, otherwise tabs with paperclip get
+                       messed up, but created a small gap at top
+                       of box. Override with !important if needed*/
 }
-div.mini-panel {
+div.detailedrecordminipanel{
    border: 1px solid #ddd;
    padding-top:3px;
    padding-bottom:3px;
 }
-div.mini-panel{
+div.detailedrecordminipanel{
    background-color:#f7f7f7;
 }
 .notopgap    { margin: 0; height:0;}
@@ -1525,64 +1559,100 @@ div.mini-panel{
 .top-left-folded {
    height: 10px;
 }
-
+* html .top-left-folded, * html .top-right-folded{
+   /*IE6 hack*/
+   display:none
+}
 /* tabs as used in detailed record pages */
-ul.tabs{
-   margin-top:5px;
-   margin-bottom:5px;
+ul.detailedrecordtabs{
+   margin-top:0px;
+   margin-bottom:0px;
    list-style-type:none;
+   margin-left:0;
+   padding-left:0;
+   width:100%;
    text-align:center;
 }
-.tabs li{
-   display:inline;
+.detailedrecordtabs li{
+   display:block;
+   margin:0;
+   float: left;
 }
-.tabs li a, .tabs li a:hover{
-   border-top: 1px solid #06c;
-   border-right: 1px solid #06c;
-   border-bottom: 1px solid #06c;
-   border-left: none;
+* html .detailedrecordtabs li{
+   /*IE 6 hack*/
+   width:1%;
+   white-space: nowrap;
+}
+*html #tabsSpacer {
+   /*IE 6 hack*/
+   display: none;
+}
+.detailedrecordtabs li a{
+   border-top: 2px solid #79D;
+   border-right: 2px solid #79D;
+   border-bottom: 2px solid #36c;
+   border-left: 2px solid #79D;
+   margin-right:10px;
    background-color: #FFF;
    padding:4px;
    color:#06c;
    font-size:x-small;
    font-weight:bold;
    text-decoration:none;
+   position:relative;
+   display:block;
+   height:100%;
    zoom:100%; /*We loose CSS validity here, but necessary because of ie7*/
 }
-.tabs li.on a, .tabs li.on a:hover{
-   background-color: #69c;
-   color: #FFF
+.detailedrecordtabs li a:hover{
+   text-decoration:underline;
 }
-.tabs li.disabled a{
-   color:#ccf;
+.detailedrecordtabs li.on a{
+   color:#36c;
+   border-bottom: 2px solid #fff;
+   border-top: 2px solid #36c;
+   border-right: 2px solid #36c;
+   border-left: 2px solid #36c;
+}
+.detailedrecordtabs li.on a:hover, .detailedrecordtabs li.disabled a:hover{
+   text-decoration:none;
+}
+.detailedrecordtabs li.disabled a{
+   color:#36c;
    cursor:default;
+   border-top: 2px solid #ccf;
+   border-right: 2px solid #ccf;
+   border-left: 2px solid #ccf;
 }
-.tabs li.first a, .tabs li.first a:hover{
-   border-left: 1px solid #06c;
+.detailedrecordtabs li.first a{
+   border-left: 2px solid #79d;
+}
+.detailedrecordtabs li.first.on a{
+   border-left: 2px solid #36c;
 }
 
-/* Actions in mini-box in detailed view */
-ul.detailedRecordActions{
+/* Actions in mini-panel of detailed record view*/
+ul.detailedrecordactions{
    list-style-image: url(arrow_link-icon-15x11-right.gif) ;
    padding-left: 1em;
    text-align:left;
    margin:0.05em;
 }
-.detailedRecordActions, .detailedRecordActions a{
+.detailedrecordactions{
    text-decoration:none;
    color:#555;
    font-weight:700;
    font-size:small;
 }
 
-/* Grading stars for mini-panel in detailed view*/
-#miniReview div.star a{
+/* Grading stars for mini-panel in detailed record view*/
+#detailedrecordminipanelreview div.star a{
    text-indent:-9000px; /*Hide text*/
    height:30px;
    width:30px;
    float:left;
 }
-#miniReview div.star{
+#detailedrecordminipanelreview div.star{
    height:30px !important;
    float:left;
    clear:none;
@@ -1593,27 +1663,27 @@ ul.detailedRecordActions{
 #miniReview div.star:hover{
    background-image:url(star-icon-30x30.gif) !important;
 }
-#miniReview:hover div.full, #miniReview:hover div.half{
+#detailedrecordminipanelreview:hover div.full, #detailedrecordminipanelreview:hover div.half{
    background-image:url(star_empty-icon-30x30.gif) ;
 }
-#miniReview div.full{
+#detailedrecordminipanelreview div.full{
    background-image:url(star-icon-30x30.gif) ;
 }
-#miniReview div.half{
+#detailedrecordminipanelreview div.half{
    background-image:url(star_half-icon-30x30.gif) ;
 }
 
-/* Short bib notice displayed as sheet of paper in detailed record pages */
-#commentHB {
+/* Short reminder displayed as sheet of paper in detailed record pages */
+#detailedrecordshortreminder {
    background: #fff url(paper-texture-128x128.gif) repeat top left;
-   margin-top:10px;
+   margin: 10px 10px 0px 10px;
    padding:4px;
    border-bottom: 1px solid #CCC;
    border-right: 1px solid #CCC;
    border-top: 1px solid #DDD;
    border-left: 1px solid #DDD;
 }
-#commentHB #clip {
+#detailedrecordshortreminder #clip {
    position:relative;
    clear:none;
    float:left;
@@ -1623,7 +1693,7 @@ ul.detailedRecordActions{
    width:72px;
    background: transparent url(paper_clip-72x72.gif) no-repeat top left;
 }
-#commentHB #HB{
+#detailedrecordshortreminder #HB{
    position:relative;
    left: -50px;
 }
@@ -1644,6 +1714,40 @@ text-decoration: none;
 text-decoration:underline;
 }
 
+/* cite summary output */
+
+#citesummary td {
+   padding-left: 30px;
+}
+
+
+/*Table columns*/
+.oddtablecolumn
+{
+    background-color: #f0f0ff;
+}
+.pairtablecolumn
+{
+    background-color: #fafaff;
+}
+.scrollableframe
+{
+    overflow-y: auto;
+    min-height: 10px;
+    max-height: 300px;
+    height: auto;
+    width: 900px;
+}
+.normalframe
+{
+    width: 600px;
+}
+.brtable
+{
+    width: 100%;
+}
+
+/* BibCirculation CSS */
 
 /* styles for detailed format */
 
@@ -1686,6 +1790,117 @@ padding:0;
  margin:.5ex 0 1.5ex 0;
  }
 
+.infoboxmsg{
+    background-color: #cadff5;
+    padding: 20px;
+    color: #336598;
+    border-collapse: collapse;
+    border: 1px solid #336598;
+    text-align: left;
+    width: 50%;
+}
+
+.clear {
+    clear:both;
+    line-height:1px;
+}
+
+/* Rollover menus */
+
+.menu ul {
+	list-style:none;
+	margin:0;
+	padding:0 0 0 0px;
+}
+
+.menu li {
+	display:block;
+	float:left;
+	text-decoration:none;
+	padding: 7px;
+	height:100%;
+	margin-right:10px;
+	/*/*//*/
+	display : none;
+	/* */
+}
+.menu .hassubmenu{
+	position:relative;
+}
+
+.menu .hassubmenu a{
+        display: inline-block; /* Necessary on IE */
+	padding-right:12px;
+	background: transparent url(drop_down_menu_arrow_down_b.gif) no-repeat right center;
+}
+.menu .on.hassubmenu a{
+	background: transparent url(drop_down_menu_arrow_down_b.gif) no-repeat right center;
+}
+.menu .on {
+	height:100%;
+}
+.menu a img {
+	vertical-align:middle;
+}
+.menu img{
+	border:none;
+}
+.menu .right {
+	float:right;
+	margin-right:2px;
+	padding-right:0;
+	padding-left:0;
+	margin-left:0;
+	background-image:none;
+}
+.menu a{
+	white-space:nowrap;
+	text-decoration:none;
+	margin:0;
+	padding:0px 6px;
+}
+.menu ul.subsubmenu {
+	display:none;
+	position: absolute;
+	background-image:none;
+	top: 1em;
+	left: 0;
+        z-index: 99;
+        text-align: left;
+}
+.menu ul.subsubmenu li {
+	display:list-item !important;
+	float: none !important;
+	position: relative;
+	border-bottom: 1px solid #36c;
+	border-left: 1px solid #36c;
+	border-right: 1px solid #36c;
+	background-color:#fff;
+        background-image:none !important;
+}
+.menu ul.subsubmenu li a, .menu div ul.subsubmenu li a:hover, .menu div ul.subsubmenu li a:visited{
+	background-color:transparent;
+        background-image:none !important;
+	display:block;
+        text-transform:capitalize;
+        color: #36c;
+}
+.menu ul.subsubmenu li a:hover{
+	text-decoration:underline
+}
+.menu :hover ul {
+	display:block;
+	position: absolute;
+}
+/* Override/Customize rollover menus in some cases*/
+.menu .headermoduleboxbody .hassubmenu a{
+	/*background: transparent url(drop_down_menu_arrow_down_lb.gif) no-repeat right center;*/
+        background-image:url(drop_down_menu_arrow_down_lb.gif)
+}
+.menu .headermoduleboxbody .hassubmenu a.header:hover{
+	/*background: transparent url(drop_down_menu_arrow_down_b.gif) no-repeat right center;*/
+        background-image:url(drop_down_menu_arrow_down_b.gif)
+}
 
 
 /* end of inspire.css */

@@ -18,40 +18,48 @@
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - report numbers (other than arxiv)
+"""BibFormat element - titles
 """
 __revision__ = "$Id$"
 
 import cgi
 from urllib import quote
-from bfe_INSPIRE_arxiv import get_arxiv
+import re
 
-def format(bfo, links="no", arxiv="no"):
+
+def format(bfo,  highlight="no", force_title_case="no"):
     """
     Provides title  converts to title case (Upper Cased First Letters) if
     the title is in all caps
 
-    @param links yes(not implemented)->display links to repositories if known no(default)->  value only
-    @param arxiv no (default)-> excludes arxiv numbers yes-> includes
     
     """
 
+    titles = bfo.fields('245', 1)
 
-    primary_report_numbers = bfo.fields('037__')
-    additional_report_numbers = bfo.fields('088__')
-    report_numbers = primary_report_numbers
-    report_numbers.extend(additional_report_numbers)
-    report_numbers = [num.get('a','') for num in report_numbers]
-    
-    if arxiv.lower == "no":
-        arxiv=get_arxiv(bfo, category="no")
-        report_numbers=filter(lambda x:x not in arxiv,report_numbers)
-    
-   # if links.lower == 'yes':
-        # nothing here...
-    out = ', '.join(report_numbers)
 
-    return(out)
+    
+    out = ""
+
+
+    for title in titles:
+        out += title.get('a')
+        
+
+    if highlight == 'yes':
+        from invenio import bibformat_utils
+        out = bibformat_utils.highlight(out, bfo.search_pattern,
+                                        prefix_tag="<span style='font-weight: bolder'>",
+                                        suffix_tag='</style>')
+
+
+    if force_title_case.lower()=="yes" and (out.upper()==out or re.search('THE ',out)):   #title is allcaps
+        out=' '.join([word.capitalize() for word in out.split(' ')])   # should not cap 1 letter words...
+
+
+    return out
+
+    
     
 def escape_values(bfo):
     """

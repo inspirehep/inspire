@@ -148,14 +148,14 @@ template function generated it.
   <td align="left">
     <div>
       <a href="%(siteurl)s?ln=%(ln)s">
-       <img border="0" src="%(cssurl)s/img/inspire_logo.png" alt="INSPIRE"
+       <img border="0" src="%(cssurl)s/img/inspire_logo_beta.png" alt="INSPIRE"
  />
       </a>
     </div>
   </td>
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
-Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> beta.
+Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> β.
 Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</br></br>
 
 
