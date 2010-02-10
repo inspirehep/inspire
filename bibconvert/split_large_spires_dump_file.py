@@ -6,8 +6,10 @@ dump from SPIRES.
 -f:  filename (default: large-test.xml)
 -X:  erase all previously created split files (otherwise pick up
 -numbering where you left off)
+-n:  number of records in a chunk (default 1000)
+-c:  (deprecated) run clean-spires-data.sh
 
-Output: many small "<input_filename>_000234" files 
+Output: many small "<input_filename>_000234" files
 """
 
 import getopt
@@ -17,11 +19,12 @@ import os
 def main(argv):
 	erase=0
 	input_filename = "large_test.xml"
-	try:                                
-		opts, args = getopt.getopt(argv, "f:Xc")
+	nb_records_in_chunk = 1000
+	try:
+		opts, args = getopt.getopt(argv, "f:n:Xc")
 	except getopt.GetoptError, err:
 		print str(err)
-		usage()                         
+		usage()
 		sys.exit(2)
 	opts.sort()
 	clean=0
@@ -32,7 +35,11 @@ def main(argv):
 			clean =1
 	       	if opt =='-X':
 			erase = 1
+		if opt == '-n':
+			nb_records_in_chunk = int(val)
 				#sys.exit()
+
+
 
 
 	lastnum=0
@@ -51,7 +58,7 @@ def main(argv):
 				
 	
        	nb_records = lastnum
-	nb_records_in_chunk = 1000
+
 
 	record = ""
 	f = open(input_filename, "r")
@@ -59,8 +66,7 @@ def main(argv):
 	out
 	for line in f:
 		out.write(line)
-		if line.startswith("</goal_record>"):
-			print nb_records
+		if line.startswith(" </goal_record>"):
 			nb_records += 1
 			if nb_records % nb_records_in_chunk == 0:
 				out.write("\n</records>")
@@ -69,8 +75,10 @@ def main(argv):
 					os.system("sh clean-spires-data.sh<"+out.name+">"+out.name+".clean")
 				out=open("%s_%09d" % (input_filename, nb_records+nb_records_in_chunk), "w")
 				out.write( "<records>")
+				print nb_records
+			
+
 	f.close()
-	out.write("\n</records>")
 	out.close()
 
 

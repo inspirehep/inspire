@@ -9,7 +9,10 @@ all:
 	@echo "Done."
 
 test:
-	@echo "Not implemented."
+	@echo "Nothing to test."
 
 install:
 	$(INSTALL) -m 664 $(CFGFILES) $(CFGDIR)
+
+clean:
+	@rm -f *.orig *~

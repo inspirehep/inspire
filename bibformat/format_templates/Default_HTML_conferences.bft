@@ -1,0 +1,11 @@
+<name>Default HTML Conferences</name>
+<description>Default short output of conference records</description>
+<strong><BFE_TITLE_BRIEF highlight="no"/></strong>
+
+
+<BFE_CONFERENCE_LOCATION prefix="" suffix="" separator=" " nbMax="" default="" escape="" /><BFE_AUTHORS limit="4" prefix=" / " extension=" ;<em> et al</em> " highlight="no"/>
+
+
+<BFE_CONFERENCE_DATE prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
+
+<BFE_URL prefix='<br /><small>' style="note" show_icons="yes" suffix="</small>" />

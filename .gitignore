@@ -1,0 +1,9 @@
+bibconvert/large_test*
+bibconvert/SPIRES_small_sample.marcxml
+bibconvert/SPIRES_small_sample.xml
+*~
+*#
+*.pyc
+*.bk
+*.orig
+config-local.mk

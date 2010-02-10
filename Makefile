@@ -1,6 +1,9 @@
 include config.mk
+-include config-local.mk
+#
+# Note that local makefile configurations can be defined in config-local.mk to override config.mk
 
-SUBDIRS = bibconvert bibformat webstyle kbs bibrank conf editor
+SUBDIRS = bibconvert bibformat webstyle bibrank conf editor
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -9,6 +12,22 @@ all:
 test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
+
+install: 
+	@echo "Installing new code and support files..."
+	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
+	@echo "Done.  You may want to copy $(ETCDIR)/invenio-local.conf-example to $(ETCDIR)/invenio-local.conf, edit commented parts, run inveniocfg --update-all --reset-all and restart Apache now."
+	@echo "To install database changes, run 'make install-dbchanges'."
+
+install-dbchanges: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+	@echo "Installing database changes..."
+	@cd kbs && make install && cd ..
+	@echo "Done."
+
+clean:
+	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
+	@rm -f *.orig *~
+	@echo "Done."
 
 reset-inspire-test-site-field-configuration:
 	@echo ">>> Resetting table tag:"
@@ -187,10 +206,6 @@ reset-inspire-test-site-field-configuration:
 	@echo ">>> Done reset-inspire-test-site-field-configuration."
 	@echo ">>> You may want to run inveniocfg --reset-fieldnames now."
 
-install: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
-	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
-	@echo "Done.  You may want to copy $(ETCDIR)/invenio-local.conf-example to $(ETCDIR)/invenio-local.conf, edit commented parts, run inveniocfg --update-all --reset-all and restart Apache now."
-
 reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectionname" | $(BINDIR)/dbexec
@@ -198,36 +213,14 @@ reset-inspire-test-site-collection-configuration:
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (1, 'HEP', '970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:"DIRECTORY"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:"INSTITUTIONS"', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 200)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 3, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
-	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" |$(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
+
 	$(BINDIR)/webcoll -u admin
+#	@sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/webcoll -u admin 
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
-
-load-inspire-test-site-records:
-	(cd bibconvert && make)
-	$(BINDIR)/bibupload -ir bibconvert/test_record_spires_converted.xml
-
-load-all-inspire-test-site-records:
-	(cd bibconvert && make)
-	$(BINDIR)/bibupload -ir bibconvert/inspire_set_converted.xml
-
-load-large-inspire-test-site-records:
-	(cd bibconvert && make)
-	$(BINDIR)/bibupload -ir bibconvert/large_converted.xml
-
-load-knowledge-base:
-	cd kbs && make && cd ..
-
-load-small-sample-of-records:
-	(cd bibconvert && make load-small-sample-of-records)
-
-load-large-sample-of-records:
-	(cd bibconvert && make load-large-sample-of-records)
-
-load-full-sample-of-records:
-	(cd bibconvert && make load-full-sample-of-records)
