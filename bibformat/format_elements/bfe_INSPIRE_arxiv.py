@@ -100,10 +100,10 @@ def get_arxiv(bfo,category="yes"):
     report_numbers.extend(additional_report_numbers)
 
     arxiv = [num.get('a','') for num in report_numbers if num.get('9') ==
-    'arxiv' or num.get('s')=='arxiv']
+    'arXiv' or num.get('s')=='arXiv']
 
     if category=="yes":
-        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arxiv' or num.get('9')=='arxiv']
+        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
         arxiv=map(append_cat,arxiv,cats)
         
     return(arxiv)
