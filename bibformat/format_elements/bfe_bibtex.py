@@ -57,8 +57,8 @@ def format(bfo, width="50"):
     #
     key = ''
     for external_keys in bfo.fields("035"):
-        if external_keys['9'] == "SPIRESTeX" and external_keys['a']:
-            key = external_keys['a']
+        if external_keys['9'] == "SPIRESTeX" and external_keys['z']:
+            key = external_keys['z']
     if not key:
         #contruct key in spires like way  need to store an make unique
         ####FIXME

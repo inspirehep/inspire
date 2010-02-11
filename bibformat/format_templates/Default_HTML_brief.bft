@@ -14,10 +14,10 @@
 
 <li>
  <a href="<BFE_SERVER_INFO var="recurl">/references">References</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=hx">BibTeX</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=hlxu">LaTeX(US)</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=hlxe">LaTeX(EU)</a>
- | <a href="<BFE_SERVER_INFO var="recurl">?of=xe">EndNote</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">/export/hx">BibTeX</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxu">LaTeX(US)</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxe">LaTeX(EU)</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">/export/xe">EndNote</a>
 </li>
 <BFE_INSPIRE_LINKS prefix='<li>' suffix='</li>' separator='</li><li>'/>
 </ul>
