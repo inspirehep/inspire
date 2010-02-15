@@ -2,11 +2,11 @@
 <name>LaTeX(US)</name>
 <description>Creates LaTeX format of a record in US Style</description>
 <pre>
-%\cite{<BFE_FIELD tag="035a" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
-\bibitem{<BFE_FIELD tag="035a" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
+%\cite{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" suffix=""/>}
+\bibitem{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
   <BFE_CERN_AUTHORS limit='8' separator=', ' extension="{\it et al.}" name_last_first="yes" print_links="no" />
   <BFE_CERN_TITLE_BRIEF prefix="%``" suffix="''"  force_title_case="yes" />
-  <BFE_INSPIRE_PUBLI_INFO style="us"/>
-  <BFE_INSPIRE_ARXIV links="no" category="yes" />	
+  <BFE_INSPIRE_PUBLI_INFO style="us" suffix="
+"/>  <BFE_INSPIRE_ARXIV links="no" category="yes" />	
 </pre>
     
