@@ -673,6 +673,7 @@
     <xsl:param name = "ind1"><xsl:text> </xsl:text></xsl:param>
     <xsl:param name = "ind2"><xsl:text> </xsl:text></xsl:param>
     <xsl:param name = "subfield"/>
+    <xsl:param name = "code"/>
     <xsl:param name = "source" />
     <xsl:param name = "sub2"/>
     <xsl:param name = "sub2_val" />
