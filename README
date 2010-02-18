@@ -1,16 +1,15 @@
-$Id$
+INSPIRE git repository
+----------------------
 
-This is a CVS space for the Inspire project.  It contains
-Inspire-specific code.  For generic Invenio CVS code, please see 
-the 'cds-invenio' CVS project.
+INSPIRE sources are to be installed after the CDS Invenio sources.
 
-The goal of this repository is to install the Inspire instance of Invenio in the following way:
+You can customize some things in config-local.mk, for example on
+Debian GNU/Linux, use:
 
-  $ cd cds-invenio
-  $ make install
-  $ cd ../inspire
-  $ make install
+   $ cat config-local.mk
+   INSTALL = install -g www-data -m 775
 
-so that this repository can overwrite or supply additional files to the standard Invenio codebase.
+To install a small INSPIRE demo site from scratch, you can use the
+attached conf/inspire-recreate-demo-site script for inspiration.
 
 - end of file -
