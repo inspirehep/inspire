@@ -1,14 +1,18 @@
 [Invenio]
-#CFG_SITE_URL = http://pcuds89.cern.ch
-#CFG_SITE_SECURE_URL = https://pcuds89.cern.ch
-#CFG_SITE_ADMIN_EMAIL = tibor.simko@cern.ch
-#CFG_SITE_SUPPORT_EMAIL = tibor.simko@cern.ch
+### BEGIN-customize-me
+CFG_SITE_URL = http://pcuds33.cern.ch
+CFG_SITE_SECURE_URL = https://pcuds33.cern.ch
+CFG_SITE_ADMIN_EMAIL = tibor.simko@cern.ch
+CFG_SITE_SUPPORT_EMAIL = tibor.simko@cern.ch
 #CFG_DATABASE_HOST = localhost
-#CFG_DATABASE_NAME = inspiredev
-#CFG_DATABASE_USER = inspire
-#CFG_DATABASE_PASS = hidden123
-#CFG_SITE_LANG = en
-#CFG_SITE_LANGS = en,fr
+#CFG_DATABASE_PORT = 3306
+#CFG_DATABASE_NAME = cdsinvenio
+#CFG_DATABASE_USER = cdsinvenio
+#CFG_DATABASE_PASS = my123p$ss
+#CFG_BIBDOCFILE_USE_XSENDFILE = 1
+### END-customize-me
+CFG_SITE_LANG = en
+CFG_SITE_LANGS = bg,ca,de,el,en,es,fr,hr,it,ja,no,pl,pt,sk,sv,zh_CN,zh_TW
 CFG_SITE_NAME = HEP
 CFG_SITE_NAME_INTL_en = HEP
 CFG_SITE_NAME_INTL_fr = HEP
@@ -35,3 +39,7 @@ CFG_WEBSTYLE_TEMPLATE_SKIN = inspire
 CFG_WEBSEARCH_INSTANT_BROWSE = 0
 CFG_WEBSEARCH_SPLIT_BY_COLLECTION = 0
 CFG_INSPIRE_SITE = 1
+CFG_ACCESS_CONTROL_LEVEL_ACCOUNTS = 5
+CFG_WEBCOMMENT_ALLOW_COMMENTS = 0
+CFG_WEBCOMMENT_ALLOW_REVIEWS = 0
+CFG_WEBCOMMENT_ALLOW_SHORT_REVIEWS = 0
