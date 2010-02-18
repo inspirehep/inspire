@@ -13,15 +13,20 @@ test:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make test && cd .. ;)
 	@echo "Done.  Please run make install now."
 
-install: 
+install:
 	@echo "Installing new code and support files..."
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	@echo "Done.  You may want to copy $(ETCDIR)/invenio-local.conf-example to $(ETCDIR)/invenio-local.conf, edit commented parts, run inveniocfg --update-all --reset-all and restart Apache now."
 	@echo "To install database changes, run 'make install-dbchanges'."
 
-install-dbchanges: reset-inspire-test-site-field-configuration reset-inspire-test-site-collection-configuration
+install-dbchanges: reset-inspire-field-configuration \
+                 reset-inspire-index-configuration \
+                 reset-inspire-collection-configuration \
+                 reset-inspire-search-sort-field-configuration \
+                 reset-inspire-useraccess-configuration \
+                 reset-inspire-submission-configuration
 	@echo "Installing database changes..."
-	@cd kbs && make install && cd ..
+	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
 
 clean:
@@ -29,7 +34,7 @@ clean:
 	@rm -f *.orig *~
 	@echo "Done."
 
-reset-inspire-test-site-field-configuration:
+reset-inspire-field-configuration:
 	@echo ">>> Resetting table tag:"
 	echo "TRUNCATE tag" | $(BINDIR)/dbexec
 	echo "INSERT INTO tag (id,name,value) VALUES (1, 'ext system source', '035__9')" | $(BINDIR)/dbexec
@@ -177,6 +182,9 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 33, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 47, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (16, 35, 100)" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-field-configuration."
+
+reset-inspire-index-configuration:
 	@echo ">>> Resetting table idxINDEX:"
 	echo "TRUNCATE idxINDEX" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (1, 'global', 'global', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
@@ -203,10 +211,9 @@ reset-inspire-test-site-field-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (9, 13)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (10, 15)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (11, 16)" | $(BINDIR)/dbexec
-	@echo ">>> Done reset-inspire-test-site-field-configuration."
-	@echo ">>> You may want to run inveniocfg --reset-fieldnames now."
+	@echo ">>> Done reset-inspire-index-configuration."
 
-reset-inspire-test-site-collection-configuration:
+reset-inspire-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectionname" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
@@ -220,7 +227,50 @@ reset-inspire-test-site-collection-configuration:
 	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" |$(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
+	echo "TRUNCATE collectiondetailedrecordpagetabs" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (1, 'citations;references;metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (2, 'metadata')" | $(BINDIR)/dbexec
 
 	$(BINDIR)/webcoll -u admin
-#	@sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/webcoll -u admin 
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
+
+reset-inspire-search-sort-field-configuration:
+	@echo ">>> Resetting search/sort field configuration:"
+	echo "TRUNCATE collection_field_fieldvalue" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 15, NULL, 'sew', 11, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 3, NULL, 'sew', 10, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 16, NULL, 'sew', 9, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 11, NULL, 'sew', 8, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 13, NULL, 'sew', 7, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 5, NULL, 'sew', 6, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 8, NULL, 'sew', 5, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 6, NULL, 'sew', 4, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 14, NULL, 'sew', 3, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 2, NULL, 'sew', 2, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 10, NULL, 'sew', 1, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 3, NULL, 'soo', 4, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 6, NULL, 'soo', 3, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 2, NULL, 'soo', 2, 0)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (1, 10, NULL, 'soo', 1, 0)" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-search-sort-field-configuration."
+
+reset-inspire-useraccess-configuration:
+	@echo ">>> Resetting user access configuration:"
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='loanusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='groupusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='messageusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='holdingsusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
+	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
+	/opt/cds-invenio/bin/webaccessadmin -u admin -c
+	@echo ">>> Done reset-inspire-useraccess-configuration."
+
+reset-inspire-submission-configuration:
+	@echo ">>> Resetting submission configuration:"
+	echo "TRUNCATE sbmCOLLECTION" | $(BINDIR)/dbexec
+	echo "TRUNCATE sbmCOLLECTION_sbmCOLLECTION" | $(BINDIR)/dbexec
+	echo "TRUNCATE sbmCOLLECTION_sbmDOCTYPE" | $(BINDIR)/dbexec
+	echo "TRUNCATE sbmDOCTYPE" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-submission-configuration."

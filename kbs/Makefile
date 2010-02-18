@@ -4,10 +4,14 @@ WEBDESC='Mapping of SPIRES abbreviations for URLs to Displayable names'
 OADESC='Journals that are fully OA'
 PWD=`pwd`
 
-install: all
-
 all:
-	@echo "Loading knowledge bases..."
+	@echo "Done."
+
+test:
+	@echo "Nothing to test."
+
+install-dbchanges:
+	@echo "Loading knowledge bases into DB..."
 	make delete-weblinks
 	make delete-oalinks
 	make delete-talktype
@@ -15,9 +19,6 @@ all:
 	make load-weblinks-knowledge-base
 	make load-talktype-knowledge-base
 	@echo "Done."
-
-test:
-	@echo "Nothing to test."
 
 delete-weblinks:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='WEBLINKS')" | $(BINDIR)/dbexec
