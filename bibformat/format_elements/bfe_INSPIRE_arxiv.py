@@ -109,6 +109,22 @@ def get_arxiv(bfo,category="yes"):
     return(arxiv)
 
 
+def get_cats(bfo):
+    """
+    Takes a bfo and returns a list of categories (in same order as numbers
+    from get_arxiv)
+    """
+    primary_report_numbers = bfo.fields('037__')
+    additional_report_numbers = bfo.fields('088__')
+    report_numbers = primary_report_numbers
+    report_numbers.extend(additional_report_numbers)
+
+    cat = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
+
+    return(cat)
+    
+
+
 def append_cat(number,cat):
     import re
     if not cat:

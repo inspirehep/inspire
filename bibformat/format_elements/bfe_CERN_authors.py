@@ -126,12 +126,13 @@ def format(bfo, limit, separator='; ',
 
             #check if we need to reverse last, first
             #we don't try to reverse it if it isn't stored with a comma.
-            display_name=author['a']
-            if name_last_first.lower()=="no":
-                match=re.search('^([^,]+)\s*,\s*([^\,]*)(\,?.*)$',author['a'])
+            author['display'] = author['a']
+            if name_last_first.lower() == "no":
+                match = re.search('^([^,]+)\s*,\s*([^\,]*)(\,?.*)$',author['a'])
                 if match:
-                    display_name=match.group(2)+' '+match.group(1)+match.group(3)
-
+                    author['display'] = match.group(2) + ' ' + \
+                                   match.group(1) + match.group(3)
+            
 
             if print_links.lower() == "yes":
 
@@ -139,7 +140,7 @@ def format(bfo, limit, separator='; ',
                 author['a'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
                               '/author/'+ quote(author['a']) + \
                               '?amp;ln='+ bfo.lang + \
-                              '">'+escape(display_name)+'</a>'
+                              '">'+escape(author['display'])+'</a>'
 
         if print_affiliations == "yes":
             if author.has_key('e'):
@@ -178,19 +179,19 @@ def format(bfo, limit, separator='; ',
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
         if print_affiliation_first.lower() != 'yes':
-            authors = [author.get('a', '') + \
+            authors = [author.get('display', '') + \
                        ((author['field'] == '700__' and author.get('e', '')) or '') +\
                        author.get('u', '')
                        for author in authors]
 
         else:
-            authors = [author.get('e', '') + author.get('a', '') +\
+            authors = [author.get('e', '') + author.get('display', '') +\
                        ((author['field'] == '700__' and author.get('u', '')) or '')
                        for author in authors]
 
 
     else:
-        authors = [author.get('a', '')
+        authors = [author.get('display', '')
                    for author in authors]
 
     if limit.isdigit() and nb_authors > int(limit) and interactive != "yes":
