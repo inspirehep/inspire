@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ## This file is part of CDS Invenio.
 ## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
 ##
@@ -20,7 +21,6 @@ WebStyle templates. Customize the look of pages of CDS Invenio
 __revision__ = \
     "$Id$"
 
-import time
 import cgi
 
 from invenio.config import \
@@ -35,6 +35,8 @@ from invenio.config import \
      CFG_WEBSTYLE_TEMPLATE_SKIN
 
 from invenio.messages import gettext_set_language
+from invenio.dateutils import convert_datestruct_to_dategui, \
+     convert_datecvs_to_datestruct
 from invenio.webstyle_templates import Template as DefaultTemplate
 
 class Template(DefaultTemplate):
@@ -135,7 +137,7 @@ template function generated it.
 <body%(body_css_classes)s lang="%(ln_iso_639_a)s">
 <div class="pageheader">
 %(inspect_templates_message)s
- 
+
 
 <!-- replaced page header -->
 
@@ -147,7 +149,7 @@ template function generated it.
  <tr>
   <td align="left">
     <div>
-      <a href="%(siteurl)s?ln=%(ln)s">
+      <a class="img" href="%(siteurl)s?ln=%(ln)s">
        <img border="0" src="%(cssurl)s/img/inspire_logo_beta.png" alt="INSPIRE"
  />
       </a>
@@ -164,7 +166,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
   </td>
  </tr>
 </table>
- 
+
 <div class="navbar">
 <a id="nav-hep" href="%(siteurl)s?ln=%(ln)s">Hep</a>
 ::
@@ -263,24 +265,24 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
     def tmpl_pagefooter(self, req=None, ln=CFG_SITE_LANG, lastupdated=None,
                         pagefooteradd=""):
         """Creates a page footer
-        
+
         Parameters:
 
         - 'ln' *string* - The language to display
-        
+
         - 'lastupdated' *string* - when the page was last updated
-        
+
         - 'pagefooteradd' *string* - additional page footer HTML code
-        
+
         Output:
-    
+
         - HTML code of the page headers
         """
 
         # load the right message language
         _ = gettext_set_language(ln)
 
-        if lastupdated:
+        if lastupdated and lastupdated != '$Date$':
             if lastupdated.startswith("$Date: ") or \
             lastupdated.startswith("$Id: "):
                 lastupdated = convert_datestruct_to_dategui(\
@@ -295,7 +297,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
 %(pagefooteradd)s
 <!-- replaced page footer -->
  <div class="pagefooterstripeleft">
-  %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/submit?ln=%(ln)s">%(msg_submit)s</a>&nbsp;::&nbsp;<a class="footer" href="%(sitesecureurl)s/youraccount/display?ln=%(ln)s">%(msg_personalize)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+  %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
   <br />
   %(msg_poweredby)s <a class="footer" href="http://cdsware.cern.ch/">Invenio</a> v%(version)s
   <br />
@@ -317,11 +319,9 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
           'langlink': '?ln=' + ln,
 
           'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
-          'sitesupportemail' : CFG_SITE_SUPPORT_EMAIL,
+          'sitesupportemail' : 'feedback@inspire-hep.net',
 
           'msg_search' : _("Search"),
-          'msg_submit' : _("Submit"),
-          'msg_personalize' : _("Personalize"),
           'msg_help' : _("Help"),
 
           'msg_poweredby' : _("Powered by"),
@@ -340,9 +340,12 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
         """Take CFG_VERSION and return a sanitized version for display"""
 
         try:
-            [major, minor]  = version.split('.')[:2]
-            return "%s.%s" % (major, minor)
+            [major, minor, patchlevel]  = version.split('.')[:3]
+            out = "%s.%s.%s" % (major, minor, patchlevel)
+            if out != version:
+                out += "+"
+            return out
         except ValueError:
             return version
-        
+
 
