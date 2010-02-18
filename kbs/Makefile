@@ -17,39 +17,39 @@ all:
 	@echo "Done."
 
 test:
-	@echo "Not Implemented."
+	@echo "Nothing to test."
 
 delete-weblinks:
-	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='WEBLINKS')" | $(BINDIR)/dbexec
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='WEBLINKS')" | $(BINDIR)/dbexec
 
 delete-oalinks:
-	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='OALINKS')" | $(BINDIR)/dbexec
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='OALINKS')" | $(BINDIR)/dbexec
 
 delete-talktype:
-	echo "DELETE FROM fmtKNOWLEDGEBASEMAPPINGS where id_fmtKNOWLEDGEBASES=(SELECT id from fmtKNOWLEDGEBASES where name='TALKTYPE')" | $(BINDIR)/dbexec
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='TALKTYPE')" | $(BINDIR)/dbexec
 
 load-weblinks-knowledge-base:
-	echo "INSERT into fmtKNOWLEDGEBASES (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like fmtKNOWLEDGEBASEMAPPINGS;\
+	echo "INSERT into knwKB (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
 LOAD DATA LOCAL INFILE '$(PWD)/weblinks.dat' replace INTO TABLE templinks;\
-update templinks set id_fmtKNOWLEDGEBASES= (select id from fmtKNOWLEDGEBASES where name='WEBLINKS');\
-insert into  fmtKNOWLEDGEBASEMAPPINGS  (m_key,m_value,id_fmtKNOWLEDGEBASES) select m_key,m_value,id_fmtKNOWLEDGEBASES from templinks ;\
+update templinks set id_knwKB= (select id from knwKB where name='WEBLINKS');\
+insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 load-oalinks-knowledge-base:
-	echo "INSERT into fmtKNOWLEDGEBASES (name, description) VALUES('OALINKS',$(OADESC)) on duplicate key update description = $(OADESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like fmtKNOWLEDGEBASEMAPPINGS;\
+	echo "INSERT into knwKB (name, description) VALUES('OALINKS',$(OADESC)) on duplicate key update description = $(OADESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
 LOAD DATA LOCAL INFILE '$(PWD)/oalinks.dat' replace INTO TABLE templinks;\
-update templinks set id_fmtKNOWLEDGEBASES= (select id from fmtKNOWLEDGEBASES where name='WEBLINKS');\
-insert into  fmtKNOWLEDGEBASEMAPPINGS  (m_key,m_value,id_fmtKNOWLEDGEBASES) select m_key,m_value,id_fmtKNOWLEDGEBASES from templinks ;\
+update templinks set id_knwKB= (select id from knwKB where name='WEBLINKS');\
+insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 load-talktype-knowledge-base:
-	echo "INSERT into fmtKNOWLEDGEBASES (name, description) VALUES('TALKTYPE',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like fmtKNOWLEDGEBASEMAPPINGS;\
+	echo "INSERT into knwKB (name, description) VALUES('TALKTYPE',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
 LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
-update templinks set id_fmtKNOWLEDGEBASES= (select id from fmtKNOWLEDGEBASES where name='TALKTYPE');\
-insert into  fmtKNOWLEDGEBASEMAPPINGS  (m_key,id_fmtKNOWLEDGEBASES) select m_key,id_fmtKNOWLEDGEBASES from templinks ;\
+update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
+insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 
