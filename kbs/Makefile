@@ -1,4 +1,5 @@
 include ../config.mk
+-include ../config-local.mk
 
 WEBDESC='Mapping of SPIRES abbreviations for URLs to Displayable names'
 OADESC='Journals that are fully OA'

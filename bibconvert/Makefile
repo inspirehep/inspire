@@ -1,4 +1,5 @@
 include ../config.mk
+-include ../config-local.mk
 
 SMALL_BASE = SPIRES_small_sample
 SMALL_URL = http://cdsware.cern.ch/download/invenio-demo-site-files/${SMALL_BASE}.xml.gz
@@ -43,7 +44,7 @@ get-large:
 	@cp ${LARGE_PATH}/${LARGE_PATTERN} .
 	@echo " done."
 
-clean-large: 
+clean-large:
 	@echo "* Removing non-ascii chars in large file, please be patient..."
 	@for file in `/bin/ls ${LARGE_PATTERN}`; do \
 		perl -i.bk -pe 's/[^[:ascii:]]//g;' $${file} ;\
@@ -59,7 +60,7 @@ convert-small:
 	@echo -n " done."
 	@echo "Please run 'make upload-small' now."
 
-convert-large: 
+convert-large:
 	@echo "* Converting split files, please be patient..."
 	@for file in `/bin/ls ${LARGE_PATTERN}`; do \
 	   echo " ... converting file $${file}..." ;\
@@ -78,7 +79,7 @@ test-large-with-xmllint: convert-large
      done
 	@echo "* Done.  Please run 'make upload-large' now."
 
-############# XXX: HACK: The following output parsing (if clause) would be unnecessary 
+############# XXX: HACK: The following output parsing (if clause) would be unnecessary
 #############            if xmlmarclint used shell return codes correctly.
 ############# was: $(BINDIR)/xmlmarclint $${file}; \
 
@@ -93,7 +94,7 @@ test-large-with-xmlmarclint: convert-large
      done
 	@echo "* Done.  Please run 'make upload-large' now."
 
-upload-small: 
+upload-small:
 	@echo "* Uploading converted files..."
 	cp ${SMALL_BASE}.marcxml /tmp
 	chmod a+r /tmp/${SMALL_BASE}.marcxml
@@ -107,8 +108,8 @@ supload-small:
 	chmod a+r /tmp/${SMALL_BASE}.marcxml
 	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
-		
-upload-large: 
+
+upload-large:
 	@echo "* Uploading converted files..."
 	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
 		echo "Uploading from " $${file} "..." ;\
@@ -135,8 +136,8 @@ load-full-sample-of-records: get-full clean-large convert-large upload-full
 get-full:
 	@echo "* rsyncing files from  server, please be patient..."
 	rsync --delete -raz ${SPIRESDIR} ${FULLSET_DIR}
-	#  Please note, bibconvert and xmllint appear to fail on this large file.  
-	#  It may be neccessary to use a different xslt engine or break up the 
+	#  Please note, bibconvert and xmllint appear to fail on this large file.
+	#  It may be neccessary to use a different xslt engine or break up the
 	#  file.
 	@echo "* Done.  Please run 'make split-full' or 'make clean-full' now."
 
@@ -170,7 +171,7 @@ upload-full:
 		$(BINDIR)/bibupload -ir $${file}; \
 	done
 	@echo "* Done.  Please see via 'bibsched' the task progress."
-		
+
 supload-full:
 	@echo "* Uploading converted files..."
 	@for file in $(FULLSET_DIR)*.marcxml* ; do \

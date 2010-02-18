@@ -1,6 +1,7 @@
 # $Id$
 
 include ../config.mk
+-include ../config-local.mk
 
 IMGFILES = *.png invenio_inspire.css
 LIBFILES = webstyle_templates_inspire.py

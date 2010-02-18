@@ -1,6 +1,7 @@
 # $Id$
 
 include ../../config.mk
+-include ../../config-local.mk
 
 LIBFILES = *.py
 BIBFORMATELEMENTSDIR = $(PREFIX)/lib/python/invenio/bibformat_elements

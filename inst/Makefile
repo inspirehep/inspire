@@ -1,7 +1,7 @@
 # $Id$
 
 include ../config.mk
-
+-include ../config-local.mk
 
 XSLFILES = inst2marc.xsl
 SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/inst.xml.gz
@@ -22,8 +22,8 @@ get:
 	wget $(SPIRESXML)
 	rm -f ./inst.xml
 	gunzip ./inst.xml.gz
-	#  Please note, bibconvert and xmllint appear to fail on this large file.  
-	#  It may be neccessary to use a different xslt engine or break up the 
+	#  Please note, bibconvert and xmllint appear to fail on this large file.
+	#  It may be neccessary to use a different xslt engine or break up the
 	#  file.
 	@echo "* Done.  Please run 'make utf8' now."
 
@@ -37,7 +37,7 @@ utf8:
 
 convert:
 	@echo "* Converting  files, please be patient..."
-	$(BINDIR)/bibconvert -c $(XSLFILES) < inst.xml > inst.marcxml 
+	$(BINDIR)/bibconvert -c $(XSLFILES) < inst.xml > inst.marcxml
 	@echo "* Done.  Please run 'make test-with-xmllint' or 'make test-with-xmlmarclint' now."
 
 test-with-xmllint:

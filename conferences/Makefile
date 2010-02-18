@@ -1,6 +1,7 @@
 # $Id$
 
 include ../config.mk
+-include ../config-local.mk
 
 XSLFILES = conf2marc.xsl
 SPIRESXML = ftp://ftp.slac.stanford.edu/groups/library/spires/conf.xml.gz
@@ -44,7 +45,7 @@ utf8:
 
 convert:
 	@echo "* Converting  files, please be patient..."
-	$(BINDIR)/bibconvert -c $(XSLFILES) < conf.xml > conf.marcxml 
+	$(BINDIR)/bibconvert -c $(XSLFILES) < conf.xml > conf.marcxml
 	@echo "* Done.  Please run 'make test-with-xmllint' or 'make test-with-xmlmarclint' now."
 
 test-with-xmllint:

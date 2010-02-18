@@ -1,6 +1,7 @@
 # $Id$
 
 include ../../config.mk
+-include ../../config-local.mk
 
 BFOFILES = *.bfo
 BFODIR = $(ETCDIR)/bibformat/output_formats

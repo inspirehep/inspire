@@ -1,4 +1,5 @@
 include ../config.mk
+-include ../config-local.mk
 
 all:
 	@echo "Done."

@@ -1,4 +1,5 @@
 include ../config.mk
+-include ../config-local.mk
 
 XMLFILES = *.xml
 XMLDIR = $(ETCDIR)/bibedit/record_templates

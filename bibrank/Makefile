@@ -1,6 +1,7 @@
 # $Id$
 
 include ../config.mk
+-include ../config-local.mk
 
 CFGFILES = citation.cfg wrd.cfg
 CFGDIR = $(ETCDIR)/bibrank

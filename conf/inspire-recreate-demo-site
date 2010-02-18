@@ -1,0 +1,66 @@
+#!/bin/sh
+# A simple script to recreate INSPIRE demo site.  Tibor/2010-02-18
+
+# config section:
+CFG_INVENIO_PREFIX=/opt/cds-invenio
+CFG_INVENIO_USER=www-data
+CFG_INVENIO_SRCDIR=~/private/src/cds-invenio
+CFG_INSPIRE_SRCDIR=~/private/src/inspire
+
+# sanity check:
+if [ "$1" != "--yes-i-know" ]; then
+    echo "[ERROR] You did not use --yes-i-know.  Not going to recreate INSPIRE demo site."
+    exit
+fi
+
+# give user a chance to quit:
+echo "[INFO] GOING TO DESTROY YOUR INSPIRE DEMO SITE IN 10 SECONDS!"
+echo "[INFO] THIS IS YOUR LAST CHANCE TO INTERRUPT BY PRESSING Ctrl-C!"
+for i in 0 1 2 3 4 5 6 7 8 9; do
+    echo -n "."
+    sleep 1
+done
+echo
+
+# install Invenio sources:
+cd $CFG_INVENIO_SRCDIR
+make -s && sudo -u $CFG_INVENIO_USER make -s install
+
+# install Atlantis demo site without records:
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --drop-demo-site \
+                                                     --create-demo-site \
+                                                     --yes-i-know
+
+# install INSPIRE sources:
+cd $CFG_INSPIRE_SRCDIR
+make -s
+sudo -u $CFG_INVENIO_USER make -s install
+
+# install INSPIRE DB changes:
+sudo -u $CFG_INVENIO_USER make -s install-dbchanges
+sudo -u $CFG_INVENIO_USER cp $CFG_INVENIO_PREFIX/etc/invenio-local.conf-example \
+                     $CFG_INVENIO_PREFIX/etc/invenio-local.conf
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --update-all --reset-all
+
+# load INSPIRE demo site:
+echo "TRUNCATE schTASK" | $CFG_INVENIO_PREFIX/bin/dbexec
+cd bibconvert
+make get-small
+make convert-small
+sudo -u $CFG_INVENIO_USER make upload-small
+cd ..
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibupload 1
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibindex -u admin
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibindex 2
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibreformat -u admin -o HB
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibreformat 3
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/webcoll -u admin
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/webcoll 4
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibrank -u admin
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibrank 5
+
+# restart Invenio WSGI app:
+sudo -u $CFG_INVENIO_USER touch $CFG_INVENIO_PREFIX/var/www-wsgi/invenio.wsgi
+
+echo "[INFO] Done."
+# end of file
