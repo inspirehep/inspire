@@ -4,9 +4,10 @@
 <pre>
 %\cite{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" suffix=""/>}
 \bibitem{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
-  <BFE_CERN_AUTHORS limit='8' separator=', ' extension="{\it et al.}" name_last_first="yes" print_links="no" />
-  <BFE_CERN_TITLE_BRIEF prefix="%``" suffix="''"  force_title_case="yes" />
-  <BFE_INSPIRE_PUBLI_INFO style="us" suffix="
-"/>  <BFE_INSPIRE_ARXIV links="no" category="yes" />	
+  <BFE_INSPIRE_AUTHORS limit='3' separator=', ' extension=" {\it et al.}"
+  name_last_first="no" print_links="no" suffix = "," markup='latex'/>
+  <BFE_CERN_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" />
+  <BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" suffix="."/>
+  <BFE_INSPIRE_ARXIV links="no" category="yes" prefix='[' suffix="]." />	
 </pre>
     

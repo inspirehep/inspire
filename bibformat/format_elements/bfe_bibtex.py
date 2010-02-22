@@ -69,11 +69,12 @@ def format(bfo, width="50"):
     out += key
         
         #If author cannot be found, print a field key=recID
-    import invenio.bibformat_elements.bfe_CERN_authors as bfe_authors
+    import invenio.bibformat_elements.bfe_INSPIRE_authors as bfe_authors
     authors = bfe_authors.format(bfo=bfo,
                                  limit="5",
                                  separator=" and ",
-                                 extension="others",
+                                 extension=" and others",
+                                 collaboration = "no",
                                  print_links="no",
                                  name_last_first = "yes")
     if authors == "":

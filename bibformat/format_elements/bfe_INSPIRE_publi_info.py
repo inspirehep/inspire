@@ -25,11 +25,12 @@ __revision__ = "$Id$"
 from urllib import quote
 import cgi
 
-def format(bfo,style='eu'):
+def format(bfo,style='eu', markup = 'html'):
     """
     Displays inline publication information
 
     @param style takes 'us' or 'eu'(default)  which changes date location
+    @param markup takes 'latex' or 'html'(default) which sets the markup used
     
     """
     out = ''
@@ -73,10 +74,18 @@ def format(bfo,style='eu'):
                 pages = cgi.escape(pages)
             else:
                 pages = ''
+            if markup.lower() == 'latex':
+                journal_source = journal_source.replace(".",'.\\ ')
             out += journal_source
+
+
+
             if style.lower() == 'eu':
                 if volume:
-                    out += ' ' + volume
+                    if markup.lower() == 'latex':
+                        out += ' {\\bf ' + volume + ' }'
+                    else:
+                        out += ' ' + volume                    
                 if year:
                     out += ' (' + year + ') '
                 if number:
@@ -85,13 +94,22 @@ def format(bfo,style='eu'):
                     out += ' ' + pages
             else:  
                 if volume:
-                    out +=  ' '+volume
+                    if markup.lower() == 'latex':
+                        out += ' {\\bf ' + volume + '}'
+                    else:
+                        out += ' ' + volume                    
                 if number:
                     out += ', no. ' + number 
                 if pages:
-                    out += ': ' + pages
+                    if markup.lower() == 'latex':
+                        out += ', ' + pages
+                    else:
+                        out += ': ' + pages
                 if year:
-                    out +=  ', ' + year
+                    if markup.lower() == 'latex':
+                        out += ' (' + year + ')'
+                    else:
+                        out +=  ', ' + year
                 
 
     elif conf_code:
