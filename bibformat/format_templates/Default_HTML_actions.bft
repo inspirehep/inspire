@@ -2,16 +2,13 @@
 <description>Output the various actions available on a record</description>
 
 <ul class="detailedrecordactions">
-        <li>_(Export reference)_<br />
+        <li>_(Export)_<br />
             <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hx">BibTeX</a>,
             <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xe">EndNote</a>,
             <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hlxu">LaTeX(US)</a>,
             <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hlxe">LaTeX(EU)</a>,
-</li>
-
-<li>_(Export data)_<br />
             <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xn">NLM</a>,
-            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xd">DC</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xd">DC</a>
 
 </li>
 

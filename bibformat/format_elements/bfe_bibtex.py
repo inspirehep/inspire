@@ -39,7 +39,7 @@ def format(bfo, width="50"):
     if width < 30:
         width = 30
 
-    name_width = 19
+    name_width = 21
     value_width = width-name_width
     recID = bfo.control_field('001')
 
@@ -48,6 +48,7 @@ def format(bfo, width="50"):
     collection = bfe_collection.format(bfo=bfo, kb="DBCOLLID2BIBTEX")
     if collection == "":
         out += "article"
+        collection = "article"
     else:
         out += collection
 
@@ -57,8 +58,8 @@ def format(bfo, width="50"):
     #
     key = ''
     for external_keys in bfo.fields("035"):
-        if external_keys['9'] == "SPIRESTeX" and external_keys['a']:
-            key = external_keys['a']
+        if external_keys['9'] == "SPIRESTeX" and external_keys['z']:
+            key = external_keys['z']
     if not key:
         #contruct key in spires like way  need to store an make unique
         ####FIXME
@@ -66,14 +67,16 @@ def format(bfo, width="50"):
               bfo.field("269c").split('-')[0] + \
               chr((recID % 26) + 97) + chr(((recID / 26) % 26) + 97)
     out += key
-        
+
         #If author cannot be found, print a field key=recID
-    import invenio.bibformat_elements.bfe_CERN_authors as bfe_authors
+    import invenio.bibformat_elements.bfe_INSPIRE_authors as bfe_authors
     authors = bfe_authors.format(bfo=bfo,
                                  limit="5",
                                  separator=" and ",
-                                 extension="et al.",
-                                 print_links="no")
+                                 extension=" and others",
+                                 collaboration = "no",
+                                 print_links="no",
+                                 name_last_first = "yes")
     if authors == "":
         out += format_bibtex_field("key",
                                    recID,
@@ -97,10 +100,10 @@ def format(bfo, width="50"):
                                value_width)
 
     #Print title
-    import invenio.bibformat_elements.bfe_title as bfe_title
-    title = bfe_title.format(bfo=bfo, separator = ". ")
+    import invenio.bibformat_elements.bfe_INSPIRE_title as bfe_title
+    title = bfe_title.format(bfo=bfo)
     out += format_bibtex_field("title",
-                               title,
+                               '{' + title + '}',
                                name_width,
                                value_width)
 
@@ -149,20 +152,14 @@ def format(bfo, width="50"):
                                    name_width,
                                    value_width)
 
-    #Print journal
-    if collection == "article":
-        journals = []
-        host_title = bfo.field("773__p")
-        if host_title != "":
-            journals.append(host_title)
-        journal = bfo.field("909C4p")
-        if journal != "":
-            journals.append(journal)
 
-        out += format_bibtex_field("journal",
-                                   ". ".join(journals),
-                                   name_width,
-                                   value_width)
+    #Print collaboration
+    collaborations = bfo.fields("710__g")
+    out += format_bibtex_field("collaboration",
+                               ", ".join(collaborations),
+                               name_width,
+                               value_width)
+
 
     #Print school
     if collection == "phdthesis":
@@ -198,17 +195,28 @@ def format(bfo, width="50"):
                                    name_width,
                                    value_width)
 
+
+    #Print journal
+    if collection == "article":
+        journals = []
+        host_title = bfo.field("773__p")
+        if host_title != "":
+            journals.append(host_title)
+        journal = bfo.field("909C4p")
+        if journal != "":
+            journals.append(journal)
+
+        out += format_bibtex_field("journal",
+                                   ". ".join(journals),
+                                   name_width,
+                                   value_width)
+
+
+
     #Print number
     if collection == "techreport" or \
            collection == "article":
         numbers = []
-        primary_report_number = bfo.field("037__a")
-        if primary_report_number != "":
-            numbers.append(primary_report_number)
-        additional_report_numbers = bfo.fields("088__a")
-        additional_report_numbers = ". ".join(additional_report_numbers)
-        if additional_report_numbers != "":
-            numbers.append(additional_report_numbers)
         host_number = bfo.field("773__n")
         if host_number != "":
             numbers.append(host_number)
@@ -219,6 +227,7 @@ def format(bfo, width="50"):
                                    ". ".join(numbers),
                                    name_width,
                                    value_width)
+
 
     #Print volume
     if collection == "article" or \
@@ -251,38 +260,38 @@ def format(bfo, width="50"):
         host_pages = bfo.field("773c")
         if host_pages != "":
             pages.append(host_pages)
-        nb_pages = bfo.field("909C4c")
-        if nb_pages != "":
-            pages.append(nb_pages)
-        phys_pagination = bfo.field("300__a")
-        if phys_pagination != "":
-            pages.append(phys_pagination)
+            nb_pages = bfo.field("909C4c")
+            if nb_pages != "":
+                pages.append(nb_pages)
+                phys_pagination = bfo.field("300__a")
+                if phys_pagination != "":
+                    pages.append(phys_pagination)
 
         out += format_bibtex_field("pages",
                                    ". ".join(pages),
                                    name_width,
                                    value_width)
 
-    #Print month
-    month = get_month(bfo.field("269__c"))
-    if month == "":
-        month = get_month(bfo.field("260__c"))
-        if month == "":
-            month = get_month(bfo.field("502__c"))
 
-    out += format_bibtex_field("month",
-                               month,
-                               name_width,
-                               value_width)
+    #Print doi
+    if collection == "article":
+        dois = bfo.fields("773__a")
+        out += format_bibtex_field("doi",
+                                   ", ".join(dois),
+                                   name_width,
+                                   value_width)
+
 
     #Print year
-    year = get_year(bfo.field("269__c"))
+    year = bfo.field("773__y")
     if year == "":
-        year = get_year(bfo.field("260__c"))
+        year = get_year(bfo.field("269__c"))
         if year == "":
-            year = get_year(bfo.field("502__c"))
+            year = get_year(bfo.field("260__c"))
             if year == "":
-                year = get_year(bfo.field("909C0y"))
+                year = get_year(bfo.field("502__c"))
+                if year == "":
+                    year = get_year(bfo.field("909C0y"))
 
     out += format_bibtex_field("year",
                                year,
@@ -295,6 +304,43 @@ def format(bfo, width="50"):
                                note,
                                name_width,
                                value_width)
+
+    #Print eprint
+    import invenio.bibformat_elements.bfe_INSPIRE_arxiv as bfe_arxiv
+
+    eprints = bfe_arxiv.get_arxiv(bfo, category = "no")
+
+    if eprints:
+        out += format_bibtex_field("eprint",
+                                   eprints[0],
+                                   name_width,
+                                   value_width)
+        out += format_bibtex_field("archivePrefix",
+                                   "arXiv",
+                                   name_width,
+                                   value_width)
+        cats = bfe_arxiv.get_cats(bfo)
+        if cats:
+            out += format_bibtex_field("primaryClass",
+                                       cats[0],
+                                       name_width,
+                                       value_width)
+
+
+    #other report numbers
+    numbers=[]
+    primary_report_numbers = bfo.fields('037_a')
+    additional_report_numbers = bfo.fields('088_a')
+    report_numbers = primary_report_numbers
+    report_numbers.extend(additional_report_numbers)
+    for number in report_numbers:
+        if number <> eprints[0]:
+            numbers.append(number)
+    if numbers:
+        out += format_bibtex_field("reportNumber",
+                                   ", ".join(numbers),
+                                   name_width,
+                                   value_width)
 
     out +="\n}"
 

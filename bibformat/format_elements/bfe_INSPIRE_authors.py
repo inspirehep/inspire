@@ -24,17 +24,19 @@ __revision__ = "$Id$"
 
 def format(bfo, limit, separator='; ',
            extension='[...]',
-           print_links="yes",
+           print_links = "yes",
            print_affiliations='no',
            affiliation_prefix = ' (',
            affiliation_suffix = ')',
            print_affiliation_first='no',
            interactive="no",
            highlight="no",
-           main_authors_only="no",
-           main_and_sec_authors_sep="",
            affiliations_separator=" ; ",
-           name_last_first="yes"
+           name_last_first = "yes",
+           collaboration = "yes",
+           id_links = "no",
+           markup = "html",
+           link_extension = "no",
            ):
     """
     Prints the list of authors of a record.
@@ -49,53 +51,38 @@ def format(bfo, limit, separator='; ',
     @param print_affiliation_first if 'yes', affiliation is printed before the author
     @param interactive if yes, enable user to show/hide authors when there are too many (html + javascript)
     @param highlight highlights authors corresponding to search query if set to 'yes'
-    @param main_authors_only If 'yes', only print main authors
-    @param main_and_sec_authors_sep a separator printed between main authors (100__) and secondary authors (700__). If value is empty string, then 'separator' is used.
     @param affiliations_separator separates affiliation groups
     @param name_last_first if yes (default) print last, first  otherwise first last
+    @param collaboration if yes (default) uses collaboration name in place of long author list, if available
+    @param id_links if yes (default = no) prints link based on INSPIRE IDs if available - only used if print_links = yes
+    @param markup html (default) or latex controls small markup differences
+    @param link_extension if 'yes' link the extension to the detailed
+    record page
+
     """
     from urllib import quote
     from cgi import escape
     import re
-#FIXME temporary while some inspire sites migrating from .92->.99
-    try:
-        from invenio.config import CFG_SITE_URL
-    except:
-        from invenio.config import weburl as CFG_SITE_URL
+    from invenio.config import CFG_SITE_URL
+    from invenio.bibformat_elements.bfe_server_info import format as bfe_server
+
+    #regex for parsing last and first names and initials
+    re_last_first = re.compile('^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')
+    re_initials = re.compile(r'(?P<initial>\w)(\w+|\.)\s*')
+    re_coll = re.compile(r'\s*collaborations?', re.IGNORECASE)
+
 
     # from invenio.config import instlink   ### FIXME
 
-    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/wwwinspire?key='
+    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/wwwinspire?icncp='
 
     from invenio.messages import gettext_set_language
 
     _ = gettext_set_language(bfo.lang)    # load the right message language
 
     authors = []
-    authors_1 = bfo.fields('100__', repeatable_subfields_p=True)
-    if main_authors_only.lower() == 'yes':
-        authors_2 = []
-    else:
-        authors_2 = bfo.fields('700__', repeatable_subfields_p=True)
-
-    if main_and_sec_authors_sep == "":
-        main_and_sec_authors_sep = separator
-    if len(authors_2) == 0 or len(authors_1) == 0:
-        main_and_sec_authors_sep = ''
-
-    coll = bfo.field('980__a')
-
-    # We will merge authors_1 and authors_2 in order to process
-    # them with the same piece of code. But we first need
-    # to tag them in order to differentiate them
-    authors_1 = [(author.setdefault('field','100__') and author) \
-                 for author in authors_1]
-    authors_2 = [(author.setdefault('field','700__') and author) \
-                 for author in authors_2]
-
-    # Merge
-    authors.extend(authors_1)
-    authors.extend(authors_2)
+    authors = bfo.fields('100__', repeatable_subfields_p=True)
+    authors.extend(bfo.fields('700__', repeatable_subfields_p=True))
 
     # Keep real num of authorsfix + affiliations_separator.join(author['u']) + \
     nb_authors = len(authors)
@@ -126,36 +113,59 @@ def format(bfo, limit, separator='; ',
 
             #check if we need to reverse last, first
             #we don't try to reverse it if it isn't stored with a comma.
-            display_name=author['a']
-            if name_last_first.lower()=="no":
-                match=re.search('^([^,]+)\s*,\s*([^\,]*)(\,?.*)$',author['a'])
-                if match:
-                    display_name=match.group(2)+' '+match.group(1)+match.group(3)
+            first_last_match = re_last_first.search(author['a'])
+            author['display'] = author['a']
+
+            if name_last_first.lower() == "no":
+                if first_last_match:
+                    author['display'] = first_last_match.group('first_names') + \
+                                        ' ' + \
+                                        first_last_match.group('last') + \
+                                        first_last_match.group('extension')
+
+            #for latex we do initials only  (asn assume first last)
+            if markup == 'latex':
+                if first_last_match:
+                    first = re_initials.sub('\g<initial>.~', \
+                                            first_last_match.group('first_names'))
+                    author['display'] = first  + \
+                                        first_last_match.group('last') + \
+                                        first_last_match.group('extension')
 
 
             if print_links.lower() == "yes":
 
-                from invenio.bibformat_elements.bfe_server_info import format as bfe_server
-                author['a'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
+                # if there is an ID, search using that.
+                id_link = ''
+                if id_links == "yes" and author.has_key('i'):
+                    author['i'] = author['i'][0]  #possible to have more IDs?
+                    id_link = '<a class="authoridlink" href="' + CFG_SITE_URL + \
+                              '/search?' + \
+                              'ln='+ bfo.lang + \
+                              '&amp;p=100__i' + escape(':' + author['i']) + \
+                              '+or+700__i' + escape(':' + author['i']) +\
+                              '">'+escape("(ID Search)") + '</a> '
+
+
+                author['display'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
                               '/author/'+ quote(author['a']) + \
-                              '?amp;ln='+ bfo.lang + \
-                              '">'+escape(display_name)+'</a>'
+                              '?ln='+ bfo.lang + \
+                              '">'+escape(author['display'])+'</a>' + id_link
+
 
         if print_affiliations == "yes":
             if author.has_key('e'):
                 author['e'] = affiliation_prefix + affiliations_separator.join(author['e']) + \
                               affiliation_suffix
 
-            if author.has_key('i'):
-                pairs = zip(author['i'], author['u'])
-                author['i'] = [instlink+code+'">'+string.lstrip()+'</a>' for code,string in pairs]
-                author['u'] = affiliation_prefix + affiliations_separator.join(author['i']) + \
+
+
+            if author.has_key('u'):
+                author['ilink'] = [instlink+escape(string)+'">'+string.lstrip()+'</a>' for string in author['u']]
+                author['u'] = affiliation_prefix + affiliations_separator.join(author['ilink']) + \
                               affiliation_suffix
 
 
-            elif author.has_key('u'):
-                author['u'] = affiliation_prefix + affiliations_separator.join(author['u']) + \
-                              affiliation_suffix
 
 #
 #  Consolidate repeated affiliations
@@ -178,34 +188,68 @@ def format(bfo, limit, separator='; ',
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
         if print_affiliation_first.lower() != 'yes':
-            authors = [author.get('a', '') + \
-                       ((author['field'] == '700__' and author.get('e', '')) or '') +\
-                       author.get('u', '')
+            authors = [author.get('display', '') + author.get('u', '') \
                        for author in authors]
 
         else:
-            authors = [author.get('e', '') + author.get('a', '') +\
-                       ((author['field'] == '700__' and author.get('u', '')) or '')
+            authors = [author.get('u', '') + author.get('display', '')  \
                        for author in authors]
 
 
     else:
-        authors = [author.get('a', '')
+        authors = [author.get('display', '')
                    for author in authors]
 
+    # link the extension to detailed record
+    if link_extension == 'yes' and interactive != 'yes':
+        extension = '<a class="authorlink" href="' + bfe_server(bfo,var="recurl")+ '">' + \
+                    extension + '</a>'
+
+    # Detect Collaborations:
+    if collaboration == "yes":
+        colls = bfo.fields("710__g")
+    else:
+        colls = []
+    if colls:
+        colls = [re_coll.sub('', coll) for coll in colls]
+        if print_links.lower() == "yes":
+            colls = ['<a class="authorlink" href="' + \
+                     bfe_server(bfo,var="searchurl") + \
+                     '?p=' + quote(coll) + \
+                     '&amp;ln='+ bfo.lang + \
+                     '&amp;f=collaboration' + \
+                     '">'+escape(coll)+'</a>' for coll in colls]
+
+        coll_display = " and ".join(colls)
+        if not coll_display.endswith("aboration"):
+            coll_display += " Collaboration"
+            if len(colls) > 1:
+                coll_display += 's'
+        if nb_authors > 1:
+            if markup == 'latex':
+                coll_display =  authors[0] + extension + " [ " + coll_display + " ]"
+            elif interactive == "yes":
+                coll_display += " ("  + authors[0] + " "
+                extension += ")"
+            else:  #html
+                coll_display += " (" + authors[0] + extension + ")"
+        elif nb_authors == 1:
+            if markup == 'latex':
+                coll_display =  authors[0] + " [ " + coll_display + " ]"
+            else:  #html
+                coll_display +=  " (" + authors[0] + " for the collaboration)"
+
+
+    # Start outputting, depending on options and number of authors
+    if colls and interactive != "yes":
+        return coll_display
+
     if limit.isdigit() and nb_authors > int(limit) and interactive != "yes":
-        if int(limit) <= len(authors_1):
-            p_sep = ''
-        else:
-            p_sep = main_and_sec_authors_sep
-        return separator.join(authors[:len(authors_1)]) + \
-               p_sep + \
-               separator.join(authors[len(authors_1):]) + \
+        return separator.join(authors[:len(authors)]) + \
                extension
 
-        #return separator.join(authors) + extension
 
-    elif limit.isdigit() and nb_authors > int(limit) and interactive == "yes":
+    elif (colls or (limit.isdigit() and nb_authors > int(limit))) and interactive == "yes":
         out = '''
         <script>
         function toggle_authors_visibility(){
@@ -226,7 +270,7 @@ def format(bfo, limit, separator='; ',
 
         function set_up(){
             var extension = document.getElementById('extension');
-            extension.innerHTML = "%(extension)s";
+            extension.innerHTML = '%(extension)s';
             toggle_authors_visibility();
         }
 
@@ -235,37 +279,22 @@ def format(bfo, limit, separator='; ',
              'show_more':_("Show all %i authors") % nb_authors,
              'extension':extension}
 
-        out += '<a name="show_hide" />'
-        if int(limit) > len(authors_1):
-            # separator between main and sec authors is before
-            # the limit
-            out += separator.join(authors[:len(authors_1)]) + \
-                   main_and_sec_authors_sep + \
-                   separator.join(authors[len(authors_1):int(limit)])
-            out += '<span id="more" style="">' + separator + \
-                   separator.join(authors[int(limit):]) + '</span>'
+#        out += '<a name="show_hide" />'
+        if colls:
+            show = coll_display
+            more = separator + separator.join(authors[1:]) + ')'
         else:
-            if int(limit) == len(authors_1):
-                p_sep = ''
-            else:
-                p_sep = separator
-            out += separator.join(authors[:int(limit)])
-            out += '<span id="more" style="">' + p_sep + \
-               separator.join(authors[int(limit):len(authors_1)]) +\
-               main_and_sec_authors_sep + \
-               separator.join(authors[len(authors_1):]) +'</span>'
-        #out += separator.join(authors[:int(limit)])
-        #out += '<span id="more" style="">' + separator + \
-        #       separator.join(authors[int(limit):]) + '</span>'
+            show = separator.join(authors[:int(limit)])
+            more = separator.join(authors[int(limit):len(authors)])
+
+        out += show
+        out += ' <span id="more" style="">' + more + '</span>'
         out += ' <span id="extension"></span>'
         out += ' <small><i><a id="link" href="#" onclick="toggle_authors_visibility()" style="color:rgb(204,0,0);"></a></i></small>'
         out += '<script>set_up()</script>'
         return out
     elif nb_authors > 0:
-        return separator.join(authors[:len(authors_1)]) + \
-               main_and_sec_authors_sep + \
-               separator.join(authors[len(authors_1):])
-        #return separator.join(authors)
+        return separator.join(authors)
 
 def escape_values(bfo):
     """

@@ -22,15 +22,16 @@
 """
 __revision__ = "$Id$"
 
-from urllib import quote
+from invenio.bibknowledge import get_kbd_values
 import cgi
 
-def format(bfo,style='eu'):
+def format(bfo, style='eu', markup = 'html'):
     """
     Displays inline publication information
 
     @param style takes 'us' or 'eu'(default)  which changes date location
-    
+    @param markup takes 'latex' or 'html'(default) which sets the markup used
+
     """
     out = ''
 
@@ -53,7 +54,7 @@ def format(bfo,style='eu'):
     conf_type = publication_info.get('t')
 
     if journal_source:
-        if not (volume or number or page or doi):
+        if not (volume or number or pages or doi):
             out += " Submitted to: "
             out += cgi.escape(journal_source)
 
@@ -73,35 +74,52 @@ def format(bfo,style='eu'):
                 pages = cgi.escape(pages)
             else:
                 pages = ''
+            if markup.lower() == 'latex':
+                journal_source = journal_source.replace(".",'.\\ ')
             out += journal_source
+
+
+
             if style.lower() == 'eu':
                 if volume:
-                    out += ' ' + volume
+                    if markup.lower() == 'latex':
+                        out += ' {\\bf ' + volume + ' }'
+                    else:
+                        out += ' ' + volume
                 if year:
                     out += ' (' + year + ') '
                 if number:
                     out += ' ' + number + ', '
                 if pages:
                     out += ' ' + pages
-            else:  
+            else:
                 if volume:
-                    out +=  ' '+volume
+                    if markup.lower() == 'latex':
+                        out += ' {\\bf ' + volume + '}'
+                    else:
+                        out += ' ' + volume
                 if number:
-                    out += ', no. ' + number 
+                    out += ', no. ' + number
                 if pages:
-                    out += ': ' + pages
+                    if markup.lower() == 'latex':
+                        out += ', ' + pages
+                    else:
+                        out += ': ' + pages
                 if year:
-                    out +=  ', ' + year
-                
+                    if markup.lower() == 'latex':
+                        out += ' (' + year + ')'
+                    else:
+                        out +=  ', ' + year
+
 
     elif conf_code:
         if conf_type:
             conf_type = bfo.kb('talktype', conf_type)
-            out += cgi_escape(conf_type)
+            out += cgi.escape(conf_type)
         conf_code = get_kbd_values('conferences', conf_code)
-        out += " " + cgi_escape(conf_code)
-            
-        
+        out += " " + cgi.escape(conf_code)
+
+
     return out
 
 def escape_values(bfo):

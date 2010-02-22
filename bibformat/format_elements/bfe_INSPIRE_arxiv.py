@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -22,9 +22,6 @@
 """
 __revision__ = "$Id$"
 
-import cgi
-from urllib import quote
-
 def format(bfo, links="no", category="yes", mirrors="yes"):
     """
     Provides arXiv number in format for display or links
@@ -32,11 +29,11 @@ def format(bfo, links="no", category="yes", mirrors="yes"):
     @param links yes->display links to arXiv only no(default)-> display value of arxiv number only
     @param category -> displays category in '[]' after number (only if not redundant)
     @param mirrors -> defautl yes  only relevant if links=yes
-    
+
     """
 
     arxiv=get_arxiv(bfo, category="no")
-    
+
     if not arxiv :
         return('')
 
@@ -74,10 +71,10 @@ def format(bfo, links="no", category="yes", mirrors="yes"):
 
 
     else:   # print only value
-        
-        
+
+
         out = ', '.join(get_arxiv(bfo,category))
-        
+
     return(out)
 
 def escape_values(bfo):
@@ -100,13 +97,29 @@ def get_arxiv(bfo,category="yes"):
     report_numbers.extend(additional_report_numbers)
 
     arxiv = [num.get('a','') for num in report_numbers if num.get('9') ==
-    'arxiv' or num.get('s')=='arxiv']
+    'arXiv' or num.get('s')=='arXiv']
 
     if category=="yes":
-        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arxiv' or num.get('9')=='arxiv']
+        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
         arxiv=map(append_cat,arxiv,cats)
-        
+
     return(arxiv)
+
+
+def get_cats(bfo):
+    """
+    Takes a bfo and returns a list of categories (in same order as numbers
+    from get_arxiv)
+    """
+    primary_report_numbers = bfo.fields('037__')
+    additional_report_numbers = bfo.fields('088__')
+    report_numbers = primary_report_numbers
+    report_numbers.extend(additional_report_numbers)
+
+    cat = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
+
+    return(cat)
+
 
 
 def append_cat(number,cat):
@@ -115,4 +128,4 @@ def append_cat(number,cat):
         return(number)
     if not re.match(cat,number):
         return(number+(' ['+cat+']'))
-    return(number)           
+    return(number)
