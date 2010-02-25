@@ -191,7 +191,7 @@ th.searchboxheader a:hover {
 
 
 
-.navbar{ 
+.navbar{
    color:#FFF;
    background-color:#69C;
    padding: 6px 6px 5px 6px;
@@ -792,7 +792,7 @@ a.google:hover {
    color: #000;
    background: #fff1a8;
    padding: 4px;
-   border-spacing: 0px;  
+   border-spacing: 0px;
  text-align: left;
    font-weight: normal;
 }
@@ -882,7 +882,7 @@ a.nearesttermsselected:hover {
    background: #FC9;
    margin: 15px;
    padding:10px;
-   float:right;   
+   float:right;
    font-size: small;
 }
 
@@ -1781,7 +1781,7 @@ text-decoration:none;
 ul.tight_list{
  margin:.5ex 0 0 0;
 list-style:none;
-} 
+}
 tight_list li{
 margin:0;
 padding:0;
@@ -1902,5 +1902,18 @@ padding:0;
         background-image:url(drop_down_menu_arrow_down_b.gif)
 }
 
+.announce_portalbox {
+    width: 80%;
+    margin: 20px;
+    border: 2px solid #ccc;
+    padding: 5px;
+    font-size: small;
+}
+
+.announce_portalbox h2, h3 {
+    color: #999;
+    border-bottom: none;
+    margin-top: 10px;
+}
 
 /* end of inspire.css */

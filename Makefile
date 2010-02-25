@@ -22,6 +22,7 @@ install:
 install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-index-configuration \
                  reset-inspire-collection-configuration \
+                 reset-inspire-portalbox-configuration \
                  reset-inspire-search-sort-field-configuration \
                  reset-inspire-useraccess-configuration \
                  reset-inspire-submission-configuration
@@ -233,6 +234,34 @@ reset-inspire-collection-configuration:
 
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
+
+reset-inspire-portalbox-configuration:
+	@echo ">>> Resetting collection portalboxes:"
+	echo "TRUNCATE portalbox" | $(BINDIR)/dbexec
+	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
+	echo "INSERT INTO portalbox VALUES (1, '', 'FIXME')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'bg', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'ca', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'de', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'el', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'en', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'es', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'fr', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'hr', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'it', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'ja', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'no', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'pl', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'pt', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'sk', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'sv', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_CN', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_TW', 'ne', 100)" | $(BINDIR)/dbexec
+        # now update portalbox value from the announce file:
+	echo -e 'from invenio.dbquery import run_sql;\
+	body = open("webhelp/inspire_announce.html").read();\
+	run_sql("UPDATE portalbox SET body=%s WHERE id=1", (body,))' | $(PYTHON)
+	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:
 	@echo ">>> Resetting search/sort field configuration:"

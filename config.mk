@@ -13,6 +13,8 @@ WEBDIR = $(PREFIX)/var/www
 
 INSTALL = install -g apache -m 775
 
+PYTHON = /usr/bin/python
+
 # bibconvert options
 #
 
