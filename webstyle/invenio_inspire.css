@@ -405,7 +405,7 @@ a.navtrail:hover {
    color: #000;
    background: #fff;
    font-size: x-small;
-   width: 120px;
+   width: 15%;
    float: right;
 }
 .pageboxlefttop {
@@ -1902,18 +1902,98 @@ padding:0;
         background-image:url(drop_down_menu_arrow_down_b.gif)
 }
 
-.announce_portalbox {
-    width: 80%;
-    margin: 20px;
-    border: 2px solid #ccc;
-    padding: 5px;
-    font-size: small;
+
+.portalboxbody h3{
+    font-size: 1.2em;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    color: #666;
+    border-bottom: 1px dotted #ccc;
+    font-style: normal;
 }
 
-.announce_portalbox h2, h3 {
-    color: #999;
-    border-bottom: none;
-    margin-top: 10px;
+.portalboxbody p{
+    margin-top:1px;
+    margin-bottom:0;
 }
+
+.portalboxbody h2 {
+    font-size:1.2em;
+    text-align: center;
+    color: #666;
+    background-color: transparent;
+    font-style: normal;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    border-bottom: 2px dotted #ccc;
+}
+
+.portalboxbody h2.bright{
+   font-size:1.4em;
+   color:#000;
+}
+
+.portalboxbody ul{
+   margin:0ex 1em 0ex 1em;
+   padding:0px;
+   list-style-type:none;
+}
+
+
+
+.portalboxbody a {
+  text-decoration:none;
+}
+
+#announce{
+   width: 50%;
+   margin: 20px;
+   border: 2px solid #ccc;
+   padding: 5px;
+   font-size: small;
+}
+
+
+.portalboxbody dl{
+   margin:0ex 1em 0ex 1em;
+   padding:0px;
+}
+
+
+
+
+/*see also .pagebodystripright*/
+#sidebar{
+    font-size: small;
+    background-color:#FC9;
+    color:#666;
+    border:1px solid #333;
+    padding:2px;
+    margin-top:10px;
+    margin-bottom:10px;
+
+}
+
+
+#sidebar a{
+   color:#069;
+   text-decoration:none;
+}
+#sidebar a:visited{
+   color:#069;
+}
+#sidebar a:active{
+   color:#333;
+}
+#sidebar a:hover{
+   color:#fff;
+   background-color:#69c;
+   text-decoration:underline;
+}
+
+
+
 
 /* end of inspire.css */

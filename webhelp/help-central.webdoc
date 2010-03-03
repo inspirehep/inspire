@@ -105,5 +105,18 @@
       <hu>Teljes útmutató a <CFG_SITE_NAME_INTL> weboldalán való kereséshez.</hu>
     </lang>
 </dd>
+<dt><a href="search-guide<lang:link/>">_(Additions)_</a>
+</dt>
+<dd><lang>
+      <en>How to request that we add documents to <CFG_SITE_NAME_INTL>.</en>
+    </lang>
+</dd>
+<dt><a href="corrections<lang:link/>">_(Corrections)_</a>
+</dt>
+<dd><lang>
+      <en>Information on how to correct data in <CFG_SITE_NAME_INTL>.</en>
+    </lang>
+</dd>
+
 </dl>
 </blockquote>

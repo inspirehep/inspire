@@ -1,0 +1,51 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of CDS Invenio.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+##
+## CDS Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## CDS Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(Corrections)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+
+
+
+<h4>
+Please note that all corrections are made in both SPIRES and INSPIRE.
+There is no need to send corrections twice.
+</h4>
+
+<p>We divide corrections into those related to citations and references,
+and all other issues.  Plase treat them as indicated below.</p>
+
+ <h2>Non-Citation Issues</h2>
+
+<p>
+For corrections other than citations and references, simply email
+        your request to <a href="mailto:help@inspire-hep.net">
+        help@inspire-hep.net</a>.&nbsp; Be sure to identify the paper that
+        has a problem in a unique way (journal reference, eprint number, or
+        report number) and clearly explain what the problem is and how you
+        suggest it should be resolved.
+</p>
+
+
+  <h2>Citations/References</h2>
+<p>
+Please treat these as you would in SPIRES.  While INSPIRE will eventually
+be capable of handling reference corrections in a much more user-friendly
+manner, for the moment please follow the same <a href = "http://www.slac.stanford.edu/spires/hep/corrections.shtml">instructions as with SPIRES</a>.
+</p>

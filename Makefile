@@ -237,6 +237,7 @@ reset-inspire-collection-configuration:
 
 reset-inspire-portalbox-configuration:
 	@echo ">>> Resetting collection portalboxes:"
+        ## announce portalbox:
 	echo "TRUNCATE portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "INSERT INTO portalbox VALUES (1, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -261,6 +262,29 @@ reset-inspire-portalbox-configuration:
 	echo -e 'from invenio.dbquery import run_sql;\
 	body = open("webhelp/inspire_announce.html").read();\
 	run_sql("UPDATE portalbox SET body=%s WHERE id=1", (body,))' | $(PYTHON)
+        ## sidebar portalbox:
+	echo "INSERT INTO portalbox VALUES (2, '', 'FIXME')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+        # now update portalbox value from the sidebar file:
+	echo -e 'from invenio.dbquery import run_sql;\
+	body = open("webhelp/inspire_sidebar.html").read();\
+	run_sql("UPDATE portalbox SET body=%s WHERE id=2", (body,))' | $(PYTHON)
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:
