@@ -174,6 +174,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
 &nbsp;&nbsp;&nbsp;
 ..::..
 &nbsp;&nbsp;&nbsp;
+<strong>SPIRES</strong>
 <a id="nav-hepnames" href="http://www.slac.stanford.edu/spires/hepnames/">HepNames</a>
 ::
 <a id="nav-inst" href="http://www.slac.stanford.edu/spires/institutions/">Inst</a>
