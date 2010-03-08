@@ -72,9 +72,7 @@ def format(bfo, limit, separator='; ',
     re_coll = re.compile(r'\s*collaborations?', re.IGNORECASE)
 
 
-    # from invenio.config import instlink   ### FIXME
-
-    instlink = '<a class="afflink" href="http://www.slac.stanford.edu/spires/find/inst/wwwinspire?icncp='
+    from invenio.bibformat_config_inspire import CFG_BIBFORMAT_INSPIRE_INST_LINK
 
     from invenio.messages import gettext_set_language
 
@@ -98,8 +96,6 @@ def format(bfo, limit, separator='; ',
         else:
             authors = authors[:int(limit)]
 
-
-    lastpairs = ()
     # Process authors to add link, affiliation and highlight
     for author in authors:
 
@@ -127,7 +123,7 @@ def format(bfo, limit, separator='; ',
             if markup == 'latex':
                 if first_last_match:
                     first = re_initials.sub('\g<initial>.~', \
-                                            first_last_match.group('first_names'))
+                                        first_last_match.group('first_names'))
                     author['display'] = first  + \
                                         first_last_match.group('last') + \
                                         first_last_match.group('extension')
@@ -139,7 +135,8 @@ def format(bfo, limit, separator='; ',
                 id_link = ''
                 if id_links == "yes" and author.has_key('i'):
                     author['i'] = author['i'][0]  #possible to have more IDs?
-                    id_link = '<a class="authoridlink" href="' + CFG_SITE_URL + \
+                    id_link = '<a class="authoridlink" href="' + \
+                              CFG_SITE_URL + \
                               '/search?' + \
                               'ln='+ bfo.lang + \
                               '&amp;p=100__i' + escape(':' + author['i']) + \
@@ -147,22 +144,30 @@ def format(bfo, limit, separator='; ',
                               '">'+escape("(ID Search)") + '</a> '
 
 
-                author['display'] = '<a class="authorlink" href="' + CFG_SITE_URL + \
-                              '/author/'+ quote(author['a']) + \
-                              '?ln='+ bfo.lang + \
-                              '">'+escape(author['display'])+'</a>' + id_link
-
+                author['display'] = '<a class="authorlink" href="' + \
+                                    CFG_SITE_URL + \
+                                    '/author/'+ quote(author['a']) + \
+                                    '?ln='+ bfo.lang + \
+                                    '">'+escape(author['display'])+'</a>' + \
+                                    id_link
 
         if print_affiliations == "yes":
             if author.has_key('e'):
-                author['e'] = affiliation_prefix + affiliations_separator.join(author['e']) + \
+                author['e'] = affiliation_prefix + \
+                              affiliations_separator.join(author['e']) + \
                               affiliation_suffix
 
 
 
             if author.has_key('u'):
-                author['ilink'] = [instlink+escape(string)+'">'+string.lstrip()+'</a>' for string in author['u']]
-                author['u'] = affiliation_prefix + affiliations_separator.join(author['ilink']) + \
+                author['ilink'] = ['<a class="afflink" href="' + \
+                                   CFG_BIBFORMAT_INSPIRE_INST_LINK + \
+                                   escape(string) + \
+                                   '">' + \
+                                   string.lstrip() + \
+                                   '</a>' for string in author['u']]
+                author['u'] = affiliation_prefix + \
+                              affiliations_separator.join(author['ilink']) + \
                               affiliation_suffix
 
 
@@ -178,7 +183,7 @@ def format(bfo, limit, separator='; ',
             author['u'] = ''
         #print 'this->'+ author['a']+'\n'
         if last == author['u']:
-            author['u']=''
+            author['u'] = ''
         else:
             last = author['u']
 
@@ -202,7 +207,8 @@ def format(bfo, limit, separator='; ',
 
     # link the extension to detailed record
     if link_extension == 'yes' and interactive != 'yes':
-        extension = '<a class="authorlink" href="' + bfe_server(bfo,var="recurl")+ '">' + \
+        extension = '<a class="authorlink" href="' +  \
+                    bfe_server(bfo, var="recurl")+ '">' + \
                     extension + '</a>'
 
     # Detect Collaborations:
@@ -227,7 +233,8 @@ def format(bfo, limit, separator='; ',
                 coll_display += 's'
         if nb_authors > 1:
             if markup == 'latex':
-                coll_display =  authors[0] + extension + " [ " + coll_display + " ]"
+                coll_display =  authors[0] + extension + " [ " + \
+                               coll_display + " ]"
             elif interactive == "yes":
                 coll_display += " ("  + authors[0] + " "
                 extension += ")"
@@ -275,9 +282,9 @@ def format(bfo, limit, separator='; ',
         }
 
         </script>
-        '''%{'show_less':_("Hide"),
-             'show_more':_("Show all %i authors") % nb_authors,
-             'extension':extension}
+        ''' % {'show_less':_("Hide"),
+               'show_more':_("Show all %i authors") % nb_authors,
+               'extension':extension}
 
 #        out += '<a name="show_hide" />'
         if colls:
@@ -290,7 +297,9 @@ def format(bfo, limit, separator='; ',
         out += show
         out += ' <span id="more" style="">' + more + '</span>'
         out += ' <span id="extension"></span>'
-        out += ' <small><i><a id="link" href="#" onclick="toggle_authors_visibility()" style="color:rgb(204,0,0);"></a></i></small>'
+        out += ' <small><i><a id="link" href="#"' + \
+               ' onclick="toggle_authors_visibility()" ' + \
+               ' style="color:rgb(204,0,0);"></a></i></small>'
         out += '<script>set_up()</script>'
         return out
     elif nb_authors > 0:

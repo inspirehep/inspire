@@ -35,18 +35,42 @@ def format(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='yes'):
     """
 
     keywords = bfo.fields('695__a')
+    out = ""
     if len(keywords) > 0:
-        out = "<small>INSPIRE:</small> " + print_kw(bfo, keyword_prefix, keyword_suffix, separator, link, keywords)
+        out += "<small>INSPIRE:</small> " + \
+               print_kw(bfo,
+                        keyword_prefix,
+                        keyword_suffix,
+                        separator, link, keywords)
     keywords = bfo.fields('6531_a')
     if len(keywords) > 0:
-        out = out + '<br /><small>Author supplied:</small> ' + print_kw(bfo, keyword_prefix, keyword_suffix, separator, link, keywords)
+        out += '<br /><small>Author supplied:</small> ' + \
+               print_kw(bfo,
+                        keyword_prefix,
+                        keyword_suffix,
+                        separator, link, keywords)
     return out
 
-def print_kw(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='yes', keywords=[]):
+def print_kw(bfo,
+             keyword_prefix,
+             keyword_suffix,
+             separator=' | ',
+             link='yes',
+             keywords=[]):
+    """
+    Print a list of words in keyword style
+
+    @param keyword_prefix a prefix before each keyword
+    @param keyword_suffix a suffix after each keyword
+    @param separator: a separator between keywords
+    @param link: links the keywords if 'yes' (HTML links)
+    @param keywords list of keywords to print
+    """
+
     if link == 'yes':
         keywords = ['<a href="' + CFG_SITE_URL + '/search?f=keyword&amp;p='+ \
                     quote('"' + keyword + '"') + \
-                    '&amp;ln='+ bfo.lang+ \
+                    '&amp;ln=' + bfo.lang + \
                     '">' + cgi.escape(keyword) + '</a>'
                     for keyword in keywords]
     else:

@@ -113,14 +113,21 @@ def format(bfo, style='eu', markup = 'html'):
 
 
     elif conf_code:
-        if conf_type:
-            conf_type = bfo.kb('talktype', conf_type)
-            out += cgi.escape(conf_type)
-        conf_code = get_kbd_values('conferences', conf_code)
-        out += " " + cgi.escape(conf_code)
+        pass
+        # Do nothing, instead use bfe_INSPIRE_conference
+        # if conf_type:
+        #     conf_type = bfo.kb('talktype', conf_type)
+        #     out += cgi.escape(conf_type)
+        # conf_code = get_kbd_values('conferences', conf_code)
+        # out += " " + cgi.escape(conf_code)
+    else:
+        # not a conference, we should do our best if there is nothing else
+        backup_out = publication_info.get('x') 
 
-
-    return out
+    if out:
+        return out
+    elif not conf_code and backup_out:
+        return backup_out
 
 def escape_values(bfo):
     """
