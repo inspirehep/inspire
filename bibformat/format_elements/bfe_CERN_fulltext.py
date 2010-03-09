@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -58,10 +58,10 @@ def format(bfo, style, separator='; ', elec_loc_field='1'):
                  bfo.field('088__a'):
             # Weekly bulletin
             continue
-        
-        
+
+
         elif url.has_key('u'):
-            
+
             label = url.get('y', '')
             if coll in ['60', '61', '62', '63', '69'] or \
                coll in ['81', '82', '83', '84', '86','87','88', '89', '115', '117']:
@@ -74,7 +74,7 @@ def format(bfo, style, separator='; ', elec_loc_field='1'):
                 label = '<img src=http://cdsweb.cern.ch/img/speaker.png border="0">' + \
                         label
 
-                
+
             link = '<a ' + style + ' href="' + url['u'] + '">' + \
                    label + '</a>'
             out.append(link)
@@ -94,7 +94,7 @@ def format(bfo, style, separator='; ', elec_loc_field='1'):
                bfo.field('088__a') +'">CERN weekly bulletin ' + bfo.field('088__a') + '</a>' + \
                ' (' + bfo.field('260__c') + ')'
         out.append(link)
-    
+
     return separator.join(out)
 
 def escape_values(bfo):

@@ -8,7 +8,7 @@ use Term::ReadLine;
 sub new {
 	my $class  = shift;    # What class are we constructing?
 	my %args       = @_;
-	
+
 	my $self = bless( {}, ref($class) || $class );
 	for (keys %args){
 		$self->{$_}=$args{$_};   # just initialize everything for now  'spi' is only known
@@ -28,7 +28,7 @@ sub new {
 
 =pod
 
-menu takes a paramhash 
+menu takes a paramhash
 
 =over
 
@@ -42,8 +42,8 @@ menu takes a paramhash
 
 =item default=> The default choice (specified as the element of choicelist to return by default ie 0 or 4 etc )defaults to none)
 
-menu will allow multiple selections (comma separated) if it is called in array context, 
-and returns the choice items (not the options) in the order selected.  
+menu will allow multiple selections (comma separated) if it is called in array context,
+and returns the choice items (not the options) in the order selected.
 If called in scalar context it will only allow one selection, and return that one.
 
 =back
@@ -63,17 +63,17 @@ sub menu {
 	else{
 		undef($default);
 	}
-	my %extra   = %{$args{'extra'}}; 
+	my %extra   = %{$args{'extra'}};
 	my $i;
 	my $done    = $args{"done"};
 	foreach $choice ( @{ $args{'choicelist'} } ) {
 		my $opt = @{ $args{'options'} }->[$i] || ( $i + 1 );
 		$opt = '<cr>' if $opt eq "\n";
 		if (defined($default) && $args{'vertical'} ){
-			if ( $choice eq $default){$dispopt{$opt} = '<cr> '.$opt} 
+			if ( $choice eq $default){$dispopt{$opt} = '<cr> '.$opt}
 			else{ $dispopt{$opt} = '     '.$opt}
 		}
-		elsif (defined($default) &&  $choice eq $default){$dispopt{$opt} = $opt.'(<cr>)'} 
+		elsif (defined($default) &&  $choice eq $default){$dispopt{$opt} = $opt.'(<cr>)'}
 		else {$dispopt{$opt} = $opt}
 		push @options, $opt;
 		$choices{ $options[$i] } = $choice;
@@ -87,8 +87,8 @@ sub menu {
 		foreach $option (@options) {
 			my $disp=$choices{$option}.$sep;
 			$disp.=' '.$extra{$choices{$option}}.$sep if $extra{$choices{$option}};
-			
-			
+
+
 			print "$dispopt{$option}) $disp";
 		}
 		$done='<cr>' if $done eq "\n";
@@ -113,9 +113,9 @@ sub menu {
 				}
 			}
 			unless (@return==$num){
-				$self->print("Unrecognized input"); 
+				$self->print("Unrecognized input");
 				@return=$self->menu(%args);
-			} 
+			}
 			return (@return);
 		}
 		else {    # scalar
@@ -127,7 +127,7 @@ sub menu {
 				}
 			}
 			if ($return eq ''){
-				$self->print("Unrecognized input"); 
+				$self->print("Unrecognized input");
 				$return=$self->menu(%args);
 			}
 			return ($return);
@@ -186,8 +186,8 @@ returns value
 
 =item prompt appears above value (defaults to "Please edit $name \n")
 
-=item del  an input value to cause the value to be deleted defaults to "-"  This value 
-is still returned, no special action is taken, it is just included in prompt.  
+=item del  an input value to cause the value to be deleted defaults to "-"  This value
+is still returned, no special action is taken, it is just included in prompt.
 Only used if a value is also passed.  This may stil work, but since we use readline now, it is easier to just delete the value
 
 =item db alternatively pass a SPIRES::Expect object with a single result as db and and element name as...
@@ -201,7 +201,7 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 	sub checkedit {
 		my $self = shift;
 		my %args = @_;
-		
+
 		#
 		# Handle live databse updates
 		if (my $db=$args{'db'}){
@@ -212,21 +212,21 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 			delete($args{'db'});
 			delete($args{'element'});
 			$occ=0;
-			
+
 			#
 			#  handle multiple occurences
-			
+
 			foreach $val(@vals){
 				$occ++;
 				$args{'value'}=$val;
 				$args{'prompt'}="Please edit $elem($occ):";
-				
+
 				$val=$self->checkedit(%args);
 				my $merge="$elem($occ)=$val;";
 				if (! $val){
 					$merge="$elem(-$occ);";
 					$occ=$occ-1;
-					
+
 				}  #delete this value, and decrement so that the next one goes in the right place
 				if (!( $db->merge($merge))){
 					$self->error(
@@ -234,7 +234,7 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 	  							);
 						return(0);
 				}
-				
+
 			}
 			#
 			# Allow user to add more
@@ -242,7 +242,7 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 			$occ++;
 			$args{'prompt'}="Please add $elem <cr>:No More $elem";
 			while($val=$self->checkedit(%args)){
-				
+
 				if (!( $db->merge("$elem($occ)=$val;"))){
 						$self->error(
 							"There appears to be a problem merging to SPIRES\nYour changes may not be saved\nContinue, but be cautious, and check the record"
@@ -250,8 +250,8 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 						return(0);
 				}
 				$occ++;
-				
-			}			
+
+			}
 			return($occ);
 		}
 		my $name = $args{'name'} || "value";
@@ -261,10 +261,10 @@ Only used if a value is also passed.  This may stil work, but since we use readl
 		  ? $args{'prompt'}." "
 		  : "Please edit $name: ";
 		my $preput =$args{'value'}||'';
-	
+
 		$return = $self->term->readline($prompt,$preput)||$del;
 		#$return =~ s/(\S+)\n/$1/;   #strips nelwine unless that is all there is
-		#if ( $return !~ /\S/ ) { $return = $args{'value'}; }	
+		#if ( $return !~ /\S/ ) { $return = $args{'value'}; }
 		return ($return);
 	}
 =pod
@@ -281,7 +281,7 @@ prompts for a (perl syntax) substitution regexp and runs it on the provided text
 
 =cut
 
-	
+
 	sub regexp{
 			my $self=shift;
 			my $text=shift;
@@ -322,7 +322,7 @@ to edit the text specified.  return 0 if failure, returns edited text otherwise.
 
 =cut
 
-	
+
 	sub edittext{
 			my $self=shift;
 			my $text=shift;
@@ -334,7 +334,7 @@ to edit the text specified.  return 0 if failure, returns edited text otherwise.
 		$self->editfile($file);
 		open(TMP,"<$file") || return(0);
 		$text='';
-		while (<TMP>){$text.=$_;}		
+		while (<TMP>){$text.=$_;}
 		return($text);
 	}
 
@@ -357,7 +357,7 @@ to edit the file specified.  return 0 if failure, returns edited text otherwise.
 
 =cut
 
-	
+
 	sub editfile{
 		my $self=shift;
 		my $file=shift;
@@ -365,7 +365,7 @@ to edit the file specified.  return 0 if failure, returns edited text otherwise.
 		system("$editor $file");
 		return;
 	}
-	
+
 =pod
 
 findPaper(bull=><bull>,irn=><irn>,either=><id>)
@@ -384,7 +384,7 @@ finds a paper, or asks the user, returns irn, then lanl.
 =back
 
 =cut
-	
+
 sub findPaper{
 	$self=shift;
 	%args=@_;
@@ -394,26 +394,26 @@ sub findPaper{
     elsif($args{irn} && $spi->number("find irn $args{irn}")==1){}
     elsif(($search=$args{either}) || ($search=$self->checkedit(name=>"", prompt=>"eprint or IRN"))){
 		if ($spi->number("find bull $search")==1){}
-    	elsif ($spi->number("find irn $search")==1){}	
+    	elsif ($spi->number("find irn $search")==1){}
     }
-	$irn=$spi->list('irn');	
-	$lanl=$spi->list('lanl');	
+	$irn=$spi->list('irn');
+	$lanl=$spi->list('lanl');
     if (!$irn) {$self->die("Can't find paper");}
     return($irn,$lanl);
 }
-	
-	
-	
+
+
+
 	sub  term{
 		return(@_[0]->{term});
 	}
-	
+
 	sub print {
 		$self=shift;
 		$string=shift;
-		print "$string\n";	
+		print "$string\n";
 	}
-	
+
 	sub error {
 		my $self=shift;
 		my $msg=shift;
@@ -421,12 +421,12 @@ sub findPaper{
 	    print "*** An error occurred ***\n";
 		print "**  $msg  **\n";
 	}
-	
+
 	sub die {
 		my $self=shift;
 		my @args=@_;
 		$self->error(@args);
-		die ("Inputter Module cannot continue, please start again\n");	
+		die ("Inputter Module cannot continue, please start again\n");
 	}
-	
+
 	1;

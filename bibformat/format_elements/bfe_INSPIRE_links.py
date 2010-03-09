@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -37,7 +37,7 @@ def format(bfo, default = '', separator = '; ', style = '', \
     @param separator (separates instances of links)
     @param prefix
     @param suffix
-    @param show_icons default = no  
+    @param show_icons default = no
     @param style options CSS style for link
     """
     _ = gettext_set_language(bfo.lang)
@@ -71,9 +71,9 @@ def format(bfo, default = '', separator = '; ', style = '', \
 
     # could look for other publication info and calculate URls here
 
-    
+
     # now look for explicit URLs
-    # might want to check that we aren't repeating things from above... 
+    # might want to check that we aren't repeating things from above...
     urls = bfo.fields('8564_')
     links.extend(['<a '+ style + \
             'href="' + url.get("u") + '">' + \
@@ -82,8 +82,8 @@ def format(bfo, default = '', separator = '; ', style = '', \
                   url.get('y').upper() != "DOI"])
 
 
-  
-        
+
+
     #put it all together
     if links:
         if show_icons.lower() == 'yes':
@@ -95,7 +95,7 @@ def format(bfo, default = '', separator = '; ', style = '', \
     else:
         return default
 
-    
+
 
 
 def _lookup_url_name(bfo, abbrev = ''):
@@ -118,4 +118,4 @@ def escape_values(bfo):
     return 0
 
 
-    
+

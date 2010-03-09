@@ -122,7 +122,7 @@ def format(bfo, style='eu', markup = 'html'):
         # out += " " + cgi.escape(conf_code)
     else:
         # not a conference, we should do our best if there is nothing else
-        backup_out = publication_info.get('x') 
+        backup_out = publication_info.get('x')
 
     if out:
         return out

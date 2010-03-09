@@ -68,7 +68,7 @@ class ConvertIntoDateGUITest(unittest.TestCase):
         dategui_en = dateutils.convert_datetext_to_dategui(datetext,
                                                            ln='en')
         self.assertEqual(dategui_en, dategui_en_expected)
-        
+
 
     def test_convert_good_to_dategui_sk(self):
         """dateutils - conversion of good text date into Slovak GUI date"""

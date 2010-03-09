@@ -59,7 +59,7 @@ ok($spitest->merge($merge_str,733)==1,'merge with key');
 
 $spitest->ask("clr sta","sta 733","gen res");
 @recs=($spitest->element('recommender'))[0];
-$rec=pop @{$recs[0]}; 
+$rec=pop @{$recs[0]};
 ok($rec=~/Travis Brooks/, "Merge actually updates");
 
 $num_res=$spitest->number("find name pot");

@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -71,16 +71,16 @@ def main(argv):
 	    result = bibconvert_xslt_engine.convert(result, "marcxmltoplain.xsl")
             #call a sub that changes the stuff to editable form, calls editor,
 	    #returns a string
-	    new = convert_edit(result)	    
+	    new = convert_edit(result)
 	    newr = to_marc(new)
-            if verbose:                
+            if verbose:
                 #debug
                 f=open('/tmp/debug', 'w')
                 f.write(new)
                 f.write(newr)
                 f.close()
                 print newr
-	    if upper(raw_input("Save to DB Y/N:")) =='Y':        
+	    if upper(raw_input("Save to DB Y/N:")) =='Y':
         	 recs=xml_marc_to_records(''.join(newr))
 	         response=bibupload(recs[0],opt_mode='replace')
 	         if response[0]:print "Error updating record: "+response[0]
@@ -112,7 +112,7 @@ def convert_edit(result):
             except OSError, e:
                 print "Editor Failed", e
                 sys.exit
-                
+
 
 
 	    tmpfile.seek(0)
@@ -143,17 +143,17 @@ def to_marc(new):
 			cfv = l[16:]
 			cf[cff]=cfv
 
-		sf={}	
+		sf={}
 		dbrec = ''
         	#if the line starts with 555xxx: it's a tag
 	        p = re.compile('^\d\d\d...:')
 		if p.match(l):
 			#take the junk
-			dfieldtag = l[0:3] 
-			dfieldind1 = l[3] 
+			dfieldtag = l[0:3]
+			dfieldind1 = l[3]
 			dfieldind2 = l[4]
 			main = dfieldtag+dfieldind1+dfieldind2
-			subfieldc = l[5] 
+			subfieldc = l[5]
 			rest = l[7:]
 			#put in hash
 			if dfsf.has_key(main):
@@ -183,7 +183,7 @@ def to_marc(new):
 						sft[subfieldc] = rest
 						sf = sft
 			sf[subfieldc] = rest
-			dfsf[main] = sf 
+			dfsf[main] = sf
 
  	    #go through the hash -- put stuff in newrecord
 	    newr = '<collection>\n<record>\n'
@@ -199,7 +199,7 @@ def to_marc(new):
 		for j in sf.keys():
 			newr=newr+'<subfield code="'+j+'">'+sf[j]+'</subfield>'
 		newr=newr+'</datafield>\n'
-		
+
             #close
 	    newr=newr+"</record></collection>"
 	    return newr
@@ -207,4 +207,4 @@ def to_marc(new):
 if __name__ == "__main__":
     main(sys.argv[1:])
 
-1 	
+1

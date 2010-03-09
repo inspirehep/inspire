@@ -12,7 +12,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -26,14 +26,14 @@ than formally tested
 import re
 import unittest
 
-from invenio.search_engine_query_parser import SpiresToInvenioSyntaxConverter 
-from invenio.search_engine_query_parser import SearchQueryParenthesisedParser 
+from invenio.search_engine_query_parser import SpiresToInvenioSyntaxConverter
+from invenio.search_engine_query_parser import SearchQueryParenthesisedParser
 spires=SpiresToInvenioSyntaxConverter()
 parser=SearchQueryParenthesisedParser()
 
-class filterTestclass(unittest.TestCase):        
-    
-            
+class filterTestclass(unittest.TestCase):
+
+
 unittest.main()
 
 

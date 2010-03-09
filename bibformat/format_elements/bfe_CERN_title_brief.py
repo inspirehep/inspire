@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -29,7 +29,7 @@ import re
 def format(bfo, highlight="no", force_title_case="no"):
     """
     Prints a short title, suitable for brief format.
-    
+
     @param highlight highlights the words corresponding to search query if set to 'yes'
     """
 
@@ -54,20 +54,20 @@ def format(bfo, highlight="no", force_title_case="no"):
 
     alt_titles = bfo.fields('246_1', 1)
     edition_statement = bfo.field('250__a', 1)
-    
+
     out = ""
 
 
     if len(main_corporate_authors) > 0: # Why is this here?
         out += " : ".join(main_corporate_authors) + " : "
-        
+
     for title in titles:
         out += title.get('a')
         if title.has_key('b'):
             out += ' : ' + title['b']
         if title.has_key('s'):
             out += ' : ' + title['s']
-        
+
     for section in sections:
         if section.has_key('n'):
             out += " " + section['n']
@@ -80,7 +80,7 @@ def format(bfo, highlight="no", force_title_case="no"):
             out += ' : ' + inst['b']
         if inst.has_key('s'):
             out += ' : ' + inst['s']
-            
+
     for alt_title in alt_titles:
         out += "<br /><b><i>" + alt_title.get('a') + '</i></b>'
         if alt_title.has_key('b'):
@@ -89,7 +89,7 @@ def format(bfo, highlight="no", force_title_case="no"):
             out += ' : ' + alt_title['s']
 
     #Try to display edition statement if other titles were not found
-    if out == '' and edition_statement != '':     
+    if out == '' and edition_statement != '':
         out += " ; " + edition_statement
 
 

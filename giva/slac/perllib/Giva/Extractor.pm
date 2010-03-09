@@ -38,7 +38,7 @@ An Astrlist object to contain the extracted list of auths
 
 1 for verbose, 0 for silence
 
-=item extracted 
+=item extracted
 
 Count of objects extracted
 
@@ -72,8 +72,8 @@ struct Giva::Extractor {
 
 =item foundAff
 
-The method can be called by the extractor whenever an affiliation is found.  It takes care of adding to the 
-Astrlist 
+The method can be called by the extractor whenever an affiliation is found.  It takes care of adding to the
+Astrlist
 
   $self->foundAff($aff)
 
@@ -84,8 +84,8 @@ It calls the following Astrlist methods
 	mergeDupAff
 	addAstr
 
-This should take care of a basic attempt at parsing affiliations out of $aff, adding them to the Astrlist, and 
-making sure that 2 astrs with the same affs are merged.  If you don't like the basic parsing, try to parse it yourself before using 
+This should take care of a basic attempt at parsing affiliations out of $aff, adding them to the Astrlist, and
+making sure that 2 astrs with the same affs are merged.  If you don't like the basic parsing, try to parse it yourself before using
 foundAff, then pass a valid ICN as $aff.
 
 Prints a "+" so that inputter can see that things are moving along...
@@ -98,7 +98,7 @@ sub foundAff {
 	my $self=shift;
 	my $aff=shift;
 	chomp($aff);
-			$aff =~ s/\s+$//g;		
+			$aff =~ s/\s+$//g;
 			$self->Astrlist->addAff($aff)
 			  unless ($aff && $self->Astrlist->parseAddAff($aff));
 			if ( $aff && $self->Astrlist->mergeDupAff ) {
@@ -116,8 +116,8 @@ sub foundAff {
 
 =item foundAuth
 
-The method can be called by the extractor whenever an author is found.  It takes care of adding to the 
-Astrlist 
+The method can be called by the extractor whenever an author is found.  It takes care of adding to the
+Astrlist
 
   $self->foundAuth($auth)
 
@@ -149,13 +149,13 @@ sub foundAuth {
 	   $auth =~ s/(\w+)\s+(.+)/$2,$1/;
 	}
 	$self->Astrlist->addAuth($auth);
-	
+
 	$self->extracted($self->extracted + 1);
 	print $self->extracted if $self->verbose;
-	
+
 	print '+';
 	}
-	
+
 	sub useTeXrefs{
 		my $self=shift;
 		use lanl;
@@ -169,7 +169,7 @@ sub foundAuth {
 			my @lines=<EXTRACT>;
 			map {print "extracted: $_\n"} @lines if $self->verbose;
 			$self->refs(\@lines);
-			close(EXTRACT);      
+			close(EXTRACT);
 		}
 		else
 	{
@@ -179,14 +179,14 @@ sub foundAuth {
 	unlink "$tmpname.tex" unless $self->verbose;
 	unlink "$tmpname.extract" unless $self->verbose;
 	return($extracted);
-		
+
 	}
-	
+
 =pod
 
 =head Methods for subclasses
 
-A subclass should at the least, supply an extract method which returns the number extracted, and modifies 
+A subclass should at the least, supply an extract method which returns the number extracted, and modifies
 $self->Astrlist $self->refs as appropriate.
 
 
@@ -283,9 +283,9 @@ sub ext_auths{
 		$word =~ s/([A-Za-z\s\.]+) ([Vvaonder\s]+) ([A-Za-z\s]+)/$2 $3, $1/;
 		$word =~ s/([A-Za-z\s\.]+) ([DdEela\s]+) ([A-Za-z\s]+)/$2 $3,$1/;
 #		$word =~ s/AUTHOR =;/AUTHOR =/;
-	
+
 		$self->foundAuth($word);
-	
+
 
 	}
 
@@ -304,7 +304,7 @@ sub ext_refs{
 	warn "Starting extraction\n" if $self->verbose;
 	my $extracted = 0;
 	my @lines     = ();
-	
+
 
 ##  Read in the file
 
@@ -343,8 +343,8 @@ sub ext_refs{
 	map {print TEXT  "$_\n";} @tidylines;
 	map {print "tidylines: $_\n";} @tidylines if $self->verbose;
 	return($self->useTeXrefs);
-	
-	
+
+
 }
 
 
@@ -367,11 +367,11 @@ use vars qw(@ISA);
 
 sub extract{
 	$self=shift;
-	
-	
+
+
 		my $extracted = 0;
 	my @lines     = ();
-	
+
 
 ##  Read in the file
 
@@ -383,7 +383,7 @@ sub extract{
 		warn "Error opening" . $self->file;
 		return (0);
 	}
-	
+
     my @tidylines=();
     push @tidylines, 'REFERENCES';
     my $textTag=0;
@@ -431,8 +431,8 @@ sub extract{
 	     $info =~ s/(arxiv\:\d{4}\.\d+)/\n$1\n/g;
 	     $info =~ s/\((doi\:[^)]+)\)/\n$1\n/g;
 	         $info =~ s/[^:\d](\d+)\.(\D)/$1\n\n\.$2/g;
-	   
-	    
+
+
             $info =~ s/([a-z]+-[a-z]+[\/\s]?\d{7})/\n$1\n/g;
             $info=~ s/(\[\d+\] )/\n\\\\\n$1/g; #insert newlines
             push @tidylines,"$info ";
@@ -446,7 +446,7 @@ sub extract{
 	map {print TEXT  "$_\n";} @tidylines;
 	map {print "tidylines: $_\n";} @tidylines if $self->verbose;
 	return($self->useTeXrefs);
-	
+
 }
 
 
@@ -458,11 +458,11 @@ use vars qw(@ISA);
 
 sub extract{
 	$self=shift;
-	
-	
+
+
 		my $extracted = 0;
 	my @lines     = ();
-	
+
 
 ##  Read in the file
 
@@ -474,7 +474,7 @@ sub extract{
 		warn "Error opening" . $self->file;
 		return (0);
 	}
-	
+
     my @tidylines=();
     push @tidylines, 'REFERENCES';
     my $textTag=0;
@@ -522,7 +522,7 @@ sub extract{
 	          $info =~ s/([a-z]+-[a-z]+[\/\s]?\d{7})/\n$1\n/g;
 	           $info =~ s/(arxiv\:\d{4}\.\d+)/\n$1\n/g;
 	         $info =~ s/(\d)\.(\D)/$1\n\n\.$2/g;
-          
+
             $info=~ s/(\[\d+\] )/\n\\\\\n$1/g; #insert newlines
             push @tidylines,"$info ";
 	}
@@ -535,7 +535,7 @@ sub extract{
 	map {print TEXT  "$_\n";} @tidylines;
 	map {print "tidylines: $_\n";} @tidylines if $self->verbose;
 	return($self->useTeXrefs);
-	
+
 }
 1;
 

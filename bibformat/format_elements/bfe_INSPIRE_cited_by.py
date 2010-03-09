@@ -38,12 +38,12 @@ def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
     from urllib import quote
 
-   #FIXME temporary while some inspire sites migrating from .92->.99 
+   #FIXME temporary while some inspire sites migrating from .92->.99
     try:
         from invenio.config import CFG_SITE_URL
     except:
         from invenio.config import weburl as CFG_SITE_URL
-        
+
     primary_report_numbers = bfo.fields('037__a')
     additional_report_numbers = bfo.fields('088__a')
 

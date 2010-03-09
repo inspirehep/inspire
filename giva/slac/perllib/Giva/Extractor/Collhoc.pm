@@ -20,7 +20,7 @@ sub extract
   $instFlag = 0;
   $foundauth = 0;
   $foundaff  = 0;
-  my $clean = '';                     
+  my $clean = '';
   my $line  = '';
   warn "Extracting from tex file ". $self->file . "\n" if $self->verbose;
   if (!(open(TEX, $self->file)))
@@ -37,14 +37,14 @@ sub extract
   {
     my $line = $_;
     $line = &LittleThings($line);
-    $line = &NewCommand($line);  
+    $line = &NewCommand($line);
     $line = &Decode($line);
     $line = &AuthorForm($line);
     if ($line =~ /(\\author|\\affiliation)/)
     {
-      $line2 .= $line;            
+      $line2 .= $line;
     }
-  }    
+  }
   $line = &Cluster($line2);
   foreach (split /\n/, $line)
   {
@@ -72,11 +72,11 @@ sub extract
       $self-> foundAff($aff);
       $foundaff = 0;
     }
-  } 
+  }
   print "EXTRACTED = ".$self->extracted."\n" if $self->verbose;
   return ($self->extracted);
 }
-  
+
 
 
 sub Cluster
@@ -127,7 +127,7 @@ sub AuthorForm
   $line =~ s/\\it\s*(\$\^\{.*\}\$)\s*(.*)/\n\\affiliation\{$1$2\}/g;
   $line=~s/\\author\[([^\]]+)\]\{([^\}]+)\}/\\author\{$2\$^\{$1\}\$\}/g;
   $line=~s/\\altaffiliation/\\affiliation/g;
-  $line =~ s/[aA]lso (at|with) / /g; 
+  $line =~ s/[aA]lso (at|with) / /g;
   $line=~s/^\\address\[([^\]]+)\]\{([^\}]+)\}/\\affiliation\{\$^\{$1\}\$$2\}/g;
   if  ($line =~ /\\affiliation\{\$\^\{?(\w+)\}?\$\W*(.*)\}/ )
   {
@@ -197,7 +197,7 @@ sub Brace
 
 sub NewCommand
 {
-  my $info = $_[0];  
+  my $info = $_[0];
   if ($info =~ /\\newcommand\*?\{\\(.*)\}\{(.*)\}/ ||
       $info =~ /\\def\\(.*)\{(\\.*)\}/  ||
       $info =~ /\\def\\(.*)\{(.*)\}/ ||
@@ -309,4 +309,4 @@ sub Decode
 
 
 1;
-  
+

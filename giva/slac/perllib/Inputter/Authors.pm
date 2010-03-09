@@ -4,8 +4,8 @@ use Astrlist;
 
 use vars qw(@ISA);
 @ISA = qw(Astrlist);
-	
-my @listAffsandGuesses;	
+
+my @listAffsandGuesses;
 
 sub allAffsandGuesses {
 		my $self   = shift;
@@ -25,8 +25,8 @@ sub allAffsandGuesses {
 			}
 		}
 		@listAffsandGuesses=@return;
-		return (@return); 
-		
+		return (@return);
+
 	}
 
 
@@ -81,8 +81,8 @@ sub guessAff {
 		warn Dumper($self);
 
 	}
-	
-	
+
+
 	sub clearlist{
 		my $self=shift;
 		my $list = Astrlist::Input->new( "astrIdx" => "-1", 'spi' => $self->{spi} );
@@ -114,7 +114,7 @@ sub guessAff {
 =item checkAuth
 
 
- 
+
 =cut
 
 	sub checkAuth {
@@ -171,9 +171,9 @@ sub guessAff {
 		my @affs = @_ ;
 		@affs=$list->guessAff($auth) unless @affs;
 		my $done=0;
-		while ( ! $done ) { 
+		while ( ! $done ) {
 			$done = $self->checkAffs(@affs);
-			@affs = ();		
+			@affs = ();
 		}
 		return (1);
 	}
@@ -210,9 +210,9 @@ sub guessAff {
 
 		}
 		my $i = 0;
-		return($self->newAff()) if ($auto && @icns ==0);	
+		return($self->newAff()) if ($auto && @icns ==0);
 		$self->print("Here are some possible matches");
-		
+
 		while () {
 			%info = {};
 			my @menu = ();
@@ -256,7 +256,7 @@ sub guessAff {
 		my $dump     = shift||$self->astrlist->toSPIRES;
 		my $dumpfile = "$ENV{HOME}/authorfile.dump.$$";
 		if ( open( TMP, ">$dumpfile" ) ) {
-			
+
 			print TMP  $dump;
 
 			$self->print("Your work thus far has been saved in $dumpfile");
@@ -285,17 +285,17 @@ sub guessAff {
 		else{
 			@affs=@{$list->astrs($idx)->aff()};
 			 $list->astrs($idx)->aff( [] );
-			
+
 		}
 
 		my %seen = ();
 		my @menu = ();my @extra=();
 		my $guess=join "\n              ", @affs;
-		push @menu, "Current:\n              $guess\n";	
-		push @menu, 'Not on List';	
+		push @menu, "Current:\n              $guess\n";
+		push @menu, 'Not on List';
 		foreach my $aff (@affs) {
 			push @menu, $aff unless $seen{$aff}++;
-			
+
 		}
 		foreach my $aff ( $list->allAffsandGuesses ) {
 			warn "$aff\n";
@@ -306,7 +306,7 @@ sub guessAff {
 			vertical   => 1,
 			default => 0,
 		);
-	    
+
 		if ($affs[0]=~/Current:/ && ! $affs[1]){
 			foreach (split /\n/, $guess) {
 				chomp;
@@ -340,17 +340,17 @@ sub guessAff {
 							prompt  => "\nGive up on this Aff?",
 							default => 'N',
 						);
-						
+
 					}
 				}
 			}
 		}
-	
+
 		return(0);
 	}
-	
+
 	sub checkIn{
-	
+
 	my $self=shift;
 	my %args=@_;
 	my $rec=$args{'rec'};
@@ -359,12 +359,12 @@ sub guessAff {
 	my $spi=$self->spi;
 	$spi->ask('sel hep');
 	my $title=$rec->title;
-	$title=~s/\w+\-\w+//g; 
+	$title=~s/\w+\-\w+//g;
 	$title=~ s/\w*[^\w\s]+\w*//g;
 	 $title=~s/^/\"/;
 	 $title=~s/$/\"/;
 
-	
+
 	my $irn=$rec->irn;
 	my $date=$rec->date;
 	$date=m/(\d{4})/;my $year=$1;
@@ -372,11 +372,11 @@ sub guessAff {
 	my $notSelf=" and not irn $irn";
 #	warn "Checking dupes:\n$search\n";
 	if (($num=$spi->number($search.$notSelf))==0){
-		return(0);				
+		return(0);
 	}
 	$noBull=$noBull?'also bb occ =0':'show result';
 	if (($num=$spi->number($noBull))==0){
-		return(0);				
+		return(0);
 	}
 
 
@@ -391,14 +391,14 @@ sub guessAff {
 	@titles=$spi->list('title');
 	@irns=$spi->list('irn');
 	@fas=$spi->list('fa');
-	
+
 	for(my $i=0;$i<$num;$i++){
 		$extra{$irns[$i]}="First Author: $fas[$i]\nTitle: $titles[$i]";
-	}	
+	}
 	unshift @irns, "No Duplicate";
 	$self->print("Choose a duplicate?");
-	my $choice=$self->menu(  
-			choicelist=>\@irns, 
+	my $choice=$self->menu(
+			choicelist=>\@irns,
 			vertical=>1,
 			extra=>\%extra,
 		);
@@ -407,12 +407,12 @@ sub guessAff {
 		$choice=~s/^(\d+)\s.*$/$1/m;
 		return($choice);
 	}
-	return(0)	
-	
+	return(0)
+
 	}
-	
-	
-	
+
+
+
 	sub checkAffList {
 	my $newaff = '';
 	my $idx    = 0;
@@ -438,11 +438,11 @@ sub guessAff {
 								default => 'N'
 						)
 					){
-						last;	
+						last;
 					}
-			}	
-			
-	
+			}
+
+
 			if ($self->astrlist->repAff(old=>$aff,new=>\@new)){
 				map {print "  $_ ... Changed\n"} @new;
 			}
@@ -452,16 +452,16 @@ sub guessAff {
 		}
 		else {
 			print "  $aff ... Correct\n";
-		}   	
+		}
 	}
 	map {$self->print("$_\n")} $self->astrlist->allAffs;
 	$self->print("To start from scratch, say \"N\", go to edit, then delete affs and come back here");
 	if($self->question(
 		prompt=> "Append more affils to above list?",
 		default => 'N',
-		
+
 	)){
-				
+
 		@append=();
 		while ( $newaff = $self->newAff() ) {
 					push @append, $newaff;
@@ -469,10 +469,10 @@ sub guessAff {
 					map { $self->print("$_\n") } @append;
 					$self->print("\n\n Add another or <cr> to go on\n");
 				}
-				
+
 		#
 		#Determine where these appended astrs go.  astr(1) if only one astr, otherwise create a new one at the end
-		#				
+		#
 		my $numAstrs= scalar(@{$self->astrlist->astrs});
 		print "I have " .$numAstrs. " astrs\n";
 		if ($numAstrs>1){
@@ -480,12 +480,12 @@ sub guessAff {
 			map {print} @append;
 			$self->astrlist->addAstr('auth'=>[],'aff'=>\@append);
 			$self->astrlist->dump;
-		}  
+		}
 		else{
 			foreach $aff (@append){
 				$self->astrlist->addAff($aff,0);
 			}
-		}						
+		}
 	}
 	push @new, @append;
     return (\@new);
@@ -494,7 +494,7 @@ sub guessAff {
 
 
 sub editAstr {
-    my $user=shift;	
+    my $user=shift;
 	my $spi    = $user->spi;
 	my $key  = shift;
 	my $db=shift||"Process.authors";
@@ -533,7 +533,7 @@ sub editAstr {
 }
 
 
-sub checkNames {	
+sub checkNames {
 	my $self     = shift;
 	my $spi      = $self->spi;
 	my $simauths = shift;
@@ -543,20 +543,20 @@ sub checkNames {
     foreach $author ($self->astrlist->allAuths){
    		if ($simauths->{$author}){
 	   		print "$author ... Matches Similar \n";
-   		}	
+   		}
    		elsif ($hepcut && $spi->number("find ea $author and not note temporary")>$hepcut){
    			print "$author ... In HEP\n";
    		}
    		else {
    			my $newauthor=$self->checkAuth($author);
-   			last if ($newauthor==-1);				
+   			last if ($newauthor==-1);
    			if ($newauthor ne $author){
    				 $self->astrlist->repAuth(old=>$author,new=>[$newauthor]);
    				 $changes++;
    			}
-   		
+
    		}
-   		
+
     }
     return ($changes);
 }
@@ -564,7 +564,7 @@ sub checkNames {
 
 sub saveAstr {
 	my $user  = shift;
-	
+
 	my $key = shift;
     my $db=shift||"process.authors";
 	$bat =
@@ -579,7 +579,7 @@ sub saveAstr {
    		else{
 	   		$user->error("Cannot merge to $db\n");
 	   		return(0);
-   		}   
+   		}
 
 }
 

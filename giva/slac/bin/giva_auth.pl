@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl 
+#!/usr/local/bin/perl
 
 use arxiv;
 use Giva;
@@ -21,9 +21,9 @@ use Mail::Mailer;
 Typical example:
 
  giva_auth.pl -b'arXiv:0705.0432'
- 
-Extracts authors from specified paper (or file) using a collection of routines.  Interactive with user to choose routines and 
-and check authors and affiliations.  
+
+Extracts authors from specified paper (or file) using a collection of routines.  Interactive with user to choose routines and
+and check authors and affiliations.
 
 =head2 Options
 
@@ -54,9 +54,9 @@ and check authors and affiliations.
 Uses Extractors written as perl modules in Giva::Extractor::<module>
 
 These are all subclasses of Giva::Extractor  which provides basic mthods for getting the paper and dealing
-with the results.  
+with the results.
 
-The extractor module needs only to define the extract method  which reads from $self->file and calls $self->foundAuth 
+The extractor module needs only to define the extract method  which reads from $self->file and calls $self->foundAuth
 $self->foundAff methods when needed.  When done it should return $self->extracted.   Of course
 you can override any of these methods yourself in the extractor, but you don't need to.  See the Giva::Extractor docs for details
 
@@ -116,8 +116,8 @@ my $simirn=0;
 my $resp='re-extract';  #default is to extract
 
 
-while(1){	
-	
+while(1){
+
 	$procauth->ask('sel process.authors');
     if ($procauth->number("find r $pakey")){
       #
@@ -126,12 +126,12 @@ while(1){
 	  $user->astrlist->fromSPIRES;
       compareSimilar($hepcut, $spi, $user, $simauths,$simaffs);
 	  $resp=$user->menu(prompt=>"You have an authorset",choicelist=>["Add to Hep", "Check Authors", "Check/Add Affils", "Re-extract",'Edit'],done=>"\n",vertical=>1);
-    } 
+    }
 	last unless $resp; #to remove lock and move on...nneed to eventually change so we can remove note.
 	if ($resp=~/re-extract/i){
-		$user->clearlist;	
+		$user->clearlist;
 		my $giva=useGiva('user'=>$user, 'irn'=> $irn ,'routine'=>$routine);
-	
+
 		if ($giva>0){
 		    compareSimilar($hepcut, $spi, $user,$simauths,$simaffs);
 			$user->editAstr("BULL = $pakey","process.authors");
@@ -142,21 +142,21 @@ while(1){
 		}
 		next;
 	}
-	
+
 	if ($resp=~/Edit/i){
 		$user->editAstr("BULL = $pakey","process.authors");
 		next;
 	}
-	
-	
-	
+
+
+
 	#
 	#  Check for similar paper.  If already found, just use that one.
 	#
     if (!$simirn){($simirn, $simauths,$simaffs) = checkSimilar($user, $irn);}
     compareSimilar($hepcut, $spi, $user, $simauths,$simaffs);
-    
-    
+
+
 	if ($resp=~/Add to Hep/i){
 		if ($user->editAstr("BULL = $pakey","process.authors") && $user->astrlist->mergetoSPIRES($irn,'hep')){
 			$hepadded=1;
@@ -185,10 +185,10 @@ while(1){
    		}
    		next;
 	}
-	
-	
+
+
 }
-	
+
 
 
 
@@ -197,30 +197,30 @@ while(1){
 #   Tidy up, remove lock
 #
 
-   
-   
- 
- 
- 
+
+
+
+
+
  $user->print("Removing lock, moving on...");
  $new='hn(-0);';
  $spi->ask('sel hep');
  if( $spi->number("find irn $irn")){
  foreach ($spi->list('hn')){
- 	   $new.= "hn=$_;" unless m/lots\.of\.authors\.lock/; 
+ 	   $new.= "hn=$_;" unless m/lots\.of\.authors\.lock/;
  }
  if ($hepadded){
  	$new.='note(-0);';
   	foreach ($spi->list('note')){
- 	   	$new.= "note=$_;" unless m/Long Author List - awaiting/i; 
- 	   	
+ 	   	$new.= "note=$_;" unless m/Long Author List - awaiting/i;
+
  	}
  	$new.="HN=Authors obtained from Giva on $date by ".$ENV{'USER'}.";";
  }
  $spi->merge($new);
  }
- 
- 
+
+
 
 
 
@@ -248,7 +248,7 @@ sub useGiva {
 		$routine = $user->menu(
 			prompt => 'Choose a routine to use to extract authors',choicelist=>\@routines,extra=>\%extra,done=>"\n",vertical=>1);
     }
-   return(-1) unless $routine;  
+   return(-1) unless $routine;
 my $giva = Giva->new(
 	input=>$user,
 	spi=>$spi,
@@ -275,7 +275,7 @@ if (my $auths=$giva->extract){
    $user->astrlist($auths);
    $user->print("Extraction Succeeded");
    return(1);
- 
+
 }
 else{
   	warn "extraction failed\n";
@@ -313,8 +313,8 @@ $year--;
 	if ($spi->number("find k $cn")>0){
 		$spi->number("also cn str $cn");
 		$spi->ask("seq ds(d)");
-		$exp=$spi->list("exp");					
-	}	
+		$exp=$spi->list("exp");
+	}
 }
 if ($exp){
 	$spi->ask('sel exp',"find exp $exp");
@@ -337,7 +337,7 @@ if ($spi->number("find (exp $exp or cn $cn) and date >= $year")>2 && $spi->numbe
  	){
 	$spi->ask("seq ds(d)","set for matchdesyplus");
 	$simirn=$spi->list('irn');
-	$spi->ask("find irn $simirn");	
+	$spi->ask("find irn $simirn");
 	$user->print($spi->ask("typ"));
 	if($user->question(prompt=>"Is this a recent similar paper",default=>'Y')){
 		$user->print("OK I will use this paper for comparison\n");
@@ -345,15 +345,15 @@ if ($spi->number("find (exp $exp or cn $cn) and date >= $year")>2 && $spi->numbe
 		 @simaffs=$spi->list('aff');
 		 foreach (@simauths){
    		    $simauths->{$_}++;
-   
+
    }
-		 
-		 
+
+
 	}
 	else {$user->print("OK I won\'t try to compare to anything.  No problem\n")}
 }
 else{$user->print("No similar papers could be found.  No problem\n")}
- 
+
 
     return ( $simirn, $simauths, \@simaffs);
 }
@@ -365,7 +365,7 @@ sub compareSimilar {
 	my $user     = shift;
 	my $simauths = shift;
 	my $simaffs=shift;  #not yet used
-	
+
 
 	my $numAffs   = 0;
 	my $numAuths  = 0;
@@ -380,7 +380,7 @@ sub compareSimilar {
 foreach my $auth( $user->astrlist->allAuths){
 	$numAuths++;
     $goodAuths++	if ($simauths->{$auth} || ($hepcut && $spi->number("find ea $auth and not note temporary")>$hepcut));
-   		  
+
 }
 
 my $badAuths=$numAuths-$goodAuths;
@@ -389,7 +389,7 @@ my $badAffs=$numAffs-$goodAffs;
 $user->print("  Authors:  found  $numAuths   ($badAuths need checking)");
 $user->print("     Affs:  found  $numAffs   ($badAffs need checking)");
 
-  
+
 }
 
 

@@ -5,7 +5,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="UTF-8"/>
 <xsl:template match="/">
     <collection xmlns="http://www.loc.gov/MARC21/slim">
-        <xsl:for-each select="//goal_record">    
+        <xsl:for-each select="//goal_record">
             <record>
                 <xsl:if test="./inst">
                     <datafield tag="970" ind1=" " ind2=" ">
@@ -13,7 +13,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </datafield>
                 </xsl:if>
 
-		<xsl:for-each select="*">			
+		<xsl:for-each select="*">
 			<xsl:if test="name()='inst.catch.name'">
         	    		<datafield tag="110" ind1=" " ind2=" ">
                 	       		<subfield code="a"><xsl:value-of select="."/></subfield>
@@ -25,7 +25,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                 	       		<subfield code="b"><xsl:value-of select="."/></subfield>
                     		</datafield>
                 	</xsl:if>
-	
+
 			<xsl:if test="name()='desy.aff'">
         	    		<datafield tag="595" ind1="" ind2=" ">
                 	       		<subfield code="a"><xsl:value-of select="."/></subfield>
@@ -45,7 +45,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     		</datafield>
                 	</xsl:if>
 			<xsl:if test="name()='type'">
-          	    		<datafield tag="980" ind1="" ind2=" ">				
+          	    		<datafield tag="980" ind1="" ind2=" ">
 				<xsl:call-template name="output-tokens">
 					<xsl:with-param name="list"><xsl:value-of select="."/></xsl:with-param>
 					<xsl:with-param name="delimiter">, </xsl:with-param>
@@ -60,17 +60,17 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 		<xsl:if test="xtra-index">
 	    		<datafield tag="595" ind1="" ind2=" ">
-			<xsl:for-each select="*">               
+			<xsl:for-each select="*">
 				<xsl:if test="name()='xtra-index'">
 	       				<subfield code="b"><xsl:value-of select="."/></subfield>
 				</xsl:if>
-			</xsl:for-each>	
+			</xsl:for-each>
                		</datafield>
                 </xsl:if>
 
 		<xsl:if test="desylookup or oaff">
        	    		<datafield tag="595" ind1="" ind2=" ">
-			<xsl:for-each select="*">               	
+			<xsl:for-each select="*">
 				<xsl:if test="name()='desylookup'">
                	       			<subfield code="a"><xsl:value-of select="."/></subfield>
 	                	</xsl:if>
@@ -118,17 +118,17 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                     </xsl:if>
                   </xsl:for-each>
                 </datafield>
-		
+
                </xsl:if>
                 <!--add collection id-->
                 <datafield tag="980" ind1=" " ind2=" ">
                         <subfield code="a">INSTITUTIONS</subfield>
-                </datafield>         
+                </datafield>
             </record>
 <xsl:text>
 </xsl:text>
-           
-        </xsl:for-each> 
+
+        </xsl:for-each>
     </collection>
 
 </xsl:template>

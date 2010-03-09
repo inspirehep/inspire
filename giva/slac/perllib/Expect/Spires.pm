@@ -18,7 +18,7 @@ my %_attr_data=(
 =head1 NAME
 
     Expect::Spires.pm - perl interface for UNIX-SPIRES
-=head1 SYNOPSIS 
+=head1 SYNOPSIS
 
 A perl module that provides several functions for interacting with SPIRES through perl, and through there, the rest of the UNIX world.
 
@@ -31,7 +31,7 @@ This class inherits from Expect.pm, so you can also use the object as a
 
 =head2 Methods
 
-=over 
+=over
 
 =item new()
 
@@ -43,7 +43,7 @@ Takes a hash argument
   debug=>'0',
  );
 
-=over  
+=over
 
 =item timeout
 
@@ -63,7 +63,7 @@ debug settings defaults to 0
 
 true if last "ask" was a timeout,reset to flase on each ask.
 
-=back 
+=back
 
 Note that height will be set to 0 and set nostop is issued.  Other than
 that, all setup is your responsibility via ask
@@ -114,14 +114,14 @@ sub _init {
     my $database=delete $args{'database'};
     foreach (keys %args){
 	$self->$_($args{$_});
-    }    
+    }
     my @SERVER_STARTUP = ("set height 0\n","set nostop\n");
 
     $self->debug($self->debug());
     $self->raw_pty(1);
     $self->exp_internal($self->debug() -1 >0 ? 1 : 0);
     $self->spawn($self->program,$self->params);
-    
+
     $self->expect($self->timeout,
 		  [ timeout  => sub {
 		      croak "Timeout in spires startup\n";
@@ -137,7 +137,7 @@ sub _init {
     return( $self );
 
 }
-  
+
 
 
 =pod
@@ -193,11 +193,11 @@ sub ask{
 		      exp_continue_timeout;
 		  }],
 		  );
-      
+
 
     return wantarray ? @results : $results[0];
 
-}    
+}
 
 =pod
 
@@ -214,14 +214,14 @@ Should accurately return the number of results found by the first search
     in @commands
 
 
-=cut 
+=cut
 
 sub number{
     $self=shift;
     @args=@_;
     if (! @args){push @args,'sho result';}
     @results=$self->ask(@args);
-    foreach (@results){  
+    foreach (@results){
 		next unless ((m/result/i) || (m/stack/i));
 		return(0) if m/-Zero/;
 		if (m/-Result\:\s*(\d+)/) {return($1)};
@@ -234,7 +234,7 @@ sub number{
 
 =pod
 
-=item element 
+=item element
 
  $spires->element(@elementname)
 
@@ -253,7 +253,7 @@ Values returned are not terminated by semicolon, and are not preceded by elem na
 
 Returns null if there is no element, or if there is no result
 
-=cut 
+=cut
 sub test{
 return 1;
 }
@@ -268,7 +268,7 @@ sub element{
     foreach (@results){
     	 s/\n/ /g;
     	 while(1){last unless s/(= \".*[^\\]);(.*\"\;)/$1\\\;$2/g}
-	    $rescnt++;	
+	    $rescnt++;
 	    s/([^\\])\;/$1 \;/g;
 	    my @occs= split / \;/, $_;
 		foreach (@occs){
@@ -281,14 +281,14 @@ sub element{
 		  $val='';
 		  }
 		  else{next;}
-		  
+
 		$val=~s{\\\;}{\;}g;
 		if (wantarray){
-		#	print "$rescnt->$val\n"; 
+		#	print "$rescnt->$val\n";
 	    	push @{$return[$rescnt]},$val;
 		}
 		else {
-	    	return($val);    
+	    	return($val);
 		}
     }
     }
@@ -298,7 +298,7 @@ sub element{
 =pod
 
 =item asHash
- 
+
   $spires->asHash(key=><key>,db=>db)
 
 outputs a single record as a hash of arrays of elements, structures are arrays of hashes of arrays
@@ -314,7 +314,7 @@ sub asHash{
 	if ($args{db}) { $self->ask('sel '.$args{db})}
 	if ($args{key}) { $self->ask('sta '.$args{key},'gen res')}
 	if (! $self->number) {carp('No result for asHash');return(0);}
-	
+
 	$record=($self->ask('clr for','for res','dis','endf'))[2];
 	@lines=split /\;\n/, $record;
 	#print Dumper @lines;
@@ -325,15 +325,15 @@ sub asHash{
 	unshift @names, 'record';
 	foreach (@lines){
 		s/^\s*\n(\s+)/$1/;
-		if (/(\s+)(\S+) = (.*)$/s){ 
+		if (/(\s+)(\S+) = (.*)$/s){
 			$indent=$1;$name=$2;$value=$3;$noval=0;
 		}
 		elsif (/(\s+)([^=]+)$/s){
-			$indent=$1;$name=$2;$value='';$noval=1;			
+			$indent=$1;$name=$2;$value='';$noval=1;
 		}
 		else{
 			carp("asHash failed to parse record at line $_");
-			return(0);		
+			return(0);
 		}
 		$level=length($indent);
 		$curhash=$hashes[0];
@@ -347,10 +347,10 @@ sub asHash{
 		    }
 			unshift @names, $lastname;
 			$oldlevel=$level;
-			#carp("down one level ($level) $name=$value");		
+			#carp("down one level ($level) $name=$value");
 		}
 		elsif ($level<$oldlevel){ #structure end
-			
+
 			# take care to the str we just findished
 			$strhash=shift @hashes;
 			$strname=shift @names;
@@ -360,45 +360,45 @@ sub asHash{
 			foreach (@$curval){	# in case we had earlier keyed structures with no other elems
 				if (ref($_) ne 'HASH'){
 				$curhash->{$strname}->[$i]={$strname=>[$curhash->{$strname}->[$i]]};
-			} 
+			}
 			$i++;
 		}
 			push @{$curhash->{$strname}}, $strhash;
-			$oldlevel=$level;	
-			#carp("back up one level ($level) $name=$value");	
+			$oldlevel=$level;
+			#carp("back up one level ($level) $name=$value");
 			# start the new str or value
 			if (exists($curhash->{$name})){
 				push @{$curhash->{$name}}, $value;
 			}
 			else {
 				$curhash->{$name}=[$value];
-			}	
+			}
 		}
 		else{
-			
+
 			if ( exists($curhash->{$name})){
 				push @{$curhash->{$name}}, $value;
 			}
 			else {
 				$curhash->{$name}=[$value];
-			}	
-			
+			}
+
 		}
 		$lastname=$name;
 		$lastval=$value;
 		$lastnoval=$noval;
-			
+
 	}
 	#print Dumper(%record);
 	return(\%record) unless wantarray;
 	return(%record);
-	
-	
+
+
 }
 
 =pod
 
-=item list 
+=item list
 
  $spires->list(elementname)
 
@@ -416,12 +416,12 @@ Values returned are not terminated by semicolon, and are not preceded by elem na
 
 Returns null if there is no element, or if there is no result
 
-=cut 
+=cut
 
 sub list{
 	use Data::Dumper;
     $self=shift;
-    $elem=shift;    
+    $elem=shift;
     my @return=();
     return('') unless $self->number("sho result") || $self->number("sho stack");
     my @results=split /\n *\n/, $self->ask("typ $elem");
@@ -429,7 +429,7 @@ sub list{
     foreach (@results){
     	 s/\n/ /g;
     	 while(1){last unless s/(= \".*[^\\]);(.*\"\;)/$1\\\;$2/g}
-	    $rescnt++;	
+	    $rescnt++;
 	    s/([^\\])\;/$1 \;/g;
 	    my @occs= split / \;/, $_;
 		foreach (@occs){
@@ -442,13 +442,13 @@ sub list{
 		  $val='';
 		  }
 		  else{next;}
-		  
+
 		$val=~s{\\\;}{\;}g;
 		if (wantarray){
 	    	push @return,$val;
 		}
 		else {
-	    	return($val);    
+	    	return($val);
 		}
     }
     }
@@ -470,7 +470,7 @@ Uses a temporary text file, so no spires size limits apply.
 
 Uses currently selsected db
 
-Returns the number of successful merges.   It compares this with the requested merges and carps 
+Returns the number of successful merges.   It compares this with the requested merges and carps
 if there is a difference, but still returns number of succ.
 
 =cut
@@ -480,20 +480,20 @@ sub merge {
 	my $string=shift;
 	my $key=shift;
 	return(0) unless (($req=$self->number("sho result")) || $key);
-	if ($key){		
+	if ($key){
 		$self->ask("clr sta");
-		unless ($self->number("sta $key")==1) {carp "Couldn't find $key\n"; return(0);} 
+		unless ($self->number("sta $key")==1) {carp "Couldn't find $key\n"; return(0);}
         @commands=("for sta", "merge all","endf");
         $req=1;
 	}
 	else{@commands=("for res", "mer all","endf")}
 	my $tmpfile="/tmp/tmpspimerge.$$.tmp";
 	if (open(TMP,">$tmpfile")){
-		print TMP "$string\n";	
+		print TMP "$string\n";
 		   close TMP;
 		   $self->ask("use $tmpfile");
-		$output=($self->ask(@commands))[1];		
-        unlink $tmpfile;  
+		$output=($self->ask(@commands))[1];
+        unlink $tmpfile;
         if ($output=~m/MER\s+(\d+)\s+(\d+)/){
         	 my $spireq=$1;
         	 my $suc=$2;
@@ -504,13 +504,13 @@ sub merge {
     	else
     	{carp "Merges probably failed-SPIRES said\n$output\n";
         return(0);}
-	}	
+	}
 	else {
 		carp "Error opening $tmpfile:$!\n";
         return(0);
 	}
-	
-	
+
+
 }
 
 =pod
@@ -518,7 +518,7 @@ sub merge {
 =item db
 
  $spi->db("hep")
- 
+
 performd $spi->ask("sel hep")
 
 =cut
@@ -539,7 +539,7 @@ batches the given string after selecting db (otherwise uses current)
 
 Uses a temporary text file, so no spires size limits apply.
 
-Returns the number of successful merges+adds.   It compares this with the requested merges/adds and carps 
+Returns the number of successful merges+adds.   It compares this with the requested merges/adds and carps
 if there is a difference, but still returns number of succ.
 
 =cut
@@ -548,24 +548,24 @@ sub batch {
 	my $self=shift;
 	my $string=shift;
 	my $db=shift||'';
-	my $num=grep /^\s*merg?e? |^\s*add|^\s*addupda?t?e? |^\s*upda?t?e?|^\s*remo?v?e?/i, split /\n/, $string; 	
+	my $num=grep /^\s*merg?e? |^\s*add|^\s*addupda?t?e? |^\s*upda?t?e?|^\s*remo?v?e?/i, split /\n/, $string;
 	my $tmpfile="/tmp/tmpspimerge.$$.tmp";
 	if (open(TMP,">$tmpfile")){
-		print TMP "$string\n";	
+		print TMP "$string\n";
 		   close TMP;
 		 if ($db){$self->ask("clr sel","sel $db");}
 		   $self->ask("use $tmpfile");
-		$output=($self->ask('inp bat'))[0];	
-		warn "Output from batch:\n".$output."\n" if $self->debug;	
+		$output=($self->ask('inp bat'))[0];
+		warn "Output from batch:\n".$output."\n" if $self->debug;
         unlink $tmpfile;
         my $tmp=$output;
         my $spireq=0;
-        my $suc=0;  
+        my $suc=0;
         while ($tmp=~s/(MER\s+|ADD\s+|UPD\s+|REM\s+)(\d+)\s+(\d+)//){
         	  $spireq+=$2;
         	  $suc+=$3;
-		}	
-        	
+		}
+
         if (($suc==$spireq)&&($suc==0))
     	{carp "Merges probably failed-SPIRES said\n$output\n";
         return(0);}
@@ -573,16 +573,16 @@ sub batch {
         	 if ($spireq!=$num){carp "Requested $num merges/adds/upds, Spires saw $spireq\n";}
         	 if ($suc!=$num){carp "Requested $num merges/adds/upds, Spires did $suc\n";}
         	 return($suc);
-        
+
 }
 	else {
 		carp "Error opening $tmpfile:$!\n";
         return(0);
 	}
-	
-	
+
+
 }
-	
+
 
 
 
@@ -594,7 +594,7 @@ sub batch {
 
 attempts to exit and do an expect soft close;
 
-=cut 
+=cut
 
 sub close{
     $self=shift;
@@ -630,10 +630,10 @@ serious problem-- string '->' within a title causes propt to fire!!  added
 
 =head1 COPYRIGHT
 
-2006, Travis Brooks, Stanford Linear Accelerator Center 
+2006, Travis Brooks, Stanford Linear Accelerator Center
 
 =cut
 
 
 
-  
+

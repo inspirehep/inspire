@@ -2,7 +2,7 @@
 # Contains:
 #	Get_Authors
 #	Get_Postscript
-# 	Get_References 
+# 	Get_References
 
 
 package Giva;
@@ -33,7 +33,7 @@ my $giva = Giva->new(
 	);
 
 
-=over 
+=over
 
 =item input  (a user input object if running with a person watching)
 
@@ -75,7 +75,7 @@ use File::Temp qw();
 use File::Copy;
 
 
-struct Giva => {		
+struct Giva => {
 		astrlist => 'Astrlist',
 		spi      => 'Expect::Spires',
 		input    => 'Inputter',
@@ -112,52 +112,52 @@ sub download{
 	my $self=shift;
 	my $spi=$self->spi;
 
-	
+
     my $tmpfile=$self->tempfile;
 	warn "downloading to $tmpfile" if $self->verbose;
-	
+
 	if ($self->flatfile){
 		copy($self->flatfile,$self->tempfile);
-		return(1);		
+		return(1);
 	}
 	if ($self->string){
 		return(1);
 	}
     if ($self->irn && ! $self->eprint){
-    	
+
 		$spi->ask('sel hep',"find irn ".$self->irn);
 		my $eprint=$spi->list('lanl');
-	
+
 		my $url=$spi->list('url');
-		if ($eprint){		
+		if ($eprint){
 			$self->eprint($eprint);
 		}
 		elsif ($url && ! $self->url){
 			$self->url($url);
 		}
 	}
-	if ($self->file eq 'paste'){				
+	if ($self->file eq 'paste'){
 		warn "downloading via paste" if $self->verbose;
-		$self->paste;	
-		return(1);	
+		$self->paste;
+		return(1);
 	}
 	elsif ($self->eprint){
-		my $fname='';	
-	
+		my $fname='';
+
 		if ($self->file eq 'tex'){
-			warn "downloading ".$self->eprint." via eprint (tex)" if $self->verbose;	
+			warn "downloading ".$self->eprint." via eprint (tex)" if $self->verbose;
 			$fname=$self->arxiv->getTeX(
 				id=>$self->eprint,
 				file=>$tmpfile,
 				user=>$self->input
-			);			
+			);
 		}
 		else{
-				warn "downloading ".$self->eprint." via eprint (pdf)" if $self->verbose;	
+				warn "downloading ".$self->eprint." via eprint (pdf)" if $self->verbose;
 		    $fname=$self->arxiv->getPDF($self->eprint,$tmpfile);
 		}
 		$self->tempfile($fname) || $self->input->error("Error Downloading File");
-	
+
 	}
 	elsif ($self->url){
 		$self->input->print("Warning trying to download ".$self->file." from:\n".$self->url) if $self->verbose;
@@ -170,7 +170,7 @@ sub download{
 	}
 	else{
 		$self->input->error("Error Downloading File: $download does not exist");
-		return(0);	
+		return(0);
 	}
 }
 
@@ -189,7 +189,7 @@ sub extractor_init{
 		verbose=>$self->verbose,
 		spi=>$self->spi,
 		ext=>$self->ext,
-	);	
+	);
 	return($self->extractor($obj));
 
 
@@ -207,9 +207,9 @@ puts resulting text in tempfile
 sub getText{
 	my $self=shift;
 	if ($self->file eq 'paste'){
-		return(1);		
+		return(1);
 	}
-	elsif ($self->file eq 'tex'){		
+	elsif ($self->file eq 'tex'){
 		return(1);
 	}
 	elsif ($self->file eq 'pdf'){
@@ -226,7 +226,7 @@ sub getText{
 		my $txtname=$self->tempfile;
 		open(TXT, ">$txtname");
 		print TXT $self->string;
-		close(TXT);		
+		close(TXT);
 	}
 }
 
@@ -266,10 +266,10 @@ returns an array of refs if that was desired, or an astrlist object or bare spir
 sub extract{
 	my $self=shift;
 	chdir($GIVADIR);
-	$self->tempfile_init;	
-	
+	$self->tempfile_init;
+
 	$self->download;
-	
+
 	$self->getText;
 
 	print "Obtained ".$self->tempfile." :\n"  if $self->verbose;
@@ -283,8 +283,8 @@ sub extract{
 	}
 	elsif ($self->ext eq 'authsbare'){
 		return($self->extractor->Astrlist->toSPIRES);
-	}	
-	
+	}
+
 	return(0);
 }
 
@@ -299,10 +299,10 @@ sub paste{
 	my $self=shift;
 	my $eprint=$self->eprint;
 	my $url=$self->url;
-	
+
 	my $txtfile=$self->tempfile;
 	open(TXT,">$txtfile")|| carp("Paste cannot open $txtfile:$!")&&return(0);
-	
+
 	my $arx='http://arXiv.org/pdf/'.$eprint;
 
 	if (!$eprint){
@@ -354,5 +354,5 @@ sub DESTROY{
       my $self = shift;
       unlink $self->tempfile unless $self->verbose;
 }
-		
+
 		1;

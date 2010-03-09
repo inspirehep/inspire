@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -25,16 +25,16 @@ __revision__ = "$Id$"
 def format(bfo, reference_prefix, reference_suffix):
     """
     Prints the references of this record
-    
+
     @param reference_prefix a prefix displayed before each reference
     @param reference_suffix a suffix displayed after each reference
     """
 
-    from invenio.search_engine import search_unit    
+    from invenio.search_engine import search_unit
     from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
     out = ""
-    
+
     for reference in references:
         ref_out = ''
 
@@ -70,7 +70,7 @@ def format(bfo, reference_prefix, reference_suffix):
                        format_record(list(hits)[0],'hs') + '</small>'
 
 #  Silly stuff that can be used if there are a lot of multiple hits
-#   
+#
 #        elif len(hits)>1:
 #            if display_journal:
 #                ref_out += '<small><a href="'+CFG_SITE_URL+\
@@ -78,22 +78,22 @@ def format(bfo, reference_prefix, reference_suffix):
 #                           reference['s']+ \
 #                           '&amp;ln=' + bfo.lang + \
 #                           '">'+display_journal+"</a></small>"
-#            if display_report:    
+#            if display_report:
 #                ref_out += ' <small><a href="'+CFG_SITE_URL+\
 #                           '/search?f=reportnumber&amp;p='+ \
 #                           reference['r']+ \
 #                           '&amp;ln=' + bfo.lang + \
 #                           '">'+display_report+"</a></small>"
-                        
+
         else:
             ref_out = '<small>'
             if display_journal:
                 ref_out += display_journal
-            if display_report:    
-                ref_out += ' '+display_report    
+            if display_report:
+                ref_out += ' '+display_report
             ref_out += ' (not in Inspire)</small>'
 
-                
+
 
         ref_out += "<br />"
 
@@ -105,7 +105,7 @@ def format(bfo, reference_prefix, reference_suffix):
             ref_out += reference_suffix
 
         out += ref_out
-        
+
     if out != '':
         out += '</li>'
 

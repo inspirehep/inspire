@@ -102,8 +102,8 @@ def convert_datestruct_to_dategui(datestruct, ln=cdslang):
                     output_format =  month + " %Y"
             else:
                 output_format =  "%Y"
-            return strftime(output_format, datestruct)            
-        else:    
+            return strftime(output_format, datestruct)
+        else:
             raise ValueError
 
     except:

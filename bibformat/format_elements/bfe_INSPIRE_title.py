@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -32,19 +32,19 @@ def format(bfo,  highlight="no", force_title_case="no"):
     Provides title  converts to title case (Upper Cased First Letters) if
     the title is in all caps
 
-    
+
     """
 
     titles = bfo.fields('245', 1)
 
 
-    
+
     out = ""
 
 
     for title in titles:
         out += title.get('a')
-        
+
 
     if highlight == 'yes':
         from invenio import bibformat_utils
@@ -59,8 +59,8 @@ def format(bfo,  highlight="no", force_title_case="no"):
 
     return out
 
-    
-    
+
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element

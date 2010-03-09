@@ -6,7 +6,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="xml" encoding="UTF-8"/>
 <xsl:template match="/">
     <collection xmlns="http://www.loc.gov/MARC21/slim">
-        <xsl:for-each select="//record">    
+        <xsl:for-each select="//record">
             <record>
                 <xsl:if test="./irn">
                     <datafield tag="970" ind1=" " ind2=" ">
@@ -28,7 +28,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <xsl:text>
 
             </xsl:text>
-        </xsl:for-each> 
+        </xsl:for-each>
     </collection>
 
 </xsl:template>

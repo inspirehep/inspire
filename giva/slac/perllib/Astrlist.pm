@@ -43,7 +43,7 @@
 
 =head1 Astrlist
 
-A package with several convenience methods for dealing with author lists, should eventually rely on a SPIRES Record 
+A package with several convenience methods for dealing with author lists, should eventually rely on a SPIRES Record
 structure class...
 
 =cut
@@ -63,9 +63,9 @@ structure class...
 
 Uses Class::Struct get/set accessors and initialization
 
-(init via 
+(init via
 
-Astrlist->new(spi=>$spi,guess=>%guesses)  
+Astrlist->new(spi=>$spi,guess=>%guesses)
 
 or similar)
 
@@ -149,7 +149,7 @@ Prints all affiliations in flat list  Returns array.  List is unique
 		return (@return);
 	}
 
-	
+
 =item allAuths
 
 Prints all affiliations in flat list  Returns array.  List is unique
@@ -179,7 +179,7 @@ Appends aff to the specified astr, defaults to current astr.
 	sub addAff {
 		my $self = shift;
 		my $aff  = shift;
-		my $idx  = shift || $self->astrIdx;		
+		my $idx  = shift || $self->astrIdx;
 		$self->astrs($idx)->addAff($aff);
 		return ($self);
 	}
@@ -238,12 +238,12 @@ and appends to the auth list, also increments the astrIdx
 		$self->astrIdx_incr;
 		return (1);
 	}
-	
-	
-=item findAstr	
-	
+
+
+=item findAstr
+
  astrlist->findAstr(auth=><auth>,aff=><aff>)
-	
+
 takes hash arg with either <auth> or <aff> specified
 
 for now, args must match exactly (perl 'eq')
@@ -260,25 +260,25 @@ returns (and sets) Idx to this astr
 		elsif ($args{auth}){$get='auth'}
 		my $match=0;
 		$self->astrIdx(0);
-		foreach $astr (@{$self->astrs}){			
+		foreach $astr (@{$self->astrs}){
 			foreach $val(@{$astr->$get} ){
 
 				if ($val eq $args{$get}){
 					$match++;
 					last;
-					
-				}					
+
+				}
 			}
 			last if $match;
 			$self->astrIdx_incr;
 		}
 		return($self->astrIdx) if $match;
-		return(-1);		
+		return(-1);
 	}
-	
-	
+
+
 =pod
-	
+
 =item repAuth
 
 astrlist->repAuth(old=>"old",new=>["new1","new2"])
@@ -297,39 +297,39 @@ returns 1 if it thinks it succeeded
 		@new=() unless $new[0];
 		return(0) unless $args{old};
 		$idx=$self->findAstr(
-			auth=>$args{old}	
+			auth=>$args{old}
 		);
 		if ($idx==-1){
 			carp("Nothing found matching $args{old}");
 			return(0);
-		}	
+		}
 		while ($idx > -1){
 			my @newauths=();
 			my $astr=$self->astrs->[$idx];
 			my @auths = @{$astr->auth};
 			my @affs  = @{$astr->aff};
 			foreach $auth (@auths){
-		
+
 				if($auth ne $args{old}){
 					push @newauths,$auth
 				}
 				elsif (@new){
 					push @newauths, @{$args{new}}
-				};	
-				
+				};
+
 			}
 		    $self->repAstr($idx,auth=>\@newauths,aff=>\@affs);
 			$idx=$self->findAstr(
 				auth=>$args{old}
 			);
-			
+
 		}
-			
+
 		return (1);
 	}
-	
-	
-	
+
+
+
 =item repAff
 
 astrlist->repAff(old=>"old",new=>["new1","new2"])
@@ -347,37 +347,37 @@ returns 1 if it thinks it succeeded
 		@new=() unless $new[0];
 		return(0) unless $args{old};
 		$idx=$self->findAstr(
-			aff=>$args{old}	
+			aff=>$args{old}
 		);
 		if ($idx==-1){
 			carp("Nothing found matching $args{old}");
 			return(0);
-		}	
+		}
 		while ($idx > -1){
 			my @newaffs=();
 			my $astr=$self->astrs->[$idx];
 			my @auths = @{$astr->auth};
 			my @affs  = @{$astr->aff};
 			foreach $aff (@affs){
-		
+
 				if($aff ne $args{old}){
 					push @newaffs,$aff
 				}
 				elsif (@new){
 					push @newaffs, @new;
-				};	
-				
+				};
+
 			}
 		    $self->repAstr($idx,auth=>\@auths,aff=>\@newaffs);
 			$idx=$self->findAstr(
 				aff=>$args{old}
 			);
-			
+
 		}
-			
+
 		return (1);
 	}
-	
+
 =item repAstr
 
 astrlist->repAstr(idx,<%astr>)
@@ -405,29 +405,29 @@ and replaces in the auth list
 		my $add = astr->new( auth => [@auths], aff => [@affs] );
 
 		$self->astrs->[$idx]=$add;
-	
+
 		return (1);
 	}
-	
-	
-	
+
+
+
 =item mergeDupAff
 
-Checks current astr for duplication in affs with previous. 
-If all affs are the same appends current auths to previous, 
+Checks current astr for duplication in affs with previous.
+If all affs are the same appends current auths to previous,
 blanks the current astr and returns 1
 otherwise returns 0
 
 
 =cut
-	
+
 	sub mergeDupAff{
 		my $self=shift;
 		my $idx=$self->astrIdx;
 		return(0) unless $idx>0;
 		my $lastIdx=$idx -1;
 		my @lastaffs=@{$self->astrs->[$lastIdx]->aff};
-		my @affs=@{$self->astrs->[$idx]->aff};		
+		my @affs=@{$self->astrs->[$idx]->aff};
 		my $diff=0;
 		for (my $i=0;$i<= @lastaffs;$i++){
 				print "comparing $lastaffs[$i] ne $affs[$i]\n" if $self->verbose;
@@ -436,12 +436,12 @@ otherwise returns 0
 		$diff=1 unless @lastaffs==@affs;
 		if ($diff){
 			return(0);
-		}		
+		}
 		foreach (@{$self->astrs->[$idx]->auth}){
 		   $self->addAuth($_,$lastIdx);
 		}
-		$self->repAstr($idx);		
-		return(1);					
+		$self->repAstr($idx);
+		return(1);
 	}
 
 =item dump
@@ -485,7 +485,7 @@ or spi=>spi is given.
 		my $self   = shift;
 		my $args = @_;
 		my $string = $args{'string'};
-		
+
 		my $spi = $args{'spi'} ||$self->spi;
  		$self->addAstr();
  		$self->astrIdx(0);
@@ -501,9 +501,9 @@ or spi=>spi is given.
 			if (m/astr/i){
 				$self->addAstr() if $count;;
 				$count++;
-			}			
+			}
 			if (m/author = (.*);?/i){
-				
+
 				$self->addAuth($1);
 				$count++;
 			}
@@ -513,7 +513,7 @@ or spi=>spi is given.
 			}
 		}
 		return($count);
-		
+
 	}
 
 =item addupdtoSPIRES
@@ -663,7 +663,7 @@ Does not return anything if no match found
 			push @return, $icn;
 			print "Found $icn from $affOriginal\n" if $self->verbose;
 		}
-	
+
 	return (@return);
 	}
 

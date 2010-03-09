@@ -8,6 +8,5 @@
   name_last_first="no" print_links="no" suffix = "," markup='latex'/>
   <BFE_CERN_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" />
   <BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" suffix="."/>
-  <BFE_INSPIRE_ARXIV links="no" category="yes" prefix='[' suffix="]." />	
+  <BFE_INSPIRE_ARXIV links="no" category="yes" prefix='[' suffix="]." />
 </pre>
-    

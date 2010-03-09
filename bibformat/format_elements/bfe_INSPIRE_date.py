@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -39,7 +39,7 @@ def format(bfo, us="yes"):
         return(re.sub(r' 0(\d),',r' \1,',(re.sub(r'(\d{2})\s(\w{3})',r'\2 \1,',date))))
     else:
         return(date)
-    
+
 def get_date(bfo):
     """
     returns datestruct for best available date
@@ -54,7 +54,7 @@ def get_date(bfo):
         if datestruct[1]:
             return(datestruct)
 
-    #arxiv date        
+    #arxiv date
     arxiv = get_arxiv(bfo,category="no")
     if arxiv:
         date=re.search('(\d+)',arxiv[0]).groups()[0]
@@ -75,13 +75,13 @@ def get_date(bfo):
         date= parse_date(bfo.fields('773__y')[0]+'0000')
         if date[0]:
             return date
-            
+
     #date added
     if bfo.fields('961__x'):
         date= parse_date(bfo.fields('961__x')[0])
         if date[0]:
             return date
-  
+
 
     return None
 
@@ -96,10 +96,10 @@ def parse_date(datetext):
     """
     import time
     match=re.search(r'\d+\-\d+\-\d+ \d+:\d+:\d+', datetext)
-    if match:    
+    if match:
         return(convert_datetext_to_datestruct(datetext))
 
-    datetext=datetext.split(' ')[0]      
+    datetext=datetext.split(' ')[0]
     if re.search(r'\d+\-\d+\-\d+', datetext):
         return(convert_datetext_to_datestruct(datetext+' 0:0:0'))
     if re.search(r'\d+\-\d+', datetext):
@@ -109,7 +109,7 @@ def parse_date(datetext):
 #
 #    if re.search(r'\d+', datetext):
         #Correct by hand spires convention of 00 for missing month and/or day
-        #use instead invenio convention of 0101  
+        #use instead invenio convention of 0101
 #        datetext=re.sub('0000$','0101',datetext)
 #        datetext=re.sub('00$','01',datetext)
 
@@ -117,5 +117,5 @@ def parse_date(datetext):
 #            return time.strptime(datetext, "%Y%m%d")
 #        except ValueError or TypeError:
 #            return (0,0,0,0,0,0,0,0,0)
-    
+
     return (0,0,0,0,0,0,0,0,0)

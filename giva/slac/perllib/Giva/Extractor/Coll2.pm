@@ -6,10 +6,10 @@ use vars qw(@ISA);
 @ISA = qw(Giva::Extractor);
 
 
-  
-  
-  
-  
+
+
+
+
 sub foundAuth
 {
  my $self=shift;
@@ -66,14 +66,14 @@ sub foundAuth
   my $author = $auth;
   return ($self->SUPER::foundAuth($auth));
 }
-  
-  
-  
-  
+
+
+
+
 sub extract
 {
   my $self=shift;
-  
+
   return (0) unless $self->ext eq 'auths';
 	$self->Astrlist(
 		Astrlist::Input->new(
@@ -88,33 +88,33 @@ sub extract
   my $titleFlag = 0;
   my $titlefootFlag = 0;
   my $titlefootAff = "";
-  my $namechars= "A-z\-";   
+  my $namechars= "A-z\-";
   my $extracted=0;
   my $instituteStyle = 0;
   my %hash = ();
-  my %hashInst = ();  
+  my %hashInst = ();
   my $authorCluster = 0;
   my $authorStart = 0;
   my %hashSuper = ();
   my $instBrace = 0;
   my $altaffilFlag = 0;
 
-  
+
   #
   # This first part seeks to replace any aliases and redefinitions
   #
-  
+
   warn "extracting from tex file " . $self->file . "\n" if $self->verbose;
 	if ( !( open( TEX, $self->file ) ) ) {
 		warn "Error opening" . $self->file;
 		return (0);
 	}
-	
+
 	my $flat='';
   while ( defined ($info=<TEX>) )
   {
     chomp($info);
-  
+
     if ($info =~ /\\optbar/)
     {
       next;
@@ -146,7 +146,7 @@ sub extract
       $info =~ s/\\mbox\s*\{(.*)\}$/\n$1\n/g;
       $info =~ s/\\mbox\s*\{(.*)$/\n$1\n/g;
     }
-    
+
     if ($info =~ /\\altaffiltext\{\w+\}\{[^\}]*$/)
     { print "Got the altaffilFlag\n";
       $altaffilFlag = 1;
@@ -177,7 +177,7 @@ sub extract
   }
 
   close (TEX);
- 
+
 #
 # Second pass
 #
@@ -186,7 +186,7 @@ my $flat2='';
 
   foreach $info ( split /\n/, $flat)
   {
-  	
+
     chomp($info);
       print "infor:$info\n" if $self->verbose;
     $info =~ s/\}[ ]+\{/\}\{/g;
@@ -216,7 +216,7 @@ my $flat2='';
       $aff5 =~ s/\$\^\{?[a-z]\}?\$//g;
       print "AFF5 = $aff5\n" if $self->verbose;
       $aff5 = $self->Decode($aff5);
-      $hashSuper{$aff5key} = $aff5;       
+      $hashSuper{$aff5key} = $aff5;
       $instituteStyle = 5;
       print "hashSuper($aff5key) = $hashSuper{$aff5key}\n" if $self->verbose;
     }
@@ -269,7 +269,7 @@ my $flat2='';
     if ($info =~ /\\author\{[^\}]*$/)
     {
       $authorStart  = 1;
-    }    
+    }
     if ($info =~ /\\author\{.*\$\,.*\$\,/)
     {
       $authorCluster = 1;
@@ -297,8 +297,8 @@ my $flat2='';
         {
           $instituteStyle = 0;
         }
-        $info =~ s/ \\and\s?/\}\n\\institute\{/g;        
-      }  
+        $info =~ s/ \\and\s?/\}\n\\institute\{/g;
+      }
     }
     if ($info =~ /\\institute\{/ && $instituteStyle == 0)
     {
@@ -313,7 +313,7 @@ my $flat2='';
       }
       #print "1 $info\n" if $self->verbose;
       $info =~ s/\$(.*)\$(.*)/\\affiliation\{$2\}/;
-      #print "2 $info\n" if $self->verbose;      
+      #print "2 $info\n" if $self->verbose;
     }
     if ($titleFlag == 0)
     {
@@ -351,7 +351,7 @@ my $flat2='';
         print "$instituteStyle hashInst($1) = $hashInst{$1}\n" if $self->verbose;
         $titlefootFlag = 0;
       }
-    }  
+    }
   }  # while split $flat
 
 
@@ -377,7 +377,7 @@ my $final='';
         $_ = $self->Decode($_);
         print "THIS $_\n" if $self->verbose;
       }
-     if ($instituteStyle == 5 && 
+     if ($instituteStyle == 5 &&
          /^([A-Z].*)\$\^\{?(\w+)\,?\}\$\$\^\{?(\d+)/)
      {
        s/\$\^\{?(\w+)\,?\}\$//;
@@ -392,7 +392,7 @@ my $final='';
         while (/(\d+)/gc)
         {
           $manyAff  = "$manyAff"."$b\{$hashSuper{$1}\}";
-        } 
+        }
         while (/\{(\w+)\}/gc)
         {
           $manyAff  = "$manyAff"."$b\{$hashSuper{$1}\}";
@@ -403,7 +403,7 @@ my $final='';
       }
       if ($instituteStyle == 5 && /^([A-Z].*)\$\^\{?(\d+)\}?\$[\s\,]*$/ ||
            /^(.*)\\altaffilmark\{(\w+)\}[\,\s]*$/  )
-      {        
+      {
         $_  = "$a\{$1\}$b\{$hashSuper{$2}\}\n";
         $_ = $self->Decode($_);
         print "THIS.SUP 1 $_\n" if $self->verbose;
@@ -421,14 +421,14 @@ my $final='';
         #return;
       }
     }
-  } 
- 
- 
+  }
+
+
   $foundauth=0;
   $foundaff=0;
   my $affFlag = 0;
   my $authorStyle=0;
- 
+
   while (<FLAT>)
   {
     $foundauth=0;
@@ -444,7 +444,7 @@ my $final='';
     if (/\\title\{(.*)\}/)
     {
     	## FIX me -no method for this yet!
-    	
+
       #my $tt = $1;
       #$tt =~ s/([\$\s\,])\\(\w+)([\$\s\,])/$1$hash{$2}$3/g;
      # print EXTRACT "TT = $1\;\nASTR;\n";
@@ -457,11 +457,11 @@ my $final='';
     if (($authorStyle == 1 && /\\author\{([^\}]+)\}/) ||
         ($authorStyle == 3 && /(.*)\$.*\,/))
     {
-     
-     
+
+
       $self->foundAuth($1);
       $affFlag = 0;
-     
+
     }
     while ($authorStyle == 1 && /\\affiliation\{([^\}]+)\}/gc)
     {
@@ -472,7 +472,7 @@ my $final='';
     {
       $authorStyle = 2;
     $self->foundAuth($1);
-    }  
+    }
     if ($authorStyle == 2 && /\\institute\{(.*)\}/)
     {
       $self->foundAff($1);
@@ -512,13 +512,13 @@ my $final='';
     if (/\\section\{/i)
     { print "end4 $_\n";
       $bibKey=0;   # almost certainly done
-    }    
+    }
     if (/\\maketitle/i)
     { print "end4 $_\n";
       $bibKey=0;   # almost certainly done
     }
     if ($bibKey==1)
-    { 
+    {
       s/\\author[^\{]+\{/\\author\{/g;
       s/\\address[^\{]+\{/\\address\{/g;
       s/\\Instfoot\{[^\}]+\}\{/affiliation\{/;
@@ -540,13 +540,13 @@ my $final='';
       s/\\([A-z])/$1/g;
       s/\mbox\{([^\}]+)\}/$1/g;
       s/\;//g;
-      s/\s+$//;      
+      s/\s+$//;
       #print "Let's check ***$_ ***\n";
       if (/author\{(.*)\}affiliation\{(.*)\}/)
       {
         $self->foundAuth($1);
         $self->foundAff($2);
-      }     
+      }
       elsif (/author\{([$namechars]+\.)\s*([$namechars]+\.)\s*([$namechars]+\.)\s*([$namechars]+\.)\s*([^\}]+)\}/)
       {
         $auth="$5, $1 $2 $3 $4";
@@ -603,7 +603,7 @@ my $final='';
         $foundauth=1;
         #print "A10 = $_\n";
       }
-      elsif (/^([A-Z\.\s\-]+) ([A-Z][a-z]+)[\$\{\}\^\w\s]*\,?/ && 
+      elsif (/^([A-Z\.\s\-]+) ([A-Z][a-z]+)[\$\{\}\^\w\s]*\,?/ &&
              $authorStyle==0)
       {
         #while (/([A-Z\.\s\-]+) ([A-Z][a-z]+)[\$\{\}\^\w\s]*\,?/gc)
@@ -619,7 +619,7 @@ my $final='';
         #print "A = $auth\n";
       }
       elsif (/affiliation\{([^\}]+)\}/)
-      { 
+      {
         $aff="$1";
         $foundaff=1;
       }
@@ -649,7 +649,7 @@ my $final='';
         {
           $foundaff=0;
         }
-       
+
     $self->foundAuth($auth);
       }
       if ($foundaff)
@@ -664,16 +664,16 @@ my $final='';
         $affKey = 1;
       }
       if ($affKey && /\w/ && !/affiliation/)
-      { 
+      {
         s/\;/ /g;
         if (/[\$\^\d\{\}]+(.*)/)
-        { 
+        {
           $aff = $1;
           if ($foundaff == 0)
           {
           	$self->foundAff($aff);
           }
-        }        
+        }
         if (/^\}/)
         {
           $affKey = 0;
@@ -685,7 +685,7 @@ my $final='';
   return($self->extracted);
 }
 
-   
+
 sub Decode
 {
   my $line = $_[0];
@@ -712,7 +712,7 @@ sub Decode
   $line =~ s/\\\.(\w)/$1/g;
   $line =~ s/\\H{([a-z])}/$1/g;
   $line =~ s/\{\\AA}/A/g;
-  $line =~ s/\\[\"\'\`\^\.]\{([A-z])\}/$1/g;    
+  $line =~ s/\\[\"\'\`\^\.]\{([A-z])\}/$1/g;
   $line =~ s/\\[\"\'\`\^]([A-z])/$1/g;
   $line =~ s/\\~([A-z])/$1/g;
   $line =~ s/\{[ ]+/\{/g;
@@ -730,6 +730,6 @@ sub Decode
   }
   return "$line";
 }
-  
+
 
 1;

@@ -4,12 +4,12 @@
   <xsl:output method="xml" encoding="UTF-8"/>
   <xsl:template match="/">
     <collection xmlns="http://www.loc.gov/MARC21/slim">
-      <xsl:for-each select="//goal_record">    
+      <xsl:for-each select="//goal_record">
 	<!-- xsl:sort select="date"/ -->
 	<!-- uncomment if you want to sort by insertion date-->
 
 	<record>
-	  <xsl:text>&#10;</xsl:text>	  
+	  <xsl:text>&#10;</xsl:text>
 
 	  <xsl:if test="string(./irn)">
 	    <datafield tag="970" ind1=" " ind2=" ">
@@ -31,14 +31,14 @@
 		  <xsl:otherwise>
 		    <xsl:attribute name="tag">700</xsl:attribute>
 		  </xsl:otherwise>
-		</xsl:choose>	
-		
+		</xsl:choose>
+
 		<subfield code="a">
 		  <xsl:value-of select="normalize-space(./author)"/>
-		</subfield>      
-		
+		</subfield>
+
 		<!--test for desy-author string, used to store INSPIRE ids-->
-		<xsl:choose> 
+		<xsl:choose>
 		  <xsl:when test="contains(./desy-author,'INSPIRE-')">
 		    <subfield code="i">
 		      <xsl:value-of select="normalize-space(./desy-author)"/>
@@ -47,13 +47,13 @@
 		  <xsl:when test="contains(./desy-author,'SLAC-')">
 		    <subfield code="j">
 		      <xsl:value-of select="normalize-space(./desy-author)"/>
-		    </subfield>                                
+		    </subfield>
 		  </xsl:when>
 		  <xsl:otherwise>
 		    <xsl:if test="string(./desy-author)">
 		      <subfield code="q">
 			<xsl:value-of select="normalize-space(./desy-author)"/>
-		      </subfield>            
+		      </subfield>
                     </xsl:if>
 		  </xsl:otherwise>
 		</xsl:choose>
@@ -74,8 +74,8 @@
 	      <xsl:text>&#10;</xsl:text>
 	    </xsl:if>
 	  </xsl:for-each>
-	  
-	  <xsl:for-each select="./astr">                            
+
+	  <xsl:for-each select="./astr">
 	    <xsl:if test="string(normalize-space(./affiliation))">
 	      <xsl:for-each select="./affiliation">
 		<xsl:if test="@type='RECAFF'">
@@ -89,10 +89,10 @@
 	      </xsl:for-each>
 	    </xsl:if>
 	  </xsl:for-each>
-	  
+
 	  <xsl:for-each select="./jour-info">
 	    <xsl:choose>
-	      <xsl:when test= "./jname='Conf.Proc.' or ./jname = 'eConf'">           
+	      <xsl:when test= "./jname='Conf.Proc.' or ./jname = 'eConf'">
 		<datafield tag="773" ind1=" " ind2=" ">
 		  <xsl:if test="string(normalize-space(./jvol))">
 		    <subfield code="w">
@@ -110,7 +110,7 @@
 		    </subfield>
 		  </xsl:if>
 		  <!-- If there is one doi and one publication we put them in the same 773 field -->
-		  <xsl:if test="count(descendant::doi) = 1 and count(descendant::jpage) =1 and  string(normalize-space(./doi))">	
+		  <xsl:if test="count(descendant::doi) = 1 and count(descendant::jpage) =1 and  string(normalize-space(./doi))">
 		    <subfield code="a">
 		      <xsl:value-of select="normalize-space(./doi)"/>
 		    </subfield>
@@ -141,7 +141,7 @@
 		    </subfield>
 		  </xsl:if>
 		  <!-- If there is one doi and one publication we put them in the same 773 field -->
-		  <xsl:if test="count(descendant::doi) = 1 and count(descendant::jpage) =1 and  string(normalize-space(./doi))">	
+		  <xsl:if test="count(descendant::doi) = 1 and count(descendant::jpage) =1 and  string(normalize-space(./doi))">
 		    <subfield code="a">
 		      <xsl:value-of select="normalize-space(./doi)"/>
 		    </subfield>
@@ -158,7 +158,7 @@
 	  <xsl:if test="count(descendant::doi) &gt; 1 or not(count(descendant::jpage)=1)">
 	    <xsl:for-each select="descendant::doi">
 	      <xsl:if test="string(normalize-space(.))">
-		<datafield tag="773" ind1=" " ind2=" ">     
+		<datafield tag="773" ind1=" " ind2=" ">
 		  <subfield code="a">
 		    <xsl:value-of select="normalize-space(.)"/>
 		  </subfield>
@@ -166,8 +166,8 @@
 	      </xsl:if>
 	      <xsl:text>&#10;</xsl:text>
 	    </xsl:for-each>
-	  </xsl:if>  
-	  
+	  </xsl:if>
+
 	  <xsl:for-each select="./conf">
 	    <xsl:if test="string(./conf-code) or string(./conf-pub) or string(./conf-page) or string(./conf-type)">
 	      <datafield tag="773" ind1=" " ind2=" ">
@@ -211,7 +211,7 @@
 	      <xsl:with-param name="ind2">7</xsl:with-param>
 	      <xsl:with-param name="sub2">2</xsl:with-param>
 	      <xsl:with-param name="sub2_val">INSPIRE</xsl:with-param>
-	    </xsl:call-template>  
+	    </xsl:call-template>
 	    <xsl:text>&#10;</xsl:text>
 	  </xsl:if>
 
@@ -254,7 +254,7 @@
 	    <!--do stuff only if there are real values-->
 	    <xsl:if test="string(normalize-space(./abstract-text)) or string(normalize-space(./abstract-source))">
 	      <datafield tag="520" ind1=" " ind2=" ">
-		<xsl:if test="string(normalize-space(./abstract-text))"> 
+		<xsl:if test="string(normalize-space(./abstract-text))">
 		  <subfield code="a">
 		    <xsl:value-of select='normalize-space(./abstract-text)'/>
 		  </subfield>
@@ -270,10 +270,10 @@
 		    </xsl:otherwise>
 		  </xsl:choose>
 		  </subfield>
-		</xsl:if>                        
+		</xsl:if>
 	      </datafield>
 	    </xsl:if>
-	    <xsl:text>&#10;</xsl:text>	   
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:for-each>
 
 	  <xsl:for-each select="./url-str">
@@ -299,7 +299,7 @@
 	    </xsl:if>
 	    <xsl:text>&#10;</xsl:text>
 	  </xsl:for-each>
-	  
+
 	  <xsl:for-each select="./lanl">
 	    <!--do not print tags for empty values-->
 	    <xsl:if test="string-length(./bull) > 3 and string(./cat)">
@@ -307,7 +307,7 @@
 		<xsl:if test="string(./bull)">
 		  <subfield code="a">
 		    <xsl:value-of select="normalize-space(./bull)"/>
-		  </subfield>			
+		  </subfield>
 		</xsl:if>
 		<subfield code="9">arXiv</subfield>
 		<xsl:if test="string(./cat)">
@@ -320,7 +320,7 @@
 		<subfield code="z">
 		  <xsl:text>oai:arXiv.org:</xsl:text>
 		  <xsl:choose>
-		    <xsl:when test="contains(./bull, ':')">		
+		    <xsl:when test="contains(./bull, ':')">
 			<xsl:value-of select="normalize-space(substring-after(./bull,':'))"
 				      />
 		    </xsl:when>
@@ -331,7 +331,7 @@
 		</subfield>
 		<subfield code="9">arXiv</subfield>
 	      </datafield>
-	      <xsl:text>&#10;</xsl:text>	  
+	      <xsl:text>&#10;</xsl:text>
 	    </xsl:if>
 	  </xsl:for-each>
 
@@ -340,7 +340,7 @@
 	    <datafield tag="980" ind1=" " ind2=" ">
 	      <subfield code="c">DELETED</subfield>
 	    </datafield>
-	    <xsl:text>&#10;</xsl:text>	   
+	    <xsl:text>&#10;</xsl:text>
 	  </xsl:if>
 
           <xsl:call-template name="basic-element">
@@ -457,7 +457,7 @@
 	    <xsl:with-param name="ind1">1</xsl:with-param>
 	    <xsl:with-param name="ind1">7</xsl:with-param>
 	    <xsl:with-param name="sub2">2</xsl:with-param>
-	    <xsl:with-param name="sub2_val">arXiv</xsl:with-param>	    
+	    <xsl:with-param name="sub2_val">arXiv</xsl:with-param>
 	    <xsl:with-param name="source">arXiv</xsl:with-param>
 	  </xsl:call-template>
 
@@ -526,8 +526,8 @@
 	  </xsl:call-template>
 
 	</record>
-      </xsl:for-each> 
-    </collection>   
+      </xsl:for-each>
+    </collection>
   </xsl:template>
 
   <xsl:template name="output-tokens">
@@ -583,9 +583,9 @@
 	    <xsl:value-of select="$sub2_val"/>
 	</subfield>
       </xsl:if>
-	
+
     </datafield>
-    
+
     <xsl:if test="$remaining">
       <xsl:call-template name="output-tokens">
 	<xsl:with-param name="list" select="$remaining"/>
@@ -595,7 +595,7 @@
 	<xsl:with-param name="code">
 	  <xsl:value-of select="$code"/>
 	</xsl:with-param>
-	
+
 	<xsl:with-param name="tag">
 	  <xsl:value-of select="$tag"/>
 	</xsl:with-param>
@@ -618,30 +618,30 @@
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
-  
+
 
 
   <xsl:template name="parse-cpn">
     <xsl:param name="cpn"/>
     <xsl:param name="type"/>
     <xsl:variable name = "tmpcpn"  select="normalize-space(substring-after(substring-after($cpn,'*'),'*'))" />
-    
+
     <xsl:choose>
       <xsl:when test = "string-length($tmpcpn)>0">
 	<xsl:choose>
           <xsl:when test= "$type = 'all'">
-	    
+
             <subfield code="c">
 	      <xsl:value-of select="$tmpcpn"/>
 	    </subfield>
             <subfield code="x">
-              <xsl:value-of select="$cpn"/> 
+              <xsl:value-of select="$cpn"/>
             </subfield>
             <subfield code="y">
 	    </subfield>
-	    
+
           </xsl:when>
-          <xsl:otherwise> 
+          <xsl:otherwise>
             <subfield code="c">
 	      <xsl:value-of select="$tmpcpn"/>
 	    </subfield>
@@ -657,7 +657,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <xsl:template name="plain-cpn">
     <xsl:param name="cpn"/>
     <subfield code = "x">

@@ -13,7 +13,7 @@
 ## CDS Invenio is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.  
+## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
 ## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
@@ -32,7 +32,7 @@ def format(bfo, links="no", incl_arxiv="no"):
 
     @param links yes(not implemented)->display links to repositories if known no(default)->  value only
     @param arxiv no (default)-> excludes arxiv numbers yes-> includes
-    
+
     """
 
 
@@ -46,13 +46,13 @@ def format(bfo, links="no", incl_arxiv="no"):
     if incl_arxiv.lower() == "no":
         arxiv=get_arxiv(bfo, category="no")
         report_numbers=filter(lambda x:x not in arxiv,report_numbers)
-    
+
    # if links.lower() == 'yes':
         # nothing here...
-    out = ', '.join(report_numbers) 
+    out = ', '.join(report_numbers)
 
     return(out)
-    
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
