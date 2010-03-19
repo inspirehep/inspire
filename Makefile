@@ -119,6 +119,7 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (14, 'record ID', 'recid')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (15, 'affiliation', 'affiliation')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (16, 'collaboration', 'collaboration')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (17, 'exact author', 'exactauthor')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
@@ -183,6 +184,10 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 33, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 47, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (16, 35, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 8, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 11, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 29, 70)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 32, 60)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-field-configuration."
 
 reset-inspire-index-configuration:
@@ -199,6 +204,7 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (9, 'journal', 'journal', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (10, 'affiliation', 'affiliation', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (11, 'collaboration', 'collaboration', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (12, 'exactauthor', 'exactauthor', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table idxINDEX_field:"
 	echo "TRUNCATE idxINDEX_field" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 1)" | $(BINDIR)/dbexec
@@ -212,6 +218,7 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (9, 13)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (10, 15)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (11, 16)" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (12, 17)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-index-configuration."
 
 reset-inspire-collection-configuration:
