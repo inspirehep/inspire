@@ -158,7 +158,8 @@ template function generated it.
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
 Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> β.
-Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you are here by mistake.</br></br>
+Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if
+ you are here by mistake.<br />
 
 
     %(feedback)s
@@ -170,7 +171,7 @@ Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if you ar
 <div class="navbar">
 <a id="nav-hep" href="%(siteurl)s?ln=%(ln)s">Hep</a>
 ::
-<a id="nav-jobs" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
+<a id="nav-help" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
 &nbsp;&nbsp;&nbsp;
 ..::..
 &nbsp;&nbsp;&nbsp;
