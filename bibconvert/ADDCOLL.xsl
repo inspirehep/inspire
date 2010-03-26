@@ -13,16 +13,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a">SPIRES-<xsl:value-of select="./irn"/></subfield>
                     </datafield>
                 </xsl:if>
-                <xsl:if test="./collection">
+                <xsl:for-each select="./collection">
                     <datafield tag="980" ind1=" " ind2=" ">
-                        <subfield code="b"><xsl:value-of select="./collection"/></subfield>
+                        <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
-                </xsl:if>
-                <xsl:if test="./topic">
+                </xsl:for-each>
+                <xsl:for-each select="./topic">
                     <datafield tag="650" ind1="2" ind2="7">
-                        <subfield code="a"><xsl:value-of select="./topic"/></subfield>
+                        <subfield code="a"><xsl:value-of select="."/></subfield>
                     </datafield>
-                </xsl:if>
+                </xsl:for-each>
 
             </record>
             <xsl:text>
