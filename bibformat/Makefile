@@ -22,7 +22,6 @@ install:
 	$(INSTALL) -m 664 $(LIBFILES) $(PYDIR)
 	@echo "Done.  You may want to restart Apache now."
 
-
 clean:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
 	@rm -f *.orig *~

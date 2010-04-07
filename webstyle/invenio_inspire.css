@@ -1771,6 +1771,11 @@ margin-bottom: 1px;
 
 
 
+a.titlelink{
+color:06c;
+font-weight:bold;
+text-decoration:none;
+}
 .authorlink{
 text-decoration:none;
 }
