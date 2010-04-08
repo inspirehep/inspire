@@ -1772,9 +1772,25 @@ margin-bottom: 1px;
 
 
 a.titlelink{
-color:06c;
+color:#000;
 font-weight:bold;
 text-decoration:none;
+}
+a.titlelink:link {
+   color: #000;
+   background: transparent;
+}
+a.titlelink:visited {
+   color: #000;
+   background: transparent;
+}
+a.titlelink:active {
+   color: #000;
+   background: transparent;
+}
+a.titlelink:hover {
+   color: #000;
+   background: #ccc;
 }
 .authorlink{
 text-decoration:none;
