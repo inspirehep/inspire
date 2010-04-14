@@ -31,6 +31,12 @@ install-dbchanges: reset-inspire-field-configuration \
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
 
+reset-ugly-ui:
+	@cd webstyle && make install-ugly && cd ..
+
+reset-normal-ui:
+	@cd webstyle && make install && cd ..
+
 clean:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
 	@rm -f *.orig *~

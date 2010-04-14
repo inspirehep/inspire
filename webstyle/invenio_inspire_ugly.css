@@ -1,0 +1,21 @@
+/** Uglify UI.  This makes it obvious we're doing a demo. **/
+body {
+   color: #000;
+   background: #fff;
+   background-image: url(paper-texture-128x128.gif);
+   /*background-image: url(dev-light-wide.png); */
+   font-family:arial,verdana, sans-serif;
+   margin: 0px;
+   padding: 0px;
+}
+.record_body {
+   background-image: url(dev-light-wide.png);
+}
+.pagebodystripemiddle {
+   background-image: url(paper-texture-128x128.gif);
+   /* background-image: url(dev-light-wide.png); */
+}
+.detailed_record_info {
+   background-image: url(dev-light-wide.png);
+}
+

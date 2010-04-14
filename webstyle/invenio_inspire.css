@@ -23,7 +23,7 @@
 body {
    color: #000;
    background: #fff;
-font-family:arial,verdana, sans-serif;
+   font-family:arial,verdana, sans-serif;
    margin: 0px;
    padding: 0px;
 }
@@ -86,22 +86,22 @@ h6 {
 }
 
 
-
+/* Bold title links */
 element.style {
-font-family:arial,verdana,sans-serif;
+   font-family:arial,verdana,sans-serif;
 }
 b.nounderline a {
-text-decoration:none;
-color:#000;
+   text-decoration:none;
+   color:#000;
 }
 b.nounderline a:hover {
-background-color:#fff;
+   background-color:#fff;
 }
 
 /* invenio makes use of the :link property so don't style a directly*/
 /*a {color:#0066CC;}*/
 a:link {
-color:#0066CC;
+   color:#0066CC;
 }
 
 
