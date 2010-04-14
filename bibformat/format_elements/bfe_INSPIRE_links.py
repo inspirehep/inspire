@@ -74,12 +74,14 @@ def format(bfo, default = '', separator = '; ', style = '', \
 
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
+    # Note: excluding self-links
     urls = bfo.fields('8564_')
     links.extend(['<a '+ style + \
             'href="' + url.get("u") + '">' + \
                   _lookup_url_name(bfo, url.get('y')) +'</a>'
             for url in urls if url.get("u") and \
-                  url.get('y').upper() != "DOI"])
+                  url.get('y').upper() != "DOI" and not \
+                  url.get('u').startswith(CFG_SITE_URL)])
 
 
 
