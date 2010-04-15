@@ -2014,7 +2014,11 @@ padding:0;
    text-decoration:underline;
 }
 
-
-
+.snippetbox {
+    margin-left:10px;
+    color: #000000;
+    background: #cccccc;
+    border: solid 1px #000000;
+}
 
 /* end of inspire.css */
