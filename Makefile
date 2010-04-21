@@ -3,7 +3,7 @@ include config.mk
 #
 # Note that local makefile configurations can be defined in config-local.mk to override config.mk
 
-SUBDIRS = bibconvert bibformat webstyle bibrank conf editor webhelp
+SUBDIRS = bibconvert bibformat webstyle bibrank conf editor webhelp feedboxes
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -268,7 +268,7 @@ reset-inspire-collection-configuration:
 
 reset-inspire-portalbox-configuration:
 	@echo ">>> Resetting collection portalboxes:"
-        ## announce portalbox:
+		## announce portalbox:
 	echo "TRUNCATE portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "INSERT INTO portalbox VALUES (1, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -289,11 +289,11 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'sv', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_CN', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_TW', 'ne', 100)" | $(BINDIR)/dbexec
-        # now update portalbox value from the announce file:
+		# now update portalbox value from the announce file:
 	echo -e 'from invenio.dbquery import run_sql;\
 	body = open("webhelp/inspire_announce.html").read();\
 	run_sql("UPDATE portalbox SET body=%s WHERE id=1", (body,))' | $(PYTHON)
-        ## sidebar portalbox:
+		## sidebar portalbox:
 	echo "INSERT INTO portalbox VALUES (2, '', 'FIXME')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -312,10 +312,10 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
-        # now update portalbox value from the sidebar file:
-	echo -e 'from invenio.dbquery import run_sql;\
-	body = open("webhelp/inspire_sidebar.html").read();\
-	run_sql("UPDATE portalbox SET body=%s WHERE id=2", (body,))' | $(PYTHON)
+		# now update portalbox value with placeholder text
+	echo "UPDATE portalbox SET body=' ' WHERE id=2"|$(BINDIR)/dbexec
+		## and now update portalbox values with RSS feed material
+	python ./feedboxes/inspire_update_feedboxes.py -d 
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:
@@ -351,7 +351,7 @@ reset-inspire-useraccess-configuration:
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
-	/opt/invenio/bin/webaccessadmin -u admin -c
+	$(BINDIR)/webaccessadmin -u admin -c
 	@echo ">>> Done reset-inspire-useraccess-configuration."
 
 reset-inspire-submission-configuration:

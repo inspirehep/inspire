@@ -12,4 +12,10 @@ Debian GNU/Linux, use:
 To install a small INSPIRE demo site from scratch, you can use the
 attached conf/inspire-recreate-demo-site script for inspiration.
 
+You may be interested in having an RSS feed update a box on your homepage.
+If so, edit feedboxes/inspire_update_feedboxes.py with a valid FEEDS list, 
+then install it somewhere and call it with the -d flag every ten minutes or 
+so.  It will rely on webcoll to regenerate the home page, so it's not really
+sensible to run it more often than webcoll runs.
+
 - end of file -
