@@ -1,0 +1,237 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of CDS Invenio.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+##
+## CDS Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## CDS Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(SPIRES Users Guide to INSPIRE)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+
+<h5><strong>What's New in INSPIRE</strong></h5>
+ 1. Google-type Searches
+ - Can use any field (author, title, journal, date, page number, affiliation, etc.)
+ <table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td width="50%" valign="top" style="white-space: nowrap">
+    <form action="/search" method="get">
+      <input name="p" type="text" value="thomas crewther quark 2002" size="40" />
+    <select name="f"><option value="">any field</option>
+                     <option>title</option>
+                     <option>author</option>
+    </select>
+    <input class="formbutton" type="submit" name="action" value="Search" />
+    </form></td>
+<td width="50%" valign="top">
+  <p>Compared with traditional SPIRES search:<br />
+    <br />
+    <em>find a thomas and a crewther and t quark and date 2002</em><em><br />
+    </em></p>  </td>
+</tr>
+</table>
+
+ <br />
+ 2.
+ Precision SPIRES/INSPIRE Searching
+ <br />
+ (We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences)
+ <table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td width="54%" valign="top" style="white-space: nowrap">
+  <p>
+    <form action="/search" method="get">
+    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200-&gt;3000" size="65" />
+    <select name="f"><option value="">any field</option>
+                     <option>title</option>
+                     <option>author</option>
+    </select>
+    <input class="formbutton" type="submit" name="action" value="Search" />
+    </form>
+    <p>You can now search on citation count <br />
+    (must be written in this format with no spaces).  </p>
+    <form action="/search" method="get">
+      <input name="p" type="text" value="find a unruh or t cauchy not t problem and primarch gr-qc" size="65" />
+      <select name="f7">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action14" value="Search" />
+    </form>
+    <p>Can search on eprint type using primarch (primary archive).<br />
+    Logic operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.</p></td>
+<td width="46%" valign="top">
+  <p>Note: In going from SPIRES search to INSPIRE</p>
+  <p>quark# &rArr; quark*</p>
+  <p>j prlta (or prl) &rArr;
+        j phys.rev.lett. <br />(No spaces, include periods)</em></p>
+  <p><br />
+  </p></td>
+</tr>
+<tr>
+  <td valign="top" style="white-space: nowrap">
+    <p>Traditional Style<br />
+      <form action="/search" method="get">
+      <input name="p" type="text" value="find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004" size="60" id="p" />
+
+    <input class="formbutton" type="submit" name="action" value="Search" />
+    </form>
+    </p>
+    <p>New Alternative Style<br />
+      <form action="/search" method="get">
+      <input name="p" type="text" value="author:hawking affiliation:&quot;cambridge u., damtp&quot; year:2005->2010" size="60" id="p" />
+      <input class="formbutton" type="submit" name="action6" value="Search" />
+      </form>
+      <br />
+<br />
+    </p></td>
+  <td valign="top"><p>Note: Quotation marks around complicated search terms.</p>
+    </td>
+</tr>
+<tr>
+  <td valign="top" style="white-space: nowrap">
+    <p>Cited By<br />
+        <form action="/search" method="get">
+        1.
+        <input name="p" type="text" value="citedby:hep-th/9711200 author:cvetic" size="60" id="p" />
+        <input class="formbutton" type="submit" name="action7" value="Search" />
+        </form>
+    <form action="/search" method="get">
+      2.
+      <input name="p" type="text" value="author:parke citedby:author:witten" size="60" id="p2" />
+      <input class="formbutton" type="submit" name="action10" value="Search" />
+    </form>
+    <p>Refers To<br />
+    <form action="/search" method="get">
+        3.
+        <input name="p" type="text" value="refersto:hep-th/9711200 title:nucl*" size="60" id="p" />
+        <input class="formbutton" type="submit" name="action8" value="Search" />
+          </form>
+        <form action="/search" method="get">
+          4.
+          <input name="p" type="text" value="author:witten refersto:author:parke" size="60" id="p3" />
+          <input class="formbutton" type="submit" name="action11" value="Search" />
+        </form>
+        <form action="/search" method="get">
+          5.
+          <input name="p" type="text" value="affiliation:&quot;oxford u.&quot; refersto:title:muon*" size="60" id="p4" />
+          <input class="formbutton" type="submit" name="action12" value="Search" />
+        </form>
+        <br />
+        <br />
+    </p></td>
+  <td valign="top"><p>1. The articles by Cvetic cited in eprint hep-th/9711200</p>
+    <p>2. Parke papers cited by Witten</p>
+    <p>3. Papers citing hep-th/9711200 with nucl* in the title (nuclear, nucleus, nucleon, ...)</p>
+    <p>4. Witten papers citing Parke</p>
+    <p>5. Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
+  </td>
+</tr>
+</table>
+<div align="right"></div>
+
+<p>3. Calculating the h-index</p>
+<p>You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong> from the list of available formats, and hit
+  <input class="formbutton" type="submit" name="action9" value="Search" />
+   again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.</p>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+
+  <tr>
+    <td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
+      <input type="hidden" name="ln" value="en" />
+      <input size="46" type="text" name="p" value="find af &quot;harvard u.&quot;" />
+      <select name="f5">
+        <option value="" selected="selected">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action5" value="Search" />
+    </form></td>
+    <td width="50%" valign="top"><p>Will give you <a href="/search?ln=en&amp;p=find+af+&quot;harvard+u.&quot;&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hcs">this result</a>.<br />
+    </p>
+      </td>
+  </tr>
+
+  <tr>
+    <td style="white-space: nowrap" height="2"></td>
+    <td valign="top"></td>
+  </tr>
+</table>
+<p>4. Problems with  SPIRES-type Searching on Authors with Initials </p>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td width="50%" valign="top" style="white-space: nowrap"><div align="center"><strong>WORKS </strong></div></td>
+<td width="50%" valign="top"><div align="center"><strong>DOESN'T WORK</strong></div></td>
+</tr>
+<tr>
+<td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
+  <input type="hidden" name="ln3" value="en" />
+  <input size="44" type="text" name="p" value="find a thomas and crewther" />
+  <select name="f3">
+    <option value="" selected="selected">any field</option>
+    <option>title</option>
+    <option>author</option>
+  </select>
+  <input class="formbutton" type="submit" name="action3" value="Search" />
+</form></td>
+<td width="50%">&nbsp;</td>
+</tr>
+<tr>
+<td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
+  <input type="hidden" name="ln5" value="en" />
+  <input size="46" type="text" name="p" value="find a thomas, a w and crewther" />
+  <select name="f6">
+    <option value="" selected="selected">any field</option>
+    <option>title</option>
+    <option>author</option>
+  </select>
+  <input class="formbutton" type="submit" name="action13" value="Search" />
+</form></td>
+<td width="50%">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top" style="white-space: nowrap"><form action="/search" method="get">
+    <input type="hidden" name="ln4" value="en" />
+    <input size="46" type="text" name="p" value="author:&quot;thomas, a w&quot; author:&quot;crewther, r j&quot;" />
+    <select name="f4">
+      <option value="" selected="selected">any field</option>
+      <option>title</option>
+      <option>author</option>
+    </select>
+    <input class="formbutton" type="submit" name="action4" value="Search" />
+  </form></td>
+  <td>&nbsp;</td>
+</tr>
+<tr>
+  <td height="46" style="white-space: nowrap">&nbsp;</td>
+  <td valign="top"><form action="/search" method="get">
+    <input type="hidden" name="ln2" value="en" />
+    <input size="35" type="text" name="p" value="find a thomas, a and crewther, r" />
+    <select name="f2">
+      <option value="" selected="selected">any field</option>
+      <option>title</option>
+      <option>author</option>
+    </select>
+    <input class="formbutton" type="submit" name="action2" value="Search" />
+    <br />
+  (Note: This will be fixed soon)
+  </form></td>
+</tr>
+<tr>
+  <td style="white-space: nowrap" height="2"></td>
+  <td valign="top"></td>
+</tr>
+</table>
