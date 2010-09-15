@@ -129,6 +129,8 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (17, 'exact author', 'exactauthor')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (18, 'date created', 'datecreated')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (19, 'date modified', 'datemodified')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (20, 'refers to', 'refersto')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (21, 'cited by', 'citedby')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
