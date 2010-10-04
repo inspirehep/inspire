@@ -217,6 +217,7 @@ def format(bfo, limit, separator='; ',
     else:
         colls = []
     if colls:
+        short_coll = False
         colls = [re_coll.sub('', coll) for coll in colls]
         if print_links.lower() == "yes":
             colls = ['<a class="authorlink" href="' + \
@@ -241,14 +242,20 @@ def format(bfo, limit, separator='; ',
             else:  #html
                 coll_display += " (" + authors[0] + extension + ")"
         elif nb_authors == 1:
+            short_coll = True
             if markup == 'latex':
                 coll_display =  authors[0] + " [ " + coll_display + " ]"
             else:  #html
                 coll_display +=  " (" + authors[0] + " for the collaboration)"
+        elif nb_authors == 0:
+            short_coll = True
+            if markup == 'latex':
+                coll_display =  "[ " + coll_display + " ]"
+
 
 
     # Start outputting, depending on options and number of authors
-    if colls and interactive != "yes":
+    if colls and (interactive != "yes" or short_coll):
         return coll_display
 
     if limit.isdigit() and nb_authors > int(limit) and interactive != "yes":
@@ -256,7 +263,7 @@ def format(bfo, limit, separator='; ',
                extension
 
 
-    elif (colls or (limit.isdigit() and nb_authors > int(limit))) and interactive == "yes":
+    elif interactive == "yes" and  ((colls and not short_coll) or (limit.isdigit() and nb_authors > int(limit))):
         out = '''
         <script>
         function toggle_authors_visibility(){
