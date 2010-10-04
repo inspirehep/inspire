@@ -50,3 +50,23 @@ CFG_WEBSUBMIT_FILESYSTEM_BIBDOC_GROUP_LIMIT = 20000
 CFG_BIBUPLOAD_FFT_ALLOWED_LOCAL_PATHS = /tmp,/afs/cern.ch/project/inspire/arXiv
 CFG_WEBSEARCH_FULLTEXT_SNIPPETS = 5
 CFG_WEBSEARCH_FULLTEXT_SNIPPETS_WORDS = 10
+CFG_WEBSEARCH_FIELDS_CONVERT = {'eprint':'reportnumber','bb':'reportnumber',
+                                'bbn':'reportnumber','bull':'reportnumber',
+                                'r':'reportnumber','rn':'reportnumber',
+                                'cn':'collaboration','a':'author',
+                                'au':'author','name':'author',
+                                'ea':'exactauthor','exp':'experiment',
+                                'expno':'experiment','sd':'experiment',
+                                'se':'experiment','j':'journal',
+                                'kw':'keyword', 'keywords':'keyword',
+                                'k':'keyword', 'au':'author', 'ti':'title',
+                                't':'title', 'irn':'970__a',
+                                'institution':'affiliation',
+                                'inst':'affiliation', 'affil':'affiliation',
+                                'aff':'affiliation', 'af':'affiliation',
+                                'topic':'695__a','tp':'695__a','dk':'695__a',
+                                'date':'year','d':'year','date-added':'datecreated',
+                                'da':'datecreated','dadd':'datecreated',
+                                'date-updated':'datemodified','dupd':'datemodified',
+                                'du':'datemodified',
+                               }
