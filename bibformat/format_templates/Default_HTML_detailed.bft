@@ -45,5 +45,7 @@ note_prefix="<br /><small><strong>Note: </strong>"
 note_suffix=" </small>"
 suffix="<br />" />
 
+<BFE_PLOTS width="200px" caption="no"/>
+
 <br />
 </div>

@@ -1618,7 +1618,7 @@ ul.detailedrecordtabs{
    text-decoration:none;
 }
 .detailedrecordtabs li.disabled a{
-   color:#36c;
+   color:#ccf;
    cursor:default;
    border-top: 2px solid #ccf;
    border-right: 2px solid #ccf;

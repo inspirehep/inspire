@@ -251,7 +251,7 @@ reset-inspire-collection-configuration:
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectiondetailedrecordpagetabs" | $(BINDIR)/dbexec
-	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (1, 'citations;references;metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (1, 'metadata;references;citations;plots')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (2, 'metadata')" | $(BINDIR)/dbexec
 
 	$(BINDIR)/webcoll -u admin
