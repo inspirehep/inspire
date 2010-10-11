@@ -158,9 +158,9 @@ template function generated it.
   </td>
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
-Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> β.
-Please go to <a href="http://www.slac.stanford.edu/spires/">SPIRES</a> if
- you are here by mistake.<br />
+Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> β: the
+upgrade of SPIRES<br />
+We now recommend that you use this site instead of SPIRES<br />
 
 
     %(feedback)s
