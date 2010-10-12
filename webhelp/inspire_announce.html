@@ -1,18 +1,13 @@
 <div id="announce" class="portalboxbody">
 <h2>Welcome to INSPIRE β</h2>
 
-<p>
-Welcome to a preview of the INSPIRE service.  The data in INSPIRE is updated
-daily and should be the same as what is available from SPIRES, or better.
-</p>
-
-<h3>How to Search</h3>
+<h3>SPIRES Search (and a little more)</h3>
 <dl>
 <dt>A few words</dt>
 <dd><a href="/search?p=1985+richter+quark+multiplicity">1985 richter quark multiplicity</a>
 </dd>
-<dt>Eprint number</dt>
-<dd><a href="/search?p=arXiv%3A0902.3702">arXiv:0902.3702</a></dd>
+<dt>Eprint number (<a href="/record/863300">note the plots</a>)</dt>
+<dd><a href="/search?p=arXiv%3A1007.5048">arXiv:1007.5048</a></dd>
 <dt>More complex</dt>
 <dd><a href="/search?p=%28symmetry+or+asymmetry%29+author%3Agell-mann+not+quark">(symmetry or asymmetry) author:gell-mann -quark</a>
 </dd>
@@ -22,28 +17,38 @@ daily and should be the same as what is available from SPIRES, or better.
 </dd>
 <dt>Range searching</dt>
 <dd><a href="/search?p=author%3Arandall+author%3Asundrum+cited%3A450-%3E1350&amp;rm=citation">author:randall author:sundrum cited:450-&gt;1350</a></dd>
+<dt>Search words inside papers (Note: limited coverage, phrases coming soon)</dt>
+<dd><form name="action10" action="/search" method="get">
+<input name="p" type="text" value="unparticle" size="40" id="p2" />
+<select name="f"><option value="">any
+    field</option><option value="affiliation">affiliation</option><option value="author">author</option><option value="caption">caption</option><option value="collaboration">collaboration</option><option value="exactauthor">exact
+    author</option><option selected="selected" value="fulltext" selected="selected">fulltext</option><option value="journal">journal</option><option value="reportnumber">report number</option><option value="title">title</option><option value="date">date</option></select>
+<input class="formbutton" type="submit" name="action10" value="Search" />
+    </form>
+</dd>
+</dl>
+
+<h3>Additional Help</h3>
+<dl>
 <dt>Help for SPIRES Users</dt><dd><a href="/help/spires-inspire">SPIRES Users' guide to INSPIRE</a></dd>
 <dt>More</dt>
 <dd>See <a href="/help/">INSPIRE help</a>.</dd>
 </dl>
 
-
 <h3>Bugs</h3>
 <p>There are some things that are not working, and others that are rough
 around the edges, please report these bugs and we'll keep you updated on
 the fixes and improvements we make.  We expect to be making a lot of
-updates and changes in the first few months, so please send feedback about the service
-to <a href="mailto:feedback@inspire-hep.net">feedback@inspire-hep.net</a></p>
-
-
-<h3>Content Errors</h3>
-<p>Corrections about the data should go to the usual
-address <a href="mailto:help@inspire-hep.net">help@inspire-hep.net</a>.
-All corrections will be made both here and in SPIRES while INSPIRE is
-still in its β phase.  Please
-see <a href="http://www.slac.stanford.edu/spires/hep/corrections.shtml">SPIRES
-  correction pages</a> for information about corrections.
+updates and changes in the next few months, so please send feedback about the service
+to <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
+<p>The data in INSPIRE is updated
+daily and should be the same as what is available from SPIRES, or better.
+  To correct data in INSPIRE (or SPIRES), let us know at <a href="mailto:help@inspirebeta.net">help@inspirebeta.net</a></p>
 </p>
+
+
+
+
 
 </div>
 

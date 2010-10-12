@@ -170,68 +170,12 @@
     <td valign="top"></td>
   </tr>
 </table>
-<p>4. Problems with  SPIRES-type Searching on Authors with Initials </p>
-<table width="100%" border="1" cellpadding="10" cellspacing="0">
-<tr>
-<td width="50%" valign="top" style="white-space: nowrap"><div align="center"><strong>WORKS </strong></div></td>
-<td width="50%" valign="top"><div align="center"><strong>DOESN'T WORK</strong></div></td>
-</tr>
-<tr>
-<td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
-  <input type="hidden" name="ln3" value="en" />
-  <input size="44" type="text" name="p" value="find a thomas and crewther" />
-  <select name="f3">
-    <option value="" selected="selected">any field</option>
-    <option>title</option>
-    <option>author</option>
-  </select>
-  <input class="formbutton" type="submit" name="action3" value="Search" />
-</form></td>
-<td width="50%">&nbsp;</td>
-</tr>
-<tr>
-<td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
-  <input type="hidden" name="ln5" value="en" />
-  <input size="46" type="text" name="p" value="find a thomas, a w and crewther" />
-  <select name="f6">
-    <option value="" selected="selected">any field</option>
-    <option>title</option>
-    <option>author</option>
-  </select>
-  <input class="formbutton" type="submit" name="action13" value="Search" />
-</form></td>
-<td width="50%">&nbsp;</td>
-</tr>
-<tr>
-  <td valign="top" style="white-space: nowrap"><form action="/search" method="get">
-    <input type="hidden" name="ln4" value="en" />
-    <input size="46" type="text" name="p" value="author:&quot;thomas, a w&quot; author:&quot;crewther, r j&quot;" />
-    <select name="f4">
-      <option value="" selected="selected">any field</option>
-      <option>title</option>
-      <option>author</option>
-    </select>
-    <input class="formbutton" type="submit" name="action4" value="Search" />
-  </form></td>
-  <td>&nbsp;</td>
-</tr>
-<tr>
-  <td height="46" style="white-space: nowrap">&nbsp;</td>
-  <td valign="top"><form action="/search" method="get">
-    <input type="hidden" name="ln2" value="en" />
-    <input size="35" type="text" name="p" value="find a thomas, a and crewther, r" />
-    <select name="f2">
-      <option value="" selected="selected">any field</option>
-      <option>title</option>
-      <option>author</option>
-    </select>
-    <input class="formbutton" type="submit" name="action2" value="Search" />
-    <br />
-  (Note: This will be fixed soon)
-  </form></td>
-</tr>
-<tr>
-  <td style="white-space: nowrap" height="2"></td>
-  <td valign="top"></td>
-</tr>
-</table>
+
+
+<p>
+ If you have questions or comments about these searches or if there is
+anything you would like to see added to this help page,
+ contact <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a>
+</p><p> Also see the <a href="search-guide<lang:link/>">_(Search
+    Guide)_</a> for more detailed help on INSPIRE searching.
+</p>
