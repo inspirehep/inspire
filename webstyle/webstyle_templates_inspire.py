@@ -260,7 +260,7 @@ We now recommend that you use this site instead of SPIRES<br />
         </div>
         </div>""" % {
             'feedback_text' : _("Please send feedback on INSPIRE to"),
-            'feedback_address' : 'feedback@inspire-hep.net',
+            'feedback_address' : 'feedback@inspirebeta.net',
             }
         return out
 
@@ -322,7 +322,7 @@ We now recommend that you use this site instead of SPIRES<br />
           'langlink': '?ln=' + ln,
 
           'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
-          'sitesupportemail' : 'feedback@inspire-hep.net',
+          'sitesupportemail' : 'feedback@inspirebeta.net',
 
           'msg_search' : _("Search"),
           'msg_help' : _("Help"),
