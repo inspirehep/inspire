@@ -51,9 +51,10 @@
  <table width="100%" border="1" cellpadding="10" cellspacing="0">
 <tr>
 <td width="54%" valign="top" style="white-space: nowrap">
-  <p>
+  <p>You can now search on citation count 
+    (must be written in this format with no spaces). 
     <form action="/search" method="get">
-    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200-&gt;3000" size="65" />
+    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200+" size="65" />
     <select name="f"><option value="">any field</option>
                      <option>title</option>
                      <option>author</option>
@@ -71,15 +72,49 @@
       </select>
       <input class="formbutton" type="submit" name="action14" value="Search" />
     </form>
-    <p>Can search on eprint type using primarch (primary archive).<br />
-    Logic operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.</p></td>
+     </p>
+<hr />
+<p>Direct searching on dates can be done.
+    <form action="/search" method="get">
+
+      <input name="p" type="text" value="find d 1997-11-18" size="65" />
+      <select name="f9">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action16" value="Search" />
+
+    </form>
+     There are also indexes for date-added (dadd) and date-updated (dupd) <br />
+     find dadd < 2010-10-03 <br />
+     find dupd > 1 oct 2010
+     </p>
+
+
+
+</td>
 <td width="46%" valign="top">
   <p>Note: In going from SPIRES search to INSPIRE</p>
-  <p>quark# &rArr; quark*</p>
-  <p>j prlta (or prl) &rArr;
-        j phys.rev.lett. <br />(No spaces, include periods)</em></p>
-  <p><br />
-  </p></td>
+  <ol>
+  <li>Truncation: quark# &rArr; quark*</li>
+  <li>j prlta (or prl) &rArr; j phys.rev.lett. <br />
+     j phlta (or pl) &rArr; j phys.lett. <br />
+
+     (No spaces, include periods)</em></li>
+  <li>topcite 100+  &rArr; cited:200+ <br /> Note: this number can be anything, e.g.
+     <br />  cited:357+ or cited:300->3000
+  </li>
+  <li>All dates must be in the ISO format <br /> <b>yyyy(-mm(-dd))</b> <br />
+
+     e.g. 2003, 2003-06, 2003-06-27 <br />
+     <b>or</b> nov 1997, 18 nov 1997 <br />
+     find d 199* finds all papers from the 1990s.<br />
+     <i>Coming December 2010</i>: dates such as "today" and "next tuesday" should also work.
+  </li>
+  </ol>
+
+  </td>
 </tr>
 <tr>
   <td valign="top" style="white-space: nowrap">
@@ -127,6 +162,12 @@
         </form>
         <form action="/search" method="get">
           5.
+          <input name="p" type="text" value="refersto:author:parke or refersto:author:lykken author:witten"
+              size="60" id="p3" />
+          <input class="formbutton" type="submit" name="action13" value="Search" />
+        </form>
+        <form action="/search" method="get">
+          6.
           <input name="p" type="text" value="affiliation:&quot;oxford u.&quot; refersto:title:muon*" size="60" id="p4" />
           <input class="formbutton" type="submit" name="action12" value="Search" />
         </form>
@@ -136,8 +177,11 @@
   <td valign="top"><p>1. The articles by Cvetic cited in eprint hep-th/9711200</p>
     <p>2. Parke papers cited by Witten</p>
     <p>3. Papers citing hep-th/9711200 with nucl* in the title (nuclear, nucleus, nucleon, ...)</p>
-    <p>4. Witten papers citing Parke</p>
-    <p>5. Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
+    <p>4. Witten papers citing "Parke, S.J."</p>
+    <p>5. Papers by Witten citing either Lykken or Parke (Boolean left-to-right,
+       implied "and" before "author:witten")</p>
+
+    <p>6. Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
   </td>
 </tr>
 </table>
@@ -146,6 +190,7 @@
 <p>3. Calculating the h-index</p>
 <p>You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong> from the list of available formats, and hit
   <input class="formbutton" type="submit" name="action9" value="Search" />
+
    again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.</p>
 <table width="100%" border="1" cellpadding="10" cellspacing="0">
 
