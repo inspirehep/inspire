@@ -64,7 +64,6 @@ def format(bfo, links="no", category="yes", mirrors="yes"):
 <a href="http://ru.arXiv.org/abs/%(ref)s">ru</a>
 <a href="http://tw.arXiv.org/abs/%(ref)s">tw</a>
 <a href="http://uk.arXiv.org/abs/%(ref)s">uk</a>
-<a href="http://za.arXiv.org/abs/%(ref)s">za</a>
 <a href="http://aps.arXiv.org/abs/%(ref)s">aps</a>
 <a href="http://lanl.arXiv.org/abs/%(ref)s">lanl</a>)'''  % \
         {'ref': arxiv_ref}

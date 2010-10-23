@@ -52,7 +52,7 @@ def format(bfo, default = '', separator = '; ', style = '', \
         mirrors = "no"
     else:
         mirrors = "yes"
-    arxiv_links = arxiv(bfo, links = "yes", mirrors = mirrors)
+    arxiv_links = arxiv(bfo, links = "yes", mirrors = "no")
     if arxiv_links:
         links.append(arxiv_links)
 
