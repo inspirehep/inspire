@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of CDS Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010 CERN, SLAC
 ##
 ## CDS Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -38,17 +38,11 @@ def format(bfo, reference_prefix, reference_suffix):
     for reference in references:
         ref_out = ''
 
-        if reference.has_key('o'):
-            if out != "":
-                ref_out = '</li>'
-            ref_out += '<li><small>'+\
-                       reference['o']+ "</small> "
-#  LEAVE out full ref while we have spires import which does not store
-#  useful things here
-#        if reference.has_key('m'):
-#            ref_out += "<small>"+ reference['m']+ "</small> "
-
-
+#        if reference.has_key('o'):
+#            if out != "":
+#                ref_out = '</li>'
+#            ref_out += '<li><small>'+\
+#                       reference['o']+ "</small> "
 
         display_journal = ''
         display_report = ''
@@ -65,39 +59,35 @@ def format(bfo, reference_prefix, reference_suffix):
             hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
             hits = search_unit(f='journal', p=clean_journal)
+        if reference.has_key('a') and len(hits)!=1:
+            hits = search_unit(f='doi', p=reference['a'])
         if len(hits) == 1:
             ref_out += '<small>' +\
                        format_record(list(hits)[0],'hs') + '</small>'
 
-#  Silly stuff that can be used if there are a lot of multiple hits
-#
-#        elif len(hits)>1:
-#            if display_journal:
-#                ref_out += '<small><a href="'+CFG_SITE_URL+\
-#                           '/search?f=journal&amp;p='+ \
-#                           reference['s']+ \
-#                           '&amp;ln=' + bfo.lang + \
-#                           '">'+display_journal+"</a></small>"
-#            if display_report:
-#                ref_out += ' <small><a href="'+CFG_SITE_URL+\
-#                           '/search?f=reportnumber&amp;p='+ \
-#                           reference['r']+ \
-#                           '&amp;ln=' + bfo.lang + \
-#                           '">'+display_report+"</a></small>"
 
         else:
-            ref_out = '<small>'
+
+            if reference.has_key('h'):
+                ref_out += "<small> " + reference['h']+ ".</small> "
+
+            if reference.has_key('m'):
+                ref_out += "<small>"+ reference['m'] + ".</small> "
+
+            if reference.has_key('a'):
+                ref_out += " <small><a href=\"http://dx.doi.org/" + \
+                reference['a'] + "\">" + reference['a']+ "</a></small> "
+
+            ref_out += ' <small>'
             if display_journal:
                 ref_out += display_journal
             if display_report:
-                ref_out += ' '+display_report
-            ref_out += ' (not in Inspire)</small>'
+                ref_out += ' ' + display_report
+            ref_out += '<br /> <em>(not extracted or not in INSPIRE)</em></small>'
 
 
 
         ref_out += "<br />"
-
-
 
         if reference_prefix is not None and ref_out != '':
             ref_out = reference_prefix + ref_out
