@@ -309,10 +309,13 @@ def format(bfo, width="50"):
     import invenio.bibformat_elements.bfe_INSPIRE_arxiv as bfe_arxiv
 
     eprints = bfe_arxiv.get_arxiv(bfo, category = "no")
+    eprint = eprints[0]
+    if eprint.upper().startswith('ARXIV:'):
+        eprint = eprint[6:]
 
     if eprints:
         out += format_bibtex_field("eprint",
-                                   eprints[0],
+                                   eprint,
                                    name_width,
                                    value_width)
         out += format_bibtex_field("archivePrefix",
