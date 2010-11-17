@@ -68,5 +68,7 @@ CFG_WEBSEARCH_FIELDS_CONVERT = {'eprint':'reportnumber','bb':'reportnumber',
                                 'date':'year','d':'year','date-added':'datecreated',
                                 'da':'datecreated','dadd':'datecreated',
                                 'date-updated':'datemodified','dupd':'datemodified',
-                                'du':'datemodified',
-                               }
+                                'du':'datemodified',}
+CFG_BIBRANK_SHOW_DOWNLOAD_GRAPHS_CLIENT_IP_DISTRIBUTION = 0
+CFG_BIBRANK_SHOW_DOWNLOAD_GRAPHS = 0
+CFG_BIBRANK_SHOW_DOWNLOAD_STATS = 0
