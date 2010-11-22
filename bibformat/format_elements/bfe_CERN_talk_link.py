@@ -24,7 +24,7 @@ __revision__ = "$Id$"
 
 from cgi import escape
 
-def format(bfo, label="Talk Information"):
+def format_element(bfo, label="Talk Information"):
     """
     Prints HTML links to talk
 

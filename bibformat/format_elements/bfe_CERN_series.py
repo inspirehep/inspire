@@ -25,7 +25,7 @@ __revision__ = "$Id$"
 
 import cgi
 
-def format(bfo, print_links="yes", serie_prefix="<br /><strong>Series: </strong>", separator="; "):
+def format_element(bfo, print_links="yes", serie_prefix="<br /><strong>Series: </strong>", separator="; "):
     """
     Print series and volumes
 

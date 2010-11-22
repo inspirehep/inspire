@@ -27,7 +27,7 @@ from invenio.search_engine import search_pattern
 
 
 
-def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
+def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
     Prints the records (or number of records) citing this record
 
@@ -38,11 +38,7 @@ def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
     from urllib import quote
 
-   #FIXME temporary while some inspire sites migrating from .92->.99
-    try:
-        from invenio.config import CFG_SITE_URL
-    except:
-        from invenio.config import weburl as CFG_SITE_URL
+    from invenio.config import CFG_SITE_URL
 
     primary_report_numbers = bfo.fields('037__a')
     additional_report_numbers = bfo.fields('088__a')
@@ -57,7 +53,7 @@ def format(bfo, separator='; ', nbOnly='no', searchlink='no'):
 
     if nbOnly.lower() == 'yes':
         if searchlink.lower()=='yes':
-            from bfe_server_info import format as bfe_server
+            from bfe_server_info import format_element as bfe_server
             return '<a href="'+CFG_SITE_URL+'/search?p=recid:'+bfo.control_field('001')+'&rm=citation">'+str(len(res))+'</a>'
         else:
             return str(len(res))

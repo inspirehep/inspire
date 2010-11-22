@@ -26,7 +26,7 @@ import cgi
 from urllib import quote
 from bfe_INSPIRE_arxiv import get_arxiv
 
-def format(bfo, links="no", incl_arxiv="no"):
+def format_element(bfo, links="no", incl_arxiv="no"):
     """
     Provides report numbers
 

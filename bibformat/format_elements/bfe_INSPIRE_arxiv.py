@@ -22,7 +22,7 @@
 """
 __revision__ = "$Id$"
 
-def format(bfo, links="no", category="yes", mirrors="yes"):
+def format_element(bfo, links="no", category="yes", mirrors="yes"):
     """
     Provides arXiv number in format for display or links
 

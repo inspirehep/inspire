@@ -27,7 +27,7 @@ from urllib import quote
 import re
 
 
-def format(bfo,  highlight="no", force_title_case="no"):
+def format_element(bfo,  highlight="no", force_title_case="no"):
     """
     Provides title  converts to title case (Upper Cased First Letters) if
     the title is in all caps

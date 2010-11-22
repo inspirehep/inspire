@@ -27,7 +27,7 @@ from invenio.dateutils import convert_datestruct_to_dategui
 import re
 
 
-def format(bfo, us="yes"):
+def format_element(bfo, us="yes"):
     """
     returns dategui for the best available date, looking in several
     locations for it (date, eprint, journal, date added)

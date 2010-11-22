@@ -23,7 +23,7 @@
 
 __revision__ = "$Id$"
 
-def format(bfo):
+def format_element(bfo):
     """
     Print HTML link(s) to request a copy/loan of the document.
     """

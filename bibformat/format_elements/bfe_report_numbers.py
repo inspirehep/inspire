@@ -23,7 +23,7 @@
 
 __revision__ = ""
 
-def format(bfo, separator, limit, extension=" etc."):
+def format_element(bfo, separator, limit, extension=" etc."):
     """
     Prints the report numbers of the record (037__a and 088__a)
 

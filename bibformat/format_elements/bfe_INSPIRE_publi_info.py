@@ -25,7 +25,7 @@ __revision__ = "$Id$"
 from invenio.bibknowledge import get_kbd_values
 import cgi
 
-def format(bfo, style='eu', markup = 'html'):
+def format_element(bfo, style='eu', markup = 'html'):
     """
     Displays inline publication information
 

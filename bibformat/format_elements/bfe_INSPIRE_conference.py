@@ -23,7 +23,7 @@
 __revision__ = "$Id$"
 
 
-def format(bfo, separator=', ', link="yes"):
+def format_element(bfo, separator=', ', link="yes"):
     """
     Prints Conference info as best is possible.
 

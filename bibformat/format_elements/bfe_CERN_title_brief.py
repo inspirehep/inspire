@@ -26,7 +26,7 @@ __revision__ = "$Id$"
 
 import re
 
-def format(bfo, highlight="no", force_title_case="no"):
+def format_element(bfo, highlight="no", force_title_case="no"):
     """
     Prints a short title, suitable for brief format.
 

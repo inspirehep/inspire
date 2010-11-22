@@ -23,7 +23,7 @@ __revision__ = "$Id$"
 from invenio.bibformat_utils import parse_tag
 import re
 
-def format(bfo, tag, limit, instances_separator=" ",
+def format_element(bfo, tag, limit, instances_separator=" ",
            subfields_separator=" ", extension="", filter_subcode='', filter_value=''):
     """
     Prints the given field of a record.

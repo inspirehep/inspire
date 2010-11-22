@@ -24,7 +24,7 @@ __revision__ = ""
 
 
 
-def format(bfo, limit, extension=" etc.", separator=" "):
+def format_element(bfo, limit, extension=" etc.", separator=" "):
     """
     Prints the report standard number(s)
 

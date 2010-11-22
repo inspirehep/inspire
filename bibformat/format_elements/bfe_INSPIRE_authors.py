@@ -22,7 +22,7 @@
 """
 __revision__ = "$Id$"
 
-def format(bfo, limit, separator='; ',
+def format_element(bfo, limit, separator='; ',
            extension='[...]',
            print_links = "yes",
            print_affiliations='no',
@@ -64,7 +64,7 @@ def format(bfo, limit, separator='; ',
     from cgi import escape
     import re
     from invenio.config import CFG_SITE_URL
-    from invenio.bibformat_elements.bfe_server_info import format as bfe_server
+    from invenio.bibformat_elements.bfe_server_info import format_element as bfe_server
 
     #regex for parsing last and first names and initials
     re_last_first = re.compile('^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')

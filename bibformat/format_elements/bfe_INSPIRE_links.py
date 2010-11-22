@@ -31,7 +31,7 @@ from urllib import quote
 from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
 
-def format(bfo, default = '', separator = '; ', style = '', \
+def format_element(bfo, default = '', separator = '; ', style = '', \
            show_icons = 'no', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
@@ -47,7 +47,7 @@ def format(bfo, default = '', separator = '; ', style = '', \
     links = []
 
 
-    from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format as arxiv
+    from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format_element as arxiv
     if show_icons.lower() == 'yes':
         mirrors = "no"
     else:

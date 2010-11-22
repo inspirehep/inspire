@@ -25,7 +25,7 @@ __revision__ = "$Id$"
 from cgi import escape
 from urllib import quote
 
-def format(bfo, style, separator='; ', elec_loc_field='1'):
+def format_element(bfo, style, separator='; ', elec_loc_field='1'):
     """
     Prints HTML links to fulltext
     @param separator the separator between urls.

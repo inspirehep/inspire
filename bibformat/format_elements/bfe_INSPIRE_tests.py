@@ -41,9 +41,9 @@ class TestInspireFormatElements(unittest.TestCase):        #
             self.assertEqual(self.bfo.field('100a'),"Farhi, E.")
         def testAff(self):
             """testing Affs"""
-            from bfe_CERN_authors import format
+            from bfe_CERN_authors import format_element
             self.bfo=BibFormatObject('7374')
-            string =  format(self.bfo,limit="5",print_affiliations="yes")
+            string =  format_element(self.bfo,limit="5",print_affiliations="yes")
 
             self.assert_(re.search(r'Farhi, E.</a>',string))
             self.assert_(re.search(r'</a> \(<a.*MIT',string))
@@ -54,9 +54,9 @@ class TestInspireFormatElements(unittest.TestCase):        #
         #test INSPIRE_arXiv
         def testarX(self):
             """testing arXiv"""
-            from bfe_INSPIRE_arxiv import format
+            from bfe_INSPIRE_arxiv import format_element
             self.bfo=BibFormatObject('37650')
-            string=format(self.bfo)
+            string=format_element(self.bfo)
             print string
             self.assert_(re.search(r'3066',string))
             self.assert_(not re.search(r'CERN',string))
@@ -66,11 +66,11 @@ class TestInspireFormatElements(unittest.TestCase):        #
                     #test INSPIRE_date
         def testDate(self):
             """testing date"""
-            from bfe_INSPIRE_date import format
+            from bfe_INSPIRE_date import format_element
             self.bfo=BibFormatObject('6194')
-            string=format(self.bfo)
+            string=format_element(self.bfo)
             print string
-            string2=format(self.bfo,us="no")
+            string2=format_element(self.bfo,us="no")
             print string2
 #            self.assert_(re.search(r'Jun 1, 1974',string))
 #            self.assert_(re.search(r'01 Jun 1974',string2))
@@ -78,9 +78,9 @@ class TestInspireFormatElements(unittest.TestCase):        #
             #test INSPIRE_links
         def testLinks(self):
             """testing Links"""
-            from bfe_INSPIRE_links import format
+            from bfe_INSPIRE_links import format_element
             self.bfo=BibFormatObject('37650')
-            string= format(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
+            string= format_element(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
             print string
             self.assert_(re.search(r'065201">Journal',string))
             self.assert_(re.search(r'\?bibcode=2004',string))
