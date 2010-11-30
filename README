@@ -1,7 +1,7 @@
 INSPIRE git repository
 ----------------------
 
-INSPIRE sources are to be installed after the CDS Invenio sources.
+INSPIRE sources are to be installed after the Invenio sources.
 
 You can customize some things in config-local.mk, for example on
 Debian GNU/Linux, use:

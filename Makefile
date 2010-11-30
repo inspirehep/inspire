@@ -346,7 +346,7 @@ reset-inspire-useraccess-configuration:
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
-	/opt/cds-invenio/bin/webaccessadmin -u admin -c
+	/opt/invenio/bin/webaccessadmin -u admin -c
 	@echo ">>> Done reset-inspire-useraccess-configuration."
 
 reset-inspire-submission-configuration:

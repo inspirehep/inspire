@@ -3,7 +3,7 @@
 # in your top level directory
 #
 
-PREFIX = /opt/cds-invenio
+PREFIX = /opt/invenio
 
 BINDIR = $(PREFIX)/bin
 ETCDIR = $(PREFIX)/etc

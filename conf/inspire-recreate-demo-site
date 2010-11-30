@@ -2,9 +2,9 @@
 # A simple script to recreate INSPIRE demo site.  Tibor/2010-02-18
 
 # config section:
-CFG_INVENIO_PREFIX=/opt/cds-invenio
+CFG_INVENIO_PREFIX=/opt/invenio
 CFG_INVENIO_USER=www-data
-CFG_INVENIO_SRCDIR=~/private/src/cds-invenio
+CFG_INVENIO_SRCDIR=~/private/src/invenio
 CFG_INSPIRE_SRCDIR=~/private/src/inspire
 
 # sanity check:
