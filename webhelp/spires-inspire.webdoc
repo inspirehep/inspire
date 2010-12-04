@@ -60,9 +60,9 @@
                      <option>author</option>
     </select>
     <input class="formbutton" type="submit" name="action" value="Search" />
-    </form>
-    <p>You can now search on citation count <br />
-    (must be written in this format with no spaces).  </p>
+    </form> </p> <hr />
+    <p>    Can search on eprint type using primarch (primary archive).<br />
+    Logic operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.
     <form action="/search" method="get">
       <input name="p" type="text" value="find a unruh or t cauchy not t problem and primarch gr-qc" size="65" />
       <select name="f7">
@@ -73,6 +73,55 @@
       <input class="formbutton" type="submit" name="action14" value="Search" />
     </form>
      </p>
+<hr />
+<p>Citation searching on individual articles can still be done.
+    <form action="/search" method="get">
+      <input name="p" type="text" value="find c Phys.Rev.Lett.,28,1421 or c arXiv:0711.4556" size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+     </p>
+    <p>As can searching on whole volumes.
+    <form action="/search" method="get">
+      <input name="p" type="text" value='find c "Phys.Rev.Lett.,28*"' size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+     </p>
+<p>Or the entire journal.
+    <form action="/search" method="get">
+      <input name="p" type="text" value='find c "Phys.Rev.Lett.,*"' size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+     </p>
+<p>This holds true for searching on journal articles too (rather than their citations).
+ <form action="/search" method="get">
+      <input name="p" type="text" value='find j "Phys.Rev.Lett.,105*" or j Phys.Lett. and a thomas' size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+      Beware of when to use quotes.
+     </p>
+
+
+
 <hr />
 <p>Direct searching on dates can be done.
     <form action="/search" method="get">
@@ -90,7 +139,19 @@
      find dadd < 2010-10-03 <br />
      find dupd > 1 oct 2010
      </p>
-
+<hr />
+<p>Eprint searching can be done.
+    <form action="/search" method="get">
+      <input name="p" type="text" value="find eprint arxiv:0711.2908 or arxiv:0705.4298 or eprint hep-ph/0504227" size="65" />
+      <select name="f10">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action17" value="Search" />
+    </form>
+     Note that the search term <b>eprint</b> is need before "hep-ph/0504227".
+     </p>
 
 
 </td>
@@ -105,12 +166,15 @@
   <li>topcite 100+  &rArr; cited:200+ <br /> Note: this number can be anything, e.g.
      <br />  cited:357+ or cited:300->3000
   </li>
+  <li>Searching for eprints must include the "arXiv" prefix, e.g. arXiv:0711.4556</li>
   <li>All dates must be in the ISO format <br /> <b>yyyy(-mm(-dd))</b> <br />
 
      e.g. 2003, 2003-06, 2003-06-27 <br />
      <b>or</b> nov 1997, 18 nov 1997 <br />
      find d 199* finds all papers from the 1990s.<br />
      <i>Coming December 2010</i>: dates such as "today" and "next tuesday" should also work.
+  </li>
+<li>Eprint numbers of the form yymm.nnnn <b>must</b> be written as "arXiv:yymm.nnnn"; the old-style hep-ph/yymmnnn do not need "arxiv:".
   </li>
   </ol>
 
@@ -157,7 +221,7 @@
           </form>
         <form action="/search" method="get">
           4.
-          <input name="p" type="text" value="author:witten refersto:author:parke" size="60" id="p3" />
+          <input name="p" type="text" value='author:witten refersto:author:"parke, s j"' size="60" id="p3" />
           <input class="formbutton" type="submit" name="action11" value="Search" />
         </form>
         <form action="/search" method="get">
@@ -188,7 +252,8 @@
 <div align="right"></div>
 
 <p>3. Calculating the h-index</p>
-<p>You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong> from the list of available formats, and hit
+<p>You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong>   from the list of available formats, and hit
+
   <input class="formbutton" type="submit" name="action9" value="Search" />
 
    again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.</p>
@@ -196,6 +261,7 @@
 
   <tr>
     <td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
+
       <input type="hidden" name="ln" value="en" />
       <input size="46" type="text" name="p" value="find af &quot;harvard u.&quot;" />
       <select name="f5">
@@ -216,11 +282,10 @@
   </tr>
 </table>
 
-
 <p>
  If you have questions or comments about these searches or if there is
 anything you would like to see added to this help page,
  contact <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a>
-</p><p> Also see the <a href="search-guide<lang:link/>">_(Search
-    Guide)_</a> for more detailed help on INSPIRE searching.
+</p><p> Also see the <a href="search-guide">Search
+    Guide</a> for more detailed help on INSPIRE searching.
 </p>
