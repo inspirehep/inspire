@@ -68,7 +68,7 @@
         <subfield code="a"><xsl:value-of select="$first" /></subfield>
         <subfield code="2">arXiv</subfield>
       </datafield>
-      <xsl:variable name="kb" select="document('/opt/invenio/etc/bibconvert/config/oaiarXiv2inspire_categories.xml')/mappings"/>
+      <xsl:variable name="kb" select="document('oaiarXiv2inspire_categories.xml')/mappings"/>
       <xsl:for-each select="$kb/category">
         <xsl:if test="./arxiv = $first">
           <datafield tag="650" ind1="1" ind2="7">
@@ -314,7 +314,7 @@
 
         <!-- *** GLOBAL RECORD VARS *** -->
 
-        <!-- Preparing base determination : getting cathegory -->
+        <!-- Preparing base determination : getting category -->
         <xsl:variable name="setspec2">
           <xsl:value-of select="substring-after(./OAI-PMH:header/OAI-PMH:setSpec,':')"/>
         </xsl:variable>
@@ -366,6 +366,7 @@
                 <xsl:if test="./OAI-PMH:header/OAI-PMH:identifier">
                   <datafield tag="035" ind1=" " ind2=" ">
                     <subfield code="9">arXiv</subfield>
+                    <subfield code="a"><xsl:value-of select="./OAI-PMH:header/OAI-PMH:identifier"/></subfield>
                     <subfield code="z"><xsl:value-of select="./OAI-PMH:header/OAI-PMH:identifier"/></subfield>
                   </datafield>
                 </xsl:if>
@@ -589,7 +590,7 @@
                         </xsl:if>
                       </datafield>
 
-                      <!-- Check if peer-reviewed TODO: needs more work 
+                      <!-- Check if peer-reviewed TODO: needs more work
                       <xsl:if test="string-length($jref-title)&gt;0 and string-length($jref-volume)&gt;0">
                         <datafield tag="980" indl="C" ind2="">
                           <subfield code="a">Peer-reviewed</subfield>
@@ -641,7 +642,7 @@
                         </xsl:if>
                       </datafield>
 
-                      <!-- Check if peer-reviewed TODO: needs more work 
+                      <!-- Check if peer-reviewed TODO: needs more work
                       <xsl:if test="string-length($jref-title)&gt;0 and string-length($jref-volume)&gt;0">
                         <datafield tag="980" indl="C" ind2="">
                           <subfield code="a">Peer-reviewed</subfield>
@@ -693,7 +694,7 @@
                         </xsl:if>
                       </datafield>
 
-                      <!-- Check if peer-reviewed TODO: needs more work 
+                      <!-- Check if peer-reviewed TODO: needs more work
                       <xsl:if test="string-length($jref-title)&gt;0 and string-length($jref-volume)&gt;0">
                         <datafield tag="980" indl="C" ind2="">
                           <subfield code="a">Peer-reviewed</subfield>
