@@ -290,9 +290,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_CN', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_TW', 'ne', 100)" | $(BINDIR)/dbexec
 		# now update portalbox value from the announce file:
-	echo -e 'from invenio.dbquery import run_sql;\
-	body = open("webhelp/inspire_announce.html").read();\
-	run_sql("UPDATE portalbox SET body=%s WHERE id=1", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("webhelp/inspire_announce.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=1", (body,))' | $(PYTHON)
 		## sidebar portalbox:
 	echo "INSERT INTO portalbox VALUES (2, '', 'FIXME')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
