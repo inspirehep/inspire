@@ -20,13 +20,49 @@
 <!-- WebDoc-Page-Title: _(Search tips for INSPIRE)_ -->
 <!-- WebDoc-Page-Revision: $Id$ -->
 
+<h5>Search with SPIRES familiar syntax</h5>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+  <td class="tips-lhs">
+      <form action="/search" method="get">
+      <input name="p" type="text" value="find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004" size="60" id="p" />
+    <input class="formbutton" type="submit" name="action" value="Search" />
+    </form>
+</td>
+  <td class="tips-rhs"><p>We have tried to reproduce traditional SPIRES
+  syntax, however, there are subtle differences - many are documented
+  below.  If you find other differences that are bothersome, let us know
+  at <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
+    </td>
 
-<h5><strong>What's New in INSPIRE</strong></h5>
- 1. Google-type Searches
- - Can use any field (author, title, journal, date, page number, affiliation, etc.)
+</tr>
+</table>
+
+<h5>Search with new "Invenio" syntax</h5>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+   <td class="tips-lhs">
+      <form action="/search" method="get">
+      <input name="p" type="text" value="author:hawking affiliation:&quot;cambridge u., damtp&quot; year:2005->2010" size="60" id="p" />
+      <input class="formbutton" type="submit" name="action6" value="Search" />
+      </form>
+      <br />
+<br />
+    </p></td>
+
+  <td class="tips-rhs"><p>Note: Quotation marks around complicated search
+      terms.</p>
+<p>See more about this style
+  in <a href="invenio-search-tips<lang:link/>">_(Invenio Search Tips)_</a></p>
+    </td>
+</tr>
+</table>
+
+
+ <h5> Search like Google</h5>
  <table width="100%" border="1" cellpadding="10" cellspacing="0">
 <tr>
-<td width="50%" valign="top" style="white-space: nowrap">
+<td class="tips-lhs">
     <form action="/search" method="get">
       <input name="p" type="text" value="thomas crewther quark 2002" size="40" />
     <select name="f"><option value="">any field</option>
@@ -35,48 +71,25 @@
     </select>
     <input class="formbutton" type="submit" name="action" value="Search" />
     </form></td>
-<td width="50%" valign="top">
-  <p>Compared with traditional SPIRES search:<br />
+<td class="tips-rhs">
+<p>Can use any field (author, title, journal, date, page number, affiliation, etc.)</p>
+ <p>Similar to traditional SPIRES search:<br />
     <br />
     <em>find a thomas and a crewther and t quark and date 2002</em><em><br />
     </em></p>  </td>
 </tr>
 </table>
 
- <br />
- 2.
- Precision SPIRES/INSPIRE Searching
- <br />
- (We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences)
+
+<h5>How do I specify journals?</h5>
  <table width="100%" border="1" cellpadding="10" cellspacing="0">
-<tr>
-<td width="54%" valign="top" style="white-space: nowrap">
-  <p>You can now search on citation count
-    (must be written in this format with no spaces).
-    <form action="/search" method="get">
-    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200+" size="65" />
-    <select name="f"><option value="">any field</option>
-                     <option>title</option>
-                     <option>author</option>
-    </select>
-    <input class="formbutton" type="submit" name="action" value="Search" />
-    </form> </p> <hr />
-    <p>    Can search on eprint type using primarch (primary archive).<br />
-    Logic operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.
-    <form action="/search" method="get">
-      <input name="p" type="text" value="find a unruh or t cauchy not t problem and primarch gr-qc" size="65" />
-      <select name="f7">
-        <option value="">any field</option>
-        <option>title</option>
-        <option>author</option>
-      </select>
-      <input class="formbutton" type="submit" name="action14" value="Search" />
-    </form>
-     </p>
-<hr />
-<p>Citation searching on individual articles can still be done.
-    <form action="/search" method="get">
-      <input name="p" type="text" value="find c Phys.Rev.Lett.,28,1421 or c arXiv:0711.4556" size="65" />
+
+
+
+
+<td class="tips-lhs">
+ <form action="/search" method="get">
+      <input name="p" type="text" value='find j phys.rev.lett.,62,1825' size="65" />
       <select name="f8">
         <option value="">any field</option>
         <option>title</option>
@@ -85,29 +98,19 @@
       <input class="formbutton" type="submit" name="action15" value="Search" />
     </form>
      </p>
-    <p>As can searching on whole volumes.
-    <form action="/search" method="get">
-      <input name="p" type="text" value='find c "Phys.Rev.Lett.,28*"' size="65" />
-      <select name="f8">
-        <option value="">any field</option>
-        <option>title</option>
-        <option>author</option>
-      </select>
-      <input class="formbutton" type="submit" name="action15" value="Search" />
-    </form>
-     </p>
-<p>Or the entire journal.
-    <form action="/search" method="get">
-      <input name="p" type="text" value='find c "Phys.Rev.Lett.,*"' size="65" />
-      <select name="f8">
-        <option value="">any field</option>
-        <option>title</option>
-        <option>author</option>
-      </select>
-      <input class="formbutton" type="submit" name="action15" value="Search" />
-    </form>
-     </p>
-<p>This holds true for searching on journal articles too (rather than their citations).
+</td>
+<td class="tips-rhs">
+<p>j prlta (or prl) &rArr; j phys.rev.lett. <br />
+     j phlta (or pl) &rArr; j phys.lett. <br />
+     j phrva  &rArr; j phys.rev. <br />
+     similar for other journals (JHEP, Nucl.Phys., etc) <br />
+     (No spaces, include periods)</em>
+</td>
+</tr>
+
+
+
+<td class="tips-lhs">
  <form action="/search" method="get">
       <input name="p" type="text" value='find j "Phys.Rev.Lett.,105*" or j Phys.Lett. and a thomas' size="65" />
       <select name="f8">
@@ -117,13 +120,22 @@
       </select>
       <input class="formbutton" type="submit" name="action15" value="Search" />
     </form>
-      Beware of when to use quotes.
      </p>
+</td>
+<td class="tips-rhs">
+<p>
+Using quotes can help when using truncation.
+</p>
+</td>
+</tr>
 
+</table>
 
-
-<hr />
-<p>Direct searching on dates can be done.
+<h5>How do I specify dates?</h5>
+ <table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td class="tips-lhs">
+<p>
     <form action="/search" method="get">
 
       <input name="p" type="text" value="find d 1997-11-18" size="65" />
@@ -135,12 +147,29 @@
       <input class="formbutton" type="submit" name="action16" value="Search" />
 
     </form>
-     There are also indexes for date-added (dadd) and date-updated (dupd) <br />
+     </p>
+</td>
+
+<td class="tips-rhs">
+<p>All dates must be in the ISO format <br /> <b>yyyy(-mm(-dd))</b> <br />
+     e.g. 2003, 2003-06, 2003-06-27 <br />
+     <b>or</b> nov 1997, 18 nov 1997 <br />
+     find d 199* finds all papers from the 1990s.<br />
+     <i>Coming Jan. 2011</i>: dates such as "today" and "next tuesday" should also work.
+</p>
+<p>     There are also indexes for date-added (dadd) and date-updated (dupd) <br />
      find dadd < 2010-10-03 <br />
      find dupd > 1 oct 2010
-     </p>
-<hr />
-<p>Eprint searching can be done.
+</p>
+
+  </td>
+</tr>
+</table>
+
+<h5>How do I find eprints?</h5>
+ <table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td class="tips-lhs">
     <form action="/search" method="get">
       <input name="p" type="text" value="find eprint arxiv:0711.2908 or arxiv:0705.4298 or eprint hep-ph/0504227" size="65" />
       <select name="f10">
@@ -150,117 +179,181 @@
       </select>
       <input class="formbutton" type="submit" name="action17" value="Search" />
     </form>
-     Note that the search term <b>eprint</b> is need before "hep-ph/0504227".
-     </p>
-
-
 </td>
-<td width="46%" valign="top">
-  <p>Note: In going from SPIRES search to INSPIRE</p>
-  <ol>
-  <li>Truncation: quark# &rArr; quark*</li>
-  <li>j prlta (or prl) &rArr; j phys.rev.lett. <br />
-     j phlta (or pl) &rArr; j phys.lett. <br />
 
-     (No spaces, include periods)</em></li>
-  <li>topcite 100+  &rArr; cited:200+ <br /> Note: this number can be anything, e.g.
-     <br />  cited:357+ or cited:300->3000
-  </li>
-  <li>Searching for eprints must include the "arXiv" prefix, e.g. arXiv:0711.4556</li>
-  <li>All dates must be in the ISO format <br /> <b>yyyy(-mm(-dd))</b> <br />
 
-     e.g. 2003, 2003-06, 2003-06-27 <br />
-     <b>or</b> nov 1997, 18 nov 1997 <br />
-     find d 199* finds all papers from the 1990s.<br />
-     <i>Coming December 2010</i>: dates such as "today" and "next tuesday" should also work.
-  </li>
-<li>Eprint numbers of the form yymm.nnnn <b>must</b> be written as "arXiv:yymm.nnnn"; the old-style hep-ph/yymmnnn do not need "arxiv:".
-  </li>
-  </ol>
-
-  </td>
-</tr>
-<tr>
-  <td valign="top" style="white-space: nowrap">
-    <p>Traditional Style<br />
-      <form action="/search" method="get">
-      <input name="p" type="text" value="find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004" size="60" id="p" />
-
-    <input class="formbutton" type="submit" name="action" value="Search" />
-    </form>
-    </p>
-    <p>New Alternative Style<br />
-      <form action="/search" method="get">
-      <input name="p" type="text" value="author:hawking affiliation:&quot;cambridge u., damtp&quot; year:2005->2010" size="60" id="p" />
-      <input class="formbutton" type="submit" name="action6" value="Search" />
-      </form>
-      <br />
-<br />
-    </p></td>
-  <td valign="top"><p>Note: Quotation marks around complicated search terms.</p>
+   <td class="tips-rhs">
+     <p>Note that the search term <b>eprint</b> is need before "hep-ph/0504227".</p>
+     <p>Searching for eprints must include the "arXiv" prefix, e.g. arXiv:0711.4556</p>
+     <p>Eprint numbers of the form yymm.nnnn <b>must</b> be written as "arXiv:yymm.nnnn"; the old-style hep-ph/yymmnnn do not need "arxiv:".</p>
     </td>
+ </tr>
+
+<tr>
+<td class="tips-lhs">
+    <form action="/search" method="get">
+      <input name="p" type="text" value="find a unruh or t cauchy not t problem and primarch gr-qc" size="65" />
+      <select name="f7">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action14" value="Search" />
+    </form>
+   </td>
+   <td class="tips-rhs">
+    <p>You can search on eprint type using primarch (primary archive).</p>
+    <p>Logical operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.</p>
+   </td>
+ </tr>
+</table>
+
+<h5>How do I search for citations?</h5>
+ <table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td class="tips-lhs">
+<p>You can now search on citation count directly</p>
+    <form action="/search" method="get">
+    <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark* cited:200+" size="65" />
+    <select name="f"><option value="">any field</option>
+                     <option>title</option>
+                     <option>author</option>
+    </select>
+    <input class="formbutton" type="submit" name="action" value="Search" />
+    </form> </p>
+</td>
+<td class="tips-rhs">
+<p>Must be written in this format with no spaces</p>
+<p> Truncation: quark# &rArr; quark* </p>
+  <p>Topcite searching works:  topcite 100+  &rArr; cited:200+ <br /> Note: this number can be anything, e.g.
+     <br />  cited:357+ or cited:300->3000
+  </p>
+</ul>
+</td>
 </tr>
 <tr>
-  <td valign="top" style="white-space: nowrap">
-    <p>Cited By<br />
+<td class="tips-lhs">
+<p>Citation searching on individual articles can still be done.
+    <form action="/search" method="get">
+      <input name="p" type="text" value="find c Phys.Rev.Lett.,28,1421 or c arXiv:0711.4556" size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+     </p>
+</td>
+<td class="tips-rhs">
+</td>
+</tr>
+
+<tr>
+<td class="tips-lhs">
+<p>Or the entire journal.
+    <form action="/search" method="get">
+      <input name="p" type="text" value='find c "Phys.Rev.Lett.,*"' size="65" />
+      <select name="f8">
+        <option value="">any field</option>
+        <option>title</option>
+        <option>author</option>
+      </select>
+      <input class="formbutton" type="submit" name="action15" value="Search" />
+    </form>
+     </p>
+</td>
+<td class="tips-rhs">
+But for this you might prefer the refers to and cited by operators below...
+</td>
+</tr>
+</table>
+
+
+<h5>New Citation Operators: Articles Cited By Any Other Set of Articles</h5>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+  <td class="tips-lhs">
         <form action="/search" method="get">
-        1.
         <input name="p" type="text" value="citedby:hep-th/9711200 author:cvetic" size="60" id="p" />
         <input class="formbutton" type="submit" name="action7" value="Search" />
         </form>
+</td>
+  <td class="tips-rhs"><p>The articles by Cvetic cited in eprint hep-th/9711200</p>
+</td>
+</tr>
+<tr>
+<td class="tips-lhs">
     <form action="/search" method="get">
-      2.
       <input name="p" type="text" value="author:parke citedby:author:witten" size="60" id="p2" />
       <input class="formbutton" type="submit" name="action10" value="Search" />
     </form>
-    <p>Refers To<br />
+   </td>
+  <td class="tips-rhs"><p>Parke papers cited by Witten</p>
+</td>
+</tr>
+</table>
+
+<h5>New Citation operators: Articles that Refer To Any Other Set of Articles</h5>
+<table width="100%" border="1" cellpadding="10" cellspacing="0">
+<tr>
+<td class="tips-lhs">
     <form action="/search" method="get">
-        3.
         <input name="p" type="text" value="refersto:hep-th/9711200 title:nucl*" size="60" id="p" />
         <input class="formbutton" type="submit" name="action8" value="Search" />
           </form>
-        <form action="/search" method="get">
-          4.
+</td>
+  <td class="tips-rhs"> <p>Papers citing hep-th/9711200 with nucl* in the title (nuclear, nucleus, nucleon, ...)</p>
+</td>
+</tr>
+
+
+<tr>
+<td class="tips-lhs">
+ <form action="/search" method="get">
           <input name="p" type="text" value='author:witten refersto:author:"parke, s j"' size="60" id="p3" />
           <input class="formbutton" type="submit" name="action11" value="Search" />
         </form>
+</td>
+  <td class="tips-rhs"><p>Witten papers citing "Parke, S.J."</p>
+
+</td>
+</tr>
+
+<tr>
+<td class="tips-lhs">
         <form action="/search" method="get">
-          5.
           <input name="p" type="text" value="refersto:author:parke or refersto:author:lykken author:witten"
               size="60" id="p3" />
           <input class="formbutton" type="submit" name="action13" value="Search" />
         </form>
+</td>
+  <td class="tips-rhs"><p>Papers by Witten citing either Lykken or Parke
+  (Boolean left-to-right, implied "and" before "author:witten")</p>
+  </td>
+</tr>
+
+<tr>
+<td class="tips-lhs">
         <form action="/search" method="get">
-          6.
           <input name="p" type="text" value="affiliation:&quot;oxford u.&quot; refersto:title:muon*" size="60" id="p4" />
           <input class="formbutton" type="submit" name="action12" value="Search" />
         </form>
-        <br />
-        <br />
-    </p></td>
-  <td valign="top"><p>1. The articles by Cvetic cited in eprint hep-th/9711200</p>
-    <p>2. Parke papers cited by Witten</p>
-    <p>3. Papers citing hep-th/9711200 with nucl* in the title (nuclear, nucleus, nucleon, ...)</p>
-    <p>4. Witten papers citing "Parke, S.J."</p>
-    <p>5. Papers by Witten citing either Lykken or Parke (Boolean left-to-right,
-       implied "and" before "author:witten")</p>
+</td>
+  <td class="tips-rhs"><p>Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
+</td>
+</tr>
 
-    <p>6. Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
   </td>
 </tr>
 </table>
-<div align="right"></div>
 
-<p>3. Calculating the h-index</p>
-<p>You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong>   from the list of available formats, and hit
 
-  <input class="formbutton" type="submit" name="action9" value="Search" />
-
-   again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.</p>
+<h5>Calculating the h-index</h5>
 <table width="100%" border="1" cellpadding="10" cellspacing="0">
-
-  <tr>
-    <td width="50%" valign="top" style="white-space: nowrap"><form action="/search" method="get">
+<tr>
+<td class="tips-lhs">
+<form action="/search" method="get">
 
       <input type="hidden" name="ln" value="en" />
       <input size="46" type="text" name="p" value="find af &quot;harvard u.&quot;" />
@@ -270,15 +363,19 @@
         <option>author</option>
       </select>
       <input class="formbutton" type="submit" name="action5" value="Search" />
-    </form></td>
-    <td width="50%" valign="top"><p>Will give you <a href="/search?ln=en&amp;p=find+af+&quot;harvard+u.&quot;&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hcs">this result</a>.<br />
+    </form>
+
+    <p>This will give you <a href="/search?ln=en&amp;p=find+af+&quot;harvard+u.&quot;&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hcs">this result</a>.<br />
     </p>
       </td>
-  </tr>
 
-  <tr>
-    <td style="white-space: nowrap" height="2"></td>
-    <td valign="top"></td>
+<td class="tips-rhs">
+ You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong>   from the list of available formats, and hit
+
+  <input class="formbutton" type="submit" name="action9" value="Search" />
+
+   again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.</p>
+
   </tr>
 </table>
 

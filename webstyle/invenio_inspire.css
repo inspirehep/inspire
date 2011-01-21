@@ -401,15 +401,22 @@ a.navtrail:hover {
    background: #fff;
    padding: 0px;
    margin: 0px;
-   width: 73%;
 }
 .pagebodystriperight {
    color: #000;
    background: #fff;
    font-size: x-small;
-   width: 25%;
+   width: 15%;
    float: right;
 }
+
+.home .pagebodystripemiddle {
+   width: 73%;
+}
+.home .pagebodystriperight {
+   width: 25%;
+}
+
 .pageboxlefttop {
    color: #000;
    background: transparent;
@@ -2559,7 +2566,8 @@ padding:0;
 
 #announce{
     width: 70%;
-    margin: 1% 15% 5px 15%;
+  /*  margin: 1% 15% 5px 15%;*/
+    margin: 20px;
     border: 2px solid #ccc;
     padding: 5px;
     font-size: small;
@@ -2627,5 +2635,13 @@ padding:0;
     margin-top:10px;
     padding:5px;
 }
-
+.tips-lhs{
+    width:55%;
+    white-space:nowrap;
+    valign:top;
+}
+.tips-rhs{
+    width:45%;
+    valign:top;
+}
 /* end of inspire.css */

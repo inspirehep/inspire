@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# A simple script to test whether the feedparser library is installed, and 
+# A simple script to test whether the feedparser library is installed, and
 # set our exit value according to the unix standard.
 import sys
 try:
