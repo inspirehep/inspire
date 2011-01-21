@@ -55,7 +55,9 @@ def format_element(bfo, style='eu', markup = 'html'):
 
     if journal_source:
         if not (volume or number or pages or doi):
-            out += " Submitted to: "
+            out += "Submitted to: "
+            if markup.lower() == 'latex':
+                out = '%' + out
             out += cgi.escape(journal_source)
 
         else:

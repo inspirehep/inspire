@@ -18,6 +18,7 @@ name_last_first="no" link_extension="yes"/>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hx">BibTeX</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxu">LaTeX(US)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxe">LaTeX(EU)</a>
+ | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxh">Harvmac</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/xe">EndNote</a>
 </li>
 <BFE_INSPIRE_LINKS prefix='<li>' suffix='</li>' separator='</li><li>'/>

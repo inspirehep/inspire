@@ -212,13 +212,15 @@ clear:right;
 
 }
 
-.navbar a:visited{
+.navbar a:visited {
     color:#FFF;
 }
-.navbar a:active{
+
+.navbar a:active {
      color:#FFF;
 }
-.navbar a:hover{
+
+.navbar a:hover {
     border:1px solid #999;
     border-bottom: 1px solid #fc9;
     margin:0em;
@@ -229,8 +231,6 @@ clear:right;
 	/*text-decoration:underline;*/
 }
 
-
-
 .headerbox {
    color: #000;
    background: transparent;
@@ -239,7 +239,7 @@ clear:right;
    margin-top: 0px;
    margin-bottom: 0px;
    border-collapse: collapse;
-   border-bottom: 2px solid #0066cc;
+   /* border-bottom: 2px solid #0066cc; */
 }
 .headerboxbody {
    color: #000;
@@ -390,7 +390,8 @@ a.navtrail:hover {
    color: #000;
    background: #fff;
    font-size: x-small;
-   width: 120px;
+   /* width: 120px; */
+   width: 0px;
    margin: 0px;
    padding-left: 10px;
    float: left;
@@ -408,6 +409,14 @@ a.navtrail:hover {
    width: 15%;
    float: right;
 }
+
+.home .pagebodystripemiddle {
+   width: 73%;
+}
+.home .pagebodystriperight {
+   width: 25%;
+}
+
 .pageboxlefttop {
    color: #000;
    background: transparent;
@@ -515,7 +524,7 @@ a.footer:hover {
    color: #000;
    background: #fff;
    padding: 1px;
-   margin: 5px 0px 5px 0px;
+   margin: 5px 0px 20px 0px;
    border-collapse: collapse;
    border-top: 1px solid #fff;
 }
@@ -622,7 +631,8 @@ a.footer:hover {
 .portalbox {
    color: #000;
    background: #fff;
-   margin: 0px 0px 15px 0px;
+   /* margin: 0px 0px 15px 0px; */
+   margin: 5px 0px 5px 0px;
    border-collapse: collapse;
    border-top: 1px solid #abb;
    font-size: x-small;
@@ -640,8 +650,14 @@ a.footer:hover {
 .portalboxbody {
    color: #000;
    background: #fff;
-   padding: 2px;
+   /* padding: 2px; */
+   padding: 3px;
    font-size: x-small;
+}
+.bugboxtd {
+   vertical-align: top;
+   text-align: left;
+   border-width: 0px;
 }
 .admin_wvar, .admin_w200, .admin_wvar_nomargin {
    color: #000;
@@ -2535,17 +2551,26 @@ padding:0;
 }
 
 
+.portalboxbody ul.hanging {
+   padding-left: 15px;
+   list-style-type:none;
+}
+
+.portalboxbody li.hanging {
+   text-indent: -15px;
+}
 
 .portalboxbody a {
   text-decoration:none;
 }
 
 #announce{
-   width: 50%;
-   margin: 20px;
-   border: 2px solid #ccc;
-   padding: 5px;
-   font-size: small;
+    width: 70%;
+  /*  margin: 1% 15% 5px 15%;*/
+    margin: 20px;
+    border: 2px solid #ccc;
+    padding: 5px;
+    font-size: small;
 }
 
 
@@ -2557,30 +2582,46 @@ padding:0;
 
 
 
-/*see also .pagebodystripright*/
-#sidebar{
+#sidebar {
+    /*see also .pagebodystripright*/
     font-size: small;
-    background-color:#FC9;
-    color:#666;
-    border:1px solid #333;
-    padding:2px;
-    margin-top:10px;
-    margin-bottom:10px;
-
+    color:#000;
 }
 
+.sidebar_linktable {
+    background-color:#FC9;
+    border: 2px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2px;
+    width: 100%;
+}
 
-#sidebar a{
+.sidebar_bugboxtable {
+    border: 2px solid #ccc;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 2px;
+    width: 100%;
+}
+
+#sidebar img {
+    border: 0pt none;
+}
+
+#sidebar a {
    color:#069;
    text-decoration:none;
 }
-#sidebar a:visited{
+
+#sidebar a:visited {
    color:#069;
 }
-#sidebar a:active{
+
+#sidebar a:active {
    color:#333;
 }
-#sidebar a:hover{
+#sidebar a:hover {
    color:#fff;
    background-color:#69c;
    text-decoration:underline;
@@ -2594,5 +2635,13 @@ padding:0;
     margin-top:10px;
     padding:5px;
 }
-
+.tips-lhs{
+    width:55%;
+    white-space:nowrap;
+    valign:top;
+}
+.tips-rhs{
+    width:45%;
+    valign:top;
+}
 /* end of inspire.css */
