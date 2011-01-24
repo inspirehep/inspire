@@ -309,11 +309,11 @@ def format_element(bfo, width="50"):
     import invenio.bibformat_elements.bfe_INSPIRE_arxiv as bfe_arxiv
 
     eprints = bfe_arxiv.get_arxiv(bfo, category = "no")
-    eprint = eprints[0]
-    if eprint.upper().startswith('ARXIV:'):
-        eprint = eprint[6:]
-
     if eprints:
+        eprint = eprints[0]
+        if eprint.upper().startswith('ARXIV:'):
+            eprint = eprint[6:]
+
         out += format_bibtex_field("eprint",
                                    eprint,
                                    name_width,
