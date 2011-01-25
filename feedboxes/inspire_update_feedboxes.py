@@ -28,8 +28,7 @@ FEED_PRE = { 2: """
    <td>
     <h3>HEP</h3>
      <ul>
-      <li><a href="/help/spires-inspire">Search Quick Start</a></li>
-      <li><a href="/help/spires-inspire">Search Guide</a></li>
+      <li><a href="/help/search-tips">Search Tips</a></li>
       <li><a href="/help/">INSPIRE Help</a></li>
       <li><a href="/help/corrections">Corrections</a></li>
       <li><a href="/help/additions">Additions</a></li>
