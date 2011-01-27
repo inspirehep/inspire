@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -154,7 +154,10 @@ def format_element(bfo, width="50"):
 
 
     #Print collaboration
-    collaborations = bfo.fields("710__g")
+    collaborations = []
+    for collaboration in bfo.fields("710__g"):
+        if collaboration not in collaborations:
+            collaborations.append(collaboration)
     out += format_bibtex_field("collaboration",
                                ", ".join(collaborations),
                                name_width,
