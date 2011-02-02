@@ -11,7 +11,7 @@ test:
 	@echo "Done."
 
 install: test
-	$(INSTALL) -m 664 $(SCRIPTS) $(BINDIR)
+	$(INSTALL) -m 755 $(SCRIPTS) $(BINDIR)
 
 clean:
 	@rm -f *.orig *~
