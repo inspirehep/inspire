@@ -11,7 +11,7 @@ test:
 	@echo "Done."
 
 install: test
-	$(INSTALL) -m 664 $(SCRIPTS) $(BINDIR)/img
+	$(INSTALL) -m 664 $(SCRIPTS) $(BINDIR)
 
 clean:
 	@rm -f *.orig *~

@@ -313,7 +313,7 @@ reset-inspire-portalbox-configuration:
 		# now update portalbox value with placeholder text
 	echo "UPDATE portalbox SET body=' ' WHERE id=2"|$(BINDIR)/dbexec
 		## and now update portalbox values with RSS feed material
-	python ./feedboxes/inspire_update_feedboxes.py -d
+	$(PYTHON) ./feedboxes/inspire_update_feedboxes.py -d
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:
