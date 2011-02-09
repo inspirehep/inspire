@@ -78,6 +78,7 @@ def format_element(bfo, limit, separator='; ',
 
     _ = gettext_set_language(bfo.lang)    # load the right message language
 
+    bibrec_id = bfo.control_field("001")
     authors = []
     authors = bfo.fields('100__', repeatable_subfields_p=True)
     authors.extend(bfo.fields('700__', repeatable_subfields_p=True))
@@ -147,8 +148,9 @@ def format_element(bfo, limit, separator='; ',
                 author['display'] = '<a class="authorlink" href="' + \
                                     CFG_SITE_URL + \
                                     '/author/'+ quote(author['a']) + \
-                                    '?ln='+ bfo.lang + \
-                                    '">'+escape(author['display'])+'</a>' + \
+                                    '?recid=' + bibrec_id + \
+                                    '&ln='+ bfo.lang + \
+                                    '">' + escape(author['display'])+'</a>' + \
                                     id_link
 
         if print_affiliations == "yes":
