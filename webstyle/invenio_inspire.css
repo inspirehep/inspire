@@ -2635,13 +2635,29 @@ padding:0;
     margin-top:10px;
     padding:5px;
 }
-.tips-lhs{
-    width:55%;
-    white-space:nowrap;
-    valign:top;
+
+table.tips {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+    padding: 0px
+    margin: 0px;
+    border: 0px solid #ccc;
 }
-.tips-rhs{
-    width:45%;
-    valign:top;
+td.tips-lhs {
+    border: 1px solid #ccc;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 2px;
+    width: 55%;
 }
+td.tips-rhs {
+    border: 1px solid #ccc;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 2px;
+    width: 45%;
+}
+
+
 /* end of inspire.css */
