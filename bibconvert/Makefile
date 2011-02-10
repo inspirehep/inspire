@@ -5,7 +5,7 @@ SMALL_BASE = SPIRES_small_sample
 SMALL_URL = http://cdsware.cern.ch/download/invenio-demo-site-files/${SMALL_BASE}.xml.gz
 LARGE_PATH = /afs/slac.stanford.edu/public/groups/library/spires/inspire/test
 LARGE_PATTERN = ????_test_set.xml
-XSLFILES = SPIRES2MARC.xsl
+XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml
 TEST_TARGETS = test-large-with-xmllint test-large-with-xmlmarclint
 
 # main targets:
