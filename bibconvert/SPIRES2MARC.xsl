@@ -317,6 +317,18 @@
 		</xsl:if>
 	      </datafield>
 	      <datafield tag="035" ind1=" " ind2=" ">
+		<subfield code="a">
+		  <xsl:text>oai:arXiv.org:</xsl:text>
+		  <xsl:choose>
+		    <xsl:when test="contains(./bull, ':')">
+			<xsl:value-of select="normalize-space(substring-after(./bull,':'))"
+				      />
+		    </xsl:when>
+		    <xsl:otherwise>
+		      <xsl:value-of select="normalize-space(./bull)" />
+		    </xsl:otherwise>
+		  </xsl:choose>
+		</subfield>
 		<subfield code="z">
 		  <xsl:text>oai:arXiv.org:</xsl:text>
 		  <xsl:choose>
