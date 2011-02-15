@@ -38,7 +38,7 @@ def format_element(bfo,harvmac="FALSE"):
     if harvmac:
         #split the texkey brooks:2010zza to be brooksZZA
         var1 = key.split(':')
-        for i in range(0,9):
+        for i in range(0,10):
            var1[1] = var1[1].replace(str(i),'')
         key = var1[0] + var1[1].upper()
     return key

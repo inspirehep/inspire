@@ -4,7 +4,7 @@
 <pre>
 %\cite{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
 \bibitem{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
-  <BFE_INSPIRE_AUTHORS limit='3' separator=', ' extension=" {\it et al.}"
+  <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}"
   name_last_first="no" print_links="no" markup='latex' suffix="," />
   <BFE_CERN_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" />
   <BFE_INSPIRE_PUBLI_INFO style="eu" markup="latex" suffix="."/>
