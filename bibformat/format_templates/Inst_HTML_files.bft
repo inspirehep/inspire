@@ -1,0 +1,13 @@
+<name>INST HTML files</name>
+<description>Outputs the available files for an Inst</description>
+
+
+
+<ul class="detailedrecordfiles"><li>_(Website)_:
+<BFE_URL prefix="" suffix="" default=" No URL available" escape="" style="" separator="; "/>
+</li>
+<li>_(Records in HEP)_:
+<BFE_BFO_RECCNT tag="110__u"  fvalue="affiliation" prefix="" suffix="" default=" None" escape=""
+/>
+</li>
+</ul>

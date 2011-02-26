@@ -1,0 +1,20 @@
+<name>Inst HTML Brief</name>
+<description>Default HTML brief format for Institutions</description>
+<!C-START REC 11.Brief--!>
+<div class="record_body"><table width="100%"><tr><td width="70%">
+<BFE_FILTER_FIELD prefix="<b>" suffix="</b>" default="" escape=""
+extension="" instances_separator=" & " filter_value=""
+subfields_separator=" " tag="110u" limit="" filter_subcode=""/> </td><td
+width="30%">
+<BFE_BFO_RECCNT prefix="" suffix=""  fvalue="affiliation" tag="110__u"/> </td></tr></table>
+
+
+<table><tr><td>
+<BFE_INSPIRE_INST_ADDRESS  separator=", "/> <br>
+
+
+<BFE_URL prefix="" suffix="" default="" escape="" style="" separator="; "/>
+
+<br></td></tr></table>
+&nbsp
+</div>

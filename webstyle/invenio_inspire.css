@@ -207,11 +207,48 @@ clear:right;
     border-bottom: 1px solid #fc9;
     margin:0em;
     padding:8px 6px 5px 6px;
-    background-color:#Fc9;
     background-color:#FC9;
     color:#69C;
-	/*text-decoration:underline;*/
+
 }
+
+.HEP a#nav-hep{
+    border:1px solid #999;
+    border-bottom: 1px solid #fc9;
+    margin:0em;
+    padding:8px 6px 5px 6px;
+    background-color:#FC9;
+    color:#69C;
+}
+.HEP a:hover#nav-hep{
+   text-decoration: underline;
+}
+
+.help a#nav-help{
+    border:1px solid #999;
+    border-bottom: 1px solid #fc9;
+    margin:0em;
+    padding:8px 6px 5px 6px;
+    background-color:#FC9;
+    color:#69C;
+}
+.help a:hover#nav-help{
+   text-decoration: underline;
+}
+
+.Institutions  a#nav-inst{
+    border:1px solid #999;
+    border-bottom: 1px solid #fc9;
+    margin:0em;
+    padding:8px 6px 5px 6px;
+    background-color:#FC9;
+    color:#69C;
+}
+
+.Institutions a:hover#nav-inst{
+   text-decoration: underline;
+}
+
 
 .headerbox {
    color: #000;
@@ -384,10 +421,10 @@ a.navtrail:hover {
    float: right;
 }
 
-.home .pagebodystripemiddle {
+.pagebodystripemiddle {
    width: 73%;
 }
-.home .pagebodystriperight {
+.pagebodystriperight {
    width: 25%;
 }
 
@@ -2268,6 +2305,20 @@ ul.detailedrecordactions{
    margin:0.05em;
 }
 .detailedrecordactions{
+   text-decoration:none;
+   color:#555;
+   font-weight:700;
+   font-size:small;
+}
+
+/* Actions in mini-panel of detailed record view*/
+ul.detailedrecordfiles{
+   list-style-image: url(arrow_link-icon-15x11-right.gif) ;
+   padding-left: 5em;
+   text-align:left;
+   margin:0.05em;
+}
+.detailedrecordfiles{
    text-decoration:none;
    color:#555;
    font-weight:700;

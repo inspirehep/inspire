@@ -1,19 +1,24 @@
 include ../config.mk
 -include ../config-local.mk
 
+
+FTP_LOC = ftp://ftp.slac.stanford.edu/groups/library/spires/inspire/
+
 SMALL_BASE = hep_test_recs
+SMALL_URL = ${FTP_LOC}testset/${SMALL_BASE}.xml
+MARC_URL = ${FTP_LOC}testset/${SMALL_BASE}.marcxml
+
 INST_BASE = inst_test_recs
-SMALL_LOC = http://www.slac.stanford.edu/spires/inspire_test/testset/
-SMALL_URL = ${SMALL_LOC}/${SMALL_BASE}.xml
-INST_URL = ${SMALL_LOC}/${INST_BASE}.xml
-MARC_URL = ${SMALL_LOC}/${SMALL_BASE}.marcxml
-INST_MARC_URL = ${SMALL_LOC}/${INST_BASE}.marcxml
+INST_URL = ${FTP_LOC}testset/${INST_BASE}.xml
+INST_MARC_URL = ${FTP_LOC}testset/${INST_BASE}.marcxml
+
+FULL_INST_BASE = inst_recs
+FULL_INST_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.xml
+FULL_INST_MARC_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.marcxml
 
 
-LARGE_PATH = /afs/slac.stanford.edu/public/groups/library/spires/inspire/test
-LARGE_PATTERN = ????_test_set.xml
-XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml
-TEST_TARGETS = test-large-with-xmllint test-large-with-xmlmarclint
+XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml inst2marc.xsl conf2marc.xsl
+TEST_TARGETS = load-small-sample-of-records
 
 # main targets:
 
@@ -24,49 +29,31 @@ test: ${TEST_TARGETS}
 	@echo "Done."
 
 clean:
-	@rm -f ${LARGE_PATTERN} ${LARGE_PATTERN}.x ${LARGE_PATTERN}.bk \
-		   ${LARGE_PATTERN}.marcxml SPIRES_small_sample.xml.gz \
-		   SPIRES_small_sample.xml SPIRES_small_sample.marcxml
+	@rm -f ${SMALL_BASE}.*xml ${INST_BASE}.*xml ${FULL_INST_BASE}.*xml
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 
 convert-small-sample-of-records: get-small convert-small
-convert-large-sample-of-records: get-large clean-large convert-large
 load-small-sample-of-records: get-small convert-small upload-small
-load-large-sample-of-records: get-large clean-large convert-large upload-large
-#load-small-sample-of-records: get-small convert-small supload-small
 
 # helper targets:
 
 get-small:
 	@echo "* Downloading the file please be patient..."
+	rm -f $(SMALL_BASE).xml
 	wget $(SMALL_URL)
 	@echo "* Done.  Please run 'make convert-small' now."
 
 get-small-marc:
 	@echo "* Downloading the file please be patient..."
+	rm -f $(SMALL_BASE).marcxml
 	wget $(MARC_URL)
 	@echo "* Done.  Please run 'make upload-small' now."
 
-get-inst:
-	@echo "* Downloading the file please be patient..."
-	wget $(INST_URL)
-	@echo "* Done.  Please run 'make convert-inst' now."
-
-get-inst-marc:
-	@echo "* Downloading the file please be patient..."
-	wget $(INST_MARC_URL)
-	@echo "* Done.  Please run 'make upload-inst' now."
-
-get-large:
-	@echo -n "* Copying XML files from AFS space, please be patient..."
-	@cp ${LARGE_PATH}/${LARGE_PATTERN} .
-	@echo " done."
-
-clean-large:
+clean-small:
 	@echo "* Removing non-ascii chars in large file, please be patient..."
-	@for file in `/bin/ls ${LARGE_PATTERN}`; do \
+	@for file in `/bin/ls ${SMALL_BASE}.xml`; do \
 		perl -i.bk -pe 's/[^[:ascii:]]//g;' $${file} ;\
 		cat $${file} | tr -d "\000-\011" | tr -d "\013-\014"| tr -d "\016-\037" > $${file}.x ;\
 		mv  $${file}.x $${file} ;\
@@ -80,55 +67,32 @@ convert-small:
 	@echo -n " done."
 	@echo "Please run 'make upload-small' now."
 
-convert-inst:
-	@echo -n "* Institution conversion currently broken.  Use 'make get-inst-marc' instead."
-#	@echo -n "* Converting small SPIRES record sample..."
-#	$(BINDIR)/bibconvert -c `pwd`/INST2MARC.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
-#	@echo -n " done."
-#	@echo "Please run 'make upload-small' now."
-
-
-
-convert-large:
-	@echo "* Converting split files, please be patient..."
-	@for file in `/bin/ls ${LARGE_PATTERN}`; do \
-	   echo " ... converting file $${file}..." ;\
-	   $(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < $${file} > $${file}.marcxml ;\
-	   if [ `md5sum $${file} | cut -f1 -d' '` = `md5sum $${file}.bk | cut -f1 -d' '` ]; \
-	     then rm -f $${file}.bk ;\
-		 else echo "WARNING: Input and backup files differ; something strange is going on." ;\
-	   fi ;\
-     done
-	@echo "* Done.  Please run 'make test-large-with-xmllint' or 'make test-large-with-xmlmarclint' now."
-
-test-large-with-xmllint: convert-large
-	@echo "* Testing XML correctness of converted files, please be patient..."
-	@for file in `/bin/ls ${LARGE_PATTERN}`; do \
-	    xmllint --noout $${file}; \
-     done
-	@echo "* Done.  Please run 'make upload-large' now."
-
-############# XXX: HACK: The following output parsing (if clause) would be unnecessary
-#############            if xmlmarclint used shell return codes correctly.
-############# was: $(BINDIR)/xmlmarclint $${file}; \
-
-test-large-with-xmlmarclint: convert-large
-	@echo "* Testing MARCXML correctness of converted files, please be patient..."
-	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
-	    echo -n $(BINDIR)/xmlmarclint $${file}; \
-		if [ -n "`$(BINDIR)/xmlmarclint $${file}`" ] ;\
-		  then echo "Removing $${file} because of bad/missing records..."; rm -f $${file} ;\
-		  else echo " ...ok." ;\
-		fi ;\
-     done
-	@echo "* Done.  Please run 'make upload-large' now."
-
 upload-small:
 	@echo "* Uploading converted files..."
 	cp ${SMALL_BASE}.marcxml /tmp
 	chmod a+r /tmp/${SMALL_BASE}.marcxml
 	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+### Institutions targets
+
+get-inst:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(INST_BASE).xml
+	wget $(INST_URL)
+	@echo "* Done.  Please run 'make convert-inst' now."
+
+get-inst-marc:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(INST_BASE).marcxml
+	wget $(INST_MARC_URL)
+	@echo "* Done.  Please run 'make upload-inst' now."
+
+convert-inst:
+	@echo -n "* Converting small INST record sample..."
+	$(BINDIR)/bibconvert -c `pwd`/inst2marc.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
+	@echo -n " done."
+	@echo "Please run 'make upload-small' now."
 
 upload-inst:
 	@echo "* Uploading converted files..."
@@ -137,30 +101,34 @@ upload-inst:
 	$(BINDIR)/bibupload -ir /tmp/${INST_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
-# upload-small that uses sudo internally
-supload-small:
+####
+## Get the full 9000 record institution set.  Should rarely if ever be used.
+
+get-inst-full:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(FULL_INST_BASE).xml
+	wget $(FULL_INST_URL)
+	@echo "* Done.  Please run 'make convert-inst-full' now."
+
+get-inst-marc-full:
+	@echo "* Downloading the file please be patient..."
+	rm -f $(FULL_INST_BASE).marcxml
+	wget $(FULL_INST_MARC_URL)
+	@echo "* Done.  Please run 'make upload-inst-full' now."
+
+convert-inst-full:
+	@echo -n "* Converting full inst record set..."
+	$(BINDIR)/bibconvert -c `pwd`/inst2marc.xsl < ${FULL_INST_BASE}.xml > ${FULL_INST_BASE}.marcxml
+	@echo -n " done."
+	@echo "Please run 'make upload-inst-full' now."
+
+upload-inst-full:
 	@echo "* Uploading converted files..."
-	cp ${SMALL_BASE}.marcxml /tmp
-	chmod a+r /tmp/${SMALL_BASE}.marcxml
-	sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	cp ${FULL_INST_BASE}.marcxml /tmp
+	chmod a+r /tmp/${FULL_INST_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /tmp/${FULL_INST_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
-upload-large:
-	@echo "* Uploading converted files..."
-	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
-		echo "Uploading from " $${file} "..." ;\
-	    $(BINDIR)/bibupload -ir $${file}; \
-     done
-	@echo "* Done.  Please see via 'bibsched' the task progress."
-
-# upload-large that uses sudo internally
-supload-large:
-	@echo "* Uploading converted files..."
-	@for file in `/bin/ls ${LARGE_PATTERN}.marcxml`; do \
-		echo "Uploading from " $${file} "..." ;\
-	    sudo -u $(BIBSCHED_PROCESS_USER) $(BINDIR)/bibupload -ir $${file}; \
-     done
-	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 
 #################
