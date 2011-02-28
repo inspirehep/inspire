@@ -11,6 +11,9 @@ all:
 test:
 	@echo "Nothing to test."
 
+install:
+	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit
+
 install-dbchanges:
 	@echo "Loading knowledge bases into DB..."
 	make delete-weblinks
@@ -53,7 +56,6 @@ LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
 update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
 insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
-
 
 clean:
 	@rm -f *.orig *~

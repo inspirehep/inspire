@@ -1,23 +1,24 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id$
 
-     This file is part of CDS Invenio.
-     Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+This file is part of Invenio.
+Copyright (C) 2009, 2010, 2011 CERN.
 
-     CDS Invenio is free software; you can redistribute it and/or
-     modify it under the terms of the GNU General Public License as
-     published by the Free Software Foundation; either version 2 of the
-     License, or (at your option) any later version.
+Invenio is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
 
-     CDS Invenio is distributed in the hope that it will be useful, but
-     WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-     General Public License for more details.
+Invenio is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-     You should have received a copy of the GNU General Public License
-     along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
-     59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-  -->
+You should have received a copy of the GNU General Public License
+along with Invenio; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+-->
 
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -279,7 +280,7 @@
   </xsl:template>
 
   <xsl:template name="firstAuthor">
-    <xsl:param name="firstNode"/> <!-- Full XML node ( with structure !) -->
+    <xsl:param name="firstNode"/>
     <datafield tag="100" ind1=" " ind2=" ">
       <xsl:call-template name="extractAuthor">
         <xsl:with-param name="node" select="$firstNode"/>
@@ -288,7 +289,7 @@
   </xsl:template>
 
   <xsl:template name="furtherAuthor">
-    <xsl:param name="node"/> <!-- Full XML node ( with structure !) -->
+    <xsl:param name="node"/>
     <datafield tag="700" ind1=" " ind2=" ">
       <xsl:call-template name="extractAuthor">
         <xsl:with-param name="node" select="$node"/>
@@ -297,7 +298,7 @@
   </xsl:template>
 
   <xsl:template name="collaboration">
-    <xsl:param name="node"/> <!-- Full XML node ( with structure !) -->
+    <xsl:param name="node"/>
     <xsl:call-template name="extractCollaboration">
       <xsl:with-param name="node" select="$node"/>
     </xsl:call-template>
@@ -767,6 +768,10 @@
 
                 <datafield tag="980" ind1=" " ind2=" ">
                   <subfield code="a">Citeable</subfield>
+                </datafield>
+
+                <datafield tag="980" ind1=" " ind2=" ">
+                  <subfield code="a">HEP</subfield>
                 </datafield>
 
               </record>

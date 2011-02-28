@@ -184,12 +184,16 @@ def write_record_to_file(filename, record_list):
     Writes a new MARCXML file to specified path from a list of records.
     """
     if len(record_list) > 0:
-        file_fd = open(filename, 'w')
-        file_fd.write('<collection>\n')
+        out = []
+        out.append("<collection>")
         for record in record_list:
-            file_fd.write(record_xml_output(record) + '\n')
-        file_fd.write('</collection>\n')
-        file_fd.close()
+            if record != {}:
+                out.append(record_xml_output(record))
+        out.append("</collection>")
+        if len(out) > 2:
+            file_fd = open(filename, 'w')
+            file_fd.write("\n".join(out))
+            file_fd.close()
 
 def has_field_origin(field_list, origin, code):
     """
