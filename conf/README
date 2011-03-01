@@ -1,0 +1,128 @@
+To use reinstall.sh here are some hints.
+
+
+Setup and Config
+---------------------
+
+1) Create an /opt/inspire directory  
+
+The directory should be writeable by you, and others installing on this machine
+
+(If you don't like this location, create it somewhere else, taking care to be outside of source trees and invemio location.  If you use a different location, please set it
+in CFG_INSPIRE_DIR in the config file .invenio-install.conf described below.)
+
+
+2) In this directory place the following five files:
+
+* Your current apache config files from your site (try:
+
+cp /opt/invenio/etc/apache/*.conf /opt/inspire/
+
+and should give you two apache config files)
+
+* Your current invenio-local file (something like:
+
+cp /opt/invenio/etc/invenio-local.conf  /opt/inspire/inspire-local.conf
+
+(note the file rename)
+
+Please *make sure* that you have these 3 files saved in /opt/inspire/ before proceeding (otherwise you will have to redo a lot of old work)
+
+* The fourth file may or may not exist. If it exists it is:
+
+cp <your inspire repo>/config-local.mk /opt/inspire/
+
+(Don't worry if you don't have it, just skip this step)
+
+* The fifth file you will create:  
+
+<your editor> /opt/inspire/.invenio_install.conf
+
+(note the leading ".")
+
+And in it you will put:
+
+INVENIO_DB="cdsinvenio"
+INVENIO_DB_USER="cdsinvenio"
+INVENIO_DB_PASS="<your db password for invenio user>"
+MYSQL_ROOT_PASS="<your db root pw, maybe blank>"
+INSPIRE_REPO="<your inspire repo>"
+INVENIO_REPO="<your invenio repo>"
+INSPIRE_DB="<your inspire db name, created in mysql>"
+INSPIRE_CONF="/opt/inspire/inspire-local.conf"
+CFG_INVENIO_USER="<your bibsched user, probably "apache">"
+CONFIGURE_OPTS="<probably blank>"
+APACHE_RESTART="<your command, including sudo if needed, to restart apache>"
+
+The first 3 options should be found in your working invenio-local.conf
+file
+
+The 4th you may need to test via
+
+mysql -u root -p
+
+The two repos should be well known to you
+
+INSPIRE_DB is not needed if you just want to have one database, and reload
+records anytime you switch from atlantis to INSPIRE.   however, you may
+like to have a way of keeping 2 dbs on the server, one for INSPIRE and one
+for atlantis.   If so, set the INSPIRE DB name here, and make sure to
+change it in the /opt/inspire/inspire-local.conf file
+
+INSPIRE_CONF is the saved invenio-local.conf that will be used on your
+inspire site.  
+
+CFG_INVENIO_USER is usually apache
+
+CONFIGURE_OPTS are passed to configure when re-running autotools to setup
+your invenio build.  See the invenio INSTALL file if you think you need
+something here.  COmmonly it is "--with-python='/home/future/python5.3'"
+or something like that.  However most sites don't need it at all.
+
+
+Usage
+-------------------------
+
+After saving this config file you should be ready to go:
+
+*** NOTE by default reinstall.sh will kill /opt/invenio and clean your
+    repos of non-git content
+
+*** Be very careful to make sure you don't have things you need sitting
+    around uncommitted in your repo or in the install directory
+
+*** you can run --dirty  to change this behavior and not clean the site first
+
+<your inspire repo>/conf/reinstall.sh 
+
+This will install an atlantis site, using whatever DB content is sitting
+on your site.
+ 
+try adding a --reset-db flag to install and index the atlantis test
+records
+
+try adding an --inspire flag to install from the inspire repo (on whatever
+branch it is currently checked out on) as well, using your
+inspire-local.conf settings.
+
+--inspire --reset-db  
+
+will install new test records, with institutions, and index everything
+creating a new INSPIRE site.   This will take 10-20 minutes to complete
+(check bibsched to see progress after the initial install.)
+
+sending no switches will install the basic atlantis site
+
+There are a few other options, but this should be all you need.
+
+
+FIXMEs
+--------------------
+
+* There are too many places where DB names and other config options are
+  stored.  Many options are listed in /opt/inspire several times, and must
+  be changed in sync.
+
+* There should be a saved invenio-local.conf as well for an atlantis site
+  with a few customizations
+

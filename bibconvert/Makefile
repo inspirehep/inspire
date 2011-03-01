@@ -1,8 +1,15 @@
 include ../config.mk
 -include ../config-local.mk
 
-SMALL_BASE = SPIRES_small_sample
-SMALL_URL = http://cdsware.cern.ch/download/invenio-demo-site-files/${SMALL_BASE}.xml.gz
+SMALL_BASE = hep_test_recs
+INST_BASE = inst_test_recs
+SMALL_LOC = http://www.slac.stanford.edu/spires/inspire_test/testset/
+SMALL_URL = ${SMALL_LOC}/${SMALL_BASE}.xml
+INST_URL = ${SMALL_LOC}/${INST_BASE}.xml
+MARC_URL = ${SMALL_LOC}/${SMALL_BASE}.marcxml
+INST_MARC_URL = ${SMALL_LOC}/${INST_BASE}.marcxml
+
+
 LARGE_PATH = /afs/slac.stanford.edu/public/groups/library/spires/inspire/test
 LARGE_PATTERN = ????_test_set.xml
 XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml
@@ -35,9 +42,22 @@ load-large-sample-of-records: get-large clean-large convert-large upload-large
 get-small:
 	@echo "* Downloading the file please be patient..."
 	wget $(SMALL_URL)
-	@rm -f ./${SMALL_BASE}.xml
-	@gunzip ${SMALL_BASE}.xml.gz
 	@echo "* Done.  Please run 'make convert-small' now."
+
+get-small-marc:
+	@echo "* Downloading the file please be patient..."
+	wget $(MARC_URL)
+	@echo "* Done.  Please run 'make upload-small' now."
+
+get-inst:
+	@echo "* Downloading the file please be patient..."
+	wget $(INST_URL)
+	@echo "* Done.  Please run 'make convert-inst' now."
+
+get-inst-marc:
+	@echo "* Downloading the file please be patient..."
+	wget $(INST_MARC_URL)
+	@echo "* Done.  Please run 'make upload-inst' now."
 
 get-large:
 	@echo -n "* Copying XML files from AFS space, please be patient..."
@@ -59,6 +79,15 @@ convert-small:
 	$(BINDIR)/bibconvert -c `pwd`/SPIRES2MARC.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
 	@echo -n " done."
 	@echo "Please run 'make upload-small' now."
+
+convert-inst:
+	@echo -n "* Institution conversion currently broken.  Use 'make get-inst-marc' instead."
+#	@echo -n "* Converting small SPIRES record sample..."
+#	$(BINDIR)/bibconvert -c `pwd`/INST2MARC.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
+#	@echo -n " done."
+#	@echo "Please run 'make upload-small' now."
+
+
 
 convert-large:
 	@echo "* Converting split files, please be patient..."
@@ -99,6 +128,13 @@ upload-small:
 	cp ${SMALL_BASE}.marcxml /tmp
 	chmod a+r /tmp/${SMALL_BASE}.marcxml
 	$(BINDIR)/bibupload -ir /tmp/${SMALL_BASE}.marcxml
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+upload-inst:
+	@echo "* Uploading converted files..."
+	cp ${INST_BASE}.marcxml /tmp
+	chmod a+r /tmp/${INST_BASE}.marcxml
+	$(BINDIR)/bibupload -ir /tmp/${INST_BASE}.marcxml
 	@echo "* Done.  Please see via 'bibsched' the task progress."
 
 # upload-small that uses sudo internally
