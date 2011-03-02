@@ -1,0 +1,70 @@
+<!-- BibEdit-Template-Name: thesis -->
+<!-- BibEdit-Template-Description: thesis -->
+<record>
+  <datafield tag="037" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:reportnr</subfield>
+  </datafield>
+  <datafield tag="041" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:language if not English</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="242" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Translated title (in English)</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Original title</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:123</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">presented 99 Mon 9999</subfield>
+  </datafield>
+  <datafield tag="502" ind1=" " ind2=" ">
+    <subfield code="b">VOLATILE:degree type</subfield>
+    <subfield code="c">VOLATILE:institution</subfield>
+    <subfield code="d">VOLATILE:year</subfield>
+  </datafield>
+    <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+<datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:subject</subfield>
+    <subfield code="2">INSPIRE</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="9">author</subfield>
+  </datafield>
+  <datafield tag="693" ind1=" " ind2=" ">
+    <subfield code="e">VOLATILE:experiment</subfield>
+  </datafield>
+  <datafield tag="695" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="2">INSPIRE</subfield>
+  </datafield>
+  <datafield tag="701" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:advisor familyname, firstname</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http:</subfield>
+    <subfield code="y">Fulltext</subfield>
+  </datafield>
+  <datafield tag="FFT" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:http:</subfield>
+    <subfield code="y">VOLATILE:Fulltext</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">Thesis</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">CORE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">HEP</subfield>
+  </datafield>
+</record>
