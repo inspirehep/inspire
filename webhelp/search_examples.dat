@@ -1,0 +1,11 @@
+INSERT into example (type,body) values
+("HEP", "find j \"Phys.Rev.Lett.,105*\""),
+("HEP", "find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004"),
+("HEP", "find eprint arxiv:0711.2908 or arxiv:0705.4298 or eprint hep-ph/0504227"),
+("HEP", "author:parke citedby:author:witten"),
+("HEP", "find a m albrow and j phys.rev.lett. and t quark* cited:200->99999"),
+("HEP", "refersto:hep-th/9711200 title:nucl*"),
+("Institutions", "find address menlo park"),
+("Institutions", "find institution CERN"),
+("Institutions", "country:DE")
+;
