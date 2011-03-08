@@ -18,7 +18,7 @@ from invenio.bibrecord import record_get_field_values, record_has_field, \
 from invenio.search_engine import search_pattern, get_record
 from invenio.bibmerge_differ import record_diff, match_subfields, compare_subfields
 from invenio.bibmerge_merger import merge_field_group
-
+from invenio.bibupload import retrieve_rec_id
 
 def record_get_recid(record):
     """
@@ -35,43 +35,8 @@ def record_get_recid(record):
     if record_has_field(record, "001"):
         return str(record_get_field_value(record, tag="001"))
 
-    oai_id = None
-    # FIXME: CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG is not set correctly for inspire
-    # When OAI config is OK, use bibrecord.record_get_oaiid
-    old_oaiid_tag = "035__z"
-    try:
-        tag = CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG[:3]
-        ind1 = CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG[3]
-        ind2 = CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG[4]
-        code = CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG[5]
-    except IndexError:
-        sys.stderr.write("Invalid CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG")
-        return - 1
-    fieldvalues = record_get_field_values(record, tag, ind1, ind2, code)
-    for fieldvalue in fieldvalues:
-        if fieldvalue.startswith("oai:arXiv.org:"):
-            oai_id = fieldvalue
-            break
-    if oai_id == None:
-        fieldvalues = record_get_field_values(record, old_oaiid_tag[:3], \
-                                              old_oaiid_tag[3], old_oaiid_tag[4], \
-                                              old_oaiid_tag[5])
-        for fieldvalue in fieldvalues:
-            if fieldvalue.startswith("oai:arXiv.org:"):
-                oai_id = fieldvalue
-                break
-        if oai_id == None:
-            sys.stderr.write("No oai id found for record")
-            return 0
-    queries = ["%s__%s:%s" % (tag, code, oai_id)]
-    queries.append("%s__%s:%s" % (old_oaiid_tag[:3], old_oaiid_tag[5], oai_id))
-    queries.append("reportnumber:arXiv:%s" % (oai_id.split(":")[-1],))
-    for query in queries:
-        hits = search_pattern(p=query).tolist()
-        # Try different patterns
-        if len(hits) == 1:
-            return str(hits[0])
-    return None
+    rec_id = retrieve_rec_id(record, "")
+    return rec_id
 
 def parse_actions(action_line):
     """
@@ -296,17 +261,10 @@ def main():
         else:
             recid = record_get_recid(record)
 
-        if recid == None:
+        if not recid or recid == -1:
             # Record (probably) does not exist, flag for insert into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
             insert_records.append(record)
-        elif recid == 0:
-            # OAI not found for record, add it to holding_pen
-            holdingpen_records.append(record)
-        elif recid == -1:
-            # Something went wrong, exit with error
-            sys.stderr.write("Error while looking for recid")
-            sys.exit(1)
         else:
             # Record exists, fetch existing record
             existing_record = get_record(recid)
