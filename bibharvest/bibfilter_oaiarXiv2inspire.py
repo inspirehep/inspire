@@ -19,24 +19,7 @@ from invenio.search_engine import search_pattern, get_record
 from invenio.bibmerge_differ import record_diff, match_subfields, compare_subfields
 from invenio.bibmerge_merger import merge_field_group
 from invenio.bibupload import retrieve_rec_id
-
-def record_get_recid(record):
-    """
-    Returns the recid (tag 001) of the given record, if found in the database.
-    It tries to extract an OAI ID from the given record, if not successful it
-    returns with errorcode 0.
-
-    @param record: bibrecord structure
-
-    @return: recid if found, otherwise 0 on missing OAI, -1 on OAI tag error,
-                 or None if no recid found.
-    """
-    recid = None
-    if record_has_field(record, "001"):
-        return str(record_get_field_value(record, tag="001"))
-
-    rec_id = retrieve_rec_id(record, "")
-    return rec_id
+from invenio.textutils import wash_for_xml
 
 def parse_actions(action_line):
     """
@@ -239,7 +222,7 @@ def main():
 
     # Transform MARCXML to record structure
     try:
-        records = create_records(open_marc_file(input_filename))
+        records = create_records(wash_for_xml(open_marc_file(input_filename)))
     except:
         sys.stderr.write("bibupload.xml_marc_to_records failed on file: %s" % (input_filename,))
         sys.exit(3)
@@ -259,7 +242,7 @@ def main():
         if skip_recid_check:
             recid = None
         else:
-            recid = record_get_recid(record)
+            recid = retrieve_rec_id(record, "")
 
         if not recid or recid == -1:
             # Record (probably) does not exist, flag for insert into database
