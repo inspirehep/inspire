@@ -220,12 +220,18 @@ def main():
         sys.stderr.write("Please enter a valid filename for config.")
         sys.exit(1)
 
-    # Transform MARCXML to record structure
+    file_data = open_marc_file(input_filename)
     try:
-        records = create_records(wash_for_xml(open_marc_file(input_filename)))
-    except:
-        sys.stderr.write("bibupload.xml_marc_to_records failed on file: %s" % (input_filename,))
+        # latin1 will decode anything
+        decoded_data = file_data.decode('latin1')
+        # utf-8 will encode anything
+        encoded_data = decoded_data.encode('utf-8')
+        washed_data = wash_for_xml(encoded_data)
+    except UnicodeError:
+        sys.stderr.write("en/decoding failed on file: %s" % (input_filename,))
         sys.exit(3)
+    # Transform MARCXML to record structure
+    records = create_records(washed_data)
     action_dict = read_actions_configuration_file(config_path)
     insert_records = []
     append_records = []
