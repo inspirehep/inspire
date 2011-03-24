@@ -35,12 +35,36 @@ export APACHE_RESTART="sudo /etc/init.d/httpd restart"
 export CLEAN_INSTALL="TRUE"
 export USE_BIBCONVERT="FALSE"
 export INSTALL_PLUGINS="FALSE"
+export BE_QUIET="FALSE"
 
-if [ -e $CONFIGFILE ]; then 
-    source $CONFIGFILE
-    echo "Thanks for the tasty config options"
-fi
+function say() {
+    if [ $BE_QUIET == "FALSE" ]; then
+        echo $@
+    fi
+    return 0
+}
 
+function warn_and_wait() {
+    if [ $BE_QUIET == "TRUE" ]; then
+        return 0;
+    fi
+    echo -ne $1
+    for i in 0 1 2; do
+        echo -n "."
+        sleep 1
+    done
+    echo
+}
+
+function warn_and_remove_untracked_files() {
+    local cleanargs="-q -x -f"
+    if [ $BE_QUIET == "FALSE" ]; then
+        git status
+        warn_and_wait "[INFO] I WILL REMOVED ALL UNTRACKED FILES ABOVE\n[INFO] STOP ME BY PRESSING Ctrl-C!\n"
+        cleanargs="-x -f"
+    fi
+    sudo git clean $cleanargs
+}
 
 for arg in $@; do
     if [ $arg == '--help' ]; then
@@ -55,109 +79,119 @@ for arg in $@; do
         echo "By default I will clean temporary files from your repos"
         echo "call me with --dirty to leave those things alone"
         echo "use --reset-db to drop and create the requested db from scratch"
+        echo ""
+        echo "Sending --shutup will cause me to do my best to only report errors."
+        echo "NB: on clean installs I will not warn you before removing files."
         exit 0
+    elif [ $arg == '--shutup' ]; then
+        export BE_QUIET="TRUE"         # Because silence is golden
     elif [ $arg == '--reset-db' ]; then
-        echo "Ok, I'll reset the DB"
+        say "Ok, I'll reset the DB"
         export G_DB_RESET="TRUE"
     elif [ $arg == '--dirty' ]; then
-        echo "Ok, I won't clean the source tree"
+        say "Ok, I won't clean the source tree"
         export CLEAN_INSTALL="FALSE"
     elif [ $arg == '--inspire' ]; then
-        echo "Ok, I'll install INSPIRE from the separate repo and use the  inspire conf"
+        say "Ok, I'll install INSPIRE from the separate repo and use the  inspire conf"
         export G_INSPIRE="TRUE"
         export LOCAL_CONF=$INSPIRE_CONF
         export INVENIO_DB=$INSPIRE_DB
     fi
 done
 
+if [ -e $CONFIGFILE ]; then 
+    source $CONFIGFILE
+    say "Thanks for the tasty config options"
+fi
 
-# give user a chance to quit:
-echo "[INFO] GOING TO DESTROY YOUR INSPIRE DEMO SITE IN VERY FEW SECONDS!"
-echo "[INFO] THIS IS YOUR LAST CHANCE TO INTERRUPT BY PRESSING Ctrl-C!"
-for i in 0 1 ; do
-    echo -n "."
-    sleep 1
-done
-echo
+
+# give user a chance to quit, if it actually makes sense to do so:
+if [ $CLEAN_INSTALL == "TRUE" ]; then
+    warn_and_wait "[INFO] GOING TO DESTROY YOUR INSPIRE DEMO SITE IN VERY FEW SECONDS!\n[INFO] THIS IS YOUR LAST CHANCE TO INTERRUP BY PRESSING Ctrl-C!\n" 
+fi
 
 sudo -v; 
 # Stop running bibsched so that we don't create zombies
-sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibsched stop
+sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibsched stop 1>/tmp/invenio_bibsched_stop.log
 
 
 if [ $CLEAN_INSTALL == "TRUE" ]; then
     sudo rm -rf $CFG_INVENIO_PREFIX; 
-    cd $INSPIRE_REPO
-    git status
-    echo "[INFO] I WILL REMOVE ALL UNTRACKED FILES ABOVE"
-    echo "[INFO] STOP ME BY PRESSING Ctrl-C!"
-    for i in 0 1 2 3; do
-        echo -n "."
-        sleep 1
-    done
-    sudo git clean -x -f;
-    cp $CFG_INSPIRE_DIR/config-local.mk .
     cd $INVENIO_REPO
-    git status
-    echo "[INFO] I WILL REMOVE ALL UNTRACKED FILES ABOVE"
-    echo "[INFO] STOP ME BY PRESSING Ctrl-C!"
-    for i in 0 1 2 3; do
-        echo -n "."
-        sleep 1
-    done
-    sudo git clean -x -f;
+    warn_and_remove_untracked_files
+    say "** REGENERATING BUILD CONFIGURATION..."
     aclocal && automake -a -c && autoconf -f && ./configure $CONFIGURE_OPTS  0</dev/null 
+    cd $INSPIRE_REPO
+    warn_and_remove_untracked_files
+    cp $CFG_INSPIRE_DIR/config-local.mk .
 fi
  
 cd $INVENIO_REPO
-make && sudo make install \
+say "I won't produce output for a while so that I can go faster, but you may find"
+say -e "something useful in some /tmp/invenio_\052.log files"        # \052 lets us echo a *
+if [ $G_INSPIRE == "TRUE" ]; then
+    say -e " and some /tmp/inspire_\052.log files";
+fi
+echo "."
+make -j 1>/tmp/invenio_make.log && sudo make -j install 1>/tmp/invenio_make_install.log \
     && sudo chown -R $CFG_INVENIO_USER:$CFG_INVENIO_USER $CFG_INVENIO_PREFIX \
     && sudo install -m 660 -o $CFG_INVENIO_USER -g $CFG_INVENIO_USER $LOCAL_CONF $CFG_INVENIO_PREFIX/etc/invenio-local.conf; 
 if [ $? -eq 0 ]; then
-    echo -e "\n** INVENIO INSTALLED SUCCESSFULLY\n";
+    say -e "\n** INVENIO INSTALLED SUCCESSFULLY\n";
 else
+    echo "Something went wrong during invenio installation."
     exit 1;
 fi
 
 sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --update-all 
-
 if [ $? -eq 0 ]; then
-  echo -e "\n** CONFIGURATION UPDATED SUCCESSFULLY\n"; 
+    say -e "\n** CONFIGURATION UPDATED SUCCESSFULLY\n"; 
 else
-  exit 1;
+    echo "Something went wrong during inveniocfg update-all."
+    exit 1;
 fi
 
 if [ $INSTALL_PLUGINS == "TRUE" ]; then
-    echo -e "INSTALLING \"OPTIONAL\" COMPONENTS...";
-    sudo -u $CFG_INVENIO_USER make install-mathjax-plugin
-    sudo -u $CFG_INVENIO_USER make install-jquery-plugins
-#sudo -u $CFG_INVENIO_USER make install-fckeditor-plugin
-#sudo -u $CFG_INVENIO_USER make install-pdfa-helper-files
+    if [ $CLEAN_INSTALL == "TRUE" ]; then
+        say -n "INSTALLING \"OPTIONAL\" COMPONENTS...";
+#sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins install-fckeditor-plugin install-pdfa-helper-files 1>/tmp/invenio_make_install_plugins.log
+        sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins 1>/tmp/invenio_make_install_plugins.log
+        if [ $? -eq 0 ]; then
+            say " done.";
+        else
+            echo -e "\n ** WARNING ** Optional component installation encountered nonfatal errors.\n"
+        fi
+    fi
 fi
 
 
 if [ $G_INSPIRE = 'TRUE' ]; then
-    echo -e "Installing INSPIRE from repo $INSPIRE_REPO"
+    say -n "Installing INSPIRE from repo $INSPIRE_REPO"
     cd $INSPIRE_REPO
-    sudo make install
+    sudo make -j install 1>/tmp/inspire_make_install.log
+    if [ $? -eq 0 ]; then
+        say -e " done.\n** INSPIRE INSTALLED SUCCESSFULLY\n";
+    else
+        echo "Something went wrong during inspire installation."
+        exit 1;
+    fi
     sudo chown -R $CFG_INVENIO_USER:$CFG_INVENIO_USER $CFG_INVENIO_PREFIX
-    echo "DONE."
 fi
 
 
 if [ $G_DB_RESET == 'TRUE' ]; then
-    echo -e "DROPPING AND RECREATING THE DATABASE...";
+    say -e "DROPPING AND RECREATING THE DATABASE...";
     echo "drop database $INVENIO_DB;" | mysql -u root --password=$MYSQL_ROOT_PASS; 
     echo "CREATE DATABASE $INVENIO_DB DEFAULT CHARACTER SET utf8; GRANT ALL PRIVILEGES ON $INVENIO_DB.* TO $INVENIO_DB_USER@localhost IDENTIFIED BY '$INVENIO_DB_PASS';" | mysql -u root --password=$MYSQL_ROOT_PASS; 
-    echo "DONE.";
+    say "DONE.";
 
-    echo -e "SETTING UP THE INVENIO TABLES AND DEMO SITE..."
+    say -e "SETTING UP THE INVENIO TABLES AND DEMO SITE..."
     sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --create-tables \
-    && echo -e "\n** MYSQL TABLES CREATED SUCCESSFULLY\n" \
+    && say -e "\n** MYSQL TABLES CREATED SUCCESSFULLY\n" \
     && sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --load-webstat-conf \
-    && echo -e "\n** WEBSTAT CONF LOADED SUCCESSFULLY\n" 
+    && say -e "\n** WEBSTAT CONF LOADED SUCCESSFULLY\n" 
     sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --create-demo-site
-    echo -e "\n** DEMO SITE INSTALLED\n"
+    say -e "\n** DEMO SITE INSTALLED\n"
 
 
    if [ $G_INSPIRE == 'TRUE' ]; then
@@ -177,8 +211,8 @@ if [ $G_DB_RESET == 'TRUE' ]; then
            make get-small-marc
            sudo -u $CFG_INVENIO_USER make upload-small
        fi
-        #FIXME when we get the inst xslt in place can move this into the
-        #bibconvert
+       #FIXME when we get the inst xslt in place can move this into the
+       #bibconvert
        make get-inst-marc
        sudo -u $CFG_INVENIO_USER make upload-inst
        
@@ -187,12 +221,12 @@ if [ $G_DB_RESET == 'TRUE' ]; then
        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibreformat -u admin -o HB
        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/webcoll -u admin
        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibrank -u admin
-       echo -e "\n** INSPIRE DEMO RECORDS INSTALLED"
+       say -e "\n** INSPIRE DEMO RECORDS INSTALLED"
        
    else
        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/inveniocfg --load-demo-records 
-       echo -e "\n** DEMO RECORDS INSTALLED\n" 
-       echo "DONE."
+       say -e "\n** DEMO RECORDS INSTALLED\n" 
+       say "DONE."
     fi
 fi
 
