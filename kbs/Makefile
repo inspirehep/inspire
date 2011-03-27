@@ -14,14 +14,9 @@ test:
 install:
 	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit/
 
-install-dbchanges:
+announce-kb-load:
 	@echo "Loading knowledge bases into DB..."
-	make delete-weblinks
-	make delete-oalinks
-	make delete-talktype
-	make load-weblinks-knowledge-base
-	make load-weblinks-knowledge-base
-	make load-talktype-knowledge-base
+install-dbchanges: announce-kb-load delete-weblinks delete-oalinks delete-talktype load-weblinks-knowledge-base load-talktype-knowledge-base create-institutions-dynamic-kb
 	@echo "Done."
 
 delete-weblinks:
@@ -56,6 +51,9 @@ LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
 update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
 insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
+
+create-institutions-dynamic-kb:
+	$(PYTHON) InstitutionsCollection_dynamic_KB.py
 
 clean:
 	@rm -f *.orig *~
