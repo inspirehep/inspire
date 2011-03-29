@@ -1420,14 +1420,6 @@ dd{
 .bibEditBtnBold {
   font-weight: bold
 }
-#bibEditMenu {
-  width: 136px;
-  position: fixed;
-  top: 220px;
-  left: 20px;
-  margin-bottom: 20px;
-  font-size: 0.8em;
-}
 #bibEditMenu .bibEditMenuSection {
   margin-bottom: 10px;
 }
@@ -1465,10 +1457,6 @@ dd{
   cursor: default;
   opacity: 0.4;
   vertical-align: bottom;
-}
-#bibEditContent {
-  min-height: 300px;
-  margin-left: 150px;
 }
 #bibEditTable {
   background-color: rgb(255, 255, 255);
