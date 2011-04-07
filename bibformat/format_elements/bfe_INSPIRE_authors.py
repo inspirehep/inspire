@@ -317,9 +317,13 @@ def format_element(bfo, limit, separator='; ',
     elif nb_authors > 0:
         return separator.join(authors)
 
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
+# pylint: enable-msg=W0613

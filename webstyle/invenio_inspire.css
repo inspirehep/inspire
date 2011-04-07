@@ -2703,5 +2703,32 @@ td.tips-rhs {
     width: 45%;
 }
 
-
+/* citeform.bft and related */
+#referenceinp_link_box {
+    padding: 5px 0px 5px 0px;
+}
+#referenceinp_link_span {
+    background-color: #ffcc99;
+    padding: 5px 5px 5px 5px;
+}
+#referenceinp_link {
+    text-align: left;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.form_label {
+    font-weight: normal;
+    font-size: small;
+    color: black;
+}
+.form_label_required {
+    font-weight: normal;
+    font-size: small;
+    color: red;
+}
+.form_label_optional {
+    font-weight: normal;
+    font-size: small;
+    color: black;
+}
 /* end of inspire.css */

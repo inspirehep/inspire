@@ -1,0 +1,215 @@
+<name>referenceinp</name>
+<description>user form for updating references</description>
+<head>
+<!-- I include this because it makes things like drop-down boxes in jquery look nicer.  -->
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/themes/redmond/jquery-ui.css" />
+
+<!--
+  These parts make jQuery work properly.  In nature, we want to use the version of jquery installed system-wide.  I
+  think it's in /img/js/
+  -->
+<script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
+<script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js'></script>
+
+<!-- Here is where I do my business -->
+
+<script type="text/javascript">
+
+var referencevar;
+var gCODENS = [];     // coden mapping global filled in by BFE
+
+/*
+ This selects the whole document and creates an anonymous function which
+ is called when the page is done rendering in the user's browser.  We could
+ do anything, but I just set a global variable.
+*/
+
+$(document).ready(function() {
+    $(window).keydown(function(event){ if(event.keyCode == 13) { event.preventDefault(); return false; } });
+    $('.cite_search_box').keydown(function(event){ if(event.keyCode == 13) { openSrchWindow(this.id); return false; } });
+});
+
+
+/*
+   Build a table row with a given ID and return its HTML.  This is just a
+   convenience so that insertRowAfter can be tidier.
+ */
+function make_table_row(id_number) {
+    var sq = "'";
+    var cnt=document.getElementById('fieldcnt').value;
+    var inpid= 'x' + cnt;
+    cnt++;
+
+    document.getElementById('fieldcnt').value=cnt;
+    retval = '<tr id="tr'+id_number+'"><td></td><td><input id="button_'+id_number+'" type="image" onclick="insertRowAfter('+id_number+'); return false;" value = "+" src="/img/add.png"> </td>';
+    retval += '<td><input type="text" style="background-color: #FDFDF0;" class="cite_search_box" name="cite" size="35" id="' + inpid + '" ></td><td align="left"><a href="#" onclick="openSrchWindow('+ sq + inpid + sq + '); return false;" ><img src="/img/search.png"  border=0 > Search for Citation</a></td></tr>';
+    return retval
+}
+
+/*
+   Use jQuery to insert a row after a table button.
+ */
+function insertRowAfter(caller_id) {
+    var arr = new Array();
+    arr = document.getElementsByName('cite');
+    var row_counter = arr.length;
+    var row_selector = '#tr' + caller_id;
+
+    $(row_selector).after( make_table_row(row_counter) );
+    // JRBL HACK FIXME add enter key handler here (and above ?)
+
+    return false;
+}
+
+function changec(){
+
+    function email_valid_p() {
+        // test if valid email address, must have @ and .
+        var checkStr = document.getElementById('username').value;
+        var checkEmail = "@.";
+        var EmailAt = false;
+        var EmailPeriod = false;
+        var ch = '';
+        for (i = 0;  i < checkStr.length;  i++) {
+            ch = checkStr.charAt(i);
+            for (j = 0;  j < checkEmail.length;  j++) {
+                if (ch == checkEmail.charAt(j) && ch == "@")
+                    EmailAt = true;
+                if (ch == checkEmail.charAt(j) && ch == ".")
+                    EmailPeriod = true;
+                if (EmailAt && EmailPeriod)
+                    break;
+            }
+            // if both the @ and . were in the string
+        }
+        return (EmailAt && EmailPeriod);
+    }
+    if (!email_valid_p()) {
+        alert("The \"email\" field must not be empty, and must contain an \"@\" and a \".\".");
+        document.referenceinp.username.focus();
+        return false;
+    }
+
+    //this section modifies the fields...
+
+    var xcnt = document.getElementById('fieldcnt').value;
+    var ccnt = document.getElementByName('cite').length - xcnt;
+    var ncnt = xcnt - 1;
+
+    for (i=1;i<=ccnt;i++) {
+        var inputid = 'c' + i;
+        var checkComExp = /\,/;
+        var citefield = document.getElementById(inputid).value;
+        var journvar = citefield;
+
+        //change the short title to coden here
+        if (citefield.match(checkComExp)){
+            journvar = citefield.split(",");
+            var shorttitlev = journvar[0];
+            var codenv = gCODENS[journvar[0]];
+            if (codenv != null) { journvar[0] = codenv; }
+        }
+
+        var chgcite = 'citation = ' + journvar + ';';
+        document.getElementById(inputid).value = chgcite;
+    }
+
+    for (i=0; i<=ncnt; i++) {
+        var inputid = 'x' + i;
+        var citefield = document.getElementById(inputid).value;
+        var journvar = citefield;
+        if (citefield.match(checkComExp)) {
+            var journvar= citefield.split(",");
+            var shorttitlev = journvar[0];
+            var codenv = gCODENS[journvar[0]];
+            if (codenv != null) { journvar[0] = codenv; }
+        }
+        if (citefield.length != 0) {
+            var chgcite = 'cite = ' + journvar + ';';
+            document.getElementById(inputid).value=chgcite;
+        }
+    }
+    var irnv=document.getElementById('irn').value;
+    var convirn = irnv.replace('SPIRES-',' ');
+    document.getElementById('irn').value=convirn;
+    return true;
+}
+
+function chgcite(txt)
+{
+    // alert(txt);
+    var citev=document.getElementById(txt).value;
+    citev += '**';
+    document.getElementById(txt).value=citev;
+}
+
+function openSrchWindow(winputid) {
+     var searchvar = document.getElementById(winputid).value;
+     document.getElementById('targfield').value = winputid;
+     var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
+
+     citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
+     citefind.focus();
+}
+
+
+</script>
+</head>
+
+<form name="referenceinp" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
+
+
+<input type=hidden value="1" id="fieldcnt" name="storecnt">
+<INPUT type=hidden value=spires@slac.stanford.edu   name=to id=tofield>
+<!--<input type="hidden" name="debug" value="1">-->
+<INPUT type=hidden value=spires@slac.stanford.edu   name=form_contact id=fcfield>
+<INPUT type=hidden value="(TEST)CITATION FORM posting (TEST - Please ignore)" name=subject>
+<INPUT type=hidden name=response_msg value="thank you for using this form, you should soon see a response email">
+<INPUT type=hidden name=email_msg_file value="/spires/hepnames/cite_msg.file">
+<input type=hidden name=dateupd value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">'>
+<input type=hidden name=targfield id=targfield value="">
+
+
+<div id="detailedrecordshortreminder">
+  <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+   <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/>
+  </a>
+  <br />
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br>
+  <BFE_REPORT_NUMBERS prefix=" " suffix=", " separator=", " nbMax="" default="" escape="" />
+  <BFE_JOURNAL_PUBLICATION_TITLE prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
+  <BFE_JOURNAL_PUBLICATION_VOLUME prefix="" suffix="," separator=" " nbMax="" default="" escape="" />
+  <BFE_JOURNAL_PUBLICATION_PAGE prefix="" suffix="," separator=" " nbMax="" default="" escape="" />
+  <BFE_JOURNAL_PUBLICATION_YEAR prefix="" suffix="; " separator=" " nbMax="" default="" escape="" />
+  <BFE_JOURNAL_PUBLICATION_DOI prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
+  <BFE_FIELD prefix="<small>Date-Upd:" tag="961c" suffix="</small>"/><br />
+   <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape=""
+      category="yes" links="no" mirrors="no"/> &nbsp; <BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" target="blank" suffix=""
+       show_icons="no" default="" prefix="" separator="  "/>
+
+</div>
+<div style="clear:both;height:1px">&nbsp;</div>
+<table>
+        <TR><TD class=left><span class="form_label">Your Email</span></TD><TD class=right><INPUT size=35 name="username" id="username"><span class="form_label_required">(Required)</span></TD></TR>
+        <TR><TD class=left><span class="form_label">Your Name</span></TD><TD class=right><INPUT size=35 name=realname id=realname><span class="form_label_optional">(Optional)</span></TD></TR>
+        <tr><TD class=left><span class="form_label">Comments</span></TD><TD class=right><textarea name="usercomment" id=usercomment rows="4" cols="35" wrap="virtual"></textarea><span class="form_label_optional">(Optional)</span></TD></TR>
+</table>
+
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+<br>
+
+<small> Click on <img src="/img/add.png" alt="+"> to insert new references below existing reference</small>
+<br>
+
+<table id="t0"><tr id="tr0"><td></td><td><input type="image" id="t0" onclick="insertRowAfter(0); return false;" src="/img/add.png" alt="Search for Reference" ></td>
+<input type="hidden" name="irn" id="irn" value= "<BFE_SPIRES_IRN />">
+
+<td><input type="text" class="cite_search_box" name="cite" id="x0" size="35" value=""></td><td align="left">
+    <a href="#" onclick="openSrchWindow('x0'); return false;" ><img src="/img/search.png"  border=0 alt="+"> Search for Citation</a>
+</td></tr></table>
+
+<BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
+<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections><b> HELP</b> with this form</a> &nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+</form>
+
+

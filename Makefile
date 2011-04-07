@@ -25,10 +25,12 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-search-sort-field-configuration \
                  reset-inspire-useraccess-configuration \
                  reset-inspire-submission-configuration \
-                 reset-inspire-format-configuration \
                  reset-inspire-portalbox-configuration \
 		 reset-inspire-examples-searches \
-		 reset-inspire-rank-configuration
+		 reset-inspire-rank-configuration \
+                 reset-inspire-format-configuration \
+                 reset-inspire-examples-searches
+
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
@@ -545,8 +547,9 @@ reset-inspire-format-configuration:
 	(19, 'RefWorks', 'xw', 'RefWorks.', 'text/xml', 1),\
 	(20, 'MODS', 'xo', 'Metadata Object Description Schema', 'application/xml', 1),\
 	(21, 'LaTeX (EU)', 'hlxe', 'LaTeX formatted reference (EU style)', 'text/html', 1),\
-	(22, 'LaTeX (US)', 'hlxu', 'LaTeX formatted reference (US Style)',\
-	'text/html', 1);" | $(BINDIR)/dbexec
+	(22, 'LaTeX (US)', 'hlxu', 'LaTeX formatted reference (US Style)', 'text/html', 1),\
+	(23, 'INSPIRE Citation Format', 'hca', 'Very brief cite-as format used by reference submission form.', 'text/html', 1),\
+	(24, 'INSPIRE Reference Submission Form', 'hrf', 'Reference submission form, used for user updates to reference lists.', 'text/html', 0);" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_format" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 1, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 2, 120)" | $(BINDIR)/dbexec

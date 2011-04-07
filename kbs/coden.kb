@@ -1,0 +1,3213 @@
+ 	.....	Astrophys.J.Lett.	
+ 	+++++	Progr.Phys.	
+ 	*****	Phys.Element.Part.Atom.Nucl.	
+ 	-----	CWI Syllabus	
+ 	AABCA	Anales Acad.Bras.Cienc.	
+ 	AABIA	Annals Appl.Biol.	
+ 	AACAE	Adv.Appl.Clifford Algebras	
+ 	AACRA	Anest.Analg.	
+ 	AAECE	Appl.Algebra Engrg.Comm.Comput.	
+ 	AAEJA	Astron.Astrophys.	
+ 	AAESB	Astron.Astrophys.Suppl.Ser.	
+ 	AAFPA	Annales Acad.Sci.Fenn.	
+ 	AAGCA	Atti Accad.Gioenia Sci.Nat.Catania	
+ 	AAMAD	Acta Appl.Math.	
+ 	AAMCA	Adv.Appl.Mech.	
+ 	AAMEE	Arch.Appl.Mech.	
+ 	AAMOA	Adv.Atom.Molec.Phys.	
+ 	AAMPE	Adv.At.Mol.Opt.Phys.	
+ 	AANLA	Rend. Acc. Naz. Lincei	
+ 	AAPBB	Adv.Appl.Probab.	
+ 	AAPME	Adv.Appl.Math.	
+ 	AAPRA	AIAA Paper	
+ 	AARIA	Acta Arith.	
+ 	AASBA	Bull.Am.Astron.Soc.	
+ 	AASIC	Acta Astronaut.	
+ 	AASRE	Astron.Astrophys.Rev.	
+ 	AASTA	Annals Math.Statist.	
+ 	AASWA	Acta Astron.	
+ 	AATFA	Atti Accad.Sci.Torino.Sci.Fis.Mat.Natur.	
+ 	AATRA	Annales Astrophys.	
+ 	AATRE	Astron.Astrophys.Trans.	
+ 	AAUFB	Proc.Astron.Soc.Austral.	
+ 	AAUPB	Publ.Astron.Soc.Austral.	
+ 	AAWDA	Abh.Akad.Wiss.DDR	
+ 	AAWTD	Abh.Akad.Wiss.DDR Abt.Math.Naturwiss.Tech.	
+ 	AAWWA	Anz.Akad.Wiss.Wien Math.Naturwiss.Kl.	
+ 	AAYAA	Adv.Astron.Astrophys.	
+ 	ABBIA	Arch.Biochem.Biophys.	
+ 	ABBSE	Ann.Rev.Biophys.Biomol.Struct.	
+ 	ABCNB	Anal.Bioanal.Chem.	
+ 	ABCRE	Acta Crystallogr.D Biol.Crystallogr.	
+ 	ABFZA	Analele Univ. Bucur.Fiz.	
+ 	ABHUE	Acta Biol.Hung.	
+ 	ABPBB	Ann.Rev.Biophys.Bioeng.	
+ 	ABRMB	Annales Univ.Sci.Budapest.(Sec.Math.)	
+ 	ABSMA	Acad.Roy.Belg.Sci.Mem.	
+ 	ABWGA	Abh.Braunschweig.Wiss.Ges.	
+ 	ACACA	Anal.Chim.Acta	
+ 	ACACE	Acta Crystallogr.A Found.Crystallogr.	
+ 	ACASE	Appl.Categ.Struct.	
+ 	ACBCA	Acta Crystallogr.B Struct.Crystallogr.Cryst.Chem.	
+ 	ACCRA	Acta Cryst.	
+ 	ACELA	Acta Electron.	
+ 	ACHRE	Accounts Chem.Res.	
+ 	ACHSE	Acta Chem.Scand.	
+ 	ACIEA	Angew.Chem.Int.Ed.	
+ 	ACISB	Adv.Colloid Interface Sci.	
+ 	ACMAA	Acta Mat.	
+ 	ACMHE	Adv.Comput.Math.	
+ 	ACMSC	ACM Trans.Math.Software	
+ 	ACMTA	Acta Math.	
+ 	ACOHE	Appl.Comput.Harmon.Anal.	
+ 	ACOMD	Ars Comb.	
+ 	ACOSD	Acta Cosmologica	
+ 	ACPHA	Annales Chim. Phys.	
+ 	ACPPA	Polymer Preprints (ACS)	
+ 	ACPYA	Acta Physicochim.URSS	
+ 	ACSFC	Acta Crystallogr.F Struc.Biol.Crystalliz.Commun.	
+ 	ACSLE	Acta Chim.Slov.	
+ 	ACSMC	ACS Symp.Ser.	
+ 	ACSRA	Abs.Amer.Chem.Soc.	
+ 	ACSUE	ACM Comput.Surveys	
+ 	ACSYE	ACM Trans.Comp.Syst.	
+ 	ACUSA	Acustica	
+ 	ACVEA	Acta Cient.Venezolana	
+ 	ACVMA	Arch.Math.	
+ 	ACYEA	Adv.Cryog.Eng.	
+ 	ADASA	Adv.Astronaut.Sci.	
+ 	ADASE	Ad Astra	
+ 	ADCOA	Adv.Comput.	
+ 	ADCPA	Adv.Chem.Phys.	
+ 	ADCSA	Advances Chem.Ser.	
+ 	ADCSD	Adv. Commun. Syst. Theor. Appl.	
+ 	ADDEN	Addendum-ibid.	
+ 	ADGEO	Adv.Geosci.	
+ 	ADMGA	Adv.Magn.Reson.	
+ 	ADMPA	Adv.Math.Phys.	
+ 	ADMTA	Adv.Math.	
+ 	ADNDA	Atom.Data Nucl.Data Tabl.	
+ 	ADPCA	Adv.Photochem.	
+ 	ADPHA	Adv.Phys.	
+ 	ADPPB	Adv.Part.Phys.	
+ 	ADVME	Adv.Mater.	
+ 	AEEPA	Adv.Electron.Electron Phys.	
+ 	AELEA	Adv.Electron.	
+ 	AELTA	Arch.Elektrotech.	
+ 	AEMAB	Aequat.Math.	
+ 	AEMEA	Aerosp.Med.	
+ 	AEMID	Appl.Envir.Microbiol.	
+ 	AENGA	At.Energ.	
+ 	AEPLA	L'Aerophile	
+ 	AERVA	At.Energy Rev.	
+ 	AESOD	Adv. Eng. Softw.	
+ 	AFLBD	Annales Fond.Broglie	
+ 	AFMSD	Annales Fac.Sci.Toulouse	
+ 	AFNUA	Acta Math.Univ.Comenianae	
+ 	AFYSA	Ark.Fys.	
+ 	AGAGD	Annals Global Anal.Geom.	
+ 	AGGHE	Acta Geod.Geophys.Montan.Hung.	
+ 	AGGHF	Acta Geod.Geophys.Hung.	
+ 	AGJOA	Agron.J.	
+ 	AHCOA	Harvard Obs.Annals	
+ 	AHESA	Arch.Hist.Ex.Sci.	
+ 	AHPAA	Annales Poincare Phys.Theor.	
+ 	AHPBA	Ann.Inst.H.Poincare Probab.Statist.	
+ 	AHPJF	Annales Henri Poincare	
+ 	AIAJA	AIAA J.	
+ 	AICEA	Aiche J.	
+ 	AICHE	Adv.Inorg.Chem.	
+ 	AIEPF	Adv.Imaging Electron Phys.	
+ 	AIFUA	Annales Inst.Fourier	
+ 	AIHPA	Ann.Inst.Henri Poincare	
+ 	AIMMD	Anales Inst.Mat.	
+ 	AINFA	Acta Inform.	
+ 	AINTB	Artificial Intel.	
+ 	AIPSD	Annals Israel Phys.Soc.	
+ 	AIPTE	Ann.Inst.Henri Poincare Phys.Theor.	
+ 	AISJB	J.Am.Soc.Inf.Sci.	
+ 	AISXA	Annals Inst.Stat.Math.	
+ 	AIVND	Atti Inst.Veneto Sci.Lett.Arti	
+ 	AJCHA	Austral.J.Chem.	
+ 	AJCOD	Am.J.Clin.Oncol.Cancer Clin.Trials	
+ 	AJHGA	Am.J.Hum.Genet.	
+ 	AJMAA	Am.J.Math.	
+ 	AJPIA	Am.J.Phys.	
+ 	AJPLA	Australasian J.Philos.	
+ 	AJSCA	Am.J.Sci.	
+ 	AJSED	Arabian.J.Sci.Eng.	
+ 	AJUSA	Antarc.J.	
+ 	AKMTA	Ark.Mat.	
+ 	AKZHA	Akust.Zhurn.	
+ 	ALECE	Astrophys.Lett.Commun.	
+ 	ALETE	Astron.Lett.	
+ 	ALFBD	Acta Univ.Lodz.	
+ 	ALG-G	ALG-GEOM	
+ 	ALGOE	Algorithmica	
+ 	ALNBA	Bull.Austral.Math.Soc.	
+ 	AMACC	Antimicrob.Agents Ch.	
+ 	AMAFA	Ark.Mat.Astron.Fys.	
+ 	AMATE	Acta Mater.	
+ 	AMCPC	AMS Colloq.Publ.	
+ 	AMETA	Acta Metall.	
+ 	AMHAA	Abh.Math.Sem.Univ.Hamburg	
+ 	AMHCA	Acta Mech.	
+ 	AMHCB	Appl.Math.Comput.	
+ 	AMLEE	Appl.Math.Lett.	
+ 	AMLOA	Annals Math.Logic	
+ 	AMMEE	Appl.Math.Mech.	
+ 	AMMIA	Amer.Miner.	
+ 	AMMYA	Am.Math.Mon.	
+ 	AMNOA	Not.Amer.Math.Soc.	
+ 	AMNTA	Amer.Nat.	
+ 	AMNVA	Arch.Math.Naturvidensk.	
+ 	AMOMB	Appl.Math.Optim.	
+ 	AMREA	Appl.Mech.Rev.	
+ 	AMSCA	Am.Sci.	
+ 	AMSCD	Appl.Math.Sci.	
+ 	AMTLA	Am.Math.Soc.Transl.	
+ 	AMTMA	AMS Transl.Math.Monogr.	
+ 	ANALA	Analyst	
+ 	ANCHA	Anal.Chem.	
+ 	ANEND	Annals Nucl.Energy	
+ 	ANEUA	Annals Eugen.	
+ 	ANFIA	Anales Fis.	
+ 	ANGLD	Annals Glaciol.	
+ 	ANHGA	Ann.Human Genet.	
+ 	ANJOA	Astron.J.	
+ 	ANLMA	Annali Mat.Pura Appl.	
+ 	ANMAA	Annals Math.	
+ 	ANMAD	Anal.Math.	
+ 	ANMAE	Appl.Numer.Math.	
+ 	ANNGE	Ann.Geophys.	
+ 	ANPHA	Annales Phys.(France)	
+ 	ANPYA	Annalen Phys.	
+ 	ANSEC	Ann.Nucl.Sci.Eng.	
+ 	ANSNA	Arch. Neerl. Sci. Exact Natur.	
+ 	ANUPB	Adv.Nucl.Phys.	
+ 	ANWSE	APS News	
+ 	ANYAA	Annals N.Y.Acad.Sci.	
+ 	ANZIA	ANZIAM J.	
+ 	ANZPE	Austral.N.Zeal.Phys.	
+ 	AOUSE	Acoust.Phys.	
+ 	APACA	Acta Physiol.Acad.Hung.	
+ 	APAHA	Acta Physica Acad.Sci.Hung.	
+ 	APANC	Appl.Anal.	
+ 	APASA	Acta Phys.Austriaca	
+ 	APAUA	Acta Phys.Austriaca Suppl.	
+ 	APBOE	Appl.Phys.B, Lasers Opt.	
+ 	APBYA	Annals Probab.	
+ 	APCAD	Appl.Catal.	
+ 	APCHA	Adv.Prot.Chem.	
+ 	APCPC	AIP Conf.Proc.	
+ 	APEIE	Apeiron	
+ 	APEND	Appl.Energy	
+ 	APFED	Acta Philos.Fenn.	
+ 	APHPF	Heavy Ion Phys.	
+ 	APHQA	Am.Philos.Q.	
+ 	APHUE	Acta Phys.Hung.	
+ 	APHYC	Appl.Phys.	
+ 	APHYE	Astropart.Phys.	
+ 	APJSA	Astrophys.J.Suppl.	
+ 	APMAD	Applications Math.	
+ 	APMTA	Aplikace Mat.	
+ 	APNMA	Annales Polon.Math.	
+ 	APNYA	Annals Phys.	
+ 	APOPA	Appl.Opt.	
+ 	APPCD	Appl.Phys.B Photophys.Laser Chem.	
+ 	APPLA	Appl.Phys.Lett.	
+ 	APPOA	Acta Phys.Polon.	
+ 	APPXA	Acta Phys.Polon.Supp.	
+ 	APSID	Adv.Polymer Sci.	
+ 	APSPA	Appl.Spectrosc.	
+ 	APSSB	Astrophys.Space Sci.	
+ 	APSTA	Appl.Statist.	
+ 	APSVC	Acta Phys.Slov.	
+ 	APTMA	Stud.Cerc.Mat.	
+ 	APTTB	Acta Polytech.	
+ 	APYCA	Acta Phys.Chem.Univ.Szeged	
+ 	AQCHA	Adv.Quant.Chem.	
+ 	ARAAA	Ann.Rev.Astron.Astrophys.	
+ 	ARDCB	Adv.Radiat.Chem.	
+ 	AREPC	Ann.Rev.Earth Planet.Sci.	
+ 	ARISE	Appl.Radiat.Isot.	
+ 	ARMJP	Armenian J.Phys.	
+ 	ARMSC	Ann.Rev.Mater.Sci.	
+ 	ARNUA	Ann.Rev.Nucl.Part.Sci.	
+	Complete	
+ 	ARPHA	Ann.Rev.Physiol.	
+ 	ARPLA	Ann.Rev.Phys.Chem.	
+ 	ARPPA	Ann.Rev.Psych.	
+ 	ARSUA	Arch.Surg.	
+ 	ARTHF	Algebr.Represent.Theory	
+ 	ARVFA	Ann.Rev.Fluid Mech.	
+ 	ARVMA	Archivum Math.	
+ 	ASAEA	Astronaut.Aeronaut.	
+ 	ASANE	Asymp.Anal.	
+ 	ASBIE	Adv.Struct.Biol.	
+ 	ASBSD	Acta Crystallogr.B Struc.Sci.	
+ 	ASEFA	Anales Real.Soc.Espanola Fis.Quim.	
+ 	ASENA	Annales Sci.Ecole Norm.Sup.	
+ 	ASEXE	Astron.Express	
+ 	ASFSB	Analog Sci.Fiction Fact	
+ 	ASGEF	Astron.Geophys.	
+ 	ASGVA	Arch.Sci.(Geneva)	
+ 	ASINA	Actual.Sci.Ind.	
+ 	ASJOA	Astrophys.J.	
+ 	ASMCB	Acta Sci.Math.(Szeged)	
+ 	ASMMA	Atti. Semin. Mat. Fis. Univ. Modena	
+ 	ASNAA	Astron.Nachr.	
+ 	ASNOA	Astrophys.Nor.	
+ 	ASORA	Aust.J.Soil Res.	
+ 	ASPEA	Adv.Spectrosc.	
+ 	ASPFA	Annali Scuola Sup.Norm.Pisa Sci.Fis.Mat.	
+ 	ASPME	Adv.Stud.Pure Math.	
+ 	ASPNA	Arch.Sci.Phys.Nat.	
+ 	ASPOA	Annals Solar Phys.Obs.Cambridge	
+ 	ASPSF	ASP Conf.Ser.	
+ 	ASRAA	Appl.Sci.Res.,Sect.A	
+ 	ASRBA	Appl.Sci.Res.(B)	
+ 	ASRHA	Appl.Sci.Res.	
+ 	ASRSA	Ann.Soc.R.Sci.Med.Nat.Bruxelles	
+ 	ASRSD	Adv.Space Res.	
+ 	ASSBA	Annales Soc.Sci.Brux.Ser.I Sci.Math.Astron.Phys.	
+ 	ASSLA	Astrophys.Space Sci.Libr.	
+ 	ASTAA	Am.Statist.	
+ 	ASTKB	Astrofiz.	
+ 	ASTLA	Astrophys.Lett.	
+ 	ASTRC	Astrobiology	
+ 	ASTRD	Astronomy	
+ 	ASTRE	New Astron.Rev.	
+ 	ASTRO	ASTRO-PH	
+ 	ASTSC	Annals Statist.	
+ 	ASTYD	Aerosol Sci.Technol.	
+ 	ASTZA	Astron.Cirk.Izd.Buro Astron.Sobsc Akad Nauk SSSR	
+ 	ASUEE	Appl.Supercond.	
+ 	ASUSE	Appl.Surf.Sci.	
+ 	ASYBB	AAS Photobull.	
+ 	ASZHA	Astron.Zh.	
+ 	ATCAA	Automatica	
+ 	ATDAA	Atom.Data	
+ 	ATEPA	At.Energiya.Prilozh.	
+ 	ATGRD	ACM Trans.Graph.	
+ 	ATHAM	Adv.Theor.Appl.Mech.	
+ 	ATHBA	Acta Radiol.Ther.Phys.Biol.	
+ 	ATHPB	Adv.Theor.Phys.	
+ 	ATKEA	Atomkernenerg.	
+ 	ATMCE	ACM Trans.Model.Comput.Simul.	
+ 	ATMMA	Atom	
+ 	ATMOA	Atl.Mon.	
+ 	ATMOE	Atmos. Ocean Opt.	
+ 	ATMTS	ACM Trans.Reconf.Tech.Syst.	
+ 	ATOM-	ATOM-PH	
+ 	ATPHD	Atom.Phys.	
+ 	ATPXA	Atompraxis	
+ 	ATPYA	Astrophysics	
+ 	ATROE	Astron.Rep.	
+ 	ATYBA	Ann.Univ.Turku Ser.AL	
+ 	AUBMD	An.Univ.Bucuresti Mat.	
+ 	AUCRA	Ann.U.Craiova Phys.	
+ 	AUJPA	Austral.J.Phys.	
+ 	AUMMB	Acta Univ.Carolinae.Math.Phys.	
+ 	AUOAD	Acta Univ.Ouluensis Ser.A Sci.Rer.Nat.	
+ 	AUONA	Acta Univ.Palacki.Olomuc.Fac.Rerum Nat.	
+ 	AUPHB	Austral.Physicist	
+ 	AURCA	Automat.Remote Control	
+ 	AUTFD	Analele Univ.Timisoara (Stiinte Fiz.)	
+ 	AUWZD	Acta Univ.Wratislav.	
+ 	AUZMA	Analele Stiint.Univ.Cuza (Sect.1A Mat.)	
+ 	AVMHB	Arch.Mech.	
+ 	AVPHA	Adv.Phys.Sci.	
+ 	AVRMA	Arch.Ration.Mech.Anal.	
+ 	AVSTA	Adv.Space Sci.Technol.	
+ 	AWGPA	Gott.Nachr.	
+ 	AWIFA	Angew.Informatik	
+ 	AWLMA	Abh. Akad. Wiss. Lit. Mainz. Nat. Kl.	
+ 	AWSTA	Aviat.Week Space Technol.	
+ 	BAAOA	Bull.Abastumani Astrophys.Obs.	
+ 	BAASA	Rep.Brit.Assoc.Adv.Sci.	
+ 	BAICA	Bull.Astron.Inst.Czech.	
+ 	BAINA	Bull.Astron.Inst.Netherlands	
+ 	BAMIA	Bull.Am.Meteor.Soc.	
+ 	BAMOA	Bull.Am.Math.Soc.	
+ 	BANCA	Bol. Acad. Nac. Cien. Cordoba	
+ 	BANID	Bull.Astron.Soc.India	
+ 	BAPAD	Bull.Acad.Polon.Sci.(Phys.Astron.)	
+ 	BAPMA	Bull.Acad.Pol.Sci.Ser.Sci.Math.Astron.Phys.	
+ 	BAPSA	Bull.Am.Phys.Soc.	
+ 	BASIA	Bull.Atom.Sci.	
+ 	BASSE	Bull.Acad.Polon.Sci.(Math.)	
+ 	BAUAA	Bull.Allahabad Math.Soc.	
+ 	BBACA	Biochim.Biophys.Acta	
+ 	BBPCA	Ber.Bunsenges.Phys.Chem.	
+ 	BBRCA	Biochem.Biophys.Res.Commun.	
+ 	BBSCD	Behav.Brain Sci.	
+ 	BBVMA	Brown Boveri Mitt.	
+ 	BCAOD	Izv.Krym.Astrofiz.Obs.	
+ 	BCBIE	Biochem.Cell Biol.	
+ 	BCMSB	Bull.Calcutta Math.Soc.	
+ 	BCPCA	Biochem.Pharmacol.	
+ 	BCPUE	Banach Center Publ.	
+ 	BCSAA	Bull.Class.Sci. Acad.Roy.Belg.	
+ 	BCSJA	Bull.Chem.Soc.Jap.	
+ 	BCSRD	Bull.Coll.Sci.(Ryukyus)	
+ 	BDPGA	Ber.Deutsch.Phys.Gesellsch.	
+ 	BEAND	Beitr.Anal.	
+ 	BEBEB	Bioelectrochem.Bioenerg	
+ 	BEGOA	Beitr.Geophys.	
+ 	BEHAE	Behaviormetrika	
+ 	BEHSA	Behav.Sci.	
+ 	BELIF	SLAC Beam Line	
+ 	BEVSA	Ber.Verh.Sachs.Akad.Wiss.Leipzig	
+ 	BEYJS	Beykent U.J.Sci.Tech.	
+ 	BGASF	Bull.Georg.Acad.Sci.	
+ 	BGDQA	Bull.Geodesique	
+ 	BICHA	Biochem.	
+ 	BICIA	Biophys.Chem.	
+ 	BICRA	Bull.Inst.Chem.Res.Kyoto	
+ 	BICYA	Biol.Cyber.	
+ 	BIJOA	Biochem.J.	
+ 	BIMAD	Biomaterials	
+ 	BIMSD	Bull.Inst.Math.Acad.Sin.	
+ 	BIOEE	BioEssays	
+ 	BIOFA	Biofiz.	
+ 	BIOJA	Biophys.J.	
+ 	BIOKA	Biometrika	
+ 	BIOMA	Biometrics	
+ 	BIOPE	Biol.Phil.	
+ 	BIPMA	Biopolymers	
+ 	BIPYB	Bull.Israel Phys.Soc.	
+ 	BITXA	Bit	
+ 	BIWIA	Bild.Wiss.	
+ 	BJAPA	Brit.J.Appl.Phys.	
+ 	BJPCB	Brit.J.Pharmacol.	
+ 	BJPHD	Bulg.J.Phys.	
+ 	BJPHE	Braz.J.Phys.	
+ 	BJPIA	Brit.J.Phil.Sci.	
+ 	BJRAA	Brit.J.Radiol.	
+ 	BJSGA	Brit.J.Psych.	
+ 	BLCTD	Bioelectromagnetics	
+ 	BLDSC	Cryst.Lattice Defects	
+ 	BLOOA	Blood	
+ 	BLRCA	Bell Labs Record	
+ 	BLUMA	Boll.Union.Mat.Ital.	
+ 	BMBEA	Bull.Soc.Math.Belg.	
+ 	BMECE	Bioorg.Med.Chem.	
+ 	BMFRA	Biogr.Mem.Fellows Roy.Soc.	
+ 	BMNSA	Biogr.Mem.NAS	
+ 	BMTBA	Bull.Math.Biol.	
+ 	BMTHA	Bibl.Math.	
+ 	BOBGB	Bull.Obs.Astron.Belgrade	
+ 	BONED	Bone	
+ 	BOSFA	Boll.Soc.Ital.Fis.	
+ 	BPLEF	Balk.Phys.Lett.	
+ 	BPSMA	Bull.Acad.Pol.Sci.Cl.3	
+ 	BPYCA	Bull.Inst.Phys.Chem.Res.	
+ 	BRAIA	Brain	
+ 	BRCIA	Bull.Res.Counc.Isr.	
+ 	BRIAA	Bull.Res.Coun.Israel.(A.Chem.)	
+ 	BRIFA	Bull.Res.Coun.Israel.(Sect.F)	
+ 	BROYA	R. Greenwich Observ. Bull.	
+ 	BRREA	Brain Res.	
+ 	BSACD	Bull.Spec.Astrophys.Obs.N.Caucasus	
+ 	BSBMD	Bol.Soc.Bras.Mat.	
+ 	BSCPA	Bull.Soc.Chim.Paris	
+ 	BSDKD	J.Beijing Normal U.(Nat.Sci.)	
+ 	BSMFA	Bull.Soc.Math.Fr.	
+ 	BSMQA	Bull.Sci.Math.	
+ 	BSMXA	Bol.Soc.Mat.Mexicana	
+ 	BSRSA	Bull.Soc.Roy.Sci.Liege	
+ 	BSSAA	Bull.Seismol.Soc.Am.	
+ 	BSSEA	Bull.Soc.Sci.Lett.Lodz	
+ 	BSTJA	Bell Syst.Tech.J.	
+ 	BSYMB	Biosyst.	
+ 	BTUPA	Bull.Union Physiciens	
+ 	BUCAB	Bull.Cancer	
+ 	BUGMA	Geol.Soc.Am.Bull.	
+ 	BUPSA	Bull.Russ.Acad.Sci.Phys.	
+ 	BUSKB	Bussei Kenkyu	
+ 	BUSTA	Bull.Astron.	
+ 	BYTED	Byte	
+ 	CACMA	Commun.ACM	
+ 	CAGDE	Comput. Aided Geom. Des.	
+ 	CAMAC	CAMAC Bull.	
+ 	CAMCA	CA. Cancer J.Clin.	
+ 	CAMPB	Comments Atom.Mol.Phys.	
+ 	CAMUP	Cambridge.Univ.Pr	
+ 	CANED	Comput.Architecture News	
+ 	CANMT	CIRP Ann.Man.Tech.	
+ 	CAOPF	Contrib.Astron.Obs.Skalnate Pleso	
+ 	CAPHA	Cahiers Phys.	
+ 	CARID	Comput.Artif.Intell.	
+ 	CASGE	Chin.Astron.Astrophys.	
+ 	CASME	C.R.Acad.Sci.I,Math.	
+ 	CATTE	Catal. Today	
+ 	CBFMA	Combust.Flame	
+ 	CBHIA	Chem.Biodivers.	
+ 	CBINA	Chem.Biol.Interact.	
+ 	CBIOD	Cell Biophys.	
+ 	CBOLE	Chem.Biol.	
+ 	CBSTB	Combust.Sci.Tech.	
+ 	CCACA	Croat.Chem.Acta	
+ 	CCACB	Crit.Rev.Anal.Chem.	
+ 	CCHRA	Coord.Chem.Rev.	
+ 	CCLAD	Contr.Centro Linceo Interdisc.Sci.Mat. Loro Appl.	
+ 	CCMPA	Clays Clay Miner.	
+ 	CCMPE	Comments Condens.Matter Phys.	
+ 	CCPEB	Concurrency Comput.Pract.Exp.	
+ 	CCRED	Comput.Commun.Rev.	
+ 	CCROA	Cah.Centr.Etud.Rech.Oper.	
+ 	CCRSD	Crit.Rev.Solid State Mater.Sci.	
+ 	CDIAA	Commun.Dublin Inst.Ser.A	
+ 	CDTIA	Curr.Drug Targets Infect.Disord.	
+ 	CECOA	CERN Cour.	
+ 	CELDB	Cosmic Electrodyn.	
+ 	CELLB	Cell	
+ 	CENTA	Centaurus	
+ 	CERDA	Chemie der Erde	
+ 	CESCA	Chem.Eng.Sci.	
+ 	CESTE	Coast.Estuar.Stud.	
+ 	CESWA	Combust.Explos.Shock Waves	
+ 	CEUJE	Chem.Eur.J.	
+ 	CGEOD	Comput.Geosci.	
+ 	CGRAD	Comput.Graphics	
+ 	CHACD	J.Korean Astron.Soc.	
+ 	CHAO-	CHAO-DYN	
+ 	CHAOE	Chaos	
+ 	CHCOF	Chem.Commun.	
+ 	CHDBA	Compt.Rend.Hebd.Seances Acad.Sci.Ser.B Sci.Phys.	
+ 	CHEM-	CHEM-PH	
+ 	CHGEA	Chem. Geol.	
+ 	CHMBA	Chem.Brit.	
+ 	CHMTA	Chin.Math.	
+ 	CHMTE	Chemtron.	
+ 	CHNUE	Publ.Korean Astron.Soc.	
+ 	CHPHD	Chin.Phys.	
+ 	CHPLB	Chem.Phys.Lett.	
+ 	CHREA	Chem.Rev.	
+ 	CHRLE	Chirality	
+ 	CHTHA	Acta Sci.Nat.Univ.Sunyatsenyi	
+ 	CHWEA	Chem.Weekbl.	
+ 	CICMD	CISM Courses Lect.	
+ 	CIENA	Ciencia	
+ 	CIHOE	Ciencia Hoje	
+ 	CIWOD	Circ.World	
+ 	CJAAA	Chin.J.Astron.Astrophys.	
+ 	CJCHA	Can.J.Chem.	
+ 	CJESA	Can.J.Earth Sci.	
+ 	CJMAA	Can.J.Math.	
+ 	CJMAD	Chin.J.Math.	
+ 	CJOPA	Chin.J.Phys.	
+ 	CJPHA	Can.J.Phys.	
+ 	CJREA	Can.J.Res.	
+ 	CJSEE	Chin. J. Syst. Eng. Electron.	
+ 	CKAKD	Chem.Kunststoffe Aktuell	
+ 	CKCFA	Cesk.Cas.Fys.	
+ 	CLCHD	Clim.Change	
+ 	CLCOF	Cluster Comput.	
+ 	CLEPA	Cargese Lect.Phys.	
+ 	CLMCA	Celestial Mech.	
+ 	CLPNA	Collect.Phenom.	
+ 	CMAPD	Comput.Math.Appl.	
+ 	CMATE	Chem.Mater.	
+ 	CMBUA	Can.Math.Bull.	
+ 	CMDAE	Celest.Mech.Dyn.Astron.	
+ 	CMEJA	Chem.Eng.J.	
+ 	CMETE	Contin.Mech.Thermodyn.	
+ 	CMMEC	Comput.Methods Appl.Mech.Eng.	
+ 	CMMPA	USSR Comput.Math.Math.Phys.	
+ 	CMMPE	Cambridge Monogr.Math.Phys.	
+ 	CMMSE	Comput.Mater.Sci.	
+ 	CMOPF	Comments Mod.Phys.	
+ 	CMPCE	Camb.Monogr.Part.Phys.Nucl.Phys.Cosmol.	
+ 	CMPDA	Comput.Design	
+ 	CMPHA	Commun.Math.Phys.	
+ 	CMPHC	Chem.Phys.	
+ 	CMPHF	Condensed Matter Phys.	
+ 	CMPJA	Comput.J.	
+ 	CMPMA	Compos.Math.	
+ 	CMPTA	Computing	
+ 	CMRMB	Concepts Magn.Reson.Part B	
+ 	CMRPC	Concepts Magn.Reson.Part A	
+ 	CMSHA	Chemosphere	
+ 	CMTHE	Condensed Matter Theor.	
+ 	CNDCE	Chance	
+ 	CNEWA	Chem.News J.Phys.Sci.	
+ 	CNMPB	Can.Math.Congr.Proc.	
+ 	CNPPA	Comments Nucl.Part.Phys.	
+ 	CNSSF	Commun.Nonlinear Sci.Numer.Simul.	
+ 	CNTSE	Connection Sci.	
+ 	COALD	Commun.Algebra	
+ 	COASB	Comments Astrophys. Space Phys.	
+ 	COASD	Comments Astrophys.	
+ 	COCBF	Curr.Opin.Chem.Biol.	
+ 	COCHD	Comput.Chem.	
+ 	COCOD	Comput.Commun.	
+ 	COCSF	Curr.Opin.Colloid Interface Sci.	
+ 	COGRD	Comput.And Graphics	
+ 	COGSD	Cognitive Sci.	
+ 	COINA	Colloq.Int.CNRS	
+ 	COJOA	Colloid J.USSR	
+ 	COLMB	Collect.Math.	
+ 	COMAA	Comment.Math.Univ.St.Pauli	
+ 	COMBD	Combinatorica	
+ 	COMHA	Comment.Math.Helv.	
+ 	COMIE	Comput.Intell.	
+ 	COMPF	Complexity	
+ 	COMSD	Comput.Sci.Dis.	
+ 	COND-	COND-MAT	
+ 	CONFP	Conf.Proc.	
+ 	COPHD	Commun.Phys.	
+ 	COPUE	Curr.Opinion.Neurobiol.	
+ 	COREA	Compt.Rend.Math.	
+ 	COSBE	Curr.Opin.Struct.Biol.	
+ 	COSPB	Comments Solid State Phys.	
+ 	COSUD	Colloids Surf.	
+ 	CPAMA	Commun.Pure Appl.Math.	
+ 	CPCFB	Comments Plasma Phys.Contr.Fusion	
+ 	CPCOF	Comb.Probab.Comput.	
+ 	CPDID	Commun.Part.Diff.Eq.	
+ 	CPEAE	Colloids Surf.A Physicochem.Eng.Aspects	
+ 	CPEXE	Concurrency Practice Exper.	
+ 	CPGRA	Comput.Rev.	
+ 	CPHCB	Comput.Phys.Commun.	
+ 	CPHRE	Comput.Phys.Rept.	
+ 	CPHYE	Comput.Phys.	
+ 	CPLEE	Chin.Phys.Lett.	
+ 	CPLUS	C++ Rept.	
+ 	CPMSB	Colloid Polym.Sci.	
+ 	CPMTA	Cas.Pestovani Mat.	
+ 	CPOSA	Comment.Pont.Acad.Sci.	
+ 	CPPHE	Contrib.Plasma Phys.	
+ 	CPREA	Chem.Proc.Eng.	
+ 	CPSCE	Curr.Phys.Sources Comments	
+ 	CPSYE	Complex Syst.	
+ 	CPTRB	Computer	
+ 	CQGRD	Class.Quant.Grav.	
+ 	CQMAA	Colloq.Math.	
+ 	CQOPD	Coherence Quantum Opt.	
+ 	CRABA	Compt.Rend.Acad.Sci.Bulg.	
+ 	CRAME	Compt.Rend.Acad.Sci.(Ser.II)	
+ 	CRBNA	Carbon	
+ 	CRCME	Reg.Conf.Ser.Appl.Math.	
+ 	CRELA	Crelle	
+ 	CRIGB	Cryog.Ind.Gases	
+ 	CRJSA	Caribbean J.Sci.Math.	
+ 	CRLIA	Coll.Res.Libr.	
+ 	CRPOB	Comptes Rendus Physique	
+ 	CRSUD	C.R.Seances Acad.Sci.II	
+ 	CRTED	Cryst.Res.Technol.	
+ 	CRTOE	Chem.Res.Toxicol.	
+ 	CRYEB	Cryog.Eng.	
+ 	CRYOA	Cryogenics	
+ 	CRYPE	Cryptologia	
+ 	CSAPC	Case Stud.Atomic Phys.	
+ 	CSBUE	Chin.Sci.Bull.	
+ 	CSCID	Cahiers Sci.	
+ 	CSCRA	Cosmic Res.	
+ 	CSDAD	Comput.Stat.Data Anal.	
+ 	CSENF	Comput.Sci.Eng.	
+ 	CSFOE	Chaos Solitons Fractals	
+ 	CSMOE	Cambridge Stud.Mod.Opt.	
+ 	CSPJA	Can.Aeron.Space J.	
+ 	CSRPB	Chem.Scripta	
+ 	CSRVB	Chem.Soc.Rev.	
+ 	CSTIE	Comput.Stand.Interfaces	
+ 	CSTMD	Commun.Stat.	
+ 	CTGDB	Cahiers Topo.Geom.Diff.	
+ 	CTIND	Cal.Tissue Int.	
+ 	CTMAE	Contemp.Math.	
+ 	CTMOF	Combust.Theor.Model.	
+ 	CTPHA	Contemp.Phys.	
+ 	CTPMD	Commun.Theor.Phys.	
+ 	CTRAA	Cables Transmission	
+ 	CUSCA	Curr.Sci.	
+ 	CVGPD	Comput.Vision Graphics Image Proc.	
+ 	CVTAD	Complex Variables Theor.Appl.	
+ 	CYSTE	Cystallogr.Rep.	
+ 	CYSYD	Cybernetics Syst.	
+ 	CZMJA	Czech.Math.J.	
+ 	CZYPA	Czech.J.Phys.	
+ 	DAANE	Dokl.Akad.Nauk Ukr.SSR (Ser.A Fiz.Mat.Tekh.Nauk)	
+ 	DABBB	Diss.Abstr.Int.	
+ 	DABSE	Dokl.Akad Nauk.Belarus	
+ 	DAEDA	Daedalus	
+ 	DAMAD	Discrete Appl.Math.	
+ 	DANAA	Dokl.Akad.Nauk Arm.SSR	
+ 	DANKA	Dokl.Akad.Nauk Ser.Fiz.	
+ 	DANTA	Dokl.Math.Akad.Nauk Tadzh.SSR	
+ 	DANUA	Dokl.Akad.Nauk Uzb.SSR	
+ 	DBANA	Dokl.Bulg.Akad.Nauk	
+ 	DBANE	Compt.Rend.Acad.Bulg.Sci.	
+ 	DCGEE	Discrete Comput.Geom.	
+ 	DDDAD	Diffus.Defect Data	
+ 	DECUA	Decuscope	
+ 	DEMAD	Demonstratio Math.	
+ 	DESJD	DESY Journal	
+ 	DESOA	Dokl. Earth Sci.	
+ 	DESRA	Deep Sea Res.	
+ 	DFASE	Turk.J.Phys.Astrophys.	
+ 	DFSOA	Discuss.Faraday Soc.	
+ 	DG-GA	DG-GA	
+ 	DGAPE	Differ.Geom.Appl.	
+ 	DGZAA	Denki Gakkai Zasshi	
+ 	DIALA	Dialectica	
+ 	DIEQA	Diff.Eq.	
+ 	DISCE	Discover	
+ 	DIURA	Diff.Urav.	
+ 	DLMAF	D Lib Magazine	
+ 	DMDSA	Drug.Metab.Dispos.	
+ 	DMKDF	Data Min.Knowl.Discov.	
+ 	DMSEE	Turk.J.Math	
+ 	DOPHF	Dokl.Phys.	
+ 	DRMTE	Diam.Rel.Mater.	
+ 	DSMAA	Diss.Math.	
+ 	DSMHA	Discrete Mathematics	
+ 	DSNGA	Denkschr. Schweiz. Naturforsch. Ges.	
+ 	DTARA	Dalton Trans.	
+ 	DTFDE	Doga Turk.J.Phys.	
+ 	DTGDE	Trans.IEICE	
+ 	DUKRA	Dopov.Akad.Nauk Ukr.RSR	
+ 	DUMJA	Duke Math.J.	
+ 	DWXUE	Chin.J.Low Temp.Phys.	
+ 	EBJOE	Eur.Biophys.J.	
+ 	EBRSE	Exp.Brain Res.Ser.	
+ 	ECCMF	Electrochem.Commun.	
+ 	ECELB	Eclairage Elect.	
+ 	ECGLA	Econ.Geol.	
+ 	ECJSE	Electron.Commun.Japan	
+ 	ECMTA	Econometrica	
+ 	ECONF	eConf	
+ 	ECSTF	ECS Trans.	
+ 	EDLED	IEEE Electron. Dev. Lett.	
+ 	EDMNA	Math.Notes	
+ 	EDVBD	EDV Medizin Biologie	
+ 	EENAA	Ergeb.Exakt.Naturwiss.	
+ 	EISSD	Ettore Majorana Int.Sci.Ser.Phys.Sci.	
+ 	EJBEF	Eur.J.Mech.B Fluids	
+ 	EJCOF	Eur.J.Control	
+ 	EJICF	Eur.J.Inorg.Chem.	
+ 	EJNMD	Eur.J.Nucl.Med.	
+ 	EJOCD	Eur.J.Combinatorics	
+ 	EJPHD	Eur.J.Phys.	
+ 	EJSCE	Eur.J.Solid State Inorg.Chem.	
+ 	EKRKA	Elektronik	
+ 	EKTMA	Elektroteknikeren	
+ 	ELCAA	Electrochim.Acta	
+ 	ELECA	Electronics	
+ 	ELEGA	Electron.Eng.	
+ 	ELKKA	Elektrokhim.	
+ 	ELLEA	Electron.Lett.	
+ 	ELODA	Electron.Design	
+ 	ELPWA	Electron.Power	
+ 	EMASD	Environ.Monit.Assess.	
+ 	EMJOD	EMBO J.	
+ 	EMPLD	Earth Moon Planets	
+ 	EMTHA	Elements Math.	
+ 	ENCHD	Environ.Chem.	
+ 	ENDEA	Endeavour	
+ 	ENFUE	Energy Fuels	
+ 	ENMAA	Enseign.Math.	
+ 	ENNLA	Energ.Nucl.(Milan)	
+ 	ENRSE	Endocr.Res.	
+ 	ENSCA	Eng.Sci.	
+ 	ENTRF	Entropy	
+ 	ENTUD	Trud.Inst.Fiz. Akad.Nauk Eston.SSR	
+ 	ENUSA	Exper.Neurol.Supp.	
+ 	EOCME	Evol.Comput.	
+ 	EOSMA	Eos	
+ 	EOSTA	EOS Trans.Am.Geophys.Union	
+ 	EPAPF	Eur.Phys.J.Appl.Phys.	
+ 	EPHJA	Eur.Phys.J.	
+ 	EPHJD	Eur.Phys.J.direct	
+ 	EPHJP	Eur.Phys.J.Plus	
+ 	EPSLA	Earth Planet.Sci.Lett.	
+ 	ERKAA	Eureka Archimedeans J.	
+ 	ERKED	Erkenntnis	
+ 	ERMGB	Ergeb.Math.Grenzgeb.	
+ 	ERRAT	Erratum-ibid.	
+ 	ESABD	ESA Bull.	
+ 	ESAJD	ESA J.	
+ 	ESARD	ESA Sci.Tech.Rev.	
+ 	ESLEF	Electrochem.Sol.State Lett.	
+ 	ESPUD	ESA Spec.Publ.	
+ 	ESTHA	Environ.Sci.Tech.	
+ 	ETAME	Proc.Est.Acad.Sci.Phys.Math.	
+ 	ETFMB	Izv.Akad.Nauk Est.SSR (Fiz.Mat.)	
+ 	ETNAB	Elec.Trans.Numer.Anal.	
+ 	ETOCD	Environ.Toxicol.Chem.	
+ 	ETRMD	Electromagnetics	
+ 	ETTEF	Eur.Trans.Telecommun.	
+ 	EULEE	Europhys.Lett.	
+ 	EUPNA	Europhys.News	
+ 	EVOLA	Evolution	
+ 	EWWWE	Electron.World And Wireless World	
+ 	EXASE	Exper.Astron.	
+ 	EXHMA	Exp.Hematol.	
+ 	EXHTE	Exper.Heat Trans.	
+ 	EXPEA	Experientia	
+ 	EXPPA	Exp.Tech.Phys.	
+ 	EXPSA	Experienta Suppl.	
+ 	FAAPB	Funct.Anal.Appl.	
+ 	FAATD	Fundam.Appl.Toxicol.	
+ 	FAEDS	Far East J.Dyn.Syst.	
+ 	FBSSE	Few Body Syst.Suppl.	
+ 	FBSYE	Few Body Syst.	
+ 	FDCSB	Faraday Discuss.Chem.Soc.	
+ 	FDQTA	Fields Quanta	
+ 	FDRSE	Fluid Dynamics Res.	
+ 	FEBLA	Febs Lett.	
+ 	FECAA	Fiz.Elem.Chast.Atom.Yadra	
+ 	FEDEE	Fusion Eng.Des.	
+ 	FEROA	Ferroelectrics	
+ 	FESIA	Funkcial.Ekvac.	
+ 	FFSPE	Folia Fac.Sci.Nat.Ujep Brunensis	
+ 	FGSEV	Future Gener.Comput.Syst.	
+ 	FHPTA	Fudan J.Nat.Sci.	
+ 	FIBQA	Fibonacci Q.	
+ 	FIPLD	Fiz.Plasmy	
+ 	FISZA	Fiz.Szemle	
+ 	FJACE	Fresenius' J.Anal.Chem.	
+ 	FLDYA	Fluid Dynamics	
+ 	FMLED	FEMS Microbiol.Lett.	
+ 	FMMEA	Fiz.Metal.Metal	
+ 	FMSID	Fiz.Mnogochast.Sistem	
+ 	FMSVA	Fluid Mech.Sov.Res.	
+ 	FNCPA	Fund.Cosmic Phys.	
+ 	FNDPA	Found.Phys.	
+ 	FNTED	Fiz.Nizk.Temp.	
+ 	FOCHF	Found.Chem.	
+ 	FOMAE	Forum Math.	
+ 	FORTA	Fortune	
+ 	FPLEE	Found.Phys.Lett.	
+ 	FPSMA	Fundam.Probl.Stat.Mech.	
+ 	FPYKA	Fortsch.Phys.	
+ 	FRACE	Fractals	
+ 	FRNAA	Foreign Affairs	
+ 	FRPHA	Front.Phys.	
+ 	FSSYD	Fuzzy Sets Syst.	
+ 	FSTKA	Festkorperprobleme	
+ 	FSYCA	Faraday Symp.Chem.Soc.	
+ 	FTCOF	Flow Turbul.Combust.	
+ 	FTPHD	Fundam.Theor.Phys.	
+ 	FTPPA	Fiz.Tekh.Poluprovodn.	
+ 	FUAPA	Funkt.Anal.Pril.	
+ 	FUELA	Fuel	
+ 	FUMAA	Fund.Math.	
+ 	FUNCT	FUNCT-AN	
+ 	FUSCD	Fund.Sci.	
+ 	FUSHA	Funkschau	
+ 	FUSTE	Fusion Tech.	
+ 	FVSAA	Acta.Soc.Sci.Fenn.	
+ 	FYCAB	Fyz. Cas.	
+ 	FYTIA	Fiz.Tidsskrift	
+ 	FZKAA	Fizika	
+ 	FZTTA	Fiz.Tverd.Tela	
+ 	GAELE	Galilean Electrodyn.	
+ 	GAFDD	Geophys.Astrophys.Fluid Dynamics	
+ 	GCACA	Geochim.Cosmochim.Acta	
+ 	GCITA	Gazz.Chim.Ital.	
+ 	GEAEA	Geomagn.Aeronom.	
+ 	GEEAA	Geochem.Explor.Environ.Anal.	
+ 	GEKEA	Genshikaku Kenkyu	
+ 	GEMDA	Geom.Dedicata	
+ 	GEMIE	Gemini	
+ 	GENRA	Genet.Res.	
+ 	GEOJA	Geophys.J.R.Astron.Soc.	
+ 	GEOKA	Geokhim.	
+ 	GEOXA	Geoexploration	
+ 	GETRF	Geochem.Trans.	
+ 	GFANF	Geom.Funct.Anal.	
+ 	GFSIA	Giornale Fis.	
+ 	GJINE	Geophys.J.Int.	
+ 	GJOUD	Geophys.J.(U.S.)	
+ 	GLBEA	Glastech.Ber.	
+ 	GLGYB	Geology	
+ 	GLMAB	Glasnik Mat.	
+ 	GLMJA	Glasgow Math.J.	
+ 	GLMWA	Grundlehren Math.Wiss.	
+ 	GMARA	Geomagn.Aeron.	
+ 	GMBTA	Giorn.Mat.Battaglini	
+ 	GMJOE	Georgian Math.J.	
+ 	GMSBA	Geom. Sb.	
+ 	GNTAA	Ganita	
+ 	GPPRA	Geophys.Prospect.	
+ 	GPRLA	Geophys.Res.Lett.	
+ 	GPYSA	Geophysics	
+ 	GR-QC	GR-QC	
+ 	GRCOF	Grav.Cosmol.	
+ 	GRGVA	Gen.Rel.Grav.	
+ 	GTMAD	Grad.Texts Math.	
+ 	GTNQA	Geotech.	
+ 	GUXUE	Acta Photonica Sin.	
+ 	GZMTA	Gaz.Mat.	
+ 	HADJM	Hadronic J.	
+ 	HCREE	Heterogeneous Chem.Rev.	
+ 	HDIZA	Hiroshima Math.J.	
+ 	HDPHA	Handb.Phys.	
+ 	HDTSA	Heidelb.Taschenb.	
+ 	HEP-E	HEP-EX	
+ 	HEP-L	HEP-LAT	
+ 	HEP-P	HEP-PH	
+ 	HEP-T	HEP-TH	
+ 	HGDKD	Bull.Fac.Sch.Educ.Hiroshima	
+ 	HIASD	Highlights Astron.	
+ 	HIECA	High Energ.Chem.	
+ 	HIMAD	Historia Math.	
+ 	HJMAD	Houston J.Math.	
+ 	HJSUE	Hadronic J.Suppl.	
+ 	HKAGD	Hozon Kagaku	
+ 	HLTPA	Health Phys.	
+ 	HMAJD	Hokkaido Math.J.	
+ 	HMATB	Hochschulb.Math.	
+ 	HPACA	Helv.Phys.Acta	
+ 	HPCQA	Human Pathol.	
+ 	HPHYA	Hochschulb.Phys.	
+ 	HPRSE	High Press.Res.	
+ 	HPYSA	Helv.Phys.Acta Suppl.	
+ 	HSPSE	Hist.Stud.Nat.Sci.	
+ 	HTHPA	High Temp.High Pressures	
+ 	HTKHA	Nucl.Sci.J.	
+ 	HUAPA	Hung.Acta Phys.	
+ 	HYIND	Hyperfine Interact.	
+ 	IAAFA	Izv.Akad.Nauk Arm.SSR Fiz.	
+ 	IACOE	Int.J.Alg.Comput.	
+ 	IACPA	Proc.Int.Astronaut.Congr.	
+ 	IAFZA	Izv.Akad.Nauk SSSR,Fiz.Zemli	
+ 	IAKGA	Izv.Akad.Nauk SSR Ser.Geogr.Geofiz.	
+ 	IAMAE	IEEE ASSP Magazine	
+ 	IAMNA	Izv.Akad.Nauk Arm.SSR (Ser.Fiz.Mat.Nauk)	
+ 	IANFA	Izv.Akad.Nauk Ser.Fiz.	
+ 	IANUA	IAU Circ.	
+ 	IAOPB	Atmos.Oceanic Phys.	
+ 	IASYA	IAU Symp.	
+ 	IBMJA	IBM J.Res.Dev.	
+ 	IBRRB	IBM Res.Rep.	
+ 	IBVSD	Inform.Bull.Var.Stars	
+ 	ICDME	IEEE Circuits Devices Mag.	
+ 	ICHAA	Inorg.Chim.Acta	
+ 	ICOEE	Impact Comput.Sci.Eng.	
+ 	ICOMD	IEEE Commun.Mag.	
+ 	ICRSA	Icarus	
+ 	ICSAE	Informationstech.	
+ 	IDEXW	Ideen d. Exakt. Wiss.	
+ 	IEANE	IEEE/ACM Trans.Netw.	
+ 	IEBEA	IEEE Trans.Biomed.Eng.	
+ 	IECHA	Indust.Eng.Chem.	
+ 	IECMB	IEEE Trans.Commun.	
+ 	IECRE	Ind.Eng.Chem.Res.	
+ 	IEECA	IEEE Trans.Electron.Comput.	
+ 	IEEDA	IEEE Trans.Educ.	
+ 	IEEPA	IEEE Proc.	
+ 	IEESA	IEEE Spectrum	
+ 	IEETA	IEEE Trans.Info.Theor.	
+ 	IEIMA	IEEE Trans.Instrum.Measur.	
+ 	IEJQA	IEEE J.Quant.Electron.	
+ 	IELRA	Int.Elek.Rundsch.	
+ 	IEMBD	IEEE Eng.Med.Bio.Mag.	
+ 	IEMCA	IEEE Trans.Electromagn.Compat.	
+ 	IEMGA	IEEE Trans.Magnetics	
+ 	IEMID	IEEE Micro	
+ 	IENEE	IEEE Network	
+ 	IEOTE	Integral Equ. Oper. Theor.	
+ 	IERME	Intermetallics	
+ 	IESCA	IEEE Trans.Syst.Sci.Cybern.	
+ 	IESED	IEEE Trans.Software Eng.	
+ 	IETAA	IEEE Trans.Automatic Control	
+ 	IETAB	IEEE Trans.Acoust.Speech Signal Proc.	
+ 	IETCA	IEEE Trans.Circ.Theor.	
+ 	IETDA	IEEE Trans.Electron.Dev.	
+ 	IETIA	IEEE Trans.Electric.Insul.	
+ 	IETMA	IEEE Trans.Microwave Theor.Tech.	
+ 	IETNA	IEEE Trans.Nucl.Sci.	
+ 	IETPA	IEEE Trans.Anten.Propag.	
+ 	IFABA	Izv.Fiz.Inst.Bulg.Akad.Nauk.	
+ 	IFCNA	Info.Control	
+ 	IFERE	Integr.Ferroelectr.	
+ 	IFESE	IEICE Trans.Fund.Elec.Comm.Comp.Sci.	
+ 	IFMAA	Istanbul Univ.Fen Fak.Mecm.A Ser.Srfi Tatb.Mat.	
+ 	IFPLA	Inform.Proc.Lett.	
+ 	IGAEF	Int.J.Geomagn.Aeron.	
+ 	IGRSD	IEEE Trans.Geosci.Remote Sensing	
+ 	IHSCE	Int.J.High Speed Computing	
+ 	IHSEE	Int.J.High Speed Electron.	
+ 	IIBUF	ICFA Instrum.Bull.	
+ 	IIPRE	IEEE Trans.Image Process.	
+ 	IJAMD	Ima J.Appl.Math.	
+ 	IJAND	IMA J.Numer.Anal.	
+ 	IJANF	Int.J.Astrobiol.	
+ 	IJARA	Int.J.Appl.Radiat.Isotopes	
+ 	IJBEE	Int.J.Bifurc.Chaos	
+ 	IJCMA	Int.J.Comput.Math.	
+ 	IJCOA	Int.J.Control	
+ 	IJCVE	Int.J.Comput.Vision	
+ 	IJCYE	Int.J.Commun.Syst.	
+ 	IJELA	Int.J.Electron.	
+ 	IJESA	Int.J.Eng.Sci.	
+ 	IJGSA	Int.J.General Systems	
+ 	IJHMA	Int.J.Heat Mass Transf.	
+ 	IJITE	Int.J.Imaging Syst.Tech.	
+ 	IJIWD	Int.J.Infrared MM Waves	
+ 	IJMEB	Int.J.Math.Educ.Sci.Tech.	
+ 	IJMHA	Indian J.Pure Appl.Math.	
+ 	IJMIE	IMA J.Manag.Math.	
+ 	IJMNA	Int.J.Magn.	
+ 	IJMPD	Int.J.Mass Spectr.Ion Process.	
+ 	IJMTA	Ill.J.Math.	
+ 	IJMTM	Int.J.Machine Tools Man.	
+ 	IJNFD	Int. J. Numer. Methods Fluids	
+ 	IJNFE	Int.J.Numer.Model.,Electron.Netw.Devices Fields	
+ 	IJNGD	Int.J.Numer.Anal.Methods Geomech.	
+ 	IJNMA	Int.J.Nonlinear Mech.	
+ 	IJNMB	Int.J.Numer.Meth.Eng.	
+ 	IJNUB	Int.J.Neurosci.	
+ 	IJOCA	Indian J.Chem.	
+ 	IJOMA	Indian J. Math.	
+ 	IJOPA	Indian J.Pure Appl.Phys.	
+ 	IJPAP	Int.J.Pure Appl.Phys.	
+ 	IJPBD	Indian J.Phys.B	
+ 	IJPPC	Int. J. Pept. Protein Res.	
+ 	IJPYA	Indian J.Phys.	
+ 	IJQCB	Int.J.Quant.Chem.	
+ 	IJQSA	Int.J.Quant.Chem.Symp.	
+ 	IJRAE	IEEE J.Robot.Automat.	
+ 	IJRBE	Int.J.Radiat.Biol.	
+ 	IJRCA	Int.J.Rad.Phys.Chem.	
+ 	IJRRE	Int.J.Robotics Res.	
+ 	IJSAA	Indian J.Statist.A	
+ 	IJSAE	Int.J.Supercomput.Appl.	
+ 	IJSCB	IEEE J.Solid State Circuits	
+ 	IJSCE	Int.J.Satell.Commun.	
+ 	IJSOA	Int.J.Solids Struc.	
+ 	IJSQE	IEEE J.Sel.Top.Quant.Electron.	
+ 	IJSTB	Iran.J.Sci.Technol.	
+ 	IJSZE	Int.J.Neural Syst.	
+ 	IJTHD	Int.J.Thermophys.	
+ 	IJTPA	Indian J.Theor.Phys.	
+ 	IJTPB	Int.J.Theor.Phys.	
+ 	IJTPC	Int.J.Theor.Phys.Group Theor.Nonlin.Opt.	
+ 	IKPIB	Izv.Univ.Kiev	
+ 	IMGLE	IEEE Microw.Guid.Wave Lett.	
+ 	IMICO	Int.J.Hybrid Microelectron.	
+ 	IMIDD	IEEE MTT.S Int.Microw.Symp.Dig.	
+ 	IMPAE	Int.J.Mod.Phys.	
+ 	IMPAZ	Int.J.Mod.Phys.Proc.Suppl.	
+ 	IMPHA	Int.Ser.Monogr.Phys.	
+ 	IMSPF	Int.J.Mass Spectrometry	
+ 	IMTAB	Bull.Inst.Math.Appl.	
+ 	IMTHB	Indag.Math.	
+ 	IMTPA	Intersci.Monogr.Phys.Astron.	
+ 	IMWCB	IEEE Microw.Wirel.Compon.Lett.	
+ 	INCOE	Interfaces Comput.	
+ 	INETA	Instrum.Exp.Tech.	
+ 	INFCE	Inform. and Comput.	
+ 	INFPA	Infrared Physics	
+ 	INFTJ	Info.Tech.J.	
+ 	INJAD	Indian J.Phys.A	
+ 	INOCA	Inorg.Chem.	
+ 	INOMA	Inorg.Mater.	
+ 	INOMF	J.Nonlin.Opt.Phys.Mater.	
+ 	INPEE	Inverse Prob.	
+ 	INSYD	Inf.Syst.	
+ 	INTAC	Itogi Nauk.Tekh.Ser.Astron.	
+ 	INUCA	Inorg.Nucl.Chem.Lett.	
+ 	INVMB	Invent.Math.	
+ 	INVRA	Invest.Radiol.	
+ 	IOBPD	Int.J.Radiat.Oncol.Biol.Phys.	
+ 	IPAMB	Int.Ser.Monogr.Pure Appl.Math.	
+ 	IPDAD	IEE Proc.D.Control Th.Appl.	
+ 	IPERD	IEEE Power Eng.Rev.	
+ 	IPRXA	Isotopenpraxis	
+ 	IPSEB	Izv.Acad.Sci.USSR Phys.Solid Earth	
+ 	IPTEE	Infrared Phys.Tech.	
+ 	IPTLE	IEEE Photonics Tech.Lett.	
+ 	IPYSA	Int.Phys.Ser.	
+ 	IRAFE	Izv.Ross.Akad.Nauk Ser.Fiz.	
+ 	IRAJA	Irish Astron.J.	
+ 	IRAKA	Izv.Ross.Akad.Nauk.	
+ 	IRAUE	IEEE Trans.Robotics Automation	
+ 	IRCYA	Int.Rev.Cytology	
+ 	IRNPE	Int.Rev.Nucl.Phys.	
+ 	IRPCD	Int.Rev.Phys.Chem.	
+ 	ISAGE	Itogi Nauk. Tekh. Ser. Alg. Topol. Geom.	
+ 	ISCEE	IEEE Comput.Sci.Eng.	
+ 	ISCRD	Interdisc.Sci.Rev.	
+ 	ISIJB	Info.Sci.	
+ 	ISJCA	Israel J.Chem.	
+ 	ISJMA	Isr.J.Math.	
+ 	ISMCE	Int.Ser.Monogr.Chem.	
+ 	ISMNA	Int.Ser.Monogr.Nat.Phil.	
+ 	ISPMD	Itogi Nauki Tekhn.Sovrem.Problemy Matem.	
+ 	ISTLF	Issues Sci.Technol.Librariansh.	
+ 	ISTPE	ICTP Ser.Theor.Phys.	
+ 	ISTRD	Int.Statist.Rev.	
+ 	ISYMA	IEEE Trans.Syst.Man Cybern.	
+ 	ITADA	IEEE Trans.Audio Electroacoust.	
+ 	ITAPF	IEEE Trans.Adv.Packag.	
+ 	ITASE	IEEE Trans.Appl.Supercond.	
+ 	ITCAE	IEEE Trans.Circuits Theor.	
+ 	ITCOB	IEEE Trans.Comput.	
+ 	ITDIE	IEEE Trans.Dielectr.Electr.Insul.	
+ 	ITDSE	IEEE Trans.Parallel Distrib.Syst.	
+ 	ITEVE	IEEE Trans.Evol.Comput.	
+ 	ITIAC	IEEE Trans.Indust.Appl.	
+ 	ITKEE	IEEE Trans.Knowledge Data Eng.	
+ 	ITMID	IEEE Trans.Med.Imag.	
+ 	ITNNE	IEEE Trans.Neural Networks	
+ 	ITPAA	Interscience Tracts Phys.Astron.	
+ 	ITPDE	IEEE Trans.Power Deliv.	
+ 	ITPID	IEEE Trans.Pattern Anal.Machine Intell.	
+ 	ITPMA	Interscience Tracts Pure Appl.Math.	
+ 	ITPRE	IEEE Trans.Signal Process.	
+ 	ITPSB	IEEE Trans.Plasma Sci.	
+ 	ITRCD	Interciencia	
+ 	ITSFE	Integral Transform. Spec. Funct.	
+ 	ITUCE	IEEE Trans.Ultrason.Ferroelectr.Freq.Control	
+ 	IUJPH	ICFAI U.J.Phys.	
+ 	IUMJA	Indiana Univ.Math.J.	
+ 	IUNIE	Immunity	
+ 	IUZFA	Izv.Akad.Nauk Uzb.SSR	
+ 	IVNMA	Izv.Akad.Nauk SSSR (Neorg.Mater.)	
+ 	IVPHA	Invest.Phys.	
+ 	IVUFA	Izv.Vuz.Fiz.	
+ 	IVUMB	Izv.Vuz.Mat.	
+ 	IVYRA	Izv.Vuz.Radiofiz.	
+ 	IZAMA	Izv.Akad.Nauk SSR (Ser.Mat.)	
+ 	IZFMB	Izv.Akad.Nauk Mold.SSR Ser.Fiz.Tekh.Mat.Nauk	
+ 	IZMTB	Izv.Akad.Nauk SSSR Mekh.Tverd.Tela	
+ 	IZTEA	Izmer. Tekh.	
+ 	IZYSA	Inz.Stavby	
+ 	JAAOD	J.Am.Assoc.Var.Star Obs.	
+ 	JACGA	J.Appl.Cryst.	
+ 	JACOA	J.Assoc.Comput.Machinery	
+ 	JACSA	J.Am.Chem.Soc.	
+ 	JACTA	J.Amer.Ceramic Soc.	
+ 	JADNA	J.Adhesion	
+ 	JAECA	J.Anim.Ecol.	
+ 	JAFCA	J.Agric.Food Chem	
+ 	JAHSA	J.Atmos.Sci.	
+ 	JAIRF	J.Artif.Intell.Res.	
+ 	JAJPA	Jap.J.Phys.	
+ 	JALCE	J.Alloys Compounds	
+ 	JALGA	J.Algebra	
+ 	JALSA	J.Astronaut.Sci.	
+ 	JALSB	J.Aerosol Sci.	
+ 	JAMAA	JAMA	
+ 	JAMAD	J.Austral.Math.Soc.Ser.A	
+ 	JAMMA	J.Appl.Math.Mech.	
+ 	JAMMD	J.Austral.Math.Soc.Ser.B	
+ 	JAMOA	J.Appl.Meteor.	
+ 	JAOME	J.Algebr.Comb.	
+ 	JAPIA	J.Appl.Phys.	
+ 	JAPNA	J.Appl.Polymer Sci.	
+ 	JAPYA	J.Appl.Physiol.	
+ 	JAREA	Jahrb.Rad.Elektron.	
+ 	JAREE	J.Automat.Reas.	
+ 	JARSA	J.Am.Rocket Soc.	
+ 	JASCA	J.Aeron.Sci.	
+ 	JASCD	J. Archaeol.Sci.	
+ 	JASIS	J.Am.Soc.Inf.Sci.Tech.	
+ 	JASMA	J.Acoust.Soc.Am.	
+ 	JASPF	J.Atmos.Sol.Terr.Phys.	
+ 	JASRD	J.Astrophys.Astron.	
+ 	JASYA	J.Appl.Spectrosc.	
+ 	JASYB	J.Assam Sci.Soc.	
+ 	JATCE	J.Atmos.Chem.	
+ 	JATPA	J.Atmos.Terr.Phys.	
+ 	JAUMA	J.Austral.Math.Soc.	
+ 	JAXTA	J.Approx.Theor.	
+ 	JBAAA	J.Br.Astron.Assoc.	
+ 	JBAEA	J.Basic Eng.	
+ 	JBBMD	J.Biochem.Biophys.Methods	
+ 	JBCHA	J.Biol.Chem.	
+ 	JBESE	J.Bus.Econ.Stat.	
+ 	JBISA	J.Br.Interplanet.Soc.	
+ 	JBJSA	J.Bone Joint.Surg.	
+ 	JBNSA	J.Br.Nucl.Energy Soc.	
+ 	JBPHB	J.Biol.Phys.	
+ 	JBSIA	J.Phys.E	
+ 	JCAMD	J.Comput.Appl.Math.	
+ 	JCAPA	JCAP	
+ 	JCATD	J.Comput.Assist.Tomogr.	
+ 	JCBTA	J.Comb.Theory Ser.	
+ 	JCCCA	J.Chem.Soc.Chem.Commun.	
+ 	JCCHD	J.Comput.Chem.	
+ 	JCCTA	J.Chin.Chem.Soc.	
+ 	JCEDA	J.Chem.Educ.	
+ 	JCFTA	J.Chem.Soc.Faraday Trans. 1	
+ 	JCFTB	J.Chem.Soc. Faraday Trans.2	
+ 	JCFTE	J.Chem.Soc.Faraday Trans.	
+ 	JCHPA	J.Chem.Phys.Soc.	
+ 	JCISA	J.Coll.Interface Sci.	
+ 	JCISD	J.Chem.Inf.Comput.Sci.	
+ 	JCLBA	J.Cell Biol.	
+ 	JCLLA	J.Cell.Compar.Physiol.	
+ 	JCMME	J.Comput.Math.	
+ 	JCMSC	J.Comput.Meth.Sci.Eng.	
+ 	JCNEF	J.Comput.Neurosci.	
+ 	JCOMA	J.Less Common Met.	
+ 	JCOME	J.Phys.Condens.Matter	
+ 	JCOPE	J.Contemp.Phys.	
+ 	JCPBA	J.Chim.Phys.Physicochim.Biol.	
+ 	JCPKB	J.Chem.Soc. Perkin Trans.	
+ 	JCPSA	J.Chem.Phys.	
+ 	JCRGA	J.Cryst.Growth	
+ 	JCRLE	J.Commun.Res.Lab.	
+ 	JCSCA	J.Colloid Sci.	
+ 	JCSCE	J.Cluster Sci.	
+ 	JCSSB	J.Comput.Syst.Sci.	
+ 	JCTHA	J.Combin.Theor.	
+ 	JCTLA	J.Cat.	
+ 	JCTPA	J.Comput.Phys.	
+ 	JCYBA	J.Cybern.	
+ 	JDDEE	J.Dyn.Differ.Equ.	
+ 	JDEQA	J.Diff.Eq.	
+ 	JDGEA	J.Diff.Geom.	
+ 	JDMVA	Jber.Deutsch.Math.-Verein	
+ 	JDOCA	J.Doc.	
+ 	JDREA	J.Dent.Res.	
+ 	JEBMA	J.Exper.Biol.	
+ 	JEBOA	J.Exp.Bot.	
+ 	JECMA	J.Electron.Mater.	
+ 	JECSE	J.Eur.Ceramic Soc.	
+ 	JEEAD	J.Electr.Electron.Eng.Aust.	
+ 	JEFIA	J.Eng.Ind.	
+ 	JEIEB	J.Electroanal.Chem.	
+ 	JELJA	J.Electron.Microsc.	
+ 	JEMOF	J.Environ.Monitor.	
+ 	JEPPA	J.Ecole Poly.	
+ 	JERAE	J.Environ.Radioact.	
+ 	JESOA	J.Electrochem.Soc.	
+ 	JESRA	J.Electron Spectrosc.Rel.Phenom.	
+ 	JETMA	J.Fac.Sci.Univ.Tokyo (Sec.1 Math.Astron.Phys.Chem.)	
+ 	JEVQA	J.Environ.Qual.	
+ 	JEWAE	J.Electromagn.Waves Appl.	
+ 	JFEGA	J.Fluids Eng.	
+ 	JFEND	J.Fusion Energ.	
+ 	JFINA	J.Franklin Inst.	
+ 	JFLSA	J.Fluid Mech.	
+ 	JFMAE	Jiurnal Fiz.Malaysia	
+ 	JFTMA	J.Fac.Sci.Tokyo (Sect.1A Math.)	
+ 	JFUAA	J.Funct.Anal.	
+ 	JGANE	J.Geom.Anal.	
+ 	JGCHA	J.Gen.Chem.USSR	
+ 	JGCOA	J.Grid Comput.	
+ 	JGCOD	J.Guid.Control Dyn.	
+ 	JGEGA	J.Geomag.Geoelectr.Japan	
+ 	JGEJA	J.Geodet.Soc.Jap.	
+ 	JGEOA	J.Geology	
+ 	JGGEF	J.Geotech.Geoenviron.Eng.	
+ 	JGMAY	J.Geom.	
+ 	JGPHE	J.Geom.Phys.	
+ 	JGPLA	J.Gen.Physiol.	
+ 	JGPLE	J.Geophys.Res.Planets	
+ 	JGPSE	J.Gen.Phil.Sci.	
+ 	JGRDE	J.Geophys.Res.Atmos.	
+ 	JGREA	J.Geophys.Res.	
+ 	JGSLA	J.Geol.Soc.London	
+ 	JGTHF	J.Group Theory	
+ 	JHAPA	J.Sci.Hiroshima Univ.(A.II Phys.Chem.)	
+ 	JHEBU	J.Hebei U.	
+ 	JHEPA	JHEP	
+ 	JHMAD	J.Hazard.Mater.	
+ 	JHPCA	J. Sci. Hiroshima Univ. Ser. A. Phys. Chem.	
+ 	JHSAA	J.Hist.Astron.	
+ 	JHTCA	J.Heterocyclic Chem.	
+ 	JHUCA	Johns Hopkins Univ.Circulars	
+ 	JHYDB	J.Hydronaut.	
+ 	JIBID	J.Inorg.Biochem.	
+ 	JIDEA	J.Invest.Dermatol.	
+ 	JIEJA	J.Inst.Electric.Eng.Japan	
+ 	JIEQD	J.Integ.Eq.	
+ 	JIISA	J.Indian Inst.Sci.	
+ 	JIMCE	J.Inclus.Phenom.Mol.Recognit.Chem.	
+ 	JIMTA	J.Indian Math.Soc.	
+ 	JINCA	J.Inorg.Nucl.Chem.	
+ 	JINSE	J.Integer Seq.	
+ 	JINST	JINST	
+ 	JIPRD	J.Info.Proc.	
+ 	JIRRA	J.Irreproducible Results	
+ 	JISEA	J.Inst.Electric.Eng.	
+ 	JIVPE	J.Inverse ILL Posed Probl.	
+ 	JIWVE	Chin.J.Comput.Phys.	
+ 	JJAPA	Jap.J.Appl.Phys.	
+ 	JJBCF	J.Biol.Inorg.Chem.	
+ 	JJMAA	Jap.J.Math.	
+ 	JKMSD	J.Korean Math.Soc.	
+ 	JKPSD	J.Korean Phys.Soc.	
+ 	JLEPA	J.Educ.Psychol.	
+ 	JLIAA	J.Lin.Algebra	
+ 	JLMSA	J.Lond.Math.Soc.	
+ 	JLTED	J.Lightwave Tech.	
+ 	JLTPA	J.Low.Temp.Phys.	
+ 	JLUMA	J.Lumin	
+ 	JMACA	Trans.Amer.Soc.Mech.Eng.Appl.Mech.	
+ 	JMACE	J.Mater.Chem.	
+ 	JMANA	J.Math.Anal.Appl.	
+ 	JMAPA	J.Math.Phys.	
+ 	JMASE	J.Mar.Syst.	
+ 	JMBED	J.Mind.Behav.	
+ 	JMBLA	J.Math.Biol.	
+ 	JMCCF	J.Mol.Catal.	
+ 	JMCHE	J.Math.Chem.	
+ 	JMCMA	J.Med.Chem.	
+ 	JMELE	J.Molec.Electron.	
+ 	JMEVA	J.Molec.Evol.	
+ 	JMIYE	J.Microelectromech.Syst.	
+ 	JMKYA	J.Math.(Kyoto)	
+ 	JMLID	J.Mol.Liq.	
+ 	JMLRA	J.Machine Learning Res.	
+ 	JMMMD	J.Magn.Magn.Mater.	
+ 	JMMRA	J.Matr.Res.	
+ 	JMOBA	J.Mol.Biol.	
+ 	JMOPE	J.Mod.Opt.	
+ 	JMOSA	J.Molec.Spectrosc.	
+ 	JMOSB	J.Molec.Struc.	
+ 	JMPAA	J.Math.Pure.Appl.	
+ 	JMPHA	J.Math.and Phys.	
+ 	JMPSA	J.Mech.Phys.Solids	
+ 	JMPSB	J.Math.Phys.Sci.	
+ 	JMPSE	J.Moscow.Phys.Soc.	
+ 	JMPYA	J.Appl.Mech.Tech.Phys.	
+ 	JMREE	J.Mater.Res.	
+ 	JMSEE	J.Mater.Sci.Mater.Electron.	
+ 	JMSJE	J.Mass.Spectrom.Soc.Japan	
+ 	JMSLD	J.Materials Sci.Lett.	
+ 	JMSOA	J.Math.Soc.Jap.	
+ 	JMSPD	J.Macromol.Sci.Chem.	
+ 	JMTAA	J.Inst.Math.Appl.	
+ 	JMTAD	J.Meca.Theor.Appl.	
+ 	JMTMA	J.Math.(Osaka City)	
+ 	JMTPA	J.Math.Psychol.	
+ 	JMTSA	J.Mater.	
+ 	JMTSE	J.Math.Sci.	
+ 	JMTUB	J.Math.(Tokushima)	
+ 	JMVAA	J.Multiv.Anal.	
+ 	JNABA	J.Nucl.Energy, Parts A/B	
+ 	JNBAA	J.Res.Natl.Bur.Stand.A Phys.Chem.	
+ 	JNBBA	J.Res.Natl.Bur.Stand.B Math.Sci.	
+ 	JNCEA	J.Nucl.Energy	
+ 	JNCSA	J.Cell Sci.	
+ 	JNCSB	J.Noncryst.Solids	
+ 	JNETD	J.Nonequil.Thermo.	
+ 	JNFMD	J.NonNewton.Fluid Mech.	
+ 	JNMEA	J.Nucl.Med.	
+ 	JNMED	J.Neurosci.Methods	
+ 	JNOED	J.Nondestruct.Eval.	
+ 	JNPRD	J.Nat.Prod.	
+ 	JNSCE	J.Nonlin.Sci.	
+ 	JNSTA	J.Nucl.Sci.Tech.	
+ 	JNUMA	J.Nucl.Mater.	
+ 	JNUTA	J.Number Theor.	
+ 	JOALD	J.Algorithms	
+ 	JOAMA	J.Anal.Math.	
+ 	JOAOF	J.Opt.	
+ 	JOBOF	J.Opt.B Quant.Semiclass.Opt.	
+ 	JOCEA	J.Org.Chem	
+ 	JOCOE	J.Complexity	
+ 	JOCRA	J.Chromatogr.	
+ 	JOCRE	J.Cryptolog.	
+ 	JOELD	J.Electrostat.	
+ 	JOGEE	J.Geodyn.	
+ 	JOGEF	J.Geod.	
+ 	JOGLA	J.Glaciol.	
+ 	JOMCA	J.Mecan.	
+ 	JOMMA	J.Math.Mech.	
+ 	JOMRA	J.Magn.Resonance	
+ 	JOMTA	J.Metals	
+ 	JOMTE	J.Meteor.	
+ 	JONEA	J.Neurophysiol.	
+ 	JONRA	J.Neurochem.	
+ 	JOOPD	J.Optics	
+ 	JOOPE	J.Object-Oriented program.	
+ 	JOPQA	J.Phys.(France)	
+ 	JOPYA	J.Phys.(USSR)	
+ 	JORCA	J.Organomet.Chem.	
+ 	JOSAA	J.Opt.Soc.Am.	
+ 	JOSMA	J.Sov.Math.	
+ 	JOSUE	J.Supercomput.	
+ 	JOTAB	J.Optim.Th.Appl.	
+ 	JOTHE	J.Operator Theor.	
+ 	JOUSE	J.Supercond.	
+ 	JOVIA	J.Virology	
+ 	JPAAA	J.Pure Appl.Algebra	
+ 	JPAGB	J.Phys.A	
+ 	JPAHE	J.Phys.II	
+ 	JPAIE	J.Phys.III	
+ 	JPAPB	J.Phys.D	
+ 	JPAPE	J.Phys.B.At.Mol.Opt.Phys.	
+ 	JPBAB	J.Phys.B	
+ 	JPBPE	J.Polymer Sci.	
+ 	JPCBA	J.Phys.C	
+ 	JPCCA	J.Phys.Colloid Chem.	
+ 	JPCHA	J.Phys.Chem.	
+ 	JPCQA	J.Chim.Phys.	
+ 	JPCRB	J.Phys.Chem.Ref.Data	
+ 	JPCSA	J.Phys.Chem.Solids	
+ 	JPDCE	J.Parallel Distrib.Comput.	
+ 	JPFMA	J.Phys.F	
+ 	JPGCE	J.Phys.I(France)	
+ 	JPHGB	J.Phys.G	
+ 	JPHIB	J.Philos	
+ 	JPHYA	J.Physiol.	
+ 	JPICE	J.Phys.IV	
+ 	JPJSA	J.Phys.Soc.Jap.Suppl.	
+ 	JPLCA	J.Polym.Sci.Polym.Chem.Ed.	
+ 	JPLGA	J.Phil.Logic	
+ 	JPLPA	J.Polym.Sci.Polym.Phys.Ed.	
+ 	JPLPB	J.Plasma Phys.	
+ 	JPOCE	J.Phys.Org.Chem.	
+ 	JPPBE	J.Photochem.Photobiol.	
+ 	JPPOE	J.Propulsion Power	
+ 	JPQCA	J.Phys.Colloq.	
+ 	JPQSA	J.Phys.(France) Suppl.	
+ 	JPRAA	J.Phys.Radium	
+ 	JPRBA	J.Appl.Probab.	
+ 	JPROB	J.Proteome Res.	
+ 	JPSLB	J.Phys.Lett.	
+ 	JPSOD	J.Power Sources	
+ 	JPTGA	J.Petrol.	
+ 	JPTSB	J.Photogr.Sci.	
+ 	JPYAB	Ann.Japan Ass.Philos.Sci.	
+ 	JPYOB	J.Phys.Oceanogr.	
+ 	JQSRA	J.Quant.Spectrosc.Radiat.Trans.	
+ 	JRACB	J.Radioanal.Chem.	
+ 	JRARA	J.Radiat.Res.	
+ 	JRASA	J.Roy.Astron.Soc.Canada	
+ 	JRCPA	J.Comp.Physiol.	
+ 	JRITE	J.Res.Natl.Inst.Stand.Tech.	
+ 	JRMAA	J.Reine Angew.Math.	
+ 	JRMAB	J.Recr.Math.	
+ 	JRMCA	J.Ration.Mech.Anal.	
+ 	JRNAA	Benelux Q.J.Automat.Control	
+ 	JRNBA	J.Res.Natl.Bur.Stand.	
+ 	JRNCD	J.Radioanal.Nucl.Chem.	
+ 	JRPHF	J.Res.Phys.	
+ 	JRRLA	J.Radio Res.Lab.	
+ 	JRSSA	J.Roy.Statist.Soc.A	
+ 	JSBIE	J.Struct.Biol.	
+ 	JSCOE	J.Sci.Comput.	
+ 	JSCRA	J.Spacecr.Rockets	
+ 	JSCSA	J.Stat.Comput.Simul.	
+ 	JSEED	Trans.ASME J.Sol.Energy Eng.	
+ 	JSEXE	J.Sci.Explor.	
+ 	JSGLA	J.Soc.Glass Tech.	
+ 	JSHAA	J.Sci.Hiroshima Univ.A.	
+ 	JSIIE	J.Sci.Islamic Republ.Iran	
+ 	JSIMA	J.Soc.Indust.Appl.Math.	
+ 	JSINA	J.Sci.Instrum.	
+ 	JSLRD	J.Russ.Laser Res.	
+ 	JSPAE	J.Spacecr.Technol.	
+ 	JSPID	J.Stat.Plan.Inference	
+ 	JSSCB	J.Solid State Chem.	
+ 	JSTAT	J.Stat.Mech.	
+ 	JSTBA	J.Roy.Statist.Soc.B	
+ 	JSTCA	J.Struct.Chem.	
+ 	JSTGA	J.Sci.Tech.	
+ 	JSTNA	J.Am.Statist.Assoc.	
+ 	JSTPB	J.Statist.Phys.	
+ 	JSUED	J.Survey.Eng.	
+ 	JSVIA	J.Sound Vibrat.	
+ 	JSYCE	J.Symb.Comput.	
+ 	JSYLA	J.Symbolic Logic	
+ 	JSYRE	J.Synchrotron Radiat.	
+ 	JTBIA	J.Theor.Biol.	
+ 	JTELE	J.Commun.Tech.Elect.	
+ 	JTMTD	J.Trace Microprobe Tech.	
+ 	JTONU	J.Tongren U.	
+ 	JTOUA	J.Turbulence	
+ 	JTPHD	J.Tech.Phys.	
+ 	JTPHE	J.Exp.Theor.Phys.	
+ 	JTPLA	JETP Lett.	
+ 	JUBAA	J.Univ.Bombay	
+ 	JUMED	J.Ultrasound Med.	
+ 	JUPSA	J.Phys.Soc.Jap.	
+ 	JURPF	J.Undergrad.Res.Phys.	
+ 	JVLCE	J.Visual Lang.Comput.	
+ 	JVPAD	J.Vert.Paleon.	
+ 	JVSTA	J.Vac.Sci.Tech.	
+ 	JVTAD	J.Vac.Sci.Technol.A Vac.Surf.Films	
+ 	JVTBD	J.Vac.Sci.Technol.B Microelectron.Nanometer Struct.	
+ 	JWASA	J.Wash.Acad.Sci.	
+ 	KAKKA	J.Jap.Assoc.Philos.Sci.	
+ 	KAPRA	Knolls Atom.Power Lab.Rep.	
+ 	KBRNA	Kibernetika	
+ 	KDRHA	Sci.Rept.Kagoshima Univ.	
+ 	KDVSA	Kong.Dan.Vid.Sel.Mat.Fys.Med.	
+ 	KERNA	Kernenerg.	
+ 	KERTA	Kerntech.	
+ 	KETEE	Kvantovaya Elektron.	
+ 	KETOD	Kexue Tongbao (Scientia)	
+ 	KEZAE	Kexue Zazhi	
+ 	KFKKA	KFKI Kozl.	
+ 	KFKNA	KFK Nachr.	
+ 	KFNTE	Kinematika Fiz.Nebesnykh Tel	
+ 	KHFID	Khim.Fizika	
+ 	KICAA	Kinet.Catal.	
+ 	KINAD	Kinam	
+ 	KJSAA	Kumamoto J.Sci.Ser.A	
+ 	KMSRA	Kodai Math.Sem.Rept.	
+ 	KNAWA	Kon.Ned.Akad.Wetensch.Proc.	
+ 	KNKTA	Kinet.Katal.	
+ 	KNSFA	Norsk.Vid.Selsk.Forh.	
+ 	KNWLD	High Energy Phys.Nucl.Phys.	
+ 	KNWNA	Versl. K. Akad. Wet. Amsterdam	
+ 	KOSBA	Kosmos	
+ 	KOZEA	Kolloid-Z.	
+ 	KOZHA	Kolloid.Zh.	
+ 	KPCBE	Kinematics Phys.Celest.Bodies	
+ 	KPMJA	Kyungpook Math.J.	
+ 	KRISA	Kristallografiya	
+ 	KRSFA	Kratk.Soobshch.Fiz.	
+ 	KTHEE	K Theory	
+ 	KYBEA	Kybernetika	
+ 	LAAPA	Linear Algebra Appl.	
+ 	LANCA	Lancet	
+ 	LANGD	Langmuir	
+ 	LAPHE	Laser Phys.	
+ 	LAPMA	Lectures Appl.Math.	
+ 	LASCD	Los Alamos Sci.	
+ 	LCISD	Lect.Notes Control Inf.Sci.	
+ 	LEOND	Leonardo	
+ 	LEPUF	Learn.Publ.	
+ 	LFFGA	Luftfahrtforsch.	
+ 	LFRMA	Liet.Fiz.Rink.	
+ 	LFZUE	Lith.J.Phys.	
+ 	LGALA	Log Analyst	
+ 	LICKA	Lick Obs.Bull.	
+ 	LIJOF	Linux J.	
+ 	LIOCA	Limnol.Oceanogr.	
+ 	LJPSE	Latv.J.Phys.Tech.Sci.	
+ 	LMDBA	Liet.TSR Mokslu Akad.Darbai (Ser.B)	
+ 	LMPHD	Lett.Math.Phys.	
+ 	LMSBB	Bull.London Math.Soc.	
+ 	LMSSD	Lond.Math.Soc.Lect.Note Ser.	
+ 	LNCHD	Lect.Notes in Chem.	
+ 	LNCSD	Lect.Notes Comput.Sci.	
+ 	LNMAA	Lect.Notes Math.	
+ 	LNMLA	Linear Multilinear Alg.	
+ 	LNPHA	Lect.Notes Phys.	
+ 	LNSPB	Lect.Notes Suppl.Phys.	
+ 	LPBED	Laser Part.Beams	
+ 	LPJOE	Lith.Phys.J.	
+ 	LPLSD	Lunar Planet.Sci.	
+ 	LSCHD	Laser Chem.	
+ 	LSSRA	Life Sci.Space Res.	
+ 	LTHPA	Lect.Theor.Phys.	
+ 	LTPHE	Low Temp.Phys.	
+ 	LWFOE	Laser Focus World	
+ 	MAANA	Math.Ann.	
+ 	MABIA	Math.Biosci.	
+ 	MACOF	Math.Commun.	
+ 	MACTA	Math.Centre Tracts Math.Centrum Amsterdam	
+ 	MAGAA	Math.Gazette	
+ 	MAGIA	Magn.Ghidrodin.	
+ 	MAGNA	Magn.	
+ 	MAIND	Math.Intelligencer	
+ 	MAJAA	Math.Jap.	
+ 	MALEE	Machine Learning	
+ 	MAMCA	Mem.Am.Math.Soc.	
+ 	MAMGA	Math.Mag.	
+ 	MAMOA	Math.Mon.	
+ 	MAMOB	Macromolec.	
+ 	MAMUB	Matematika	
+ 	MANGE	Manuscr.Geod.	
+ 	MAPSA	Mem.Amer.Philos.Soc.	
+ 	MAREA	Math.Rev.	
+ 	MASGC	Mitt. Astron. Ges.	
+ 	MASLD	Math.Slovaca	
+ 	MASTB	Math.Syst.Theor.	
+ 	MATDA	Math.Studies	
+ 	MATJE	Mathematica J.	
+ 	MATSA	Mat.Sbornik	
+ 	MATZA	Mat.Zametki	
+ 	MAZEA	Math.Z.	
+ 	MBRDE	MRS Bull.	
+ 	MCFUE	Muon Cat.Fusion	
+ 	MCKAA	Mem.Coll.Sci.Univ.Kyoto (Series A Math.)	
+ 	MCKBA	Mem.Coll.Sci.Kyoto (Ser.B Geol.Biol.)	
+ 	MCLCA	Mol.Cryst.Liq.Cryst.	
+ 	MCMOE	Math.Comput.Modelling	
+ 	MCMPA	Math.Comput.	
+ 	MCOPB	Methods Comput.Phys.	
+ 	MCPHD	Makromol.Chem.	
+ 	MCRCD	Makromol.Chem.Rapid Commun.	
+ 	MCSCE	Math.Struct.Comput.Sci.	
+ 	MCSID	Math.Comput.Simul.	
+ 	MCSYE	Math.Control Signals Syst.	
+ 	MCTSE	Makromol.Chem.Theor.Simul.	
+ 	MDAWA	Monatsber.Deutsch.Akad.Wiss.Berlin	
+ 	MECCB	Meccanica	
+ 	MEKSA	Mem.Fac.Eng.Kyushu Univ.	
+ 	MENCE	Mendeleev Commun.	
+ 	MENZA	Methods Enzymol.	
+ 	MERAA	Med.Radiol.	
+ 	MERCU	Mercury	
+ 	MERNA	Metron	
+ 	MERTA	Meteoritics	
+ 	MESMB	Messenger Math.	
+ 	MESOB	Mech.Solids	
+ 	MESSE	ESO Messenger	
+ 	METTS	Metro.Tech.Suppl.	
+ 	MFKPA	Mem.Fac.Sci.Kyoto (Ser.A Phys.Astrophys.Geophys.Chem.)	
+ 	MGFFA	Magyar Fiz.Foly.	
+ 	MGHDA	Magnetohydrodynamics	
+ 	MGHMA	Mitt.Math.Gesellsch.Hamburg	
+ 	MGIKA	Mater.Glyas.Issled.	
+ 	MHMZA	Math.Mag.	
+ 	MHPGA	Math.Programming	
+ 	MHTEE	Mater.High Temp.	
+ 	MICJA	Microchem.J.	
+ 	MICNB	Micron	
+ 	MIDEB	Mineral. Deposita	
+ 	MIENE	Microelectron.Eng.	
+ 	MIMJA	Michigan Math.J.	
+ 	MINEF	Minerva	
+ 	MISFA	Mem.Real.Accad.Ital.Cl.Sci.Fis.Mat.Nat.	
+ 	MITPA	MIT Press.Res.Monogr.	
+ 	MJOKA	Math.J.(Okayama)	
+ 	MJTUE	Math.J.Toyama Univ.	
+ 	MKOUA	Mem. Konan Univ., Sci. Ser.	
+ 	MLAOA	Medd.Lund.Astron.Obs.	
+ 	MLETD	Mater.Lett.	
+ 	MLMLB	Math.Lehrb.Monogr.I.Abt.Math.Lehrb.	
+ 	MLMMA	Math.Lehrb.Monogr.II.Abt.Math.Monogr.	
+ 	MLUMA	Medd.Lund.Univ.Mat.Sem.	
+ 	MMESF	Math.Mech.Solids	
+ 	MMICD	Microproc.Microprog.	
+ 	MMKIA	Magyar Tud.Akad.Mat.Kut.Int.Kozlemen.	
+ 	MMODE	Mat.Modelirovanie	
+ 	MMPHA	Monatsh.Math.Phys.	
+ 	MMSCD	Math.Methods Appl.Sci.	
+ 	MNBUA	Math.Nat.Ber.Ungarn	
+ 	MNDDA	Mind	
+ 	MNLMB	Mineralogical Mag.	
+ 	MNMTA	Mon.Math.	
+ 	MNRAA	Mon.Not.Roy.Astron.Soc.	
+ 	MNWBA	Math.Naturwiss.Bibl.	
+ 	MOAEA	Mem.Osaka Univ.Liberal Arts Educ.Ser.B Nat.Sci.	
+ 	MOCEF	Mol.Cell	
+ 	MOCHA	Monatsh.Chem.	
+ 	MOENE	Mol.Endocrinol.	
+ 	MOMAE	Mol.Mater.	
+ 	MOMTB	Monogr.Mat.	
+ 	MONIA	Monist	
+ 	MOPHA	Mol.Phys.	
+ 	MOPLD	Moon Planets	
+ 	MORED	Math.Oper.Res.	
+ 	MOSIE	Molec.Simul.	
+ 	MOTLE	Microw.Opt.Technol.Lett.	
+ 	MPAGF	Math.Phys.Anal.Geom.	
+ 	MPAMD	Math.Phys.Appl.Math.	
+ 	MPCPC	Math.Proc.Cambridge Phil.Soc.	
+ 	MPCSD	Mod.Probl.Condens.Matter Sci.	
+ 	MPEGD	Mar.Pet.Geol.	
+ 	MPEJF	Math.Phys.Electron.J.	
+ 	MPHYA	Med.Phys.	
+ 	MPLAE	Mod.Phys.Lett.	
+ 	MPOHB	Mol.Pharmaceutics	
+ 	MPSCF	Meteorit.Planet.Sci.	
+ 	MRASA	Mem.Real.Accad.Sci.Ist.Bologna Cl.Sci.Fis.	
+ 	MRBUA	Mater.Res.Bull.	
+ 	MRCOD	Mech.Res.Commun.	
+ 	MRLTB	MIT Res.Lab.Electron.Tech.Rep.	
+ 	MRMEE	Magn.Reson.Med.	
+ 	MROBE	Microbiology	
+ 	MRSAB	Methuen's Monogr.Appl.Probab.Statist.	
+ 	MRSPD	Mater.Res.Soc.Symp.Proc.	
+ 	MRSRB	Magn.Reson.Rev.	
+ 	MRYAA	Mem.Roy.Astron.Soc.	
+ 	MSAPE	Mater.Sci.Eng.	
+ 	MSATA	Mem.Soc.Ast.It.	
+ 	MSBTE	Mater.Sci.Eng.B	
+ 	MSCEE	Mater.Sci.Eng.C	
+ 	MSCJD	Mater.Sci.	
+ 	MSCTE	Mater.Sci.Technol.	
+ 	MSFOE	Mater.Sci.Forum	
+ 	MSGLA	Mem. Soc. Geol. It.	
+ 	MSMFE	Mem.Soc.Math.France	
+ 	MSMHB	Manuscr.Math.	
+ 	MSMQA	Mem.Sci.Math.	
+ 	MSNTE	Microwave Syst.News	
+ 	MSRMD	Measurement (London)	
+ 	MSRSA	Mem.Soc.Roy.Sci.Liege	
+ 	MSTCA	Meas.Tech.	
+ 	MSTCE	Measur.Sci.Tech.	
+ 	MSTMB	MAA Stud.Math.	
+ 	MSYME	Macromol.Symp.	
+ 	MTAPB	Math.Appl.	
+ 	MTHCB	Math.Chronicle	
+ 	MTHNB	Math.Notes Acad.Sci.USSR	
+ 	MTHNP	Math.Notes Princeton	
+ 	MTHSB	Math.Student	
+ 	MTKAA	Mathematika	
+ 	MTMNA	Math.Nachr.	
+ 	MTPMB	Math.Phys.Monogr.Ser.	
+ 	MTRGA	Metrologia	
+ 	MTRKA	Metrika	
+ 	MTRLB	Metrologiya	
+ 	MTSCA	Math.Scand.	
+ 	MTSEA	Math.Sci.Eng.	
+ 	MTTAB	Metall.Trans.	
+ 	MTTCA	Math.Tables Aids Comput.	
+ 	MUCBB	Moscow Univ.Chem.Bull.	
+ 	MUDSA	Seminaire Math.Sup.	
+ 	MUMBA	Moscow Univ.Math.Bull.	
+ 	MUPBA	Moscow Univ.Phys.Bull.	
+ 	MUSBB	Math.USSR Sb.	
+ 	MUSIA	Math.USSR Izv.	
+ 	MVNSA	Mat.Vesn.	
+ 	MWREA	Mon.Weather Rev.	
+ 	MYCGA	Memory Cognition	
+ 	MZSCD	Mater.Zimn.Shk.LIYaF Fiz.Yad.Elem.Chast.	
+ 	NAAKA	Nachr.Akad.Wiss.Goett.II,Math.-Phys.Kl.	
+ 	NABIF	Nature Biotechnology	
+ 	NACPD	NASA Conf.Publ.	
+ 	NAGAE	Nagare	
+ 	NALEF	Nano Lett.	
+ 	NANEF	Nat.Neurosci.	
+ 	NARHA	Nucleic Acids Res.	
+ 	NARSA	Naturwiss.Rundsch.	
+ 	NARWC	Nonlinear Anal. Real World Appl.	
+ 	NASBD	NATO Adv.Study Inst.Ser.B Phys.	
+ 	NASCD	NATO Adv.Study Inst.Ser.C.Math.Phys.Sci.	
+ 	NASFE	NATO Adv.Study Inst.Ser.F Comput.Syst.Sci.	
+ 	NASOA	Natural Sci. Rept. Ochanomizu Univ.	
+ 	NASSA	NASA Tech.Transl.	
+ 	NATMA	NASA Tech.Memo.	
+ 	NATUA	Nature	
+ 	NATWA	Naturwiss.	
+ 	NAWIA	Nieuw Arch.Wis.	
+ 	NAZEA	Nachrichtentech.Z.	
+ 	NBAMA	NBS Appl.Math.Ser.	
+ 	NBGSA	Nippon Butsuri Gakkaishi	
+ 	NCBAB	Nat.Chem.Biol.	
+ 	NCLTA	Lett.Nuovo Cim.	
+ 	NDBSA	Proc.Inst.Natural Sci.Nihon Univ.	
+ 	NDEAF	Nonlinear Differ.Eq.Appl.	
+ 	NDJFA	Notre Dame J.Form.Logic	
+ 	NDNKD	Gen. Educ. Rev. Nihon Univ	
+ 	NDSAA	Nucl.Data Sec.A	
+ 	NDSBA	Nucl.Data Sec.B	
+ 	NDTIE	NDT & E Int.	
+ 	NDTSB	Nucl.Data Sheets	
+ 	NDVFA	Nauch.Dokl.Vyssh.Shk.Fiz.Mat.Nauk	
+ 	NEDEA	Nucl.Eng.Des.	
+ 	NEJMA	New England J.Med.	
+ 	NERNE	Neuron	
+ 	NEUCE	Neural Comput.	
+ 	NEUID	Neurochem.Int.	
+ 	NEURA	Neurobiol.	
+ 	NEWAS	New Astron.	
+ 	NFADO	Numer.Funct.Anal.Optim.	
+ 	NFBFA	Notas Fis.	
+ 	NFKAF	Nachr.Forsch.zentr.Karlsruhe	
+ 	NGMJA	Nagoya Math.J.	
+ 	NIAMC	Nat.Immunol.	
+ 	NIASB	Nauchnye Inform.Astron.Sov.Akad Nauk SSR	
+ 	NJCHE	New J.Chem.	
+ 	NJOPF	New J.Phys.	
+ 	NLAAE	Num.Lin.Alg.Appl.	
+ 	NLMEF	Neurobiol.Learning Memory	
+ 	NMAEA	Nature Meth.	
+ 	NMAIA	Nucl.Met.Met.Soc.AIME	
+ 	NMBIE	Nucl.Med.Biol.	
+ 	NMTIA	Norsk.Mat.Tid.	
+ 	NNETE	Neural Networks	
+ 	NNOBE	Nanobiol.	
+ 	NNOTE	Nanotechnol.	
+ 	NNWOF	Neural Netw.World	
+ 	NNWRE	Nonlinear World	
+ 	NOALA	Nova Acta Leopoldina	
+ 	NOAND	Nonlinear Anal.	
+ 	NOBZA	Nauchn.Obozr.	
+ 	NODYE	Nonlinear Dyn.	
+ 	NOJGD	J.Magn.Soc.Japan	
+ 	NOLIN	Nonlinearity	
+ 	NOSCA	Not. Rec. Roy. Soc. Lond.	
+ 	NOSYB	Proc.Nobel Symp.	
+ 	NOUSA	Nous	
+ 	NOVMA	Novyi Mir	
+ 	NPAHA	Nature Phys.	
+ 	NPAHB	Nature Photon.	
+ 	NPCSC	Nonlin.Phenom.Complex Syst.	
+ 	NPSCA	Nature Phys.Sci.	
+ 	NPSUA	New Phys.Suppl.	
+ 	NRCGE	Neurocomput.	
+ 	NRLQA	Nav.Res.Logist.Q.	
+ 	NRSDA	Sci.Dimens.	
+ 	NRTXD	Neurotoxicology	
+ 	NSAPA	Nucl.Sci.Appl.	
+ 	NSAPD	Nucl.Sci.Appl.	
+ 	NSBIE	Nature Struct.Biol.	
+ 	NSENA	Nucl.Sci.Eng.	
+ 	NSRSD	Nucl.Sci.Res.Conf.Ser.	
+ 	NSSIC	NATO Sci.Ser.II	
+ 	NSSPA	NASA Spec.Publ.	
+ 	NTDED	Nucl.Track Detect.	
+ 	NTMSB	NTM Schriftenr.Gesch.Naturw.Tech.Med.	
+ 	NTNAA	Ned.Tid.Natuurk.	
+ 	NTNEE	Neutron News	
+ 	NTRMD	Nucl.Tracks Radiat.Meas.	
+ 	NTWRE	Netw.Comput.Neural Syst.	
+ 	NTXAA	Nucl.Data Tables	
+ 	NUALE	Num. Algorithms	
+ 	NUAPA	Nucl.Appl.	
+ 	NUCIA	Nuovo Cim.	
+ 	NUCL-	NUCL-TH	
+ 	NUCLA	Nucleonics	
+ 	NUCSA	Nucleus	
+ 	NUCUA	Nuovo Cim.Suppl.	
+ 	NUFUA	Nucl.Fusion	
+ 	NUIMA	Nucl.Instrum.Meth.	
+ 	NUKLA	Nukleonika	
+ 	NUMMA	Numer.Math.	
+ 	NUNWA	Nuclear News	
+ 	NUPHA	Nucl.Phys.	
+ 	NUPHZ	Nucl.Phys.Proc.Suppl.	
+ 	NUTED	Nucl.Tech.	
+ 	NUTRD	Nucl.Tracks	
+ 	NUTYB	Nucl.Technol.	
+ 	NWGAA	Nachr.Ges.Wiss.Goettigen Math.Phys.Kl.	
+ 	NWPYA	New Phys.	
+ 	NWSCA	New Sci.	
+ 	OBSEA	Observatory	
+ 	OESSE	Oxford Eng.Sci.Ser.	
+ 	OGDSA	Osaka Gakugei Daigaku Kiyo, B, Shizenkagaku	
+ 	OIGJA	Oil and Gas.J.	
+ 	OJCOE	ORSA J. Comput.	
+ 	OJMAA	Osaka J.Math.	
+ 	OLEBE	Orig.Life.Evol.Biosph.	
+ 	OLEEE	Opto & Laser Europe	
+ 	OLTCA	Opt.Laser Tech.	
+ 	OMATE	Opt.Mater.	
+ 	ONELA	Onde.Elec.	
+ 	ONEWD	Optics News	
+ 	ONLGA	Oceanology	
+ 	OOOOO	Math.Phys.Stud.	
+ 	OPACA	Opt.Acta	
+ 	OPCOB	Opt.Commun.	
+ 	OPCSM	Int.J.Open Prob.Comput.Sci.Math.	
+ 	OPENE	Opt.Eng.	
+ 	OPEXF	Opt.Express	
+ 	OPLED	Opt.Lett.	
+ 	OPPHE	Opt.Phontonics News	
+ 	OPSPA	Opt.Spektrosk.	
+ 	OPSUA	Opt.Spectrosc.	
+ 	OQELD	Opt.Quant.Electron.	
+ 	ORDRE	Order	
+ 	ORGND	Organometallics	
+ 	OSIDE	Open Syst.Info.Dyn.	
+ 	OTIKA	Optik	
+ 	OTIZD	Otkrytiya, Izobret.	
+ 	OUTEM	Oxford Texts Appl.Eng.Math.	
+ 	OYBSA	Oyo Butsuri	
+ 	PAAEA	Prog.Astronaut.Aeronaut.	
+ 	PAATA	Praktika Akad.Athenon	
+ 	PACHA	Pure Appl.Chem.	
+ 	PACOE	Parallel Comput.	
+ 	PADUE	Publ.Astron.Dep.Eotvos Univ.	
+ 	PAFSD	Proc.Ann.Symp.Freq.Control	
+ 	PAGYA	Pur.Appl.Geophys.	
+ 	PAHRA	Pacific Hist.Rev.	
+ 	PAJSA	Pak.J.Sci.	
+ 	PAMYA	Proc.Am.Math.Soc.	
+ 	PANUA	Part.Nucl.	
+ 	PANUE	Phys.Atom.Nucl.	
+ 	PAOAE	Pure Appl.Opt.	
+ 	PAPCA	Proc.Am.Phil.Soc.	
+ 	PAPHA	Pure Appl.Phys.	
+ 	PAPMD	Pure Appl.Math.	
+ 	PARWE	Part.World	
+ 	PASIA	Proc.Amsterdam Acad.Sci.	
+ 	PASJA	Publ.Astron.Soc.Jap.	
+ 	PASPA	Publ.Astron.Soc.Pac.	
+ 	PASPF	Prob.Atomic Sci.Technol.	
+ 	PASVA	Pontif.Acad.Sci.Scrivaria	
+ 	PAZHD	Pisma Astron.Zh.	
+ 	PBBHA	Pharmacol.Biochem.Behavior.	
+ 	PBLIB	PLoS Biol.	
+ 	PBMAA	Publ.Res.Inst.Math.Sci.Kyoto	
+ 	PBSPA	Publ.Inst.Stat.Univ.Paris	
+ 	PCBRB	Precambrian Res.	
+ 	PCEAA	Phys.Chem.Earth	
+ 	PCGCD	Prog.Cryst.Growth Charact.Mater.	
+ 	PCGLA	Phys.Chem.Glass.	
+ 	PCHPD	Proc.Int.Conf.High Energy Phys.	
+ 	PCIRC	Proc.Combust.Inst.	
+ 	PCMSB	Princeton Math.Ser.	
+ 	PCMSE	Poverkhnost	
+ 	PCOMB	Phys.Kondens.Mater.	
+ 	PCOND	Phys.Contemp.Needs	
+ 	PCPSA	Proc.Cambridge Phil.Soc.	
+ 	PCRPA	Prog.Cosmic Ray Phys.	
+ 	PCSOD	Program.Comput.Software	
+ 	PCSPD	Phys.Chem.Space	
+ 	PCTHA	Acta Sci.Natur.Univ.Pekin.	
+ 	PDAOA	Publ.Dominion Astrophys.Obs.	
+ 	PDMTA	Period.Mat.	
+ 	PDPHA	Proc.Univ.Durham Phil.Soc.	
+ 	PECSD	Prog.Energy Combust.Sci.	
+ 	PEERA	Proc.Inst.Electric.Eng.3.Radio Commun.Eng.	
+ 	PEMSA	Proc.Edin.Math.Soc.	
+ 	PEPCA	Prog.Elem.Part.Cosmic Ray Phys.	
+ 	PEPIA	Phys.Earth Planet.Interiors	
+ 	PEXPE	Protein Expres.Purif.	
+ 	PFBND	Potsdamer Forsch.	
+ 	PFBPE	Phys.Fluids B	
+ 	PFLDA	Phys.Fluids	
+ 	PFLSA	Phys.Fluids Supp.	
+ 	PGMAA	Proc.Glasgow Math.Assoc.	
+ 	PGNBA	Progr.in Neurobiol.	
+ 	PGNMA	Prog.Nucl.Med.	
+ 	PHAPD	Phys.Appl.	
+ 	PHBHA	Physiol.Behavior	
+ 	PHBLA	Phys.Bl.	
+ 	PHCAA	Phys.Canada	
+ 	PHDOE	Phys.Dokl.	
+ 	PHEDA	Phys.Educ.India	
+ 	PHFEA	Phys.Fenn.	
+ 	PHJRD	Philips Res.Rept.	
+ 	PHKOA	Photo Korr.	
+ 	PHLTA	Phys.Lett.	
+ 	PHMAA	Phil.Mag.	
+ 	PHMAD	Physicalia Mag.	
+ 	PHMBA	Phys.Med.Biol.	
+ 	PHMMA	Phys.Met.Metallogr.	
+ 	PHMSA	Phil.Mag.Suppl.	
+ 	PHNOA	Phys.Norv.	
+ 	PHNSB	Physics News India	
+ 	PHPAE	Phys.Plasmas	
+ 	PHPEF	Phys.Perspect.	
+ 	PHPLA	Physiol.Plant.	
+ 	PHREA	Physiol.Rev.	
+ 	PHREE	Pharmaceut.Res.	
+ 	PHRSD	Photosynth.Res.	
+ 	PHRVA	Phys.Rev.	
+ 	PHSAD	Photonics Spectra	
+ 	PHSBB	Phys.Bull.	
+ 	PHSCA	Phil.Sci.	
+ 	PHSNA	Philos.Natur.	
+ 	PHSQB	Phil.Q.	
+ 	PHSSA	Phys.Status Solidi	
+ 	PHSTB	Phys.Scripta	
+ 	PHTEA	Phys.Teacher	
+ 	PHTOA	Phys.Today	
+ 	PHTPA	Prog.High Temp.Phys.Chem.	
+ 	PHTRD	Phase Transitions	
+ 	PHUSE	Phys.Usp.	
+ 	PHUZA	Phys.Unserer Zeit	
+ 	PHWOE	Phys.World	
+ 	PHYAE	PHYSICAE	
+ 	PHYCE	Physica C Supercond.Appl.	
+ 	PHYES	Phys.Essays	
+ 	PHYME	Phys.Medica	
+ 	PHYSA	Physica	
+ 	PHYSF	The Physicist	
+ 	PHZSA	Phys.Z.Sowjetunion	
+ 	PHZTA	Phys.Z.	
+ 	PIACA	Proc.Indiana Acad.Sci.	
+ 	PIASA	Proc.Indian Acad.Sci.	
+ 	PIATA	Proc.Imp.Acad.Tokyo	
+ 	PIIAA	Proc.Nat.Inst.Sci.India (Pt.A Phys.Sci.)	
+ 	PIMIB	Publ.Inst.Math.	
+ 	PIOCA	Prog.Inorg.Chem.	
+ 	PIPFA	Proc.Int.Sch.Phys.Fermi	
+ 	PIPSB	Proc.Indian Natl.Sci.Acad.	
+ 	PIREA	Proc.Ire.	
+ 	PJAAD	Proc.Japan Acad.A Math.Sci.	
+ 	PJACA	Proc.Japan Acad.	
+ 	PJCHD	Pol.J.Chem.	
+ 	PJHOB	Physik J.	
+ 	PJMAA	Pacific J.Math.	
+ 	PKYGE	J.Plasma Fusion Res.	
+ 	PLACB	Part.Accel.	
+ 	PLANA	Planta	
+ 	PLCED	Plant Cell Environ.	
+ 	PLCEE	Plant Cell	
+ 	PLDSF	Phys.Low Dimen.Struct.	
+ 	PLMTA	Proc.Lond.Math.Soc.	
+ 	PLPHA	Plant Physiol.	
+ 	PLPHB	Plasma Phys.	
+ 	PLRVA	Phil.Rev.	
+ 	PLSDA	Phil.Stud.	
+ 	PLSSA	Planet.Space Sci.	
+ 	PLTPA	Prog.Low Temp.Phys.	
+ 	PLYHD	Polyhedron	
+ 	PMAMA	Prikl.Mat.Mekh.	
+ 	PMCPA	PMC Phys.	
+ 	PMEAE	Physiol.Meas.	
+ 	PMFZB	Prace Mat.Fiz.	
+ 	PMIHA	Inst.Hautes Etudes Sci.Publ.Math.	
+ 	PMLEE	Phil.Mag.Lett.	
+ 	PMSTB	Probab.Math.Statist.	
+ 	PMTHB	Progr.Math.	
+ 	PMTMA	Prog.Math.	
+ 	PNAJE	Publ.Nat.Astron.Obs.Japan	
+ 	PNASA	Proc.Nat.Acad.Sci.	
+ 	PNASE	Prog.Nat.Sci.	
+ 	PNEND	Prog.Nucl.Energy	
+ 	PNEXD	Panel Proc.Ser.IAEA	
+ 	PNMRA	Prog.Nucl.Mag.Reson.Spectrosc.	
+ 	PNOTE	Publisher-note	
+ 	PNPHD	Prax.Naturwiss.Phys.	
+ 	PNPSD	Prace Nauk.Pol.Szczec.	
+ 	PNUPA	Prog.Nucl.Phys.	
+ 	POANE	Potential Anal.	
+ 	POLJB	Polymer J.Japan	
+ 	POLMA	Polymer	
+ 	POMAA	Port.Math.	
+ 	POMFA	Publ.Dep.Math.Lyon	
+ 	POPTA	Prog.Opt	
+ 	POPYA	Portugal.Phys.	
+ 	POSCI	PoS	
+ 	POTEB	Powder Tech.	
+ 	PPBIE	Plant Physiol.Biochem.	
+ 	PPCFE	Plasma Phys.Control.Fusion	
+ 	PPCPF	Phys.Chem.Chem.Phys.	
+ 	PPDIA	Prob.Peredachi Info.	
+ 	PPHRA	Prog.Photovol.Res.Appl.	
+ 	PPHRE	Plasma Phys.Rep.	
+ 	PPLAC	PLoS Pathog.	
+ 	PPMJA	Proc.Phys.Math.Soc.Jap.	
+ 	PPNPD	Prog.Part.Nucl.Phys.	
+ 	PPNSE	Period.Polytech.Phys.Nucl.Sci.	
+ 	PPNUE	Phys.Part.Nucl.	
+ 	PPSOA	Proc.Phys.Soc.	
+ 	PQUEA	Prog.Quant.Electron.	
+ 	PRAMC	Pramana	
+ 	PRASE	Proc.Aristotelian Soc.	
+ 	PRCIE	Protein Sci.	
+ 	PRENE	Protein Eng.	
+ 	PRENG	Prec.Eng.	
+ 	PRESJ	Prespace.J.	
+ 	PRGEA	Prz.Geofiz.	
+ 	PRIAA	Proc.Roy.Irish Acad.(Sect.A)	
+ 	PRIBB	Priborostr.(Kiev)	
+ 	PRIRA	Priroda	
+ 	PRITA	Probl.Info.Transm.	
+ 	PRKNA	Prog.React.Kinet.	
+ 	PRLAA	Proc.Roy.Soc.Lond.A Math.Phys.Eng.Sci.	
+ 	PRLED	Pattern Recog.Lett.	
+ 	PRLGA	Prologue J.Natl.Arch.	
+ 	PRLTA	Phys.Rev.Lett.	
+ 	PRMAB	Problemy Mat.Fiz.	
+ 	PRMSA	Prog.Mater.Sci.	
+ 	PROGD	Programmirovanie	
+ 	PROTA	Protoplasma	
+ 	PRPHO	Prog.Photovol.Res.	
+ 	PRPLC	Phys.Rept.	
+ 	PRSEA	Proc.Roy.Soc.Edinburgh	
+ 	PRSLA	Proc.Roy.Soc.Lond.	
+ 	PRSSA	Phil.Res.Rept.Suppl.	
+ 	PRSTA	Phys.Rev.ST Accel.Beams	
+ 	PRTEA	Prib.Tekh.Eksp.	
+ 	PSCED	Pour La Science	
+ 	PSENA	Photo Sci.Eng.	
+ 	PSFGE	Proteins Struct.Funct.Genet.	
+ 	PSFSP	Probl.Sovr.Fiz.Sb.Perev.Obzor.Inostr.Period.Lit.	
+ 	PSISD	Proc.SPIE Int.Soc.Opt.Eng.	
+ 	PSMIA	Psychometrika	
+ 	PSMMB	Proc.Steklov Inst.Math.	
+ 	PSNAA	Ann.Scuola Norm.Sup.Pisa Cl.Sci.	
+ 	PSRVA	Psychol.Rev.	
+ 	PSSFB	Prog.Surface Sci.	
+ 	PSSTA	Prog.Solid State.Chem.	
+ 	PSTFA	Postepy Fizyki	
+ 	PSUPD	Proc.Scottish Summer School Phys.	
+ 	PTBMA	PTB Mitt.	
+ 	PTCPE	Phase Transit.Crit.Phenom.	
+ 	PTEFD	Probl.Teor.Fiz.	
+ 	PTGEA	Prob. Teor. Grav. Elem. Chast.	
+ 	PTMSF	Phil.Trans.A.Math.Phys.Eng.Sci.	
+ 	PTNRA	Pattern Recognition	
+ 	PTPKA	Prog.Theor.Phys.	
+ 	PTPLA	Proc.Lebedev Phys.Inst.	
+ 	PTPSA	Prog.Theor.Phys.Suppl.	
+ 	PTRBA	Phil.Trans.Roy.Soc.Lond.B	
+ 	PTREA	Philips Tech.Rev.	
+ 	PTRFE	Probab.Theor.Related Fields	
+ 	PTRSA	Phil.Trans.Roy.Soc.Lond.	
+ 	PTRUA	Philips Tech.Rundsch.	
+ 	PUASA	Proc.Utah.Acad.Sci.	
+ 	PUMAA	Publ.Math.Debrecen	
+ 	PYAIA	Postepy Astron.	
+ 	PYAPA	Phys.Appl.	
+ 	PYCSA	Physics	
+ 	PYSCA	Polymer Sci.USSR	
+ 	QAMAA	Q.Appl.Math.	
+ 	QICUA	Quant.Inf.Comput.	
+ 	QJMAA	Quart.J.Math.Oxford Ser.	
+ 	QJMMA	Q.J.Mech.Appl.Math.	
+ 	QJPMA	Q.J.Pure Appl.Math.	
+ 	QJRAA	Q.J.Roy.Astron.Soc.	
+ 	QJRMA	Q.J.R.Meteorol.Soc.	
+ 	QRBIA	Q.Rev.Biol.	
+ 	QRESA	Quat.Res.	
+ 	QRSCA	Quad.Ricerca	
+ 	QUNOD	Quimica Nova	
+ 	QUOPE	Quant.Opt.	
+ 	QURBA	Q.Rev.Biophys.	
+ 	QUREA	Q.Rev.Chem.Soc.	
+ 	QURGA	Q.Rev.Biophys.	
+ 	QUSOE	Quant.Semiclass.Opt.	
+ 	QUSYE	Queueing Syst.Theory Appl.	
+ 	QYLIE	High Power Laser Part.Beams	
+ 	RAACA	Radiochim.Acta	
+ 	RACAA	Radiocarbon	
+ 	RADIA	Radiography	
+ 	RADKA	Radiokhimiya	
+ 	RADLA	Radiology	
+ 	RAEFB	Radiat.Eff.Def.Solids	
+ 	RAELA	Radiotekhnika I Elektronika	
+ 	RAIOE	Radioeng.	
+ 	RAMEA	Radiol.Med.	
+ 	RAMSC	Rev.Adv.Mater.Sci.	
+ 	RANZA	Rend.Accad.Naz.40 (Quaranta)	
+ 	RAOND	Radiotherapy Oncology	
+ 	RAREA	Rad.Res.	
+ 	RASCA	Radio Sci.	
+ 	RASTA	Rev.Accel.Sci.Tech.	
+ 	RBFSA	Rev.Bras.Fis.	
+ 	RCARC	RCA Rev.	
+ 	RCCHB	Recherche	
+ 	RCDEC	Regular Chaot. Dyn.	
+ 	RCFID	Rev.Colomb.Fis.	
+ 	RCMAB	Rev.Colomb.Mat.	
+ 	RCMMA	Rend.Circ.Mat.Palermo	
+ 	RCOMF	Reliable Comput.	
+ 	REDCD	Rev.Esp.Doc.Cient.	
+ 	REDEE	Res.Dev.	
+ 	RELRD	Radiat.Eff.Lett.	
+ 	REPBA	Radiat.Environ.Biophys.	
+ 	RESCA	Rev.Scient.	
+ 	RESOF	Resonance J.Sci.Educ.	
+ 	RFAIE	Rev.Fis.Apl.Instrum.	
+ 	RFSSB	Rept.Fac.Sci.Shizuoka Univ.	
+ 	RFSSD	Rept.Fac.Sci.Eng.Saga	
+ 	RGELA	Rev. Gen. Electr.	
+ 	RGPSB	Rev.Geophys.Space Phys.	
+ 	RGSAA	Rev, Gen. Sci. Pure Appl.	
+ 	RHEAA	Rheologica Acta	
+ 	RHSAA	Rev.Hist.Sci.Leurs Appl.	
+ 	RIAND	Risk Anal.	
+ 	RIREE	RIKEN Rev.	
+ 	RISCA	Ric.Sci.	
+ 	RJMPE	Russ.J.Math.Phys.	
+ 	RJPCA	Russ.J.Phys.Chem.	
+ 	RKTEB	Die Rakete	
+ 	RLMAA	Rend.Ist.Lombardo A.Sci.Mat.Fis.Chim.Geol.	
+ 	RLPHA	Res.Lett.Phys.	
+ 	RMAAD	Rev.Mex.Astron.Astrofis.	
+ 	RMAAF	Rev.Mex.Astron.Astrof.Ser.Conf.	
+ 	RMAFA	Rev.Union Mat.Argentina	
+ 	RMEAE	Radiat.Meas.	
+ 	RMGEC	Rev.Mineral.Geochem.	
+ 	RMHPB	Rept.Math.Phys.	
+ 	RMJMA	Rocky Mt.J.Math.	
+ 	RMMOB	Rev.Metaphys.Morale	
+ 	RMPHA	Rev.Mod.Phys.	
+ 	RMPHE	Rev.Math.Phys.	
+ 	RMPMA	Riv.Mat.Univ.Parma	
+ 	RMSUA	Russ.Math.Surveys	
+ 	RMUPA	Rend.Sem.Mat.Padova	
+ 	RMXFA	Rev.Mex.Fis.	
+ 	RNARF	RNA	
+ 	RNCIB	Riv.Nuovo Cim.	
+ 	RNMTA	Rend.Mat.	
+ 	RORPE	Rom.Rep.Phys.	
+ 	ROTIA	Rev.Opt.	
+ 	RPCHD	Radiat.Phys.Chem.	
+ 	RPDOD	Radiat.Prot.Dosim.	
+ 	RPHAA	Rev.Phys.Appl.	
+ 	RPJOE	Russ.Phys.J.	
+ 	RPLPA	Rev.Plasma Phys.	
+ 	RPMTE	Rec.Prog.Many Body Theor.	
+ 	RPPHA	Rept.Prog.Phys.	
+ 	RPQEA	Radiophys.Quant.Electron.	
+ 	RQSCA	Rev.Quest.Sci.	
+ 	RRALA	Radiochem.Radioanal.Lett.	
+ 	RRMPB	Rev.Roum.Math.Pures Appl.	
+ 	RRPQA	Rom.J.Phys.	
+ 	RSDSA	Riv.Storia Sci.	
+ 	RSINA	Rev.Sci.Instrum.	
+ 	RSMFA	Rend.Semin.Mat.Fis.Milano	
+ 	RSUTB	Rend.Sem.Mat.Univ.Politec.Torino	
+ 	RTCPA	Recl.Trav.Chim.Pays-Bas	
+ 	RTMAA	Rev.Roum.Sci.Tech.Ser.Mec.Appl.	
+ 	RUBXA	Rev.Univ.Bruxelles	
+ 	RUNAA	Rev.Univ.Nac.Tucuman, Ser.A	
+ 	RUNSA	Rice Univ.Studies	
+ 	RUSAE	Russ.J.At.Energy	
+ 	RVGPA	Rev.Geophys.	
+ 	RVSSE	Rev.Solid State Sci.	
+ 	RZONA	Razved.Okhr.Nedr.	
+ 	SAAJA	Sov.Astron.	
+ 	SAAPD	Stoch.Anal.Appl.	
+ 	SAASB	Spectrochim.Acta B At.Spectrosc.	
+ 	SAJOD	Scand.Actuarial J.	
+ 	SAJOF	Serb.Astron.J.	
+ 	SAJSA	South Afr.J.Sci.	
+ 	SAKNA	Soobshch.Akad.Nauk Gruz.SSR	
+ 	SALED	Sov.Astron.Lett.	
+ 	SALOB	Alg.Logika	
+ 	SAMCA	Spectrochim.Acta A	
+ 	SANAB	Sankhyan.	
+ 	SAPHD	South Afr.J.Phys.	
+ 	SAPMB	Stud.Appl.Math.	
+ 	SATEA	Sov.Atom.Energ.	
+ 	SBMAB	Summa Bras.Math.	
+ 	SBMGA	Sitzungsber.Berlin.Math.Ges.	
+ 	SCAMA	Sci.Am.	
+ 	SCASE	Sci.China	
+ 	SCEFA	Stud.Cercetari Fiz.	
+ 	SCIEA	Science	
+ 	SCIMA	Scientia	
+ 	SCINA	Sci.Cult.	
+ 	SCINZ	Scienze	
+ 	SCJUA	Science J.	
+ 	SCLED	Syst.Control Lett.	
+ 	SCLIA	Sci. Light	
+ 	SCMOA	Sci. Monthly	
+ 	SCMTA	Scripta Math.	
+ 	SCNEB	Sci.News	
+ 	SCNND	Scanning	
+ 	SCNTD	Scientometrics	
+ 	SCPGD	Sci.Comput.Program.	
+ 	SCPRA	Sci.Prog.	
+ 	SCRMB	Scripta Mater.	
+ 	SCRPA	Sci.Rep.	
+ 	SCRUE	Sci.Russia	
+ 	SCSPF	Sci.Spectra	
+ 	SCSYA	Sci. Soc.	
+ 	SCTEA	Sci.Teacher	
+ 	SCTEE	Surf. Coat. Technol.	
+ 	SDRKD	Mem.Fac.Sci.Shimane	
+ 	SEACD	Sens.Actuators	
+ 	SEATA	Sea Technol.	
+ 	SEDIA	Sedimentoloy	
+ 	SERDD	Serdica	
+ 	SESEE	Semicond.Semimetals	
+ 	SGASA	Commun.Sternberg Astron.Inst.	
+ 	SGBUD	SIGCHI Bull.	
+ 	SGEGA	Stud.Geophys.Geod.	
+ 	SHEPD	Surveys High Energ.Phys.	
+ 	SHHPB	Acta Math.Sin.	
+ 	SHPSB	Stud.Hist.Phil.Sci.	
+ 	SHWAE	Shock Waves(Germany)	
+ 	SIAND	Surf. Interface Anal.	
+ 	SIBAM	Sib.Adv.Math.	
+ 	SIEZA	Siemens Zeit.	
+ 	SIGND	Sigact News	
+ 	SIGSB	Sigsam Bull.	
+ 	SIJCD	SIAM J.Sci.Statist.Comput.	
+ 	SINLD	SIN Newsl.	
+ 	SINOD	SIGPLAN Not.	
+ 	SIREA	SIAM Rev.	
+ 	SIXMA	Mem.Soc.It.Sc.(Dei XL)	
+ 	SJAMD	SIAM J.Algebra Discrete Methods	
+ 	SJCOD	SIAM J.Control Optim.	
+ 	SJCPD	Sov. J. Chem. Phys.	
+ 	SJCPE	Sov.J.Contemp.Phys.	
+ 	SJDME	SIAM J.Discrete Math.	
+ 	SJLPD	Sov.J.Low.Tem.Phys.	
+ 	SJMAA	SIAM J.Math.Anal.	
+ 	SJMAE	SIAM J.Matrix Anal.Appl.	
+ 	SJNAA	SIAM J.Numer.Anal.	
+ 	SJNCA	Sov.J.Nucl.Phys.	
+ 	SJNME	Sov.J.Numer.Anal.Math.Modeling	
+ 	SJOCE	SIAM J.Sci.Comput.	
+ 	SJOPE	SIAM J.Optim.	
+ 	SJPNA	Sov.J.Part.Nucl.	
+ 	SJPPD	Sov.J.Plasma Phys.	
+ 	SJQEA	Quant.Electron.	
+ 	SJSAD	Scand.J.Stat.	
+ 	SJSMD	Soochow J.Math.	
+ 	SKTEA	Sky Telesc.	
+ 	SLFMD	Stud.Logic Found.Math.	
+ 	SLGYA	Sociology	
+ 	SLOGA	Studia Logica	
+ 	SLPHA	Solar Phys.	
+ 	SMATA	Stud.Math.	
+ 	SMATF	Selecta Math.	
+ 	SMGBB	Bull.Soc.Math.Grece	
+ 	SMGFA	Semigroup Forum	
+ 	SMICE	Semicond.	
+ 	SMJCA	SIAM J.Comput.	
+ 	SMJMA	SIAM J.Appl.Math.	
+ 	SMSNA	Smithsonian	
+ 	SMSOD	Sel.Math.Sov.	
+ 	SMSRB	Sel.Transl.Math.Statist.Probab.	
+ 	SMSTE	Smart Mater.Struct.	
+ 	SMTJA	Sib.Math.J.	
+ 	SMZHA	Sib.Mat.Zh.	
+ 	SNSRB	South.Stars	
+ 	SOEMD	Solar Energy Mater.Solar Cells	
+ 	SOKEA	Soryushiron Kenkyu	
+ 	SOMAD	Sov.Math.	
+ 	SOPAA	Sov.Phys.-Acoust.	
+ 	SOPHA	Sov.Phys.	
+ 	SOPJA	Sov.Phys.J.	
+	Russ.Phys.J	
+ 	SOPUA	Sov.Phys.Usp.	
+ 	SORPA	Sov.Radiophys.	
+ 	SPCOD	Sov.Phys.Collect.	
+ 	SPCOE	Supercomputer	
+ 	SPCPB	Proc.Space Congr.	
+ 	SPCTD	Sci. Pap. Coll. Arts Sci. Univ. Tokyo	
+ 	SPECA	Spectrum	
+ 	SPECE	Spectrosc.	
+ 	SPEXB	Software Pract.Exper.	
+ 	SPFLA	Spaceflight	
+ 	SPHCA	Sov.Phys.Cryst.	
+ 	SPHDA	Sov.Phys.Dokl.	
+ 	SPHJA	Sov.Phys.JETP	
+ 	SPIEB	J.Soc.Photo-Opt.Instrum.Eng.	
+ 	SPIPA	Sci.Pap.Inst.Phys.Chem.Res.	
+ 	SPLRD	Bull.Lebedev Phys.Inst.	
+ 	SPLTD	Statist.Probab.Lett.	
+ 	SPPPE	Springer Proc.Phys.	
+ 	SPROD	Signal Processing	
+ 	SPSRA	Space Sci.Rev.	
+ 	SPSSA	Sov.Phys.Solid State	
+ 	SPSTD	Speculations Sci.Tech.	
+ 	SPTCD	Stud.Phys.Theor.Chem.	
+ 	SPTPA	Tech.Phys.	
+ 	SPUTF	Separ.Purific.Technol.	
+ 	SPWPA	Sitzungsber.Preuss.Akad.Wiss.Berlin (Math.Phys.)	
+ 	SRCRE	Sov.Sci.Rev.C.Math.Phys.Rev.	
+ 	SRECD	Sigmod Record	
+ 	SRENA	Solar Energ.	
+ 	SRLEF	Surf. Rev. Lett.	
+ 	SRSSA	Sci.Rept.Saitama Univ.	
+ 	SRTAA	Sci.Rept.Tohoku Univ.(Ser.A)	
+ 	SRTAD	Sci.Rept.Tohoku Univ. Eighth Ser.Phys.Astron.	
+ 	SRTHA	Sci.Rep.Nat Tsing Hua Univ.Ser.A	
+ 	SSCOA	Solid State Commun.	
+ 	SSCPD	Springer Ser.Chem.Phys.	
+ 	SSELA	Solid State Electron.	
+ 	SSFPA	Comment.Phys.Math.Soc.Sci.Fenn.	
+ 	SSHRE	Shuxue de Shijian yu Renshi (Math.Practice Theor.)	
+ 	SSINA	Sci.Sin.	
+ 	SSIND	Space Sci.Instrum.	
+ 	SSMHA	Studia Sci.Math.Hung.	
+ 	SSOSD	Springer Ser.Opt.Sci.	
+ 	SSPHA	Solid State Phys.	
+ 	SSPSA	Solid State Phys.Suppl.	
+ 	SSRED	Surf.Sci.Rept.	
+ 	SSRVD	Sov.Sci.Rev.Sect.E	
+ 	SSRWA	Sov.Sci.Rev.	
+ 	SSSCD	Soc.Stud.Sci.	
+ 	SSSJD	Soil Sci.Soc.Am.J.	
+ 	SSSSD	Springer Ser. Solid State Sci.	
+ 	SSSSE	Springer Ser.Surf.Sci.	
+ 	SSSYD	Springer Ser.Synerg.	
+ 	SSTEA	Solid State Technol.	
+ 	SSTEE	Semicond.Sci.Tech.	
+ 	SSTMB	Stud.Statist.Mech.	
+ 	SSTRE	Stoch.Stoch.Rep.	
+ 	SSWNA	Simon Stevin	
+ 	SSWPE	Springer Ser.Wave Phenom.	
+ 	SSYRA	Sol.Syst.Res.	
+ 	STACE	Stat.Comput.	
+ 	STBGA	Struct.Bond.	
+ 	STELD	Sci.Tech.Libraries	
+ 	STEND	Sci.Total Environ.	
+ 	STHED	Stat. Hefte	
+ 	STKRA	Steko Keram.	
+ 	STOCB	Stochastics	
+ 	STONE	Strahlenther.Onkol.	
+ 	STOPB	Stoch.Proc.Appl.	
+ 	STPAE	Statist.Papers	
+ 	STPHB	Springer Tracts Mod.Phys.	
+ 	STPLA	Sb.Trud.Tsent.Nauch Issl.Prodekt.Inst.Lesokhim.Promysh.	
+ 	STPLD	Sov.Tech.Phys.Lett.	
+ 	STRAA	Strahlentherapie	
+ 	STRSD	Asterisque	
+ 	STRUE	Structure	
+ 	STSCE	Statist.Sci.	
+ 	STSSB	Ser.Monogr.Selected Topics Solid State Phys.	
+ 	STTNA	Statistician	
+ 	STUCA	Sci.Rep.Tohoku Univ.First Ser.	
+ 	STUWA	Sterne Weltraum	
+ 	SUGEE	Surveys in Geophys.	
+ 	SUGKA	Sugaku	
+ 	SUMIE	Superlattices Microstruct.	
+ 	SUSCA	Surf.Sci.	
+ 	SUSEE	Subnucl.Ser.	
+ 	SUSTE	Supercond.Sci.Technol.	
+ 	SVMDA	Sov.Math.Dokl.	
+ 	SVRDA	Sov.Radiochem.	
+ 	SWWCA	Sitzungsber.Akad.Wiss.Wien.Math.(Naturwiss.Klasse)	
+ 	SXKEE	J.Shaanxi Normal U.	
+ 	SYMED	Synth.Metals	
+ 	SYNTA	Synthese	
+ 	TAEEA	Trans.Am.Inst.Electr Eng.	
+ 	TAIMA	Trans.Am.Inst.Min.Metal.Eng.	
+ 	TAMTA	Trans.Am.Math.Soc.	
+ 	TANSA	Trans.Amer.Nucl.Soc.	
+ 	TASMA	Trans.Am.Soc.Mech.Eng.	
+ 	TCACF	Theor. Chem. Acc.	
+ 	TCAPD	Theor.Chem.Adv.Perspect.	
+ 	TCFDE	Theor.Comput.Fluid Dyn.	
+ 	TCHAA	Theor.Chim.Acta	
+ 	TCMTA	Technometrics	
+ 	TCPSA	Trans.Cambridge Phil.Soc.	
+ 	TCSCD	Theor.Comput.Sci.	
+ 	TCTOA	Tectonophys.	
+ 	TDGKA	J.Sci.Gakugei Fac.Tokushima Univ.Math.	
+ 	TDKHA	Sci.Pap.Fac.Eng.Tokushima Univ.	
+ 	TDSOF	Tech.Dig.Ser.	
+ 	TECUA	Technol.Cult.	
+ 	TELEA	Tetrahedron Lett.	
+ 	TENOE	Terra Nova	
+ 	TEREA	Technology Rev.	
+ 	TFIAA	Trud.Fiz.Inst.Acad.Nauk SSSR (Fiz.Inst.Lebedev)	
+ 	TFSOA	Trans.Faraday Soc.	
+ 	TGSAB	Trud.Geom.Sem.	
+ 	THACA	Thermochim. Acta	
+ 	THCHA	Theor.Chem.Ser.Monogr.	
+ 	THEOD	Theochem	
+ 	THSFA	Thin Solid Films	
+ 	TIAPD	Topology Appl.	
+ 	TIAUA	Trans.Int.Astron.Union	
+ 	TISJB	Trans.Iron Steel Inst.Jap.	
+ 	TIWHA	Acta Astron.Sin.	
+ 	TJIMA	Trans.Jap.Inst.Met.	
+ 	TJPHE	Turk.J.Phys.	
+ 	TJTCD	Ziran Zazhi	
+ 	TKOYD	J.Toyota Coll.Tech.	
+ 	TLPBA	Theor.Population Biol.	
+ 	TMFZA	Teor.Mat.Fiz.	
+ 	TMISA	Trudy Steklov Mat.Inst.	
+ 	TMMOA	Trud.Mosk.Mat.Obshch.	
+ 	TMMPF	Tatra Mt.Math.Pub.	
+ 	TMMSD	Trans.Moscow Math.Soc.	
+ 	TMPHA	Theor.Math.Phys.	
+ 	TMRGA	Trud.Tbil.Mat.Inst.	
+ 	TMSAA	Trans.Metall.Soc.AIME	
+ 	TNSRA	Tensor (Japan)	
+ 	TNYAA	Trans.New York Acad.Sci.	
+ 	TOMJA	Tohoku Math.J.	
+ 	TPCCA	Top.Curr.Chem.	
+ 	TPLGA	Topology	
+ 	TPRBA	Theor.Probab.Appl.	
+ 	TPTMA	Traite Phys.Theor.Phys.Math.	
+ 	TRGEE	Trends Genet.	
+ 	TRIKA	Tr.Radiotekh.Inst.	
+ 	TRSCA	Trans.Roy.Soc.Canada	
+ 	TRSEA	Trans.Roy.Soc.Edin.	
+ 	TRSOA	Trans.Roy.Soc.Lond.	
+ 	TSAOD	Tellus	
+ 	TSIPD	Trud. Semin. Im. I. G. Petrovskogo	
+ 	TSLGA	Teubner's Samml.Lehrb.Geb.Math.Wiss.Einschl.Anwend.	
+ 	TSVKB	Trudy Sem.Vektor.Anal.	
+ 	TTETE	Trans.Tallinn Tech.Univ.	
+ 	TTGIA	Proc.Tbilisi Univ.	
+ 	TTPHE	Teubner Texte Phys.	
+ 	TTSPB	Transp.Theory Statist.Phys.	
+ 	TUFPB	Proc. Fac. Sci. Tokai Univ.	
+ 	TVPRA	Teor.Veroyatn.Primen.	
+ 	TVRMB	Trav.Rech.Math.	
+ 	TWXUD	Acta Astrophys.Sin.	
+ 	UAKFA	Uch.Zap.Azerb.Gos.Univ., Ser.Fiz.-Mat.Nauk	
+ 	UFIZA	Ukr.Fiz.Zh.(Russ.Ed.)	
+ 	UFNAA	Usp.Fiz.Nauk	
+ 	UFZHA	Ukr.Fiz.Zh.(Ukr.Ed.)	
+ 	UGSBA	Ukr.Geom.Sb.	
+ 	UKAUA	Uch.Zapiski Kazan Univ.	
+ 	UKCEA	Uchuusen Kenkyuu	
+ 	UKMJB	Ukr.Math.J.	
+ 	UKPJA	Ukr.Phys.J.	
+ 	UKUGA	Uch.Zap.Kharkov.Gos.Univ.	
+ 	ULIMD	Ultrason. Imag.	
+ 	ULTRA	Ultrasonics	
+ 	ULTRD	Ultramicroscopy	
+ 	UMANA	Usp.Mat.Nauk	
+ 	UMZHA	Ukr.Mat.Zh.	
+ 	UQUAE	Ulam Quarterly	
+ 	URGYA	Urology	
+ 	URMRA	Rend.Mat.Appl.	
+ 	USKHA	Usp.Khim.	
+ 	USMBA	Ultrasound Med.Biol.	
+ 	USPSE	Ultra Sci.Phys.Sci.	
+ 	UTMAD	Util.Math.	
+ 	UWTCA	Umsch.Wiss.Tech.	
+ 	VABNF	Vesti Nats.Akad.Navuk Belarusi Ser.Fiz.Mat.	
+ 	VACUA	Vacuum	
+ 	VAKTA	Vak.Tech.	
+ 	VANKD	Vopf.At.Nauki Tekh.Ser.Yad.Konstanty	
+ 	VANSA	Vestn.Akad.Nauk SSSR	
+ 	VASED	Vopr.At.Nauki Tekh.Ser.Tekh.Fiz.Eksp	
+ 	VASTA	Vistas Astron.	
+ 	VBMFA	Vestn.Belorus.Gos.Univ.(Ser.Fiz.Mat.Mekh.)	
+ 	VBSFA	Vestsi Akad.Navuk BSSR Ser.Fiz.Mat.Navuk	
+ 	VDPEA	Verh.Phys.Gesell.	
+ 	VESBU	Vestn.Bashkir.Univ.	
+ 	VIRLA	Virology	
+ 	VISRA	Vision Res.	
+ 	VJAQF	Virtual J.Atom.Quant. Fluids	
+ 	VKANA	Vopr.Kosmog.	
+ 	VKTMD	Vopr.Kvant.Teor.Atom.Molek.	
+ 	VLGUA	Vestn.Leningrad.Gos.Univ.	
+ 	VLUBB	Vest.Leningrad.Univ.Biol.	
+ 	VLUFB	Vestn.Leningrad.Univ.(Ser.4 Fiz.Khim.)	
+ 	VMMAA	Vestnik Leningrad Univ.Mat.Mekh.Astron.	
+ 	VMMMA	Vestn.Moskov.Univ.(Mat.Mekh.)	
+ 	VMSTB	Trud.Vsesoyuzn.Mat.Sezda	
+ 	VMUFA	Vestn.Mosk.Univ.Fiz.Astron.	
+ 	VMUNA	Vestn.Mosk.Univ.	
+ 	VNEUE	Visual Neurosci.	
+ 	VSDEE	VLSI Syst.Design	
+ 	VSUKE	Vestn.St.Peterburg.Univ.(Ser.4 Fiz.Khim.)	
+ 	VWNEA	Verh.Kon.Ned.Akad.Wet.Afd.Nat.Eerst.Sect.	
+ 	WAMOD	Wave Motion	
+ 	WATRA	Water Res.	
+ 	WBATB	Wiss.Ber.AEG Telefunken	
+ 	WEARA	Wear	
+ 	WHLPA	Acta Phys.Sin.	
+ 	WIFOA	Wiss.Fortschr.	
+ 	WINEF	Wirel.Netw.	
+ 	WIWOA	Wireless World	
+ 	WLHPA	Wu Li Hsueh Pao	
+ 	WPBAA	World Perspect.	
+ 	WRMEE	Waves Random Media	
+ 	WSSED	Top.Curr.Phys.	
+ 	WSTED	Water Sci.Technol.	
+ 	WTRCA	Wiss.Taschenb.	
+ 	WZFMA	Wiss.Z.Univ.Jena	
+ 	WZMNA	Wiss.Z.Leipzig (Mat.Naturwiss.Reihe)	
+ 	XDXZE	Xinjiang Daxue Xuebao Ziran Kexue Ban	
+ 	XRSPA	X Ray Spectrom.	
+ 	YAFIA	Yad.Fiz.	
+ 	YIJIE	Appl.Laser	
+ 	YKJIE	Atomic Energ.Sci.Technol.	
+ 	YKMJA	Yokohama Math.J.	
+ 	YKZAE	Acta Petrolog.Mineral.	
+ 	YTHLD	Chin.J.Nucl.Phys.	
+ 	YUBMA	Yeshiva Univ.Belfer Grad.School Sci.Monogr.	
+ 	ZAMMA	Z.Angew.Math.Mech.	
+ 	ZAMPA	Z.Angew.Math.Phys.	
+ 	ZAMTA	Zastos.Mat.	
+ 	ZAPHA	Z.Angew.Phys.	
+ 	ZEASA	Z.Astrophys.	
+ 	ZECEA	Z.Chem.	
+ 	ZEELA	Z.Elektrochem.	
+ 	ZEPYA	Z.Phys.	
+ 	ZETFA	Zh.Eksp.Teor.Fiz.	
+ 	ZFDOF	J.Phys.Stud.	
+ 	ZFKHA	Zh.Fiz.Khim.	
+ 	ZFPRA	Pisma Zh.Eksp.Teor.Fiz.	
+ 	ZKKKA	Z.Krist.	
+ 	ZMLGA	Z.Math.Logik Grundlagen Math.	
+ 	ZMPHA	Z.Math.Phys.	
+ 	ZNASE	Z.Naturforsch., Teil A	
+ 	ZNSLA	Zap.Nauchn.Semin.	
+ 	ZNTFA	Z.Naturforsch.	
+ 	ZPCLA	Z.Phys.Chem.	
+ 	ZPMFA	Zh.Prikl.Mekh.Tekh.Fiz.	
+ 	ZPSBA	Zh.Prikl.Spektrosk.	
+ 	ZTEFA	Zh.Tekh.Fiz.	
+ 	ZVMFA	Zh.Vych.Mat.Mat.Fiz.	
+ 	ZWVGA	Z.Wahrschein Verw.Gebiet	
+ 	ZYGOA	Zygon	
+ 	00000	Published	
+ 	00011	Kobe J.Math.	
+ 	00014	Stud.Phil.Gand.	
+ 	00015	Tokyo J.Math.	
+ 	00022	Ergod.Theor.Dynam.Syst.	
+ 	00028	Constructive Approx.	
+ 	00030	Twistor Newslett.	
+ 	00032	Adv.Math.Supp.	
+ 	00033	Saitama Math.J.	
+ 	00036	Symp.Math.	
+ 	00040	Alg.Anal.	
+ 	00045	Alg.Groups Geom.	
+ 	00047	Proc.Symp.Pure Math.	
+ 	00050	CWI Q.	
+ 	00051	Expo.Math.	
+ 	00052	J.Am.Math.Soc.	
+ 	00055	Kodai Math.J.	
+ 	00058	Bull.Santa Fe Inst.	
+ 	00059	Compt.Rend.Math.Acad.Sci.Canada	
+ 	00064	Leningrad Math.J.	
+ 	00066	Stockholm Math.Rept.	
+ 	00068	Anales AFA	
+ 	00069	Arch.Philos.	
+ 	00070	Int.J.Math.	
+ 	00076	PiN Newslett.	
+ 	00077	Rev.Mat.Iberoam.	
+ 	00078	Surveys Diff.Geom.	
+ 	00079	Wien.Ber.	
+ 	00080	Z.Anal.Anw.	
+ 	00081	Amer.Math.Soc.Prog.Pure Math.	
+ 	00083	Bol.Soc.Mex.Fis.	
+ 	00089	Oper.Theor.Advan.Appl.	
+ 	00091	Analysis	
+ 	00093	Adv.Pure Math.	
+ 	00094	Adv.Sov.Math.	
+ 	00095	Analysis (Oldenburg)	
+ 	00096	Annals Appl.Probab.	
+ 	00097	Aport.Math.	
+ 	00098	Astronews	
+ 	00099	Biotechnics	
+ 	00100	Commun.Anal.Theor.Cont.Fract.	
+ 	00101	Cosnews	
+ 	00102	Elem.Part.Res.J.	
+ 	00103	Epistemological Lett.	
+ 	00105	Int.Math.Res.Not.	
+ 	00106	Izv.Akad.Nauk Gruz.SSR.Ser.Fiz.	
+ 	00107	Izv.Vyssh.Uchebn.Zaved.Tomsk	
+ 	00108	J.Knot Theor.Ramifications	
+ 	00110	Nat.Energy Res.Supercomput.Buffer	
+ 	00111	Neural Inform.Proc.Syst.	
+ 	00112	Nucl.Phys.News	
+ 	00113	Raum Zeit	
+ 	00114	Rev.Mod.Astron.	
+ 	00115	Sci.Int.(Lahore)	
+ 	00117	Trans.Inst.Phys. Estonian Acad.Sci.	
+ 	00118	Asia Pac.Phys.News	
+ 	00124	J.Alg.Geom.	
+ 	00127	Seminar Sophus Lie	
+ 	00129	Can.J.Statist.	
+ 	00130	J.Appl.Phil.	
+ 	00131	Bull.Can.Nucl.Soc.	
+ 	00132	J.Infrared Phys.Tech.	
+ 	00134	Res.J.Meiji Gakuin Univ.	
+ 	00135	Nouvelles Saturne	
+ 	00136	Result.Math.	
+ 	00137	Acta Numer.	
+ 	00139	Beitr.Alg.Geom.	
+ 	00142	Commun.Anal.Geom.	
+ 	00144	J.Consciousness Stud.	
+ 	00145	Int.J.Math.Math.Sci.	
+ 	00146	Math.Res.Lett.	
+ 	00147	Libertas Math.	
+ 	00148	J.Group Theor.Phys.	
+ 	00150	Riv.Mat.Pure Appl.	
+ 	00152	Abstracts Amer.Math.Soc.	
+ 	00154	J.Nonlin.Math.Phys.	
+ 	00155	Math.Today	
+ 	00156	Maple Tech.Newslett.	
+ 	00157	Quant.Fractals Complex Syst.	
+ 	00158	Algebra Colloq.	
+ 	00160	Bul.Acad.Sti.Rep.Moldova (Fiz.Teh.)	
+ 	00161	Eur.J.Appl.Math.	
+ 	00162	Exper.Math.	
+ 	00163	Fields Inst.Commun.	
+ 	00165	Ain Shams Sci.Bull.	
+ 	00166	Methods Appl.Anal.	
+ 	00168	Phil.Topics	
+ 	00170	Prog.Nonlinear Diff.Eq.Appl.	
+ 	00172	Adv.Neural Inf.Process.Syst.	
+ 	00174	J.Nonmath.Phys.	
+ 	00175	Geometria	
+ 	00176	Conceptus	
+ 	00177	Probl.Issl.Vsel.	
+ 	00179	ETNA	
+ 	00180	Fiz.Mysl.Ross.	
+ 	00181	Spektrum Wiss.	
+ 	00183	JINR Rapid Commun.	
+ 	00184	Ann. Rev. Comput. Phys.	
+ 	00185	Electron. J. Comb.	
+ 	00186	Matters Grav.	
+ 	00187	Diff. Integral Equ.	
+ 	00188	Adv. Synerg.	
+ 	00189	J. Bihar Math. Soc.	
+ 	00190	Priklad. Fiz.	
+ 	00193	Sci. Philos. Interface	
+ 	00194	Transform. Groups	
+ 	00195	J. Neutron Res.	
+ 	00196	Cerebral Cortex	
+ 	00197	ANPA West J.	
+ 	00199	C.R.Acad.Sci.URSS	
+ 	00200	Found.Sci.	
+ 	00203	Adv.Theor.Math.Phys.	
+ 	00204	Asian J.Math	
+ 	00205	Doc.Math.J.DMV	
+ 	00207	Dyn.Reported	
+ 	00210	Sci.Technol.	
+ 	00212	Differ.Equ.Dyn.Syst.	
+ 	00213	Synchrotron Radiat.News	
+ 	00214	Random Oper.Stochastic Equations	
+ 	00215	Russian Math.(Iz.VUZ)	
+ 	00216	Quaestiones Math.	
+ 	00217	St.Petersburg Math.J.	
+ 	00218	Stud.Hist.Philos.Mod.Phys.	
+ 	00219	Ramanujan J.	
+ 	00220	Giornale Astron.	
+ 	00222	Living Rev.Rel.	
+ 	00223	Extracta Math.	
+ 	00224	LBL Res. Rev.	
+ 	00225	Vietnam J.Math.	
+ 	00227	Sem.Lothar.Combin.	
+ 	00229	J.Fourier Anal.Appl.	
+ 	00230	Calc.Var.Part.Differ.Equ	
+ 	00231	Bol.Soc.Parana.Mat.	
+ 	00232	Concepts Magn.Res.	
+ 	00233	Illinois Libraries	
+ 	00235	Invest.Cient.	
+ 	00237	Publ.Astron.Obs.Belgrade	
+ 	00239	J. Nigerian Math. Soc.	
+ 	00240	Dynam. Systems Appl.	
+ 	00241	Japan J. Indust. Appl. Math.	
+ 	00242	Adv.Diff.Eq.	
+ 	00243	Int.J.Phys.	
+ 	00244	Nuovo Saggiatore	
+ 	00245	New York J.Math.	
+ 	00246	Nucl.Elect.Detect.Tech.	
+ 	00247	Topol.Meth.Nonlin.Anal.	
+ 	00249	Int.Stud.Phil.Sci.	
+ 	00250	Ann.Comb.	
+ 	00251	AMS/IP Stud.Adv.Math.	
+ 	00252	Coll.Phys.	
+ 	00253	Z. Anal. Anwendungen	
+ 	00256	Geom.Topol.	
+ 	00257	Electron.J.Diff.Eq.	
+ 	00258	J. Lie Theory	
+ 	00259	Inf.Dim.Anal.Quant.Probab.Rel.Top.	
+ 	00260	Ann.Math.Stud.	
+ 	00261	Int.J.Math.Stat.Sci.	
+ 	00262	Int.J.Groups Phys.	
+ 	00263	Adv.Math.Phys.Astr.	
+ 	00265	Statist. Sinica	
+ 	00266	Rev.Bras.Ens.Fis.	
+ 	00267	Ukr.J.Phys.	
+ 	00268	J.Universal Comp.Sci.	
+ 	00269	Rev.Acad.Canaria Cienc.	
+ 	00270	Discourses Math.Appl.	
+ 	00271	Facta Univ.Ser.Phys.Chem.Tech.	
+ 	00273	Commun.Cognition	
+ 	00274	Southeast Asian Bull.Math.	
+ 	00275	Mat.Model.	
+ 	00276	Commun.Contemp.Math.	
+ 	00277	Cambridge Math.J.	
+ 	00278	Euromath Bull.	
+ 	00279	Trans.Roy.Irish Acad.	
+ 	00280	CMS Bull.	
+ 	00281	Represent. Theory	
+ 	00284	Lect.Notes Pure Appl.Math.	
+ 	00285	CCAST-WL Workshop Series	
+ 	00286	HEP Lib.Web.	
+ 	00287	Part.Nucl.Lett.	
+ 	00288	Sov.J.Contemp.Math.Anal.	
+ 	00289	Economist	
+ 	00290	Infinite Energy	
+ 	00291	J.New Energy	
+ 	00292	Grav.Cosmol.Suppl.	
+ 	00293	Far East J. Theor. Stat.	
+ 	00294	Econom.J.	
+ 	00295	Rev.Econ.Stud.	
+ 	00296	RIKEN Accel.Prog.Rep.	
+ 	00297	Markov Process. Related Fields	
+ 	00298	Commun.Appl.Anal.	
+ 	00299	Int. Series Num.Math.	
+ 	00300	Rev.Bras.Aplicadoes Vacuo	
+ 	00302	Finite Syst.Multipart.Dyn.	
+ 	00304	Adv.Ser.Math.Phys.	
+ 	00305	Res.Notes Math.	
+ 	00306	Perspect.Math.	
+ 	00307	Monogr.Textbooks Pure Appl.Math.	
+ 	00308	Oxford Stud.Nucl.Phys.	
+ 	00309	Frascati Phys.Ser.	
+ 	00310	London Math.Soc.Student Texts	
+ 	00312	Fund.Appl.Math.	
+ 	00313	CRM Proc.Lect.Notes	
+ 	00314	Italian Phys.Soc.Proc.	
+ 	00316	Spacetime and Substance	
+ 	00317	Geom.Topol.Monographs	
+ 	00319	Adv.Ser.Direct.High Energy Phys.	
+ 	00320	Tsukuba J.Math.	
+ 	00321	Octogon Math.Mag.	
+ 	00324	Math.Teacher	
+ 	00325	SEAMS Monogr.	
+ 	00326	Samml.Schubert	
+ 	00327	World Sci.Lect.Notes Phys.	
+ 	00328	Math.Lect.Ser.	
+ 	00329	Quad.Storia Fis.	
+ 	00331	Cambridge Tracts Math.Math.Phys.	
+ 	00332	Trans.Jap.Soc.Artif.Intell.	
+ 	00333	Microporous Mesoporous Mat.	
+ 	00335	De Gruyter Stud.Math.	
+ 	00336	Anal.Univ.Vest Timisoara Ser.Theor.Math.Comput.Phys.	
+ 	00337	Canadian Math.Soc.Conf.Proc.	
+ 	00338	Beam Sci.Technol.	
+ 	00340	Nucl.Sci.Technol.	
+ 	00341	J.Egyptian Math.Soc.	
+ 	00342	Rev.English Stud.	
+ 	00343	Issues Sci.Technol.	
+ 	00344	Collect.Manage.	
+ 	00345	Le Scienze	
+ 	00346	AAPPS Bull.	
+ 	00347	Catal.Lett.	
+ 	00350	Baltic Astron.	
+ 	00351	Amer.Astron.Soc.Meeting	
+ 	00353	Interval Comput.	
+ 	00355	Cryst.Growth Des.	
+ 	00356	Stud.Cercet.Stiin.Ser.Mat.	
+ 	00357	Central Eur.J.Phys.	
+ 	00358	Ann.Physique Suppl.	
+ 	00359	Note di Matematica	
+ 	00360	Bull.Greek Math.Soc.	
+ 	00361	Electromagn.Phenom.	
+ 	00363	Regular Chaot.Behav.	
+ 	00367	Ann.Inst.H.Poincare Anal.Non Lineaire	
+ 	00368	APCTP Bull.	
+ 	00369	Symmetry Nonlin.Math.Phys.	
+ 	00370	Astrophys.Rep.	
+ 	00371	Manila J.Sci.	
+ 	00372	Rom.Astron.J.	
+ 	00373	Kyushu J.Math.	
+ 	00374	Vestn.Ross.Univ.Druzhby Narodov Ser.Mat.	
+ 	00375	Encycl.Math.Appl.	
+ 	00376	ICFA Beam Dyn.Newslett.	
+ 	00377	Commun.Math.Sci.	
+ 	00378	Frontiers	
+ 	00379	Lect.Notes Statist.	
+ 	00380	Contemp.Concepts Phys.	
+ 	00382	Annales Math.Pures Appl.	
+ 	00383	College Math.J.	
+ 	00384	Nature Materials	
+ 	00385	Cambridge Lect.Notes Phys.	
+ 	00387	Acta Univ.Palacki.Olomuc.Fac.Rerum Nat.Math.	
+ 	00388	Texas Q.	
+ 	00389	Ann.Sci.Kanazawa Univ.	
+ 	00390	Dyn.Contin.Discrete Syst.	
+ 	00391	Moscow Math.J.	
+ 	00392	J.Web Engineering	
+ 	00394	J.Business	
+ 	00395	Comput.Meth.Funct.Theory	
+ 	00396	Cluster Comput.J.Net.Softw.Applic.	
+ 	00397	ACM SIGSIM Simul.Digest	
+ 	00399	WGN	
+ 	00400	Boll.Soc.Ital.Fis.Nuova Ser.	
+ 	00401	STScI Newsletter	
+ 	00402	Monogr.Probab.Calc.Probab.Appl.	
+ 	00403	Am.Phys.Teach.	
+ 	00404	Theor.Histor.Scient.	
+ 	00405	J.Evol.Techol.	
+ 	00406	Rel.Grav.Cosmol.	
+ 	00407	Uch.Zap.Imp.Mosk.Univ.Otd.Fiz.Mat.	
+ 	00408	Bull.Iran.Math.Soc.	
+ 	00409	Russ.Tracts Adv.Math.Phys.	
+ 	00410	Ostwald's Klass.Exakt.Wiss.	
+ 	00411	Les Houches Lect.Notes	
+ 	00412	C.R.Acad.Sci.IV Phys.Astrophys.	
+ 	00413	Theor.Mec.Hydrodyn.Acoust.	
+ 	00414	Monogr.Dunod	
+ 	00415	Biol.Monogr.Manuals	
+ 	00416	Proc.Int.Congr.Math.	
+ 	00417	Cambridge Stud.Adv.Math.	
+ 	00418	J.Nonlin.Mathematical Phys.	
+ 	00419	Rev.R.Acad.Cien.Exactas Fis.Nat.Ser.A Mat.	
+ 	00420	Bull.Soc.Sci.Lett.Lodz Ser.Rech.Deform.	
+ 	00421	Quant.Inf.Proc.	
+ 	00422	J.Optoelectron.Adv.Mat.	
+ 	00423	Cambridge Tracts Math.	
+ 	00424	Commun.Asteros.	
+ 	00425	Studia Math.Skript	
+ 	00426	Conform.Geom.Dyn.	
+ 	00427	J.Theor.Nombres Bordeaux	
+ 	00428	Chin.Ann.Math.	
+ 	00429	Ukr.Antarctic J.	
+ 	00430	Prog.Math.Phys.	
+ 	00431	Phi Kappa Phi Forum	
+ 	00433	Vestn.St.Peterburg.Univ.	
+ 	00434	Appl.Geochem.	
+ 	00435	J.Eur.Math.Soc	
+ 	00436	Int.J.Geom.Meth.Mod.Phys.	
+ 	00437	Mat.Fiz.Anal.Geom.	
+ 	00438	Phys.Part.Nucl.Lett.	
+ 	00440	Contact in Context	
+ 	00441	Synopsis	
+ 	00442	Proc.Centre Math.Appl.Austral.Natl.Univ.	
+ 	00443	EURASIP J.Appl.Signal Process.	
+ 	00444	Ser.Sov.East Eur.Math.	
+ 	00445	Int.J.Quant.Inf.	
+ 	00446	Cancer	
+ 	00447	J.Theor.Comput.Chem.	
+ 	00449	Phys.Educ.	
+ 	00450	Hypercomplex Num.Geom.Phys.	
+ 	00451	Afr.J.Math.Phys.	
+ 	00452	Pisma Fiz.Elem.Chast.Atom.Yadra	
+ 	00453	J.Hyperbol.Diff.Equat.	
+ 	00454	Soc.Networks	
+ 	00455	Izv.Altais.Gos.Univ.	
+ 	00457	Annals Improb.Res.	
+ 	00458	J.Sci.Eng.	
+ 	00459	Adv.Geom.	
+ 	00460	J.Symplectic Geom.	
+ 	00461	Probl.Fiz.Vysok.Energ.Teor.Polya Trud.Sem.	
+ 	00462	J.Phys.Conf.Ser.	
+ 	00463	Statistics	
+ 	00464	GESJ Phys.	
+ 	00466	Prog.Phys.	
+ 	00467	J.Dynam.Syst.Geom.Theor.	
+ 	00468	Concepts Phys.	
+ 	00469	Teor.Prikl.Mat.	
+ 	00470	Johns Hopkins Ser.Math.Sci.	
+ 	00471	BI-Hochschultaschenb.	
+ 	00472	Wiss.Samml.Naturwiss.Math.Monogr.	
+ 	00473	Cad.Bras.Ens.Fis.	
+ 	00474	Math.Anwend.Monogr.Lehrb.	
+ 	00475	Space Weather	
+ 	00476	Plasma Fusion Res.	
+ 	00477	Lehrb.Monogr.Geb.Exakt.Wiss.Math.Reihe	
+ 	00478	TSPU Vestnik	
+ 	00479	Acta Math.Vietnamica	
+ 	00480	SIGMA	
+ 	00481	Algebr.Geom.Topol.	
+ 	00482	Mon.Not.Roy.Astron.Soc.Lett.	
+ 	00483	SFIN	
+ 	00484	Electron.J.Theor.Phys.	
+ 	00485	Recent Res.Devel.Phys.	
+ 	00486	JP J.Geom.Topol.	
+ 	00487	Metaphys.Rev.	
+ 	00488	Anal.Appl.	
+ 	00489	Sci.Acta Quad.Dott.	
+ 	00490	Aerotecn.Miss.Spaz.	
+ 	00491	Adv.Ser.Astrophys.Cosmol.	
+ 	00493	Int.Sci.Rev.Ser.	
+ 	00494	Ann.Sci.Math.Quebec	
+ 	00495	Lektsii Molod.Uch.	
+ 	00496	Fundam.Prikl.Mat	
+ 	00497	Trud.Inst.Obshch.Fiz.Akad.Nauk SSSR	
+ 	00498	Math.Anwend.Phys.Tech.	
+ 	00499	IEEE Nucl.Sci.Symp.Conf.Rec.	
+ 	00500	Arms Control Today	
+ 	00502	SIAM Stud.Appl.Math.	
+ 	00503	Adv.Math.Sci.	
+ 	00504	Zb.Rad.Filoz.Fak.Nisu Ser.Mat.	
+ 	00505	Adv.Stud.Contemp.Math.	
+ 	00506	Av.Persp.	
+ 	00507	Bull.Peace Propos.	
+ 	00508	World Sci.Ser.Contemp.Chem.Phys.	
+ 	00509	Surveys Ref.Works Math.	
+ 	00510	J.Yunnan Univ.Nat.Sci.Ed.	
+ 	00511	Edoardo Amaldi Found.Ser.	
+ 	00512	Mem.Math.Phys.	
+ 	00513	Trends Math.	
+ 	00514	Exposes Geom.	
+ 	00515	Front.Phys.China	
+ 	00516	ACIF Ser.	
+ 	00517	Lie Groups	
+ 	00518	AGF Jahresheft	
+ 	00519	Prog.Sci.Culture	
+ 	00520	High Energy Dens.Phys.	
+ 	00521	Hand.Jahrb.Chem.Phys.	
+ 	00522	J.Dalian Univ.Technol.	
+ 	00524	J.Hebei Normal Univ.	
+ 	00526	Wechselwirkung	
+ 	00528	Nakhchivan State Univ.News	
+ 	00529	Azerbaijan J.Phys.	
+ 	00530	EAS Publ.Ser.	
+ 	00531	Trans.NAS Azerbaijan Ser.Phys.Tech.Math.Sci.	
+ 	00532	Proc.Azerbaijan NAS	
+ 	00533	Publ.Math.Soc.Japan	
+ 	00534	Europa Archiv	
+ 	00535	Jap.J.Astron.Geophys.	
+ 	00536	Sumgait State Univ.News	
+ 	00537	Baku State Univ.News	
+ 	00538	Wiss.Nachr.	
+ 	00539	AGF Jahresheft	
+ 	00540	Proc.Inst.Math.NAS Ukraine	
+ 	00541	AEG Mitt.	
+ 	00542	Mem.Cl.Sci.Math.Phys.Inst.France	
+ 	00543	Polymeric Nanofibers	
+ 	00544	J.Bacteriol.	
+ 	00545	Prog.Geophys.	
+ 	00546	Prot.Struct.Funct.Bioinform.	
+ 	00547	Bull.Oerlikon	
+ 	00548	Adv.Math.(Dordrecht)	
+ 	00549	Trav.Math.	
+ 	00550	J.Immunol.	
+ 	00551	SciDAC Review	
+ 	00552	Pure Appl.Math.Quart.	
+ 	00553	J.Struct.Funct.Genom.	
+ 	00554	Iran.J.Phys.Res.	
+ 	00555	Stud.Hist.Sci.Technol.Med.	
+ 	00556	Camb.Monogr.Atom.Molec.Chem.Phys.	
+ 	00557	Int.J.Coal Geol.	
+ 	00558	NASA Act.	
+ 	00559	Space News	
+ 	00560	Collier's	
+ 	00561	IRMA Lect.Math.Theor.Phys.	
+ 	00562	J.Geom.Symmetry Phys.	
+ 	00563	Air Space Eur.	
+ 	00564	Math.Appl.Sov.Ser.	
+ 	00565	J.Appl.Math.	
+ 	00566	Interdisc.Appl.Math.	
+ 	00567	Einstein Studies	
+ 	00568	FEBS J.	
+ 	00569	J.Classif.	
+ 	00570	Textes Math.	
+ 	00571	J.Informet.	
+ 	00572	World Sci.Ser.20th Cent.Phys.	
+ 	00573	Homology Homotopy Appl.	
+ 	00574	Electron.Res.Announ.AMS	
+ 	00575	Sci.Am.Libr.	
+ 	00576	Nature Clin.Prac.Rheum.	
+ 	00577	Phys.Life Rev.	
+ 	00578	SIAM J.Appl.Dynam.Syst.	
+ 	00579	Int.J.Appl.Electro.Mech.	
+ 	00580	Int.J.Multiscale Comput.Eng.	
+ 	00581	Monogr.Theor.Appl.Phys.	
+ 	00582	Math.Appl.East Eur.Ser.	
+ 	00584	Nankai Tracts Math.	
+ 	00585	Hist.Tech.	
+ 	00586	Bull.Inform.Sci.Tech.	
+ 	00587	Elektron.Datenverarbeitung	
+ 	00588	Astrophys.Bull.	
+ 	00589	Probab.Anal.Rel.Top.	
+ 	00590	Plant J.	
+ 	00591	Adv.Stud.Theor.Phys.	
+ 	00592	Contrib.Gen.Algebra	
+ 	00593	Annals Discrete Math.	
+ 	00594	Theor.Appl.Categor.	
+ 	00595	Cellular Oncology	
+ 	00596	Nauka i Obrazovanie	
+ 	00597	World Sci.Ser.Comput.Sci.	
+ 	00598	Geostand.Geoanal.Res.	
+ 	00599	ChemPhysChem	
+ 	00600	Biosphere	
+ 	00601	Nature Nanotech.	
+ 	00602	Fluct.Noise Lett.	
+ 	00603	Metabolomics	
+ 	00604	Results Math.	
+ 	00609	Retrovirology	
+ 	00617	Sci.Geol.Sin.	
+ 	00619	Eur.Phys.J.ST	
+ 	00622	Innov.Tech.Biol.Med.	
+ 	00624	Revista Cien.Mat.	
+ 	00625	Mediterranean J.Math.	
+ 	00626	Automat.Comp.Appl.Math.	
+ 	00627	Phys.Rev.Focus	
+ 	00629	Van Nostrand Reinhold Math.Stud.	
+ 	00630	Int.J.Pure Appl.Math.	
+ 	00632	J.General.Lie Theor.Appl.	
+ 	00633	Cambridge Tracts Theor.Comput.Sci.	
+ 	00634	Jahrb.Kurt-Godel-Ges.	
+ 	00635	Meta Res.Bull.	
+ 	00636	Kragujevac J.Math.	
+ 	00637	J.Relig.Psych.Res.	
+ 	00638	Recent Res.Dev.Astron.Astrophys.	
+ 	00639	Can.Appl.Math.Q.	
+ 	00641	Astronmer's Telegram	
+ 	00642	Adv.High Energy Phys.	
+ 	00644	Int.Math.Forum	
+ 	00645	Rejecta Math.	
+ 	00647	Phil.Found.Phys.	
+ 	00649	Commun.Num.Theor.Phys.	
+ 	00650	Topics Contemp.Phil.	
+ 	00651	Phys.Phil.	
+ 	00653	Phil.Imprint.	
+ 	00654	Bull.Am.Math.Soc.N.S.	
+ 	00655	Notes Rep.Math.Sci.Eng.	
+ 	00656	Schr.Wiss.Weltauff.	
+ 	00657	RHIC News	
+ 	00658	Far East J.Math.Sci.	
+ 	00659	Lecturas Mat.	
+ 	00660	Ser.Adv.Quant.Many Body Theor.	
+ 	00661	Grundlagen Exakt.Naturwiss.	
+ 	00662	J.Appl.Fluid Mech.	
+ 	00664	Curr.Appl.Phys.	
+ 	00665	Electron.J.Probab.	
+ 	00666	Electron.Commun.Probab.	
+ 	00667	Sci.Am.Spec.Ed.	
+ 	00668	C.R.Acad.Sci.	
+ 	00669	Res.Inf.	
+ 	00670	J.Electron.Publ.	
+ 	00671	Georgia J.Sci.	
+ 	00672	Egypt.J.Solids	
+ 	00673	Telepolis	
+ 	00674	Global J.Pure Appl.Math.	
+ 	00675	Mater.Chem.Phys.	
+ 	00676	Sci.Global Secur.	
+ 	00677	Rev.Integr.Temas Mat.	
+ 	00678	Nonlin.Proc.Geophys.	
+ 	00679	Spektrum Wiss.Dossier	
+ 	00680	NeuroQuantol.	
+ 	00681	Phys.Solid State	
+ 	00682	J.Air Transp.Mgmt.	
+ 	00683	Sci.Plen.	
+ 	00684	Living Rev.Sol.Phys.	
+ 	00685	APS Physics	
+ 	00686	Vestn.Leningrad.Univ.Fiz.Khim.	
+ 	00688	Bol.A.A.Astron.	
+ 	00689	KronoScope	
+ 	00690	Inform. Serv.Use	
+ 	00691	Eng.Fail.Anal.	
+ 	00692	CNRS Int.Magazine	
+ 	00693	J.Cell.Automata	
+ 	00694	Indon.J.Phys.	
+ 	00695	Open Astron.J.	
+ 	00696	VNU J.Sci.Math.Phys.	
+ 	00697	Sci.Echoes	
+ 	00698	Schol.Res.Exch.	
+ 	00699	Comput.Net.	
+ 	00700	J.Eng.Math.	
+ 	00701	PLoS One	
+ 	00702	Microbiol.Mol.Biol.Rev.	
+ 	00703	Microelectron. Reliab.	
+ 	00704	Appl.Sciences	
+ 	00705	Eur.J.Radiol.	
+ 	00706	Isis	
+ 	00707	J.Assoc.Lab.Automat.	
+ 	00708	IEEE J.Sel.Top.Sig.Proc.	
+ 	00709	Asian J.Phys.	
+ 	00710	Dev.Soil Sci.	
+ 	00711	Mol.Microbiol.	
+ 	00712	Int.J.Phytoremediat.	
+ 	00713	Angew.Chem.	
+ 	00714	Ann.Appl.Stat.	
+ 	00715	Sci.Context	
+ 	00716	GAMM Mitt.	
+ 	00717	Bull.Pure Appl.Sci.	
+ 	00718	J.Thermal Spray Technol.	
+ 	00719	Int.Congress Ser.	
+ 	00720	Philo	
+ 	00721	Odessa Astron.Pub.	
+ 	00722	Acta Acustica	
+ 	00723	J.Noncommut.Geom.	
+ 	00724	Invertis J.Sci.Technol.	
+ 	00725	Int.Rev.Phys.	
+ 	00726	Nucl.Phys.Rev.	
+ 	00727	Ann.Shanghai.Obs.Acad.Sin.	
+ 	00728	J.Shanghai Jiaotong U.(Sci.)	
+ 	00729	Geol.Rev.	
+ 	00730	J.Acad.Libr.	
+ 	00731	UKIRT Newslett.	
+ 	00732	Ariadne	
+ 	00733	Res.Astron.Astrophys.	
+ 	00734	J.Global Sci.Tech.	
+ 	00735	Adv.Sci.Lett.	
+ 	00736	Laser Photonics Rev.	
+ 	00737	Ser.Semicond.Sci.Tech.	
+ 	00739	Mass.Spectrom.Rev.	
+ 	00740	Cent.Euro.Astro.Bull.	
+ 	00741	Horiz.World Phys.	
+ 	00742	J.Astron.Hist.Herit.	
+ 	00743	Bull.Crim.Astrophys.Observ.	
+ 	00744	Open Nucl.Part.Phys.J.	
+ 	00745	Inf.Process.Mgmt.	
+ 	00746	IEEE Trans.Compon.Pack.Manuf.Tech.	
+ 	00747	Sitz.Ber.Leib.Soz.	
+ 	00748	Karachi Univ.J.Sci.	
+ 	00749	Gauge Inst.J.Math.Phys.	
+ 	00750	IEEE Comp.Graph.App.	
+ 	00751	Seminaire Poincare	
+ 	00752	Int.J.Comp.Sci.Eng.	
+ 	00753	IEEE Sensors J.	
+ 	00754	Analog Int.Circ.Sig.Pro.	
+ 	00755	Electron Tech.	
+ 	00756	MPG Spiegel	
+ 	00757	J.Kharkov Natl.Univ.Phys.Ser.	
+ 	00758	IEEE Anten.Wirel.Propag.Lett.	
+ 	00759	Tenn.L.Rev.	
+ 	00760	Nature Chem.	
+ 	00761	Astrophys.Space Sci.Trans.	
+ 	00762	Symmetry	
+ 	00763	Boundary Meteor.	
+ 	00764	Discrete Contin.Dyn.Syst.	
+ 	00765	Sci.China Phys.Mech.Astron.	
+ 	00766	Hist.Rec.Austral.Sci.	
+ 	00767	Earth Planets Space	
+ 	00768	JDSO	
+ 	00769	J.Mater.Eng.Perform.	
+ 	00770	Aerospace Res.Bulg.	
+ 	00771	Cent.Eur.J.Math.	
+ 	00772	IEEE Sig.Proc.Mag.	
+ 	00773	Adv.Astron.	
+ 	00774	Adv.Solid State Phys.	
+ 	00775	Interdisc.Descrip.Complex Syst.	
+ 	00776	EPJ Web Conf.	
+ 	00777	J.Cosmol.	
+ 	00778	J.East China Univ.Sci.Technol.	
+ 	00779	Environ.Forum	
+ 	00780	Elec.J.Stat.	
+ 	00781	Proc.Symp.Appl.Math.	
+ 	00782	Natural Sci.	
+ 	00783	Rev.Bras.Geofis.	
+ 	00784	Astron.Educ.Rev.	
+ 	00785	J.Nanjing Univ.Aeron.Astronaut.	
+ 	00786	Arm.J.Math.	
+ 	00787	Proc.Natl.Acad.Sci.Belarus.Ser.Phys.Math.	
+ 	00788	New Adv.Phys.	
+ 	00789	Buturi	
+ 	00790	Ann.Geophys.Italy	
+ 	00791	Int.J.Model.Simul.Sci.Comput.	
+ 	00792	Quad.Geofis.	
+ 	00793	Pacific J.Sci.Technol.	
+ 	00794	J.Theor.Comput.Stud.	
+ 	00795	Uzbek J.Phys.	
+ 	00796	Int.J.Thermal Sci.	
+ 	00797	Kosmichna Nauka Tekhnol.	
+ 	00798	Adv.Cond.Mat.Phys.	
+ 	00799	Cosmos Hist.	
+ 	00800	Fermi News	
+ 	00801	Kosm.Issle.	
+ 	00802	Bull. Allahabad Math. Soc.	
+ 	00803	J.Plasma Fusion Res.SER.	
+ 	00804	Laser Phys.Lett.	
+ 	00805	Rev.Elec.Ens.Ciencias	
+ 	00806	Educ.For.	
+ 	00807	J.Opt.Technol.	
+ 	00808	Geofis.Intl.	
+ 	00809	Bulg.Astron.J.	
+ 	00810	Balkan J.Geom.Appl.	
+ 	00811	Probab.Surv.	
+ 	00812	Munster J.Math.	
+ 	00813	Rechenzentrum	
+ 	00814	Int.Rev.Atom.Mol.Phys.	
+ 	00815	Algorithms	
+ 	00816	J.Theor.Math.Comput.Phys.	
+ 	00817	J.Phys.Math.	
+ 	00818	Astron.Soc.India Conf.Ser.	
+ 	00819	J.Infra.Mill.Tera.Waves	
+ 	00820	Clay Math.Proc.	
+ 	00821	Quantum Topol.	
+ 	00822	Sci.Tech.Trends Quart.Rev.	
+ 	00823	J.Matem.Sains	
+ 	00824	Natl.Acad.Sci.Lett.	
+ 	00825	Bull.Kor.Chem.Soc.	
+ 	00826	Indian J.Radio Space Phys.	
+ 	00827	Sib.Elec.Math.Rept.	
+ 	00828	p Adic Ultra.Anal.Appl.	
+ 	00829	J.Topol.	
+ 	00830	Paleobiology	
+ 	00831	JSIAM Lett.	
+ 	00832	Int.J.Nonlin.Sci.	
+ 	00833	Phot.Net.Commun.	
+ 	00834	Transp.Res.Rec.	
+ 	00835	Intl.J.Comput.Net.Commun.	
+ 	00836	Sao Paulo J.Math.Sci.	
+ 	00837	Comp.Anal.Op.Theor.	
+ 	00838	Am.Phil.Quart.	
+ 	00839	Inst.Phys.Conf.Ser.	
+ 	00840	COMPEL	
+ 	00841	Chiang Mai J.Sci.	
+ 	00842	Appl.Phys.Res.	
+ 	00843	Ann.Rev.Biophys.	
+ 	00844	Bull.Fac.Sci.Zagazig	
+ 	00845	Nature Commun.	
+ 	00846	Bull.Fac.Sci.Assiut	
+ 	00847	Arab Gulf J.Sci.Res.	
+ 	00848	Transdisc.Sci.Relig.	
+ 	00849	Egyptian J.Phys.	
+ 	00850	Delta J.Sci	
+ 	00851	Comm.Theor.Phys.(Allahabad)	
+ 	00852	J.Mod.Phys.	
+ 	00853	Iad.Energ.	
+ 	00854	Int.J.Appl.Math.Comput.Sci.	
+ 	00855	J.Adv.Model.Earth Syst.	
+ 	00856	Quant.Biosyst.	
+ 	00857	IAU Colloq.	
+ 	00858	PIER	
+ 	00859	IEEE Commun.Lett.	
+ 	00860	Res.Policy	
+ 	00861	J.Sib.Fed.U.	
+ 	00862	Space Pol.	
+ 	39UHA	Continuum Phys.	
+ 	48WHA	Sovr.Probl.Mat.	
+ 	49ANA	Adv.X-Ray Spectros.	
+ 	5545	Universitas	

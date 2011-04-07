@@ -1,0 +1,48 @@
+<name>cite_as</name>
+<description>Output arxiv number, pub-note, and report numbers</description>
+<head>
+<script type="text/javascript">
+
+function valtoReferenceinp(recid) {
+      var reportf = "r" + recid;
+      var pubnotef = "p" + recid;
+      var irnvarf = "irn" + recid;
+      var reportvar = document.getElementById(reportf).value;
+      var pubnotevar = document.getElementById(pubnotef).value;
+      var irnvar = document.getElementById(irnvarf).value;
+      if (reportvar == "") {
+         referencevar = pubnotevar;
+      }
+      else {
+         reportvar2 = reportvar.split(",");
+         referencevar = reportvar2[0];
+      }
+      if (referencevar == "") {
+         referencevar = irnvar;
+      }
+      var targfieldv = window.opener.document.referenceinp.targfield.value;
+      window.opener.document.getElementById(targfieldv).value = referencevar; //=document.getElementById('reportf').value;
+      window.close();
+}
+</script>
+</head>
+
+<p>
+ <div id="detailedrecordshortreminder">
+    <form  action="" method="POST">
+    <input type="button" value="Select this reference" onClick="valtoReferenceinp(<BFE_RECORD_ID>); return(false);" >
+    <br>
+     <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+     <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/>
+     </a><br />
+      <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /></b>
+     <br>
+    <input type='hidden' value='<BFE_REPORT_NUMBERS prefix="" suffix=""  default="" escape="0" separator=",">' id='r<BFE_RECORD_ID escape="0">'>
+    <input type='hidden'  value='<BFE_JOURNAL_PUBLICATION_TITLE suffix=","/><BFE_JOURNAL_PUBLICATION_VOLUME  suffix=","/><BFE_JOURNAL_PUBLICATION_PAGE suffix="" />' id='p<BFE_RECORD_ID escape="0">'>
+      <input type='hidden' value='<BFE_SPIRES_IRN >' id='irn<BFE_RECORD_ID escape="0">'>
+
+</form>
+ <small> INSPIRE cites this as: </small>
+<BFE_REPORT_NUMBERS prefix="" suffix=" "  default="" escape="0" separator=" or " /><BFE_JOURNAL_PUBLICATION_TITLE suffix=","/><BFE_JOURNAL_PUBLICATION_VOLUME  suffix=","/><BFE_JOURNAL_PUBLICATION_PAGE suffix="  " />
+</div>
+

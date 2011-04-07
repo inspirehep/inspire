@@ -20,7 +20,10 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints references
 """
-__revision__ = "$Id$"
+
+from invenio.config import CFG_SITE_URL
+from invenio.search_engine import search_unit
+from invenio.bibformat import format_record
 
 def format_element(bfo, reference_prefix, reference_suffix):
     """
@@ -30,19 +33,11 @@ def format_element(bfo, reference_prefix, reference_suffix):
     @param reference_suffix a suffix displayed after each reference
     """
 
-    from invenio.search_engine import search_unit
-    from invenio.bibformat import format_record
     references = bfo.fields("999C5", escape=1)
-    out = ""
+    out = "<div id='referenceinp_link_box'><span id='referenceinp_link_span'><a id='referenceinp_link' href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hrf'+"'>Update these references</a></span></div>"
 
     for reference in references:
         ref_out = ''
-
-#        if reference.has_key('o'):
-#            if out != "":
-#                ref_out = '</li>'
-#            ref_out += '<li><small>'+\
-#                       reference['o']+ "</small> "
 
         display_journal = ''
         display_report = ''
@@ -101,9 +96,13 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
     return out
 
+
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
+# pylint: enable-msg=W0613
