@@ -331,36 +331,28 @@ a.headerselected:hover {
    text-decoration: none;
 }
 .navtrailbox {
-   color: #06c;
-   background: #fff;
-   padding: 0px;
-   margin-top: 7px;
-   border-spacing: 0px;
-   border-collapse: collapse;
-   font-size: x-small;
+   visibility:hidden;
+   height:0px;
 }
 .navtrailboxbody {
-   color: #06c;
-   padding: 0px 0px 0px 10px;
-   border-spacing: 0px;
-   background: #fff;
-   font-size: x-small;
+   visibility:hidden;
+   height:0px;
 }
 a.navtrail:link {
-   color: #06c;
-   background: transparent;
+   visibility:hidden;
+   height:0px;
 }
 a.navtrail:visited {
-   color: #06c;
-   background: transparent;
+   visibility:hidden;
+   height:0px;
 }
 a.navtrail:active {
-   color: #06c;
-   background: transparent;
+   visibility:hidden;
+   height:0px;
 }
 a.navtrail:hover {
-   color: #06c;
-   background: transparent;
+   visibility:hidden;
+   height:0px;
 }
 .info {
    color: #060;

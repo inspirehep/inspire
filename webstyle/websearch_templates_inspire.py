@@ -16,7 +16,7 @@
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """
-WebSearch templates. Customize the look of search of Invenio
+WebSearch templates. Customize the look of search of Inspire
 """
 __revision__ = \
     "$Id$"
@@ -66,7 +66,7 @@ from invenio.urlutils import make_canonical_urlargd, drop_default_urlargd, creat
 #from invenio.webinterface_handler import wash_urlargd
 #from invenio.bibrank_citation_searcher import get_cited_by_count
 #from invenio.intbitset import intbitset
-#from invenio.websearch_external_collections import external_collection_get_state, get_external_collection_engine
+#from invenio.websearch_externacollections import external_collection_get_state, get_external_collection_engine
 #from invenio.websearch_external_collections_utils import get_collection_id
 #from invenio.websearch_external_collections_config import CFG_EXTERNAL_COLLECTION_MAXRESULTS
 
@@ -80,7 +80,7 @@ class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
     def tmpl_searchfor_simple(self, ln, collection_id, collection_name, record_count,
-                 middle_option='',  ): # EXPERIMENTAL
+                 middle_option='',  ):
         """Produces light *Search for* box for the current collection.
 
         Parameters:
@@ -93,9 +93,7 @@ class Template(DefaultTemplate):
         # load the right message language
         _ = gettext_set_language(ln)
 
-        out = '''
-        <!--create_searchfor_light()-->
-        '''
+        out = ''
 
 
         argd = drop_default_urlargd({'ln': ln, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
@@ -114,20 +112,6 @@ class Template(DefaultTemplate):
         #get examples
         example_html = self.tmpl_show_examples(collection_id, ln)
 
-        # display options to search in current collection or everywhere
-        search_in = ''
-        if collection_name != CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME):
-            search_in += '''
-           <input type="radio" name="cc" value="%(collection_id)s" id="searchCollection" checked="checked"/>
-           <label for="searchCollection">%(search_in_collection_name)s</label>
-           <input type="radio" name="cc" value="%(root_collection_name)s" id="searchEverywhere" />
-           <label for="searchEverywhere">%(search_everywhere)s</label>
-           ''' % {'search_in_collection_name': _("Search in %(x_collection_name)s") % \
-                  {'x_collection_name': collection_name},
-                  'collection_id': collection_id,
-                  'root_collection_name': CFG_SITE_NAME,
-                  'search_everywhere': _("Search everywhere")}
-
         # print commentary start:
         out += '''
         <table class="searchbox lightsearch">
@@ -138,7 +122,7 @@ class Template(DefaultTemplate):
          </thead>
          <tbody>
           <tr valign="baseline">
-           <td class="searchboxbody" align="right"><input type="text" name="p" size="%(sizepattern)d" value="" class="lightsearchfield"/><br/>
+           <td class="searchboxbody" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield"/><br/>
              <small><small>%(example_query_html)s</small></small>
            </td>
            <td class="searchboxbody" align="left">
@@ -153,25 +137,21 @@ class Template(DefaultTemplate):
           </tr></table>
           <!--<tr valign="baseline">
            <td class="searchboxbody" colspan="2" align="left">
-             <small>
-               --><small>%(search_in)s</small><!--
-             </small>
            </td>
           </tr>
          </tbody>
         </table>-->
-        <!--/create_searchfor_light()-->
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
                'siteurl' : CFG_SITE_URL,
-               'asearch' : create_html_link(asearchurl, {}, _('Advanced Search')),
+               'asearch' : create_html_link(asearchurl, {}, _('Easy Search')),
                'header' : header,
                'msg_search' : _('Search'),
                'msg_browse' : _('Browse'),
                'msg_search_tips' : _('Search Tips'),
-               'search_in': search_in,
-               'example_query_html': example_html}
+               'example_query_html': example_html
+              }
 
         return out
 
@@ -312,7 +292,7 @@ class Template(DefaultTemplate):
         <!--create_searchfor_advanced()-->
         '''
 
-        argd = drop_default_urlargd({'ln': ln, 'aas': 1, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
+        argd = drop_default_urlargd({'ln': ln, 'aas': 0, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
                                     self.search_results_default_urlargd)
 
         # Only add non-default hidden values
@@ -323,9 +303,67 @@ class Template(DefaultTemplate):
         header = _("Search %s records for") % \
                  self.tmpl_nbrecs_info(record_count, "", "")
         header += ':'
-        ssearchurl = self.build_search_interface_url(c=collection_id, aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
+        ssearchurl = self.build_search_interface_url(c=collection_id, 
+                                    aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
 
         out += '''
+
+        <script type="text/javascript">
+            function perform_easy_search() {
+                // get values
+                author = document.getElementById('author').value;
+                title = document.getElementById('title').value;
+                c = document.getElementById('c').value;
+                rn = document.getElementById('rn').value;
+                aff = document.getElementById('aff').value;
+                cn = document.getElementById('cn').value;
+                k = document.getElementById('k').value;
+                eprinttype = document.getElementById('eprinttype');
+                eprinttype = eprinttype.options[eprinttype.selectedIndex].value;
+                eprintnumber = document.getElementById('eprintnumber').value;
+                topcite = document.getElementById('topcite');
+                topcite = topcite.options[topcite.selectedIndex].value;
+                j = document.getElementById('j');
+                j = j.options[j.selectedIndex].value;
+                jvol = document.getElementById('jvol').value;
+                jpage = document.getElementById('jpage').value;
+
+                // filter and build
+                query = 'find';
+                if (author != '') { query += ' and a ' + author; }
+                if (title != '') { query += ' and t ' + title; }
+                if (c != '') { query += ' and c ' + c; }
+                if (rn != '') { query += ' and rn ' + rn; }
+                if (aff != '') { query += ' and aff ' + aff; }
+                if (cn != '') { query += ' and cn ' + cn; }
+                if (k != '') { query += ' and k ' + k; }
+                if (eprinttype != '' && eprintnumber != '') {
+                    query += ' and eprint ' + eprinttype + ' ' + eprintnumber;
+                }
+                else {
+                    if (eprinttype != '') {
+                        query += ' and eprint ' + eprinttype;
+                    }
+                    if (eprintnumber != '') {
+                        query += ' and eprint ' + eprintnumber;
+                    }
+                }
+                if (topcite != '') { query += ' and topcite ' + topcite; }
+                if (j != '' && jvol != '' && jpage != '') { query += ' and j ' + j + ','+ jvol + ',' + jpage; }
+                else {
+                    if (j != '') { query += ' and j ' + j; }
+                    if (jvol != '') { query += ' and jvol ' + jvol; }
+                    if (jpage != '') { query += ' and jp ' + jpage; }
+                }
+
+                query = query.replace(/topcite (\d+)?\+/, 'topcite $1->99999');
+                query = query.replace(' and ', ' ');
+                query = query.replace(/ /g, '+');
+                search_url = '%(search_url)s'.replace('QUERY', query);
+                window.location = search_url;
+            };
+        </script>
+
         <table class="searchbox advancedsearch">
          <thead>
           <tr>
@@ -333,55 +371,49 @@ class Template(DefaultTemplate):
           </tr>
          </thead>
 
-
          <tbody>
+         <table border="0">
           <tr valign="bottom">
             <td class="searchboxbody" style="white-space: nowrap;">
 
-
-
-<table border="0">
           <tr>
-            <th align="right">
-           Author:</th>
-            <td align="left"><input size="40" name="AUTHOR"/></td>
+            <th align="right">Author:</th>
+            <td align="left"><input size="40" id="author"/></td>
           </tr>
+         
           <tr>
-            <th align="right">
-                        Title:</th>
-            <td align="left"><input size="40" name="TITLE" /></td>
-          </tr>
-
-<tr>
-            <th align="right">
-                        Citation:</th>
-            <td align="left"><input size="40" name="C" /></td>
+            <th align="right">Title:</th>
+            <td align="left"><input size="40" id="title" /></td>
           </tr>
 
           <tr>
-            <th align="right">
-            Report Number:</th>
-            <td align="left"><input size="40" name="REPORT-NUM" /></td>
+            <th align="right">Citation:</th>
+            <td align="left"><input size="40" id="c" /></td>
           </tr>
-          <tr>
-            <th align="right">
-            Affiliation:</th>
 
-            <td align="left"><input size="40" name="AFFILIATION" /></td>
+          <tr>
+            <th align="right">Report Number:</th>
+            <td align="left"><input size="40" id="rn" /></td>
           </tr>
+
+          <tr>
+            <th align="right">Affiliation:</th>
+            <td align="left"><input size="40" id="aff" /></td>
+          </tr>
+
           <tr>
             <th align="right">Collaboration:</th>
-            <td align="left"><input size="40" name="cn" /></td>
+            <td align="left"><input size="40" id="cn" /></td>
           </tr>
-          <tr>
-            <th align="right">
 
-                        Keywords:</th>
-            <td align="left"><input size="40" name="k" /></td>
+          <tr>
+            <th align="right">Keywords:</th>
+            <td align="left"><input size="40" id="k" /></td>
           </tr>
+          
           <tr>
             <th align="right">Eprint:</th>
-            <td align="left"><select name="eprint">
+            <td align="left"><select id="eprinttype">
             <option value="" selected="selected">Any Type</option>
             <option>ACC-PHYS</option>
             <option>ASTRO-PH</option>
@@ -391,149 +423,152 @@ class Template(DefaultTemplate):
             <option>HEP-LAT</option>
             <option>HEP-PH</option>
             <option>HEP-TH</option>
+
             <option>NUCL-EX</option>
             <option>NUCL-TH</option>
 
             <option>PHYSICS</option>
             <option>QUANT-PH</option>
             </select>&nbsp;&nbsp; Number
-	    <input size="14" name="eprint" />
-	    </td>
-          </tr>
-          <tr>
-            <th align="right">
+	        <input size="14" id="eprintnumber" />
+	        </td>
+        </tr>
 
-            Topcite:</th>
-            <td align="left">
-	    <select name="cited">
+        <tr>
+          <th align="right">Topcite:</th>
+          <td align="left">
+	      <select id="topcite">
             <option value="" selected="selected">Don\'t care</option>
+            <option>50+</option>
+            <option>100+</option>
+            <option>250+</option>
+            <option>500+</option>
+            <option>1000+</option>
             <option>50->99</option>
             <option>100->249</option>
             <option>250->499</option>
             <option>500->999</option>
-            <option>1000->999999</option>
-            <option>50->999999</option>
-            <option>100->999999</option>
-            <option>250->999999</option>
-            <option>500->999999</option>
-            <option>1000->999999</option>
             </select>
-	    &nbsp;&nbsp;
-	     </td>
-          </tr>
-          <tr>
-            <th align="right">Journal:</th>
-            <td align="left"><select name="J">
+	      </td>
+        </tr>
+        
+        <tr>
+          <th align="right">Journal:</th>
+          <td align="left"><select id="j">
             <option value="" selected="selected">Any Journal</option>
-            <Option>Acta Phys.Austr.</Option>
+            <option>Acta Phys.Austr.</option>
 
-            <Option>Acta Phys.Polon.</Option>
-            <Option>Ann.Poincare</Option>
-            <Option>Ann.Phys.(N.Y.)</Option>
-            <Option>Astropart.Phys.</Option>
-            <Option>Astrophys.J.</Option>
-            <Option>Can.J.Phys.</Option>
+            <option>Acta Phys.Polon.</option>
+            <option>Ann.Poincare</option>
+            <option>Ann.Phys.(N.Y.)</option>
+            <option>Astropart.Phys.</option>
+            <option>Astrophys.J.</option>
+            <option>Can.J.Phys.</option>
 
-            <Option>Class.Quant.Grav.</Option>
-            <Option>Comm.Nucl.Part.Phys.</Option>
-            <Option>Commun.Math.Phys.</Option>
-            <Option>Commun. Theor. Phys.</Option>
-            <Option>Comput. Phys. Commun.</Option>
-            <Option>Czech. J. Phys.</Option>
+            <option>Class.Quant.Grav.</option>
+            <option>Comm.Nucl.Part.Phys.</option>
+            <option>Commun.Math.Phys.</option>
+            <option>Commun. Theor. Phys.</option>
+            <option>Comput. Phys. Commun.</option>
+            <option>Czech. J. Phys.</option>
 
-            <Option>Europhys. Lett.</Option>
-            <Option>Eur. Phys. J.</Option>
-            <Option>Few Body Syst.</Option>
-            <Option>Fiz. Elem. Chast. At. Yadra</Option>
-            <Option>Fizika</Option>
-            <Option>Fortschr. Phys.</Option>
+            <option>Europhys. Lett.</option>
+            <option>Eur. Phys. J.</option>
+            <option>Few Body Syst.</option>
+            <option>Fiz. Elem. Chast. At. Yadra</option>
+            <option>Fizika</option>
+            <option>Fortschr. Phys.</option>
 
-            <Option>Found. Phys.</Option>
-            <Option>Gen. Rel. Grav.</Option>
-            <Option>Hadronic J.</Option>
-            <Option>Helv. Phys. Acta</Option>
-            <Option>High Energy Phys. Nucl. Phys.</Option>
-            <Option>Ieee Trans. Magnetics</Option>
+            <option>Found. Phys.</option>
+            <option>Gen. Rel. Grav.</option>
+            <option>Hadronic J.</option>
+            <option>Helv. Phys. Acta</option>
+            <option>High Energy Phys. Nucl. Phys.</option>
+            <option>Ieee Trans. Magnetics</option>
 
-            <Option>Ieee Trans. Nucl. Sci.</Option>
-            <Option>Instrum. Exp. Tech.</Option>
-            <Option>Int. J. Mod. Phys.</Option>
-            <Option>Int. J. Theor. Phys.</Option>
-	    <Option>Jcap</Option>
-            <Option>Jhep</Option>
+            <option>Ieee Trans. Nucl. Sci.</option>
+            <option>Instrum. Exp. Tech.</option>
+            <option>Int. J. Mod. Phys.</option>
+            <option>Int. J. Theor. Phys.</option>
+	        <option>Jcap</option>
+            <option>Jhep</option>
 
-            <Option>J. Math. Phys.</Option>
-            <Option>J. Phys. - A -</Option>
-            <Option>J. Phys. - G -</Option>
-            <Option>J. Phys. Soc. Jap.</Option>
-            <Option>Jetp Lett.</Option>
-            <Option>Lett. Math. Phys.</Option>
+            <option>J. Math. Phys.</option>
+            <option>J. Phys. - A -</option>
+            <option>J. Phys. - G -</option>
+            <option>J. Phys. Soc. Jap.</option>
+            <option>Jetp Lett.</option>
+            <option>Lett. Math. Phys.</option>
 
-            <Option>Lett. Nuovo Cim.</Option>
-	    <Option>Living Rev. Rel.</Option>
-	    <Option>Mod. Phys. Lett.</Option>
-	    <option >Mon.Not.Roy.Astron.Soc.</option>
-            <Option>New J.Phys.</Option>
-            <Option>Nucl.Instrum.Meth.</Option>
-            <Option>Nucl.Phys.</Option>
+            <option>Lett. Nuovo Cim.</option>
+	        <option>Living Rev. Rel.</option>
+	        <option>Mod. Phys. Lett.</option>
+	        <option>Mon.Not.Roy.Astron.Soc.</option>
+            <option>New J.Phys.</option>
+            <option>Nucl.Instrum.Meth.</option>
+            <option>Nucl.Phys.</option>
 
-            <Option>Nucl.Phys.(Proc.Suppl.)</Option>
-            <Option>Nuovo Cim.</Option>
-            <Option>Part. Accel.</Option>
-            <Option>Phys. Atom. Nucl.</Option>
-            <Option>Phys.Lett.</Option>
-            <Option>Phys.Rept.</Option>
+            <option>Nucl.Phys.(Proc.Suppl.)</option>
+            <option>Nuovo Cim.</option>
+            <option>Part. Accel.</option>
+            <option>Phys. Atom. Nucl.</option>
+            <option>Phys.Lett.</option>
+            <option>Phys.Rept.</option>
 
-            <Option>Phys.Rev.</Option>
-            <Option>Phys.Rev.Lett.</Option>
-            <Option>Phys. Scripta</Option>
-            <Option>Physica</Option>
-            <Option>Pisma Zh. Eksp. Teor. Fiz.</Option>
-            <Option>Pramana</Option>
+            <option>Phys.Rev.</option>
+            <option>Phys.Rev.Lett.</option>
+            <option>Phys. Scripta</option>
+            <option>Physica</option>
+            <option>Pisma Zh. Eksp. Teor. Fiz.</option>
+            <option>Pramana</option>
 
-            <Option>Prog. Part. Nucl. Phys.</Option>
-            <Option>Prog. Theor. Phys.</Option>
-            <Option>Rept. Math. Phys.</Option>
-            <Option>Rept. Prog. Phys.</Option>
-            <Option>Rev. Mod. Phys.</Option>
-            <Option>Rev. Sci. Instrum.</Option>
+            <option>Prog. Part. Nucl. Phys.</option>
+            <option>Prog. Theor. Phys.</option>
+            <option>Rept. Math. Phys.</option>
+            <option>Rept. Prog. Phys.</option>
+            <option>Rev. Mod. Phys.</option>
+            <option>Rev. Sci. Instrum.</option>
 
-            <Option>Riv. Nuovo Cim.</Option>
-            <Option>Russ. Phys. J. (Sov. Phys. J.)</Option>
-            <Option>Sov. J. Nucl. Phys.</Option>
-            <Option>Sov. Phys. Jetp</Option>
-            <Option>Teor. Mat. Fiz.</Option>
-            <Option>Theor. Math. Phys.</Option>
+            <option>Riv. Nuovo Cim.</option>
+            <option>Russ. Phys. J. (Sov. Phys. J.)</option>
+            <option>Sov. J. Nucl. Phys.</option>
+            <option>Sov. Phys. Jetp</option>
+            <option>Teor. Mat. Fiz.</option>
+            <option>Theor. Math. Phys.</option>
 
-            <Option>Yad. Fiz.</Option>
-            <Option>Z. Phys.</Option>
-            <Option>Zh. Eksp. Teor. Fiz.</Option>
-            </select>&nbsp;&nbsp; vol:
-	    <input size="8" name="j" />  pg: <input size="8" name="j" /></td>
-          </tr>
+            <option>Yad. Fiz.</option>
+            <option>Z. Phys.</option>
+            <option>Zh. Eksp. Teor. Fiz.</option>
+            </select>&nbsp;&nbsp; 
+            vol:<input size="8" id="jvol" />
+            pg: <input size="8" id="jpage" /></td>
+        </tr>
 
-<tr>
-
-            <td class="searchboxbody" style="white-space: nowrap;">
-              <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
-              <input class="formbutton" type="submit" name="action_browse" value="%(msg_browse)s" /></td>
-          </tr>
-          <tr valign="bottom">
+        <tr>
+          <td class="searchboxbody" style="white-space: nowrap;" align="center">
+              <input type="button" onclick="perform_easy_search()" name="action_search" value="%(msg_search)s" />
+          </td>
+        </tr>
+        
+        <tr valign="bottom">
             <td colspan="3" class="searchboxbody" align="right">
               <small>
                 <a href="%(siteurl)s/help/search-tips%(langlink)s">%(msg_search_tips)s</a> ::
                 %(ssearch)s
               </small>
             </td>
-          </tr>
-         </tbody>
+        </tr>
+        
+        </tbody>
         </table>
+
         <!-- @todo - more imports -->
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
                'siteurl' : CFG_SITE_URL,
                'ssearch' : create_html_link(ssearchurl, {}, _("Simple Search")),
+               'search_url' : (CFG_SITE_URL + '/search?p=QUERY&action_search=Search'),
                'header' : header,
 
                'matchbox_m1' : self.tmpl_matchtype_box('m1', ln=ln),
@@ -548,8 +583,8 @@ class Template(DefaultTemplate):
                'middle_option_3' : middle_option_3,
 
                'msg_search' : _("Search"),
-               'msg_browse' : _("Browse"),
-               'msg_search_tips' : _("Search Tips")}
+               'msg_search_tips' : _("Search Tips")
+            }
 
         if (searchoptions):
             out += """<table class="searchbox">
@@ -612,7 +647,6 @@ class Template(DefaultTemplate):
                   </table>
                   <!--/create_searchfor_advanced()-->
               """ % {
-
                     'added' : _("Added/modified since:"),
                     'until' : _("until:"),
                     'added_or_modified': self.tmpl_inputdatetype(ln=ln),
@@ -628,5 +662,3 @@ class Template(DefaultTemplate):
                     'formatoptions' : formatoptions
                   }
         return out
-
-
