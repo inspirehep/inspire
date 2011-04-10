@@ -227,9 +227,8 @@ def format_element(bfo, limit, separator='; ',
         if print_links.lower() == "yes":
             colls = ['<a class="authorlink" href="' + \
                      bfe_server(bfo,var="searchurl") + \
-                     '?p=' + quote(coll) + \
+                     '?p=collaboration:' + quote("'" + coll + "'") + \
                      '&amp;ln='+ bfo.lang + \
-                     '&amp;f=collaboration' + \
                      '">'+escape(coll)+'</a>' for coll in colls]
 
         coll_display = " and ".join(colls)

@@ -68,7 +68,7 @@ def print_kw(bfo,
     """
 
     if link == 'yes':
-        keywords = ['<a href="' + CFG_SITE_URL + '/search?f=keyword&amp;p='+ \
+        keywords = ['<a href="' + CFG_SITE_URL + '/search?p=keyword:'+ \
                     quote('"' + keyword + '"') + \
                     '&amp;ln=' + bfo.lang + \
                     '">' + cgi.escape(keyword) + '</a>'

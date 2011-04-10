@@ -170,24 +170,6 @@ a.nodecoration:hover {
    color: #000;
    text-decoration: underline;
 }
-th.searchboxheader a:link {
-   color: #000;
-   text-decoration: none;
-}
-
-th.searchboxheader a:visited {
-   color: #000;
-   text-decoration: none;
-}
-
-th.searchboxheader a:active {
-   color: #000;
-   text-decoration: none;
-}
-
-th.searchboxheader a:hover {
-   color: #000;
-}
 
 
 
@@ -523,9 +505,19 @@ a.footer:hover {
 .searchboxheader {
    color: #000;
    background: #fff;
-   padding: 3px;
+   margin: 0px;
+   padding: 3px 3px 0px 5px;
    border-spacing: 0px;
    font-size: small;
+   text-align: left;
+   font-weight: normal;
+}
+
+.searchboxexample {
+   margin: 0px;
+   padding: 0px 3px 3px 5px;
+   border-spacing: 0px;
+   font-size: x-small;
    text-align: left;
 }
 .searchboxbody {
@@ -624,7 +616,7 @@ a.footer:hover {
    color: #000;
    background: #fff;
    /* margin: 0px 0px 15px 0px; */
-   margin: 5px 0px 5px 0px;
+   margin: 5px 0px 5px -20px;
    border-collapse: collapse;
    border-top: 1px solid #abb;
    font-size: x-small;
@@ -646,6 +638,75 @@ a.footer:hover {
    padding: 3px;
    font-size: x-small;
 }
+
+.portalboxbody h3{
+    font-size: 1.2em;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    color: #666;
+    border-bottom: 1px dotted #ccc;
+    
+    font-style: normal;
+}
+
+
+.portalboxbody h2 {
+    font-size:1.2em;
+    text-align: center;
+    color: #666;
+    background-color: transparent;
+    font-style: normal;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    border-bottom: 1px dotted #ccc;
+}
+
+.portalboxbody h2.bright{
+   font-size:1.4em;
+   color:#000;
+}
+
+
+.portalboxbody p{
+    margin:.5ex 1em 0ex 1em;
+}
+
+.portalboxbody ul{
+   margin:0ex 1em 0ex 1em;
+   padding:0px;
+   list-style-type:none;
+}
+
+.portalboxbody ul.hanging {
+   padding-left: 15px;
+   list-style-type:none;
+}
+
+.portalboxbody li.hanging {
+   text-indent: -15px;
+}
+
+.portalboxbody a {
+  text-decoration:none;
+}
+
+
+.portalboxbody dl{
+   margin:0ex 1em 0ex 1em;
+   padding:0px;
+}
+
+#announce{
+    width: 75%;
+    margin: 20px 20px 20px 0px;
+    border: 2px solid #ccc;
+    padding: 5px;
+    font-size: small;
+}
+
+
 .bugboxtd {
    vertical-align: top;
    text-align: left;
@@ -2489,74 +2550,6 @@ padding:0;
 .menu .headermoduleboxbody .hassubmenu a.header:hover{
 	/*background: transparent url(drop_down_menu_arrow_down_b.gif) no-repeat right center;*/
         background-image:url(drop_down_menu_arrow_down_b.gif)
-}
-
-
-.portalboxbody h3{
-    font-size: 1.2em;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    padding-bottom: 3px;
-    color: #666;
-    border-bottom: 1px dotted #ccc;
-    font-style: normal;
-}
-
-.portalboxbody p{
-    margin-top:1px;
-    margin-bottom:0;
-}
-
-.portalboxbody h2 {
-    font-size:1.2em;
-    text-align: center;
-    color: #666;
-    background-color: transparent;
-    font-style: normal;
-    margin-top: 4px;
-    margin-bottom: 4px;
-    padding-bottom: 3px;
-    border-bottom: 2px dotted #ccc;
-}
-
-.portalboxbody h2.bright{
-   font-size:1.4em;
-   color:#000;
-}
-
-.portalboxbody ul{
-   margin:0ex 1em 0ex 1em;
-   padding:0px;
-   list-style-type:none;
-}
-
-
-.portalboxbody ul.hanging {
-   padding-left: 15px;
-   list-style-type:none;
-}
-
-.portalboxbody li.hanging {
-   text-indent: -15px;
-}
-
-.portalboxbody a {
-  text-decoration:none;
-}
-
-#announce{
-    width: 70%;
-  /*  margin: 1% 15% 5px 15%;*/
-    margin: 20px;
-    border: 2px solid #ccc;
-    padding: 5px;
-    font-size: small;
-}
-
-
-.portalboxbody dl{
-   margin:0ex 1em 0ex 1em;
-   padding:0px;
 }
 
 

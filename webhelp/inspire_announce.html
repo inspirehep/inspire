@@ -1,54 +1,51 @@
 </form>
 <form action="/search" method="get">
 <div id="announce" class="portalboxbody">
-<h2>Welcome to INSPIRE β</h2>
-
-<h3>SPIRES Search<br />...and a little more</h3>
+<h3>How to Search</h3>
 <dl>
-<dt>A few words</dt>
-<dd><a href="/search?p=1985+richter+quark+multiplicity">1985 richter quark multiplicity</a>
-</dd>
-<dt>Eprint number (<a href="/record/863300">note the plots</a>)</dt>
-<dd><a href="/search?p=arXiv%3A1007.5048">arXiv:1007.5048</a></dd>
-<dt>More complex</dt>
-<dd><a href="/search?p=%28symmetry+or+asymmetry%29+author%3Agell-mann+not+quark">(symmetry or asymmetry) author:gell-mann -quark</a>
-</dd>
-<dt>SPIRES syntax is (mostly) supported (requires "find")</dt>
+<dt>SPIRES syntax is (<a href="/help/serarch-tips">mostly</a>) supported (requires "find")</dt>
 <dd><a href="/search?p=find+a+richter%2C+b+and+t+quark+and+date+%3E+1984">find
     a richter, b and t quark and date &gt; 1984</a>
 </dd>
-<dt>Complex citation searching</dt>
-<dd><a href="/search?p=citedby%3Aauthor%3Aellis+refersto%3Aauthor%3Awitten">citedby:author:ellis refersto:author:witten</a></dd>
-<dt>Range searching</dt>
-<dd><a href="/search?p=author%3Arandall+author%3Asundrum+cited%3A450-%3E1350&amp;rm=citation">author:randall author:sundrum cited:450-&gt;1350</a></dd>
-<dt>Search words inside papers (Note: limited coverage, phrases coming soon)</dt>
+<dd><a href="/search?p=find+j+phys.rev.%2CD50%2C1140+or+j+jhep%2C0903%2C112">find j phys.rev.,D50,1140 or j jhep,0903,112</a>
+</dd>
+<dd><a href="/search?p=find+eprint+1007.5048">find eprint 1007.5048</a>
+  (Note the plots available on the detailed record)
+</dd>
+<dd><a href="/search?ln=en&p=find+fulltext+&quot;quark-gluon+plasma&quot;">find fulltext &quot;quark-gluon plasma&quot;</a> (Note new "fulltext" operator)
+</dd>
+<dd><a href="/search?p=find+a+ellis+and+refersto+a+witten">find
+    a ellis and refersto a witten</a> (Note "refersto")
+</dd>
+<dd><a href="/search?p=find+a+kane+and+citedby+title+SUSY+and+topcite+200+">find
+    a kane and citedby title SUSY and topcite 200+</a> (Note "citedby")
+</dd>
+<dt>New techniques:</dt>
+<dd><a href="/search?p=1985+richter+quark+multiplicity">1985 richter quark multiplicity</a>
+</dd>
+<dd><a href="/search?p=arXiv%3A1007.5048">arXiv:1007.5048</a></dd>
+<dd><a href="/search?p=citedby%3Aauthor%3Aellis+-refersto%3Aauthor%3Awitten">citedby:author:ellis -refersto:author:witten</a></dd>
+<dd><a href="/search?p=author%3Arandall|author%3Asundrum+cited%3A450-%3E1350&amp;rm=citation">author:randall | author:sundrum cited:450-&gt;1350</a></dd>
+<dt>
+Additional Help:
+</dt>
 <dd>
-<input name="p" type="text" value="unparticle" size="20" id="p2" />
-<select name="f"><option value="">any
-    field</option><option value="affiliation">affiliation</option><option value="author">author</option><option value="caption">caption</option><option value="collaboration">collaboration</option><option value="exactauthor">exact
-    author</option><option selected="selected" value="fulltext" selected="selected">fulltext</option><option value="journal">journal</option><option value="reportnumber">report number</option><option value="title">title</option><option value="date">date</option></select>
-<input class="formbutton" type="submit" name="action" value="Search" />
+<a href="/help/search-tips">More search tips</a> and <a href="/help/">full help</a>
 </dd>
 </dl>
 
-<h3>Additional Help</h3>
-<dl>
-<dt>Help for SPIRES Users</dt><dd><a href="/help/search-tips">INSPIRE search tips</a></dd>
-<dt>More</dt>
-<dd>See <a href="/help/">INSPIRE help</a>.</dd>
-</dl>
+<h3>INSPIRE Updates</h3>
+<p>See our blog
+at <a href="http://blog.inspirebeta.net">blog.inspirebeta.net</a> for
+updates on new features and other news.  You can also follow us at
+<a href="http://twitter.com/inspirehep">@inspirehep</a> on twitter
 
-<h3>Bugs</h3>
-<p>There are some things that are not working, and others that are rough
-around the edges, please report these bugs and we'll keep you updated on
-the fixes and improvements we make.  We expect to be making a lot of
-updates and changes in the next few months, so please send feedback about the service
-to <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
-<p>The data in INSPIRE is updated
-daily and should be the same as what is available from SPIRES, or better.
-  To correct data in INSPIRE (or SPIRES), let us know at <a href="mailto:help@inspirebeta.net">help@inspirebeta.net</a></p>
+To send us feedback
+use <a href:"mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a>.
+The data in INSPIRE is updated daily and should be the same as what is
+available from SPIRES, or better. To correct data in INSPIRE (or SPIRES),
+let us know at <a href="mailto:help@inspirebeta.net">help@inspirebeta.net</a>.
 </p>
-
 
 </div>
 
