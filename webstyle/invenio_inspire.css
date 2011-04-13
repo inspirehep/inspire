@@ -1448,12 +1448,12 @@ dd{
 #bibEditMenu button, #bibEditMenu input, #bibEditMenu select  {
   width: 100%;
 }
-#bibEditMenu .bibEditImgCtrlEnabled {
+.bibEditImgCtrlEnabled {
   cursor: pointer;
   opacity: 1.0;
   vertical-align: bottom;
 }
-#bibEditMenu .bibEditImgCtrlDisabled {
+.bibEditImgCtrlDisabled {
   cursor: default;
   opacity: 0.4;
   vertical-align: bottom;
