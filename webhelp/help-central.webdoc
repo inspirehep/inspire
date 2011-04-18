@@ -48,6 +48,13 @@
 <blockquote>
 <dl>
 
+<dt><a href="easy-search<lang:link/>">_(INSPIRE Easy Search)_</a></dt>
+<dd><lang>
+      <en>
+	SPIRES-style easy search for <CFG_SITE_NAME_INTL>.
+      </en>
+</dd>
+
 <dt><a href="search-tips<lang:link/>">_(Search tips for INSPIRE)_</a></dt>
 <dd><lang>
       <en>

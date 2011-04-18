@@ -262,30 +262,14 @@ class Template(DefaultTemplate):
 
 
 
-    def tmpl_searchfor_easy(self,
-                                ln, # current language
-                                collection_id,
-                                collection_name,
-                                record_count,
-                                middle_option_1, middle_option_2, middle_option_3,
-                                searchoptions,
-                                sortoptions,
-                                rankoptions,
-                                displayoptions,
-                                formatoptions
-                                ):
+    def tmpl_searchfor_easy(self, ln, collection_id, collection_name, record_count,
+                            searchoptions, sortoptions, rankoptions, displayoptions, formatoptions):
         """
-          Produces advanced *Search for* box for the current collection.
+          Produces SPIRES-style easy search box.
 
           Parameters:
 
             - 'ln' *string* - The language to display
-
-            - 'middle_option_1' *string* - HTML code for the first row of options (any field, specific fields ...)
-
-            - 'middle_option_2' *string* - HTML code for the second row of options (any field, specific fields ...)
-
-            - 'middle_option_3' *string* - HTML code for the third row of options (any field, specific fields ...)
 
             - 'searchoptions' *string* - HTML code for the search options
 
@@ -303,7 +287,7 @@ class Template(DefaultTemplate):
         _ = gettext_set_language(ln)
 
         out = '''
-        <!--create_searchfor_advanced()-->
+        <!--create_searchfor_easy()-->
         '''
 
         argd = drop_default_urlargd({'ln': ln, 'aas': 0, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
@@ -561,8 +545,8 @@ class Template(DefaultTemplate):
         <tr valign="bottom">
             <td colspan="3" class="searchboxbody" align="right">
               <small>
-                <a href="%(siteurl)s/help/search-tips%(langlink)s">%(msg_search_tips)s</a> ::
-                %(ssearch)s
+                %(ssearch)s::
+                %(advanced_search)s
               </small>
             </td>
         </tr>
@@ -576,19 +560,17 @@ class Template(DefaultTemplate):
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
                'siteurl' : CFG_SITE_URL,
                'ssearch' : create_html_link(ssearchurl, {}, _("Regular Search")),
+               'advanced_search': create_html_link(self.build_search_url(rm=rm,
+                                                                        aas=max(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES),
+                                                                        cc=cc,
+                                                                        jrec=jrec,
+                                                                        ln=ln,
+                                                                        rg=rg),
+                                                  {}, _("Advanced Search")),
+
+               'leading' : leadingtext,
                'search_url' : (CFG_SITE_URL + '/search?p=QUERY&action_search=Search'),
                'header' : header,
-
-               'matchbox_m1' : self.tmpl_matchtype_box('m1', ln=ln),
-               'middle_option_1' : middle_option_1,
-               'andornot_op1' : self.tmpl_andornot_box('op1', ln=ln),
-
-               'matchbox_m2' : self.tmpl_matchtype_box('m2', ln=ln),
-               'middle_option_2' : middle_option_2,
-               'andornot_op2' : self.tmpl_andornot_box('op2', ln=ln),
-
-               'matchbox_m3' : self.tmpl_matchtype_box('m3', ln=ln),
-               'middle_option_3' : middle_option_3,
 
                'msg_search' : _("Search"),
                'msg_search_tips' : _("Search Tips")
@@ -653,7 +635,7 @@ class Template(DefaultTemplate):
                     </tr>
                    </tbody>
                   </table>
-                  <!--/create_searchfor_advanced()-->
+                  <!--/create_searchfor_easy()-->
               """ % {
                     'added' : _("Added/modified since:"),
                     'until' : _("until:"),
@@ -815,7 +797,7 @@ class Template(DefaultTemplate):
               <tr valign="bottom">
                 <td colspan="3" align="right" class="searchboxbody">
                   <small>
-                    <a href="%(siteurl)s/help/search-tips%(langlink)s">%(search_tips)s</a> ::
+                    %(easy_search)s ::
                     %(simple_search)s
                   </small>
                 </td>
@@ -825,6 +807,8 @@ class Template(DefaultTemplate):
             ''' % {
                 'simple_search': create_html_link(self.build_search_url(p=p1, f=f1, rm=rm, cc=cc, ln=ln, jrec=jrec, rg=rg),
                                                   {}, _("Simple Search")),
+                'easy_search': create_html_link(self.build_easy_search_url(),
+                                                  {}, _("Easy Search")),
 
                 'leading' : leadingtext,
                 'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
@@ -867,7 +851,6 @@ class Template(DefaultTemplate):
               'siteurl' : CFG_SITE_URL,
               'ln' : ln,
               'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
-              'search_tips': _("Search Tips")
             }
         elif aas == 0:
             # print Simple Search form:
