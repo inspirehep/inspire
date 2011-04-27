@@ -27,7 +27,6 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-submission-configuration \
                  reset-inspire-format-configuration \
                  reset-inspire-portalbox-configuration \
-                 reset-inspire-format-configuration \
 		 reset-inspire-examples-searches 
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
@@ -275,17 +274,16 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (14, 23)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (15, 24)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-index-configuration."
-<<<<<<< HEAD
-# add address to global index
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 25)" | $(BINDIR)/dbexec
-=======
+
 	## inst indexes:
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (16, 'address', 'address', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (17, 'postalcode', 'postal code', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'institution', 'institution', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+#	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'affiliation', 'affiliation', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
+# new indexes for address and postal code
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 25)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (17, 26)" | $(BINDIR)/dbexec
-	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (18, 30)" | $(BINDIR)/dbexec
+# put affiliation into global aff index and address into global anyfield
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (10, 30)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 25)" | $(BINDIR)/dbexec
 
 	echo "CREATE TABLE IF NOT EXISTS idxPAIR17F (\

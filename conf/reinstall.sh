@@ -207,14 +207,16 @@ if [ $G_DB_RESET == 'TRUE' ]; then
            make get-small
            make convert-small
            sudo -u $CFG_INVENIO_USER make upload-small
+           make get-inst
+           make convert-inst
+           sudo -u $CFG_INVENIO_USER make upload-inst
        else
            make get-small-marc
            sudo -u $CFG_INVENIO_USER make upload-small
+           make get-inst-marc
+           sudo -u $CFG_INVENIO_USER make upload-inst
        fi
-       #FIXME when we get the inst xslt in place can move this into the
-       #bibconvert
-       make get-inst-marc
-       sudo -u $CFG_INVENIO_USER make upload-inst
+
        
        cd ..
        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibindex -u admin

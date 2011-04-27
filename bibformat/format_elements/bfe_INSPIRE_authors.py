@@ -163,8 +163,9 @@ def format_element(bfo, limit, separator='; ',
 
             if author.has_key('u'):
                 author['ilink'] = ['<a class="afflink" href="' + \
-                                   CFG_BIBFORMAT_INSPIRE_INST_LINK + \
-                                   escape(string) + \
+                                   CFG_SITE_URL + '/search?cc=Institutions&p=institution:'+ \
+                                   quote('"' + string + '"') + \
+                                   '&amp;ln=' + bfo.lang + \
                                    '">' + \
                                    string.lstrip() + \
                                    '</a>' for string in author['u']]

@@ -129,6 +129,26 @@ a.moreinfo:hover {
    color: #060;
    background: transparent;
 }
+
+.moreinfo a:link {
+   color: #060;
+   background: transparent;
+}
+.moreinfo a:visited {
+   color: #060;
+   background: transparent;
+}
+.moreinfo a:active {
+   color: #060;
+   background: transparent;
+}
+.moreinfo a:hover {
+   color: #060;
+   background: transparent;
+}
+
+
+
 a.img:hover {
    color: #69c;
    background: transparent;
@@ -421,7 +441,7 @@ a.navtrail:hover {
    float: right;
 }
 
-.pagebodystripemiddle {
+.home .pagebodystripemiddle {
    width: 73%;
 }
 .pagebodystriperight {

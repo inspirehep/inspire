@@ -28,9 +28,24 @@ def format_element(bfo,separator):
     #Print Address marc fields for an Inst record
     #
     out = ''
-    address = ''
-    addresses = bfo.fields("371__a")
-    out = separator.join(addresses)
+    address = bfo.fields("371__f")
+    if not address:
+        if bfo.fields("371__d"):
+            country = bfo.fields("371__d")[0]
+        if country == "US":
+            address = bfo.fields("371__a") + \
+                      bfo.fields("371__b") + \
+                      bfo.fields("371__c") + \
+                      bfo.fields("371__d") + \
+                      bfo.fields("371__e")
+        else:
+            address = bfo.fields("371__a") + \
+                      bfo.fields("371__e") + \
+                      bfo.fields("371__b") + \
+                      bfo.fields("371__c") + \
+                      bfo.fields("371__d")
+    out = separator.join(address)
     return out
+
 def escape_values(bfo):
     return 0

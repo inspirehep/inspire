@@ -129,6 +129,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="a"><xsl:value-of select="."/></subfield>
                     </xsl:if>
 
+            <xsl:if test="name()='address'">
+                        <subfield code="f"><xsl:value-of select="."/></subfield>
+                    </xsl:if>
 
             <xsl:if test="name()='city'">
                         <subfield code="b"><xsl:value-of select="."/></subfield>

@@ -90,7 +90,7 @@ get-inst-marc:
 
 convert-inst:
 	@echo -n "* Converting small INST record sample..."
-	$(BINDIR)/bibconvert -c `pwd`/inst2marc.xsl < ${SMALL_BASE}.xml > ${SMALL_BASE}.marcxml
+	$(BINDIR)/bibconvert -c `pwd`/inst2marc.xsl < ${INST_BASE}.xml > ${INST_BASE}.marcxml
 	@echo -n " done."
 	@echo "Please run 'make upload-small' now."
 

@@ -25,21 +25,40 @@ from invenio.config import CFG_SITE_LANG, CFG_SITE_URL
 
 from invenio.search_engine import search_pattern
 
-def format_element(bfo, fvalue, tag, default = "0 Records found"):
+def format_element(bfo, fvalue, tag, items = "Records", printtag = "",
+    default = "", number_only = False):
     """ uses tag to fetch a tag from the given bfo, searches that value in
     fvalue, and outputs the number of records found, linked to a search
     for those recs.
     @param fvalue field to search
     @param tag tag from record to use to search
-    @param default returned if there are no results
+    @param items string for X ITEMS found
+    @param printtag if non-null string will print X ITEMS <printtag>
+    <tagvalue>
+       so printtag=from would give:
+       23 Papers from SLAC
+    @param default returned if there are no result [0 items]
+    @param number_only return only the number of itesm with no formatting
     """
+    text = items
     out = ''
     reccnt = 0
-    pvalue = bfo.field(tag)
-    reccnt = len(search_pattern(p=pvalue, f=fvalue).tolist())
-    if reccnt > 0:
-        out = "<a href=\"" + CFG_SITE_URL + "/search?f=" + fvalue + "&p=" + pvalue + "\">" +str(reccnt) + "</a> Records"
-        return out
+    tagvalue = bfo.field(tag)
+    if tagvalue:
+        if printtag:
+            text += " " + printtag + " " + tagvalue
+        tagvalue = "'" + tagvalue + "'"
+        reccnt = len(search_pattern(p=tagvalue, f=fvalue).tolist())
+        if number_only:
+            return reccnt
+        if reccnt > 0:
+            out = "<a href=\"" + CFG_SITE_URL + "/search?f=" + fvalue + "&p=" \
+                  + tagvalue + "\" >" +str(reccnt) + " " + text + " </a> "
+            return out
+
+    if not default:
+        default = "0 " + text
     return default
+
 def escape_values(bfo):
     return 0

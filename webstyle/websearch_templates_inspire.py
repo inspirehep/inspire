@@ -190,7 +190,7 @@ class Template(DefaultTemplate):
         example_search_queries_links = [create_html_link(self.build_search_url(p=example_query,
                                                                                ln=ln,
                                                                                aas= 0,
-                                                                               c=collection_name),
+                                                                               cc=collection_name),
                                                          {},
                                                          cgi.escape(example_query),
                                                          {'class': 'examplequery'}) \
