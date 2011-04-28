@@ -2,7 +2,7 @@ include ../config.mk
 -include ../config-local.mk
 
 FILTERCFGFILES = oaiarXiv_bibfilter_actions.cfg
-FILTERCFGDIR = $(ETCDIR)/bibharvest
+FILTERCFGDIR = $(ETCDIR)/bibharvest/
 FILTERBINFILES = bibfilter_oaiarXiv2inspire.py
 FILTERBINDIR = $(BINDIR)
 # main targets:
@@ -14,6 +14,7 @@ clean:
 	@echo "Done."
 
 install:
+	mkdir $(FILTERCFGDIR)
 	$(INSTALL) $(FILTERCFGFILES) $(FILTERCFGDIR)
 	$(INSTALL) $(FILTERBINFILES) $(FILTERBINDIR)
 

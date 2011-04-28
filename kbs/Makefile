@@ -12,7 +12,7 @@ test:
 	@echo "Nothing to test."
 
 install:
-	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit
+	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit/
 
 install-dbchanges:
 	@echo "Loading knowledge bases into DB..."
