@@ -14,7 +14,7 @@ clean:
 	@echo "Done."
 
 install:
-	mkdir $(FILTERCFGDIR)
+	mkdir -p $(FILTERCFGDIR)
 	$(INSTALL) $(FILTERCFGFILES) $(FILTERCFGDIR)
 	$(INSTALL) $(FILTERBINFILES) $(FILTERBINDIR)
 
