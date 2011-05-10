@@ -231,7 +231,6 @@ We now recommend that you use this site instead of SPIRES<br />
           'personalize_selected': navmenuid.startswith('your') and "selected" or "",
           'help_selected': navmenuid == 'help' and "selected" or "",
 
-          'msg_search' : _("Search"),
           'msg_submit' : _("Submit"),
           'msg_personalize' : _("Personalize"),
           'msg_help' : _("Help"),
@@ -300,7 +299,8 @@ We now recommend that you use this site instead of SPIRES<br />
 %(pagefooteradd)s
 <!-- replaced page footer -->
  <div class="pagefooterstripeleft">
-  %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+  %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;
+  <a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
   <br />
   %(msg_poweredby)s <a class="footer" href="http://invenio-software.org/">Invenio</a> v%(version)s
   <br />
@@ -350,5 +350,3 @@ We now recommend that you use this site instead of SPIRES<br />
             return out
         except ValueError:
             return version
-
-

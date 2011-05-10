@@ -26,7 +26,10 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-search-sort-field-configuration \
                  reset-inspire-useraccess-configuration \
                  reset-inspire-submission-configuration \
-                 reset-inspire-format-configuration
+                 reset-inspire-format-configuration \
+                 reset-inspire-portalbox-configuration \
+                 reset-inspire-format-configuration \
+		 reset-inspire-examples-searches 
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
@@ -244,6 +247,87 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (14, 23)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (15, 24)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-index-configuration."
+# add address to global index
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 25)" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR17F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(100) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR17R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE17F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term text default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  KEY term (term(50))\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE17R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD17F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(50) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD17R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR18F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(100) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR18R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE18F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term text default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  KEY term (term(50))\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE18R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD18F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(50) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD18R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+>>>>>>> a10d0f5... websearch: search interface improvements
 
 reset-inspire-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
@@ -397,3 +481,12 @@ reset-inspire-format-configuration:
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 9, 50)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (1, 19, 10)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-format-configuration."
+
+reset-inspire-examples-searches:
+	@echo ">>> Resetting example searches:"
+	echo "TRUNCATE collection_example" | $(BINDIR)/dbexec
+	echo "TRUNCATE example" | $(BINDIR)/dbexec
+	cat webhelp/search_examples.dat |  $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example)	select 1, example.id from example where example.type='HEP';" | $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example)	select 2, example.id from example where example.type='Institutions';" | $(BINDIR)/dbexec
+	@echo ">>> Done reset-inspire-example-searches."

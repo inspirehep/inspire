@@ -26,7 +26,7 @@
 <tr>
     <td class="tips-lhs">
        <form action="/search" method="get">
-        <input name="p" type="text" value="find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004" size="56" id="p" />
+        <input name="p" type="text" value="find a hawking and aff cambridge u., damtp and date > 2004" size="56" id="p" />
         <input class="formbutton" type="submit" name="action" value="Search" />
        </form>
   </td>
@@ -43,7 +43,7 @@
 <tr>
    <td class="tips-lhs">
       <form action="/search" method="get">
-      <input name="p" type="text" value="author:hawking affiliation:&quot;cambridge u., damtp&quot; year:2005->2010" size="56" id="p" />
+      <input name="p" type="text" value="author:hawking affiliation:&quot cambridge u., damtp&quot year:2005->2010" size="56" id="p" />
       <input class="formbutton" type="submit" name="action6" value="Search" />
       </form>
       <br />
