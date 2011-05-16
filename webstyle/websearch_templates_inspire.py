@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -737,6 +737,10 @@ class Template(DefaultTemplate):
         # load the right message language
         _ = gettext_set_language(ln)
 
+        # FIXME: temporarily switch off 'Search collections:'
+        # drop-down box until INSPIRE collection tree is clarified and
+        # properly set up:
+        show_colls = False
 
         # These are hidden fields the user does not manipulate
         # directly
