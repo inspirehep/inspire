@@ -1,7 +1,4 @@
 <name>Default HTML files</name>
 <description>Outputs the available files for a record</description>
 
-
-
-
-<BFE_INSPIRE_LINKS show_icons="yes" separator='<br />' default='<br/><br/><span style="color:#aaa;">_(No external fulltext)_</span>'/>
+<BFE_INSPIRE_LINKS show_icons="yes" separator='<br />' default='<br/>'/>
