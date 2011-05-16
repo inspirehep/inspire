@@ -98,7 +98,7 @@ class Template(DefaultTemplate):
         <!--create_searchfor_simple()-->
         '''
 
-        argd = drop_default_urlargd({'ln': ln, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
+        argd = drop_default_urlargd({'ln': ln, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
                                     self.search_results_default_urlargd)
 
         # Only add non-default hidden values
