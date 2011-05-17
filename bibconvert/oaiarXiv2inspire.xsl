@@ -368,7 +368,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                   <datafield tag="035" ind1=" " ind2=" ">
                     <subfield code="9">arXiv</subfield>
                     <subfield code="a"><xsl:value-of select="./OAI-PMH:header/OAI-PMH:identifier"/></subfield>
-                    <subfield code="z"><xsl:value-of select="./OAI-PMH:header/OAI-PMH:identifier"/></subfield>
                   </datafield>
                 </xsl:if>
                 <!-- MARC FIELD 037_$$9,a,c = metadata/header/identifier  -->

@@ -10,16 +10,16 @@ import os
 import sys
 import getopt
 
-from invenio.bibupload import xml_marc_to_records, open_marc_file
-from invenio.config import CFG_BIBUPLOAD_EXTERNAL_OAIID_TAG, CFG_ETCDIR
-from invenio.bibrecord import record_get_field_values, record_has_field, \
-    record_get_field_value, create_records, record_get_field_instances, \
-    record_add_field, record_xml_output, field_get_subfield_values
-from invenio.search_engine import search_pattern, get_record
-from invenio.bibmerge_differ import record_diff, match_subfields, compare_subfields
-from invenio.bibmerge_merger import merge_field_group
+from invenio.bibupload import open_marc_file
+from invenio.config import CFG_ETCDIR
+from invenio.bibrecord import create_records, \
+                              record_get_field_instances, \
+                              record_add_field, record_xml_output, \
+                              field_get_subfield_values
+from invenio.search_engine import get_record
+from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
-from invenio.textutils import wash_for_xml
+from invenio.textutils import wash_for_xml, wash_for_utf8
 
 def parse_actions(action_line):
     """
@@ -50,7 +50,7 @@ def read_actions_configuration_file(filename):
     Reads the configuration file describing actions to be taken.
 
     Each other line should be build in the following format:
-    identifier, [conditional], change_type -> action1, change_type -> action2, ...
+    identifier, change_type -> action1, change_type -> action2, ...
     where actionN is one of [append, correct, holdingpen]
        append : add field content
        correct : replace existing fields with new fields
@@ -76,13 +76,8 @@ def read_actions_configuration_file(filename):
             sys.stderr.write("Error when parsing the actions configuration file %s" % (str(parts)))
             sys.exit(4)
         identifier = parts[0]
-        condition = []
-        if parts[1].startswith("$"):
-            condition = parts[1].split("=")
-            parsed_actions = parse_actions(parts[2:])
-        else:
-            parsed_actions = parse_actions(parts[1:])
-        actions.setdefault(identifier, []).append((condition, parsed_actions))
+        parsed_actions = parse_actions(parts[1:])
+        actions.setdefault(identifier, []).append(parsed_actions)
     return actions
 
 def get_action(tag, diff_code, action_dict):
@@ -90,7 +85,7 @@ def get_action(tag, diff_code, action_dict):
     Returns an 'action'-string describing the action to be taken.
     It will iterate over an action_dict containing elements of this structure:
 
-    'tag': [([condition], [('code', 'act'), ..])]
+    'tag': [('code', 'act'), ..]
 
     """
     actionlist = []
@@ -98,13 +93,13 @@ def get_action(tag, diff_code, action_dict):
     if tag not in action_dict:
         tag = "default"
     actionlist = action_dict[tag]
-    for condition, actions in actionlist:
+    for actions in actionlist:
         for code, act in actions:
             if diff_code in code:
                 return act
     else:
         # tag->code not specified in configuration file, lets do defaults
-        for condition, actions in action_dict["default"]:
+        for actions in action_dict["default"]:
             for code, act in actions:
                 if diff_code in code:
                     return act
@@ -159,7 +154,7 @@ def has_field(field, field_list):
     identical to passed field.
     """
     if len(field_list) > 0:
-        for subfields, ind1, ind2, value, field_position_global in field_list:
+        for subfields, ind1, ind2, value, dummy in field_list:
             if (ind1, ind2, value) == field[1:4]:
                 for sub in subfields:
                     if sub not in field[0]:
@@ -189,8 +184,8 @@ def main():
     """
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:nh", [])
-    except getopt.GetoptError, e:
-        sys.stderr.write("Error:" + e + "\n")
+    except getopt.GetoptError, err_obj:
+        sys.stderr.write("Error:" + err_obj + "\n")
         print usage
         sys.exit(1)
 
@@ -220,16 +215,11 @@ def main():
         sys.stderr.write("Please enter a valid filename for config.")
         sys.exit(1)
 
+    # Read and wash incoming data
     file_data = open_marc_file(input_filename)
-    try:
-        # latin1 will decode anything
-        decoded_data = file_data.decode('latin1')
-        # utf-8 will encode anything
-        encoded_data = decoded_data.encode('utf-8')
-        washed_data = wash_for_xml(encoded_data)
-    except UnicodeError:
-        sys.stderr.write("en/decoding failed on file: %s" % (input_filename,))
-        sys.exit(3)
+    washed_data = wash_for_xml(wash_for_utf8(file_data))
+    washed_data = washed_data.replace('&', '&amp;')
+
     # Transform MARCXML to record structure
     records = create_records(washed_data)
     action_dict = read_actions_configuration_file(config_path)
@@ -240,6 +230,9 @@ def main():
 
     for rec in records:
         record = rec[0]
+        if record == None:
+            sys.stderr.write("Record is None: %s" % (rec[2],))
+            sys.exit(1)
         # Perform various checks to determine an suitable action to be taken for
         # that particular record. Whether it will be inserted, discarded or replacing
         # existing records
@@ -270,7 +263,6 @@ def main():
             #                              -> uploaded with correct if accepted
             fields_to_add = []
             fields_to_correct = []
-            ignored_fields = 0
             holdingpen = False
 
             difference = record_diff(existing_record, record, compare_subfields=match_subfields)
