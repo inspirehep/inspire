@@ -1,6 +1,10 @@
 bibconvert/large_test*
 bibconvert/SPIRES_small_sample.marcxml
 bibconvert/SPIRES_small_sample.xml
+bibconvert/hep_test_recs.marcxml
+bibconvert/hep_test_recs.xml
+bibconvert/inst_test_recs.marcxml
+bibconvert/inst_test_recs.xml
 *~
 *#
 *.pyc
