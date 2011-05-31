@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -21,24 +21,25 @@
 """BibFormat element - Prints record count for BFO search, provides link to search.
 """
 __revision__ = "$Id$"
-from invenio.config import CFG_SITE_LANG, CFG_SITE_URL
+from invenio.config import CFG_SITE_URL
 
-from invenio.search_engine import search_pattern
+from invenio.search_engine import perform_request_search
 
-def format_element(bfo, fvalue, tag, items = "Records", printtag = "",
-    default = "", number_only = False):
+def format_element(bfo, fvalue, tag, items="Records", printtag='',
+                   default='', number_only=False, collection=''):
     """ uses tag to fetch a tag from the given bfo, searches that value in
     fvalue, and outputs the number of records found, linked to a search
     for those recs.
-    @param fvalue field to search
-    @param tag tag from record to use to search
-    @param items string for X ITEMS found
-    @param printtag if non-null string will print X ITEMS <printtag>
-    <tagvalue>
-       so printtag=from would give:
-       23 Papers from SLAC
-    @param default returned if there are no result [0 items]
-    @param number_only return only the number of itesm with no formatting
+    @param fvalue: field to search
+    @param tag: tag from record to use to search
+    @param items: string for X ITEMS found
+    @param printtag: if non-null string will print X ITEMS <printtag>
+        <tagvalue>
+        so printtag=from would give:
+        23 Papers from SLAC
+    @param default: returned if there are no result [0 items]
+    @param number_only: return only the number of itesm with no formatting
+    @param collection: which collection to search in [default=Home]
     """
     text = items
     out = ''
@@ -48,7 +49,7 @@ def format_element(bfo, fvalue, tag, items = "Records", printtag = "",
         if printtag:
             text += " " + printtag + " " + tagvalue
         tagvalue = "'" + tagvalue + "'"
-        reccnt = len(search_pattern(p=tagvalue, f=fvalue).tolist())
+        reccnt = len(perform_request_search(p=tagvalue, f=fvalue, cc=collection))
         if number_only:
             return reccnt
         if reccnt > 0:
