@@ -5,6 +5,8 @@ bibconvert/hep_test_recs.marcxml
 bibconvert/hep_test_recs.xml
 bibconvert/inst_test_recs.marcxml
 bibconvert/inst_test_recs.xml
+bibconvert/inst_recs.marcxml
+bibconvert/inst_recs.xml
 *~
 *#
 *.pyc
