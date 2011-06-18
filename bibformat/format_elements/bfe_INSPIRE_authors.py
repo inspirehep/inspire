@@ -63,27 +63,24 @@ def format_element(bfo, limit, separator='; ',
     from urllib import quote
     from cgi import escape
     import re
+    from invenio.messages import gettext_set_language
     from invenio.config import CFG_SITE_URL
     from invenio.bibformat_elements.bfe_server_info import format_element as bfe_server
+
+    _ = gettext_set_language(bfo.lang)    # load the right message language
 
     #regex for parsing last and first names and initials
     re_last_first = re.compile('^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')
     re_initials = re.compile(r'(?P<initial>\w)(\w+|\.)\s*')
     re_coll = re.compile(r'\s*collaborations?', re.IGNORECASE)
 
-
-    from invenio.bibformat_config_inspire import CFG_BIBFORMAT_INSPIRE_INST_LINK
-
-    from invenio.messages import gettext_set_language
-
-    _ = gettext_set_language(bfo.lang)    # load the right message language
-
     bibrec_id = bfo.control_field("001")
     authors = []
+    lastauthor = ''
     authors = bfo.fields('100__', repeatable_subfields_p=True)
     authors.extend(bfo.fields('700__', repeatable_subfields_p=True))
 
-    # Keep real num of authorsfix + affiliations_separator.join(author['u']) + \
+    # Keep real num of authors. fix + affiliations_separator.join(author['u']) + \
     nb_authors = len(authors)
 
     # Limit num of authors, so that we do not process
@@ -95,6 +92,7 @@ def format_element(bfo, limit, separator='; ',
         if bfo.field('710g'):   #check for colln note
             authors = authors[:1]
         else:
+
             authors = authors[:int(limit)]
 
     # Process authors to add link, affiliation and highlight
@@ -264,7 +262,12 @@ def format_element(bfo, limit, separator='; ',
         return coll_display
 
     if limit.isdigit() and nb_authors > int(limit) and interactive != "yes":
-        return separator.join(authors[:len(authors)]) + \
+        if markup == 'latex' :
+            lastauthor = authors.pop()
+            lastauthor = ' and ' + lastauthor
+            limit = int(limit) - 1
+            
+        return separator.join(authors[:int(limit)]) + lastauthor + \
                extension
 
 
@@ -315,7 +318,11 @@ def format_element(bfo, limit, separator='; ',
         out += '<script>set_up()</script>'
         return out
     elif nb_authors > 0:
-        return separator.join(authors)
+        if markup == 'latex' :
+            if nb_authors > 1 :
+                lastauthor = authors.pop()
+                lastauthor = ' and ' + lastauthor 
+        return separator.join(authors) + lastauthor
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613

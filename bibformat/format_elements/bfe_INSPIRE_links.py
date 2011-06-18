@@ -24,10 +24,6 @@ does not include arXiv, nor does it use a kb for lookups of display names
 or other similar information
 """
 
-__revision__ = "$Id $"
-
-
-from urllib import quote
 from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
 from invenio.bibdocfile import bibdocfile_url_to_bibdoc
@@ -49,10 +45,10 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
 
 
     from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format_element as arxiv
-    if show_icons.lower() == 'yes':
-        mirrors = "no"
-    else:
-        mirrors = "yes"
+    #if show_icons.lower() == 'yes':
+    #    mirrors = "no"
+    #else:
+    #    mirrors = "yes"
     arxiv_links = arxiv(bfo, links = "yes", mirrors = "no")
     if arxiv_links:
         links.append(arxiv_links)
@@ -60,14 +56,17 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     journals = bfo.fields('773')
     # trivially take care of dois
     for journal in journals:
+        journtitle = ''
         oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
         if oa_type:
             final_style = style+' class = "'+oa_type+'"'
         else:
             final_style = style
         if journal.get('a'):
+            if journal.get('p') :
+                journtitle = ' - ' + journal.get('p')
             links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
-                         +journal.get('a')+'">Journal Server</a>')
+                         +journal.get('a')+'">Journal Server</a>' + journtitle )
 
     # KEKSCAN links
     identifiers = bfo.fields('035__')
@@ -121,13 +120,14 @@ def _lookup_url_name(bfo, abbrev = ''):
     return bfo.kb('WEBLINKS', abbrev, 'Link to '+abbrev.lower())
 
 
-
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-
+# pylint: enable-msg=W0613
 
 
