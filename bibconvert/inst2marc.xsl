@@ -118,7 +118,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
                         <subfield code="e"><xsl:value-of select="."/></subfield>
                     </xsl:if>
             <xsl:if test="name()='country.code'">
-                        <subfield code="d"><xsl:value-of select="."/></subfield>
+                        <subfield code="g"><xsl:value-of select="."/></subfield>
                     </xsl:if>
 
                 <xsl:if test="name()='state.code'">
