@@ -58,8 +58,7 @@ def format_element(bfo, separator=', ', link="yes"):
                 note += 'Talk given at ' + conf_name
             if conf.has_key('x'):
                 note += ' (' + conf['x'] +')'
-            else:
-                note += ' (Conference information coming soon)'
+
         if len(note)>0:
             output.append(note)
 
