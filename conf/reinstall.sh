@@ -204,17 +204,17 @@ if [ $G_DB_RESET == 'TRUE' ]; then
 
        cd bibconvert
        if [ $USE_BIBCONVERT == "TRUE" ]; then
-           make get-small
-           make convert-small
-           sudo -u $CFG_INVENIO_USER make upload-small
-           make get-inst
-           make convert-inst
-           sudo -u $CFG_INVENIO_USER make upload-inst
+           make get-test
+           make convert-test
+           sudo -u $CFG_INVENIO_USER make upload-test
+           make get-test-inst
+           make convert-test-inst
+           sudo -u $CFG_INVENIO_USER make upload-test-inst
        else
-           make get-small-marc
-           sudo -u $CFG_INVENIO_USER make upload-small
-           make get-inst-marc
-           sudo -u $CFG_INVENIO_USER make upload-inst
+           make get-test-marc
+           sudo -u $CFG_INVENIO_USER make upload-test
+           make get-test-inst-marc
+           sudo -u $CFG_INVENIO_USER make upload-test-inst
        fi
 
        

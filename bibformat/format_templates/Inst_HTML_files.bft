@@ -6,7 +6,7 @@
 <ul class="detailedrecordfiles">
 <li>
 <BFE_BFO_RECCNT tag="110__u"  fvalue="affiliation" prefix="" suffix=""
-items="_(Papers)_" printtag="_(from)_" default=" None" escape=""
-/>
+item="Paper" plural="Papers" printtag="_(from)_" default=" None" escape=""
+collection="HEP" />
 </li>
 </ul>

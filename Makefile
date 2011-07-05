@@ -27,7 +27,8 @@ install-dbchanges: reset-inspire-field-configuration \
                  reset-inspire-submission-configuration \
                  reset-inspire-format-configuration \
                  reset-inspire-portalbox-configuration \
-		 reset-inspire-examples-searches 
+		 reset-inspire-examples-searches \
+		 reset-inspire-rank-configuration
 	@echo "Installing database changes..."
 	@cd kbs && make install-dbchanges && cd ..
 	@echo "Done."
@@ -145,11 +146,11 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (24, 'first author','firstauthor')" | $(BINDIR)/dbexec
 	####inst fields
 	echo "INSERT INTO field (id,name,code) VALUES (25, 'address', 'address')" | $(BINDIR)/dbexec
-	echo "INSERT INTO field (id,name,code) VALUES (26, 'postal code', 'postal_code')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (26, 'postal code', 'postalcode')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (27, 'country', 'country')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (28, 'city', 'city')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (29, 'region', 'region')" | $(BINDIR)/dbexec
-	echo "INSERT INTO field (id,name,code) VALUES (30, 'institution name', 'institution_name')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (30, 'institution name', 'institutionname')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
@@ -278,8 +279,6 @@ reset-inspire-index-configuration:
 	## inst indexes:
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (16, 'address', 'address', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (17, 'postalcode', 'postal code', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
-#	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'affiliation', 'affiliation', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
-# new indexes for address and postal code
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (16, 25)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (17, 26)" | $(BINDIR)/dbexec
 # put affiliation into global aff index and address into global anyfield
@@ -373,8 +372,9 @@ reset-inspire-collection-configuration:
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (1, 'HEP', 'collection:HEP or 970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (2, 'Institutions',	'collection:INSTITUTION', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 200)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 3, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 2, 110)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_rnkMETHOD VALUES (2, 3, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'en', 'ln', 'HEP')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" |$(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (2, 'en', 'ln', 'Institutions')" | $(BINDIR)/dbexec
@@ -386,6 +386,17 @@ reset-inspire-collection-configuration:
 
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
+
+reset-inspire-rank-configuration:
+	@echo ">>> Resetting ranking configuration:"
+	echo "TRUNCATE rnkMETHOD" | $(BINDIR)/dbexec
+	echo "TRUNCATE rnkMETHODNAME" | $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHOD VALUES (1,'wrd','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHOD VALUES (2,'citation','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHOD VALUES (3,'inst_papers','0000-00-00 00:00:00')"  | $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHODNAME VALUES (1, 'en', 'ln', 'word similarity')" |  $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHODNAME VALUES (2, 'en', 'ln', 'times cited')" |  $(BINDIR)/dbexec
+	echo "INSERT INTO rnkMETHODNAME VALUES (3, 'en', 'ln', 'papers in HEP')" |  $(BINDIR)/dbexec
 
 reset-inspire-portalbox-configuration:
 	@echo ">>> Resetting collection portalboxes:"
