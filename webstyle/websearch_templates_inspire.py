@@ -807,7 +807,7 @@ class Template(DefaultTemplate):
             ''' % {
                 'simple_search': create_html_link(self.build_search_url(p=p1, f=f1, rm=rm, cc=cc, ln=ln, jrec=jrec, rg=rg),
                                                   {}, _("Simple Search")),
-                'easy_search': create_html_link(self.build_easy_search_url(),
+                'easy_search': create_html_link(CFG_SITE_URL+'/help/easy-search',   # OK to hardcode; this is what we test
                                                   {}, _("Easy Search")),
 
                 'leading' : leadingtext,
