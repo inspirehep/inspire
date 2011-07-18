@@ -549,7 +549,10 @@ reset-inspire-format-configuration:
 	(21, 'LaTeX (EU)', 'hlxe', 'LaTeX formatted reference (EU style)', 'text/html', 1),\
 	(22, 'LaTeX (US)', 'hlxu', 'LaTeX formatted reference (US Style)', 'text/html', 1),\
 	(23, 'INSPIRE Citation Format', 'hca', 'Very brief cite-as format used by reference submission form.', 'text/html', 1),\
-	(24, 'INSPIRE Reference Submission Form', 'hrf', 'Reference submission form, used for user updates to reference lists.', 'text/html', 0);" | $(BINDIR)/dbexec
+	(24, 'INSPIRE Reference Submission Form', 'hrf', 'Reference submission form, used for user updates to reference lists.', 'text/html', 0),\
+	(25, 'LaTeX CV', 'tlcv', 'A LaTeX CV', 'text/plain', 1),\
+	(26, 'text CV', 'htcv', 'A plaintext CV', 'text/html', 1),\
+	(27, 'HTML CV', 'hcv', 'A CV with hyperlinks', 'text/html', 1);" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_format" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 1, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (2, 2, 120)" | $(BINDIR)/dbexec

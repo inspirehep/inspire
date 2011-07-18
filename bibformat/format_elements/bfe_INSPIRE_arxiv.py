@@ -34,8 +34,8 @@ def format_element(bfo, links="no", category="yes", mirrors="yes"):
 
     arxiv=get_arxiv(bfo, category="no")
 
-    if not arxiv :
-        return('')
+    if len(arxiv) == 0:
+        return
 
     out = ''
     if links == 'yes':
@@ -70,11 +70,9 @@ def format_element(bfo, links="no", category="yes", mirrors="yes"):
 
 
     else:   # print only value
-
-
         out = ', '.join(get_arxiv(bfo,category))
 
-    return(out)
+    return out
 
 def escape_values(bfo):
     """
@@ -82,7 +80,6 @@ def escape_values(bfo):
     should be escaped.
     """
     return 0
-
 
 def get_arxiv(bfo,category="yes"):
     """
@@ -95,15 +92,13 @@ def get_arxiv(bfo,category="yes"):
     report_numbers = primary_report_numbers
     report_numbers.extend(additional_report_numbers)
 
-    arxiv = [num.get('a','') for num in report_numbers if num.get('9') ==
-    'arXiv' or num.get('s')=='arXiv']
+    arxiv = [num.get('a','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
 
     if category=="yes":
         cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
         arxiv=map(append_cat,arxiv,cats)
 
-    return(arxiv)
-
+    return arxiv
 
 def get_cats(bfo):
     """
@@ -117,14 +112,12 @@ def get_cats(bfo):
 
     cat = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
 
-    return(cat)
-
-
+    return cat
 
 def append_cat(number,cat):
     import re
     if not cat:
-        return(number)
+        return number
     if not re.match(cat,number):
-        return(number+(' ['+cat+']'))
-    return(number)
+        return number+' ['+cat+']'
+    return number
