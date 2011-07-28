@@ -18,76 +18,60 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element test - Prints a custom field
 """
-
-
+BibFormat element tests - Prints a custom field
+"""
 
 import re
 import unittest
 from invenio.testutils import make_test_suite, run_test_suite
 from invenio.bibformat_engine import BibFormatObject
 
+class TestInspireFormatElements(unittest.TestCase):
+    """Test cases for INSPIRE format elements. 
+    Depends on default inspire test records (~1000)"""
 
+    def testFieldRetrieval(self):
+        """bfeField retrieval"""
+        self.bfo = BibFormatObject('1')
+        self.assertEqual(self.bfo.field('100a'),"Sachdev, Subir")
 
+    def testarXiv(self):
+        """INSPIRE arXiv format"""
+        from bfe_INSPIRE_arxiv import format_element
+        self.bfo = BibFormatObject('1')
+        string = format_element(self.bfo)
+        self.assert_(re.search(r'0299',string))
+        self.assert_(not re.search(r'CERN',string))
+        self.assert_(re.search(r'hep-th',string))
 
-class TestInspireFormatElements(unittest.TestCase):        #
-        # Test case depends on inspires test records
+    def testDate(self):
+        """INSPIRE date format"""
+        from bfe_INSPIRE_date import format_element, parse_date
+        # Test parse date function
+        self.assert_(not parse_date(None))
+        self.assert_(not parse_date(""))
+        self.assert_(not parse_date("This is bad input"))
+        self.assert_(not parse_date([1,2,4,"test"]))
+        self.assert_(parse_date("2003-05-02") == (2003,5,2))
+        self.assert_(parse_date("20030502") == (2003,5,2))
+        self.assert_(parse_date("2003-05") == (2003,5))
+        self.assert_(parse_date("200305") == (2003,5))
+        self.assert_(parse_date("2003") == (2003,))
+        # Expect date from 269__$$c
+        self.bfo = BibFormatObject('1')
+        string = format_element(self.bfo)
+        self.assert_(re.search(r'Dec 2010',string))
 
-        #test CERN_authors
-        def testField(self):
-            print """testing bfeField"""
-            self.bfo=BibFormatObject('7374')
-            self.assertEqual(self.bfo.field('100a'),"Farhi, E.")
-        def testAff(self):
-            """testing Affs"""
-            from bfe_CERN_authors import format_element
-            self.bfo=BibFormatObject('7374')
-            string =  format_element(self.bfo,limit="5",print_affiliations="yes")
-
-            self.assert_(re.search(r'Farhi, E.</a>',string))
-            self.assert_(re.search(r'</a> \(<a.*MIT',string))
-
-
-
-
-        #test INSPIRE_arXiv
-        def testarX(self):
-            """testing arXiv"""
-            from bfe_INSPIRE_arxiv import format_element
-            self.bfo=BibFormatObject('37650')
-            string=format_element(self.bfo)
-            print string
-            self.assert_(re.search(r'3066',string))
-            self.assert_(not re.search(r'CERN',string))
-            self.assert_(re.search(r'hep-ph',string))
-
-
-                    #test INSPIRE_date
-        def testDate(self):
-            """testing date"""
-            from bfe_INSPIRE_date import format_element
-            self.bfo=BibFormatObject('6194')
-            string=format_element(self.bfo)
-            print string
-            string2=format_element(self.bfo,us="no")
-            print string2
-#            self.assert_(re.search(r'Jun 1, 1974',string))
-#            self.assert_(re.search(r'01 Jun 1974',string2))
-
-            #test INSPIRE_links
-        def testLinks(self):
-            """testing Links"""
-            from bfe_INSPIRE_links import format_element
-            self.bfo=BibFormatObject('37650')
-            string= format_element(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
-            print string
-            self.assert_(re.search(r'065201">Journal',string))
-            self.assert_(re.search(r'\?bibcode=2004',string))
-
+    def testLinks(self):
+        """testing INSPIRE Links"""
+        from bfe_INSPIRE_links import format_element
+        self.bfo=BibFormatObject('1')
+        string = format_element(self.bfo, separator='</li>\n<li>', prefix="<ul><li>",suffix="</li></ul>")
+        self.assert_(re.search(r'1012.0299">Abstract<',string))
+        self.assert_(re.search(r'arXiv:1012.0299">PDF</a> from arXiv.org',string))
 
 TEST_SUITE = make_test_suite(TestInspireFormatElements)
-
 
 if __name__ == "__main__":
     run_test_suite(TEST_SUITE)
