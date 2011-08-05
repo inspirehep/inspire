@@ -46,9 +46,8 @@ def format_element(bfo, us="yes"):
             return(date)
     elif len(datestruct) == 2:
         # if we have only the month, pass the converter a dummy day and
-        # the strip it
+        # then strip it
         datestruct = tuple(datestruct[0:2]) + (1,) + dummy_time
-        print datestruct
         date = re.sub(r',\s00:00$','',convert_datestruct_to_dategui(datestruct))
         return  re.sub(r'\d+\s+(\w+)',r'\1',date)
     elif len(datestruct) == 1:

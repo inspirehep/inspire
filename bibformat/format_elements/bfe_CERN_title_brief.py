@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 ##
-## $Id$
-##
 ## This file is part of Invenio.
 ## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
 ##
@@ -20,21 +18,22 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints short title
 """
-__revision__ = "$Id$"
-
 
 
 import re
 
-def format_element(bfo, highlight="no", force_title_case="no"):
+
+def format_element(bfo, highlight="no", force_title_case="no", esctitle='1'):
     """
     Prints a short title, suitable for brief format.
 
     @param highlight highlights the words corresponding to search query if set to 'yes'
     """
 
+    esctitle = int(esctitle)
+
     main_corporate_authors = bfo.fields('931__a', 1)
-    titles = bfo.fields('245__', 1)
+    titles = bfo.fields('245__', esctitle)
     sections =  bfo.fields('246__', 1)
     field_245_0 = bfo.fields('245_0', 1)
     field_245_1 = bfo.fields('245_1', 1)
@@ -101,7 +100,7 @@ def format_element(bfo, highlight="no", force_title_case="no"):
 
 
     if force_title_case.lower()=="yes" and (out.upper()==out or re.search('THE ',out)):   #title is allcaps
-        out=' '.join([word.capitalize() for word in out.split(' ')])   # should not cap 1 letter words...
+        out=' '.join([word.capitalize() for word in out.split(' ')])   # python .title() is too dumb
 
     if bfo.field('960__a') == '40':
         out += "<br />"

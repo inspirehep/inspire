@@ -1,12 +1,13 @@
-
 <name>LaTeX(CV)</name>
-<description>Creates LaTeX format of a record suitable for inclusion in a CV</description>
+<description>Creates LaTeX format of a record suitable for inclusion in a CV. 
+N.B.: There is some hanky whitespacing in this template on the line with
+BFE_INSPIRE_AUTHORS and BFE_INSPIRE_ARXIV; this is necessary for the output
+to be correctly formatted; keep this line and its next one together in the
+same relationship.</description>
 %\cite{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" suffix=""/>}
-\item{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
-{\bf %``<BFE_CERN_TITLE_BRIEF  force_title_case="yes" />''}
-  \{}<BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}"
-  name_last_first="no" print_links="no" suffix="." markup='latex'/>
-  <BFE_INSPIRE_ARXIV links="no" category="yes" prefix="\{}"/>
-<BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="\{}" suffix=""/>(<BFE_INSPIRE_DATE>)
+\item%{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
+{\bf ``<BFE_CERN_TITLE_BRIEF  force_title_case="yes" esctitle="0" />''}
+  \\{}<BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}" name_last_first="no" print_links="no" suffix="." markup='latex'/><BFE_INSPIRE_ARXIV links="no" category="yes" prefix="
+  \\{}"/>
+<BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="\\{}" suffix=""/> %(<BFE_INSPIRE_DATE>)
 %\href{<BFE_SERVER_INFO var="recurl" />}{HEP entry}
-

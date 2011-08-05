@@ -1,4 +1,3 @@
-
 <name>Text(CV)</name>
 <description>Creates text format of a record suitable for inclusion in a CV</description>
 <a href="<BFE_SERVER_INFO var="recurl" />">

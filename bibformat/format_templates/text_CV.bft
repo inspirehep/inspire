@@ -1,4 +1,3 @@
-
 <name>Text(CV)</name>
 <description>Creates text format of a record suitable for inclusion in a CV</description>
 <BFE_CERN_TITLE_BRIEF prefix='' suffix='<br/>' force_title_case='yes' />
