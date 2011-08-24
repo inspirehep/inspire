@@ -33,7 +33,7 @@ export CFG_INVENIO_PREFIX="/opt/invenio"
 export G_INSPIRE_DB="FALSE"
 export APACHE_RESTART="sudo /etc/init.d/httpd restart"
 export CLEAN_INSTALL="TRUE"
-export USE_BIBCONVERT="FALSE"
+export USE_BIBCONVERT="TRUE"
 export INSTALL_PLUGINS="FALSE"
 export BE_QUIET="FALSE"
 
@@ -107,7 +107,7 @@ fi
 
 # give user a chance to quit, if it actually makes sense to do so:
 if [ $CLEAN_INSTALL == "TRUE" ]; then
-    warn_and_wait "[INFO] GOING TO DESTROY YOUR INSPIRE DEMO SITE IN VERY FEW SECONDS!\n[INFO] THIS IS YOUR LAST CHANCE TO INTERRUP BY PRESSING Ctrl-C!\n" 
+    warn_and_wait "[INFO] GOING TO DESTROY YOUR INSPIRE DEMO SITE IN VERY FEW SECONDS!\n[INFO] THIS IS YOUR LAST CHANCE TO INTERRUPT BY PRESSING Ctrl-C!\n" 
 fi
 
 sudo -v; 

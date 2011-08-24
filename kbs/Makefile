@@ -20,6 +20,7 @@ install:
 	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit/
 
 install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject create-institutions-dynamic-kb
+# FIXME: remove coden targets?
 	@echo "Done."
 
 weblinks: delete-weblinks load-weblinks-knowledge-base
@@ -31,9 +32,6 @@ subject: delete-subject load-subject-knowledge-base
 
 announce-kb-load:
 	@echo "Loading knowledge bases into DB..."
-
-install-dbchanges: announce-kb-load delete-weblinks delete-oalinks delete-talktype delete-coden load-weblinks-knowledge-base load-talktype-knowledge-base create-institutions-dynamic-kb load-coden-knowledge-base
-	@echo "Done."
 
 delete-weblinks:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='WEBLINKS')" | $(BINDIR)/dbexec
