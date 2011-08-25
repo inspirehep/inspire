@@ -85,3 +85,8 @@ CFG_WEBSEARCH_SYNONYM_KBRS = {
     'collection': ['COLLECTION', 'exact'],
     'subject': ['SUBJECT', 'exact'],
     }
+#CFG_BIBCATALOG_SYSTEM = RT
+#CFG_BIBCATALOG_SYSTEM_RT_CLI = /opt/cds-invenio/bin/rt
+#CFG_BIBCATALOG_SYSTEM_RT_URL = https://rt.inspirebeta.net
+#CFG_BIBCATALOG_SYSTEM_RT_DEFAULT_USER = cli
+#CFG_BIBCATALOG_SYSTEM_RT_DEFAULT_PWD = rt_cli_pw

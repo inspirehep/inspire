@@ -3,7 +3,7 @@ include config.mk
 #
 # Note that local makefile configurations can be defined in config-local.mk to override config.mk
 
-SUBDIRS = bibconvert bibformat webstyle bibrank conf bibedit webhelp feedboxes bibharvest kbs
+SUBDIRS = bibconvert bibformat webstyle bibrank conf bibedit webhelp feedboxes bibharvest kbs bibcatalog
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
