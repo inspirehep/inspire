@@ -140,7 +140,7 @@ class Template(DefaultTemplate):
            </td>
            <td class="searchboxbody" align="left" rowspan="2" valign="top">
              <small><small>
-             <a href="%(siteurl)s/help/search-tips%(langlink)s">%(msg_search_tips)s</a><br/>
+             <a href="%(siteurl)s/help/easy-search%(langlink)s">%(msg_easy_search)s</a><br/>
              %(asearch)s
              </small></small>
            </td>
@@ -164,7 +164,7 @@ class Template(DefaultTemplate):
                'header' : header,
                'msg_search' : _('Search'),
                'msg_browse' : _('Browse'),
-               'msg_search_tips' : _('Search Tips'),
+               'msg_easy_search' : _('Easy Search'),
                'example_query_html': example_html,
                'searchvalue' : searchvalue
               }
@@ -1067,3 +1067,206 @@ class Template(DefaultTemplate):
         ## last but not least, print end of search box:
         out += """</form>"""
         return out
+        
+        
+    def tmpl_searchfor_advanced(self,
+                                ln, # current language
+                                collection_id,
+                                collection_name,
+                                record_count,
+                                middle_option_1, middle_option_2, middle_option_3,
+                                searchoptions,
+                                sortoptions,
+                                rankoptions,
+                                displayoptions,
+                                formatoptions
+                                ):
+        """
+          Produces advanced *Search for* box for the current collection.
+
+          Parameters:
+
+            - 'ln' *string* - The language to display
+
+            - 'middle_option_1' *string* - HTML code for the first row of options (any field, specific fields ...)
+
+            - 'middle_option_2' *string* - HTML code for the second row of options (any field, specific fields ...)
+
+            - 'middle_option_3' *string* - HTML code for the third row of options (any field, specific fields ...)
+
+            - 'searchoptions' *string* - HTML code for the search options
+
+            - 'sortoptions' *string* - HTML code for the sort options
+
+            - 'rankoptions' *string* - HTML code for the rank options
+
+            - 'displayoptions' *string* - HTML code for the display options
+
+            - 'formatoptions' *string* - HTML code for the format options
+
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = '''
+        <!--create_searchfor_advanced()-->
+        '''
+
+        argd = drop_default_urlargd({'ln': ln, 'aas': 1, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
+                                    self.search_results_default_urlargd)
+
+        # Only add non-default hidden values
+        for field, value in argd.items():
+            out += self.tmpl_input_hidden(field, value)
+
+
+        header = _("Search %s records for") % \
+                 self.tmpl_nbrecs_info(record_count, "", "")
+        header += ':'
+        ssearchurl = self.build_search_interface_url(c=collection_id, aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
+
+        out += '''
+        <table class="searchbox advancedsearch">
+         <thead>
+          <tr>
+           <th class="searchboxheader" colspan="3">%(header)s</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr valign="bottom">
+            <td class="searchboxbody" style="white-space: nowrap;">
+                %(matchbox_m1)s<input type="text" name="p1" size="%(sizepattern)d" value="" class="advancedsearchfield"/>
+            </td>
+            <td class="searchboxbody" style="white-space: nowrap;">%(middle_option_1)s</td>
+            <td class="searchboxbody">%(andornot_op1)s</td>
+          </tr>
+          <tr valign="bottom">
+            <td class="searchboxbody" style="white-space: nowrap;">
+                %(matchbox_m2)s<input type="text" name="p2" size="%(sizepattern)d" value="" class="advancedsearchfield"/>
+            </td>
+            <td class="searchboxbody">%(middle_option_2)s</td>
+            <td class="searchboxbody">%(andornot_op2)s</td>
+          </tr>
+          <tr valign="bottom">
+            <td class="searchboxbody" style="white-space: nowrap;">
+                %(matchbox_m3)s<input type="text" name="p3" size="%(sizepattern)d" value="" class="advancedsearchfield"/>
+            </td>
+            <td class="searchboxbody">%(middle_option_3)s</td>
+            <td class="searchboxbody" style="white-space: nowrap;">
+              <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
+              <input class="formbutton" type="submit" name="action_browse" value="%(msg_browse)s" /></td>
+          </tr>
+          <tr valign="bottom">
+            <td colspan="3" class="searchboxbody" align="right">
+              <small>
+                <a href="%(siteurl)s/help/easy-search%(langlink)s">%(msg_easy_search)s</a> ::
+                %(ssearch)s
+              </small>
+            </td>
+          </tr>
+         </tbody>
+        </table>
+        <!-- @todo - more imports -->
+        ''' % {'ln' : ln,
+               'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
+               'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
+               'siteurl' : CFG_SITE_URL,
+               'ssearch' : create_html_link(ssearchurl, {}, _("Simple Search")),
+               'header' : header,
+
+               'matchbox_m1' : self.tmpl_matchtype_box('m1', ln=ln),
+               'middle_option_1' : middle_option_1,
+               'andornot_op1' : self.tmpl_andornot_box('op1', ln=ln),
+
+               'matchbox_m2' : self.tmpl_matchtype_box('m2', ln=ln),
+               'middle_option_2' : middle_option_2,
+               'andornot_op2' : self.tmpl_andornot_box('op2', ln=ln),
+
+               'matchbox_m3' : self.tmpl_matchtype_box('m3', ln=ln),
+               'middle_option_3' : middle_option_3,
+
+               'msg_search' : _("Search"),
+               'msg_browse' : _("Browse"),
+               'msg_search_tips' : _("Search Tips"),
+               'msg_easy_search' : _("Easy Search"),
+        }
+
+        if (searchoptions):
+            out += """<table class="searchbox">
+                      <thead>
+                       <tr>
+                         <th class="searchboxheader">
+                           %(searchheader)s
+                         </th>
+                       </tr>
+                      </thead>
+                      <tbody>
+                       <tr valign="bottom">
+                        <td class="searchboxbody">%(searchoptions)s</td>
+                       </tr>
+                      </tbody>
+                     </table>""" % {
+                       'searchheader' : _("Search options:"),
+                       'searchoptions' : searchoptions
+                     }
+
+        out += """<table class="searchbox">
+                   <thead>
+                    <tr>
+                      <th class="searchboxheader">
+                        %(added)s
+                      </th>
+                      <th class="searchboxheader">
+                        %(until)s
+                      </th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                    <tr valign="bottom">
+                      <td class="searchboxbody">%(added_or_modified)s %(date_added)s</td>
+                      <td class="searchboxbody">%(date_until)s</td>
+                    </tr>
+                   </tbody>
+                  </table>
+                  <table class="searchbox">
+                   <thead>
+                    <tr>
+                      <th class="searchboxheader">
+                        %(msg_sort)s
+                      </th>
+                      <th class="searchboxheader">
+                        %(msg_display)s
+                      </th>
+                      <th class="searchboxheader">
+                        %(msg_format)s
+                      </th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                    <tr valign="bottom">
+                      <td class="searchboxbody">%(sortoptions)s %(rankoptions)s</td>
+                      <td class="searchboxbody">%(displayoptions)s</td>
+                      <td class="searchboxbody">%(formatoptions)s</td>
+                    </tr>
+                   </tbody>
+                  </table>
+                  <!--/create_searchfor_advanced()-->
+              """ % {
+
+                    'added' : _("Added/modified since:"),
+                    'until' : _("until:"),
+                    'added_or_modified': self.tmpl_inputdatetype(ln=ln),
+                    'date_added' : self.tmpl_inputdate("d1", ln=ln),
+                    'date_until' : self.tmpl_inputdate("d2", ln=ln),
+
+                    'msg_sort' : _("Sort by:"),
+                    'msg_display' : _("Display results:"),
+                    'msg_format' : _("Output format:"),
+                    'sortoptions' : sortoptions,
+                    'rankoptions' : rankoptions,
+                    'displayoptions' : displayoptions,
+                    'formatoptions' : formatoptions
+                  }
+        return out
+        
