@@ -20,13 +20,14 @@
 <!-- WebDoc-Page-Title: _(Search tips for INSPIRE)_ -->
 <!-- WebDoc-Page-Revision: $Id$ -->
 
-
+<h2>You can search INSPIRE via our <a href="http://inspirebeta.net/help/easy-search">easy search</a> or via the main search box.  The 
+search box allows for greater control over the search.  Tips for using it are presented below.<h2>
 <h5>Search with SPIRES familiar syntax</h5>
  <table class="tips">
    <tr>
      <td class="tips-lhs">
        <form action="/search" method="get">
-         <input name="p" type="text" value="find a hawking and aff &quot;cambridge u., damtp&quot; and date > 2004" size="56" />
+         <input name="p" type="text" value="find a van proeyen and aff ecole normale superieure" size="56" />
          <input class="formbutton" type="submit" name="action" value="Search" />
        </form>
      </td>
@@ -55,92 +56,137 @@
       </p>  
      </td>
    </tr>
+   <tr>
+     <td class="tips-lhs">
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a l everett or t light higgs and j phys.rev.lett. and primarch hep-ex" size="56" />
+         <input class="formbutton" type="submit" name="action" value="Search" />
+       </form>
+     </td>
+     <td class="tips-rhs">
+      <p>Search logic:  Logical operators (<b>and, or, not</b>) work left to right.</p>
+     </td>
+   </tr>
+ </table>
+<h5>Logical Operators and Truncation</h5>
+ <table class="tips">
+   <tr>
+     <td class="tips-lhs">
+        <p>Logical operators:
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a l everett or t light higgs and j phys.rev.lett. and primarch hep-ph" size="56" />
+         <input class="formbutton" type="submit" name="action" value="Search" />
+       </form>
+     </td>
+     <td class="tips-rhs">
+      <p>Search logic: Logical operators (<b>and, or, not</b>) work left to right.</p>
+     </td>
+   </tr>
+   <tr>
+     <td class="tips-lhs">
+      <p>Truncation:</p>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a rober* and t dyso*" size="56" />
+         <input class="formbutton" type="submit" name="action" value="Search" />
+       </form>
+     </td>
+     <td class="tips-rhs">
+      <p>The <a href="http://inspirebeta.net/help/easy-search/">easy search</a> is the easiest way to specify journals but you can 
+      also use the search box.</p>
+     </td>
+   </tr>
  </table>
 <h5>How do I specify journals?</h5>
  <table class="tips">
    <tr>
      <td class="tips-lhs">
        <form action="/search" method="get">
-         <input name="p" type="text" value='find j phys.rev.lett.,62,1825' size="56" />
+         <input name="p" type="text" value="find j phys.rev.lett.,62,1825" size="56" />
          <input class="formbutton" type="submit" name="action15" value="Search" />
+       </form>
+       <p>or coden searching <br /></p>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find j prlta and a smith and c hep-th/9711200" size="56" />
+         <input class="formbutton" type="submit" name="action" value="Search" />
        </form>
      </td>
      <td class="tips-rhs">
-      <p>j prlta (or prl) &rArr; j phys.rev.lett. <br />
-      j phlta (or pl) &rArr; j phys.lett. <br />
-      j phrva  &rArr; j phys.rev. <br />
-      similar for other journals (JHEP, Nucl.Phys., etc) <br />
+      <p>The <a href="http://inspirebeta.net/help/easy-search">easy search</a> is the easiest way to specify journals but you can also
+       use the search box.</p>
+      <p>Similar for other journals (JHEP, Nucl.Phys., etc) <br />
       (No spaces, include periods)<br />
-      <select><option>Click here for more examples</option>
-      <option>AIP Conf.Proc.</option>
-      <option>ASP Conf.Ser.</option>
-      <option>Acta Phys.Polon.</option>
-      <option>Adv.Cryog.Eng.</option>
-      <option>Ann.Rev.Astron.Astrophys.</option>
-      <option>Ann.Rev.Nucl.Part.Sci.</option>
-      <option>Annales Henri Poincare</option>
-      <option>Annals Phys.</option>
-      <option>Astron.Astrophys.</option>
-      <option>Astron.J.</option>
-      <option>Astron.Nachr.</option>
-      <option>Astropart.Phys.</option>
-      <option>Astrophys.J.</option>
-      <option>Astrophys.J.Suppl.</option>
-      <option>Class.Quant.Grav.</option>
-      <option>Comments Nucl.Part.Phys.</option>
-      <option>Comput.Phys.Commun.</option>
-      <option>Cryogenics</option>
-      <option>Eur.Phys.J.</option>
-      <option>Eur.Phys.J.direct</option>
-      <option>Fortsch.Phys.</option>
-      <option>Gen.Rel.Grav.</option>
-      <option>Grav.Cosmol.</option>
-      <option>Health Phys.</option>
-      <option>IEEE J.Solid State Circuits</option>
-      <option>IEEE Trans.Adv.Packag.</option>
-      <option>IEEE Trans.Appl.Supercond.</option>
-      <option>IEEE Trans.Magnetics</option>
-      <option>IEEE Trans.Nucl.Sci.</option>
-      <option>Int.J.Mod.Phys.</option>
-      <option>J.Math.Phys.</option>
-      <option>J.Phys.</option>
-      <option>J.Phys.Conf.Ser.</option>
-      <option>JCAP</option>
-      <option>JHEP</option>
-      <option>JINST</option>
-      <option>Lect.Notes Comput.Sci.</option>
-      <option>Lect.Notes Phys.</option>
-      <option>Living Rev.Rel.</option>
-      <option>Mod.Phys.Lett.</option>
-      <option>Mon.Not.Roy.Astron.Soc.</option>
-      <option>Nature</option>
-      <option>New Astron.Rev.</option>
-      <option>New J.Phys.</option>
-      <option>Nucl.Instrum.Meth.</option>
-      <option>Nucl.Phys.</option>
-      <option>Nucl.Phys.Proc.Suppl.</option>
-      <option>Phil.Trans.Roy.Soc.Lond.</option>
-      <option>Phys.Lett.</option>
-      <option>Phys.Rept.</option>
-      <option>Phys.Rev.</option>
-      <option>Phys.Rev.Lett.</option>
-      <option>Phys.Rev.ST Accel.Beams</option>
-      <option>Phys.Scripta</option>
-      <option>PoS</option>
-      <option>Pramana</option>
-      <option>Proc.SPIE Int.Soc.Opt.Eng.</option>
-      <option>Prog.Part.Nucl.Phys.</option>
-      <option>Publ.Astron.Soc.Jap.</option>
-      <option>Publ.Astron.Soc.Pac.</option>
-      <option>Rev.Mod.Phys.</option>
-      <option>Rev.Sci.Instrum.</option>
-      <option>Science</option>
+      <select><option>Click here for a list of more examples</option>
+      <option>Short Title [CODEN]</option>
+      <option>AIP Conf.Proc.[APCPC]</option>
+      <option>ASP Conf.Ser.[ASPSF]</option>
+      <option>Acta Phys.Polon.[APPOA]</option>
+      <option>Adv.Cryog.Eng.[ACYEA]</option>
+      <option>Ann.Rev.Astron.Astrophys.[ARAAA]</option>
+      <option>Ann.Rev.Nucl.Part.Sci.[ARNUA]</option>
+      <option>Annales Henri Poincare[AHPJF]</option>
+      <option>Annals Phys.[APNYA]</option>
+      <option>Astron.Astrophys.[AAEJA]</option>
+      <option>Astron.J.[ANJOA]</option>
+      <option>Astron.Nachr.[ASNAA]</option>
+      <option>Astropart.Phys.[APHYE]</option>
+      <option>Astrophys.J.[ASJOA]</option>
+      <option>Astrophys.J.Suppl.[APJSA]</option>
+      <option>Class.Quant.Grav.[CQGRD]</option>
+      <option>Comments Nucl.Part.Phys.[CNPPA]</option>
+      <option>Comput.Phys.Commun.[CPHCB]</option>
+      <option>Cryogenics[CRYOA]</option>
+      <option>Eur.Phys.J.[EPHJA]</option>
+      <option>Eur.Phys.J.direct[EPHJD]</option>
+      <option>Fortsch.Phys.[FPYKA]</option>
+      <option>Gen.Rel.Grav.[GRGVA]</option>
+      <option>Grav.Cosmol.[GRCOF]</option>
+      <option>Health Phys.[HLTPA]</option>
+      <option>IEEE J.Solid State Circuits[IJSCB]</option>
+      <option>IEEE Trans.Adv.Packag.[ITAPF]</option>
+      <option>IEEE Trans.Appl.Supercond.[ITASE]</option>
+      <option>IEEE Trans.Magnetics[IEMGA]</option>
+      <option>IEEE Trans.Nucl.Sci.[IETNA]</option>
+      <option>Int.J.Mod.Phys.[IMPAE]</option>
+      <option>J.Math.Phys.[JMAPA]</option>
+      <option>J.Phys.[JOPQA]</option>
+      <option>J.Phys.Conf.Ser.[00462]</option>
+      <option>JCAP[JCAPA]</option>
+      <option>JHEP[JHEPA]</option>
+      <option>JINST[JINST]</option>
+      <option>Lect.Notes Comput.Sci.[LNCSD]</option>
+      <option>Lect.Notes Phys.[LNPHA]</option>
+      <option>Living Rev.Rel.[00222]</option>
+      <option>Mod.Phys.Lett.[MPLAE]</option>
+      <option>Mon.Not.Roy.Astron.Soc.[MNRAA]</option>
+      <option>Nature[NATUA]</option>
+      <option>New Astron.Rev.[ASTRE]</option>
+      <option>New J.Phys.[NJOPF]</option>
+      <option>Nucl.Instrum.Meth.[NUIMA]</option>
+      <option>Nucl.Phys.[NUPHA]</option>
+      <option>Nucl.Phys.Proc.Suppl.[NUPHZ]</option>
+      <option>Phil.Trans.Roy.Soc.Lond.[PTRSA]</option>
+      <option>Phys.Lett.[PHLTA]</option>
+      <option>Phys.Rept.[PRPLC]</option>
+      <option>Phys.Rev.[PHRVA]</option>
+      <option>Phys.Rev.Lett.[PRLTA]</option>
+      <option>Phys.Rev.ST Accel.Beams[PRSTA]</option>
+      <option>Phys.Scripta[PHSTB]</option>
+      <option>PoS[POSCI]</option>
+      <option>Pramana[PRAMC]</option>
+      <option>Proc.SPIE Int.Soc.Opt.Eng.[PSISD]</option>
+      <option>Prog.Part.Nucl.Phys.[PPNPD]</option>
+      <option>Publ.Astron.Soc.Jap.[PASJA]</option>
+      <option>Publ.Astron.Soc.Pac.[PASPA]</option>
+      <option>Rev.Mod.Phys.[RMPHA]</option>
+      <option>Rev.Sci.Instrum.[RSINA]</option>
+      <option>Science[SCIEA]</option>
       </select>
       </p> 
      </td>
    </tr>
    <tr>
      <td class="tips-lhs">
+      <p>Search on a given volume series</p>
        <form action="/search" method="get">
          <input name="p" type="text" value='find j "Phys.Lett.,B&#42;" or j Phys.Rev.Lett. and a d rainwater' size="56" />
          <input class="formbutton" type="submit" name="action15" value="Search" />
@@ -158,12 +204,16 @@
    <tr>
      <td class="tips-lhs">
        <form action="/search" method="get">
-         <input name="p" type="text" value="find d 1997-11-18" size="56" />
+         <input name="p" type="text" value="find d 1997-11" size="56" />
          <input class="formbutton" type="submit" name="action16" value="Search" />
        </form>
        <form action="/search" method="get">
-         <input name="p" type="text" value="find da 2011-01-26 and title neutrino&#42;" size="56" />
+         <input name="p" type="text" value="find da today and title neutrino&#42;" size="56" />
          <input class="formbutton" type="submit" name="action16A" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find da today - 2 and primarch hep-th" size="56" />
+         <input class="formbutton" type="submit" name="action26A" value="Search" />
        </form>
      </td>
      <td class="tips-rhs">
@@ -200,12 +250,11 @@
        </form>
      </td>
      <td class="tips-rhs">
-      <p>You can search on eprint type using primarch (primary archive).</p>
-      <p>Logical operators (<b>and</b>, <b>or</b>, <b>not</b>) work left to right.</p>
+      <p>You can search on eprint type using primarch (primary archive, as opposed to cross-lists).</p>
      </td>
   </tr>
  </table>
-<h5>How do I search for citations?</h5>
+<h5>How do I search by citation count?</h5>
  <table class="tips">
    <tr>
      <td class="tips-lhs">
@@ -221,7 +270,6 @@
      </td>
      <td class="tips-rhs">
       <p>Must be written in this format with no spaces</p>
-      <p> Truncation: quark# &rArr; quark&#42; </p>
       <p>Topcite searching is now general--any number of citations can be searched on.  You can also search a range such as 
       topcite 60->173</p>
      </td>
@@ -237,18 +285,6 @@
      <td class="tips-rhs">
      </td>
    </tr>
-   <tr>
-     <td class="tips-lhs">
-      <p>Or the entire journal.</p>
-       <form action="/search" method="get">
-         <input name="p" type="text" value='find c "Phys.Rev.Lett.,&#42;"' size="56" />
-         <input class="formbutton" type="submit" name="action15" value="Search" />
-       </form>
-     </td>
-     <td class="tips-rhs">
-      <p>But for this you might prefer the refers to and cited by operators below...</p>
-     </td>
-   </tr>
  </table>
 <h5>Calculating the h-index</h5>
  <table class="tips">
@@ -256,7 +292,7 @@
      <td class="tips-lhs">
        <form action="/search" method="get">
          <input type="hidden" name="ln" value="en" />
-         <input size="56" type="text" name="p" value="find af &quot;harvard u.&quot;" />
+         <input size="56" type="text" name="p" value="find af harvard u." />
          <input class="formbutton" type="submit" name="action5" value="Search" />
        </form>
       <p>This will give you 
@@ -276,7 +312,7 @@
    <tr>
      <td class="tips-lhs">
        <form action="/search" method="get">
-         <input name="p" type="text" value="find citedby hep-th/9711200 and author cevetic" size="56" />
+         <input name="p" type="text" value="find citedby hep-th/9711200 and author cvetic" size="56" />
          <input class="formbutton" type="submit" name="action7" value="Search" />
        </form>
      </td>
@@ -301,12 +337,12 @@
    <tr>
      <td class="tips-lhs">
        <form action="/search" method="get">
-         <input name="p" type="text" value="find a witten and refersto author &quot;park, s.j.&quot;" size="56" />
+         <input name="p" type="text" value="find a witten and refersto author parke, s j" size="56" />
          <input class="formbutton" type="submit" name="action11" value="Search" />
        </form>
      </td>
      <td class="tips-rhs">
-      <p>Witten papers citing "Parke, S.J."</p>
+      <p>Witten papers citing author Parke, S.J.</p>
       <p>Note the difference between this example and the one immediately above it.</p>      
      </td>
    </tr>
@@ -343,6 +379,18 @@
       <p>Oxford papers citing papers with the string &quot;muon&quot; in the title</p>
      </td>
    </tr>
+   <tr>
+     <td class="tips-lhs">
+      <p>Or the entire journal.</p>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find refersto j Phys.Rev.Lett." size="56" />
+         <input class="formbutton" type="submit" name="action15" value="Search" />
+       </form>
+     </td>
+     <td class="tips-rhs">
+      <p>Find citations to an entire journal</p>
+     </td>
+   </tr>
  </table>
  <table class="tips">
    <tr>
@@ -362,6 +410,26 @@
      </td>
    </tr>
  </table>
+<h5>Full-text Searching</h5>
+ <table class="tips">
+   <tr>
+     <td class="tips-lhs">
+       <form action="/search" method="get">
+         <input type="hidden" name="ln" value="en" />
+         <input size="56" type="text" name="p" value="find ft &quot;faster than light&quot;" />
+         <input class="formbutton" type="submit" name="action75" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input type="hidden" name="ln" value="en" />
+         <input size="56" type="text" name="p" value="find ft neutrino axion &quot;dark matter&quot; cosmology" />
+         <input class="formbutton" type="submit" name="action85" value="Search" />
+       </form>
+     </td>
+     <td class="tips-rhs">
+      <p>Full-text searching is available for certain papers, mainly eprints from 2006-2011.</p>
+     </td>
+   </tr>
+ </table>
 <h5>Caption search</h5>
  <table class="tips">
    <tr>
@@ -373,45 +441,82 @@
        </form>
      </td>
      <td class="tips-rhs">
+      <p>Caption searching applies mainly to eprints 2008-2011.<p/>
       <p>Caption phrasing, i.e. enclosing a string of words in double quotation marks, is coming soon.
       </p>
      </td>
    </tr>
  </table>
-<h5>Searching by Type-Code</h5>
+<h5>Searching by Type-Code (tc)</h5>
  <table class="tips">
    <tr>
      <td class="tips-lhs">
-      <p>
-      Type-codes (tc) allow you to narrow your search to categories of publications:
-      </p>
        <form action="/search" method="get">
-         <input name="p" type="text" value="find a quigg and tc published" size="56" />
-         <input class="formbutton" type="submit" name="action13" value="Search" />
+         <input name="p" type="text" value="find a t dorigo and tc p" size="56" />
+         <input class="formbutton" type="submit" name="action23" value="Search" />
        </form>
-     </td>
-     <td class="tips-rhs">
-      <p>Abbreviations coming soon:</p>
-      <p>
-      find tc p (type-code published)
-      </p>
-     </td>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a j hewett and tc r" size="56" />
+         <input class="formbutton" type="submit" name="action33" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find fa g watts and tc c" size="56" />
+         <input class="formbutton" type="submit" name="action43" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a c johnson and tc l" size="56" />
+         <input class="formbutton" type="submit" name="action53" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a l motl and tc t" size="56" />
+         <input class="formbutton" type="submit" name="action63" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find a s carroll and tc b" size="56" />
+         <input class="formbutton" type="submit" name="action73" value="Search" />
+       </form>
+     <td class="tips-rhs"> 
+      <p>b (book)</p>
+      <p>c (conference paper)</p>
+      <p>l (lectures)</p>
+      <p>p (published) [means published in a peer-reviewed journal]</p>
+      <p>r (review)</p>
+      <p>t (thesis)</p>
+     </td> 
    </tr>
+ </table>
+<h5>Searching by Field-Code</h5>
+ <table class="tips">
    <tr>
      <td class="tips-lhs">
+      <p>Field-codes expand the familiar archive categories to non-eprints.</p>
        <form action="/search" method="get">
-         <input name="p" type="text" value="find title string and tc conference paper" size="56" />
-         <input class="formbutton" type="submit" name="action13" value="Search" />
+         <input name="p" type="text" value="find fc t and t higgs mass" size="56" />
+         <input class="formbutton" type="submit" name="action23" value="Search" />
        </form>
-     <td class="tips-rhs">
-      <p>Other abbreviations coming soon:</p>
-      <p>
-      find tc c (conference paper)
-      </p></br> 
-      <p>find tc l (lectures)</p>
-      <p>find tc r (review)</p>
-      <p>find tc b (book)</p>
-      <p>find tc t (thesis)</p>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find fc o and t feynman" size="56" />
+         <input class="formbutton" type="submit" name="action33" value="Search" />
+       </form>
+       <form action="/search" method="get">
+         <input name="p" type="text" value="find fc g and t eccentric orbits" size="56" />
+         <input class="formbutton" type="submit" name="action43" value="Search" />
+       </form>
+     <td class="tips-rhs"> 
+      <p>A - astrophysics - astro-ph</p>
+      <p>B - beams - physics-acc-phy</p>
+      <p>C - computing</p>
+      <p>E - experiment - hep-ex</p>
+      <p>G - gravity - gr-qc</p>
+      <p>I - instruments - phys.ins-det</p>
+      <p>L - lattice - hep-lat</p>
+      <p>M - math - math-ph/mh</p>
+      <p>N - nuclear theory - nucl-th</p>
+      <p>O - other - physics</p>
+      <p>P - phenomenology - hep-ph</p>
+      <p>Q - quantum - quant-ph</p>
+      <p>T - theory - hep-th</p>
+      <p>X - (e)xperiment - nucl-ex</p>
      </td> 
    </tr>
  </table>
@@ -419,15 +524,26 @@
  <table class="tips">
    <tr>
      <td class="tips-lhs">
-      <p>Most author searching is done the way it was in SPIRES.</p>  
-      <p>Last names consisting of more than one word must be followed by a comma so Inspire can tell when the last name ends the the rest of the name begins.  e.g.:</p>
-       <form action="/search" method="get">
-         <input name="p" type="text" value="find a Van Allen, j." size="56" />
-         <input class="formbutton" type="submit" name="action" value="Search" />
-       </form>
+      <p>We have a new author identification system.  When you find a paper and click on an author's name,
+         you will be taken to the author's publication profile page.</p>
+      <p>These pages are created by a program that identifies an author's identity based on name, co-authors and affiliation.
+         For most authors it does quite well.  For others, eg. John Smith, it does less well.  Authors are able to help though, by 
+         verifying the publication list:&nbsp;&nbsp;claiming their own papers and removing other people's papers.</p>
      </td>
      <td class="tips-rhs">
-      <p>Note:  If a last name only search is needed, use the last name followed by a comma.</p>
+      <p>eg. <a href="http://inspirebeta.net/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
+     </td>
+   </tr>
+ </table>
+<h5>Displaying your results</h5>
+ <table class="tips">
+   <tr>
+     <td class="tips-lhs">
+      <p>INSPIRE currently supports a variety of output formats and sorting options, that are available once you have done a 
+         search.  Note that the CV formats have a fixed sorting:  Earliest papers first.</p>
+     </td>
+     <td class="tips-rhs">
+      <p>  </p>
      </td>
    </tr>
  </table>
@@ -436,43 +552,7 @@
    <tr>
      <td class="tips-lhs">
       <p>
-      1. Searching by first-author (fa) eg: 
-      </p>
-     </td>
-     <td class="tips-rhs">
-      <p>
-      find fa r plunkett
-      </p>
-     </td>
-   </tr>
-   <tr>
-     <td class="tips-lhs">
-      <p>
-      2. cv LaTeX format 
-      </p>
-     </td>
-     <td class="tips-rhs">
-      <p>
-      A format which will produce a LaTeX file suitable for creating a C.V.
-      </p>
-     </td>
-   </tr>
-   <tr>
-     <td class="tips-lhs">
-      <p>
-      3. Plain text output format that can be cut and pasted into a flat file.
-      </p>
-     </td>
-     <td class="tips-rhs">
-      <p>
-      e.g. a MS Word document.  
-      </p>
-     </td>
-   </tr>
-   <tr>
-     <td class="tips-lhs">
-      <p>
-      4. author-count (i.e. a way to search papers by the number of authors)
+      1. author-count (i.e. a way to search papers by the number of authors)
       </p>
      </td>
      <td class="tips-rhs">
@@ -486,7 +566,7 @@
    <tr>
      <td class="tips-lhs">
       <p>
-      5. country searching, either using the full country name or the internet code. 
+      2. country searching, either using the full country name or the internet code. 
       </p>
      </td>
      <td class="tips-rhs">
@@ -495,10 +575,10 @@
       </p>
      </td>
    </tr>
- </table>
+  </table>
       <p>If you have questions or comments about these searches or if there is anything you would like to see added to this help page,
        contact <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
       <p> Also see the <a href="search-guide">Search Guide</a> for more detailed help on INSPIRE searching, and 
        <a href="help-central">Help Central</a> for other help documents.</p>
 
-<h5>Modified: 2011-05-19</h5>
+<h5>Modified: 2011-09-08</h5>
