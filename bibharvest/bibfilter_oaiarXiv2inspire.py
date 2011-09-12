@@ -15,11 +15,14 @@ from invenio.config import CFG_ETCDIR
 from invenio.bibrecord import create_records, \
                               record_get_field_instances, \
                               record_add_field, record_xml_output, \
-                              field_get_subfield_values
+                              field_get_subfield_values, \
+                              record_get_field_values
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
+from invenio.search_engine import perform_request_search
+
 
 def parse_actions(action_line):
     """
@@ -163,6 +166,17 @@ def has_field(field, field_list):
                     return True
     return False
 
+def get_minimal_arxiv_id(record):
+    """
+    Returns the OAI arXiv id in the given record skipping the prefixes.
+    I.e. oai:arxiv.org:1234.1234 becomes 1234.1234 and oai:arxiv.org:hep-ex/2134123
+    becomes hep-ex/2134123. Used for searching.
+    """
+    values = record_get_field_values(record, tag="035", code="a")
+    for value in values:
+        if 'arXiv' in value:
+            return value.split(':')[-1]
+
 def main():
     usage = """
     name:           bibfilter_oaiarXiv2inspire
@@ -244,6 +258,15 @@ def main():
             recid = retrieve_rec_id(record, "")
 
         if not recid or recid == -1:
+            # Try again with p_r_s
+            arxiv_id = get_minimal_arxiv_id(record)
+            if arxiv_id:
+                results = perform_request_search(p="reportnumber:%s" % (arxiv_id,), of='id')
+                if len(results) > 0:
+                    # FIXME: Ambiguous results may happen. Now just taking first result..
+                    recid = results[0]
+
+        if not recid or recid == -1:
             # Record (probably) does not exist, flag for insert into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
             insert_records.append(record)
@@ -320,7 +343,7 @@ def main():
 
     # Output results. Create new files, if necessary.
     write_record_to_file("%s.insert.xml" % (input_filename,), insert_records)
-    sys.stdout.write("Number of records to insert:  %d" % (len(insert_records),))
+    sys.stdout.write("Number of records to insert:  %d\n" % (len(insert_records),))
 
     write_record_to_file("%s.append.xml" % (input_filename,), append_records)
     sys.stdout.write("Number of records to append fields: %d:\n" % (len(append_records),))
@@ -329,7 +352,7 @@ def main():
     sys.stdout.write("Number of records to correct fields: %d:\n" % (len(correct_records),))
 
     write_record_to_file("%s.holdingpen.xml" % (input_filename,), holdingpen_records)
-    sys.stdout.write("Number of records to the holding pen: %d" % (len(holdingpen_records),))
+    sys.stdout.write("Number of records to the holding pen: %d\n" % (len(holdingpen_records),))
 
     sys.exit(0)
 if __name__ == '__main__':
