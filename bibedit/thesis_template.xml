@@ -1,6 +1,10 @@
 <!-- BibEdit-Template-Name: thesis -->
 <!-- BibEdit-Template-Description: thesis -->
 <record>
+  <datafield tag="024" ind1="7" ind2=" ">
+    <subfield code="a">VOLATILE:doi</subfield>
+    <subfield code="2">VOLATILE:DOI</subfield>
+  </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:reportnr</subfield>
   </datafield>
@@ -18,32 +22,40 @@
     <subfield code="a">VOLATILE:Original title</subfield>
   </datafield>
   <datafield tag="300" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:123</subfield>
+    <subfield code="a">VOLATILE:999</subfield>
   </datafield>
   <datafield tag="500" ind1=" " ind2=" ">
-    <subfield code="a">presented 99 Mon 9999</subfield>
+    <subfield code="a">VOLATILE:presented 99 Mon 9999</subfield>
   </datafield>
   <datafield tag="502" ind1=" " ind2=" ">
     <subfield code="b">VOLATILE:degree type</subfield>
-    <subfield code="c">VOLATILE:institution</subfield>
+    <subfield code="c">VOLATILE:university</subfield>
     <subfield code="d">VOLATILE:year</subfield>
   </datafield>
     <datafield tag="520" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:abstract</subfield>
   </datafield>
-<datafield tag="650" ind1="1" ind2="7">
+  <datafield tag="540" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:terms of use, e.g CC License</subfield>
+    <subfield code="u">VOLATILE:url of file specifying access rights</subfield>
+  </datafield>
+  <datafield tag="542" ind1=" " ind2=" ">
+    <subfield code="u">VOLATILE:copyright statement</subfield>
+    <subfield code="f">VOLATILE:url of copyright statement</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
-    <subfield code="2">INSPIRE</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
   </datafield>
   <datafield tag="653" ind1="1" ind2=" ">
     <subfield code="a">VOLATILE:keyword</subfield>
-    <subfield code="9">author</subfield>
+    <subfield code="9">VOLATILE:author</subfield>
   </datafield>
   <datafield tag="693" ind1=" " ind2=" ">
     <subfield code="e">VOLATILE:experiment</subfield>
   </datafield>
   <datafield tag="695" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="a">thesis</subfield>
     <subfield code="2">INSPIRE</subfield>
   </datafield>
   <datafield tag="701" ind1=" " ind2=" ">
@@ -51,20 +63,24 @@
     <subfield code="u">VOLATILE:Affiliation</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">VOLATILE:http:</subfield>
-    <subfield code="y">Fulltext</subfield>
+    <subfield code="u">VOLATILE:http: (for external link)</subfield>
+    <subfield code="y">VOLATILE:x server</subfield>
   </datafield>
   <datafield tag="FFT" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:http:</subfield>
-    <subfield code="y">VOLATILE:Fulltext</subfield>
+    <subfield code="d">VOLATILE:Fulltext</subfield>
+    <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
   </datafield>
-  <datafield tag="980" ind1=" " ind2=" ">
-    <subfield code="a">Thesis</subfield>
+  <datafield tag="690" ind1="C" ind2=" ">
+    <subfield code="a">THESIS</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">CORE</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">HEP</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">THESIS</subfield>
   </datafield>
 </record>

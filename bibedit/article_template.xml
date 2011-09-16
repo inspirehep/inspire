@@ -1,9 +1,6 @@
-<!-- BibEdit-Template-Name: preprint -->
-<!-- BibEdit-Template-Description: preprint -->
+<!-- BibEdit-Template-Name: article -->
+<!-- BibEdit-Template-Description: article -->
 <record>
-  <datafield tag="037" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:reportnr</subfield>
-  </datafield>
   <datafield tag="041" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:language (if not English)</subfield>
   </datafield>
@@ -17,8 +14,8 @@
   <datafield tag="245" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Original title</subfield>
   </datafield>
-  <datafield tag="269" ind1=" " ind2=" ">
-    <subfield code="c">VOLATILE:YYYY-MM-DD</subfield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="c">VOLATILE:publication date YYYY-MM-DD</subfield>
   </datafield>
   <datafield tag="300" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:11</subfield>
@@ -53,6 +50,11 @@
     <subfield code="g">VOLATILE:collaboration</subfield>
   </datafield>
   <datafield tag="773" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:DOI</subfield>
+    <subfield code="p">VOLATILE:journal</subfield>
+    <subfield code="v">VOLATILE:volume</subfield>
+    <subfield code="n">VOLATILE:issue</subfield>
+    <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
     <subfield code="w">VOLATILE:CNUM</subfield>
     <subfield code="t">VOLATILE:Presented at</subfield>
   </datafield>

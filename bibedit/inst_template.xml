@@ -1,0 +1,60 @@
+<!-- BibEdit-Template-Name: institution -->
+<!-- BibEdit-Template-Description: institution -->
+<record>
+  <datafield tag="034" ind1=" " ind2=" ">
+    <subfield code="d">VOLATILE:longitude</subfield>
+    <subfield code="d">VOLATILE:latitude</subfield>
+  </datafield>
+  <datafield tag="110" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:organization (official name)(acronym in brackets)</subfield>
+    <subfield code="b">VOLATILE:department (official name) (acronym in brackets</subfield>
+    <subfield code="t">VOLATILE:newICN</subfield>
+    <subfield code="u">VOLATILE:ICN</subfield>
+  </datafield>
+  <datafield tag="371" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:address (street,...)</subfield>
+    <subfield code="a">VOLATILE:postal code + city (native language)</subfield>
+    <subfield code="b">VOLATILE:city (in English)</subfield>
+    <subfield code="c">VOLATILE:state/province</subfield>
+    <subfield code="d">VOLATILE:country</subfield>
+    <subfield code="e">VOLATILE:postal code (without country code)</subfield>
+    <subfield code="g">VOLATILE:country code</subfield>
+  </datafield>
+  <datafield tag="372" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:University/Research center/Company</subfield>
+  </datafield>
+  <datafield tag="410" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:name variants</subfield>
+    <subfield code="9">VOLATILE:source</subfield>
+  </datafield>
+  <datafield tag="410" ind1=" " ind2=" ">
+    <subfield code="g">VOLATILE:hidden name variants</subfield>
+  </datafield>
+  <datafield tag="510" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:name of related inst (newICN)</subfield>
+    <subfield code="w">VOLATILE:type of relation: a predecessor, b successor, t parent institute, r for other relations</subfield>
+    <subfield code="0">VOLATILE:record nr of related inst</subfield>
+    <subfield code="i">VOLATILE:description of relation if $w=r (optional)</subfield>
+  </datafield>
+  <datafield tag="667" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:nonpublic note</subfield>
+  </datafield>
+  <datafield tag="678" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:historical data</subfield>
+  </datafield>
+  <datafield tag="680" ind1=" " ind2=" ">
+    <subfield code="i">VOLATILE:public note</subfield>
+  </datafield>
+  <datafield tag="690" ind1="C" ind2=" ">
+    <subfield code="a">VOLATILE:CORE</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external link)</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CORE/NONCORE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">INSTITUTION</subfield>
+  </datafield>
+</record>

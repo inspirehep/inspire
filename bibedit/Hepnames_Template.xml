@@ -1,0 +1,84 @@
+<!-- BibEdit-Template-Name: hepnames -->
+<!-- BibEdit-Template-Description: hepnames -->
+<record>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE: Inspire id - only nr</subfield>
+    <subfield code="9">INSPIRE</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:BAI name</subfield>
+    <subfield code="9">VOLATILE:BAI</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="b">VOLATILE:numeration (e.g. III or Jr.)</subfield>
+    <subfield code="c">VOLATILE:title (e.g. Sir)</subfield>
+    <subfield code="d">VOLATILE:dates</subfield>
+    <subfield code="q">VOLATILE:preferred name</subfield>
+    <subfield code="g">VOLATILE:active, retired...</subfield>
+  </datafield>
+  <datafield tag="400" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:variant name</subfield>
+  </datafield>
+  <datafield tag="701" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Name of advisor</subfield>
+    <subfield code="b">VOLATILE:Inspire id of advisor</subfield>
+    <subfield code="g">VOLATILE:degree (PhD, master, diploma...)</subfield>
+  </datafield>
+  <datafield tag="371" ind1=" " ind2=" ">
+    <subfield code="m">VOLATILE:public email</subfield>
+    <subfield code="z">VOLATILE:current</subfield>
+  </datafield>
+  <datafield tag="371" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:affiliation</subfield>
+    <subfield code="s">VOLATILE:start year</subfield>
+    <subfield code="t">VOLATILE:end year</subfield>
+    <subfield code="r">VOLATILE:rank</subfield>
+    <subfield code="z">VOLATILE:current</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="m">VOLATILE:contact email</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="o">VOLATILE:old email</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:arxiv category</subfield>
+  </datafield>
+  <datafield tag="667" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:nonpublic note</subfield>
+  </datafield>
+  <datafield tag="670" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:source</subfield>
+  </datafield>
+  <datafield tag="670" ind1=" " ind2=" ">
+    <subfield code="d">VOLATILE:date verified</subfield>
+  </datafield>
+  <datafield tag="678" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:award</subfield>
+  </datafield>
+  <datafield tag="680" ind1=" " ind2=" ">
+    <subfield code="i">VOLATILE:public note</subfield>
+  </datafield>
+  <datafield tag="693" ind1=" " ind2=" ">
+    <subfield code="e">VOLATILE:experiment</subfield>
+    <subfield code="s">VOLATILE:start date</subfield>
+    <subfield code="d">VOLATILE:end date</subfield>
+    <subfield code="z">VOLATILE:current</subfield>
+  </datafield>
+  <datafield tag="711" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:conf attended (cnum)</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:url</subfield>
+  </datafield>
+  <datafield tag="880" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:native name</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">HEPNAMES</subfield>
+  </datafield>
+</record>
