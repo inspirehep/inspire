@@ -32,7 +32,7 @@ FEED_PRE = { 2: """
       <li><a href="/help/">INSPIRE Help</a></li>
       <li><a href="/help/corrections">Corrections</a></li>
       <li><a href="/help/additions">Additions</a></li>
-      <li><a href="mailto:feedback@inspirebeta.net">Email Us</a></li>
+      <li><a href="mailto:feedback@inspirehep.net">Email Us</a></li>
      </ul>
 
     <h3>INSPIRE</h3>
@@ -181,4 +181,3 @@ if __name__ == "__main__":
     outname = out.name
     if outname != '<stdout>':
         out.close()
-

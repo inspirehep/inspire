@@ -20,7 +20,7 @@
 <!-- WebDoc-Page-Title: _(Search tips for INSPIRE)_ -->
 <!-- WebDoc-Page-Revision: $Id$ -->
 
-<h2>You can search INSPIRE via our <a href="http://inspirebeta.net/help/easy-search">easy search</a> or via the main search box.  The 
+<h2>You can search INSPIRE via our <a href="http://inspirehep.net/help/easy-search">easy search</a> or via the main search box.  The
 search box allows for greater control over the search.  Tips for using it are presented below.<h2>
 <h5>Search with SPIRES familiar syntax</h5>
  <table class="tips">
@@ -31,9 +31,9 @@ search box allows for greater control over the search.  Tips for using it are pr
          <input class="formbutton" type="submit" name="action" value="Search" />
        </form>
      </td>
-     <td class="tips-rhs"><p>We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences - many are 
-      documented below.  If you find other differences that are bothersome, let us know at <a 
-      href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
+     <td class="tips-rhs"><p>We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences - many are
+      documented below.  If you find other differences that are bothersome, let us know at <a
+      href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></p>
      </td>
    </tr>
  </table>
@@ -53,7 +53,7 @@ search box allows for greater control over the search.  Tips for using it are pr
       <br />
       find a thomas and a crewther and t quark and date 2002
       <br />
-      </p>  
+      </p>
      </td>
    </tr>
    <tr>
@@ -91,7 +91,7 @@ search box allows for greater control over the search.  Tips for using it are pr
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirebeta.net/help/easy-search/">easy search</a> is the easiest way to specify journals but you can 
+      <p>The <a href="http://inspirehep.net/help/easy-search/">easy search</a> is the easiest way to specify journals but you can
       also use the search box.</p>
      </td>
    </tr>
@@ -111,7 +111,7 @@ search box allows for greater control over the search.  Tips for using it are pr
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirebeta.net/help/easy-search">easy search</a> is the easiest way to specify journals but you can also
+      <p>The <a href="http://inspirehep.net/help/easy-search">easy search</a> is the easiest way to specify journals but you can also
        use the search box.</p>
       <p>Similar for other journals (JHEP, Nucl.Phys., etc) <br />
       (No spaces, include periods)<br />
@@ -181,7 +181,7 @@ search box allows for greater control over the search.  Tips for using it are pr
       <option>Rev.Sci.Instrum.[RSINA]</option>
       <option>Science[SCIEA]</option>
       </select>
-      </p> 
+      </p>
      </td>
    </tr>
    <tr>
@@ -262,15 +262,15 @@ search box allows for greater control over the search.  Tips for using it are pr
        <form action="/search" method="get">
          <input name="p" type="text" value="find a m albrow and j phys.rev.lett. and t quark&#42; and topcite 137+" size="56" />
          <input class="formbutton" type="submit" name="action" value="Search" />
-       </form> 
+       </form>
        <form action="/search" method="get">
          <input name="p" type="text" value="find a bando and topcite 100->500" size="56" />
          <input class="formbutton" type="submit" name="action" value="Search" />
-       </form> 
+       </form>
      </td>
      <td class="tips-rhs">
       <p>Must be written in this format with no spaces</p>
-      <p>Topcite searching is now general--any number of citations can be searched on.  You can also search a range such as 
+      <p>Topcite searching is now general--any number of citations can be searched on.  You can also search a range such as
       topcite 60->173</p>
      </td>
    </tr>
@@ -295,13 +295,13 @@ search box allows for greater control over the search.  Tips for using it are pr
          <input size="56" type="text" name="p" value="find af harvard u." />
          <input class="formbutton" type="submit" name="action5" value="Search" />
        </form>
-      <p>This will give you 
+      <p>This will give you
       <a href="/search?ln=en&amp;p=find+af+&quot;harvard+u.&quot;&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hcs">
        this result</a>.<br />
       </p>
      </td>
      <td class="tips-rhs">
-       You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong> 
+       You can perform any search and when it displays, then just choose the format <strong>HTML</strong> <strong>citesummary</strong>
        from the list of available formats, and hit <input class="formbutton" type="submit" name="action9" value="Search" />
        again. The h-index will be displayed at the bottom. Unlike in SPIRES, there is no limit to the size of the search.
      </td>
@@ -343,7 +343,7 @@ search box allows for greater control over the search.  Tips for using it are pr
      </td>
      <td class="tips-rhs">
       <p>Witten papers citing author Parke, S.J.</p>
-      <p>Note the difference between this example and the one immediately above it.</p>      
+      <p>Note the difference between this example and the one immediately above it.</p>
      </td>
    </tr>
    <tr>
@@ -353,7 +353,7 @@ search box allows for greater control over the search.  Tips for using it are pr
          <input class="formbutton" type="submit" name="action8" value="Search" />
        </form>
      </td>
-     <td class="tips-rhs"> 
+     <td class="tips-rhs">
       <p>Papers citing hep-th/9711200 with nucl&#42; in the title (nuclear, nucleus, nucleon, ...)</p>
      </td>
    </tr>
@@ -399,13 +399,13 @@ search box allows for greater control over the search.  Tips for using it are pr
        N.B.:
       </p>
       <p>
-       Be aware that the refersto operator finds the number of papers citing a given set of papers.  This is not the same as counting the total number of citations to those papers.  
-       The refersto result includes papers citing multiple papers within the target set, and lists those only once. If you want the traditional count of total citations summed 
+       Be aware that the refersto operator finds the number of papers citing a given set of papers.  This is not the same as counting the total number of citations to those papers.
+       The refersto result includes papers citing multiple papers within the target set, and lists those only once. If you want the traditional count of total citations summed
        over a set of papers, use the citesummary format, as described above.
-      </p> 
+      </p>
      </td>
-   
-   
+
+
      <td class="tips-rhs">
      </td>
    </tr>
@@ -475,14 +475,14 @@ search box allows for greater control over the search.  Tips for using it are pr
          <input name="p" type="text" value="find a s carroll and tc b" size="56" />
          <input class="formbutton" type="submit" name="action73" value="Search" />
        </form>
-     <td class="tips-rhs"> 
+     <td class="tips-rhs">
       <p>b (book)</p>
       <p>c (conference paper)</p>
       <p>l (lectures)</p>
       <p>p (published) [means published in a peer-reviewed journal]</p>
       <p>r (review)</p>
       <p>t (thesis)</p>
-     </td> 
+     </td>
    </tr>
  </table>
 <h5>Searching by Field-Code</h5>
@@ -502,7 +502,7 @@ search box allows for greater control over the search.  Tips for using it are pr
          <input name="p" type="text" value="find fc g and t eccentric orbits" size="56" />
          <input class="formbutton" type="submit" name="action43" value="Search" />
        </form>
-     <td class="tips-rhs"> 
+     <td class="tips-rhs">
       <p>A - astrophysics - astro-ph</p>
       <p>B - beams - physics-acc-phy</p>
       <p>C - computing</p>
@@ -517,7 +517,7 @@ search box allows for greater control over the search.  Tips for using it are pr
       <p>Q - quantum - quant-ph</p>
       <p>T - theory - hep-th</p>
       <p>X - (e)xperiment - nucl-ex</p>
-     </td> 
+     </td>
    </tr>
  </table>
 <h5>More about author searching:</h5>
@@ -527,11 +527,11 @@ search box allows for greater control over the search.  Tips for using it are pr
       <p>We have a new author identification system.  When you find a paper and click on an author's name,
          you will be taken to the author's publication profile page.</p>
       <p>These pages are created by a program that identifies an author's identity based on name, co-authors and affiliation.
-         For most authors it does quite well.  For others, eg. John Smith, it does less well.  Authors are able to help though, by 
+         For most authors it does quite well.  For others, eg. John Smith, it does less well.  Authors are able to help though, by
          verifying the publication list:&nbsp;&nbsp;claiming their own papers and removing other people's papers.</p>
      </td>
      <td class="tips-rhs">
-      <p>eg. <a href="http://inspirebeta.net/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
+      <p>eg. <a href="http://inspirehep.net/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
      </td>
    </tr>
  </table>
@@ -539,7 +539,7 @@ search box allows for greater control over the search.  Tips for using it are pr
  <table class="tips">
    <tr>
      <td class="tips-lhs">
-      <p>INSPIRE currently supports a variety of output formats and sorting options, that are available once you have done a 
+      <p>INSPIRE currently supports a variety of output formats and sorting options, that are available once you have done a
          search.  Note that the CV formats have a fixed sorting:  Earliest papers first.</p>
      </td>
      <td class="tips-rhs">
@@ -566,7 +566,7 @@ search box allows for greater control over the search.  Tips for using it are pr
    <tr>
      <td class="tips-lhs">
       <p>
-      2. country searching, either using the full country name or the internet code. 
+      2. country searching, either using the full country name or the internet code.
       </p>
      </td>
      <td class="tips-rhs">
@@ -577,8 +577,8 @@ search box allows for greater control over the search.  Tips for using it are pr
    </tr>
   </table>
       <p>If you have questions or comments about these searches or if there is anything you would like to see added to this help page,
-       contact <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
-      <p> Also see the <a href="search-guide">Search Guide</a> for more detailed help on INSPIRE searching, and 
+       contact <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></p>
+      <p> Also see the <a href="search-guide">Search Guide</a> for more detailed help on INSPIRE searching, and
        <a href="help-central">Help Central</a> for other help documents.</p>
 
 <h5>Modified: 2011-09-08</h5>

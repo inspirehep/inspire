@@ -258,7 +258,7 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
         </div>
         </div>""" % {
             'feedback_text' : _("Please send feedback on INSPIRE to"),
-            'feedback_address' : 'feedback@inspirebeta.net',
+            'feedback_address' : 'feedback@inspirehep.net',
             }
         return out
 
@@ -321,7 +321,7 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
           'langlink': '?ln=' + ln,
 
           'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
-          'sitesupportemail' : 'feedback@inspirebeta.net',
+          'sitesupportemail' : 'feedback@inspirehep.net',
 
           'msg_search' : _("Search"),
           'msg_help' : _("Help"),
