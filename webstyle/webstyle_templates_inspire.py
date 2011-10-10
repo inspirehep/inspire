@@ -159,12 +159,10 @@ template function generated it.
   </td>
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
-Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a> β: the
-upgrade of SPIRES<br />
-We now recommend that you use this site instead of SPIRES<br />
-
-
-    %(feedback)s
+Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>!
+INSPIRE is out of beta and ready to replace SPIRES.  SPIRES will be
+switched off soon.  If you have questions, comments or concerns, please
+email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
    </div>
   </td>
  </tr>
