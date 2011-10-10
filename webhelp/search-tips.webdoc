@@ -20,7 +20,7 @@
 <!-- WebDoc-Page-Title: _(Search tips for INSPIRE)_ -->
 <!-- WebDoc-Page-Revision: $Id$ -->
 
-<h2>You can search INSPIRE via our <a href="http://inspirehep.net/help/easy-search">easy search</a> or via the main search box.  The
+<h2>You can search INSPIRE via our <a href="/help/easy-search">easy search</a> or via the main search box.  The
 search box allows for greater control over the search.  Tips for using it are presented below.<h2>
 <h5>Search with SPIRES familiar syntax</h5>
  <table class="tips">
@@ -91,7 +91,7 @@ search box allows for greater control over the search.  Tips for using it are pr
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirehep.net/help/easy-search/">easy search</a> is the easiest way to specify journals but you can
+      <p>The <a href="/help/easy-search/">easy search</a> is the easiest way to specify journals but you can
       also use the search box.</p>
      </td>
    </tr>
@@ -111,7 +111,7 @@ search box allows for greater control over the search.  Tips for using it are pr
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirehep.net/help/easy-search">easy search</a> is the easiest way to specify journals but you can also
+      <p>The <a href="/help/easy-search">easy search</a> is the easiest way to specify journals but you can also
        use the search box.</p>
       <p>Similar for other journals (JHEP, Nucl.Phys., etc) <br />
       (No spaces, include periods)<br />
@@ -531,7 +531,7 @@ search box allows for greater control over the search.  Tips for using it are pr
          verifying the publication list:&nbsp;&nbsp;claiming their own papers and removing other people's papers.</p>
      </td>
      <td class="tips-rhs">
-      <p>eg. <a href="http://inspirehep.net/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
+      <p>eg. <a href="/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
      </td>
    </tr>
  </table>
