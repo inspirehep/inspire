@@ -152,7 +152,7 @@ template function generated it.
   <td align="left">
     <div>
       <a class="img" href="%(siteurl)s?ln=%(ln)s">
-       <img border="0" src="%(cssurl)s/img/inspire_logo_beta.png" alt="INSPIRE"
+       <img border="0" src="%(cssurl)s/img/inspire_logo_hep.png" alt="INSPIRE"
  />
       </a>
     </div>

@@ -20,7 +20,7 @@ install-ugly: install uglify
 
 uglify:
 	@cat invenio_inspire_ugly.css >>$(WEBDIR)/img/invenio_inspire.css
-	@mv $(WEBDIR)/img/inspire_logo_beta_ugly.png $(WEBDIR)/img/inspire_logo_beta.png
+	@mv $(WEBDIR)/img/inspire_logo_hep_ugly.png $(WEBDIR)/img/inspire_logo_hep.png
 
 clean:
 	@rm -f *.orig *~
