@@ -30,6 +30,7 @@ __revision__ = "$Id $"
 from urllib import quote
 from invenio.messages import gettext_set_language
 from invenio.config import CFG_SITE_URL
+from invenio.bibdocfile import bibdocfile_url_to_bibdoc
 
 def format_element(bfo, default = '', separator = '; ', style = '', \
            show_icons = 'no', prefix='', suffix=''):
@@ -68,6 +69,13 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
             links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
                          +journal.get('a')+'">Journal Server</a>')
 
+    # KEKSCAN links
+    identifiers = bfo.fields('035__')
+
+    for ident in identifiers:
+        if ident['9'] == 'KEKSCAN':
+            out = str(bfo.field('035__a')).replace("-", "")
+            links.append('<a href="http://www-lib.kek.jp/cgi-bin/img_index?' + out + '"> KEK scanned document </a>')
 
     # could look for other publication info and calculate URls here
 
@@ -76,28 +84,30 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
     urls = bfo.fields('8564_')
-    links.extend(['<a '+ style + \
+    allowed_doctypes = ["INSPIRE-PUBLIC"]
+    for url in urls:
+        if url.get("u") and \
+        url.get('y', 'Fulltext').upper() != "DOI" and not \
+        url.get('u').startswith(CFG_SITE_URL):
+            links.append('<a '+ style + \
             'href="' + url.get("u") + '">' + \
-                  _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>'
-            for url in urls if url.get("u") and \
-                  url.get('y', 'Fulltext').upper() != "DOI" and not \
-                  url.get('u').startswith(CFG_SITE_URL)])
-
-
-
+                  _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>')
+        elif url.get("u").startswith(CFG_SITE_URL) and \
+        bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes and \
+        url.get("u")[-3:].lower() == "pdf":
+            links.append('<a '+ style + 'href="' + url.get("u") + '">' + \
+            _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>')
 
     #put it all together
     if links:
         if show_icons.lower() == 'yes':
             img = '<img style="border:none" \
-            src="%s/img/file-icon-text-12x16.gif" alt="%s"/>'\
+            src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' \
             % (CFG_SITE_URL, _("Download fulltext"))
             links = [img+'<small>'+link+'</small>' for link in links]
         return prefix+separator.join(links)+suffix
     else:
         return default
-
-
 
 
 def _lookup_url_name(bfo, abbrev = ''):
