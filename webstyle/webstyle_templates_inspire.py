@@ -173,6 +173,8 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 ::
 <a id="nav-inst" href="%(siteurl)s/collection/Institutions">Inst</a>
 ::
+<a id="nav-jobs" href="%(siteurl)s/collection/Jobs">Jobs</a>
+::
 <a id="nav-help" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
 &nbsp;&nbsp;&nbsp;
 ..::..
@@ -183,8 +185,6 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 <a id="nav-conf" href="http://www.slac.stanford.edu/spires/conferences/">Conf</a>
 ::
 <a id="nav-exp" href="http://www.slac.stanford.edu/spires/experiments/">Exp</a>
-::
-<a id="nav-jobs" href="http://www.slac.stanford.edu/spires/jobs/">Jobs</a>
 </div>
 <table class="navtrailbox">
  <tr>

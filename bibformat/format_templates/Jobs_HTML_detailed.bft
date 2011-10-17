@@ -1,0 +1,37 @@
+<name>Jobs HTML Detail</name>
+<description>Detailed description of job listing</description>
+<div class="detailed_record_info">
+<BFE_TITLE prefix="<center><big><strong>" separator="<br /><br />" suffix="</strong></big></center>" />
+<p align="center">
+<BFE_FIELD prefix="<center><big>" suffix="</big></center>" tag="970__a" />
+<br />
+<a href= "/search?ln=en&cc=Institutions&p=110__u%3A%22<BFE_FIELD tag="110__a" />%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd"><BFE_FIELD tag="110__a" /></a> <BFE_FIELD prefix=" - <span style='text-transform: capitalize;'>" suffix="</span>" tag="656__a" instances_separator=", " />
+</p>
+
+<br />
+<BFE_FIELD prefix="<strong>Field of Interest: </strong>" suffix="<br />" tag="65017a" instances_separator=", " />
+<BFE_INSPIRE_EXPERIMENT prefix="<strong>Experiment: </strong>" suffix="<br />"/>
+<BFE_INSPIRE_DEADLINE_DATE prefix="<strong>Deadline: </strong>" suffix="<br />"/>
+<BFE_FIELD prefix="<strong>Region: </strong>" suffix="<br />" tag="043__a" limit="1" />
+
+<p style=" width: 70%">
+
+<BFE_ABSTRACT
+prefix_en="<strong>Job description: </strong><br />"
+prefix_fr="<strong>Résumé: </strong><br />"
+suffix_en="<br />"
+suffix_fr="<br />" escape="0"
+/>
+</p>
+
+<BFE_INSPIRE_JOBS_CONTACT prefix="<strong>Contact: </strong>" suffix="<br />" />
+<BFE_INSPIRE_EMAIL prefix="<strong>Email: </strong>" suffix="<br />" />
+
+<BFE_INSPIRE_URL prefix="<strong>More Information: </strong>" suffix="<br />" />
+
+<BFE_INSPIRE_JOBS_REFERENCE_EMAIL prefix="<strong>Letters of Reference should be sent to: </strong>" suffix="<br />" /><br />
+<BFE_CATALOGING_DATE_CREATION prefix="<small>Date added: " suffix="</small>"/>
+
+</div>
+
+<BFE_ADDTHIS />

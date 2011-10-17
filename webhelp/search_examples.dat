@@ -7,5 +7,8 @@ INSERT into example (type,body) values
 ("HEP", "fin refersto hep-th/9711200 and t nucl*"),
 ("Institutions", "find address menlo park"),
 ("Institutions", "find institution CERN"),
-("Institutions", "country:DE")
+("Institutions", "country:DE"),
+("Jobs", "find field cond-mat"),
+("Jobs", "rank:Postdoc"),
+("Jobs", "region:EU")
 ;

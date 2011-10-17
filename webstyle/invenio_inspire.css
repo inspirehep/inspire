@@ -28,10 +28,9 @@ body {
    padding: 0px;
 }
 h1 {
-   font-size: 173%;
+   font-size: 155%;
    font-weight: 700;
-   margin-top: 5px;
-   margin-left: 0px;
+   margin: 2px 0px;
    color: #69c;
    background: transparent;
 }
@@ -43,10 +42,10 @@ h1 {
    background: transparent;
 }
 h2 {
-   font-size: 144%;
+   font-size: 120%;
    font-weight: 700;
-   margin-left: 0px;
-   color: #69c;
+   margin: 2px 0px;
+   color: #666;
    background: transparent;
 }
 h3 {
@@ -244,6 +243,19 @@ clear:right;
    text-decoration: underline;
 }
 
+.Jobs  a#nav-jobs{
+    border:1px solid #999;
+    border-bottom: 1px solid #fc9;
+    margin:0em;
+    padding:8px 6px 5px 6px;
+    background-color:#FC9;
+    color:#69C;
+}
+
+.Jobs a:hover#nav-jobs{
+   text-decoration: underline;
+}
+
 .help a#nav-help{
     border:1px solid #999;
     border-bottom: 1px solid #fc9;
@@ -370,27 +382,27 @@ a.headerselected:hover {
    text-decoration: none;
 }
 .navtrailbox {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 .navtrailboxbody {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 a.navtrail:link {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 a.navtrail:visited {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 a.navtrail:active {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 a.navtrail:hover {
-   visibility:hidden;
+   display: none;
    height:0px;
 }
 .info {
@@ -441,9 +453,6 @@ a.navtrail:hover {
    float: right;
 }
 
-.home .pagebodystripemiddle {
-   width: 73%;
-}
 .pagebodystriperight {
    width: 25%;
 }
@@ -694,6 +703,7 @@ a.footer:hover {
    /* padding: 2px; */
    padding: 3px;
    font-size: x-small;
+   width: 55%;
 }
 
 .portalboxbody h3{
@@ -703,7 +713,7 @@ a.footer:hover {
     padding-bottom: 3px;
     color: #666;
     border-bottom: 1px dotted #ccc;
-    
+    width: 100%;
     font-style: normal;
 }
 
@@ -756,7 +766,6 @@ a.footer:hover {
 }
 
 #announce{
-    width: 75%;
     margin: 20px 20px 20px 0px;
     border: 2px solid #ccc;
     padding: 5px;
@@ -2454,6 +2463,8 @@ text-decoration:underline;
 div.detailed_record_info {
 padding-left:10px;
 padding-right:10px;
+max-width: 1280px;
+margin: auto;
 }
 
 .detailed_record_info ul{
@@ -2630,6 +2641,7 @@ padding:0;
     /*see also .pagebodystripright*/
     font-size: small;
     color:#000;
+    width: 95%;
 }
 
 .sidebar_linktable {
@@ -2731,4 +2743,8 @@ td.tips-rhs {
     font-size: small;
     color: black;
 }
+
+/*.pagebodystripemiddle form[name=search] {
+    width: 73%;
+}*/
 /* end of inspire.css */
