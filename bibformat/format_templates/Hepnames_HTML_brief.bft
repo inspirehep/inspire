@@ -1,0 +1,18 @@
+<name>Hepnames HTML Brief</name>
+<description>Brief hepnames descriptions - used for search results</description>
+<div class="record_body">
+
+<a class = "titlelink" href= <BFE_SERVER_INFO var="recurl">> <strong><BFE_FIELD tag="100__a" /></strong></a>
+
+<a href= "/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22<BFE_FIELD tag="371__a" limit="1" />%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd"><BFE_FIELD tag="371__a" limit="1" prefix="(" suffix=")" /></a>
+<a href="/author/<BFE_INSPIRE_HEPNAMES_BAI />">[Publication list]</a>
+<br />
+<!--<div style="padding-left:20px";>-->
+<small>
+<BFE_INSPIRE_HEPNAMES_EMAIL suffix="<br />"/>
+<BFE_INSPIRE_URL suffix="<br />" separator="<br />" />
+<BFE_INSPIRE_HEPNAMES_FIELD_INTEREST suffix="<br />"/>
+</small>
+</div>
+
+

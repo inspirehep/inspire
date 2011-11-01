@@ -231,31 +231,6 @@ clear:right;
 
 }
 
-.HEP a#nav-hep{
-    border:1px solid #999;
-    border-bottom: 1px solid #fc9;
-    margin:0em;
-    padding:8px 6px 5px 6px;
-    background-color:#FC9;
-    color:#69C;
-}
-.HEP a:hover#nav-hep{
-   text-decoration: underline;
-}
-
-.Jobs  a#nav-jobs{
-    border:1px solid #999;
-    border-bottom: 1px solid #fc9;
-    margin:0em;
-    padding:8px 6px 5px 6px;
-    background-color:#FC9;
-    color:#69C;
-}
-
-.Jobs a:hover#nav-jobs{
-   text-decoration: underline;
-}
-
 .help a#nav-help{
     border:1px solid #999;
     border-bottom: 1px solid #fc9;
@@ -267,20 +242,6 @@ clear:right;
 .help a:hover#nav-help{
    text-decoration: underline;
 }
-
-.Institutions  a#nav-inst{
-    border:1px solid #999;
-    border-bottom: 1px solid #fc9;
-    margin:0em;
-    padding:8px 6px 5px 6px;
-    background-color:#FC9;
-    color:#69C;
-}
-
-.Institutions a:hover#nav-inst{
-   text-decoration: underline;
-}
-
 
 .headerbox {
    color: #000;

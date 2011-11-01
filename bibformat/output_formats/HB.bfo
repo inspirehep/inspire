@@ -2,6 +2,8 @@ tag 980__a :
 INSTITUTION --- Inst_HTML_brief.bft
 JOB --- Jobs_HTML_brief.bft
 JOBHIDDEN --- Jobs_HTML_brief.bft
+HEPNAMES --- Hepnames_HTML_brief.bft
+CONFERENCES --- Conf_HTML_brief.bft
 
 default: Default_HTML_brief.bft
 

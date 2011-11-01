@@ -2,5 +2,7 @@ tag 980__a :
 INSTITUTION --- Inst_HTML_files.bft
 JOB --- Jobs_HTML_files.bft
 JOBHIDDEN --- Jobs_HTML_files.bft
+HEPNAMES --- Hepnames_HTML_files.bft
+CONFERENCES  --- Conf_HTML_files.bft
 
 default: Default_HTML_files.bft

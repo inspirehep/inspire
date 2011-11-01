@@ -10,5 +10,8 @@ INSERT into example (type,body) values
 ("Institutions", "country:DE"),
 ("Jobs", "find field cond-mat"),
 ("Jobs", "rank:Postdoc"),
-("Jobs", "region:EU")
+("Jobs", "region:EU"),
+("HepNames", "find name ellis and field hep-th"),
+("Conferences", "Las Vegas"),
+("Conferences", "SUSY08")
 ;

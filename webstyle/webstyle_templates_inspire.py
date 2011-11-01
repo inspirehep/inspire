@@ -171,7 +171,11 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 <div class="navbar">
 <a id="nav-hep" href="%(siteurl)s?ln=%(ln)s">Hep</a>
 ::
+<a id="nav-hepnames" href="%(siteurl)s/collection/HepNames">HepNames</a>
+::
 <a id="nav-inst" href="%(siteurl)s/collection/Institutions">Inst</a>
+::
+<a id="nav-conf" href="%(siteurl)s/collection/Conferences">Conferences</a>
 ::
 <a id="nav-jobs" href="%(siteurl)s/collection/Jobs">Jobs</a>
 ::
@@ -180,9 +184,6 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 ..::..
 &nbsp;&nbsp;&nbsp;
 <strong>SPIRES</strong>
-<a id="nav-hepnames" href="http://www.slac.stanford.edu/spires/hepnames/">HepNames</a>
-::
-<a id="nav-conf" href="http://www.slac.stanford.edu/spires/conferences/">Conf</a>
 ::
 <a id="nav-exp" href="http://www.slac.stanford.edu/spires/experiments/">Exp</a>
 </div>

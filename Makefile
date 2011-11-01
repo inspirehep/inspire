@@ -613,6 +613,8 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collection VALUES (1, 'HEP', 'collection:HEP or 970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (2, 'Institutions',	'collection:INSTITUTION', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (3, 'Jobs', 'collection:JOB', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (4, 'Conferences', 'collection:CONFERENCES', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (5, 'HepNames', 'collection:HEPNAMES', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (6, 'Jobs Hidden', 'collection:JOBHIDDEN', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 2, 110)" | $(BINDIR)/dbexec
@@ -621,6 +623,8 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectionname VALUES (1, 'fr', 'ln', 'HEP')" |$(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (2, 'en', 'ln', 'Institutions')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (3, 'en', 'ln', 'Jobs')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (4, 'en', 'ln', 'Conferences')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (5, 'en', 'ln', 'HepNames')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (6, 'en', 'ln', 'Jobs Hidden')" | $(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
@@ -628,6 +632,8 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (1, 'metadata;references;citations;files;plots')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (2, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (3, 'metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (4, 'metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (5, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (6, 'metadata')" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
@@ -834,6 +840,93 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
+
+# Add Hepnames title box
+	echo "INSERT INTO portalbox VALUES (8, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hepnames_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=8", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'de', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'el', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'en', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'es', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'fr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'hr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'it', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'ja', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'no', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
+
+	echo "INSERT INTO portalbox VALUES (9, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hepnames_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=9", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+
+# Add Conf title box
+	echo "INSERT INTO portalbox VALUES (10, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=10", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'de', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'el', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'en', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'es', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'fr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'hr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'it', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'ja', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'no', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
+
+	echo "INSERT INTO portalbox VALUES (11, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=11", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:
@@ -961,6 +1054,12 @@ reset-inspire-format-configuration:
 	@echo ">>> Adding format configuration for jobs:"
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (3, 1, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (3, 2, 120)" | $(BINDIR)/dbexec
+	@echo ">>> Adding format configuration for conf:"
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (4, 1, 130)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (4, 2, 120)" | $(BINDIR)/dbexec
+	@echo ">>> Adding format configuration for Hepnames:"
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (5, 1, 130)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_format (id_collection, id_format, score) VALUES (5, 2, 120)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-jobs-format-configuration."
 
 reset-inspire-examples-searches:
@@ -971,4 +1070,6 @@ reset-inspire-examples-searches:
 	echo "insert into collection_example (id_collection,id_example)	select 1, example.id from example where example.type='HEP';" | $(BINDIR)/dbexec
 	echo "insert into collection_example (id_collection,id_example)	select 2, example.id from example where example.type='Institutions';" | $(BINDIR)/dbexec
 	echo "insert into collection_example (id_collection,id_example) select 3, example.id from example where example.type='Jobs';" | $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example) select 4, example.id from example where example.type='Conferences';" | $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example) select 5, example.id from example where example.type='HepNames';" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-example-searches."

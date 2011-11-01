@@ -16,39 +16,24 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints INSPIRE jobs contact name HEPNAMES search
+"""BibFormat element - Prints full-text URLs
 """
+__revision__ = "$Id$"
 
-from urllib import quote_plus
-
-def format_element(bfo, style="", separator=', '):
+def format_element(bfo, style, separator='; '):
     """
-    This is the default format for formatting the contact person
-    link in the Jobs format. This link will point to a direct search
-    in the HepNames database.
-
+    This is the default format for formatting full-text URLs.
+    @param separator: the separator between urls.
     @param style: CSS class of the link
-    @type style: str
-
-    @param separator: the separator between names.
-    @type separator: str
     """
 
-    contact_list = bfo.fields("270__p")
+    urls_u = bfo.fields("701__a")
     if style != "":
         style = 'class="'+style+'"'
 
-# KEEP UNTIL HEPNAMES ARE ON INSPIRE
-#    urls = ['<a '+ style + \
-#            'href="/search?ln=en&cc=HepNames&p=' + quote_plus(contact) + '">' + contact +'</a>'
-#            for contact in contact_list]
-    # SPIRES link http://www.slac.stanford.edu/spires/find/hepnames/www?rawcmd=FIND+NAME+DIXON%2C+Ned+S%2E
-    contacts = ['<a '+ style + \
-            ' href="/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=100__a%3A%27' \
-            + quote_plus(contact) + '%27&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">' + contact +'</a>'
-            for contact in contact_list]
-
-    return separator.join(contacts)
+    urls = ['<a href="'+ style + '/search?ln=en&cc=HepNames&p=100__a%3A%27' + url + '%27&of=hd">' + url +'</a>'
+            for url in urls_u]
+    return separator.join(urls)
 
 def escape_values(bfo):
     """
