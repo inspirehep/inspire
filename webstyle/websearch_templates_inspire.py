@@ -70,7 +70,6 @@ from invenio.urlutils import make_canonical_urlargd, drop_default_urlargd, creat
 #from invenio.websearch_external_collections_utils import get_collection_id
 #from invenio.websearch_external_collections_config import CFG_EXTERNAL_COLLECTION_MAXRESULTS
 
-
 from invenio.messages import gettext_set_language
 from invenio.dateutils import convert_datestruct_to_dategui, \
      convert_datecvs_to_datestruct
@@ -85,11 +84,47 @@ from invenio.config import CFG_WEBSEARCH_SHOW_REVIEW_COUNT
 from invenio.search_engine_utils import get_fieldvalues
 from invenio.bibrank_citation_searcher import get_cited_by_count
 
+CFG_SEARCH_INSPIRE_OUTPUT_FORMATS = [
+                   {'value' : "hb",
+                    'text' : "Brief format"
+                    },
+                   {'value' : "hd",
+                    'text' : "Detailed format"
+                    },
+                   {'value' : "hcs",
+                    'text' : "Citesummary"
+                    },
+                   {'value' : "hlxe",
+                    'text' : "LaTeX (EU)"
+                    },
+                   {'value' : "hlxu",
+                    'text' : "LaTeX (US)"
+                    },
+                   {'value' : "hx",
+                    'text' : "BibTeX"
+                    },
+                   {'value' : "tlcv",
+                    'text' : "CV format (LaTeX)"
+                    },
+                   {'value' : "hcv",
+                    'text' : "CV format (html)"
+                    },
+                   {'value' : "htcv",
+                    'text' : "CV format (text)"
+                    },
+                   {'value' : "xw",
+                    'text' : "RefWorks"
+                    },
+                   {'value' : "xe",
+                    'text' : "EndNote"
+                    }
+               ]
+
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
     def tmpl_searchfor_simple(self, ln, collection_id, collection_name, record_count,
-                 middle_option='', searchvalue='' ):
+                 middle_option='', searchvalue='', of='hb'):
         """Produces light *Search for* box for the current collection.
 
         Parameters:
@@ -131,11 +166,22 @@ class Template(DefaultTemplate):
                                                      ln=ln)
         #get examples
         example_html = self.tmpl_show_examples(collection_id, ln)
+
         langlink = ln != CFG_SITE_LANG and '?ln=' + ln or ''
         easy_search_link = ""
+        middle_option = ""
+
         if collection_id == "HEP":
+            # add easy search link
             easy_search_link = create_html_link("%s/help/easy-search%s" % (CFG_SITE_URL, langlink), {}, _("Easy Search")) + "<br/>"
 
+            # add output format select box for HEP
+            middle_option = '<td class="searchboxbody" align="left">%s</td>' % \
+                (self.tmpl_select(
+                 fieldname='of',
+                 selected=of,
+                 values=self._add_mark_to_field(value=of, fields=CFG_SEARCH_INSPIRE_OUTPUT_FORMATS, chars=3, ln=ln),
+                 css_class=''),)
         # print commentary start:
         out += '''
         <table class="searchbox lightsearch">
@@ -146,16 +192,15 @@ class Template(DefaultTemplate):
          </thead>
          <tbody>
           <tr valign="baseline">
-           <td class="searchboxbody" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield" value="%(searchvalue)s"/><br/>
+           <td class="searchboxbody searchboxbodyinput" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield searchboxbodyinput" value="%(searchvalue)s"/><br/>
            </td>
+           %(middle_option)s
            <td class="searchboxbody" align="left">
              <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
            </td>
-           <td class="searchboxbody" align="left" rowspan="2" valign="top">
-             <small><small>
+           <td class="searchboxbody searchboxbodymoresearch" align="left" rowspan="2" valign="top">
              %(esearch)s
              %(asearch)s
-             </small></small>
            </td>
            </tr>
            <tr>
@@ -180,7 +225,8 @@ class Template(DefaultTemplate):
                'msg_browse' : _('Browse'),
                'msg_easy_search' : _('Easy Search'),
                'example_query_html': example_html,
-               'searchvalue' : searchvalue
+               'searchvalue' : searchvalue,
+               'middle_option' : middle_option
               }
 
         return out
@@ -375,7 +421,7 @@ class Template(DefaultTemplate):
             };
         </script>
 
-        <table class="searchbox advancedsearch">
+        <table class="advancedsearch">
          <thead>
           <tr>
            <th class="searchboxheader" colspan="3">%(header)s</th>
@@ -775,7 +821,7 @@ class Template(DefaultTemplate):
 
             # define search box elements:
             out += '''
-            <table class="searchbox advancedsearch">
+            <table class="advancedsearch">
              <thead>
               <tr>
                <th colspan="3" class="searchboxheader">
@@ -870,7 +916,7 @@ class Template(DefaultTemplate):
             # print Simple Search form:
 
             out += self.tmpl_searchfor_simple(ln, cc, cgi.escape(cc_intl), 0,
-                            middle_option='', searchvalue=cgi.escape(p, 1) )
+                            middle_option='', searchvalue=cgi.escape(p, 1), of=of)
 
         else:
             # EXPERIMENTAL
@@ -990,7 +1036,7 @@ class Template(DefaultTemplate):
         else:
             cell_6_a = self.tmpl_inputdatetype(dt, ln) + self.tmpl_inputdate("d1", ln, d1y, d1m, d1d)
             cell_6_b = self.tmpl_inputdate("d2", ln, d2y, d2m, d2d)
-            out += """<table class="searchbox">
+            out += """<table>
                        <thead>
                         <tr>
                           <th class="searchboxheader">
@@ -1024,8 +1070,21 @@ class Template(DefaultTemplate):
                     rgs.append({ 'value' : i, 'text' : "%d %s" % (i, _("results"))})
             # enrich sort fields list if we are sorting by some MARC tag:
             sort_fields = self._add_mark_to_field(value=sf, fields=sort_fields, ln=ln)
+
+            formatoptions = ""
+            formatoptions_label = ""
+            if aas != 0 or cc != "HEP":
+                # add format options
+                formatoptions = '<td class="searchboxbody" align="left">%s</td>' % \
+                    (self.tmpl_select(
+                     css_class="address",
+                     fieldname='of',
+                     selected=of,
+                     values=self._add_mark_to_field(value=of, fields=CFG_SEARCH_INSPIRE_OUTPUT_FORMATS, chars=3, ln=ln)),)
+                formatoptions_label = '<th class="searchboxheader">%s</th>' % (_("Output format:"),)
+
             # create sort by HTML box:
-            out += """<table class="searchbox">
+            out += """<table>
                  <thead>
                   <tr>
                    <th class="searchboxheader">
@@ -1034,9 +1093,7 @@ class Template(DefaultTemplate):
                    <th class="searchboxheader">
                     %(display_res)s
                    </th>
-                   <th class="searchboxheader">
-                    %(out_format)s
-                   </th>
+                   %(output_format_label)s
                   </tr>
                  </thead>
                  <tbody>
@@ -1047,13 +1104,13 @@ class Template(DefaultTemplate):
                    <td valign="top" class="searchboxbody">
                      %(select_rg)s %(select_sc)s
                    </td>
-                   <td valign="top" class="searchboxbody">%(select_of)s</td>
+                   %(select_of)s
                   </tr>
                  </tbody>
                 </table>""" % {
                   'sort_by' : _("Sort by:"),
                   'display_res' : _("Display results:"),
-                  'out_format' : _("Output format:"),
+                  'output_format_label' : formatoptions_label,
                   'select_sf' : self.tmpl_select(fieldname='sf', values=sort_fields, selected=sf, css_class='address'),
                   'select_so' : self.tmpl_select(fieldname='so', values=[{
                                     'value' : 'a',
@@ -1071,18 +1128,14 @@ class Template(DefaultTemplate):
                                     'value' : 1,
                                     'text' : _("split by collection")
                                   }], selected=sc, css_class='address'),
-                  'select_of' : self.tmpl_select(
-                                  fieldname='of',
-                                  selected=of,
-                                  values=self._add_mark_to_field(value=of, fields=formats, chars=3, ln=ln),
-                                  css_class='address'),
+                  'select_of' : formatoptions
                 }
 
         ## last but not least, print end of search box:
         out += """</form>"""
         return out
-        
-        
+
+
     def tmpl_searchfor_advanced(self,
                                 ln, # current language
                                 collection_id,
@@ -1093,7 +1146,8 @@ class Template(DefaultTemplate):
                                 sortoptions,
                                 rankoptions,
                                 displayoptions,
-                                formatoptions
+                                formatoptions,
+                                of='hb'
                                 ):
         """
           Produces advanced *Search for* box for the current collection.
@@ -1140,8 +1194,15 @@ class Template(DefaultTemplate):
         header += ':'
         ssearchurl = self.build_search_interface_url(c=collection_id, aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
 
+        # replace format options
+        formatoptions = self.tmpl_select(
+                             fieldname='of',
+                             selected=of,
+                             values=self._add_mark_to_field(value=of, fields=CFG_SEARCH_INSPIRE_OUTPUT_FORMATS, chars=3, ln=ln),
+                             css_class='address')
+
         out += '''
-        <table class="searchbox advancedsearch">
+        <table class="advancedsearch">
          <thead>
           <tr>
            <th class="searchboxheader" colspan="3">%(header)s</th>
@@ -1207,7 +1268,7 @@ class Template(DefaultTemplate):
         }
 
         if (searchoptions):
-            out += """<table class="searchbox">
+            out += """<table>
                       <thead>
                        <tr>
                          <th class="searchboxheader">
@@ -1225,7 +1286,7 @@ class Template(DefaultTemplate):
                        'searchoptions' : searchoptions
                      }
 
-        out += """<table class="searchbox">
+        out += """<table>
                    <thead>
                     <tr>
                       <th class="searchboxheader">
@@ -1243,7 +1304,7 @@ class Template(DefaultTemplate):
                     </tr>
                    </tbody>
                   </table>
-                  <table class="searchbox">
+                  <table>
                    <thead>
                     <tr>
                       <th class="searchboxheader">
@@ -1283,7 +1344,7 @@ class Template(DefaultTemplate):
                     'formatoptions' : formatoptions
                   }
         return out
-        
+
     def tmpl_record_links(self, recid, ln, sf='', so='d', sp='', rm=''):
         """
           Displays the *More info* and *Find similar* links for a record

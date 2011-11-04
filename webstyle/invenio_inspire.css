@@ -529,6 +529,7 @@ a.footer:hover {
    border-collapse: collapse;
    border-top: 1px solid #fff;
 }
+
 .searchboxheader {
    color: #000;
    background: #fff;
@@ -551,6 +552,15 @@ a.footer:hover {
    color: #000;
    background: #fff;
    padding: 3px;
+}
+
+.searchboxbodyinput{
+   width:100%;
+}
+
+.searchboxbodymoresearch{
+   white-space: nowrap;
+   font-size: x-small;
 }
 .narrowsearchbox {
    color: #000;
@@ -664,7 +674,6 @@ a.footer:hover {
    /* padding: 2px; */
    padding: 3px;
    font-size: x-small;
-   width: 55%;
 }
 
 .portalboxbody h3{
@@ -2705,7 +2714,8 @@ td.tips-rhs {
     color: black;
 }
 
-/*.pagebodystripemiddle form[name=search] {
+.pagebodystripemiddle form[name=search] {
     width: 73%;
-}*/
+    max-width: 800px;
+}
 /* end of inspire.css */
