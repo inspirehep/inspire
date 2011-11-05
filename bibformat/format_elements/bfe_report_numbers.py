@@ -35,6 +35,6 @@ def format_element(bfo, separator, limit, extension=" etc."):
     numbers = bfo.fields("037__a")
     numbers.extend(bfo.fields("088__a"))
     if limit.isdigit() and int(limit) <= len(numbers):
-        return separator.join(numbers[:limit]) + extension
+        return separator.join(numbers[:int(limit)]) + extension
     else:
         return separator.join(numbers)

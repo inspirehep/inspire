@@ -136,7 +136,7 @@ template function generated it.
  %(metaheaderadd)s
 </head>
 
-<body%(body_css_classes)s lang="%(ln_iso_639_a)s" onload="if (document.search) { document.search.p.focus(); }">
+<body%(body_css_classes)s lang="%(ln_iso_639_a)s" onload="if ((document.search) && (document.baseURI.indexOf('/search?') == -1)) { document.search.p.focus(); }">
 <div class="pageheader">
 %(inspect_templates_message)s
 

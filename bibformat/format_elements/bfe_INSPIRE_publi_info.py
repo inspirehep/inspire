@@ -20,7 +20,6 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints publcation information and link to ejournal
 """
-__revision__ = "$Id$"
 
 from invenio.bibformat_elements.bfe_INSPIRE_arxiv import get_arxiv
 #from invenio.bibknowledge import get_kbd_values
@@ -38,82 +37,82 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
     latexperiod = ''
     displayouts = []
     displaycnt = 0
+    backup_out = ''
 
     publication_infos = bfo.fields('773__')
-    #publication_info = publication_info[0]
 
     for publication_info in publication_infos :
         out = ''
-        #if publication_info == []:
-        #    return ""
-        journal_source = publication_info.get('p', '')
-        volume = publication_info.get('v')
-        year = publication_info.get('y')
-        number = publication_info.get('n')
-        pages = publication_info.get('c')
-        #url = publication_info.get('u')
-        doi = publication_info.get('a')
-        conf_code = publication_info.get('w')
-        #conf_type = publication_info.get('t')        
+        journal_source = cgi.escape(publication_info.get('p', ''))
+        volume         = cgi.escape(publication_info.get('v', ''))
+        year           = cgi.escape(publication_info.get('y', ''))
+        number         = cgi.escape(publication_info.get('n', ''))
+        pages          = cgi.escape(publication_info.get('c', ''))
+        doi            = publication_info.get('a')
+        conf_code      = publication_info.get('w')
+        latex_p        = markup.lower() == 'latex'
+        eu_style_p     = style.lower() == 'eu'
+
         if journal_source:
             if not (volume or number or pages or doi):
                 out += "Submitted to: "
-                if markup.lower() == 'latex':
+                if latex_p:
                     out = '%' + out
-                out += cgi.escape(journal_source)
+                out += journal_source
 
             else:
-                if journal_source:
-                    journal_source = cgi.escape(journal_source)
-                if volume:
-                    volume = cgi.escape(volume)
-                if year:
-                    year = cgi.escape(year)
-                else:
-                    year = ''
-                if number:
-                    number = cgi.escape(number)
-                if pages:
-                    pages = cgi.escape(pages)
-                else:
-                    pages = ''
-                if markup.lower() == 'latex':
+                if latex_p:
                     journal_source = journal_source.replace(".",'.\\ ')
                 out += journal_source
 
-            if style.lower() == 'eu':
-                if volume:
-                    if markup.lower() == 'latex':
-                        out += ' {\\bf ' + volume + ' }'
-                    else:
-                        out += ' ' + volume
-                if year:
-                    out += ' (' + year + ') '
-                if number:
-                    out += ' ' + number + ', '
+            if volume:       # preparing volume and appending it
+                if latex_p:
+                    char_i = 0
+                    for char in volume:
+                        if char.isalpha():
+                            char_i += 1
+                        else:
+                            break
+                    journal_letter = volume[:char_i]
+                    volume_number = volume[char_i:]
+                    out += journal_letter + '\\ {\\bf ' + volume_number + '}'
+                else:
+                    out += ' ' + volume
+
+            if year:         # preparing year; it's appended below
+                if eu_style_p or latex_p:
+                    year = ' (' + year + ')'
+                else:
+                    year = ', ' + year
+
+            if number:       # preparing number; it's appended below
+                if eu_style_p:
+                    number = ' ' + number + ', '
+                else:
+                    number = ', no. ' + number
+
+            if latex_p:
+                if pages:
+                    dashpos = pages.find('-') 
+                    if dashpos > -1:
+                        pages = pages[:dashpos]
+
+            if eu_style_p:   # EU style reference
+                out += year
+                out += number
                 if pages:
                     out += ' ' + pages
-            else:
-                if volume:
-                    if markup.lower() == 'latex':
-                        out += ' {\\bf ' + volume + '}'
-                    else:
-                        out += ' ' + volume
-                if number:
-                    out += ', no. ' + number
+            else:            # US style reference
+                out += number
                 if pages:
-                    if markup.lower() == 'latex':
+                    if latex_p:
                         out += ', ' + pages
                     else:
                         out += ': ' + pages
-                if year:
-                    if markup.lower() == 'latex':
-                        out += ' (' + year + ')'
-                    else:
-                        out +=  ', ' + year
+                out += ' ' + year
             displaycnt += 1            
             if displaycnt > 1 :
-                if markup.lower() == 'latex' :
+                if latex_p:
                     out = '[' + out + ']'    
             displayouts.append(out)
 
@@ -126,20 +125,20 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
             # conf_code = get_kbd_values('conferences', conf_code)
             # out += " " + cgi.escape(conf_code)
         else:
-            # not a conference, we should do our best if there is nothing else
+            # no journal source and not a conference, we should do our best if
+            # there is nothing else
             backup_out = publication_info.get('x')
 
     if displayouts :
         # determine if there's an arxiv number to decide whether to put a
         # period after the pub-note.  There should be a period after either
         # a pub-note or an Arxiv number, but not two periods, and no period if no pub/arxiv info.
-        if markup.lower() == 'latex' :
-            arxiv=get_arxiv(bfo, category="no")
-            if not arxiv :
+        if latex_p:
+            if not get_arxiv(bfo, category="no"):
                 latexperiod = '.'
                     
         return separator.join(displayouts) + latexperiod
-    elif not conf_code and backup_out:
+    elif backup_out:
         return backup_out
 
 
@@ -152,22 +151,3 @@ def escape_values(bfo):
     """
     return 0
 # pylint: enable-msg=W0613
-
-#def get_arxiv(bfo,category="yes"):
-#    """
-#    Take a bfo and return a list of arXiv ids found within the report numbers
-#    """
-#
-#    primary_report_numbers = bfo.fields('037__')
-#    additional_report_numbers = bfo.fields('088__')
-#    report_numbers = primary_report_numbers
-#    report_numbers.extend(additional_report_numbers)
-#
-#    arxiv = [num.get('a','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
-#
-#    if category=="yes":
-#        cats = [num.get('c','') for num in report_numbers if num.get('9') == 'arXiv' or num.get('s')=='arXiv']
-#        arxiv=map(append_cat,arxiv,cats)
-#
-#    return(arxiv)
-

@@ -172,7 +172,7 @@ function openSrchWindow(winputid) {
 
 <div id="detailedrecordshortreminder">
   <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
-   <BFE_INSPIRE_TITLE prefix="" suffix="" default="" escape="" highlight="no" separator=" "/>
+   <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" separator=" " brief="yes" />
   </a>
   <br />
   <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br>

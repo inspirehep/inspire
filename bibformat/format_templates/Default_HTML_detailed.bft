@@ -4,9 +4,9 @@
 
 
 <div class="detailed_record_info">
-<BFE_INSPIRE_TITLE prefix="<center><big><big><strong>"
+<BFE_INSPIRE_TITLE_BRIEF prefix="<center><big><big><strong>"
 suffix=".</strong></big></big></center>" force_title_case="yes"
-highlight="yes" />
+highlight="yes" brief="yes" />
 
 
 <p align="center">

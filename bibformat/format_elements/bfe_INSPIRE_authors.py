@@ -237,8 +237,8 @@ def format_element(bfo, limit, separator='; ',
                 coll_display += 's'
         if nb_authors > 1:
             if markup == 'latex':
-                coll_display =  authors[0] + extension + " [ " + \
-                               coll_display + " ]"
+                coll_display =  authors[0] + extension + "  " + \
+                               coll_display + "]"
             elif interactive == "yes":
                 coll_display += " ("  + authors[0] + " "
                 extension += ")"
@@ -247,13 +247,13 @@ def format_element(bfo, limit, separator='; ',
         elif nb_authors == 1:
             short_coll = True
             if markup == 'latex':
-                coll_display =  authors[0] + " [ " + coll_display + " ]"
+                coll_display =  authors[0] + " [" + coll_display + "]"
             else:  #html
                 coll_display +=  " (" + authors[0] + " for the collaboration)"
         elif nb_authors == 0:
             short_coll = True
             if markup == 'latex':
-                coll_display =  "[ " + coll_display + " ]"
+                coll_display =  "[" + coll_display + "]"
 
 
 

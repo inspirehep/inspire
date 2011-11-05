@@ -1,7 +1,7 @@
 <name>Text(CV)</name>
 <description>Creates text format of a record suitable for inclusion in a CV</description>
 <a href="<BFE_SERVER_INFO var="recurl" />">
-    <BFE_CERN_TITLE_BRIEF prefix="" suffix="." force_title_case="yes" />
+    <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="." force_title_case="yes" />
 </a>
 <br/>
 <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" et al."

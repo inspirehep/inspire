@@ -1,10 +1,12 @@
 <name>LaTeX(US)</name>
 <description>Creates LaTeX format of a record in US Style</description>
 <pre>
-%\cite{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" suffix=""/>}
-\bibitem{<BFE_FILTER_FIELD tag="035z" limit='1' filter_subcode='9' filter_value="SPIRESTeX" />}
+%\cite{<BFE_INSPIRE_ARXIV_WITH_FAILOVER />}
+\bibitem{<BFE_INSPIRE_ARXIV_WITH_FAILOVER />} 
   <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}"
   name_last_first="no" print_links="no" suffix = "," markup='latex'/>
-  <BFE_CERN_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" /><BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="<br>&nbsp; &nbsp;"
-  suffix="" separator = "<br>&nbsp; &nbsp;"/><BFE_INSPIRE_ARXIV links="no" category="yes" prefix='<br>&nbsp; &nbsp;[' suffix="]." />
+  <BFE_INSPIRE_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" /><BFE_INSPIRE_PUBLI_INFO_LATEX pubnotestyle="us" pubnotemark="latex" 
+  pubnotepre="<br>&nbsp;&nbsp;" pubnotesuf="" pubnotesep="<br>&nbsp;&nbsp;"
+  arxivlinks="no" arxivcategory="yes" arxivprepubnote="<br>&nbsp;&nbsp;[" arxivsufpubnote="]." arxivprenopub="<br>&nbsp;&nbsp;" arxivsufnopub="." 
+  reportpre="<br>&nbsp;&nbsp;" reportsuf="." reportlimit="1" reportsep=", " reportext="" />
 </pre>

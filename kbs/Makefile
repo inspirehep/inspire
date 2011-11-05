@@ -20,7 +20,6 @@ install:
 	$(INSTALL) refextract-journal-titles-INSPIRE.kb $(ETCDIR)/bibedit/
 
 install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject create-institutions-dynamic-kb
-# FIXME: remove coden targets?
 	@echo "Done."
 
 weblinks: delete-weblinks load-weblinks-knowledge-base
