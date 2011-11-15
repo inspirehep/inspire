@@ -76,6 +76,15 @@ from invenio.dateutils import convert_datestruct_to_dategui, \
      convert_datecvs_to_datestruct
 from invenio.websearch_templates import Template as DefaultTemplate
 
+from invenio.config import CFG_BIBRANK_SHOW_CITATION_LINKS
+from invenio.config import CFG_WEBCOMMENT_ALLOW_COMMENTS
+from invenio.config import CFG_WEBSEARCH_SHOW_COMMENT_COUNT
+from invenio.config import CFG_SITE_RECORD
+from invenio.config import CFG_WEBCOMMENT_ALLOW_REVIEWS
+from invenio.config import CFG_WEBSEARCH_SHOW_REVIEW_COUNT
+from invenio.search_engine_utils import get_fieldvalues
+from invenio.bibrank_citation_searcher import get_cited_by_count
+
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
@@ -1274,3 +1283,101 @@ class Template(DefaultTemplate):
                   }
         return out
         
+    def tmpl_record_links(self, recid, ln, sf='', so='d', sp='', rm=''):
+        """
+          Displays the *More info* and *Find similar* links for a record
+
+        Parameters:
+
+          - 'ln' *string* - The language to display
+
+          - 'recid' *string* - the id of the displayed record
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = '''<br /><span class="moreinfo">%(detailed)s - %(similar)s</span>''' % {
+            'detailed': create_html_link(self.build_search_url(recid=recid, ln=ln),
+                                         {},
+                                         _("Detailed record"), {'class': "moreinfo"})}
+
+        if CFG_BIBRANK_SHOW_CITATION_LINKS:
+            num_timescited = get_cited_by_count(recid)
+            if num_timescited:
+                out += '''<span class="moreinfo"> - %s </span>''' % \
+                       create_html_link(self.build_search_url(p='refersto:recid:%d' % recid,
+                                                              sf=sf,
+                                                              so=so,
+                                                              sp=sp,
+                                                              rm=rm,
+                                                              ln=ln),
+                                        {}, _("Cited by %i records") % num_timescited, {'class': "moreinfo"})
+
+        return out
+
+
+    def tmpl_print_record_brief_links(self, ln, recID, sf='', so='d', sp='', rm='', display_claim_link=False):
+        """Displays links for brief record on-the-fly
+
+        Parameters:
+
+          - 'ln' *string* - The language to display
+
+          - 'recID' *int* - The record id
+        """
+        from invenio.webcommentadminlib import get_nb_reviews, get_nb_comments
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = '<div class="moreinfo"><span class="moreinfo">%s</span>' % \
+               create_html_link(self.build_search_url(recid=recID, ln=ln),
+                                {}, _("Detailed record"),
+                                {'class': "moreinfo"})
+
+        if CFG_BIBRANK_SHOW_CITATION_LINKS:
+            num_timescited = get_cited_by_count(recID)
+            if num_timescited:
+                out += '<span class="moreinfo"> - %s</span>' % \
+                       create_html_link(self.build_search_url(p="refersto:recid:%d" % recID,
+                                                              sf=sf,
+                                                              so=so,
+                                                              sp=sp,
+                                                              rm=rm,
+                                                              ln=ln),
+                                        {}, num_timescited > 1 and _("Cited by %i records") % num_timescited
+                                        or _("Cited by 1 record"),
+                                        {'class': "moreinfo"})
+            else:
+                out += "<!--not showing citations links-->"
+        if display_claim_link: #Maybe we want not to show the link to who cannot use id?
+            out += '<span class="moreinfo"> - %s</span>' % \
+                create_html_link(CFG_SITE_URL + '/person/action', {'claim':'True', 'selection':str(recID)},
+                                                                        'Attribute this paper',
+                                                                        {'class': "moreinfo"})
+
+        if CFG_WEBCOMMENT_ALLOW_COMMENTS and CFG_WEBSEARCH_SHOW_COMMENT_COUNT:
+            num_comments = get_nb_comments(recID, count_deleted=False)
+            if num_comments:
+                out += '<span class="moreinfo"> - %s</span>' % \
+                        create_html_link(CFG_SITE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
+                        + '/comments?ln=%s' % ln, {}, num_comments > 1 and _("%i comments")
+                        % (num_comments) or _("1 comment"),
+                        {'class': "moreinfo"})
+            else:
+                out += "<!--not showing reviews links-->"
+
+        if CFG_WEBCOMMENT_ALLOW_REVIEWS and CFG_WEBSEARCH_SHOW_REVIEW_COUNT:
+            num_reviews = get_nb_reviews(recID, count_deleted=False)
+            if num_reviews:
+                out += '<span class="moreinfo"> - %s</span>' % \
+                        create_html_link(CFG_SITE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
+                        + '/reviews?ln=%s' % ln, {}, num_reviews > 1 and _("%i reviews")
+                        % (num_reviews) or _("1 review"), {'class': "moreinfo"})
+            else:
+                out += "<!--not showing reviews links-->"
+
+
+        out += '</div>'
+        return out
