@@ -88,6 +88,10 @@ class Template(DefaultTemplate):
 
           - HTML code of the page headers
         """
+        hepDataAdditions = """<script type="text/javascript" src="%s/js/hepdata.js"></script>""" \
+            % (CFG_SITE_URL, )
+        hepDataAdditions += """<link rel="stylesheet" href="%s/img/hepdata.css" type="text/css" />""" \
+            % (CFG_SITE_URL, )
 
         # load the right message language
         _ = gettext_set_language(ln)
@@ -180,6 +184,7 @@ $(function() {
  </script>
  %(submissionjs)s
  %(metaheaderadd)s
+ %(hepDataAdditions)s
 </head>
 
 <body%(body_css_classes)s lang="%(ln_iso_639_a)s">
@@ -281,8 +286,8 @@ $(function() {
           'feedback' : self.tmpl_feedback_box(ln),
 
           'unAPIurl' : cgi.escape('%s/unapi' % CFG_SITE_URL),
-          'inspect_templates_message' : inspect_templates_message
-
+          'inspect_templates_message' : inspect_templates_message,
+          'hepDataAdditions' : hepDataAdditions
         }
         return out
 
