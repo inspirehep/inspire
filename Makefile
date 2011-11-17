@@ -153,6 +153,7 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (28, 'city', 'city')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (29, 'region', 'region')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (30, 'institution name', 'institutionname')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (31, 'exact first author','exactfirstauthor')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
@@ -225,6 +226,8 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (23, 46, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (24, 8, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (24, 11, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (31, 8, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (31, 11, 90)" | $(BINDIR)/dbexec
 	### inst field_tags
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 65, 130)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 66, 120)" | $(BINDIR)/dbexec
@@ -265,6 +268,7 @@ reset-inspire-index-configuration:
 #	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'affiliation', 'affiliation', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 #	## kb indexes
 	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (18, 'subject', 'subject', '0000-00-00 00:00:00', 'en')" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX (id,name,description,last_updated,stemming_language) VALUES (19, 'exactfirstauthor', 'exactfirstauthor', '0000-00-00 00:00:00', '')" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table idxINDEX_field:"
 	echo "TRUNCATE idxINDEX_field" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (1, 1)" | $(BINDIR)/dbexec
@@ -282,6 +286,7 @@ reset-inspire-index-configuration:
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (13, 22)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (14, 23)" | $(BINDIR)/dbexec
 	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (15, 24)" | $(BINDIR)/dbexec
+	echo "INSERT INTO idxINDEX_field (id_idxINDEX,id_field) VALUES (19, 31)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-index-configuration."
 
 # new indexes for address and postal code
@@ -367,6 +372,45 @@ reset-inspire-index-configuration:
   UNIQUE KEY term (term)\
 ) ENGINE=MyISAM;" | $(BINDIR)/dbexec
 	echo "CREATE TABLE IF NOT EXISTS idxWORD18R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR19F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(100) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPAIR19R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE19F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term text default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  KEY term (term(50))\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxPHRASE19R (\
+  id_bibrec mediumint(9) unsigned NOT NULL,\
+  termlist longblob,\
+  type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
+  PRIMARY KEY (id_bibrec,type)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD19F (\
+  id mediumint(9) unsigned NOT NULL auto_increment,\
+  term varchar(50) default NULL,\
+  hitlist longblob,\
+  PRIMARY KEY  (id),\
+  UNIQUE KEY term (term)\
+) ENGINE=MyISAM;" | $(BINDIR)/dbexec
+	echo "CREATE TABLE IF NOT EXISTS idxWORD19R (\
   id_bibrec mediumint(9) unsigned NOT NULL,\
   termlist longblob,\
   type enum('CURRENT','FUTURE','TEMPORARY') NOT NULL default 'CURRENT',\
