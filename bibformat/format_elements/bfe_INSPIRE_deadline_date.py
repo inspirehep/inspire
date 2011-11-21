@@ -56,18 +56,19 @@ def format_element(bfo, warnings="0000=EXPIRED,8888=OPEN UNTIL FILLED,9999=ALWAY
         if len(deadline) == 8:
             # Assume 12/15/11
             format = "%m/%d/%y %H:%M"
+    else:
+        format = "%Y-%m-%d %H:%M"
         # Add dummy time
         deadline += " 23:59"
-        try:
-            datestruct = time.strptime(deadline, format)
-            date = convert_datestruct_to_datetext(datestruct)
-        except ValueError, e:
-            # Something went wrong. Do not display date
-            return ""
-        now = datetime.datetime.now().date().isoformat()
-        if date > now:
-            return date.split()[0]
-        else:
-            return "%s (PASSED)" % (date.split()[0],)
-    return ""
+    try:
+        datestruct = time.strptime(deadline, format)
+        date = convert_datestruct_to_datetext(datestruct)
+    except ValueError, e:
+        # Something went wrong. Do not display date
+        return ""
+    now = datetime.datetime.now().date().isoformat()
+    if date > now:
+        return date.split()[0]
+    else:
+        return "%s (PASSED)" % (date.split()[0],)
 
