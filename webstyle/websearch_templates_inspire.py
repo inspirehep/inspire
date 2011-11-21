@@ -186,11 +186,15 @@ class Template(DefaultTemplate):
 
 
                 # Build example of queries for this collection
+        sf = ""
+        if collection_name.lower() == "jobs":
+            sf = "datecreated"
         example_search_queries = get_example_search_queries(collection_name)
         example_search_queries_links = [create_html_link(self.build_search_url(p=example_query,
                                                                                ln=ln,
                                                                                aas= 0,
-                                                                               cc=collection_name),
+                                                                               cc=collection_name,
+                                                                               sf=sf),
                                                          {},
                                                          cgi.escape(example_query),
                                                          {'class': 'examplequery'}) \

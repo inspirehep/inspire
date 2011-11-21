@@ -362,6 +362,9 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 29, 70)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (17, 32, 60)" | $(BINDIR)/dbexec
 
+	## datecreated: 961__x
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (18, 49, 100)" | $(BINDIR)/dbexec
+
 	## fulltext: 8564_u
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (22, 44, 100)" | $(BINDIR)/dbexec
 
@@ -626,6 +629,8 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (2, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (3, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (6, 'metadata')" | $(BINDIR)/dbexec
+	# Jobs sort option
+	echo "INSERT INTO collection_field_fieldvalue (id_collection, id_field, id_fieldvalue, type, score, score_fieldvalue) VALUES (3, 18, None, 'soo', 1, 0)" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
