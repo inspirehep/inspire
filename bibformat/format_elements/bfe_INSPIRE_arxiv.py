@@ -40,12 +40,7 @@ def format_element(bfo, links="no", category="yes", mirrors="yes"):
     out = ''
     if links == 'yes':
         arxiv_ref = arxiv[0] # Take only first one
-        if bfo.recID == 928153:
-            out += '''
-<a href="http://inspirehep.net/record/928153/files/arXiv:1109.4897.pdf">PDF</a> (new version)
-            '''
-        else:
-            out += '''
+        out += '''
 <a href="http://arXiv.org/abs/%(ref)s">Abstract</a> and
 <a href="http://arXiv.org/ps/%(ref)s">Postscript</a>
  and <a href="http://arXiv.org/pdf/%(ref)s">PDF</a> from arXiv.org'''% \
