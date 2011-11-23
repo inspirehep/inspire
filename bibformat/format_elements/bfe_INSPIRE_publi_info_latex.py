@@ -24,13 +24,12 @@ in the Invenio templating system, so this format element is a facade for
 those others and handles the decision logic.
 """
 
+from invenio.bibformat_elements import bfe_report_numbers, bfe_INSPIRE_publi_coden
 from invenio.bibformat_engine import eval_format_element, get_format_element
 
 
 pubnoteFE = get_format_element('bfe_inspire_publi_info',  with_built_in_params=True)
 arxivFE   = get_format_element('bfe_inspire_arxiv',       with_built_in_params=True)
-repnoFE   = get_format_element('bfe_report_numbers',      with_built_in_params=True)
-codenFE   = get_format_element('bfe_inspire_publi_coden', with_built_in_params=True)
 
 
 def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp;", pubnotesuf="&nbsp;", pubnotesep=", ", 
@@ -62,30 +61,58 @@ def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp
     if pubnote or arxiv:
         out = pubnote_w + arxiv_w
     else:
-        repno   = eval_format_element(repnoFE, bfo, {'limit': reportlimit, 'separator': reportsep, 'extension': reportext })[0]
+        repno   = bfe_report_numbers.get_report_numbers_formatted(bfo, reportsep, reportlimit, reportext)
         repno_w = wrap(repno, reportpre, reportsuf)
         out     = repno_w
 
-    # Insert %% CITATION line
-    cite_line = ''
-    if pubnote:
-        cite_line = eval_format_element(codenFE, bfo, {'separator': ','})[0]
-    elif arxiv and not cite_line:
-        cite_line = arxiv.split(' ')[0].upper()
-    elif repno and not cite_line:
-        cite_line = repno.upper()
-    else:
-        cite_line = "INSPIRE-"+str(bfo.recID)
-    if cite_line:
-        out += wrap(cite_line, pcnt_pre, pcnt_suf)
+    # Get the %%CITATION line last
+    out += get_cite_line(arxiv, pubnote, repno, bfo, pcnt_pre, pcnt_suf)
     return out
 
+
 def wrap(val, pre, suf):
-    """Wrap value in prefix and suffix - but only if its non-empty."""
+    """Wrap value in prefix and suffix - but only if its non-empty.
+    
+    @param val A string to wrap
+    @param pre The part to go in front of val
+    @param suf The part to go in back of val
+    """
     if val:
         return pre + val + suf
     else:
         return val
+
+
+def get_cite_line(arxiv='', pubnote='', repno='', bfo=None, pcnt_pre="%%CITATION = ", pcnt_suf=";%%"):
+    """Return %% CITATION line.
+       
+    Parameters are given in the order of their preference, ie
+    @param arxiv If given, will be used
+    @param pubnote If no arxiv and pubnote, pubnote used
+    @param repno If no arxiv or pubnote and repno given, repno used
+    @param bfo Some BFO to extract data from
+    @param pcnt_pre The part at the front of the citation line 
+    @param pcnt_suf The part at the back of the citation line
+    """
+    cite_line = ''
+    if arxiv:
+        # We prefer to cite things by their arxiv id
+        cite_line = arxiv.split(' ')[0].upper()
+    elif pubnote and not cite_line:
+        # But we'll use the pubnote (ie, coden-formatted reference) if it's ok
+        if bfo:
+            cite_line = bfe_INSPIRE_publi_coden.get_coden_formatted(bfo, ',')
+    elif repno and not cite_line:
+        # and failing that, we'll use the internal report number
+        cite_line = repno.upper()
+    elif bfo:
+        # or if we're really desparate, we'll get the inspire internal recid
+        cite_line = "INSPIRE-"+str(bfo.recID)
+    else: 
+        # but if no bfo passed in, no recid available
+        return ''
+
+    return wrap(cite_line, pcnt_pre, pcnt_suf)
 
 
 # we know the argument is unused, thanks

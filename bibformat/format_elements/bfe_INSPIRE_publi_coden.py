@@ -23,10 +23,19 @@ from invenio.bibknowledge import get_kbr_keys
 
 
 def format_element(bfo, separator=','):
+    """Produces a SPIRES-style coden reference for a record"""
+    return get_coden_formatted(bfo, separator)
+
+
+def get_coden_formatted(bfo, separator=','):
     """Produces a SPIRES-style coden reference for a record
+
+    This typically looks like JOURNAL-CODEN,VOLUME,FIRSTPAGE
 
     If this is impossible (for example if we lack sufficient information about
     the reference or lack a CODEN lookup KB), produces empty string.
+
+    @param separator A string used to join the pieces of the reference
     """
     coden = ''
     publication_info = bfo.fields('773__')
@@ -35,8 +44,8 @@ def format_element(bfo, separator=','):
     else:
         return ''
     journal = publication_info.get('p', '')
-    volume = publication_info.get('v', '')
-    pages = publication_info.get('c', '')
+    volume  = publication_info.get('v', '')
+    pages   = publication_info.get('c', '')
 
     if pages:
         dashpos = pages.find('-') 
@@ -44,7 +53,8 @@ def format_element(bfo, separator=','):
             pages = pages[:dashpos]
 
     try:
-        coden = get_kbr_keys("CODENS", searchvalue=journal, searchtype='e')[0][0] + separator + volume + separator + pages
+        if journal and (volume != '' or pages != ''):
+            coden = separator.join([get_kbr_keys("CODENS", searchvalue=journal, searchtype='e')[0][0], volume, pages])
     except:
         return ''
 

@@ -1,0 +1,6 @@
+<name>BibTeX</name>
+<description>Creates BibTeX format of a record.</description>
+
+<pre>
+<BFE_INSPIRE_BIBTEX width="80" />
+</pre>

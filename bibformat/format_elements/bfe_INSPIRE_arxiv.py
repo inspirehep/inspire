@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 ##
-## $Id$
-##
 ## This file is part of Invenio.
 ## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
 ##
@@ -18,18 +16,15 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Links record to arXiv metadata, whenever possible
-"""
-__revision__ = "$Id$"
+"""BibFormat element - Links record to arXiv metadata when possible"""
+
 
 def format_element(bfo, links="no", category="yes", mirrors="yes"):
-    """
-    Provides arXiv number in format for display or links
+    """Provide arXiv number in format for display or links.
 
     @param links yes->display links to arXiv only no(default)-> display value of arxiv number only
     @param category -> displays category in '[]' after number (only if not redundant)
     @param mirrors -> defautl yes  only relevant if links=yes
-
     """
 
     arxiv=get_arxiv(bfo, category="no")
@@ -74,12 +69,6 @@ def format_element(bfo, links="no", category="yes", mirrors="yes"):
 
     return out
 
-def escape_values(bfo):
-    """
-    Called by BibFormat in order to check if output of this element
-    should be escaped.
-    """
-    return 0
 
 def get_arxiv(bfo,category="yes"):
     """
@@ -100,6 +89,7 @@ def get_arxiv(bfo,category="yes"):
 
     return arxiv
 
+
 def get_cats(bfo):
     """
     Takes a bfo and returns a list of categories (in same order as numbers
@@ -114,6 +104,7 @@ def get_cats(bfo):
 
     return cat
 
+
 def append_cat(number,cat):
     import re
     if not cat:
@@ -121,3 +112,14 @@ def append_cat(number,cat):
     if not re.match(cat,number):
         return number+' ['+cat+']'
     return number
+
+
+# we know the argument is unused, thanks
+# pylint: disable-msg=W0613
+def escape_values(bfo):
+    """
+    Called by BibFormat in order to check if output of this element
+    should be escaped.
+    """
+    return 0
+# pylint: enable-msg=W0613

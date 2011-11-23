@@ -237,7 +237,7 @@ def format_element(bfo, limit, separator='; ',
                 coll_display += 's'
         if nb_authors > 1:
             if markup == 'latex':
-                coll_display =  authors[0] + extension + "  " + \
+                coll_display =  authors[0] + extension + "  [" + \
                                coll_display + "]"
             elif interactive == "yes":
                 coll_display += " ("  + authors[0] + " "

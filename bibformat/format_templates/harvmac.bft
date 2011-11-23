@@ -1,8 +1,8 @@
 <name>harvmac</name>
 <description>harvmac format</description>
 <pre>
-%\<BFE_TEXKEY tag="035z"  harvmac="TRUE" />
-\lref\<BFE_TEXKEY tag="035z" harvmac="TRUE" />{
+%\<BFE_TEXKEY  harvmac="TRUE" />
+\lref\<BFE_TEXKEY harvmac="TRUE" />{
   <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}"
   name_last_first="no" print_links="no" markup='latex' suffix="," />
   <BFE_INSPIRE_TITLE_BRIEF prefix="%``" suffix=",''<br>"  force_title_case="yes" /><BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" suffix=".<br>"/><BFE_INSPIRE_ARXIV links="no" escape="1" category="yes" prefix="[" suffix="].<br>"/><BFE_FILTER_FIELD tag="037a" limit="1" escape="1" prefix="%%CITATION = " suffix="%%<br>"/>}

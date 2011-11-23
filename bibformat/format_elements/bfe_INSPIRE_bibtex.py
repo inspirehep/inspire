@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 ##
-## $Id$
-##
 ## This file is part of Invenio.
 ## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
 ##
@@ -18,30 +16,47 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints BibTeX meta-data
-"""
-__revision__ = "$Id$"
+"""BibFormat element - Prints BibTeX meta-data"""
 
+
+import re
 from invenio.config import CFG_SITE_LANG
+from invenio.bibformat_elements import bfe_report_numbers as bfe_repno
+
 
 def format_element(bfo, width="50"):
     """
     Prints a full BibTeX record.
 
-    'width' must be bigger than or equal to 30.
-    This format element is an example of large element, which does
+    'width' must be >= 30.
+    This format element is an example of a large element, which does
     all the formatting by itself
 
     @param width the width (in number of characters) of the record
     """
-    out = "@"
+
+    # Values of the note field which should not be displayed.
+    # These are typically added programmatically, so stupid string matching is
+    # ok. If this assumption changes, turn this into a list of regexps to apply
+    # for a match test.
+    note_values_skip = ["* Temporary entry *", "* Brief entry *"]
+
     width = int(width)
     if width < 30:
         width = 30
-
     name_width = 21
     value_width = width-name_width
     recID = bfo.control_field('001')
+
+    # Initialize user output
+    out = "@"
+
+    def texified(name, value):
+        """Closure of format_bibtex_field so we don't keep pasing static data
+    
+        Saves a little bit of boilerplate.
+        """
+        return format_bibtex_field(name, value, name_width, value_width)
 
     #Print entry type
     import invenio.bibformat_elements.bfe_collection as bfe_collection
@@ -54,18 +69,20 @@ def format_element(bfo, width="50"):
 
     out += "{"
 
-    #Print BibTeX key
-    #
-    key = ''
-    for external_keys in bfo.fields("035"):
-        if external_keys['9'] == "SPIRESTeX" and external_keys['z']:
-            key = external_keys['z']
-    if not key:
-        #contruct key in spires like way  need to store an make unique
-        ####FIXME
-        key = bfo.field("100a").split(' ')[0].lower() + ":" + \
-              bfo.field("269c").split('-')[0] + \
-              chr((recID % 26) + 97) + chr(((recID / 26) % 26) + 97)
+    # BibTeX key
+    import invenio.bibformat_elements.bfe_texkey as bfe_texkey
+    key = bfe_texkey.format_element(bfo, harvmac=False)
+
+#    key = ''
+#    for external_keys in bfo.fields("035"):
+#        if external_keys['9'] == "SPIRESTeX" and external_keys['z']:
+#            key = external_keys['z']
+#    if not key:
+#        #contruct key in spires like way  need to store an make unique
+#        ####FIXME
+#        key = bfo.field("100a").split(' ')[0].lower() + ":" + \
+#              bfo.field("269c").split('-')[0] + \
+#              chr((recID % 26) + 97) + chr(((recID / 26) % 26) + 97)
     out += key + ','
 
         #If author cannot be found, print a field key=recID
@@ -77,44 +94,30 @@ def format_element(bfo, width="50"):
                                  collaboration = "no",
                                  print_links="no",
                                  name_last_first = "yes")
-    if authors == "":
-        out += format_bibtex_field("key",
-                                   recID,
-                                   name_width,
-                                   value_width)
+    if authors:
+        out += texified("author", authors)
     else:
-        out += format_bibtex_field("author",
-                                   authors,
-                                   name_width,
-                                   value_width)
+        out += texified("key", recID)
 
-    #Print editors
+    # Editors
     import invenio.bibformat_elements.bfe_editors as bfe_editors
     editors = bfe_editors.format_element(bfo=bfo, limit="10",
                                  separator=" and ",
                                  extension="",
                                  print_links="no")
-    out += format_bibtex_field("editor",
-                               editors,
-                               name_width,
-                               value_width)
+    out += texified("editor", editors)
 
-    #Print title
-    import invenio.bibformat_elements.bfe_INSPIRE_title as bfe_title
-    title = bfe_title.format_element(bfo=bfo)
-    out += format_bibtex_field("title",
-                               '{' + title + '}',
-                               name_width,
-                               value_width)
+    # Title
+    import invenio.bibformat_elements.bfe_INSPIRE_title_brief as bfe_title
+    title = bfe_title.format_element(bfo=bfo, brief="yes")
+    out += texified("title", '{' + title + '}')
 
-    #Print institution
+    # Institution
     if collection ==  "techreport":
         publication_name = bfo.field("269__b")
-        out += format_bibtex_field("institution",
-                                   publication_name,
-                                   name_width, value_width)
+        out += texified("institution", publication_name)
 
-    #Print organization
+    # Organization
     if collection == "inproceedings" or collection == "proceedings":
         organization = []
         organization_1 = bfo.field("260__b")
@@ -123,12 +126,9 @@ def format_element(bfo, width="50"):
         organization_2 = bfo.field("269__b")
         if organization_2 != "":
             organization.append(organization_2)
-        out += format_bibtex_field("organization",
-                                   ". ".join(organization),
-                                   name_width,
-                                   value_width)
+        out += texified("organization", ". ".join(organization))
 
-    #Print publisher
+    # Publisher
     if collection == "book" or \
            collection == "inproceedings" \
            or collection == "proceedings":
@@ -147,33 +147,22 @@ def format_element(bfo, width="50"):
         if imprint_e_journal__publisher_name != "":
             publishers.append(imprint_e_journal__publisher_name)
 
-        out += format_bibtex_field("publisher",
-                                   ". ".join(publishers),
-                                   name_width,
-                                   value_width)
+        out += texified("publisher", ". ".join(publishers))
 
-
-    #Print collaboration
+    # Collaboration
     collaborations = []
     for collaboration in bfo.fields("710__g"):
         if collaboration not in collaborations:
             collaborations.append(collaboration)
-    out += format_bibtex_field("collaboration",
-                               ", ".join(collaborations),
-                               name_width,
-                               value_width)
+    out += texified("collaboration", ", ".join(collaborations))
 
-
-    #Print school
+    # School
     if collection == "phdthesis":
         university = bfo.field("502__b")
 
-        out += format_bibtex_field("school",
-                                   university,
-                                   name_width,
-                                   value_width)
+        out += texified("school", university)
 
-    #Print address
+    # Address
     if collection == "book" or \
            collection == "inproceedings" or \
            collection == "proceedings" or \
@@ -193,13 +182,9 @@ def format_element(bfo, width="50"):
         if imprint_e_journal__publisher_place != "":
             addresses.append(imprint_e_journal__publisher_place)
 
-        out += format_bibtex_field("address",
-                                   ". ".join(addresses),
-                                   name_width,
-                                   value_width)
+        out += texified("address", ". ".join(addresses))
 
-
-    #Print journal
+    # Journal
     if collection == "article":
         journals = []
         host_title = bfo.field("773__p")
@@ -209,14 +194,9 @@ def format_element(bfo, width="50"):
         if journal != "":
             journals.append(journal)
 
-        out += format_bibtex_field("journal",
-                                   ". ".join(journals),
-                                   name_width,
-                                   value_width)
+        out += texified("journal", ". ".join(journals))
 
-
-
-    #Print number
+    # Number
     if collection == "techreport" or \
            collection == "article":
         numbers = []
@@ -226,13 +206,9 @@ def format_element(bfo, width="50"):
         number = bfo.field("909C4n")
         if number != "":
             numbers.append(number)
-        out += format_bibtex_field("number",
-                                   ". ".join(numbers),
-                                   name_width,
-                                   value_width)
+        out += texified("number", ". ".join(numbers))
 
-
-    #Print volume
+    # Volume
     if collection == "article" or \
            collection == "book":
         volumes = []
@@ -243,20 +219,14 @@ def format_element(bfo, width="50"):
         if volume != "":
             volumes.append(volume)
 
-        out += format_bibtex_field("volume",
-                                   ". ".join(volumes),
-                                   name_width,
-                                   value_width)
+        out += texified("volume", ". ".join(volumes))
 
-    #Print series
+    # Series
     if collection == "book":
         series = bfo.field("490__a")
-        out += format_bibtex_field("series",
-                                   series,
-                                   name_width,
-                                   value_width)
+        out += texified("series", series)
 
-    #Print pages
+    # Pages
     if collection == "article" or \
            collection == "inproceedings":
         pages = []
@@ -270,22 +240,14 @@ def format_element(bfo, width="50"):
                 if phys_pagination != "":
                     pages.append(phys_pagination)
 
-        out += format_bibtex_field("pages",
-                                   ". ".join(pages),
-                                   name_width,
-                                   value_width)
+        out += texified("pages", ". ".join(pages))
 
-
-    #Print doi
+    # DOI
     if collection == "article":
         dois = bfo.fields("773__a")
-        out += format_bibtex_field("doi",
-                                   ", ".join(dois),
-                                   name_width,
-                                   value_width)
+        out += texified("doi", ", ".join(dois))
 
-
-    #Print year
+    # Year
     year = bfo.field("773__y")
     if year == "":
         year = get_year(bfo.field("269__c"))
@@ -295,61 +257,49 @@ def format_element(bfo, width="50"):
                 year = get_year(bfo.field("502__c"))
                 if year == "":
                     year = get_year(bfo.field("909C0y"))
+    out += texified("year", year)
 
-    out += format_bibtex_field("year",
-                               year,
-                               name_width,
-                               value_width)
-
-    #Print note
+    # Note
     note = bfo.field("500__a")
-    out += format_bibtex_field("note",
-                               note,
-                               name_width,
-                               value_width)
+    if note and note not in note_values_skip:
+        out += texified("note", note)
 
-    #Print eprint
+    # Eprint (aka arxiv number)
     import invenio.bibformat_elements.bfe_INSPIRE_arxiv as bfe_arxiv
-
     eprints = bfe_arxiv.get_arxiv(bfo, category = "no")
+    cats    = bfe_arxiv.get_cats(bfo)
     if eprints:
         eprint = eprints[0]
         if eprint.upper().startswith('ARXIV:'):
             eprint = eprint[6:]
 
-        out += format_bibtex_field("eprint",
-                                   eprint,
-                                   name_width,
-                                   value_width)
-        out += format_bibtex_field("archivePrefix",
-                                   "arXiv",
-                                   name_width,
-                                   value_width)
-        cats = bfe_arxiv.get_cats(bfo)
+        out += texified("eprint", eprint)
+        out += texified("archivePrefix", "arXiv")
         if cats:
-            out += format_bibtex_field("primaryClass",
-                                       cats[0],
-                                       name_width,
-                                       value_width)
+            out += texified("primaryClass", cats[0])
+    else:
+        # No eprints, but we don't want refs to eprints[0] to error out below
+        # This makes everything work nicely without a lot of extra gating
+        eprints=['']
 
 
-    #other report numbers
-    numbers=[]
-    primary_report_numbers = bfo.fields('037_a')
-    additional_report_numbers = bfo.fields('088_a')
-    report_numbers = primary_report_numbers
-    report_numbers.extend(additional_report_numbers)
-    for number in report_numbers:
-        if number <> eprints[0]:
-            numbers.append(number)
-    if numbers:
-        out += format_bibtex_field("reportNumber",
-                                   ", ".join(numbers),
-                                   name_width,
-                                   value_width)
+    # Other report numbers
+    out += texified("reportNumber", 
+                    bfe_repno.get_report_numbers_formatted(bfo, 
+                                                           separator=', ', 
+                                                           limit='1000', 
+                                                           skip=eprints[0]))
+
+    # Add %%CITATION line
+    import invenio.bibformat_elements.bfe_INSPIRE_publi_info_latex as bfe_pil
+    import invenio.bibformat_elements.bfe_INSPIRE_publi_coden as bfe_coden
+    cite_as = bfe_pil.get_cite_line(arxiv=eprints[0], 
+                                    pubnote=bfe_coden.get_coden_formatted(bfo, ','),
+                                    repno=bfe_repno.get_report_numbers_formatted(bfo, '', '1'),
+                                    bfo=bfo)
+    out += texified("SLACcitation", cite_as)
 
     out +="\n}"
-
     return out
 
 
@@ -457,7 +407,6 @@ def get_year(date, default=""):
     @param date the textual date to retrieve the year from
     @param default a default value to return if year not fount
     """
-    import re
     year_pattern = re.compile(r'\d\d\d\d')
     result = year_pattern.search(date)
     if result is not None:
@@ -475,7 +424,6 @@ def get_month(date, ln=CFG_SITE_LANG, default=""):
     @param date the textual date to retrieve the year from
     @param default a default value to return if year not fount
     """
-    import re
     from invenio.dateutils import get_i18n_month_name
     from invenio.messages import language_list_long
 

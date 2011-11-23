@@ -1,8 +1,8 @@
 <name>LaTeX(US)</name>
 <description>Creates LaTeX format of a record in US Style</description>
 <pre>
-%\cite{<BFE_INSPIRE_ARXIV_WITH_FAILOVER />}
-\bibitem{<BFE_INSPIRE_ARXIV_WITH_FAILOVER />} 
+%\cite{<BFE_TEXKEY />}
+\bibitem{<BFE_TEXKEY />} 
   <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}"
   name_last_first="no" print_links="no" suffix = "," markup='latex'/>
   <BFE_INSPIRE_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" /><BFE_INSPIRE_PUBLI_INFO_LATEX pubnotestyle="us" pubnotemark="latex" 
