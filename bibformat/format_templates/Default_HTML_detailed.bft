@@ -2,7 +2,7 @@
 <description>This is the default HTML detailed format.</description>
 <div class="detailed_record_info">
 
-<div style="text-align:center">
+<div style="text-align:center; margin-bottom: 5px">
 <BFE_INSPIRE_TITLE_BRIEF prefix="<big><big><strong>"
 suffix=".</strong></big></big>" force_title_case="yes"
 highlight="yes" brief="yes" />
@@ -24,6 +24,8 @@ affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <BFE_ISBN prefix="<br />ISBN: " />
 <BFE_INSPIRE_arxiv prefix="<br />e-Print: <b>" suffix="</b>" />
 <BFE_INSPIRE_DOI prefix="<br />" suffix=""/>
+
+<div style="text-align:left; width: 70%; margin: 10px auto;">
 <p>
 <BFE_ABSTRACT
 prefix_en="<small><strong>Abstract: </strong>"
@@ -32,6 +34,7 @@ suffix_en="</small><br />"
 suffix_fr="</small><br />"
 />
 </p>
+
 <BFE_KEYWORDS
  prefix="<br /><small><strong>Keyword(s): </strong></small>"
 keyword_prefix="<small>"
@@ -41,6 +44,9 @@ keyword_suffix="</small>" />
 note_prefix="<br /><small><strong>Note: </strong>"
 note_suffix=" </small>"
 suffix="<br />" />
+</div>
+
+<br />
 
 <BFE_PLOTS width="200px" caption="no"/>
 
