@@ -44,6 +44,9 @@ from invenio.websubmit_config import CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN
 from invenio.mailutils import send_email
 from invenio.errorlib import register_exception
 from invenio.search_engine import print_record
+from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, \
+                                                                 CFG_WEBSUBMIT_JOBS_FROMADDR, \
+                                                                 job_email_footer
 
 CFG_WEBSUBMIT_RECORD_OWNER_EMAIL = "270__m"
 
@@ -83,7 +86,6 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
                 document.
     """
     global titlevalue,authorvalue,sysno,rn
-    FROMADDR = '%s Submission Engine <%s>' % (CFG_SITE_NAME,CFG_SITE_SUPPORT_EMAIL)
     doctype = form['doctype']
     titlevalue = titlevalue.replace("\n"," ")
     authorvalue = authorvalue.replace("\n","; ")
@@ -247,5 +249,6 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     if comment != "":
         mailbody += "Comments from the referee:\n%s\n" % comment
     # Send mail to referee
-    send_email(FROMADDR,addresses,mailtitle,mailbody, copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
+    send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=addresses, subject=mailtitle, \
+               content=mailbody, footer=job_email_footer(), copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
     return ""

@@ -117,6 +117,35 @@ template function generated it.
         else:
             inspect_templates_message = ""
 
+        #FIXME: Hack to include datepicker for submissions using WebSubmit
+        submission_js = ""
+        if navmenuid == "submit":
+            # src taken from batchuploader form
+            submission_js = """
+<script type="text/javascript" src="%(site_url)s/js/ui.datepicker.min.js"></script>
+<link type="text/css" href="%(site_url)s/img/jquery-ui.css" rel="stylesheet" />
+<style type="text/css">
+div.ui-datepicker{
+    font-size:12px;
+}
+</style>
+<script type="text/javascript">
+function clearText(field){
+    if (field.value == field.defaultValue){
+        field.value = '';
+    }
+}
+function defText(field){
+    if (field.value == ''){
+        field.value = field.defaultValue;
+    }
+}
+$(function() {
+    $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+});
+</script>
+            """ % { 'site_url' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL }
+
         out = """\
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -133,6 +162,7 @@ template function generated it.
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
  <script type="text/javascript" src="%(cssurl)s/js/jquery.min.js"></script>
+ %(submissionjs)s
  %(metaheaderadd)s
 </head>
 
@@ -215,6 +245,7 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
           'description' : cgi.escape(description),
           'keywords' : cgi.escape(keywords),
           'metaheaderadd' : metaheaderadd,
+          'submissionjs' : submission_js,
 
           'userinfobox' : userinfobox,
           'navtrailbox' : navtrailbox,
