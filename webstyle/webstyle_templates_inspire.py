@@ -203,7 +203,7 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 ::
 <a id="nav-hepnames" href="%(siteurl)s/collection/HepNames">HepNames</a>
 ::
-<a id="nav-inst" href="%(siteurl)s/collection/Institutions">Inst</a>
+<a id="nav-inst" href="%(siteurl)s/collection/Institutions">Institutions</a>
 ::
 <a id="nav-conf" href="%(siteurl)s/collection/Conferences">Conferences</a>
 ::

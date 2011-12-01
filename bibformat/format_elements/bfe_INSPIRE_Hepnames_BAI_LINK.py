@@ -16,34 +16,23 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints INSPIRE jobs contact name HEPNAMES search
+"""BibFormat element - Prints BAI link
 """
+__revision__ = "$Id$"
 
-from urllib import quote_plus
-
-def format_element(bfo, style="", separator=', '):
+def format_element(bfo, separator='; '):
     """
-    This is the default format for formatting the contact person
-    link in the Jobs format. This link will point to a direct search
-    in the HepNames database.
-
+    This is the default format for formatting full-text URLs.
+    @param separator: the separator between urls.
     @param style: CSS class of the link
-    @type style: str
-
-    @param separator: the separator between names.
-    @type separator: str
     """
+    bai = bfo.fields('035__')
 
-    contact_list = bfo.fields("270__p")
-    if style != "":
-        style = 'class="'+style+'"'
+    for item in bai:
+        if item.has_key('9') and item['9'] == 'BAI' and item.has_key('a'):
+            return '<a href="/author/' + item['a'] + '">[Publication list]</a>'
 
-    contacts = ['<a '+ style + \
-            ' href="/search?ln=en&cc=HepNames&p=100__a%3A%27' \
-            + quote_plus(contact) + '%27&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">' + contact +'</a>'
-            for contact in contact_list]
-
-    return separator.join(contacts)
+    return '<a href="/person/search?q=' + bfo.field('100__a') + '">[Publication list]</a>'
 
 def escape_values(bfo):
     """

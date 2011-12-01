@@ -3,6 +3,7 @@
 <!C-START REC 11.Brief--!>
 <div class="record_body">
 <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix=".<br />" force_title_case="yes"/></a>
+<small>
 <BFE_INSPIRE_AUTHORS print_affiliations="yes" affiliations_separator=' & '
 separator=', ' limit="10" extension="<i> et al.</i>" suffix=". "
 name_last_first="no" link_extension="yes"/>
@@ -11,8 +12,8 @@ name_last_first="no" link_extension="yes"/>
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" />
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
 <BFE_INSPIRE_arxiv prefix="<br/>e-Print: <b>" suffix="</b>" mirrors="no"/>
-</p><ul class="tight_list">
 
+<ul class="tight_list">
 <li>
  <a href="<BFE_SERVER_INFO var="recurl">/references">References</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hx">BibTeX</a>
@@ -21,6 +22,8 @@ name_last_first="no" link_extension="yes"/>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxh">Harvmac</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/xe">EndNote</a>
 </li>
-<BFE_INSPIRE_LINKS prefix='<li>' suffix='</li>' separator='</li><li>'/>
+
+<BFE_INSPIRE_LINKS />
 </ul>
+</small>
 </div>

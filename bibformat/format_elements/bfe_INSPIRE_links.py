@@ -73,8 +73,15 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
 
     for ident in identifiers:
         if ident['9'] == 'KEKSCAN':
-            out = str(bfo.field('035__a')).replace("-", "")
+            out = ident['a'].replace("-", "")
             links.append('<a href="http://www-lib.kek.jp/cgi-bin/img_index?' + out + '"> KEK scanned document </a>')
+
+    # CDS links
+    identifiers = bfo.fields('035__')
+
+    for ident in identifiers:
+        if ident['9'] == 'CDS':
+            links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
 
     # could look for other publication info and calculate URls here
 

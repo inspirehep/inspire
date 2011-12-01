@@ -45,8 +45,9 @@ FEED_PRE = { 2: """
 
     <h3>Resources</h3>
      <ul>
+      <li><a href="http://adswww.harvard.edu">ADS</a></li>
       <li><a href="http://www.arXiv.org">arXiv</a></li>
-      <li><a href="http://hepdata.cedar.ac.uk/">HEPDATA</a></li>
+      <li><a href="http://hepdata.cedar.ac.uk/">HepData</a></li>
       <li><a href="http://pdg.lbl.gov">PDG</a></li>
      </ul>
    </td>

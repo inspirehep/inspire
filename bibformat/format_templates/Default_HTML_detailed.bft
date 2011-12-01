@@ -1,15 +1,14 @@
 <name>Default HTML detailed</name>
 <description>This is the default HTML detailed format.</description>
-
-
-
 <div class="detailed_record_info">
-<BFE_INSPIRE_TITLE_BRIEF prefix="<center><big><big><strong>"
-suffix=".</strong></big></big></center>" force_title_case="yes"
+
+<div style="text-align:center">
+<BFE_INSPIRE_TITLE_BRIEF prefix="<big><big><strong>"
+suffix=".</strong></big></big>" force_title_case="yes"
 highlight="yes" brief="yes" />
+</div>
 
-
-<p align="center">
+<div style="text-align:center">
 <BFE_INSPIRE_AUTHORS suffix="<br />" limit=25 interactive="yes"
 print_affiliations="yes" affiliations_separator=' & ' separator=', '
 limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"
@@ -18,25 +17,21 @@ affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <BFE_INSPIRE_report links="no" incl_arxiv="no" suffix='. ' />
 <BFE_INSPIRE_DATE prefix="<br />" suffix="<br />"/>
 <BFE_FIELD tag="300a" suffix=" pp." />
-<BFE_INSPIRE_PUBLI_INFO prefix="<br /><br /><strong>" suffix="</strong><br />" separator="<br />"/>
+<BFE_INSPIRE_HEP_ERRATUM prefix="<br /><strong>" suffix="</strong>"/>
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
-<BFE_PUBLISHER prefix="<small>" suffix="</small>"/>
-<BFE_PLACE prefix="<small>" suffix="</small>"/>
+<BFE_PUBLISHER prefix="<br /><small>" suffix="</small>"/>
+<BFE_PLACE prefix="<br /><small>" suffix="</small>"/>
 <BFE_ISBN prefix="<br />ISBN: " />
-<BFE_INSPIRE_arxiv prefix="e-Print: <b>" suffix="</b>" />
-</p>
-
-
-<p style="margin-left: 15%; width: 70%">
-
+<BFE_INSPIRE_arxiv prefix="<br />e-Print: <b>" suffix="</b>" />
+<BFE_INSPIRE_DOI prefix="<br />" suffix=""/>
+<p>
 <BFE_ABSTRACT
 prefix_en="<small><strong>Abstract: </strong>"
 prefix_fr="<small><strong>Résumé: </strong>"
 suffix_en="</small><br />"
 suffix_fr="</small><br />"
 />
-
-
+</p>
 <BFE_KEYWORDS
  prefix="<br /><small><strong>Keyword(s): </strong></small>"
 keyword_prefix="<small>"
@@ -49,5 +44,5 @@ suffix="<br />" />
 
 <BFE_PLOTS width="200px" caption="no"/>
 
-<br />
+</div>
 </div>

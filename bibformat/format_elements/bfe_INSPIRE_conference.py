@@ -34,6 +34,8 @@ def format_element(bfo, separator=', ', link="yes"):
 
     from invenio.bibformat_config_inspire import CFG_BIBFORMAT_INSPIRE_CONF_LINK
 
+    cnum = str((bfo.field('773__w').replace("/", "")).replace(".", ""))
+    cnumdash = str(bfo.field('773__w')).replace("/", "-")
 
     confs = []
     confs = bfo.fields('773')
@@ -48,14 +50,14 @@ def format_element(bfo, separator=', ', link="yes"):
             if link.lower() == 'yes' :
                 conf_name = '<a class="conflink" href = "' + \
                             CFG_BIBFORMAT_INSPIRE_CONF_LINK + \
-                            conf['w'] + '">' + 'SPIRES Conference ' + \
-                            conf['w'] + '</a>'
+                            cnum + '&of=hd">' + \
+                            cnumdash + '</a>'
             else:
                 conf_name = conf['w']
             if conf.has_key('t'):
-                note += conf['t'] + ' ' + conf_name
+                note += conf['t'] + ' Conference: ' + conf_name
             else:
-                note += 'Talk given at ' + conf_name
+                note += 'Conference: ' + conf_name
             if conf.has_key('x'):
                 note += ' (' + conf['x'] +')'
 
@@ -64,40 +66,9 @@ def format_element(bfo, separator=', ', link="yes"):
 
     return separator.join(output)
 
-
-
-
-
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

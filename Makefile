@@ -699,23 +699,27 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 ## Now add HEP portalbox to INST collection
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'de', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'el', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'en', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'es', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'it', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'no', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (2, 2, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO portalbox VALUES (15, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_inst_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=15", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 ## Now add JOBS collection portalbox
 	echo "INSERT INTO portalbox VALUES (3, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the main portalbox file:
@@ -886,47 +890,47 @@ reset-inspire-portalbox-configuration:
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 # Add Conf title box
-	echo "INSERT INTO portalbox VALUES (10, '', 'FIXME')" | $(BINDIR)/dbexec
+	echo "INSERT INTO portalbox VALUES (13, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=10", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=13", (body,))' | $(PYTHON)
 
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'de', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'el', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'en', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'es', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'fr', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'hr', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'it', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'ja', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'no', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 10, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'de', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'el', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'en', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'es', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'fr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'hr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'it', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'ja', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'no', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
 
-	echo "INSERT INTO portalbox VALUES (11, '', 'FIXME')" | $(BINDIR)/dbexec
+	echo "INSERT INTO portalbox VALUES (14, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=11", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=14", (body,))' | $(PYTHON)
 
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'de', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'el', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'en', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'es', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'it', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'no', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection_portalbox VALUES (4, 11, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
 reset-inspire-search-sort-field-configuration:

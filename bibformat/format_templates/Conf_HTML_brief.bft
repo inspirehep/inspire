@@ -14,6 +14,6 @@
 HEP records: <a href= "/search?p=773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM />+or+773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM_LINK />"><BFE_INSPIRE_CONFERENCES_CNUM_LINK /></a><br />
 
 <BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>
-<BFE_BFO_RECCNT prefix="<span class='moreinfo'>" suffix="</span>" fvalue="773__w" item="Paper" plural="Papers" printtag="from" tag="111__g" collection="HEP"/>
+<!--<BFE_BFO_RECCNT prefix="<span class='moreinfo'>" suffix="</span>" fvalue="773__w" item="Paper" plural="Papers" printtag="from" tag="111__g" collection="HEP"/>-->
 </small>
 </div>

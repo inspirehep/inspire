@@ -47,7 +47,8 @@
 	CDF95	CDF Document Server		
 	CDF96	CDF Document Server		
 	CDF97	CDF Document Server		
-	CDF98	CDF Document Server		
+	CDF98	CDF Document Server
+	CDS     CERN Document Server		
 	CDSWEB	CERN Library Record		
 	CECOA	CERN Courier Server		
 	CERN	CERN Document Server		
@@ -190,7 +191,7 @@
 	DSPACE	eCommons Digital Repository Server		
 	DUBNA	JINR DUBNA Preprint Server		
 	DUBNA2	JINR DUBNA Preprint Server		
-	DURHAM	Reaction Data (Durham)		
+	DURHAM	HepData
 	D0	Postscript_Version from D0 Server		
 	ECONF	Proceedings write-up on eConf		
 	ECONFS	Slides on eConf		
