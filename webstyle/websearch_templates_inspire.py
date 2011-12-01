@@ -107,6 +107,11 @@ class Template(DefaultTemplate):
         <!--create_searchfor_simple()-->
         '''
 
+        if collection_id in ["HepNames", "Conferences"]:
+            out += '<p class="warningred"><small>This collection is currently in a transitional phase as we are ' \
+            'importing content from SPIRES into INSPIRE. This may cause some searches to not give the expected results.' \
+            ' Thank you for your understanding.</small></p>'
+
         argd = drop_default_urlargd({'ln': ln, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
                                     self.search_results_default_urlargd)
 
@@ -131,6 +136,10 @@ class Template(DefaultTemplate):
                                                      ln=ln)
         #get examples
         example_html = self.tmpl_show_examples(collection_id, ln)
+        langlink = ln != CFG_SITE_LANG and '?ln=' + ln or ''
+        easy_search_link = ""
+        if collection_id == "HEP":
+            easy_search_link = create_html_link("%s/help/easy-search%s" % (CFG_SITE_URL, langlink), {}, _("Easy Search")) + "<br/>"
 
         # print commentary start:
         out += '''
@@ -149,7 +158,7 @@ class Template(DefaultTemplate):
            </td>
            <td class="searchboxbody" align="left" rowspan="2" valign="top">
              <small><small>
-             <a href="%(siteurl)s/help/easy-search%(langlink)s">%(msg_easy_search)s</a><br/>
+             %(esearch)s
              %(asearch)s
              </small></small>
            </td>
@@ -167,8 +176,9 @@ class Template(DefaultTemplate):
         </table>-->
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
-               'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
+               'langlink': langlink,
                'siteurl' : CFG_SITE_URL,
+               'esearch' : easy_search_link,
                'asearch' : create_html_link(asearchurl, {}, _('Advanced Search')),
                'header' : header,
                'msg_search' : _('Search'),
