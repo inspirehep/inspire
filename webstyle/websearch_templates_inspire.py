@@ -107,11 +107,6 @@ class Template(DefaultTemplate):
         <!--create_searchfor_simple()-->
         '''
 
-        if collection_id in ["HepNames", "Conferences"]:
-            out += '<p class="warningred"><small>This collection is currently in a transitional phase as we are ' \
-            'importing content from SPIRES into INSPIRE. This may cause some searches to not give the expected results.' \
-            ' Thank you for your understanding.</small></p>'
-
         argd = drop_default_urlargd({'ln': ln, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
                                     self.search_results_default_urlargd)
 
