@@ -1139,31 +1139,36 @@ input,select {
     text-decoration: none;
 }
 .submitBody {
-   color: #000;
-   background: #9cf;
+    background: #69C;
+    color: #000;
+    width: 700px;
 }
 .submitHeader {
-   color: #fff;
-   background: #006;
+    background: #FC9;
+    color: #06C;
+    text-align: center;
+    vertical-align: middle;
 }
 .submitCurrentPage {
-   color: #000;
-   background: #9cf;
-   border-top: 1px solid #039;
-   border-left: 1px solid #039;
-   border-right: 1px solid #039;
+    background: #69C;
+    border-left: 1px solid #69C;
+    border-right: 1px solid #69C;
+    border-top: 1px solid #69C;
+    color: #FFF;
+    text-align: center;
+    vertical-align: middle;
 }
 .submitEmptyPage {
-   color: #fff;
-   background: #fff;
-   border-bottom: 1px solid #039;
+    background: none repeat scroll 0 0 #FFF;
+    color: #FFF;
+    padding: 2px;
 }
 .submitPage {
-   color: #000;
-   background: #fff;
-   border-top: 1px solid #039;
-   border-left: 1px solid #039;
-   border-right: 1px solid #039;
+    background: #FFF;
+    border-left: 1px solid #039;
+    border-right: 1px solid #039;
+    border-top: 1px solid #039;
+    color: #000;
 }
 .mycdscell {
     border-right: 1px solid #fff;
@@ -2717,5 +2722,22 @@ td.tips-rhs {
 .pagebodystripemiddle form[name=search] {
     width: 73%;
     max-width: 800px;
+}
+
+.submission input, .submission select, .submission textarea {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #000000;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 70%;
+}
+.submissionbutton{
+    background: none repeat scroll 0 0 #FFCC99;
+    border-collapse: collapse;
+    border-top: 1px solid #0066CC;
+    color: #0066CC;
+    font-weight: bold;
+    margin: 5px 10px;
 }
 /* end of inspire.css */

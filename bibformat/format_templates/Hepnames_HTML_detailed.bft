@@ -4,9 +4,9 @@
 <BFE_FIELD tag="100__q" prefix="<big><strong>" suffix="</strong></big>" />
 
 <a href= "/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22<BFE_FIELD tag="371__a" limit="1" />%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd"><BFE_FIELD tag="371__a" limit="1" prefix="(" suffix=")"/></a>
-<BFE_INSPIRE_HEPNAMES_BAI_LINK />
+<br><BFE_INSPIRE_HEPNAMES_BAI_LINK />
 <a href="http://www.google.com/search?hl=en&q=<BFE_FIELD tag="100__q" />">[Google]</a>
-<a href="/search?cc=HepNames&p=701__i%3A<BFE_FIELD tag="100__a" limit="1" />&sf=year&so=d&rm=&rg=25&sc=0&of=hb">[Students]</a>
+<a href="/search?cc=HepNames&p=701__a%3A<BFE_FIELD tag="100__a" limit="1" />&sf=year&so=d&rm=&rg=25&sc=0&of=hb">[Students]</a>
 <a href="http://arxiv.org/find/all/1/au:<BFE_INSPIRE_HEPNAMES_ARXIV />/0/1/0/all/0/1?per_page=100">[arXiv]</a>
 <! http://arxiv.org/find/all/1/au:Brooks_T/0/1/0/all/0/1?per_page=100 ->
 <a href="http://adsabs.harvard.edu/cgi-bin/author_form?author=<BFE_FIELD tag="100__q" />">[ADS]</a>

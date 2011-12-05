@@ -34,32 +34,39 @@ def format_element(bfo, separator=', ', link="yes"):
 
     from invenio.bibformat_config_inspire import CFG_BIBFORMAT_INSPIRE_CONF_LINK
 
-    cnum = str((bfo.field('773__w').replace("/", "")).replace(".", ""))
-    cnumdash = str(bfo.field('773__w')).replace("/", "-")
-
     confs = []
     confs = bfo.fields('773')
     output = []
     for conf in confs:
         note = ''
         if conf.has_key('w'):
-            if conf['w'].count('/') == 0 and conf['w'].count('-') == 0:
+            cnum = conf['w'].replace("/", "-")
+            if cnum.count('-') == 0:
                 # This is probably an ECONF pub note, which are all messed
                 # up  likely that there is another, better note on the record
-                continue
+                string = cnum[:3] + '-' + cnum[3:5] + '-'
+                if len(cnum) == 8:
+                    day = cnum[5:7]
+                    nr = cnum[7]
+                    cnum = string + day + '.' + nr
+                else:
+                    day = cnum[5:]
+                    cnum = string + day
             if link.lower() == 'yes' :
                 conf_name = '<a class="conflink" href = "' + \
                             CFG_BIBFORMAT_INSPIRE_CONF_LINK + \
                             cnum + '&of=hd">' + \
-                            cnumdash + '</a>'
+                            cnum + '</a>'
             else:
-                conf_name = conf['w']
+                conf_name = cnum
             if conf.has_key('t'):
                 note += conf['t'] + ' Conference: ' + conf_name
             else:
                 note += 'Conference: ' + conf_name
             if conf.has_key('x'):
                 note += ' (' + conf['x'] +')'
+            if conf.has_key('c'):
+                note += ', p.' + conf['c']
 
         if len(note)>0:
             output.append(note)

@@ -20,8 +20,12 @@ extension="" instances_separator=" & " tag="110t"/>
 <BFE_INSPIRE_INST_ADDRESS  separator="<br />"/>
 </i>
 </div>
+<br />
+
+<BFE_INSPIRE_INST_SECONDARY_ADDRESS />
 
 <br>
+
 <BFE_URL prefix="" suffix="" default="" escape="" style="" separator="; "/>
 <br />
 <a href="/record/<BFE_FIELD tag="510__0" limit="1" />"><BFE_FIELD tag="510_a" limit="1" prefix="<br />Parent Instituion: " suffix="<br />"/></a>

@@ -7,8 +7,8 @@
 <BFE_INSPIRE_AUTHORS print_affiliations="yes" affiliations_separator=' & '
 separator=', ' limit="10" extension="<i> et al.</i>" suffix=". "
 name_last_first="no" link_extension="yes"/>
-<BFE_REPORT_NUMBERS suffix='. ' />
 <BFE_INSPIRE_date suffix=". " /> <BFE_FIELD tag="300a" suffix=" pp." />
+<BFE_REPORT_NUMBERS prefix="<br />" suffix="."/>
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" />
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
 <BFE_INSPIRE_arxiv prefix="<br/>e-Print: <b>" suffix="</b>" mirrors="no"/>

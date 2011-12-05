@@ -31,19 +31,22 @@ def format_element(bfo, separator=',', limit='9999', extension=" etc."):
     return get_report_numbers_formatted(bfo, separator, limit, extension)
 
 
-def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None):
+def get_report_numbers_formatted(bfo, separator, limit, extension=" etc."):
     """
-    Prints the report numbers of the record (037__a and 088__a)
+    Prints the report numbers of the record (037__a)
 
     @param separator the separator between report numbers.
     @param limit the max number of report numbers to print
     @param extension a prefix printed when limit param is reached
     """
 
-    numbers = bfo.fields("037__a")
-    numbers.extend(bfo.fields("088__a"))
-    if skip:
-        numbers = [x for x in numbers if x != skip]
+    report_numbers = bfo.fields("037__")
+    numbers = []
+    for report_number_datafield in report_numbers:
+        # We dont want arXiv numbers in there
+        if '9' in report_number_datafield and report_number_datafield['9'].lower() == 'arxiv':
+            continue
+        numbers.append(report_number_datafield['a'])
     if limit.isdigit() and int(limit) <= len(numbers):
         return separator.join(numbers[:int(limit)]) + extension
     else:

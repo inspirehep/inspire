@@ -14,7 +14,6 @@ print_affiliations="yes" affiliations_separator=' & ' separator=', '
 limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"
 affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <br />
-<BFE_REPORT_NUMBERS suffix='. ' />
 <BFE_INSPIRE_DATE prefix="<br />" suffix="<br />"/>
 <BFE_FIELD tag="300a" suffix=" pp." />
 <BFE_INSPIRE_HEP_ERRATUM prefix="<br /><strong>" suffix="</strong>"/>
@@ -22,6 +21,7 @@ affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <BFE_PUBLISHER prefix="<br /><small>" suffix="</small>"/>
 <BFE_PLACE prefix="<br /><small>" suffix="</small>"/>
 <BFE_ISBN prefix="<br />ISBN: " />
+<BFE_REPORT_NUMBERS prefix="<br />"" />
 <BFE_INSPIRE_arxiv prefix="<br />e-Print: <b>" suffix="</b>" />
 <BFE_INSPIRE_DOI prefix="<br />" suffix=""/>
 

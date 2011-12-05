@@ -14,11 +14,10 @@ extension="" instances_separator=" & " tag="110t"/>
 <br />
 
 <small>
-<BFE_INSPIRE_INST_ADDRESS  separator=", "/>
-<br />
 
-<BFE_URL prefix="" suffix="" default="" escape="" style="" separator="; "/>
-<br />
+<BFE_INSPIRE_INST_ADDRESS separator=", " suffix="<br />"/>
+
+<BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
 
 <BFE_BFO_RECCNT prefix="<span class='moreinfo'>" suffix="</span>"
 fvalue="affiliation" item="Paper" plural="Papers"

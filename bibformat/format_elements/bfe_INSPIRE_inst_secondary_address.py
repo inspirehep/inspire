@@ -20,33 +20,45 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints address for Institution.
 """
-__revision__ = "$Id$"
-from invenio.config import CFG_SITE_LANG
-from invenio.search_engine import search_pattern
 
-def format_element(bfo, separator=", "):
-    #Print Address marc fields for an Inst record
-    #
+def format_element(bfo, separator=""):
+    """Print Address marc fields for an Inst record"""
     out = []
     fulladdress = bfo.fields("371__", repeatable_subfields_p=True)
 
     for printaddress in fulladdress:
         if printaddress.has_key('x'):
-            continue
-        if printaddress.has_key('f'):
-        ## if f exists print only f fields
-        ## loop over f fields
-            out.append(separator.join(printaddress['f']))
-        else:
             ## only print all a's and d
             ## loop over a fields
-            if printaddress.has_key('a'):
+            if printaddress.has_key('a') and printaddress.has_key('d'):
                 out.append(separator.join(printaddress['a']))
-            if printaddress.has_key('d'):
+                out.append(", ")
                 out.append(separator.join(printaddress['d']))
-            break
+                out.append("<br>")
 
-    return separator.join(out)
+    if len(out):
+        return """<a href="#" onclick="toggle2('content', this)">Show secondary addresses</a>
+<div id="content" style="display:none; padding-left:10px;">
+<i>%(content)s</i>
+</div>
+<br>
+<script type="text/javascript">
+function toggle2(id, link) {
+var e = document.getElementById(id);
+if (e.style.display == '') {
+e.style.display = 'none';
+link.innerHTML = 'Show secondary addresses';
+}
+else
+{
+e.style.display = '';
+link.innerHTML = 'Hide secondary addresses';
+}
+}
+</script>
+        """ % {'content': "".join(out)}
+    else:
+        return ""
 
 def escape_values(bfo):
     return 0
