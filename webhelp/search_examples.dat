@@ -8,9 +8,10 @@ INSERT into example (type,body) values
 ("Institutions", "find address menlo park"),
 ("Institutions", "find institution CERN"),
 ("Institutions", "country:DE"),
-("Jobs", "find field cond-mat"),
+("Jobs", "find field hep-th and rank postdoc and region europe"),
+("Jobs", 'find (field hep-th or hep-ex) and rank senior and region "north america"'),
 ("Jobs", "rank:Postdoc"),
-("Jobs", "region:EU"),
+("Jobs", "region:Europe"),
 ("HepNames", "find author ellis and field hep-th"),
 ("Conferences", "Las Vegas"),
 ("Conferences", "SUSY08")
