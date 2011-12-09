@@ -19,8 +19,7 @@ __revision__ = "$Id$"
 
 import os
 
-from invenio.websubmit_functions.Shared_Functions import txt2html
-from invenio.websubmit_functions.JOBSUBMIT_Shared_Functions import get_jobsubmit_message
+from invenio.websubmit_functions.Shared_Functions import txt2html, get_nice_bibsched_related_message
 # FIXME: cannot import Request_Print(), is defined in websubmit_engine.py
 
 def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
@@ -66,5 +65,5 @@ def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
         t=t+Request_Print("A",  "It will soon appear on our server.<br /><br />\n")
     t=t+Request_Print("A",  "Thank you for using Jobsubmit!")
     t=t+Request_Print("A",  "<br /><br /><br /><br />")
-    t += txt2html(get_jobsubmit_message(curdir))
+    t += txt2html(get_nice_bibsched_related_message(curdir))
     return t
