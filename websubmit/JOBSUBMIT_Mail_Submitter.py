@@ -125,9 +125,9 @@ def JOBSUBMIT_Mail_Submitter(parameters, curdir, form, user_info=None):
     if parameters['status'] == "APPROVAL":
         email_txt =  email_txt + "An email has been sent to the referee. You will be warned by email as soon as the referee takes his/her decision regarding your document.\n\n"
     elif parameters['status'] == "ADDED":
-        email_txt = email_txt + "It will be soon added to our Jobs Database.\n\nOnce inserted, you will be able to check the information and the quality of the electronic documents at this URL:\n<%s/%s/%s>\nIf you detect an error please let us know by sending an email to %s. \n\n" % (CFG_SITE_URL,CFG_SITE_RECORD,sysno,CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL)
+        email_txt = email_txt + "It will be soon added to our Jobs Database.\n\nIf you detect an error please let us know by sending an email to %s. \n\n" % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL,)
     email_txt += get_nice_bibsched_related_message(curdir)
-    email_txt = email_txt + "Thank you for using Jobs Submission Interface.\n"
+    email_txt = email_txt + "Thank you for using the HEP Jobs submission.\n"
 
 
     # send the mail
