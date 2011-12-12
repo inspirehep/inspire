@@ -28,10 +28,13 @@ def format_element(bfo):
 
     string = cnum[:3] + '/' + cnum[3:5] + '/'
 
-    if len(cnum) == 8:
-        day = cnum[5:7]
-        nr = cnum[7]
-        return string + day + '.' + nr
+    if "-" in cnum:
+        return cnum.replace("-", "/")
     else:
-        day = cnum[5:]
-        return string + day
+        if len(cnum) == 8:
+            day = cnum[5:7]
+            nr = cnum[7]
+            return string + day + '.' + nr
+        else:
+            day = cnum[5:]
+            return string + day
