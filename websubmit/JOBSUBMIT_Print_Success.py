@@ -18,8 +18,8 @@
 __revision__ = "$Id$"
 
 import os
-
-from invenio.websubmit_functions.Shared_Functions import txt2html, get_nice_bibsched_related_message
+from invenio.config import CFG_SITE_URL
+from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL
 # FIXME: cannot import Request_Print(), is defined in websubmit_engine.py
 
 def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
@@ -31,11 +31,7 @@ def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
     Parameters:
 
        * status: Depending on the value of this parameter, the
-         function adds an additional text to the email.
-         This parameter can be one of:
-           - ADDED: The file has been integrated in the database.
-           - APPROVAL: The file has been sent for approval to a referee.
-                       or can stay empty.
+         function adds an additional text to the email. (Not applicable)
 
        * edsrn: Name of the file containing the reference of the
                 document
@@ -57,13 +53,10 @@ def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
         additional_rn = " and %s" % additional_rn
     else:
         additional_rn = ""
-    t=t+Request_Print("A",  "<br /><br /><b>Submission Complete!</b><br /><br />")
-    t=t+Request_Print("A",  "Your document has the following reference(s): <b>%s%s</b><br /><br />" % (rn,additional_rn))
-    if status == "APPROVAL":
-        t=t+Request_Print("A",  "An email has been sent to the referee. You will be warned by email as soon as the referee takes his/her decision regarding your document.<br /><br />\n")
-    if status == "ADDED":
-        t=t+Request_Print("A",  "It will soon appear on our server.<br /><br />\n")
-    t=t+Request_Print("A",  "Thank you for using Jobsubmit!")
-    t=t+Request_Print("A",  "<br /><br /><br /><br />")
-    t += txt2html(get_nice_bibsched_related_message(curdir))
+    t=t+Request_Print("A",  "<br /><br /><b>Your Job submission has been successfully completed!</b><br /><br />")
+    t=t+Request_Print("A",  "Your listing has the following reference(s): <b>%s%s</b><br /><br />" % (rn,additional_rn))
+    t=t+Request_Print("A",  "The listing will not be visible until it has been fully approved by one of our catalogers. You will be notified by e-mail once the submission has been processed.<br /><br />\n")
+    t=t+Request_Print("A",  'If you experience any problems with the submission or have any questions, please contact us at <a href="mailto:%s">%s</a>.' % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL))
+    t=t+Request_Print("A",  "Thank you for using the HEP Jobs submission!")
+    t=t+Request_Print("A",  '<br /><br /><a href="%s/collection/Jobs">Return to the Jobs database</a><br /><br />' % (CFG_SITE_URL,))
     return t
