@@ -238,8 +238,8 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
 
     if decision == "approve":
         mailtitle = "%s has been approved" % rn
-        mailbody = "The %s %s has been approved." % (docname,rn)
-        mailbody += "\nIt will soon be accessible here:\n\n<%s/%s/%s>" % (CFG_SITE_URL,CFG_SITE_RECORD,sysno)
+        mailbody = "The submitted job listing with reference number %s has been fully approved." % (docname,rn)
+        mailbody += "\n\nIt will soon become visible in the INSPIRE-HEP Jobs database - <%s/Jobs>" % (CFG_SITE_URL,)
     else:
         mailtitle = "%s has been rejected" % rn
         mailbody = "The %s %s has been rejected." % (docname,rn)

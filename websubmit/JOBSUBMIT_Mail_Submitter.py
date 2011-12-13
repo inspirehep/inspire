@@ -48,7 +48,6 @@ from invenio.config import CFG_SITE_NAME, \
 
 from invenio.websubmit_config import CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN
 from invenio.mailutils import send_email
-from invenio.websubmit_functions.Shared_Functions import get_nice_bibsched_related_message
 from invenio.messages import wash_language, gettext_set_language
 
 CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL = "jobs@inspirehep.net"
@@ -120,16 +119,12 @@ def JOBSUBMIT_Mail_Submitter(parameters, curdir, form, user_info=None):
     except:
         m_recipient = ""
     # create email body
-    email_txt = "The document %s\nTitle: %s\nAuthor(s): %s\n\nhas been correctly received\n\n" % (fullrn,m_title,m_author)
+    email_txt = "The job listing with reference number %s\nTitle: %s\nSubmitter(s): %s\n\nhas been received for approval.\n\n" % (fullrn,m_title,m_author)
     # The user is either informed that the document has been added to the database, or sent for approval
-    if parameters['status'] == "APPROVAL":
-        email_txt =  email_txt + "An email has been sent to the referee. You will be warned by email as soon as the referee takes his/her decision regarding your document.\n\n"
-    elif parameters['status'] == "ADDED":
-        email_txt = email_txt + "It will be soon added to our Jobs Database.\n\nIf you detect an error please let us know by sending an email to %s. \n\n" % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL,)
-    email_txt += get_nice_bibsched_related_message(curdir)
-    email_txt = email_txt + "Thank you for using the HEP Jobs submission.\n"
-
-
+    email_txt += "Your listing will not be visible until it has been fully approved by one of our catalogers. " \
+                 "When this happens, you will be warned by email.\n\n" \
+                 "If you detect an error, please let us know by sending an email to %s. \n\n" \
+                 "Thank you for using the HEP Jobs submission.\n" % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL,)
     # send the mail
     send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=m_recipient.strip(), subject="%s: Document Received" % fullrn, \
                content=email_txt, footer=job_email_footer(), copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
