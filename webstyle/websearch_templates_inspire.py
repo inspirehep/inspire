@@ -145,45 +145,6 @@ class Template(DefaultTemplate):
           </tr>
          </thead>
          <tbody>
-          <tr>
-           <td class="searchboxbody" align="center">
-            <select id="rank" name="rank" multiple="multiple" size="2">
-             <option value="senior">Senior</option>
-             <option value="junior">Junior</option>
-             <option value="postdoc">Postdoc</option>
-             <option value="phd">PhD Student</option>
-             <option value="visiting">Visiting Scientist</option>
-             <option value="staff">Staff</option>
-            </select>
-            <select id="region" name="region" multiple="multiple" size="2">
-             <option value="africa">Africa</option>
-             <option value="asia">Asia</option>
-             <option value="australasia">Australasia</option>             
-             <option value="europe">Europe</option>
-             <option value="middle">Middle East</option>
-             <option value="north">North America</option>
-             <option value="south">South America</option>
-            </select>
-            <select id="region" name="field" multiple="multiple" size="2"> 
-             <option value="astroph">astro-ph</option>
-             <option value="condmat">cond-mat</option> 
-             <option value="cs">cs</option> 
-             <option value="grqc">gr-qc</option> 
-             <option value="hepex">hep-ex</option> 
-             <option value="heplat">hep-lat</option> 
-             <option value="hepph">hep-ph</option> 
-             <option value="hepth">hep-th</option> 
-             <option value="math">math</option> 
-             <option value="mathph">math-ph</option> 
-             <option value="nuclex">nucl-ex</option> 
-             <option value="nuclth">nucl-th</option> 
-             <option value="physicsaccphys">physics.acc-phys</option> 
-             <option value="physicsinsdet">physics.ins-det</option> 
-             <option value="physicsother">physics-other</option> 
-             <option value="quant">quant-ph</option>
-            </select>   
-           </td>   
-          </tr>    
           <tr valign="baseline">
            <td class="searchboxbody" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield" value="%(searchvalue)s"/><br/>
            </td>
