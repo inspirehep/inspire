@@ -30,6 +30,7 @@
   <td>Rank</td>
   <td>Start Date</td>
   <td>End Date</td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><BFE_INSPIRE_HEPNAMES_UPDATE_BUTTON prefix="" suffix="" default="" escape=""/></td>
 </tr>
 <BFE_INSPIRE_HEPNAMES_INSTITUTION_TABLE />
 </table>
