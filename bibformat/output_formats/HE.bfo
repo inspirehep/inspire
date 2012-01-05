@@ -1,0 +1,5 @@
+tag 980__a :
+JOB --- Jobs_text_brief.bft
+JOBHIDDEN --- Jobs_text_brief.bft
+
+default: Default_HTML_brief.bft

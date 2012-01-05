@@ -1,0 +1,13 @@
+<name>Jobs text Brief</name>
+<description>Brief description of job listing</description>
+<div class="record_body">
+<BFE_CATALOGING_DATE_CREATION prefix="<strong>" suffix=":</strong> " />
+<BFE_TITLE highlight="no"/>
+(<BFE_FIELD tag="110__a" />
+<BFE_FIELD tag="043__a" prefix=" - " limit="1" />)
+<BFE_INSPIRE_DEADLINE_DATE prefix="<strong>[Deadline: " suffix="]</strong>" warnings="0000=EXPIRED,8888=OPEN UNTIL FILLED,9999=ALWAYS OPEN" /><br />
+<BFE_FIELD prefix="<span style='text-transform: capitalize;'>" suffix="</span> - " tag="656__a" instances_separator=", " />
+<BFE_FIELD tag="65017a" instances_separator=", " />
+ <br />
+<BFE_RECORD_URL prefix="" suffix="<br />" default="" escape="" />
+<br />
