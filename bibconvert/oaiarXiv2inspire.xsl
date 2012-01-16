@@ -510,6 +510,16 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                   </xsl:otherwise>
                 </xsl:choose>
 
+                <!-- MARC FIELD 500$$a  = comments -->
+                <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments">
+                  <datafield tag="500" ind1=" " ind2=" ">
+                    <subfield code="a">
+                      <xsl:value-of select="normalize-space(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments)"/>
+                    </subfield>
+                    <subfield code="9">arXiv</subfield>
+                  </datafield>
+                </xsl:if>
+
                 <!-- MARC FIELD 520$$a  = metadata/arXiv/abstract -->
                 <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:abstract">
                   <datafield tag="520" ind1=" " ind2=" ">
