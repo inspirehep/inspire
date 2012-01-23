@@ -194,6 +194,16 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO tag (id,name,value) VALUES (142, 'series','411__a')" | $(BINDIR)/dbexec
 	echo "INSERT INTO tag (id,name,value) VALUES (143, 'xplace','270__b')" | $(BINDIR)/dbexec
 	echo "INSERT INTO tag (id,name,value) VALUES (144, 'date','111__x')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (145, 'conference title','111__a')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (146, 'conference sub title','111__b')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (147, 'conference acronym','111__e')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (148, 'other title','711__e')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (148, 'other title','711__e')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (149, 'address, inst','371__a')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (150, 'country','270__d')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (151, 'rank','371__r')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (152, 'series','490__a')" | $(BINDIR)/dbexec
+	echo "INSERT INTO tag (id,name,value) VALUES (153, 'series','411__n')" | $(BINDIR)/dbexec
 
 	@echo ">>> Resetting table field:"
 	echo "TRUNCATE field" | $(BINDIR)/dbexec
@@ -242,8 +252,7 @@ reset-inspire-field-configuration:
 	echo "TRUNCATE field_tag" | $(BINDIR)/dbexec
 	## anyfield: 0247_a, 035__a 035__z 037__a 037__c 041__a 100__a 100__q 100__u 110__% 210__a
 	##  242__a 242__b 242__y 245__a 245__b 246__a 269__c 371__% 500__a 520__a 520__h 6531_a
-	## 656__a 693__a 693__e 695__a 700__a 700__q 700__u 710__a 710__g 773__a 773__c 773__p 
-	## 773__t 773__v 773__w 773__x 773__y 902__a 65017a
+	## 656__a 693__a 693__e 695__a 700__a 700__q 700__u 710__a 710__g 773__% 902__a 65017a 111__%
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 2, 360)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 3, 350)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 5, 340)" | $(BINDIR)/dbexec
@@ -265,14 +274,7 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 33, 180)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 34, 170)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 35, 160)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 36, 150)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 37, 140)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 38, 130)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 39, 120)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 40, 110)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 41, 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 42, 90)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 43, 80)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 56, 150)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 47, 70)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 57, 50)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 58, 40)" | $(BINDIR)/dbexec
@@ -289,20 +291,27 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 110, 20)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 118, 20)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 125, 20)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1, 140, 20)" | $(BINDIR)/dbexec
 
-	## title: 210__a 242__a 242__b 245__a 245__b 246__a
+	## title: 210__a 242__a 242__b 245__a 245__b 246__a 111__a 111__b 111__e 711__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 14, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 16, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 57, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 13, 70)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 87, 70)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 88, 70)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 145, 70)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 146, 70)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 147, 70)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (2, 148, 70)" | $(BINDIR)/dbexec
 
-	## author: 100__a 100__q 700__a 700__q
+	## author: 100__a 100__q 700__a 700__q 400__a 880__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 8, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 11, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 29, 70)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 32, 60)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 101, 60)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (3, 134, 60)" | $(BINDIR)/dbexec
 
 	## abstract: 520__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (4, 20, 100)" | $(BINDIR)/dbexec
@@ -343,7 +352,7 @@ reset-inspire-field-configuration:
 	## recid: 001
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (14, 55, 100)" | $(BINDIR)/dbexec
 
-	# affiliation: 100__u 110__a 110__b 110__t 110__u 410__a 410__g 700__u 902__a
+	# affiliation: 100__u 110__a 110__b 110__t 110__u 410__a 410__g 700__u 902__a 371__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 12, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 33, 90)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 47, 80)" | $(BINDIR)/dbexec
@@ -352,6 +361,7 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 86, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 71, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 70, 80)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (15, 149, 80)" | $(BINDIR)/dbexec
 
 	## collaboration: 710__g
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (16, 35, 100)" | $(BINDIR)/dbexec
@@ -379,20 +389,21 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (38, 8, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (38, 11, 90)" | $(BINDIR)/dbexec
 
-	## address - 371__%
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 65, 130)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 66, 120)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 67, 110)" | $(BINDIR)/dbexec
+	## address - 371__a 371__b 371__c 371__e 371__f 110__u 410__g
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 149, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 68, 100)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 69, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 95, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 66, 80)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 69, 80)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 71, 80)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 70, 80)" | $(BINDIR)/dbexec
-	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (25, 71, 200)" | $(BINDIR)/dbexec
 
 	## postalcode: 371__e
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (26, 66, 90)" | $(BINDIR)/dbexec
 
-	## country: 371__d
+	## country: 371__d 270__d
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (27, 67, 90)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (27, 150, 90)" | $(BINDIR)/dbexec
 
 	## city: 371__b
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (28, 68, 90)" | $(BINDIR)/dbexec
@@ -400,11 +411,13 @@ reset-inspire-field-configuration:
 	## region: 043__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (29, 77, 90)" | $(BINDIR)/dbexec
 
-	## institution name: 110__u
+	## institution name: 110__a 110__b 110__t 110__u 410__a 410__g
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 71, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 84, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 85, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 86, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 102, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (30, 70, 100)" | $(BINDIR)/dbexec
 
 	### accelerator: 693__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (31, 125, 100)" | $(BINDIR)/dbexec
@@ -419,8 +432,10 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (34, 91, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (34, 43, 100)" | $(BINDIR)/dbexec
 
-	### rank 656__a:
+	### rank 656__a 371__r
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (35, 118, 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (35, 151, 100)" | $(BINDIR)/dbexec
+
 #
 #  conf fields
 #
@@ -428,7 +443,12 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (1,141, 1100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (37,141, 1100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (37,143, 1100)" | $(BINDIR)/dbexec
+
+	### series: 411__a 490__a
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (36,142, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (36,152, 1100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (36,153, 1100)" | $(BINDIR)/dbexec
+
 	echo "INSERT INTO field_tag (id_field,id_tag,score) VALUES (10, 144, 80)" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-field-configuration."
 
