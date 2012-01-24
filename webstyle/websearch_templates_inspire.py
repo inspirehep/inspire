@@ -112,6 +112,9 @@ CFG_SEARCH_INSPIRE_OUTPUT_FORMATS = [
                    {'value' : "htcv",
                     'text' : "CV format (text)"
                     },
+                   {'value' : "hlxh",
+                    'text' : "Harvmac"
+                    },
                    {'value' : "xw",
                     'text' : "RefWorks"
                     },
