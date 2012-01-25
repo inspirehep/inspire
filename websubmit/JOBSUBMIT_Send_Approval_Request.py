@@ -196,6 +196,7 @@ To approve/reject the document, you should go to this URL:\n<%(access)s>\n
            'access' : "%s/approve.py?access=%s" % (CFG_SITE_URL,access),
            'recordlink' : record_url
            }
+    addresses += ",%s" % CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL
     #Send mail to referee
     send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=addresses, subject=title_referee, \
                content=mail_referee, footer=job_email_footer(), copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
