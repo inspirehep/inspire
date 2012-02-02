@@ -178,7 +178,7 @@ Description:
 The record will appear here:
 %(recordlink)s
 
-To approve/reject the document, you should go to this URL:\n<%(access)s>\n
+To approve/reject the document, you should go to this URL:\n%(access)s\n
     """ % {'rn' : rn,
            'title' : title,
            'contactname' : contactname,

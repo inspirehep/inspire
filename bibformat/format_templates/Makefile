@@ -3,7 +3,7 @@
 include ../../config.mk
 -include ../../config-local.mk
 
-BFTFILES = *.bft
+BFTFILES = *.bft *.xsl
 BFTDIR = $(ETCDIR)/bibformat/format_templates
 
 all:

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,24 +16,30 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints authors
+"""BibFormat element - Prints HEP Thesis Info
 """
+__revision__ = "$Id$"
 
-from cgi import escape
+def format_element(bfo, separator=''):
+    """
+    This is the default format for formatting full-text URLs.
+    @param separator: the separator between urls.
+    @param style: CSS class of the link
+    """
+    bai = bfo.fields('502__')
+    output = ''
 
-def format_element(bfo, tag="0247_"):
-    """
-    Return an HTML link to the DOI.
-    """
-    fields = bfo.fields(tag)
-    doi = ''
-    for field in fields:
-        if field.get('2', 'DOI') == 'DOI' and 'a' in field:
-            doi = field['a']
-    if doi:
-        return """DOI: <a href="http://dx.doi.org/%s" title="DOI" target="_blank">%s</a>""" % (escape(doi, True), escape(doi))
-    else:
-        return ""
+    for item in bai:
+        if item.has_key('a'):
+            output += item['a'] + " - "
+        if item.has_key('b'):
+            output += item['b'] + " "
+        if item.has_key('c'):
+            output += '<a href="/search?ln=en&cc=Institutions&p=110__u%3A%22' + item['c'] + '%22">' + item['c'] + "</a> "
+        if item.has_key('d'):
+            output += "(" + item['d'] + ")"
+
+    return output
 
 def escape_values(bfo):
     """

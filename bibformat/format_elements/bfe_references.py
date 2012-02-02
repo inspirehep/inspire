@@ -21,9 +21,9 @@
 """BibFormat element - Prints references
 """
 
-from invenio.config import CFG_SITE_URL
 from invenio.search_engine import search_unit
 from invenio.bibformat import format_record
+
 
 def format_element(bfo, reference_prefix, reference_suffix):
     """
@@ -32,10 +32,9 @@ def format_element(bfo, reference_prefix, reference_suffix):
     @param reference_prefix a prefix displayed before each reference
     @param reference_suffix a suffix displayed after each reference
     """
+    references = bfo.fields("999C5", escape=1, repeatable_subfields_p=True)
 
-    references = bfo.fields("999C5", escape=1)
-
-    out = "<div id='referenceinp_link_box'><span id='referenceinp_link_span'><a id='referenceinp_link' href='"+CFG_SITE_URL+'/record/'+str(bfo.recID)+'/export/hrf'+"'>Update these references</a></span></div>"
+    out = ""
     last_o = ""
 
     if not references:
@@ -43,76 +42,86 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
     out += "<table>"
     for reference in references:
-        ref_out = '<tr><td valign="top">'
+        ref_out = []
+        ref_out.append('<tr><td valign="top">')
 
         display_journal = ''
         display_report = ''
         clean_report = ''
         clean_journal = ''
         hits = []
-        if reference.has_key('o') and not reference['o'] == last_o:
-            temp_ref = reference['o'].replace('.', '')
+        if reference.has_key('o') and not reference['o'][0] == last_o:
+            temp_ref = reference['o'][0].replace('.', '')
             if '[' in temp_ref and ']' in temp_ref:
-                ref_out += "<small>" + temp_ref + "</small> "
+                ref_out.append("<small>" + temp_ref + "</small> ")
             else:
-                ref_out += "<small>[" + temp_ref + "] </small> "
+                ref_out.append("<small>[" + temp_ref + "] </small> ")
             last_o = temp_ref
-        ref_out += "</td><td>"
+        ref_out.append("</td><td>")
+
+        if reference_prefix:
+            ref_out.append(reference_prefix)
+
         if reference.has_key('s'):
-            display_journal = reference['s']
-            clean_journal = reference['s']
+            display_journal = reference['s'][0]
+            clean_journal = reference['s'][0]
         if reference.has_key('r'):
-            if "[" in reference['r'] and "]" in reference['r']:
-                breaknum = reference['r'].find('[')
-                newreference = reference['r'][:breaknum].strip()
+            if "[" in reference['r'][0] and "]" in reference['r'][0]:
+                breaknum = reference['r'][0].find('[')
+                newreference = reference['r'][0][:breaknum].strip()
                 display_report = newreference
                 clean_report = newreference
             else:
-                display_report = reference['r']
-                clean_report = reference['r']
+                display_report = reference['r'][0]
+                clean_report = reference['r'][0]
         if clean_report:
             hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
             hits = search_unit(f='journal', p=clean_journal)
         if reference.has_key('a') and len(hits)!=1:
-            hits = search_unit(f='doi', p=reference['a'])
+            hits = search_unit(f='doi', p=reference['a'][0])
         if len(hits) == 1:
-            ref_out += '<small>' +\
-                       format_record(list(hits)[0],'hs') + '</small>'
+            ref_out.append('<small>' + format_record(list(hits)[0],'hs') + '</small>')
         else:
+            if reference.has_key('t'):
+                ref_out.append("<small> " + reference['t'][0] + "</small> - ")
+
             if reference.has_key('h'):
-                ref_out += "<small> " + reference['h'] + ".</small> "
+                ref_out.append("<small> " + reference['h'][0] + "</small> ")
+
+            if reference.has_key('y'):
+                ref_out.append("<small> " + reference['y'][0] + ".</small> ")
+
+            if reference.has_key('p'):
+                ref_out.append("<small> " + reference['p'][0] + ".</small> ")
 
             if reference.has_key('m'):
-                ref_out += "<small>"+ reference['m'].replace(']]', ']') + ".</small> "
+                ref_out.append("<small>"+ reference['m'][0].replace(']]', ']') + ".</small> ")
 
             if reference.has_key('a'):
-                ref_out += " <small><a href=\"http://dx.doi.org/" + \
-                reference['a'] + "\">" + reference['a']+ "</a></small> "
+                ref_out.append(" <small><a href=\"http://dx.doi.org/" + \
+                reference['a'][0] + "\">" + reference['a'][0]+ "</a></small> ")
 
             if reference.has_key('u'):
-                ref_out += " <small><a href=" + reference['u'] + ">" + \
-                reference['u']+ "</a></small> "
+                ref_out.append(" <small><a href=" + reference['u'][0] + ">" + \
+                reference['u'][0]+ "</a></small> ")
 
-            ref_out += ' <small>'
+            if reference.has_key('i'):
+                for r in reference['i']:
+                    ref_out.append(" <small><a href=\"/search?ln=en&p=020__a%3A"+r+"\">"+r+"</a></small> ")
+
+            ref_out.append('<small>')
             if display_journal:
-                ref_out += display_journal
+                ref_out.append(display_journal)
             if display_report:
-                ref_out += ' ' + display_report
+                ref_out.append(' ' + display_report)
+            ref_out.append("</small>")
 
+        if reference_suffix:
+            ref_out.append(reference_suffix)
 
-
-        ref_out += "</small></td></tr>"
-
-        if reference_prefix is not None and ref_out != '':
-            ref_out = reference_prefix + ref_out
-        if reference_suffix is not None and ref_out != '':
-            ref_out += reference_suffix
-
-        out += ref_out
-
-    if out != '':
-        out += '</li>'
+        ref_out.append("</td></tr>")
+        out += ' '.join(ref_out)
 
     return out + "</table>"
 

@@ -10,7 +10,7 @@
 
 <br />
 <BFE_FIELD prefix="<strong>Field of Interest: </strong>" suffix="<br />" tag="65017a" instances_separator=", " />
-<BFE_INSPIRE_EXPERIMENT prefix="<strong>Experiment: </strong>" suffix="<br />"/>
+<BFE_INSPIRE_EXP_LINK prefix="<strong>Experiment: </strong>" suffix="<br />"/>
 <BFE_INSPIRE_DEADLINE_DATE prefix="<strong>Deadline: </strong>" suffix="<br />"/>
 <BFE_FIELD prefix="<strong>Region: </strong>" suffix="<br />" tag="043__a" limit="1" />
 

@@ -6,9 +6,11 @@
 <BFE_INSPIRE_TITLE_BRIEF prefix="<big><big><strong>"
 suffix=".</strong></big></big>" force_title_case="yes"
 highlight="yes" brief="yes" />
+<BFE_FIELD tag="041a" prefix="<big><big>(In " suffix=")</big></big>" />
 </div>
 
 <div style="text-align:center">
+<BFE_FIELD tag="242__a" suffix="<br />" />
 <BFE_INSPIRE_AUTHORS suffix="<br />" limit=25 interactive="yes"
 print_affiliations="yes" affiliations_separator=' & ' separator=', '
 limit="10" extension="<i> et al.</i>" suffix=". " name_last_first="no"
@@ -19,11 +21,10 @@ affiliation_prefix="<small> (" affiliation_suffix=")</small>" />
 <BFE_INSPIRE_HEP_ERRATUM prefix="<br /><strong>" suffix="</strong>"/>
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
 <BFE_INSPIRE_EXP_LINK prefix="<br />"/>
-<BFE_PUBLISHER prefix="<br /><small>" suffix="</small>"/>
-<BFE_PLACE prefix="<br /><small>" suffix="</small>"/>
+<BFE_INSPIRE_HEP_PUBLISHER prefix="<br /><small>" suffix="</small>"/>
 <BFE_ISBN prefix="<br />ISBN: " />
 <BFE_REPORT_NUMBERS prefix="<br />"" />
-<BFE_INSPIRE_arxiv prefix="<br />e-Print: <b>" suffix="</b>" />
+<BFE_INSPIRE_ARXIV prefix="<br />e-Print: <b>" suffix="</b>" />
 <BFE_INSPIRE_DOI prefix="<br />" suffix=""/>
 
 <div style="text-align:left; width: 70%; margin: 10px auto;">
@@ -36,19 +37,20 @@ suffix_fr="</small><br />"
 />
 </p>
 
+<BFE_NOTES
+note_prefix="<br /><small><strong>Note: </strong>"
+note_suffix=" </small><br />" />
+<BFE_INSPIRE_HEP_THESIS prefix="<small><strong>Thesis: </strong>" suffix="</small><br />" />
+<BFE_INSPIRE_HEP_SUPERVISOR
+prefix="<small><strong>Supervisor: </strong>"
+suffix=" </small><br />"/>
 <BFE_KEYWORDS
- prefix="<br /><small><strong>Keyword(s): </strong></small>"
+prefix="<br /><small><strong>Keyword(s): </strong></small>"
 keyword_prefix="<small>"
 keyword_suffix="</small>" />
 
-<BFE_NOTES
-note_prefix="<br /><small><strong>Note: </strong>"
-note_suffix=" </small>"
-suffix="<br />" />
 </div>
-
 <br />
-
 <BFE_PLOTS width="200px" caption="no"/>
 
 </div>

@@ -2,13 +2,16 @@
 <description>Prototype brief format for the Inspire project</description>
 <!C-START REC 11.Brief--!>
 <div class="record_body">
-<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix=".<br />" force_title_case="yes"/></a>
+<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="." force_title_case="yes"/></a>
+<BFE_FIELD tag="041a" prefix=" (In " suffix=")" />
+<br />
 <small>
+<BFE_FIELD tag="242__a" suffix="<br />" />
 <BFE_INSPIRE_AUTHORS print_affiliations="yes" affiliations_separator=' & '
 separator=', ' limit="10" extension="<i> et al.</i>" suffix=". "
 name_last_first="no" link_extension="yes"/>
-<BFE_INSPIRE_date suffix=". " /> <BFE_FIELD tag="300a" suffix=" pp." />
-<BFE_REPORT_NUMBERS prefix="<br />" suffix="."/>
+<BFE_INSPIRE_date suffix=". " /> <BFE_FIELD tag="300a" suffix=" pp. " />
+<BFE_NOTES />
 <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" />
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
 <BFE_INSPIRE_arxiv prefix="<br/>e-Print: <b>" suffix="</b>" mirrors="no"/>

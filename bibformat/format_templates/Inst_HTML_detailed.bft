@@ -1,18 +1,19 @@
 <name>Inst HTML Detailed</name>
 <description>Default HTML brief format for Institutions</description>
 <div class="detailed_record_info"><table width="100%"><tr><td width="70%">
-<BFE_FIELD prefix="<b>" suffix="</b>" default="" escape=""
-extension="" instances_separator=" & " tag="110u"/> 
-<BFE_FIELD prefix="[Future INSPIRE ID:" suffix="]" default="" escape=""
-extension="" instances_separator=" & " tag="110t"/> 
+
+<BFE_INSPIRE_INST_TITLE prefix="<b>" suffix="</b>" />
+<BFE_FIELD prefix="[Future INSPIRE ID: " suffix="]" default="" escape=""
+extension="" instances_separator=" & " tag="110t"/>
+<BFE_FIELD tag="410a" prefix="<br />" />
 </td>
 <td width="30%">
 </td>
 </tr>
 </table>
 <BFE_FIELD prefix="" instances_separator=" "
- suffix="</dd>" tag="110a" escape="">
-<BFE_FIELD prefix=":"  instances_separator=" "
+ suffix="<br />" tag="110a" escape="">
+<BFE_FIELD instances_separator=" "
  suffix=""  tag="110b" escape=""> <br />
 
 <div style="padding-left:10px";>
@@ -24,22 +25,24 @@ extension="" instances_separator=" & " tag="110t"/>
 
 <BFE_INSPIRE_INST_SECONDARY_ADDRESS />
 
-<br>
+<br />
 
-<BFE_URL prefix="" suffix="" default="" escape="" style="" separator="; "/>
+<BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
+<BFE_FIELD tag="6781_a" prefix="Historical Data: " suffix="<br />" />
+<BFE_FIELD tag="680i" prefix="Notes: " suffix="<br />" />
+<BFE_INSPIRE_INST_RELATED_INST suffix="<br />" />
+<!--Add element here to handle different relationship types 510__w -->
 <br />
-<a href="/record/<BFE_FIELD tag="510__0" limit="1" />"><BFE_FIELD tag="510_a" limit="1" prefix="<br />Parent Instituion: " suffix="<br />"/></a>
-<br />
-HEP list of <a href="/search?ln=en&ln=en&p=fin+tc+t+and+aff+<BFE_FIELD tag="110u" />"> Ph.D. theses </a> at <BFE_FIELD tag="110u" /> <br />
-HEPNAMES list of <a href="/search?cc=HepNames&ln=en&p=<BFE_FIELD tag="110u" />"> people </a> at <BFE_FIELD tag="110u" /> <br />
 <!--
-HEPNAMES list of <a href="http://www.slac.stanford.edu/spires/find/hepnames/www?sequence=n&phdaff=<BFE_FIELD tag="110u" />"> Ph.D. grads </a> from <BFE_FIELD tag="110u" /> <br />
-HEPNAMES list of <a href="http://www.slac.stanford.edu/spires/find/hepnames/www?sequence=n&undergrad=<BFE_FIELD tag="110u" />"> B.Sc. grads </a> from <BFE_FIELD tag="110u" /> <br />
--->
-EXPERIMENTS list of <a href="http://www.slac.stanford.edu/spires/find/experiments/www?sequence=exp&exp=<BFE_FIELD tag="110u" />"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
+Search 502a and 502c
+HEP list of <a href="/search?ln=en&ln=en&p=fin+tc+t+and+aff+<BFE_FIELD tag="110u" />"> Ph.D. theses </a> at <BFE_FIELD tag="110u" /> <br /> -->
+HEPNAMES list of <a href="/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=371__a%3A%27<BFE_FIELD tag="110u" />%27"> people </a> at <BFE_FIELD tag="110u" /> <br />
+EXPERIMENTS list of <a href="/search?ln=en&cc=Experiments&ln=en&cc=Experiments&p=119__u%3A%27<BFE_FIELD tag="110u"/>%27"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
+<!--
+Search people from inst completing experiments
 EXPERIMENTS list of <a href="http://www.slac.stanford.edu/spires/find/experiments/www?sequence=exp&aff=<BFE_FIELD tag="110u" />"> experiments </a> performed by people <b>from</b> <BFE_FIELD tag="110u" /> <br />
 
-<!--
+Google maps for inst
 <img src="http://maps.google.com/maps/api/staticmap?center=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;markers=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;zoom=13&amp;size=400x400&amp;&maptype=hybrid&amp;sensor=false">
 -->
 &nbsp

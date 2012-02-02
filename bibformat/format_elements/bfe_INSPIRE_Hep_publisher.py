@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 ##
+## $Id$
+##
 ## This file is part of Invenio.
-## Copyright (C) 2011 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,24 +18,27 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints authors
+"""BibFormat element - Prints dates for Experiment.
 """
+__revision__ = "$Id$"
 
-from cgi import escape
+def format_element(bfo, separator=" "):
 
-def format_element(bfo, tag="0247_"):
-    """
-    Return an HTML link to the DOI.
-    """
-    fields = bfo.fields(tag)
-    doi = ''
-    for field in fields:
-        if field.get('2', 'DOI') == 'DOI' and 'a' in field:
-            doi = field['a']
-    if doi:
-        return """DOI: <a href="http://dx.doi.org/%s" title="DOI" target="_blank">%s</a>""" % (escape(doi, True), escape(doi))
+    date = bfo.fields('260__')
+    out = []
+
+    for item in date:
+        if item.has_key('a'):
+            out.append(item['a'] + ':')
+        if item.has_key('b'):
+            out.append(' ' + item['b'])
+        if item.has_key('c'):
+            out.append(' (' + item['c'] + ')')
+
+    if out:
+        return separator.join(out)
     else:
-        return ""
+        return ''
 
 def escape_values(bfo):
     """

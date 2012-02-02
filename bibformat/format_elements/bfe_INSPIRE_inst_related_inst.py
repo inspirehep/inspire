@@ -16,34 +16,37 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints INSPIRE jobs contact name HEPNAMES search
+"""BibFormat element - Prints full-text URLs
 """
+__revision__ = "$Id$"
 
-from urllib import quote_plus
-
-def format_element(bfo, style="", separator=', '):
+def format_element(bfo, style, separator='; '):
     """
-    This is the default format for formatting the contact person
-    link in the Jobs format. This link will point to a direct search
-    in the HepNames database.
-
+    This is the default format for formatting full-text URLs.
+    @param separator: the separator between urls.
     @param style: CSS class of the link
-    @type style: str
-
-    @param separator: the separator between names.
-    @type separator: str
     """
 
-    contact_list = bfo.fields("270__p")
+    urls_u = bfo.fields("510__")
+    prefix = ''
     if style != "":
         style = 'class="'+style+'"'
 
-    contacts = ['<a '+ style + \
-            ' href="/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=find+a+%27' \
-            + quote_plus(contact) + '%27&of=hd">' + contact +'</a>'
-            for contact in contact_list]
-
-    return separator.join(contacts)
+    for url in urls_u:
+        if url.has_key('w'):
+            if url['w'] == 'a':
+                prefix = 'Preceding Institution: '
+            if url['w'] == 'b':
+                prefix = 'Successive Institution: '
+            if url['w'] == 't':
+                prefix = 'Parent Institution: '
+            if url['w'] == 'r':
+                prefix = 'Related Institution: '
+        else:
+            prefix = 'Related Institution: '
+    urls = ['<a href="/record' + url['0'] + '">' + url['a'] +'</a>'
+            for url in urls_u]
+    return prefix + separator.join(urls)
 
 def escape_values(bfo):
     """

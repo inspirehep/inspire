@@ -263,11 +263,6 @@ def format_element(bfo, width="50"):
                     year = get_year(bfo.field("909C0y"))
     out += texified("year", year)
 
-    # Note
-    note = bfo.field("500__a")
-    if note and note not in note_values_skip:
-        out += texified("note", note)
-
     # Eprint (aka arxiv number)
     import invenio.bibformat_elements.bfe_INSPIRE_arxiv as bfe_arxiv
     eprints = bfe_arxiv.get_arxiv(bfo, category = "no")
