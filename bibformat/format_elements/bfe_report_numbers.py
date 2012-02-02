@@ -28,10 +28,10 @@ def format_element(bfo, separator=',', limit='9999', extension=" etc."):
     format_element is still handy for magic parameters, e.g., prefix, suffix
     and friends.
     """
-    return get_report_numbers_formatted(bfo, separator, limit, extension)
+    return get_report_numbers_formatted(bfo, separator, limit, extension, skip='arXiv:')
 
 
-def get_report_numbers_formatted(bfo, separator, limit, extension=" etc."):
+def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None):
     """
     Prints the report numbers of the record (037__a)
 
@@ -39,19 +39,14 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc."):
     @param limit the max number of report numbers to print
     @param extension a prefix printed when limit param is reached
     """
-
-    report_numbers = bfo.fields("037__")
-    numbers = []
-    for report_number_datafield in report_numbers:
-        # We dont want arXiv numbers in there
-        if '9' in report_number_datafield and report_number_datafield['9'].lower() == 'arxiv':
-            continue
-        numbers.append(report_number_datafield['a'])
+    numbers = bfo.fields("037__a")
+    numbers.extend(bfo.fields("088__a"))
+    if skip:
+        numbers = [x for x in numbers if x != skip and skip not in x]
     if limit.isdigit() and int(limit) <= len(numbers):
         return separator.join(numbers[:int(limit)]) + extension
     else:
         return separator.join(numbers)
-
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613
