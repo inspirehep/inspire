@@ -324,11 +324,12 @@ class Template(DefaultTemplate):
             return example_query_html
 
 
+    #disabled at the moment...
 
     def tmpl_searchfor_easy(self, ln, collection_id, collection_name, record_count,
                             searchoptions, sortoptions, rankoptions, displayoptions, formatoptions):
         """
-          Produces SPIRES-style easy search box.
+          Produces SPIRES-style easy search box. NOT USED
 
           Parameters:
 
@@ -547,6 +548,7 @@ class Template(DefaultTemplate):
             <option>Int. J. Theor. Phys.</option>
 	        <option>Jcap</option>
             <option>Jhep</option>
+            <option>JINST</option>
 
             <option>J. Math. Phys.</option>
             <option>J. Phys. - A -</option>

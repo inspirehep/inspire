@@ -217,6 +217,7 @@
     <option value="Int.J.Theor.Phys.">Int.J.Theor.Phys.</option>
     <option value="JCAP">JCAP</option>
     <option value="JHEP">JHEP</option>
+    <option value="JINST">JINST</option>
 
     <option value="J.Math.Phys.">J.Math.Phys.</option>
     <option value="J.Phys.- A -">J.Phys.- A -</option>
