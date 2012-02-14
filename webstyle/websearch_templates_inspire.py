@@ -123,6 +123,102 @@ CFG_SEARCH_INSPIRE_OUTPUT_FORMATS = [
                     }
                ]
 
+CFG_SEARCH_INSPIRE_JOB_RANKS = [
+                   {'value' : "senior",
+                    'text' : "Senior"
+                    },
+                   {'value' : "junior",
+                    'text' : "Junior"
+                    },
+                   {'value' : "postdoc",
+                    'text' : "Postdoc"
+                    },
+                   {'value' : "student",
+                    'text' : "Student"
+                    },
+                   {'value' : "visitor",
+                    'text' : "Visiting Scientist"
+                    },
+                   {'value' : "staff",
+                    'text' : "Staff"
+                    }
+               ]
+
+CFG_SEARCH_INSPIRE_JOB_REGIONS = [
+                   {'value' : "africa",
+                    'text' : "Africa"
+                    },
+                   {'value' : "asia",
+                    'text' : "Asia"
+                    },
+                   {'value' : "australasia",
+                    'text' : "Australasia"
+                    },
+                   {'value' : "europe",
+                    'text' : "Europe"
+                    },
+                   {'value' : "middle east",
+                    'text' : "Middle East"
+                    },
+                   {'value' : "north america",
+                    'text' : "North America"
+                    },
+                   {'value' : "south america",
+                    'text' : "South America"
+                    }
+               ]
+
+CFG_SEARCH_INSPIRE_JOB_FIELDS = [
+                   {'value' : "astro-ph",
+                    'text' : "astro-ph"
+                    },
+                   {'value' : "cond-mat",
+                    'text' : "cond-mat"
+                    },
+                   {'value' : "cs",
+                    'text' : "cs"
+                    },
+                   {'value' : "gr-qc",
+                    'text' : "gr-qc"
+                    },
+                   {'value' : "hep-ex",
+                    'text' : "hep-ex"
+                    },
+                   {'value' : "hep-lat",
+                    'text' : "hep-lat"
+                    },
+                   {'value' : "hep-ph",
+                    'text' : "hep-ph"
+                    },
+                   {'value' : "hep-th",
+                    'text' : "hep-th"
+                    },
+                   {'value' : "math",
+                    'text' : "math"
+                    },
+                   {'value' : "math-ph",
+                    'text' : "math-ph"
+                    },
+                   {'value' : "nucl-ex",
+                    'text' : "nucl-ex"
+                    },
+                   {'value' : "nucl-th",
+                    'text' : "nucl-th"
+                    },
+                   {'value' : "physics.acc-phys",
+                    'text' : "physics.acc-phys"
+                    },
+                   {'value' : "physics.ins-det",
+                    'text' : "physics.ins-det"
+                    },
+                   {'value' : "physics-other",
+                    'text' : "physics-other"
+                    },
+                   {'value' : "quant-ph",
+                    'text' : "quant-ph"
+                    }
+               ]
+
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
@@ -186,51 +282,55 @@ class Template(DefaultTemplate):
                  values=self._add_mark_to_field(value=of, fields=CFG_SEARCH_INSPIRE_OUTPUT_FORMATS, chars=3, ln=ln),
                  css_class=''),)
         # print commentary start:
+        if collection_id == "Jobs":
+            # print Jobs Search form:
+            out += self.tmpl_searchfor_jobs(ln, collection_id, filters="", keywords="", of="")
+            return out
         out += '''
-        <table class="searchbox lightsearch">
-        <thead>
-          <tr align="left">
-           <th class="searchboxheader">%(header)s</th>
-          </tr>
-         </thead>
-         <tbody>
-          <tr valign="baseline">
-           <td class="searchboxbody searchboxbodyinput" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield searchboxbodyinput" value="%(searchvalue)s"/><br/>
-           </td>
-           %(middle_option)s
-           <td class="searchboxbody" align="left">
-             <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
-           </td>
-           <td class="searchboxbody searchboxbodymoresearch" align="left" rowspan="2" valign="top">
-             %(esearch)s
-             %(asearch)s
-           </td>
-           </tr>
-           <tr>
-             <td class="searchboxexample">
-               %(example_query_html)s
-             </td>
-          </tr></table>
-          <!--<tr valign="baseline">
-           <td class="searchboxbody" colspan="2" align="left">
-           </td>
-          </tr>
-         </tbody>
-        </table>-->
-        ''' % {'ln' : ln,
-               'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
-               'langlink': langlink,
-               'siteurl' : CFG_SITE_URL,
-               'esearch' : easy_search_link,
-               'asearch' : create_html_link(asearchurl, {}, _('Advanced Search')),
-               'header' : header,
-               'msg_search' : _('Search'),
-               'msg_browse' : _('Browse'),
-               'msg_easy_search' : _('Easy Search'),
-               'example_query_html': example_html,
-               'searchvalue' : searchvalue,
-               'middle_option' : middle_option
-              }
+            <table class="searchbox lightsearch">
+            <thead>
+              <tr align="left">
+               <th class="searchboxheader">%(header)s</th>
+              </tr>
+             </thead>
+             <tbody>
+              <tr valign="baseline">
+               <td class="searchboxbody searchboxbodyinput" align="right"><input type="text" id="mainlightsearchfield" name="p" size="%(sizepattern)d" class="lightsearchfield searchboxbodyinput" value="%(searchvalue)s"/><br/>
+               </td>
+               %(middle_option)s
+               <td class="searchboxbody" align="left">
+                 <input class="formbutton" type="submit" name="action_search" value="%(msg_search)s" />
+               </td>
+               <td class="searchboxbody searchboxbodymoresearch" align="left" rowspan="2" valign="top">
+                 %(esearch)s
+                 %(asearch)s
+               </td>
+               </tr>
+               <tr>
+                 <td class="searchboxexample">
+                   %(example_query_html)s
+                 </td>
+              </tr></table>
+              <!--<tr valign="baseline">
+               <td class="searchboxbody" colspan="2" align="left">
+               </td>
+              </tr>
+             </tbody>
+            </table>-->
+            ''' % {'ln' : ln,
+                   'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
+                   'langlink': langlink,
+                   'siteurl' : CFG_SITE_URL,
+                   'esearch' : easy_search_link,
+                   'asearch' : create_html_link(asearchurl, {}, _('Advanced Search')),
+                   'header' : header,
+                   'msg_search' : _('Search'),
+                   'msg_browse' : _('Browse'),
+                   'msg_easy_search' : _('Easy Search'),
+                   'example_query_html': example_html,
+                   'searchvalue' : searchvalue,
+                   'middle_option' : middle_option
+                  }
 
         return out
 
@@ -718,9 +818,141 @@ class Template(DefaultTemplate):
                   }
         return out
 
+    def tmpl_searchfor_jobs(self, ln, collection_id, filters, keywords, of='hb'):
+        """Produces Search filter box for the Jobs collection.
+
+        Parameters:
+
+          - 'ln' *string* - *str* The language to display
+          - 'collection_id' - *str* The collection id. For example: Jobs
+          - 'filters' - *str* The first search string (p1) used for filters (rank etc.)
+          - 'keywords' - *str* The first search string (p2) used for keywords
+          - 'of' - *str* Currently selected output format
+        """
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = '''
+        <!--create_searchfor_jobs()-->
+        '''
+
+        argd = drop_default_urlargd({'ln': ln, 'cc': collection_id, 'sc': CFG_WEBSEARCH_SPLIT_BY_COLLECTION},
+                                    self.search_results_default_urlargd)
+
+        # Only add non-default hidden values
+        for field, value in argd.items():
+            out += self.tmpl_input_hidden(field, value)
 
 
-    #disabled at the moment...
+        # lets decorate the search box with some help
+        header = _('Optionally add some keywords to the search:')
+
+        asearchurl = self.build_search_interface_url(c=collection_id,
+                                                     aas=max(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES),
+                                                     ln=ln)
+
+        #get examples
+        example_html = self.tmpl_show_examples(collection_id, ln)
+
+        langlink = ln != CFG_SITE_LANG and '?ln=' + ln or ''
+
+        clear_button = '<span id="reset_search">%s</span>' % (_("Reset search"))
+        msg_search = _('Search')
+        msg_header = "Select search filters (multiples allowed):"
+
+        rank_selected = [item['value'] for item in CFG_SEARCH_INSPIRE_JOB_RANKS if '"' + item['value'] + '"' in filters]
+        rank_select = self.tmpl_select_multiple(fieldname="rank", \
+                                                values=CFG_SEARCH_INSPIRE_JOB_RANKS, \
+                                                selected=rank_selected, \
+                                                css_id='rank', \
+                                                size=5)
+
+        region_selected = [item['value'] for item in CFG_SEARCH_INSPIRE_JOB_REGIONS if '"' + item['value'] + '"' in filters]
+        region_select = self.tmpl_select_multiple(fieldname="region", \
+                                                values=CFG_SEARCH_INSPIRE_JOB_REGIONS, \
+                                                selected=region_selected, \
+                                                css_id='region', \
+                                                size=5)
+
+        field_selected = [item['value'] for item in CFG_SEARCH_INSPIRE_JOB_FIELDS if item['value'] in filters]
+        field_select = self.tmpl_select_multiple(fieldname="field", \
+                                                values=CFG_SEARCH_INSPIRE_JOB_FIELDS, \
+                                                selected=field_selected, \
+                                                css_id='field', \
+                                                size=5)
+
+        out += '''
+        <script type="text/javascript">
+        $(document).ready(function(){
+            // Disable default search on Enter key and launch job search.
+            $(window).keydown(function(event){ if(event.keyCode === 13) { event.preventDefault(); perform_job_search(); return false; } });
+        });
+        </script>
+        <h3 class="jobfilter_header">%(msg_header)s</h3>
+        <table id="jobfilters">
+        <thead>
+        <th><label for="rank">Rank:</label></th>
+        <th><label for="region">Region:</label></th>
+        <th><label for="field">Field:</label></th>
+        </thead>
+        <tbody>
+        <tr>
+        <td>%(rank_select)s</td>
+        <td>%(region_select)s</td>
+        <td>%(field_select)s</td>
+        <td class="searchboxbody searchboxbodymoresearch" align="left" rowspan="2" valign="top">
+          <em>Crtl + click</em> to select multiple<br />
+          <em>Crtl + click</em> existing to remove<br />
+          %(clear_search)s
+        </td>
+        </tr>
+        </tbody>
+        </table>
+
+        <table class="searchbox lightsearch">
+        <thead>
+          <tr align="left">
+           <th class="searchboxheader">%(header)s</th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr valign="baseline">
+           <td class="searchboxbody searchboxbodyinput" align="right">
+               <input type="text" id="mainlightsearchfield" name="p2" size="%(sizepattern)d" class="lightsearchfield searchboxbodyinput" value="%(keywords)s"/><br/>
+           </td>
+           <td class="searchboxbody" align="left">
+             <input class="formbutton" type="button" name="action_search" value="%(msg_search)s" onclick="perform_job_search('%(search_url)s')" />
+           </td>
+           </tr>
+           <tr>
+             <td class="searchboxexample">
+               %(example_query_html)s
+             </td>
+          </tr>
+          </table>
+          <!--<tr valign="baseline">
+           <td class="searchboxbody" colspan="2" align="left">
+           </td>
+          </tr>
+         </tbody>
+        </table>-->
+        ''' % {'ln' : ln,
+               'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
+               'langlink': langlink,
+               'siteurl' : CFG_SITE_URL,
+               'clear_search' : clear_button,
+               'header' : header,
+               'msg_search' : msg_search,
+               'example_query_html': example_html,
+               'keywords' : keywords,
+               'search_url' : '/search?p1=QUERY&op1=a&p2=KEYWORD&action_search=Search&cc=Jobs',
+               'msg_header' : msg_header,
+               'rank_select' : rank_select,
+               'region_select' : region_select,
+               'field_select' : field_select
+              }
+
+        return out
 
     def tmpl_search_box(self, ln, aas, cc, cc_intl, ot, sp,
                         action, fieldslist, f1, f2, f3, m1, m2, m3,
@@ -821,9 +1053,13 @@ class Template(DefaultTemplate):
         if action == 'browse':
             leadingtext = _("Browse")
 
-        if aas == 1:
+        if cc == "Jobs":
+            # print Jobs Search form:
+            # If p is specified use it instead of p2
+            keywords = p and p or p2
+            out += self.tmpl_searchfor_jobs(ln=ln, collection_id=cc, filters=p1, keywords=keywords, of=of)
+        elif aas == 1:
             # print Advanced Search form:
-
             # define search box elements:
             out += '''
             <table class="advancedsearch">
@@ -1197,6 +1433,9 @@ class Template(DefaultTemplate):
         header = _("Search %s records for") % \
                  self.tmpl_nbrecs_info(record_count, "", "")
         header += ':'
+
+        # this is not Jobs, we build normal interface
+
         ssearchurl = self.build_search_interface_url(c=collection_id, aas=min(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES), ln=ln)
 
         # replace format options
@@ -1447,4 +1686,49 @@ class Template(DefaultTemplate):
 
 
         out += '</div>'
+        return out
+
+    def tmpl_select_multiple(self, fieldname, values, selected=None, css_id='',
+                             css_class='', size=3):
+        """
+          Produces a generic select box
+
+        Parameters:
+
+          - 'css_class' *string* - optional, a css class to display this select with
+
+          - 'fieldname' *list* - the name of the select box produced
+
+          - 'selected' *list* - which of the values is selected
+
+          - 'values' *list* - the list of values in the select
+        """
+        if css_class != '':
+            class_field = ' class="%s"' % css_class
+        else:
+            class_field = ''
+        if css_id != '':
+            id_field = ' id="%s"' % css_id
+        else:
+            id_field = ''
+        out = '<select name="%(fieldname)s" multiple="multiple" size=%(size)d %(class)s %(id)s>' % {
+            'fieldname' : fieldname,
+            'size' : size,
+            'class' : class_field,
+            'id' : id_field
+            }
+
+        for pair in values:
+            if pair.get('selected', False) or pair['value'] in selected:
+                flag = ' selected="selected"'
+            else:
+                flag = ''
+
+            out += '<option value="%(value)s"%(selected)s>%(text)s</option>' % {
+                     'value'    : cgi.escape(str(pair['value'])),
+                     'selected' : flag,
+                     'text'     : cgi.escape(pair['text'])
+                   }
+
+        out += """</select>"""
         return out

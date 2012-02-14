@@ -4,6 +4,7 @@ include ../config.mk
 -include ../config-local.mk
 
 IMGFILES = *.png invenio_inspire.css
+JSFILES = *.js
 LIBFILES = web*_templates_inspire.py
 
 all:
@@ -14,6 +15,7 @@ test:
 
 install:
 	$(INSTALL) -m 664 $(IMGFILES) $(WEBDIR)/img
+	$(INSTALL) -m 664 $(JSFILES) $(WEBDIR)/js
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
 
 install-ugly: install uglify

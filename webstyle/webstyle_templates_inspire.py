@@ -146,6 +146,11 @@ $(function() {
 </script>
             """ % { 'site_url' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL }
 
+        # Hack to add jobs filter JS to Jobs collection pages
+        if "Jobs" in body_css_classes:
+            metaheaderadd += '<script type="text/javascript" src="%s/js/jobs_filter.js"></script>' % \
+                (secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL,)
+
         out = """\
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

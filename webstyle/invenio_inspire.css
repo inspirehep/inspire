@@ -52,7 +52,7 @@ h3 {
    font-size: 120%;
    font-weight: 600;
    font-variant: small-caps;
-   margin-top: 40px;
+   margin-top: 10px;
    margin-left: 0px;
    margin-bottom: 10px;
    color: #69c;
@@ -231,7 +231,7 @@ clear:right;
 
 }
 
-.help a#nav-help{
+.help a#nav-help, .Jobs a#nav-jobs, .HEP a#nav-hep, .Institutions a#nav-inst, .Conferences a#nav-conf, .HepNames a#nav-hepnames {
     border:1px solid #999;
     border-bottom: 1px solid #fc9;
     margin:0em;
@@ -239,7 +239,7 @@ clear:right;
     background-color:#FC9;
     color:#69C;
 }
-.help a:hover#nav-help{
+.help a:hover#nav-help, .Jobs a:hover#nav-jobs, .HEP a:hover#nav-hep, .Institutions a:hover#nav-inst, .Conferences a:hover#nav-conf, .HepNames a:hover#nav-hepnames {
    text-decoration: underline;
 }
 
@@ -2748,4 +2748,28 @@ td.tips-rhs {
    color: #0066CC;
 }
 
+.jobfilter_header {
+    border-bottom: 0px solid black;
+    margin-top: 0px;
+    width: 100%;
+}
+
+#jobfilters {
+    text-align: left;
+}
+
+#jobfilters th {
+    font-size: small;
+}
+
+span#reset_search {
+    color: #0066CC;
+    text-decoration: underline;
+}
+
+span:hover#reset_search {
+    background-color: #6699CC;
+    color: #FFFFFF;
+    cursor: pointer;
+}
 /* end of inspire.css */
