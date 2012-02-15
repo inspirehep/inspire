@@ -2740,4 +2740,12 @@ td.tips-rhs {
     font-weight: bold;
     margin: 5px 10px;
 }
+
+.pagelastmodified {
+   text-align: right;
+   float: right;
+   font-size: small;
+   color: #0066CC;
+}
+
 /* end of inspire.css */

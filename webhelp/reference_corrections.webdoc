@@ -55,12 +55,16 @@ There is no need to send corrections twice.</strong>
 
 
 <h4>How to use this form</h4>
-<p>To correct the references of a paper using this form:<ol>
-<li>Search for the paper whose reference list needs updating (paper B
-  above)</li>
+<p>To correct the references of a paper using this form:</p>
+<ol>
+<li>Search for the paper whose reference list needs updating (paper B above)</li>
 <li>Click on "references"</li>
-<li>Click on "Update these references."</li></ol>   If you cannot find this paper in INSPIRE, you'll need to request that we add it.  We will add papers if they are related
-  to HEP, and the best way is described here <a href="additions<lang:link/>">_(Additions)_</a>
+<li>Click on "Update these references."</li>
+</ol>
+
+<p>
+If you cannot find this paper in INSPIRE, you'll need to request that we add it.  We will add papers if they are related
+to HEP, and the best way is described here <a href="additions<lang:link/>">_(Additions)_</a>
 </p>
 
 <p>
@@ -70,21 +74,24 @@ comments. A valid email is required for the form to properly be submitted.</p>
 <p>
 On the form, you will see boxes with the current references as we
 have them in INSPIRE:
-<form onSubmit="return false">
-<table id="t21"><tbody><tr id="tr21"><td></td><td><input id="t21" src="/img/add.png" onclick="return false;" value="+" type="image"></td><td><input name="cite" size="35" value="Phys.Rev.Lett.,96,165002" id="c21" type="text"></td><td><small><strong>
+</p>
+
+<table>
+<tbody>
+<tr>
+<td><img src="/img/add.png" alt="+" /></td><td><input name="cite" size="35" value="Phys.Rev.Lett.,96,165002" type="text" /></td><td><small><strong>
 <a href="">
 Nonlinear theory for relativistic plasma wakefields in the blowout regime</a></strong>
  - <a class="authorlink" href="">Lu, W.</a> <em>et al.</em>
   Phys.Rev.Lett. 96 (2006)  165002
 </small></td></tr></tbody></table>
-</p>
 
 <p> Note that in some cases a paper may cite a paper that we don't have,
   or don't recognize, in INSPIRE:
-
-<table id="t18"><tbody><tr id="tr18"><td></td><td><input id="t18" src="/img/add.png" onclick="return false;" value="+" type="image"></td><td><input name="cite" size="35" value="Lect.Notes Comput.Sci.,2331,342" id="c18" type="text"></td><td><small>Lect.Notes Comput.Sci.,2331,342</small></td></tr></tbody></table>
-</form>
 </p>
+<table><tbody><tr><td><img src="/img/add.png" alt="+" /></td><td><input name="cite" size="35" value="Lect.Notes Comput.Sci.,2331,342" type="text" /></td><td>
+<small>Lect.Notes Comput.Sci.,2331,342</small></td></tr></tbody></table>
+
 <p>
 If you don't see title and author information next to a reference, and you
 are sure that we have the paper, then the reference probably has an error,
@@ -95,7 +102,7 @@ and you should attempt to correct it so that the citation is correctly counted.
 If a reference needs correcting, simply change the field.
 </p>
 <p>If references need to be
-added or inserted, click on <img src="/img/add.png" alt="+"> to the
+added or inserted, click on <img src="/img/add.png" alt="+" /> to the
 left of the box, a new box will appear below that line.  If you have
 mistakenly opened too many boxes, do not be concerned, we'll ignore
 the empty ones.</p>
@@ -108,7 +115,8 @@ the empty ones.</p>
   wasn't found in your search, you can revise your search until you find
   the paper, then click "Select this reference" and it will be added to
   the list.</p>
-
+<h4>Deleting a citation</h4>
+<p>To delete a cite you simply blank out the cite on the page.</p>
 
 <h4>What to expect</h4>
 <p>After you've added missed references, or corrected errors, you'll click
@@ -125,3 +133,5 @@ our workload.
 Note that during the submit process, the data in the form will change slightly to
 help our input process.
 </p>
+
+<div class="pagelastmodified">Last modified: 2012-02-15</div>
