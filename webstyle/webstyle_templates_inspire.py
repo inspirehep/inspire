@@ -130,7 +130,10 @@ template function generated it.
 <link type="text/css" href="%(site_url)s/img/jquery-ui.css" rel="stylesheet" />
 <style type="text/css">
 div.ui-datepicker{
-    font-size:12px;
+  font-size:12px;
+}
+input.proceedings_radio{
+  width: 20px;
 }
 </style>
 <script type="text/javascript">
@@ -146,8 +149,20 @@ function defText(field){
     }
 }
 $(function() {
-    $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+    $('.datepicker[name="CONFSUBMIT_FDAT"]').datepicker({
+      dateFormat: 'yy-mm-dd'});
+    $('.datepicker[name="CONFSUBMIT_SDAT"]').datepicker({
+      dateFormat: 'yy-mm-dd',
+      altField: '.datepicker[name="CONFSUBMIT_FDAT"]'
+    });
 });
+
+//hiding some useless fields
+$(function () {
+  var hideFields = $(".submit form table tr").eq(0);
+  hideFields.find("td:gt(1)").hide();
+  $(".submit a img[alt='Back to main menu']").parent().hide();
+})
  //]]>
 </script>
             """ % { 'site_url' : CFG_BASE_URL }

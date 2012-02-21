@@ -40,11 +40,9 @@ from invenio.dbquery import run_sql
 from invenio.access_control_admin import acc_get_role_users,acc_get_role_id
 from invenio.websubmit_config import CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN
 from invenio.mailutils import send_email
-from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, \
-                                                                 CFG_WEBSUBMIT_JOBS_FROMADDR, \
-                                                                 email_footer
+from invenio.websubmit_functions.CONFSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, CFG_WEBSUBMIT_CONF_FROMADDR, email_footer
 
-def JOBSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
+def CONFSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
     """
     This function sends an email to the referee in order to start the
     simple approval process.  This function is very CERN-specific and
@@ -71,6 +69,10 @@ def JOBSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
                          category equals "CATEGORY1"
 
        * titleFile: name of the file in which the title is stored.
+
+       * submitteremailfile: name of the file in which the title is stored.
+
+       * submitternamefile: name of the file in which the title is stored.
 
        * contactnamefile: name of the file in which the title is stored.
 
@@ -119,16 +121,21 @@ def JOBSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
     date = get_file_contents(curdir, "date")
     title = get_file_contents(curdir, parameters['titleFile']).replace("\n","")
     title += " - %s" % date
+    submitteremail = get_file_contents(curdir, parameters['submitteremailfile']).replace("\n",", ")
+    submittername = get_file_contents(curdir, parameters['submitternamefile']).replace("\n",", ")
     contactname = get_file_contents(curdir, parameters['contactnamefile']).replace("\n",", ")
     contactemail = get_file_contents(curdir, parameters['contactemailfile']).replace("\n",", ")
-    reference = get_file_contents(curdir, parameters['referencefile']).replace("\n",", ")
-    affiliation = get_file_contents(curdir, parameters['affiliationfile']).replace("\n",", ")
-    region = get_file_contents(curdir, parameters['regionfile']).replace("\n",", ")
-    rank = get_file_contents(curdir, parameters['rankfile']).replace("\n",", ")
+    subtitle = get_file_contents(curdir, parameters['subtitle']).replace("\n",", ")
+    city = get_file_contents(curdir, parameters['cityfile']).replace("\n",", ")
+    country = get_file_contents(curdir, parameters['countryfile']).replace("\n",", ")
+    state = get_file_contents(curdir, parameters['statefile']).replace("\n",", ")
+    stdate = get_file_contents(curdir, parameters['stdatefile']).replace("\n",", ")
+    fndate = get_file_contents(curdir, parameters['fndatefile']).replace("\n",", ")
     field = get_file_contents(curdir, parameters['fieldfile']).replace("\n",", ")
-    experiments = get_file_contents(curdir, parameters['experimentsfile']).replace("\n",", ")
     url = get_file_contents(curdir, parameters['urlfile']).replace("\n"," ")
-    date = get_file_contents(curdir, parameters['datefile']).replace("\n","")
+    shorttitle = get_file_contents(curdir, parameters['shorttitle']).replace("\n"," ")
+    keywords = get_file_contents(curdir, parameters['keywords']).replace("\n"," ")
+    proceedings = get_file_contents(curdir, parameters['proceedings']).replace("\n"," ")
     abstract = get_file_contents(curdir, parameters['abstractfile'])
 
     # we get the referee password
@@ -148,57 +155,55 @@ def JOBSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
     addresses = ""
     if refereeaddress != "":
         addresses = refereeaddress + ","
-    if otheraddresses != "" and otheraddresses != CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL:
+    if otheraddresses != "":
         addresses += otheraddresses
     else:
         addresses = re.sub(",$","",addresses)
     record_url = "%s/%s/%s" % (CFG_SITE_URL, CFG_SITE_RECORD, sysno)
     title_referee = "Request for approval of %s" % rn
     mail_referee = """
-The document %(rn)s has been submitted to the Jobs database.\nYour approval is requested on it.
+The document %(rn)s has been submitted to the Conferences database and it will appear here:\n%(recordlink)s.
+To approve/reject the document, you should go to this URL:\n<%(access)s>\n
 
 Title: %(title)s
-Contact name(s): %(contactname)s
-Contact email(s): %(contactemail)s
-Reference(s): %(reference)s
-Affliliation(s): %(affiliation)s
-
-Region(s): %(region)s
-Rank(s): %(rank)s
-Field(s): %(field)s
-Experiments(s): %(experiments)s
+Date: from %(stdate)s to %(fndate)s
+Place: %(city)s, %(state)s, %(country)s
 
 URL: %(url)s
 
-Deadline date: %(date)s
+Field(s): %(field)s
 
 Description:
 %(abstract)s
 
-The record will appear here:
-%(recordlink)s
-
-To approve/reject the document, you should go to this URL:\n%(access)s\n
+Contact name(s): %(contactname)s
+Contact email(s): %(contactemail)s
+Submitter name(s): %(submittername)s
+Submitter email(s): %(submitteremail)s
     """ % {'rn' : rn,
            'title' : title,
+           'submitteremail' : submitteremail,
+           'submittername' : submittername,
            'contactname' : contactname,
            'contactemail' : contactemail,
-           'reference' : reference,
-           'affiliation' : affiliation,
-           'region' : region,
-           'rank' : rank,
-           'region' : region,
            'field' : field,
-           'experiments' : experiments,
+           'city' : city,
+           'state' : state,
+           'country' : country,
+           'stdate' : stdate,
+           'fndate' : fndate,
            'url' : url,
-           'date' : date,
-           'abstract' : abstract,
-           'access' : "%s/approve.py?access=%s" % (CFG_SITE_URL, access),
-           'recordlink' : record_url
+           'subtitle' : subtitle,
+           'shorttitle' : shorttitle,
+           'proceedings' : proceedings,
+           'keywords' : keywords,
+           'access' : "%s/approve.py?access=%s" % (CFG_SITE_URL,access),
+           'recordlink' : record_url,
+           'abstract' : abstract
            }
     #Send mail to referee
-    send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, subject=title_referee, \
-               content=mail_referee, footer=email_footer(support_email=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL),
+    send_email(fromaddr=CFG_WEBSUBMIT_CONF_FROMADDR, toaddr=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, subject=title_referee, \
+               content=mail_referee, footer=email_footer(support_email=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL),
                copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN, bccaddr=addresses)
     return ""
 

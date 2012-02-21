@@ -44,13 +44,13 @@ from invenio.websubmit_config import CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN
 from invenio.mailutils import send_email
 from invenio.errorlib import register_exception
 from invenio.search_engine import print_record
-from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, \
-                                                                 CFG_WEBSUBMIT_JOBS_FROMADDR, \
+from invenio.websubmit_functions.CONFSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, \
+                                                                 CFG_WEBSUBMIT_CONF_FROMADDR, \
                                                                  email_footer
 
 CFG_WEBSUBMIT_RECORD_OWNER_EMAIL = "270__m"
 
-def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
+def CONFSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     """
     This function send an email informing the original submitter of a
     document that the referee has approved/ rejected the document.
@@ -111,7 +111,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## a file called 'COM' in curdir:
         if os.path.exists("%s/COM" % curdir):
             try:
-                fh_comments = open("%s/COM" % curdir)
+                fh_comments = open("%s/COM" % curdir, "r")
                 comment = fh_comments.read()
                 fh_comments.close()
             except IOError:
@@ -130,7 +130,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## Try to read the comments from the comments file:
         if os.path.exists("%s/%s" % (curdir, comments_filename)):
             try:
-                fh_comments = open("%s/%s" % (curdir, comments_filename))
+                fh_comments = open("%s/%s" % (curdir, comments_filename), "r")
                 comment = fh_comments.read()
                 fh_comments.close()
             except IOError:
@@ -153,7 +153,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## a file called 'decision' in curdir:
         if os.path.exists("%s/decision" % curdir):
             try:
-                fh_decision = open("%s/decision" % curdir)
+                fh_decision = open("%s/decision" % curdir, "r")
                 decision = fh_decision.read()
                 fh_decision.close()
             except IOError:
@@ -171,7 +171,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     else:
         ## Try to read the decision from the decision file:
         try:
-            fh_decision = open("%s/%s" % (curdir, decision_filename))
+            fh_decision = open("%s/%s" % (curdir, decision_filename), "r")
             decision = fh_decision.read()
             fh_decision.close()
         except IOError:
@@ -186,7 +186,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
             decision = decision.strip()
 
     if os.path.exists("%s/%s" % (curdir,newrnpath)):
-        fp = open("%s/%s" % (curdir,newrnpath))
+        fp = open("%s/%s" % (curdir,newrnpath) , "r")
         newrn = fp.read()
         fp.close()
     else:
@@ -218,7 +218,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     ## Add the record's submitter(s) into the list of recipients:
     # The submitters email address is read from the file specified by 'emailFile'
     try:
-        fp = open("%s/%s" % (curdir,parameters['emailFile']))
+        fp = open("%s/%s" % (curdir,parameters['emailFile']),"r")
         addresses += fp.read().replace ("\n"," ")
         fp.close()
     except:
@@ -226,17 +226,17 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
 
     if decision == "approve":
         mailtitle = "%s has been approved" % rn
-        mailbody = "The submitted job listing with reference number %s has been fully approved." % (rn,)
-        mailbody += "\n\nIt will soon become visible in the INSPIRE-HEP Jobs database - <%s/Jobs>" % (CFG_SITE_URL,)
+        mailbody = "The submitted conference with reference number %s has been fully approved." % (rn,)
+        mailbody += "\n\nIt will soon become visible in the INSPIRE-HEP Conference database - <%s/Conferences>" % (CFG_SITE_URL,)
     else:
         mailtitle = "%s has been rejected" % rn
         mailbody = "The %s %s has been rejected." % (docname,rn)
     if rn != newrn and decision == "approve" and newrn != "":
         mailbody += "\n\nIts new reference number is: %s" % newrn
-    mailbody += "\n\nTitle: %s\n\nAuthor(s): %s\n\n" % (titlevalue,authorvalue)
+    mailbody += "\n\nTitle: %s\n\nContact(s): %s\n\n" % (titlevalue,authorvalue)
     if comment != "":
         mailbody += "Comments from the referee:\n%s\n" % comment
     # Send mail to referee
-    send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=addresses, subject=mailtitle, \
-               content=mailbody, footer=email_footer(support_email=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL), copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
+    send_email(fromaddr=CFG_WEBSUBMIT_CONF_FROMADDR, toaddr=addresses, subject=mailtitle, \
+               content=mailbody, footer=email_footer(support_email=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL), copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN)
     return ""

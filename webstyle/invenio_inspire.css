@@ -1111,6 +1111,10 @@ input,select {
     color: #000;
     background: #fff;
 }
+input[type="text"]:disabled
+{
+background:#cccccc;
+}
 .wsactionbutton {
     width: 150px;
     height: 25px;

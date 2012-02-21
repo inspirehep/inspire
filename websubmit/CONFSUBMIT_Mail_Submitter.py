@@ -26,23 +26,22 @@ from invenio.websubmit_functions.INSPIRE_Mail_Submitter import Mail_Submitter, \
      load_parameters, email_footer
 # email_footer function will be passed further
 
-CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL = "jobs@inspirehep.net"
-CFG_WEBSUBMIT_JOBS_FROMADDR = 'INSPIRE-HEP Jobs support <%s>' % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL,)
+CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL = "conf@inspirehep.net"
+CFG_WEBSUBMIT_CONF_FROMADDR = 'INSPIRE-HEP Conference support <%s>' % (CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL,)
 
-def JOBSUBMIT_Mail_Submitter(parameters, curdir, form, user_info=None):
+def CONFSUBMIT_Mail_Submitter(parameters, curdir, form, user_info=None):
     param_list = load_parameters(parameters=parameters, curdir=curdir)
     fullrn = param_list[0]
     m_title = param_list[1]
     m_author = param_list[2]
     # create email body
-    email_txt = "The job listing with reference number %s\nTitle: %s\nSubmitter(s): %s\n\nhas been received for approval.\n\n" % (fullrn,m_title,m_author)
+    email_txt = "The conference with reference number %s\nTitle: %s\nSubmitter(s): %s\n\nhas been received for approval.\n\n" % (fullrn,m_title,m_author)
     # The user is either informed that the document has been added to the database, or sent for approval
     email_txt += "Your listing will not be visible until it has been fully approved by one of our catalogers. " \
-                 "When this happens, you will be warned by email.\n\n" \
+                 "When this happens, you will be notified by email.\n\n" \
                  "If you detect an error, please let us know by sending an email to %s. \n\n" \
-                 "Thank you for using the HEP Jobs submission.\n" % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL,)
+                 "Thank you for using the Inspire Conference submission.\n" % (CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL,)
     # send the mail
     Mail_Submitter(parameters=parameters, curdir=curdir, subject="%s: Document Received" % fullrn,\
-      text=email_txt, support_email=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, from_address=CFG_WEBSUBMIT_JOBS_FROMADDR)
-
+      text=email_txt, support_email=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, from_address=CFG_WEBSUBMIT_CONF_FROMADDR)
     return ""
