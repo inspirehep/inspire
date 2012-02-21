@@ -520,12 +520,12 @@ reset-inspire-collection-configuration:
 	echo "TRUNCATE collection_collection" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_portalbox" | $(BINDIR)/dbexec
 	echo "TRUNCATE collection_rnkMETHOD" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (1, 'HEP', 'collection:HEP or 970__a:\'SPIRES\'', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (2, 'Institutions',	'collection:INSTITUTION', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (3, 'Jobs', 'collection:JOB', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (4, 'Conferences', 'collection:CONFERENCES', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (5, 'HepNames', 'collection:HEPNAMES', 0, NULL)" | $(BINDIR)/dbexec
-	echo "INSERT INTO collection VALUES (6, 'Jobs Hidden', 'collection:JOBHIDDEN', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (1, 'HEP', '970__a:\'SPIRES\' or 980__a:\"HEP\" or 980__a:\"CORE\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (2, 'Institutions', '980__a:\"INSTITUTION\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (3, 'Jobs', '980__a:\"JOB\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (4, 'Conferences', '980__a:\"CONFERENCES\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (5, 'HepNames', '980__a:\"HEPNAMES\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (6, 'Jobs Hidden', '980__a:\"JOBHIDDEN\"', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 2, 110)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (2, 3, 100)" | $(BINDIR)/dbexec
