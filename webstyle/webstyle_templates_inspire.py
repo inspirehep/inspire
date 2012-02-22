@@ -158,7 +158,7 @@ $(function() {
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="%(ln_iso_639_a)s" xml:lang="%(ln_iso_639_a)s">
 <head>
- <title>%(headertitle)s - %(sitename)s</title>
+ <title>%(headertitle)s - INSPIRE-HEP</title>
  <link rev="made" href="mailto:%(sitesupportemail)s" />
  <link rel="stylesheet" href="%(cssurl)s/img/invenio%(cssskin)s.css" type="text/css" />
  <link rel="alternate" type="application/rss+xml" title="%(sitename)s RSS" href="%(rssurl)s" />
@@ -225,13 +225,9 @@ email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>
 ::
 <a id="nav-jobs" href="%(siteurl)s/collection/Jobs">Jobs</a>
 ::
-<a id="nav-help" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
-&nbsp;&nbsp;&nbsp;
-..::..
-&nbsp;&nbsp;&nbsp;
-<strong>SPIRES</strong>
+<a id="nav-exp" href="%(siteurl)s/collection/Experiments">Experiments</a>
 ::
-<a id="nav-exp" href="http://www.slac.stanford.edu/spires/experiments/">Exp</a>
+<a id="nav-help" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
 </div>
 <table class="navtrailbox">
  <tr>

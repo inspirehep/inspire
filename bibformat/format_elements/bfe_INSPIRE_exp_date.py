@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 ##
+## $Id$
+##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,24 +18,32 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints full-text URLs
+"""BibFormat element - Prints dates for Experiment.
 """
 __revision__ = "$Id$"
 
-def format_element(bfo, style, separator=', '):
-    """
-    This is the default format for formatting full-text URLs.
-    @param separator: the separator between urls.
-    @param style: CSS class of the link
-    """
+def format_element(bfo, separator=", "):
 
-    urls_u = bfo.fields("693__e")
-    if style != "":
-        style = 'class="'+style+'"'
+    date = bfo.fields('046__')
+    out = []
 
-    urls = ['<a href="/search?ln=en&cc=Experiments&p=119__a%3A' + url + '&of=hd" ' + style + '>' + url +'</a>'
-            for url in urls_u]
-    return separator.join(urls)
+    for item in date:
+        if item.has_key('q'):
+            out.append('Proposed: ' + item['q'])
+        if item.has_key('r'):
+            out.append('Approved: ' + item['r'])
+        if item.has_key('s'):
+            out.append('Started: ' + item['s'])
+        if item.has_key('t'):
+            if item['t'] == '9999':
+                out.append('Still Running')
+            else:
+                out.append('Completed: ' + item['t'])
+
+    if out:
+        return '(' + separator.join(out) + ')'
+    else:
+        return ''
 
 def escape_values(bfo):
     """
@@ -41,3 +51,4 @@ def escape_values(bfo):
     should be escaped.
     """
     return 0
+

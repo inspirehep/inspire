@@ -1,0 +1,23 @@
+<name>Exp HTML Detail</name>
+<description>Default HTML Detailed format for Experiments</description>
+<div class="detailed_record_info">
+
+<BFE_FIELD prefix="<big><strong>" suffix="</strong></big><br />" tag="119a" escape="">
+<BFE_FIELD prefix="<big>" suffix="</big><br />" tag="245a" escape="">
+
+<BFE_INSPIRE_EXP_DATE prefix="<br />" suffix="<br />"/>
+
+<br />
+<BFE_INSPIRE_EXP_SPOKESPERSON prefix="<strong>Spokesperson:</strong> " suffix="<br />" />
+<BFE_INSPIRE_EMAIL prefix="<strong>Contact Email: </strong>" suffix="<br />"/>
+<BFE_INSPIRE_URL prefix="<strong>URL: </strong>" suffix="<br />" default="" escape="" style="" separator="; "/>
+
+<BFE_FIELD prefix="<br />" suffix="<br />" tag="520a" escape="">
+<br />
+<a href="/search?ln=en&p=693__e%3A<BFE_FIELD tag='119__a'/>">HEP articles associated with <BFE_FIELD tag="119__a"/></a><br />
+<a href="/search?ln=en&cc=HepNames&p=693__e%3A<BFE_FIELD tag='119__a'/>">Collaboration members in HepNames</a><br />
+<a href="/search?ln=en&ln=en&p=693__e%3A<BFE_FIELD tag='119__a'/>&of=hcs">Citesummary</a>
+<BFE_INSPIRE_EXP_RELATED prefix="<br />Related Experiments: " /><br />
+<BFE_INSPIRE_EXP_COLLABORATION prefix="<br />"/>
+
+</div>

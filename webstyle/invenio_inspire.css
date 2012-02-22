@@ -231,7 +231,7 @@ clear:right;
 
 }
 
-.help a#nav-help, .Jobs a#nav-jobs, .HEP a#nav-hep, .Institutions a#nav-inst, .Conferences a#nav-conf, .HepNames a#nav-hepnames {
+.help a#nav-help, .Jobs a#nav-jobs, .HEP a#nav-hep, .Institutions a#nav-inst, .Experiments a#nav-exp, .Conferences a#nav-conf, .HepNames a#nav-hepnames {
     border:1px solid #999;
     border-bottom: 1px solid #fc9;
     margin:0em;
@@ -239,7 +239,7 @@ clear:right;
     background-color:#FC9;
     color:#69C;
 }
-.help a:hover#nav-help, .Jobs a:hover#nav-jobs, .HEP a:hover#nav-hep, .Institutions a:hover#nav-inst, .Conferences a:hover#nav-conf, .HepNames a:hover#nav-hepnames {
+.help a:hover#nav-help, .Jobs a:hover#nav-jobs, .HEP a:hover#nav-hep, .Institutions a:hover#nav-inst, .Conferences a:hover#nav-conf, .Experiments a:hover#nav-exp, .HepNames a:hover#nav-hepnames {
    text-decoration: underline;
 }
 

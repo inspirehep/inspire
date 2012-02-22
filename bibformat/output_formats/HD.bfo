@@ -4,5 +4,6 @@ JOB --- Jobs_HTML_detailed.bft
 JOBHIDDEN --- Jobs_HTML_detailed.bft
 HEPNAMES --- Hepnames_HTML_detailed.bft
 CONFERENCES  --- Conf_HTML_detailed.bft
+EXPERIMENT --- Exp_HTML_detailed.bft
 
 default: Default_HTML_detailed.bft

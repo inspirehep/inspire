@@ -1,0 +1,17 @@
+<name>Exp HTML Brief</name>
+<description>Default HTML brief format for Experiments</description>
+<!C-START REC 11.Brief--!>
+<div class="record_body">
+
+<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+<BFE_FIELD prefix=""  suffix="<br />"  tag="119a" escape="">
+</a>
+<BFE_FIELD prefix=""  suffix="<br />"  tag="245a" escape="">
+
+<small>
+<BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
+<a href="/search?ln=en&p=693__e%3A<BFE_FIELD tag='119__a'/>">HEP articles associated with <BFE_FIELD tag="119__a"/></a>
+<BFE_INSPIRE_EXP_COLLABORATION prefix="<br />"/>
+
+</small>
+</div>

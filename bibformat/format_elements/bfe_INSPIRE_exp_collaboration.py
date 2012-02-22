@@ -27,11 +27,9 @@ def format_element(bfo, style, separator=', '):
     @param style: CSS class of the link
     """
 
-    urls_u = bfo.fields("693__e")
-    if style != "":
-        style = 'class="'+style+'"'
+    urls_u = bfo.fields("710__g")
 
-    urls = ['<a href="/search?ln=en&cc=Experiments&p=119__a%3A' + url + '&of=hd" ' + style + '>' + url +'</a>'
+    urls = ['<a href="/search/?p=collaboration:%27' + url + '%27&ln=en">' + url +'</a>'
             for url in urls_u]
     return separator.join(urls)
 

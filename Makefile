@@ -531,6 +531,7 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collection VALUES (4, 'Conferences', '980__a:\"CONFERENCES\"', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (5, 'HepNames', '980__a:\"HEPNAMES\"', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection VALUES (6, 'Jobs Hidden', '980__a:\"JOBHIDDEN\"', 0, NULL)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection VALUES (7, 'Experiments', '980__a:\"EXPERIMENT\"', 0, NULL)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 1, 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (1, 2, 110)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_rnkMETHOD VALUES (2, 3, 100)" | $(BINDIR)/dbexec
@@ -541,6 +542,7 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectionname VALUES (4, 'en', 'ln', 'Conferences')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (5, 'en', 'ln', 'HepNames')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectionname VALUES (6, 'en', 'ln', 'Jobs Hidden')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectionname VALUES (7, 'en', 'ln', 'Experiments')" | $(BINDIR)/dbexec
 	echo "DELETE FROM collection_externalcollection WHERE id_collection >= 2" | $(BINDIR)/dbexec
 	echo "UPDATE collection_externalcollection SET type=1 WHERE type=2" | $(BINDIR)/dbexec
 	echo "TRUNCATE collectiondetailedrecordpagetabs" | $(BINDIR)/dbexec
@@ -550,6 +552,7 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (4, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (5, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (6, 'metadata')" | $(BINDIR)/dbexec
+	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (7, 'metadata')" | $(BINDIR)/dbexec
 	$(BINDIR)/webcoll -u admin
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
@@ -848,6 +851,51 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
 	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
 
+# Add Exp title box
+	echo "INSERT INTO portalbox VALUES (16, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_exp_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=16", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'de', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'el', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'en', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'es', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'fr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'hr', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'it', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'ja', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'no', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
+
+	echo "INSERT INTO portalbox VALUES (17, '', 'FIXME')" | $(BINDIR)/dbexec
+		# now update portalbox value from the right top portalbox file:
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_exp_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=17", (body,))' | $(PYTHON)
+
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'de', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'el', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'en', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'es', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'fr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'hr', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'it', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'ja', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'no', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
+	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+
+
 reset-inspire-search-sort-field-configuration:
 	@echo ">>> Resetting search/sort field configuration:"
 	@echo ">>> Adding hep search/sort field configuration:"
@@ -994,4 +1042,5 @@ reset-inspire-examples-searches:
 	echo "insert into collection_example (id_collection,id_example) select 3, example.id from example where example.type='Jobs';" | $(BINDIR)/dbexec
 	echo "insert into collection_example (id_collection,id_example) select 4, example.id from example where example.type='Conferences';" | $(BINDIR)/dbexec
 	echo "insert into collection_example (id_collection,id_example) select 5, example.id from example where example.type='HepNames';" | $(BINDIR)/dbexec
+	echo "insert into collection_example (id_collection,id_example) select 7, example.id from example where example.type='Experiments';" | $(BINDIR)/dbexec
 	@echo ">>> Done reset-inspire-example-searches."

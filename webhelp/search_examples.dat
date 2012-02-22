@@ -13,5 +13,6 @@ INSERT into example (type,body) values
 ("Jobs", "Madrid"),
 ("HepNames", "find author ellis and field hep-th"),
 ("Conferences", "Las Vegas"),
-("Conferences", "SUSY08")
+("Conferences", "SUSY08"),
+("Experiments", "find year 1997")
 ;
