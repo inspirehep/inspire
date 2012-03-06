@@ -28,7 +28,7 @@ suffix_fr="<br />" escape="0"
 <BFE_INSPIRE_JOBS_CONTACT prefix="<strong>Contact: </strong>" suffix="<br />" />
 <BFE_INSPIRE_EMAIL prefix="<strong>Email: </strong>" suffix="<br />" />
 
-<BFE_INSPIRE_URL prefix="<strong>More Information: </strong>" suffix="<br />" />
+<BFE_INSPIRE_URL prefix="<strong>More Information: </strong><br />" separator="<br />" suffix="<br />" />
 
 <BFE_INSPIRE_JOBS_REFERENCE_EMAIL prefix="<strong>Letters of Reference should be sent to: </strong>" suffix="<br />" /><br />
 
