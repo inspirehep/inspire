@@ -1,7 +1,7 @@
 <name>Jobs text Brief</name>
 <description>Brief description of job listing</description>
 <div class="record_body">
-<BFE_CATALOGING_DATE_CREATION prefix="<strong>" suffix=":</strong> " />
+<BFE_INSPIRE_DATE_CREATED prefix="<strong>" suffix=":</strong> " />
 <BFE_TITLE highlight="no"/>
 (<BFE_FIELD tag="110__a" />
 <BFE_FIELD tag="043__a" prefix=" - " limit="1" />)
