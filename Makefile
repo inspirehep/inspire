@@ -246,6 +246,8 @@ reset-inspire-field-configuration:
 	echo "INSERT INTO field (id,name,code) VALUES (37, 'place', 'place')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (38, 'exact first author','exactfirstauthor')" | $(BINDIR)/dbexec
 	echo "INSERT INTO field (id,name,code) VALUES (39, 'author count','authorcount')" | $(BINDIR)/dbexec
+	echo "INSERT INTO field (id,name,code) VALUES (40, 'reference to','rawref')" | $(BINDIR)/dbexec
+
 	@echo ">>> Resetting table fieldname:"
 	echo "TRUNCATE fieldname" | $(BINDIR)/dbexec
 	@echo ">>> Resetting table field_tag:"
