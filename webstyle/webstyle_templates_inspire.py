@@ -130,6 +130,7 @@ div.ui-datepicker{
 }
 </style>
 <script type="text/javascript">
+ //<![CDATA[
 function clearText(field){
     if (field.value == field.defaultValue){
         field.value = '';
@@ -143,6 +144,7 @@ function defText(field){
 $(function() {
     $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
 });
+ //]]>
 </script>
             """ % { 'site_url' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL }
 
@@ -167,11 +169,20 @@ $(function() {
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
  <script type="text/javascript" src="%(cssurl)s/js/jquery.min.js"></script>
+ <script type="text/javascript">
+ //<![CDATA[
+ $(document).ready(function() {
+   if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
+       $('#mainlightsearchfield').focus();
+   }
+ });
+ //]]>
+ </script>
  %(submissionjs)s
  %(metaheaderadd)s
 </head>
 
-<body%(body_css_classes)s lang="%(ln_iso_639_a)s" onload="if ((document.search) && (document.baseURI.indexOf('/search?') == -1)) { document.search.p.focus(); }">
+<body%(body_css_classes)s lang="%(ln_iso_639_a)s">
 <div class="pageheader">
 %(inspect_templates_message)s
 

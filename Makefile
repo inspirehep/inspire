@@ -38,6 +38,9 @@ install-dbchanges: reset-inspire-field-configuration \
 reset-ugly-ui:
 	@cd webstyle && make install-ugly && cd ..
 
+reset-test-ui:
+	@cd webstyle && make install-test && cd ..
+
 reset-normal-ui:
 	@cd webstyle && make install && cd ..
 
