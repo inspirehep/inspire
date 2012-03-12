@@ -17,7 +17,7 @@ test:
 	@echo "Nothing to test."
 
 install:
-	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/refextract/journal-titles-inspire.kb
+	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
 install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject create-institutions-dynamic-kb
 	@echo "Done."
