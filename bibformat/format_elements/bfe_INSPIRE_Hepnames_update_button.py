@@ -24,12 +24,11 @@ def format_element(bfo, separator='; '):
     @param style: CSS class of the link
     """
     try:
-        hepnames_id = bfo.fields('970__a')[0]
-        irn = hepnames_id.split('-')[1]
+        hepnames_id = bfo.control_field('001')
     except:
         return ''
 
-    url = "http://www.slac.stanford.edu/spires/find/hepnames/wwwupd2?IRN=" + urllib.quote(irn)
+    url = "/person/update?IRN=" + urllib.quote(hepnames_id)
     return '<a href="' + url + '">' + '<img src="/img/update.jpg"></a>'
 
 def escape_values(bfo):
