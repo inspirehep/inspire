@@ -20,7 +20,7 @@
 <!-- WebDoc-Page-Title: _(Search tips for INSPIRE)_ -->
 <!-- WebDoc-Page-Revision: $Id$ -->
 
-<h2 id="top">You can search INSPIRE via our <a href="http://inspirebeta.net/help/easy-search">easy search</a> or via the 
+<h2 id="top">You can search INSPIRE via our <a href="/help/easy-search">easy search</a> or via the 
 main search box. The search box allows for greater control over the search. Tips for using it are presented below.</h2>
 
  <div class="navigation">
@@ -52,7 +52,7 @@ main search box. The search box allows for greater control over the search. Tips
        </form>
      </td>
      <td class="tips-rhs">
-      <p>We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences - many are documented below. If you find other differences that are bothersome, let us know at <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
+      <p>We have tried to reproduce traditional SPIRES syntax, however, there are subtle differences - many are documented below. If you find other differences that are bothersome, let us know at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></p>
      </td>
    </tr>
  </table>
@@ -79,7 +79,7 @@ main search box. The search box allows for greater control over the search. Tips
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirebeta.net/help/easy-search/">easy search</a> is the easiest way to specify journals but you can also use the search box.</p>
+      <p>The <a href="/help/easy-search/">easy search</a> is the easiest way to specify journals but you can also use the search box.</p>
      </td>
    </tr>
  </table>
@@ -98,7 +98,7 @@ main search box. The search box allows for greater control over the search. Tips
        </form>
      </td>
      <td class="tips-rhs">
-      <p>The <a href="http://inspirebeta.net/help/easy-search">easy search</a> is the easiest way to specify journals but you can also use the search box.</p>
+      <p>The <a href="/help/easy-search">easy search</a> is the easiest way to specify journals but you can also use the search box.</p>
       <p>Similar for other journals (JHEP, Nucl.Phys., etc)<br />(No spaces, include periods)<br />
       <select>
         <option>Click here for a list of more examples</option>
@@ -492,7 +492,7 @@ main search box. The search box allows for greater control over the search. Tips
       <p>These pages are created by a program that identifies an author's identity based on name, co-authors and affiliation. For most authors it does quite well. For others, eg. John Smith, it does less well. Authors are able to help though, by verifying the publication list:  claiming their own papers and removing other people's papers.</p>
      </td>
      <td class="tips-rhs">
-      <p>eg. <a href="http://inspirebeta.net/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
+      <p>eg. <a href="/author/search/S.Weinberg.1">page for S. Weinberg</a>.</p>
      </td>
    </tr>
  </table>
@@ -529,7 +529,7 @@ main search box. The search box allows for greater control over the search. Tips
      </td>
    </tr>
  </table>
-      <p>If you have questions or comments about these searches or if there is anything you would like to see added to this help page, contact <a href="mailto:feedback@inspirebeta.net">feedback@inspirebeta.net</a></p>
+      <p>If you have questions or comments about these searches or if there is anything you would like to see added to this help page, contact <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></p>
       <p>Also see the <a href="search-guide">Search Guide</a> for more detailed help on INSPIRE searching, and <a href="help-central">Help Central</a> for other help documents.</p>
 
 <div class="pagelastmodified">Last modified: 2012-02-15</div>
