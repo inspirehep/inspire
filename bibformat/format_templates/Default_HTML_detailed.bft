@@ -51,7 +51,8 @@ keyword_suffix="</small>" />
 
 </div>
 <br />
-<BFE_PLOTS width="200px" caption="no"/>
+
+<BFE_INSPIRE_PLOTS width="200px" caption="no" suffix="<br />"/>
 
 </div>
 </div>
