@@ -95,7 +95,11 @@ def format_element(bfo, width="50"):
                                  print_links="no",
                                  name_last_first = "yes")
     if authors:
-        out += texified("author", authors)
+
+        rx = re.compile('([A-Za-z\,\'\-\s]+?\.)([A-Z][a-z]+)')
+        auspace = rx.sub(r'\1 \2', authors, count=0)
+        out += texified("author", auspace)
+
     else:
         out += texified("key", recID)
 
