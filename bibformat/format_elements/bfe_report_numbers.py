@@ -48,6 +48,19 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
     else:
         return separator.join(numbers)
 
+def build_report_number_link(report_number, link_p=True):
+    """
+    Build HTML link out of given report number when it make sense (or
+    is possible) and/or escape report number.
+    @param report_number: the report number to consider
+    @param link_p: if True, build link, otherwise just escape
+    """
+    if link_p and report_number.lower().startswith('arxiv:'):
+        return create_html_link('http://arxiv.org/abs/' + report_number,
+                                urlargd={}, link_label=report_number)
+    else:
+        return cgi.escape(report_number)
+
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613
 def escape_values(bfo):
