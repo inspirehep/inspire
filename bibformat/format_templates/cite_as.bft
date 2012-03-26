@@ -10,18 +10,28 @@ function valtoReferenceinp(recid) {
       var reportvar = document.getElementById(reportf).value;
       var pubnotevar = document.getElementById(pubnotef).value;
       var irnvar = document.getElementById(irnvarf).value;
+      var subfvar = "r";
+      var pubnsendv = "NONE";
       if (reportvar == "") {
          referencevar = pubnotevar;
+         subfvar = "s";
       }
       else {
          reportvar2 = reportvar.split(",");
          referencevar = reportvar2[0];
+         if (pubnotevar != "") {
+              pubnsendv = pubnotevar;
+         }
       }
       if (referencevar == "") {
          referencevar = irnvar;
       }
       var targfieldv = window.opener.document.referenceinp.targfield.value;
+      var targfield2v = window.opener.document.referenceinp.targfieldtwo.value;
+      var targfield3v = window.opener.document.referenceinp.targfldthree.value;
       window.opener.document.getElementById(targfieldv).value = referencevar; //=document.getElementById('reportf').value;
+      window.opener.document.getElementById(targfield2v).value = subfvar;
+      window.opener.document.getElementById(targfield3v).value = pubnsendv;
       window.close();
 }
 </script>

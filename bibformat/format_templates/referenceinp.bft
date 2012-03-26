@@ -38,11 +38,14 @@ function make_table_row(id_number) {
     var sq = "'";
     var cnt=document.getElementById('fieldcnt').value;
     var inpid= 'x' + cnt;
+    var sbid = 's' + inpid;
+    var mcid = 'm' + inpid;
     cnt++;
 
     document.getElementById('fieldcnt').value=cnt;
     retval = '<tr id="tr'+id_number+'"><td></td><td><input id="button_'+id_number+'" type="image" onclick="insertRowAfter('+id_number+'); return false;" value = "+" src="/img/add.png"> </td>';
     retval += '<td><input type="text" style="background-color: #FDFDF0;" class="cite_search_box" name="cite" size="35" id="' + inpid + '" ></td><td align="left"><a href="#" onclick="openSrchWindow('+ sq + inpid + sq + '); return false;" ><img src="/img/search.png"  border=0 > Search for Citation</a></td></tr>';
+    retval += '<input type="hidden" name="subf" id="' + sbid + '"> <input type="hidden" name="jmarc" id="' + mcid + '">'
     return retval
 }
 
@@ -103,35 +106,51 @@ function changec(){
         var journvar = citefield;
 
         //change the short title to coden here
-        if (citefield.match(checkComExp)){
-            journvar = citefield.split(",");
-            var shorttitlev = journvar[0];
-            var codenv = gCODENS[journvar[0]];
-            if (codenv != null) { journvar[0] = codenv; }
-        }
+        //  if (citefield.match(checkComExp)){
+        //    journvar = citefield.split(",");
+        //    var shorttitlev = journvar[0];
+        //    var codenv = gCODENS[journvar[0]];
+        //    if (codenv != null) { journvar[0] = codenv; }
+        //}
 
-        var chgcite = 'citation = ' + journvar + ';';
+        var chgcite =  journvar ;
         document.getElementById(inputid).value = chgcite;
     }
-
+    //alert(ncnt);
+    var subfusev = "";
+    var pubnusev = "";
     for (i=0; i<=ncnt; i++) {
         var inputid = 'x' + i;
+        var subfgetid = 's' + inputid;
+        var pubngetid = 'm' + inputid;
         var citefield = document.getElementById(inputid).value;
-        var journvar = citefield;
-        if (citefield.match(checkComExp)) {
-            var journvar= citefield.split(",");
-            var shorttitlev = journvar[0];
-            var codenv = gCODENS[journvar[0]];
-            if (codenv != null) { journvar[0] = codenv; }
+        if (document.getElementById(subfgetid)) {
+             subfusev = document.getElementById(subfgetid).value;
+             pubnusev = document.getElementById(pubngetid).value;
         }
+  
+        //alert(subfgetid);
+        if (pubnusev == "") {
+             pubnusev = "NONE";
+        }
+        var journvar = citefield;
+        //if (citefield.match(checkComExp)) {
+        //    var journvar= citefield.split(",");
+        //    var shorttitlev = journvar[0];
+        //    var codenv = gCODENS[journvar[0]];
+        //    if (codenv != null) { journvar[0] = codenv; }
+        //}
         if (citefield.length != 0) {
-            var chgcite = 'cite = ' + journvar + ';';
+              var chgcite = '$$' + subfusev + ' ' + journvar;
+              if (pubnusev != "NONE") {
+                   chgcite += ' $$s ' + pubnusev; 
+              }    
             document.getElementById(inputid).value=chgcite;
         }
     }
-    var irnv=document.getElementById('irn').value;
+    var irnv=document.getElementById('recid').value;
     var convirn = irnv.replace('SPIRES-',' ');
-    document.getElementById('irn').value=convirn;
+    document.getElementById('recid').value=convirn;
     return true;
 }
 
@@ -144,8 +163,14 @@ function chgcite(txt)
 }
 
 function openSrchWindow(winputid) {
+     var subfretid = "s" + winputid;
+     var pubnretid = "m" + winputid;
      var searchvar = document.getElementById(winputid).value;
+     var subfretvar = document.getElementById(subfretid).value;
+     var pubnretvar = document.getElementById(pubnretid).value;
      document.getElementById('targfield').value = winputid;
+     document.getElementById('targfieldtwo').value = subfretid;
+     document.getElementById('targfldthree').value = pubnretid;
      var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
 
      citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
@@ -163,12 +188,14 @@ function openSrchWindow(winputid) {
 <INPUT type=hidden value=spires@slac.stanford.edu   name=to id=tofield>
 <!--<input type="hidden" name="debug" value="1">-->
 <INPUT type=hidden value=spires@slac.stanford.edu   name=form_contact id=fcfield>
-<INPUT type=hidden value="CITATION updates (INSPIRE)" name=subject>
+<INPUT type=hidden value="CITATION updates form INSPIRE" name=subject>
 <INPUT type=hidden name=response_msg value="thank you for using this form, you should soon see a response email">
-<INPUT type=hidden name=email_msg_file value="/spires/hepnames/cite_msg.file">
+<INPUT type=hidden name=email_msg_file value="/spires/hepnames/inspcite_msg.file">
+<input type="hidden" name="recid" id="recid" value= "<BFE_RECORD_ID />">
 <input type=hidden name=dateupd value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">'>
 <input type=hidden name=targfield id=targfield value="">
-
+<input type=hidden name=targfieldtwo id=targfieldtwo value="">
+<input type=hidden name=targfldthree id=targfldthree value="">
 
 <div id="detailedrecordshortreminder">
   <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
@@ -203,9 +230,9 @@ function openSrchWindow(winputid) {
 
 <table id="t0"><tr id="tr0"><td></td><td><input type="image" id="t0" onclick="insertRowAfter(0); return false;" src="/img/add.png" alt="Search for Reference" ></td>
 <input type="hidden" name="irn" id="irn" value= "<BFE_SPIRES_IRN />">
-
 <td><input type="text" class="cite_search_box" name="cite" id="x0" size="35" value=""></td><td align="left">
     <a href="#" onclick="openSrchWindow('x0'); return false;" ><img src="/img/search.png"  border=0 alt="+"> Search for Citation</a>
+<input type="hidden" name="subf" id="sx0"> <input type="hidden" name="jmarc" id="mx0">
 </td></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
