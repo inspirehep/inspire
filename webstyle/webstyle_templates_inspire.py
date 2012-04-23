@@ -122,7 +122,7 @@ template function generated it.
         if navmenuid == "submit":
             # src taken from batchuploader form
             submission_js = """
-<script type="text/javascript" src="%(site_url)s/js/ui.datepicker.min.js"></script>
+<script type="text/javascript" src="%(site_url)s/js/jquery-ui.min.js"></script>
 <link type="text/css" href="%(site_url)s/img/jquery-ui.css" rel="stylesheet" />
 <style type="text/css">
 div.ui-datepicker{
