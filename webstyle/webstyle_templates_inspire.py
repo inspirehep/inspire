@@ -206,9 +206,9 @@ $(function() {
   <td  class="feedbackbox">
    <div class="feedbackboxbody">
 Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>!
-INSPIRE is out of beta and ready to replace SPIRES.  SPIRES will be
-switched off soon.  If you have questions, comments or concerns, please
-email us at <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
+INSPIRE is now in full operation and supersedes
+SPIRES. SPIRES front end at all mirrors has been switched off. Please direct 
+questions, comments or concerns to <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
    </div>
   </td>
  </tr>
