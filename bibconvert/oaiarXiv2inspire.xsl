@@ -375,11 +375,14 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                   <datafield tag="037" ind1=" " ind2=" ">
                     <subfield code="9">arXiv</subfield>
                     <subfield code="a">
-                      <xsl:call-template name="replace-string">
-                        <xsl:with-param name="text" select="substring-after(./OAI-PMH:header/OAI-PMH:identifier, ':')"/>
-                        <xsl:with-param name="from" select="'arXiv.org'"/>
-                        <xsl:with-param name="to" select="'arXiv'"/>
-                      </xsl:call-template>
+                      <xsl:choose>
+                        <xsl:when test="contains(./OAI-PMH:header/OAI-PMH:identifier, '/')">
+                          <xsl:value-of select="substring-after(substring-after(./OAI-PMH:header/OAI-PMH:identifier, ':'), ':')" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:text>arXiv:</xsl:text><xsl:value-of select="substring-after(substring-after(./OAI-PMH:header/OAI-PMH:identifier, ':'), ':')" />
+                        </xsl:otherwise>
+                      </xsl:choose>
                     </subfield>
                     <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:categories">
                       <subfield code="c">
@@ -490,25 +493,16 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                 </xsl:if>
 
                 <!-- MARC FIELD 300$$a / pagination -->
-                <xsl:choose>
-                  <xsl:when test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments">
-                    <xsl:choose>
-                      <xsl:when test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments, 'pages')">
-                        <xsl:variable name="beforepages">
-                          <xsl:value-of select="normalize-space(substring-before(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments,'pages'))"/>
-                        </xsl:variable>
-                        <datafield tag="300" ind1=" " ind2=" ">
-                          <subfield code="a"><xsl:call-template name="last-word"><xsl:with-param name="text" select="$beforepages"/></xsl:call-template></subfield>
-                        </datafield>
-                      </xsl:when>
-                    </xsl:choose>
-                  </xsl:when>
-                  <xsl:otherwise>
+                <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments">
+                  <xsl:if test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments, 'pages')">
+                    <xsl:variable name="beforepages">
+                      <xsl:value-of select="normalize-space(substring-before(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments,'pages'))"/>
+                    </xsl:variable>
                     <datafield tag="300" ind1=" " ind2=" ">
-                      <subfield code="a">mult.</subfield>
+                      <subfield code="a"><xsl:call-template name="last-word"><xsl:with-param name="text" select="$beforepages"/></xsl:call-template></subfield>
                     </datafield>
-                  </xsl:otherwise>
-                </xsl:choose>
+                  </xsl:if>
+                </xsl:if>
 
                 <!-- MARC FIELD 500$$a  = comments -->
                 <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments">
