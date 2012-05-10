@@ -60,7 +60,7 @@ function perform_job_search() {
     $('#field :selected').each(function(i, selected){
       fields[i] = $(selected).val();
     });
-    keywords = $('#mainlightsearchfield').val();
+    var keywords = $('#mainlightsearchfield').val();
 
     var query = "";
     /* filter and build */
