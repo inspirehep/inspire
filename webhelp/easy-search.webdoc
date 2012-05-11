@@ -102,8 +102,9 @@
     };
 </script>
 
-<tbody>
+<form>
 <table border="0">
+<tbody>
 <tr valign="bottom">
 <td class="searchboxbody" style="white-space: nowrap;">
 
@@ -269,9 +270,9 @@
 vol:<input size="8" id="jvol" />
 pg: <input size="8" id="jpage" /></td>
 </tr>
-
 </tbody>
 </table>
+</form>
 
 <div style="white-space: nowrap;" align="center">
 <input type="button" onclick="perform_easy_search()" value="Search" class="formbutton"/>
