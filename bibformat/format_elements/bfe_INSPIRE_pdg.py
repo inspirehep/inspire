@@ -66,7 +66,7 @@ def format_element(bfo, separator=' | ', link="yes"):
                 pdgcount += 1
 
             if len(output1):
-                link = """ | <a href="#" style="color:green;background:white;" onclick="toggle2('content', this)"><i>Show additional PDG codes</i></a>
+                link = """ | <a href="#" style="color:green;background:white;" onclick="toggle2('content', this)"><i>More</i></a>
 <div id="content" style="display:none; padding-left:36px;">
 %(content)s
 </div>
@@ -75,12 +75,12 @@ function toggle2(id, link) {
 var e = document.getElementById(id);
 if (e.style.display == '') {
 e.style.display = 'none';
-link.innerHTML = '<i>Show additional PDG codes</i>';
+link.innerHTML = '<i>More</i>';
 }
 else
 {
 e.style.display = '';
-link.innerHTML = '<i>Hide additional PDG codes</i>';
+link.innerHTML = '<i>Less</i>';
 }
 }
 </script>
