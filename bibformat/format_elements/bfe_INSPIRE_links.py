@@ -39,34 +39,25 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     """
     _ = gettext_set_language(bfo.lang)
     if style != "":
-        style = 'class = "'+style+'"'
+        style = 'class = "'+ style +'"'
 
     links = []
 
-
-    from invenio.bibformat_elements.bfe_INSPIRE_arxiv import format_element as arxiv
-    #if show_icons.lower() == 'yes':
-    #    mirrors = "no"
-    #else:
-    #    mirrors = "yes"
-    arxiv_links = arxiv(bfo, links = "yes", mirrors = "no")
-    if arxiv_links:
-        links.append(arxiv_links)
-
     journals = bfo.fields('773')
+    journal_doi = bfo.fields('0247_')
     # trivially take care of dois
-    for journal in journals:
+    for journal in journals + journal_doi:
         journtitle = ''
         oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
         if oa_type:
-            final_style = style+' class = "'+oa_type+'"'
+            final_style = style + ' class = "' + oa_type + '"'
         else:
             final_style = style
         if journal.get('a'):
-            if journal.get('p') :
+            if journal.get('p'):
                 journtitle = ' - ' + journal.get('p')
-            links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
-                         +journal.get('a')+'">Journal Server</a>' + journtitle )
+            links.append('<a ' + final_style + 'href="http://dx.doi.org/'\
+                         + journal.get('a') + '">Journal Server</a>' + journtitle)
 
     # KEKSCAN links
     identifiers = bfo.fields('035__')
@@ -85,7 +76,6 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
 
     # could look for other publication info and calculate URls here
 
-
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
@@ -95,14 +85,14 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
         if url.get("u") and \
         url.get('y', 'Fulltext').upper() != "DOI" and not \
         url.get('u').startswith(CFG_SITE_URL):
-            links.append('<a '+ style + \
+            links.append('<a ' + style + \
             'href="' + url.get("u") + '">' + \
-                  _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>')
+                  _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
         elif url.get("u").startswith(CFG_SITE_URL) and \
         bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes and \
         url.get("u")[-3:].lower() == "pdf":
-            links.append('<a '+ style + 'href="' + url.get("u") + '">' + \
-            _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>')
+            links.append('<a ' + style + 'href="' + url.get("u") + '">' + \
+            _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
     #put it all together
     if links:
@@ -110,13 +100,13 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
             img = '<img style="border:none" \
             src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' \
             % (CFG_SITE_URL, _("Download fulltext"))
-            links = [img+'<small>'+link+'</small>' for link in links]
-        return prefix+separator.join(links)+suffix
+            links = [img + '<small>' + link + '</small>' for link in links]
+        return prefix + separator.join(links) + suffix
     else:
         return default
 
 
-def _lookup_url_name(bfo, abbrev = ''):
+def _lookup_url_name(bfo, abbrev=''):
     """ Finds the display name for the url, based on an
     abbrev in record.
     Input:  bfo, abbrev  (abbrev is PHRVA-D, etc)
@@ -124,7 +114,7 @@ def _lookup_url_name(bfo, abbrev = ''):
     """
     if abbrev == None:
         abbrev = ''
-    return bfo.kb('WEBLINKS', abbrev, 'Link to '+abbrev.lower())
+    return bfo.kb('WEBLINKS', abbrev, 'Link to ' + abbrev.lower())
 
 
 # we know the argument is unused, thanks

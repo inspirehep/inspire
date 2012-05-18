@@ -16,18 +16,25 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints full-text URLs
+"""BibFormat element - Prints 110a and 110b
 """
 __revision__ = "$Id$"
 
-def format_element(bfo, style, separator='; '):
-    """
-    This is the default format for formatting full-text URLs.
-    @param separator: the separator between urls.
-    @param style: CSS class of the link
-    """
+import cgi
 
-    return separator.join(bfo.fields("702__a", repeatable_subfields_p=True))
+def format_element(bfo, note_suffix, separator=', '):
+    notes = []
+    x = bfo.fields('110__')
+
+    for item in x:
+        if 'a' in item and 'b' in item:
+            notes.append(item['a'] + " - " + item['b'])
+        elif 'a' in item and not 'b' in item:
+            notes.append(item['a'])
+        elif 'b' in item and not 'a' in item:
+            notes.append(item['b'])
+
+    return separator.join(notes)
 
 def escape_values(bfo):
     """

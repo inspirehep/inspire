@@ -2,7 +2,9 @@
 <description>Default HTML Detailed format for Experiments</description>
 <div class="detailed_record_info">
 
-<BFE_FIELD prefix="<big><strong>" suffix="</strong></big><br />" tag="119a" escape="">
+<BFE_FIELD prefix="<big><strong>" suffix="</strong></big>" tag="119a" escape="">
+<BFE_FIELD prefix="<big><strong> (" suffix=")</strong></big>" tag="119u" escape="">
+<br />
 <BFE_FIELD prefix="<big>" suffix="</big><br />" tag="245a" escape="">
 
 <BFE_INSPIRE_EXP_DATE prefix="<br />" suffix="<br />"/>

@@ -44,7 +44,7 @@ def format_element(bfo, style, separator='; '):
                 prefix = 'Related Institution: '
         else:
             prefix = 'Related Institution: '
-    urls = ['<a href="/record' + url['0'] + '">' + url['a'] +'</a>'
+    urls = ['<a href="/record/' + url['0'] + '">' + url['a'] +'</a>'
             for url in urls_u]
     return prefix + separator.join(urls)
 

@@ -83,32 +83,25 @@ def format_element(bfo, reference_prefix, reference_suffix):
         if len(hits) == 1:
             ref_out.append('<small>' + format_record(list(hits)[0],'hs') + '</small>')
         else:
-            if reference.has_key('t'):
-                ref_out.append("<small> " + reference['t'][0] + "</small> - ")
-
             if reference.has_key('h'):
-                ref_out.append("<small> " + reference['h'][0] + "</small> ")
-
+                ref_out.append("<small> " + reference['h'][0] + ".</small>")
+            if reference.has_key('t'):
+                ref_out.append("<small> " + reference['t'][0] + "</small> -")
             if reference.has_key('y'):
-                ref_out.append("<small> " + reference['y'][0] + ".</small> ")
-
+                ref_out.append("<small> " + reference['y'][0] + ".</small>")
             if reference.has_key('p'):
-                ref_out.append("<small> " + reference['p'][0] + ".</small> ")
-
+                ref_out.append("<small> " + reference['p'][0] + ".</small>")
             if reference.has_key('m'):
-                ref_out.append("<small>"+ reference['m'][0].replace(']]', ']') + ".</small> ")
-
+                ref_out.append("<small> "+ reference['m'][0].replace(']]', ']') + ".</small>")
             if reference.has_key('a'):
-                ref_out.append(" <small><a href=\"http://dx.doi.org/" + \
-                reference['a'][0] + "\">" + reference['a'][0]+ "</a></small> ")
-
+                ref_out.append("<small> <a href=\"http://dx.doi.org/" + \
+                reference['a'][0] + "\">" + reference['a'][0]+ "</a></small>")
             if reference.has_key('u'):
-                ref_out.append(" <small><a href=" + reference['u'][0] + ">" + \
-                reference['u'][0]+ "</a></small> ")
-
+                ref_out.append("<small> <a href=" + reference['u'][0] + ">" + \
+                reference['u'][0]+ "</a></small>")
             if reference.has_key('i'):
                 for r in reference['i']:
-                    ref_out.append(" <small><a href=\"/search?ln=en&p=020__a%3A"+r+"\">"+r+"</a></small> ")
+                    ref_out.append("<small> <a href=\"/search?ln=en&p=020__a%3A"+r+"\">"+r+"</a></small>")
 
             ref_out.append('<small>')
             if display_journal:

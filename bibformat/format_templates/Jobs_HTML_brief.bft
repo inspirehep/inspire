@@ -11,4 +11,4 @@
 <BFE_FIELD prefix="<span style='text-transform: capitalize;'>" suffix="</span> - " tag="656__a" instances_separator=", " />
 <BFE_FIELD tag="65017a" instances_separator=", " />
 
-<BFE_INSPIRE_EXPERIMENT prefix=" - " separator=", " />
+<BFE_INSPIRE_EXP_LINK prefix=" - " separator=", " />

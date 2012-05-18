@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,18 +16,27 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints full-text URLs
+"""Bibformat element - Return an HTML link to ArXiv.
 """
-__revision__ = "$Id$"
 
-def format_element(bfo, style, separator='; '):
-    """
-    This is the default format for formatting full-text URLs.
-    @param separator: the separator between urls.
-    @param style: CSS class of the link
-    """
+from cgi import escape
 
-    return separator.join(bfo.fields("702__a", repeatable_subfields_p=True))
+def format_element(bfo):
+    fields = bfo.fields('037__')
+    fields.extend(bfo.fields('088__'))
+    out = ''
+
+    for field in fields:
+        if '9' in field and field['9'] == 'arXiv':
+            out = '<a href="http://arXiv.org/abs/' + field['a'] + '">' + field['a'] + '</a>'
+            if 'c' in field:
+                out += ' [' + field['c'] + ']'
+            if 'arXiv:' in field['a']:
+                out += ' <a href="http://arXiv.org/pdf/' + field['a'][6:] + '.pdf">PDF</a>'
+            else:
+                out += ' <a href="http://arXiv.org/pdf/' + field['a'] + '.pdf">PDF</a>'
+
+    return out
 
 def escape_values(bfo):
     """

@@ -47,10 +47,8 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
 
     links = []
 
-
-
-
     journals = bfo.fields('773')
+    journal_doi = bfo.fields('0247_')
     # trivially take care of dois
     for journal in journals:
         oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
@@ -59,13 +57,11 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
         else:
             final_style = style
         final_style = style + target
-        if journal.get('a'):
+        if journal_doi.get('a'):
             links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
-                         +journal.get('a')+'">Journal Server</a>')
-
+                         +journal_doi.get('a')+'">Journal Server</a>')
 
     # could look for other publication info and calculate URls here
-
 
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
@@ -78,9 +74,6 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
                   url.get('y', 'Fulltext').upper() != "DOI" and not \
                   url.get('u').startswith(CFG_SITE_URL)])
 
-
-
-
     #put it all together
     if links:
         if show_icons.lower() == 'yes':
@@ -92,9 +85,6 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     else:
         return default
 
-
-
-
 def _lookup_url_name(bfo, abbrev = ''):
     """ Finds the display name for the url, based on an
     abbrev in record.
@@ -104,8 +94,6 @@ def _lookup_url_name(bfo, abbrev = ''):
     if abbrev == None:
         abbrev = ''
     return bfo.kb('WEBLINKS', abbrev, 'Link to '+abbrev.lower())
-
-
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613

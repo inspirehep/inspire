@@ -5,16 +5,9 @@
 <BFE_INSPIRE_INST_TITLE prefix="<b>" suffix="</b>" />
 <BFE_FIELD prefix="[Future INSPIRE ID: " suffix="]" default="" escape=""
 extension="" instances_separator=" & " tag="110t"/>
-<BFE_FIELD tag="410a" prefix="<br />" />
-</td>
-<td width="30%">
-</td>
-</tr>
-</table>
-<BFE_FIELD prefix="" instances_separator=" "
- suffix="<br />" tag="110a" escape="">
-<BFE_FIELD instances_separator=" "
- suffix=""  tag="110b" escape=""> <br />
+<BFE_FIELD instances_separator=" " prefix="<br />" tag="110a" escape="">
+<BFE_FIELD instances_separator=" " prefix="<br />"  tag="110b" escape="">
+<br />
 
 <div style="padding-left:10px";>
 <i>
@@ -28,10 +21,10 @@ extension="" instances_separator=" & " tag="110t"/>
 <br />
 
 <BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
+<BFE_INSPIRE_INST_NAME_VARIANT prefix="Name Variants: " suffix="<br />"/>
 <BFE_FIELD tag="6781_a" prefix="Historical Data: " suffix="<br />" />
 <BFE_FIELD tag="680i" prefix="Notes: " suffix="<br />" />
 <BFE_INSPIRE_INST_RELATED_INST suffix="<br />" />
-<!--Add element here to handle different relationship types 510__w -->
 <br />
 <!--
 Search 502a and 502c

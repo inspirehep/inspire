@@ -4,8 +4,10 @@
 <div class="record_body">
 
 <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
-<BFE_FIELD prefix=""  suffix="<br />"  tag="119a" escape="">
+<BFE_FIELD prefix=""  suffix=""  tag="119a" escape="">
 </a>
+<BFE_FIELD prefix="<strong> (" suffix=")</strong>" tag="119u" />
+<br />
 <BFE_FIELD prefix=""  suffix="<br />"  tag="245a" escape="">
 
 <small>

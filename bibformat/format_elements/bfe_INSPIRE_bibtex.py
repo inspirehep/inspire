@@ -248,8 +248,8 @@ def format_element(bfo, width="50"):
 
     # DOI
     if collection == "article":
-        dois = bfo.fields("773__a")
-        out += texified("doi", ", ".join(dois))
+        dois = bfo.fields("0247_a") + bfo.fields("773__a")
+        out += texified("doi", ", ".join(set(dois)))
 
     # Year
     year = bfo.field("773__y")

@@ -48,7 +48,7 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
         year           = cgi.escape(publication_info.get('y', ''))
         number         = cgi.escape(publication_info.get('n', ''))
         pages          = cgi.escape(publication_info.get('c', ''))
-        doi            = publication_info.get('a')
+        doi            = bfo.field('0247_a') or publication_info.get('a', '')
         conf_code      = publication_info.get('w')
         latex_p        = markup.lower() == 'latex'
         eu_style_p     = style.lower() == 'eu'

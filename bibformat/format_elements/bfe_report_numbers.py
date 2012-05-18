@@ -18,8 +18,11 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints report numbers"""
 
+import cgi
+from invenio.urlutils import create_html_link
 
-def format_element(bfo, separator=',', limit='9999', extension=" etc."):
+
+def format_element(bfo, separator=', ', limit='9999', extension=" etc."):
     """
     Print the report numbers of the record (037__a and 088__a)
 
@@ -28,7 +31,7 @@ def format_element(bfo, separator=',', limit='9999', extension=" etc."):
     format_element is still handy for magic parameters, e.g., prefix, suffix
     and friends.
     """
-    return get_report_numbers_formatted(bfo, separator, limit, extension, skip='arXiv:')
+    return get_report_numbers_formatted(bfo, separator, limit, extension, skip='arXiv')
 
 
 def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None):
@@ -39,14 +42,21 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
     @param limit the max number of report numbers to print
     @param extension a prefix printed when limit param is reached
     """
-    numbers = bfo.fields("037__a")
-    numbers.extend(bfo.fields("088__a"))
-    if skip:
-        numbers = [x for x in numbers if x != skip and skip not in x]
-    if limit.isdigit() and int(limit) <= len(numbers):
-        return separator.join(numbers[:int(limit)]) + extension
+    out = []
+    numbers = bfo.fields("037__")
+    numbers.extend(bfo.fields("088__"))
+    for x in numbers:
+        if skip:
+            if (x.has_key('a') and skip.lower() in x['a'].lower()) or \
+               (x.has_key('9') and x['9'].lower() == skip.lower()):
+                continue
+        if x.has_key('a'):
+            out.append(x['a'])
+
+    if limit.isdigit() and int(limit) <= len(out):
+        return separator.join(out[:int(limit)]) + extension
     else:
-        return separator.join(numbers)
+        return separator.join(out)
 
 def build_report_number_link(report_number, link_p=True):
     """

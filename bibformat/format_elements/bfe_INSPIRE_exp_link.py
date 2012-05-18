@@ -36,13 +36,13 @@ def format_element(bfo, separator=', ', link="yes"):
     
     # Process authors to add link, highlight and format affiliation
 
-    output = ''
+    output = []
 
     for exp in authors:
         if exp.has_key('e'):
-            output = 'Experiment: <a href="/search?ln=en&cc=Experiments&p=119__a%3A' + exp['e'] + '&of=hd">' + exp['e'] + '</a>'
+            output.append('<a href="/search?ln=en&cc=Experiments&p=119__a%3A' + exp['e'] + '&of=hd">' + exp['e'] + '</a>')
 
-    return output
+    return separator.join(output)
 
 def escape_values(bfo):
     """
