@@ -37,7 +37,7 @@ def format_element(bfo, separator=""):
                 out.append("<br>")
 
     if len(out):
-        return """<a href="#" onclick="toggle2('content', this)">Show secondary addresses</a>
+        return """<a href="#" style="color:green;background:white;" onclick="toggle2('content', this)">Show secondary addresses</a>
 <div id="content" style="display:none; padding-left:10px;">
 <i>%(content)s</i>
 </div>

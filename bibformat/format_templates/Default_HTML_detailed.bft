@@ -36,6 +36,7 @@ suffix_en="</small><br />"
 suffix_fr="</small><br />"
 />
 </p>
+<BFE_INSPIRE_PDG prefix="<br /><small><strong>PDG: </strong>" suffix="</small>" />
 
 <BFE_NOTES
 note_prefix="<br /><small><strong>Note: </strong>"

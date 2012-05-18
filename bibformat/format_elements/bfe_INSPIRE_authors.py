@@ -313,7 +313,7 @@ def format_element(bfo, limit, separator='; ',
         out += ' <span id="more" style="">' + more + '</span>'
         out += ' <span id="extension"></span>'
         out += ' <small><i><a id="link" href="#"' + \
-               ' onclick="toggle_authors_visibility()" ' + \
+               ' style="color:green;background:white;" onclick="toggle_authors_visibility()" ' + \
                ' style="color:rgb(204,0,0);"></a></i></small>'
         out += '<script>set_up()</script>'
         return out
