@@ -209,6 +209,10 @@ Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>!
 INSPIRE is now in full operation and supersedes
 SPIRES. SPIRES front end at all mirrors has been switched off. Please direct 
 questions, comments or concerns to <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
+<br />
+<span style="font-weight: bold; color:#FC4C58;">NOTICE: INSPIRE
+  will be unavailable on Sunday May 20th between 0100-0200AM CEST due to scheduled
+maintenance.</span>
    </div>
   </td>
  </tr>
