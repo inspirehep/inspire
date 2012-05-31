@@ -8,6 +8,7 @@ JOURNALDESC='Mapping of journal abbreviations to full names'
 TALKTYPEDESC='List of types of talks'
 COLLECTIONDESC='690C aliases'
 SUBJECTDESC='65017 aliases'
+PDGDESC='PDG codes'
 PWD=`pwd`
 
 all:
@@ -19,7 +20,7 @@ test:
 install:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject create-institutions-dynamic-kb
+install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject pdg create-institutions-dynamic-kb
 	@echo "Done."
 
 weblinks: delete-weblinks load-weblinks-knowledge-base
@@ -28,6 +29,7 @@ journals: delete-journals load-journals-knowledge-base
 talktype: delete-talktype load-talktype-knowledge-base
 type: delete-type load-type-knowledge-base
 subject: delete-subject load-subject-knowledge-base
+pdg: delete-pdg load-pdg-knowledge-base
 
 announce-kb-load:
 	@echo "Loading knowledge bases into DB..."
@@ -52,6 +54,9 @@ delete-type:
 
 delete-subject:
 	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='SUBJECT')" | $(BINDIR)/dbexec
+
+delete-pdg:
+	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='PDG-test')" | $(BINDIR)/dbexec
 
 load-weblinks-knowledge-base:
 	echo "INSERT into knwKB (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
@@ -110,6 +115,14 @@ load-talktype-knowledge-base:
 LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
 update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
 insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
+"|$(BINDIR)/dbexec
+
+load-pdg-knowledge-base:
+	echo "INSERT into knwKB (name, description) VALUES('PDG',$(PDGDESC)) on duplicate key update description = $(PDGDESC)" | $(BINDIR)/dbexec
+	echo " create temporary table templinks like knwKBRVAL;\
+LOAD DATA LOCAL INFILE '$(PWD)/pdg.kb' replace INTO TABLE templinks;\
+update templinks set id_knwKB= (select id from knwKB where name='PDG');\
+insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
 "|$(BINDIR)/dbexec
 
 create-institutions-dynamic-kb:
