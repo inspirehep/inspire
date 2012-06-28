@@ -31,7 +31,7 @@ def format_element(bfo):
 
     for item in conferences:
         if item.has_key('a'):
-            link = '<a href ="/search?ln=en&cc=Conferences&p=411%3A%27' + item['a'] + '%27">' + item['a'] + '</a>'
+            link = '<a href ="/search?ln=en&amp;cc=Conferences&amp;p=411%3A%27' + item['a'] + '%27">' + item['a'] + '</a>'
             out = "Part of the " + link + " series"
         if item.has_key('n'):
             ##anything *11

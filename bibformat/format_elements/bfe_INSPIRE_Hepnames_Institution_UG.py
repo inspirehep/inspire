@@ -54,7 +54,9 @@ def format_element(bfo, limit, separator='',
     # Process authors to add link, highlight and format affiliation
     for author in authors:
         if author.has_key('r') and author['r'] == 'UG' and author.has_key('a'):
-            return '<a href="/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22' + author['a'] + '%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">' + author['a'] +'</a>'
+            return '<a href="/search?ln=en&amp;cc=Institutions&amp;ln=en&amp;cc=Institutions&amp;p=110__u%3A%22' \
+            + author['a'] + '%22&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hd">' \
+            + author['a'] +'</a>'
 
     # Uncomment next line if default value must be returned
     # return 'whatever'

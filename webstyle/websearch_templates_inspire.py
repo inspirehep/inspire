@@ -734,7 +734,7 @@ class Template(DefaultTemplate):
                                                   {}, _("Advanced Search")),
 
                'leading' : leadingtext,
-               'search_url' : (CFG_SITE_URL + '/search?p=QUERY&action_search=Search'),
+               'search_url' : (CFG_SITE_URL + '/search?p=QUERY&amp;action_search=Search'),
                'header' : header,
 
                'msg_search' : _("Search"),
@@ -945,7 +945,7 @@ class Template(DefaultTemplate):
                'msg_search' : msg_search,
                'example_query_html': example_html,
                'keywords' : keywords,
-               'search_url' : '/search?p1=QUERY&op1=a&p2=KEYWORD&action_search=Search&cc=Jobs',
+               'search_url' : '/search?p1=QUERY&amp;op1=a&amp;p2=KEYWORD&amp;action_search=Search&amp;cc=Jobs',
                'msg_header' : msg_header,
                'rank_select' : rank_select,
                'region_select' : region_select,

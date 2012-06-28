@@ -24,9 +24,8 @@
 __revision__ = "$Id$"
 
 
-
 # Link to SPIRES institutional information
 CFG_BIBFORMAT_INSPIRE_INST_LINK = 'http://www.slac.stanford.edu/spires/find/inst/wwwinspire?icncp='
 
 # Link to SPIRES conference information
-CFG_BIBFORMAT_INSPIRE_CONF_LINK = '/search?ln=en&cc=Conferences&ln=en&cc=Conferences&p=111__g%3A'
+CFG_BIBFORMAT_INSPIRE_CONF_LINK = '/search?ln=en&amp;cc=Conferences&amp;ln=en&amp;cc=Conferences&amp;p=111__g%3A'

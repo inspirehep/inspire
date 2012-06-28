@@ -57,7 +57,9 @@ def format_element(bfo, limit, separator='',
 #'<a href="/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22' + author['a'] + '%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">'
     for author in authors:
         if author.has_key('a'):
-            output += '<tr><td>' + '<a href="/search?ln=en&cc=Institutions&p=110__u%3A%22' + author['a'] + '%22&action_search=Search&of=hd">' + author['a'] + '</a>'  + '</td><td>' + author['r'] + '</td><td>' + author['s'] + '</td><td>' + author['t'] + '</td></tr>'
+            output += '<tr><td>' + '<a href="/search?ln=en&amp;cc=Institutions&amp;p=110__u%3A%22' \
+            + author['a'] + '%22&amp;action_search=Search&amp;of=hd">' + author['a'] + '</a>' \
+            + '</td><td>' + author['r'] + '</td><td>' + author['s'] + '</td><td>' + author['t'] + '</td></tr>'
 #            output += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>' % (author['a'], author['r'], author['s'], author['t'])
 
     return output

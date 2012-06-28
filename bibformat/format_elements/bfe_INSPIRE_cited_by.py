@@ -54,7 +54,7 @@ def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     if nbOnly.lower() == 'yes':
         if searchlink.lower()=='yes':
             from bfe_server_info import format_element as bfe_server
-            return '<a href="'+CFG_SITE_URL+'/search?p=recid:'+bfo.control_field('001')+'&rm=citation">'+str(len(res))+'</a>'
+            return '<a href="'+CFG_SITE_URL+'/search?p=recid:'+bfo.control_field('001')+'&amp;rm=citation">'+str(len(res))+'</a>'
         else:
             return str(len(res))
     else:

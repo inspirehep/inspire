@@ -40,7 +40,7 @@ def format_element(bfo, separator=', ', link="yes"):
 
     for exp in authors:
         if exp.has_key('e'):
-            output.append('<a href="/search?ln=en&cc=Experiments&p=119__a%3A' + exp['e'] + '&of=hd">' + exp['e'] + '</a>')
+            output.append('<a href="/search?ln=en&amp;cc=Experiments&amp;p=119__a%3A' + exp['e'] + '&amp;of=hd">' + exp['e'] + '</a>')
 
     return separator.join(output)
 

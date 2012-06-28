@@ -35,7 +35,7 @@ def format_element(bfo, separator=''):
         if item.has_key('b'):
             output += item['b'] + " "
         if item.has_key('c'):
-            output += '<a href="/search?ln=en&cc=Institutions&p=110__u%3A%22' + item['c'] + '%22">' + item['c'] + "</a> "
+            output += '<a href="/search?ln=en&amp;cc=Institutions&amp;p=110__u%3A%22' + item['c'] + '%22">' + item['c'] + "</a> "
         if item.has_key('d'):
             output += "(" + item['d'] + ")"
 

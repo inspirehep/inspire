@@ -39,8 +39,8 @@ def format_element(bfo, style="", separator=', '):
         style = 'class="'+style+'"'
 
     contacts = ['<a '+ style + \
-            ' href="/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=find+a+%27' \
-            + quote_plus(contact) + '%27&of=hd">' + contact +'</a>'
+            ' href="/search?ln=en&amp;cc=HepNames&amp;ln=en&amp;cc=HepNames&amp;p=find+a+%27' \
+            + quote_plus(contact) + '%27&amp;of=hd">' + contact +'</a>'
             for contact in contact_list]
 
     return separator.join(contacts)

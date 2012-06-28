@@ -29,7 +29,7 @@ def format_element(bfo, note_suffix, separator=', '):
     for item in supervisor:
         comma = item.find(',')
         item = item[comma+2:] + " " + item[:comma]
-        notes.append('<a href="/search?ln=en&cc=HepNames&p=fin+a+' + item + '&of=hd">' + item + '</a>')
+        notes.append('<a href="/search?ln=en&amp;cc=HepNames&amp;p=fin+a+' + item + '&of=hd">' + item + '</a>')
     return separator.join(notes)
 
 def escape_values(bfo):

@@ -147,7 +147,7 @@ def format_element(bfo, limit, separator='; ',
                                     CFG_SITE_URL + \
                                     '/author/'+ quote(author['a']) + \
                                     '?recid=' + bibrec_id + \
-                                    '&ln='+ bfo.lang + \
+                                    '&amp;ln='+ bfo.lang + \
                                     '">' + escape(author['display'])+'</a>' + \
                                     id_link
 
@@ -161,7 +161,7 @@ def format_element(bfo, limit, separator='; ',
 
             if author.has_key('u'):
                 author['ilink'] = ['<a class="afflink" href="' + \
-                                   CFG_SITE_URL + '/search?cc=Institutions&p=institution:'+ \
+                                   CFG_SITE_URL + '/search?cc=Institutions&amp;p=institution:'+ \
                                    quote('"' + string + '"') + \
                                    '&amp;ln=' + bfo.lang + \
                                    '">' + \

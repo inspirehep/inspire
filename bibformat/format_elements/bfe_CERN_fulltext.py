@@ -83,7 +83,7 @@ def format_element(bfo, style, separator='; ', elec_loc_field='1'):
         file_numbers = bfo.field('927__a')
         for file_number in file_numbers:
             if '-' in file_number or '_' in file_number:
-                link = '<a href="http://doc.cern.ch/cgi-bin/setlink?base=pauli&categ=&id="%s">Fulltext</a>' % file_number
+                link = '<a href="http://doc.cern.ch/cgi-bin/setlink?base=pauli&amp;categ=&amp;id="%s">Fulltext</a>' % file_number
                 out.append(link)
 
     if coll in ['74', '75'] and \

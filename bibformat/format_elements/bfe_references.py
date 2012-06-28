@@ -101,7 +101,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
                 reference['u'][0]+ "</a></small>")
             if reference.has_key('i'):
                 for r in reference['i']:
-                    ref_out.append("<small> <a href=\"/search?ln=en&p=020__a%3A"+r+"\">"+r+"</a></small>")
+                    ref_out.append("<small> <a href=\"/search?ln=en&amp;p=020__a%3A"+r+"\">"+r+"</a></small>")
 
             ref_out.append('<small>')
             if display_journal:

@@ -55,7 +55,7 @@ def format_element(bfo, separator=', ', link="yes"):
             if link.lower() == 'yes' :
                 conf_name = '<a class="conflink" href = "' + \
                             CFG_BIBFORMAT_INSPIRE_CONF_LINK + \
-                            cnum + '&of=hd">' + \
+                            cnum + '&amp;of=hd">' + \
                             cnum + '</a>'
             else:
                 conf_name = cnum

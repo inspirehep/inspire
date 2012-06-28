@@ -41,7 +41,7 @@ def format_element(bfo, print_links="yes", serie_prefix="<br /><strong>Series: <
         if serie.has_key('a'):
            serie_out += serie_prefix
            if print_links.lower() == "yes":
-               serie_out += '<a href="http://cdsweb.cern.ch/search?f=490__a&p=' + \
+               serie_out += '<a href="http://cdsweb.cern.ch/search?f=490__a&amp;p=' + \
                             serie['a'].replace(' ', '+') + '"' + \
                             cgi.escape(serie['a']) + '</a>'
            else:

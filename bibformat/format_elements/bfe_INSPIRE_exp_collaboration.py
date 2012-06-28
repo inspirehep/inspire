@@ -29,7 +29,7 @@ def format_element(bfo, style, separator=', '):
 
     urls_u = bfo.fields("710__g")
 
-    urls = ['<a href="/search/?p=collaboration:%27' + url + '%27&ln=en">' + url +'</a>'
+    urls = ['<a href="/search/?p=collaboration:%27' + url + '%27&amp;ln=en">' + url +'</a>'
             for url in urls_u]
     return separator.join(urls)
 

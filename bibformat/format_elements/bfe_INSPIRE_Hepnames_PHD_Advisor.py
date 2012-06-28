@@ -31,7 +31,7 @@ def format_element(bfo, style, separator='; '):
     if style != "":
         style = 'class="'+style+'"'
 
-    urls = ['<a href="'+ style + '/search?ln=en&cc=HepNames&p=100__a%3A%27' + url + '%27&of=hd">' + url +'</a>'
+    urls = ['<a href="'+ style + '/search?ln=en&amp;cc=HepNames&amp;p=100__a%3A%27' + url + '%27&amp;of=hd">' + url +'</a>'
             for url in urls_u]
     return separator.join(urls)
 

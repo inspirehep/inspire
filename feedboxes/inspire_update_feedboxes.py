@@ -38,8 +38,8 @@ FEED_PRE = { 2: """
     <h3>INSPIRE</h3>
      <ul>
       <li><a href="http://www.projecthepinspire.net">About INSPIRE</a></li>
-      <li><a href="/search?ln=en&ln=en&p=cited%3A50->30000+year%3A2011->2012&of=hb&action_search=Search&sf=&so=d&rm=citation&rg=25&sc=0">Recent topcites</a></li>
-      <li><a href="search?ln=en&p=find+tc+review&f=&action_search=Search&sf=&so=d&rm=citation&rg=10&sc=0&of=hb">HEP Reviews</a></li>
+      <li><a href="/search?ln=en&amp;ln=en&amp;p=cited%3A50->30000+year%3A2011->2012&amp;of=hb&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=citation&amp;rg=25&amp;sc=0">Recent topcites</a></li>
+      <li><a href="search?ln=en&amp;p=find+tc+review&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=citation&amp;rg=10&amp;sc=0&amp;of=hb">HEP Reviews</a></li>
       <li><a href="http://www.slac.stanford.edu/spires/hepback/index.shtml">SPIRES-HEP</a> <a href="http://blog.inspirehep.net/2012/04/good-bye-spires.html">[?]</a></li>
      </ul>
 
@@ -82,8 +82,8 @@ def configOptParse():
     parser.add_option('-u', '--uname', dest="uname", action="store", metavar="UNAME", default='anonymous',
                       help="Substituted for UNAME into the resource URL.  Defaults to anonymous")
     parser.add_option('-r', '--resource', dest="url", action="store", metavar="URL",
-                      default='http://cdswaredev.cern.ch/invenio/report/1?format=rss&USER=UNAME',
-                      help="Updates from URL (Token UNAME substituted for value of -u). Defaults to http://cdswaredev.cern.ch/invenio/report/1?format=rss&USER=UNAME")
+                      default='http://cdswaredev.cern.ch/invenio/report/1?format=rss&amp;USER=UNAME',
+                      help="Updates from URL (Token UNAME substituted for value of -u). Defaults to http://cdswaredev.cern.ch/invenio/report/1?format=rss&amp;USER=UNAME")
     parser.add_option('-o', '--outfile', dest="outfile", action="store", metavar="FILE", default=None,
                       help="Output to FILE.  - writes to stdout.  Defaults to no output")
     parser.add_option('-d', '--dbwrite', dest="dbwrite", action="store_true", default=False,
