@@ -16,7 +16,7 @@ name_last_first="no" link_extension="yes"/>
 <BFE_REPORT_NUMBERS prefix="<br />" />
 <BFE_INSPIRE_DOI prefix="<br />DOI: " />
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
-<BFE_INSPIRE_ARXIV_LINK prefix="<br/>e-Print: <b>" suffix="</b>" mirrors="no"/>
+<BFE_INSPIRE_ARXIV_LINK prefix="<br/>e-Print: <b>" suffix="</b>" />
 
 <ul class="tight_list">
 <li>

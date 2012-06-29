@@ -50,16 +50,18 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     journals = bfo.fields('773')
     journal_doi = bfo.fields('0247_')
     # trivially take care of dois
-    for journal in journals:
+    for journal in journals + journal_doi:
+        journtitle = ''
         oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
         if oa_type:
-            final_style = style+' class = "'+oa_type+'"'
+            final_style = style + ' class = "' + oa_type + '"'
         else:
             final_style = style
-        final_style = style + target
-        if journal_doi.get('a'):
-            links.append('<a '+final_style+ 'href="http://dx.doi.org/'\
-                         +journal_doi.get('a')+'">Journal Server</a>')
+        if journal.get('a'):
+            if journal.get('p'):
+                journtitle = ' - ' + journal.get('p')
+            links.append('<a ' + final_style + 'href="http://dx.doi.org/'\
+                         + journal.get('a') + '">Journal Server</a>' + journtitle)
 
     # could look for other publication info and calculate URls here
 

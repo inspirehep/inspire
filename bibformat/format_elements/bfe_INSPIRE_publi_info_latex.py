@@ -33,7 +33,7 @@ arxivFE   = get_format_element('bfe_inspire_arxiv',       with_built_in_params=T
 
 
 def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp;", pubnotesuf="&nbsp;", pubnotesep=", ", 
-                        arxivlinks="yes", arxivcat="yes", arxivprepubnote="<br />", arxivsufpubnote="<br />", arxivprenopub="<br />", arxivsufnopub="<br />",
+                        arxivlinks="yes", arxivcategory="yes", arxivprepubnote="<br />", arxivsufpubnote="<br />", arxivprenopub="<br />", arxivsufnopub="<br />",
                         reportpre="", reportsuf="", reportlimit="1", reportsep='', reportext=''):
     """Aggregates pubnote, arxive, and %% CITATION %% display"""
     out       = ''
@@ -51,7 +51,7 @@ def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp
     pubnote_w = wrap(pubnote, pubnotepre, pubnotesuf)
 
     # Get the arxiv number, surrounding it differently if there is or isn't a pubnote
-    arxiv = eval_format_element(arxivFE, bfo, {'links': arxivlinks, 'category': arxivcat })[0]
+    arxiv = eval_format_element(arxivFE, bfo, {'links': arxivlinks, 'category': arxivcategory })[0]
     if pubnote:
         arxiv_w = wrap(arxiv, arxivprepubnote, arxivsufpubnote)
     else:

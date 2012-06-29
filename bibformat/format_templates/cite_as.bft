@@ -43,7 +43,7 @@ function valtoReferenceinp(recid) {
     <input type="button" value="Select this reference" onClick="valtoReferenceinp(<BFE_RECORD_ID>); return(false);" >
     <br>
      <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
-     <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" separator=" " brief="yes" />
+     <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" brief="yes" />
      </a><br />
       <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /></b>
      <br>
