@@ -342,7 +342,9 @@ $(function() {
 <!-- replaced page footer -->
  <div class="pagefooterstripeleft">
   %(sitename)s&nbsp;::&nbsp;<a class="footer" href="%(siteurl)s/?ln=%(ln)s">%(msg_search)s</a>&nbsp;::&nbsp;
-  <a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>
+  <a class="footer" href="%(siteurl)s/help/%(langlink)s">%(msg_help)s</a>&nbsp;::&nbsp;
+  <a class="footer" href="%(siteurl)s/info/general/terms-of-use">%(msg_terms)s</a>&nbsp;::&nbsp;
+  <a class="footer" href="%(siteurl)s/info/general/privacy-policy">%(msg_privacy)s</a>
   <br />
   %(msg_poweredby)s <a class="footer" href="http://invenio-software.org/">Invenio</a> v%(version)s
   <br />
@@ -368,6 +370,9 @@ $(function() {
 
           'msg_search' : _("Search"),
           'msg_help' : _("Help"),
+
+          'msg_terms': _("Terms of use"),
+          'msg_privacy': _("Privacy policy"),
 
           'msg_poweredby' : _("Powered by"),
           'msg_maintainedby' : _("Problems/Questions to"),
