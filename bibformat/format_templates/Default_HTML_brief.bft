@@ -1,13 +1,12 @@
 <name>Default HTML brief</name>
 <description>Prototype brief format for the Inspire project</description>
-<!C-START REC 11.Brief--!>
 <div class="record_body">
 <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="." force_title_case="yes"/></a>
 <BFE_FIELD tag="041a" prefix=" (In " suffix=")" />
 <br />
 <small>
 <BFE_FIELD tag="242__a" suffix="<br />" />
-<BFE_INSPIRE_AUTHORS print_affiliations="yes" affiliations_separator=' & '
+<BFE_INSPIRE_AUTHORS print_affiliations="yes" affiliations_separator=' &amp; '
 separator=', ' limit="10" extension="<i> et al.</i>" suffix=". "
 name_last_first="no" link_extension="yes"/>
 <BFE_INSPIRE_date suffix=". " /> <BFE_FIELD tag="300a" suffix=" pp. " />
@@ -17,8 +16,8 @@ name_last_first="no" link_extension="yes"/>
 <BFE_INSPIRE_DOI prefix="<br />DOI: " />
 <BFE_INSPIRE_CONFERENCE prefix="<br />" />
 <BFE_INSPIRE_ARXIV_LINK prefix="<br/>e-Print: <b>" suffix="</b>" />
-
-<ul class="tight_list">
+</small>
+<ul class="tight_list" style="font-size: small;">
 <li>
  <a href="<BFE_SERVER_INFO var="recurl">/references">References</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hx">BibTeX</a>
@@ -26,9 +25,9 @@ name_last_first="no" link_extension="yes"/>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxe">LaTeX(EU)</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/hlxh">Harvmac</a>
  | <a href="<BFE_SERVER_INFO var="recurl">/export/xe">EndNote</a>
+ <BFE_INSPIRE_MARCFORMAT prefix="| " />
 </li>
-
-<BFE_INSPIRE_LINKS />
+<li><BFE_INSPIRE_LINKS /></li>
 </ul>
-</small>
+
 </div>

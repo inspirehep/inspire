@@ -16,48 +16,43 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints authors
+"""BibFormat element - Prints Hepnames Institution table
 """
-__revision__ = "$Id$"
+from invenio.config import CFG_BASE_URL
 
-def format_element(bfo, limit, separator='',
-           extension='[...]',
-           print_links="yes",
-           print_affiliations='yes',
-           affiliation_prefix=' (',
-           affiliation_suffix=')',
-           interactive="no",
-           highlight="no",
-           link_author_pages="no"):
+
+def format_element(bfo):
     """
-    Prints the list of authors of a record.
-
-    @param limit: the maximum number of authors to display
-    @param separator: the separator between authors.
-    @param extension: a text printed if more authors than 'limit' exist
-    @param print_links: if yes, prints the authors as HTML link to their publications
-    @param print_affiliations: if yes, make each author name followed by its affiliation
-    @param affiliation_prefix: prefix printed before each affiliation
-    @param affiliation_suffix: suffix printed after each affiliation
-    @param interactive: if yes, enable user to show/hide authors when there are too many (html + javascript)
-    @param highlight: highlights authors corresponding to search query if set to 'yes'
+    Prints Hepnames Institution table
     """
     authors = bfo.fields('371__')
 
     # Process authors to add link, highlight and format affiliation
     output = ""
-    cell = "<tr><td>"
-#'<a href="/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22' + author['a'] + '%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">'
-    for author in authors:
-        if author.has_key('a'):
-            output += '<tr><td>' + '<a href="/search?ln=en&amp;cc=Institutions&amp;p=110__u%3A%22' \
-            + author['a'] + '%22&amp;action_search=Search&amp;of=hd">' + author['a'] + '</a>' \
-            + '</td><td>' + author['r'] + '</td><td>' + author['s'] + '</td><td>' + author['t'] + '</td></tr>'
-#            output += '<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>' % (author['a'], author['r'], author['s'], author['t'])
 
+    for author in authors:
+        output += '<tr>'
+        if author.get('a', ''):
+            output += '<td>' + '<a href="' + CFG_BASE_URL + '/search?ln=en&amp;cc=Institutions&amp;p=110__u%3A%22' \
+            + author['a'] + '%22&amp;action_search=Search&amp;of=hd">' + author['a'] + '</a>' \
+            + '</td>'
+        else:
+            output += '<td></td>'
+        if author.get('r', ''):
+            output += '<td>' + author['r'] + '</td>'
+        else:
+            output += '<td></td>'
+        if author.get('s', ''):
+            output += '<td>' + author['s'] + '</td>'
+        else:
+            output += '<td></td>'
+        if author.get('t', ''):
+            output += '<td>' + author['t'] + '</td>'
+        else:
+            output += '<td></td>'
+        output += '</tr>'
     return output
-    # Uncomment next line if default value must be returned
-    # return 'whatever'
+
 
 def escape_values(bfo):
     """

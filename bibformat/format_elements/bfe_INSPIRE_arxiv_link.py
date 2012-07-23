@@ -19,24 +19,35 @@
 """Bibformat element - Return an HTML link to ArXiv.
 """
 
-from cgi import escape
 
-def format_element(bfo):
+def format_element(bfo, separator=", "):
+    """
+    Returns a HTML link to arXiv.org for each arXiv report-number.
+    """
     fields = bfo.fields('037__')
     fields.extend(bfo.fields('088__'))
-    out = ''
+    out = []
 
     for field in fields:
         if '9' in field and field['9'] == 'arXiv':
-            out = '<a href="http://arXiv.org/abs/' + field['a'] + '">' + field['a'] + '</a>'
-            if 'c' in field:
-                out += ' [' + field['c'] + ']'
-            if 'arXiv:' in field['a']:
-                out += ' <a href="http://arXiv.org/pdf/' + field['a'][6:] + '.pdf">PDF</a>'
+            temp_out = ""
+            #if new arxiv
+            if ':' in field['a']:
+                temp_out = '<a href="http://arXiv.org/abs/' + field['a'] + '">' + field['a'] + '</a>'
+                if 'c' in field:
+                    temp_out += ' [' + field['c'] + ']'
+            #else old arxiv
             else:
-                out += ' <a href="http://arXiv.org/pdf/' + field['a'] + '.pdf">PDF</a>'
+                temp_out = '<a href="http://arXiv.org/abs/' + field['a'] + '">' + field['a'] + '</a>'
 
-    return out
+            if 'arXiv:' in field['a']:
+                temp_out += ' | <a href="http://arXiv.org/pdf/' + field['a'][6:] + '.pdf">PDF</a>'
+            else:
+                temp_out += ' | <a href="http://arXiv.org/pdf/' + field['a'] + '.pdf">PDF</a>'
+            out.append(temp_out)
+
+    return separator.join(out)
+
 
 def escape_values(bfo):
     """

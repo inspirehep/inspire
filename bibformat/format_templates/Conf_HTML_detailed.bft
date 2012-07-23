@@ -2,31 +2,32 @@
 <description>Default HTML Detailed format for Conferences</description>
 <div class="detailed_record_info">
 <table width="100%"><tr><td width="70%">
-<BFE_FIELD prefix="<b>" suffix="</b>" default="" escape="" extension="" instances_separator=" & " tag="111a"/>
+<BFE_FIELD prefix="<b>" suffix="</b>" default="" escape="" extension="" instances_separator=" &amp; " tag="111a" />
+<BFE_FIELD prefix="<b>: "  instances_separator=" " suffix=".</b>"  tag="111b" escape="">
 <BFE_FIELD tag="111e" prefix="<b> (" suffix=")</b>" />
 </td>
 <td width="30%">
 </td>
 </tr>
 </table>
-<BFE_FIELD prefix="<br />"  instances_separator=" " suffix=". "  tag="111b" escape="">
-<BFE_FIELD prefix="<br />"  instances_separator=" " suffix=". "  tag="711a" escape="">
-<BFE_INSPIRE_CONFERENCES_DATE suffix=". " />
+
+<BFE_INSPIRE_CONFERENCES_DATE prefix="<br />" suffix=". " />
 <BFE_FIELD prefix=""  instances_separator=" " suffix=""  tag="111c" escape="">
 
 <br />
 HEP records: <a href= "/search?p=773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM />+or+773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM_LINK />"><BFE_INSPIRE_CONFERENCES_CNUM_LINK /></a><br />
-<BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
-
-<br />
-<BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="270b" escape="">
+<BFE_INSPIRE_URL prefix="URL: " suffix="<br />" default="" escape="" style="" separator="; "/>
 <BFE_INSPIRE_EMAIL prefix="Email: " suffix="<br />" />
+
+<BFE_FIELD prefix="<br />"  instances_separator=" " suffix="<br />"  tag="520a" escape="">
 <BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="500o" escape="">
-<BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="505t" escape="">
-<BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="520a" escape="">
 <BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="6531a" escape="">
 <BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="773x" escape="">
 
+<br />
 <BFE_INSPIRE_CONFERENCES_OTHER_CONF />
+<BFE_FIELD prefix="Alternative title: "  instances_separator=" " suffix="<br />"  tag="711a" escape="">
+<BFE_FIELD prefix="Extra place info: "  instances_separator=" " suffix="<br />"  tag="270b" escape="">
 
+<BFE_FIELD prefix="<br />Sessions: "  instances_separator=" " suffix="<br />"  tag="505t" escape="">
 </div>

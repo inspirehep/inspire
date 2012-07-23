@@ -7,5 +7,6 @@
 <BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" et al."
   name_last_first="no" print_links="no" suffix = ".<br/>" prefix="By "/>
 <BFE_INSPIRE_ARXIV links="no" category="yes" prefix='[' suffix='].<br/>' />
+<BFE_INSPIRE_DOI suffix=".<br/>"/>
 <BFE_INSPIRE_PUBLI_INFO suffix=".<br/>">
 <br/>

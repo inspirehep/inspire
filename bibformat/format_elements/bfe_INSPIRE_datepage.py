@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,22 +16,32 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints DOI
+"""BibFormat element - Prints the page and date of article
 """
+from invenio.bibformat_elements.bfe_INSPIRE_date import format_element as get_date_element
+from invenio.bibformat_elements.bfe_field import format_element as get_field
 
 
-def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='http://dx.doi.org/'):
+def format_element(bfo, separator=" - ", page_suffix=" pages"):
     """
-    Return an HTML link to the DOI.
+    Prints the page and date of article with a given seperator.
     """
-    tags = tag.split(",")
-    output = []
-    for a_tag in tags:
-        fields = bfo.fields(a_tag)
-        for field in fields:
-            if (a_tag == "773__" or field.get('2', 'DOI') == 'DOI') and 'a' in field:
-                output.append('<a href="' + link_prefix + field['a'] + '">' + field['a'] + '</a>')
-    return separator.join(set(output))
+    date = get_date_element(bfo)
+    pages = get_field(bfo, "300a", "1")
+
+    out = []
+
+    if date:
+        out.append(date)
+        # Let us see if we have pages, if not, we're done
+        if pages:
+            # We have a date and page so add page info with suffix
+            out.append(separator)
+            out.append(pages + page_suffix)
+    else:
+        # We have only page info
+        out.append(pages + page_suffix)
+    return "".join(out)
 
 
 def escape_values(bfo):

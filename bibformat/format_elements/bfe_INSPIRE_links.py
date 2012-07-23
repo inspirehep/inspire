@@ -19,17 +19,17 @@
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """ BibFormat element - scans through all fields likely to create urls
-(856, 773, etc) and creates and displys a list of those links.  Currently
-does not include arXiv, nor does it use a kb for lookups of display names
-or other similar information
+(856, 773, etc) and creates and displays a list of those links.  Currently
+does not include arXiv.
 """
 
 from invenio.messages import gettext_set_language
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_SITE_URL, CFG_BASE_URL
 from invenio.bibdocfile import bibdocfile_url_to_bibdoc
 
-def format_element(bfo, default = '', separator = '; ', style = '', \
-           show_icons = 'no', prefix='', suffix=''):
+
+def format_element(bfo, default='', separator='; ', style='', \
+                   show_icons='no', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
     @param prefix
@@ -39,25 +39,9 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     """
     _ = gettext_set_language(bfo.lang)
     if style != "":
-        style = 'class = "'+ style +'"'
+        style = 'class = "' + style + '"'
 
     links = []
-
-    journals = bfo.fields('773')
-    journal_doi = bfo.fields('0247_')
-    # trivially take care of dois
-    for journal in journals + journal_doi:
-        journtitle = ''
-        oa_type = bfo.kb('OALINKS', journal.get('n'), '').lower()
-        if oa_type:
-            final_style = style + ' class = "' + oa_type + '"'
-        else:
-            final_style = style
-        if journal.get('a'):
-            if journal.get('p'):
-                journtitle = ' - ' + journal.get('p')
-            links.append('<a ' + final_style + 'href="http://dx.doi.org/'\
-                         + journal.get('a') + '">Journal Server</a>' + journtitle)
 
     # KEKSCAN links
     identifiers = bfo.fields('035__')
@@ -71,7 +55,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     for ident in identifiers:
         if ident['9'] == 'CDS':
             links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
- 
+
     # ADS links
     identifiers = bfo.fields('037__')
     current_links = bfo.field('8564_y')

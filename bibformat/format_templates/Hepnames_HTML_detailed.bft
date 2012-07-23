@@ -16,8 +16,9 @@
 <BFE_INSPIRE_HEPNAMES_PHD_ADVISOR prefix="<strong>PhD Advisor: </strong>" suffix="<br />"/>
 <BFE_INSPIRE_HEPNAMES_INSTITUTION_PHD prefix="<strong>PhD Institution: </strong> " suffix="<br />"/>
 <BFE_INSPIRE_HEPNAMES_INSTITUTION_UG prefix="<strong>Undergrad: </strong> " suffix="<br />"/>
-<BFE_INSPIRE_HEPNAMES_EMAIL prefix="<strong>Email: </strong>" suffix="<br />" separator="<br />" /> 
+<BFE_INSPIRE_HEPNAMES_EMAIL prefix="<strong>Email: </strong>" suffix="<br />" separator="<br />" />
 <BFE_INSPIRE_URL prefix="<strong>URL:</strong> " suffix="<br />" separator="<br /><strong>URL: </strong>" />
+<BFE_INSPIRE_HEPNAMES_GSCHOLAR prefix="<strong>Google Scholar: </strong>" suffix="<br />" />
 <BFE_INSPIRE_HEPNAMES_FIELD_INTEREST prefix="<strong>Field: </strong>" suffix="<br />" />
 <BFE_INSPIRE_EXP_LINK prefix="<strong>Experiment: </strong>" suffix="<br />"/>
 <BFE_INSPIRE_HEPNAMES_BAI prefix="<strong>Author ID: </strong>" suffix="<br />"/>

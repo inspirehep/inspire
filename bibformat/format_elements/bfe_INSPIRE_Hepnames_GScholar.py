@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,23 +16,21 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints DOI
+"""BibFormat element - Prints BAI link
 """
+__revision__ = "$Id$"
 
-
-def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='http://dx.doi.org/'):
+def format_element(bfo, separator='; '):
     """
-    Return an HTML link to the DOI.
+    This is the default format for formatting full-text URLs.
+    @param separator: the separator between urls.
+    @param style: CSS class of the link
     """
-    tags = tag.split(",")
-    output = []
-    for a_tag in tags:
-        fields = bfo.fields(a_tag)
-        for field in fields:
-            if (a_tag == "773__" or field.get('2', 'DOI') == 'DOI') and 'a' in field:
-                output.append('<a href="' + link_prefix + field['a'] + '">' + field['a'] + '</a>')
-    return separator.join(set(output))
+    bai = bfo.fields('035__')
 
+    for item in bai:
+        if item.has_key('9') and item['9'].lower() == 'googlescholar' and item.has_key('a'):
+            return '<a href="http://scholar.google.com/citations?user=' + item['a'] + '">http://scholar.google.com/citations?user=' + item['a'] + '</a>'
 
 def escape_values(bfo):
     """

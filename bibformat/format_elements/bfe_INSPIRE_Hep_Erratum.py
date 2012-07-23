@@ -19,26 +19,27 @@
 """BibFormat element - Hep Erratum info
 """
 
+
 def format_element(bfo):
     """
     Prints Hep Erratum info
     """
     pubinfos = bfo.fields('773__')
 
-    # Process to add link, highlight and format affiliation
-    output = "<div style=\"text-align: center; margin: 0 auto; display: inline\">"
-    newline = "<br />"
+    if not pubinfos:
+        return ""
 
+    # Process pubnotes
+    newline = "<br />"
+    out = []
     for pubinfo in pubinfos:
         if 'p' in pubinfo:
-            output += newline + pubinfo['p'] + ' ' + pubinfo['v'] + ' (' + pubinfo['y'] + ') ' + pubinfo['c']
-        if 'x' in pubinfo:
-            output += newline + pubinfo['x']
+            out.append("<strong>" + pubinfo['p'] + ' ' + pubinfo['v'] + ' (' + pubinfo['y'] + ') ' + pubinfo['c'] + "</strong>")
+        if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or "Also in *".lower() in pubinfo['x'].lower()):
+            out.append("<small>" + pubinfo['x'] + "</small>")
 
-    output += "</div>"
-    return output
-    # Uncomment next line if default value must be returned
-    # return 'whatever'
+    return newline.join(out)
+
 
 def escape_values(bfo):
     """

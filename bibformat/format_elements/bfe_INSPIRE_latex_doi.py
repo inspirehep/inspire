@@ -16,7 +16,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints DOI
+"""BibFormat element - Prints authors
 """
 
 
@@ -30,7 +30,7 @@ def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='http://d
         fields = bfo.fields(a_tag)
         for field in fields:
             if (a_tag == "773__" or field.get('2', 'DOI') == 'DOI') and 'a' in field:
-                output.append('<a href="' + link_prefix + field['a'] + '">' + field['a'] + '</a>')
+                output.append(field['a'])
     return separator.join(set(output))
 
 

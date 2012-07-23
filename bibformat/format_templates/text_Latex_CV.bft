@@ -9,6 +9,7 @@ same relationship.</description>
 {\bf ``<BFE_INSPIRE_TITLE_BRIEF  force_title_case="yes" esctitle="0" />''}
   \\{}<BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}" name_last_first="no" print_links="no" suffix="." markup='latex'/><BFE_INSPIRE_ARXIV links="no" category="yes" prefix="
   \\{}"/>
+  <BFE_INSPIRE_LATEX_DOI prefix="  \\{}" />
 <BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="\\{}" suffix=""/> %(<BFE_INSPIRE_DATE>)
 %\href{<BFE_SERVER_INFO var="recurl" />}{HEP entry}
 

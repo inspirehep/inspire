@@ -6,13 +6,14 @@
 <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
 
 <BFE_FILTER_FIELD prefix="<b>" suffix="</b>" default="" escape="" extension="" instances_separator=" & " filter_value="" subfields_separator=" " tag="111a" limit="" filter_subcode=""/></a>
+<BFE_FIELD prefix="<b>: "  instances_separator=" " suffix="</b>"  tag="111b" escape="">
 <BFE_FIELD tag="111e" prefix="<b> (" suffix=")</b>" />
 
 <small>
-<BFE_FIELD prefix="<br />"  instances_separator=" " suffix=": "  tag="111b" escape="">
-<BFE_INSPIRE_CONFERENCES_DATE prefix="<br />" suffix=": " />
-<BFE_FIELD prefix=""   instances_separator=" " suffix="<br />"  tag="111c" escape="">
 
+<BFE_INSPIRE_CONFERENCES_DATE prefix="<br />" suffix=". " />
+<BFE_FIELD prefix=""   instances_separator=" " suffix=""  tag="111c" escape="">
+<br />
 HEP records: <a href= "/search?p=773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM />+or+773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM_LINK />"><BFE_INSPIRE_CONFERENCES_CNUM_LINK /></a><br />
 
 <BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>

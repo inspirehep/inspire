@@ -74,6 +74,8 @@ def format_element(bfo, width="", caption="yes", max="3"):
     img_files = sorted(img_files, key=lambda x: x[0])
     if max > 0:
         img_files = img_files[:max]
+
+    if len(img_files) >= max:
         link = "<a href='/record/"+bfo.control_field('001')+"/plots'>Show more plots</a>"
 
     for index in range(len(img_files)):

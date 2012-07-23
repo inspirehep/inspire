@@ -16,4 +16,5 @@
 </li>
 
    <BFE_EDIT_RECORD prefix="<li>" suffix="</li>" />
+   <BFE_EDIT_FILES prefix="<li>" suffix="</li>" />
 </ul>
