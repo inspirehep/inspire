@@ -68,11 +68,17 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
             links.append('<a href="http://www-lib.kek.jp/cgi-bin/img_index?' + out + '"> KEK scanned document </a>')
 
     # CDS links
-    identifiers = bfo.fields('035__')
-
     for ident in identifiers:
         if ident['9'] == 'CDS':
             links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
+ 
+    # ADS links
+    identifiers = bfo.fields('037__')
+    current_links = bfo.field('8564_y')
+
+    for ident in identifiers:
+        if ident.get('9', '') == 'arXiv' and not ("ADSABS" in current_links):
+            links.append('<a href="http://http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch=' + ident.get('a', '') + '">ADS Abstract Service</a>')
 
     # could look for other publication info and calculate URls here
 
@@ -82,17 +88,17 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     urls = bfo.fields('8564_')
     allowed_doctypes = ["INSPIRE-PUBLIC"]
     for url in urls:
-        if url.get("u") and \
-        url.get('y', 'Fulltext').upper() != "DOI" and not \
-        url.get('u').startswith(CFG_SITE_URL):
-            links.append('<a ' + style + \
-            'href="' + url.get("u") + '">' + \
-                  _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
-        elif url.get("u").startswith(CFG_SITE_URL) and \
-        bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes and \
-        url.get("u")[-3:].lower() == "pdf":
-            links.append('<a ' + style + 'href="' + url.get("u") + '">' + \
-            _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+        if '.png' not in url['u']:
+            if url.get("u") and \
+            url.get('y', 'Fulltext').upper() != "DOI" and not \
+            url.get('u').startswith(CFG_SITE_URL):
+                links.append('<a ' + style + \
+                'href="' + url.get("u") + '">' + \
+                      _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+            elif url.get("u").startswith(CFG_SITE_URL) and \
+            url.get("u")[-3:].lower() == "pdf" and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
+                links.append('<a ' + style + 'href="' + url.get("u") + '">' + \
+                _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
     #put it all together
     if links:
