@@ -6,4 +6,5 @@ HEPNAMES --- Hepnames_HTML_detailed.bft
 CONFERENCES  --- Conf_HTML_detailed.bft
 EXPERIMENT --- Exp_HTML_detailed.bft
 DATA --- Detailed_HEPDATA_dataset.bft
+JOURNALS --- Journal_Inspire_HTML_detailed.bft
 default: Default_HTML_detailed.bft

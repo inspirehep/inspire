@@ -1,0 +1,15 @@
+<name>Journal Inspire HTML Brief</name>
+<description>Default HTML brief format for Journals</description>
+<!C-START REC 11.Brief--!>
+<div class="record_body">
+
+<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+<BFE_FIELD prefix=""  suffix=""  tag="130a" escape="">
+</a>
+<BFE_FIELD tag="711a" prefix="<br />" suffix="" />
+
+<br />
+<BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>
+<BFE_INSPIRE_JOURNAL_PUBLISHER suffix="<br />" />
+
+</div>

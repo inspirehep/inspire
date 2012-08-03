@@ -1,0 +1,19 @@
+<name>Journal Inspire HTML Detail</name>
+<description>Default HTML Detailed format for Journals</description>
+<div class="detailed_record_info">
+
+<BFE_FIELD prefix="<b>"  suffix="</b>"  tag="130a" escape="">
+<BFE_FIELD tag="711a" prefix="<br />" suffix="<br />" />
+
+<BFE_INSPIRE_JOURNAL_PUBLISHER prefix="<br />" />
+<BFE_FIELD tag="022a" prefix="<br />ISSN: " suffix="<br />" />
+
+<BFE_INSPIRE_URL prefix="<br />" suffix="" default="" escape="" style="" separator="<br />"/>
+<BFE_INSPIRE_JOURNAL_ADS prefix="<br />" >
+<BFE_INSPIRE_JOURNAL_NAME_VARIANTS prefix="<br />" />
+
+<BFE_FIELD tag="680i" prefix="<br />" suffix="" />
+<BFE_FIELD tag="500a" prefix="<br />" suffix="" />
+<BFE_INSPIRE_JOURNAL_RELATED prefix="<br />">
+<BFE_FIELD tag="690a" prefix="<br />" suffix="" />
+</div>

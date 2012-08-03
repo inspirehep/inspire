@@ -246,6 +246,8 @@ $(function () {
 ::
 <a id="nav-exp" href="%(siteurl)s/collection/Experiments">Experiments</a>
 ::
+<a id="nav-journals" href="%(siteurl)s/collection/Journals">Journals</a>
+::
 <a id="nav-help" href="%(siteurl)s/help/?ln=%(ln)s">%(msg_help)s</a>
 </div>
 <table class="navtrailbox">
