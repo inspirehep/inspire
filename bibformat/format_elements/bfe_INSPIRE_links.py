@@ -78,7 +78,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
 
     for ident in identifiers:
         if ident.get('9', '') == 'arXiv' and not ("ADSABS" in current_links):
-            links.append('<a href="http://http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch=' + ident.get('a', '') + '">ADS Abstract Service</a>')
+            links.append('<a href="http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch=' + ident.get('a', '') + '">ADS Abstract Service</a>')
 
     # could look for other publication info and calculate URls here
 
