@@ -15,13 +15,16 @@
 ## INSPIRE_CONF="/opt/inspire/inspire-local.conf" (if needed)
 ## CFG_INVENIO_USER="apache"
 ## PREFIX="/opt/invenio"
+## STDOUTREDIR="/tmp/invenio_install_output.log"
 # ...except without being commented out.
 # 
 # It must be readable only by the owner and have no other permissions
 
 export CONFIGURE_OPTS="--with-python=/usr/bin/python"
 export CFG_INSPIRE_DIR="/opt/inspire"
-export CONFIGFILE="$CFG_INSPIRE_DIR/.invenio_install.conf"
+export CONFIGFILE="$CFG_INSPIRE_DIR/invenio_install.conf"
+export CONFIGOVERRIDEFILE="$HOME/invenio_install_override.conf"
+export STDOUTREDIR="/tmp/invenio_build.out"
 export G_DB_RESET="FALSE"
 export G_INSPIRE="FALSE"
 export INVENIO_REPO="~/src/invenio/"
@@ -36,6 +39,7 @@ export CLEAN_INSTALL="TRUE"
 export USE_BIBCONVERT="TRUE"
 export INSTALL_PLUGINS="FALSE"
 export BE_QUIET="FALSE"
+export BE_NOISY="FALSE"
 
 function say() {
     if [ $BE_QUIET == "FALSE" ]; then
@@ -81,10 +85,15 @@ for arg in $@; do
         echo "use --reset-db to drop and create the requested db from scratch"
         echo ""
         echo "Sending --shutup will cause me to do my best to only report errors."
+        echo "Sending --all-errors will cause me to always show all output."
         echo "NB: on clean installs I will not warn you before removing files."
         exit 0
     elif [ $arg == '--shutup' ]; then
         export BE_QUIET="TRUE"         # Because silence is golden
+        export BE_NOISY="FALSE"        # Because I don't like contradictions
+    elif [ $arg == '--all-errors' ]; then
+        export BE_NOISY="TRUE"
+        export BE_QUIET="FALSE"
     elif [ $arg == '--reset-db' ]; then
         say "Ok, I'll reset the DB"
         export G_DB_RESET="TRUE"
@@ -102,8 +111,16 @@ done
 if [ -e $CONFIGFILE ]; then 
     source $CONFIGFILE
     say "Thanks for the tasty config options"
+else
+    say "[WARNING] you should have file /opt/inspire/install_invenio.conf"
 fi
 
+if [ -e $CONFIGOVERRIDEFILE ]; then
+    source $CONFIGOVERRIDEFILE
+    say "Oooh, and more config, yummy!"
+else
+    say "[INFO] [OPTIONAL] set more config in ~/install_invenio_override.conf"
+fi
 
 # give user a chance to quit, if it actually makes sense to do so:
 if [ $CLEAN_INSTALL == "TRUE" ]; then
@@ -112,7 +129,13 @@ fi
 
 sudo -v; 
 # Stop running bibsched so that we don't create zombies
-sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibsched stop 1>/tmp/invenio_bibsched_stop.log
+if [ -x $CFG_INVENIO_PREFIX/bin/bibsched ]; then
+    if [ $BE_NOISY == "TRUE" ]; then
+        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibsched stop
+    else 
+        sudo -u $CFG_INVENIO_USER $CFG_INVENIO_PREFIX/bin/bibsched stop 1>$STDOUTREDIR
+    fi
+fi
 
 
 if [ $CLEAN_INSTALL == "TRUE" ]; then
@@ -128,14 +151,17 @@ fi
  
 cd $INVENIO_REPO
 say "I won't produce output for a while so that I can go faster, but you may find"
-say -e "something useful in some /tmp/invenio_\052.log files"        # \052 lets us echo a *
-if [ $G_INSPIRE == "TRUE" ]; then
-    say -e " and some /tmp/inspire_\052.log files";
-fi
+say -e "something useful in $STDOUTREDIR"
 echo "."
-make -j 1>/tmp/invenio_make.log && sudo make -j install 1>/tmp/invenio_make_install.log \
-    && sudo chown -R $CFG_INVENIO_USER:$CFG_INVENIO_USER $CFG_INVENIO_PREFIX \
-    && sudo install -m 660 -o $CFG_INVENIO_USER -g $CFG_INVENIO_USER $LOCAL_CONF $CFG_INVENIO_PREFIX/etc/invenio-local.conf; 
+if [ $BE_NOISY == "TRUE" ]; then
+    make -j && sudo make -j install \
+        && sudo chown -R $CFG_INVENIO_USER:$CFG_INVENIO_USER $CFG_INVENIO_PREFIX \
+        && sudo install -m 660 -o $CFG_INVENIO_USER -g $CFG_INVENIO_USER $LOCAL_CONF $CFG_INVENIO_PREFIX/etc/invenio-local.conf; 
+else
+    make -j 1>>$STDOUTREDIR && sudo make -j install 1>>$STDOUTREDIR \
+        && sudo chown -R $CFG_INVENIO_USER:$CFG_INVENIO_USER $CFG_INVENIO_PREFIX \
+        && sudo install -m 660 -o $CFG_INVENIO_USER -g $CFG_INVENIO_USER $LOCAL_CONF $CFG_INVENIO_PREFIX/etc/invenio-local.conf; 
+fi
 if [ $? -eq 0 ]; then
     say -e "\n** INVENIO INSTALLED SUCCESSFULLY\n";
 else
@@ -154,8 +180,11 @@ fi
 if [ $INSTALL_PLUGINS == "TRUE" ]; then
     if [ $CLEAN_INSTALL == "TRUE" ]; then
         say -n "INSTALLING \"OPTIONAL\" COMPONENTS...";
-#sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins install-fckeditor-plugin install-pdfa-helper-files 1>/tmp/invenio_make_install_plugins.log
-        sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins 1>/tmp/invenio_make_install_plugins.log
+        if [ $BE_NOISY == "TRUE" ]; then
+            sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins
+        else 
+            sudo -u $CFG_INVENIO_USER make -j install-mathjax-plugin install-jquery-plugins 1>>$STDOUTREDIR
+        fi
         if [ $? -eq 0 ]; then
             say " done.";
         else
@@ -168,7 +197,11 @@ fi
 if [ $G_INSPIRE = 'TRUE' ]; then
     say -n "Installing INSPIRE from repo $INSPIRE_REPO"
     cd $INSPIRE_REPO
-    sudo make -j install 1>/tmp/inspire_make_install.log
+    if [ $BE_NOISY == "TRUE" ]; then
+        sudo make -j install
+    else 
+        sudo make -j install 1>>$STDOUTREDIR
+    fi
     if [ $? -eq 0 ]; then
         say -e " done.\n** INSPIRE INSTALLED SUCCESSFULLY\n";
     else
@@ -245,7 +278,7 @@ sudo cp -v $CFG_INVENIO_PREFIX/etc/apache/*conf $CFG_INSPIRE_DIR/last_generated_
 for file in $CFG_INSPIRE_DIR/invenio-apache-vhost*.conf; do
     if [ -e $file ]; then
         sudo install -p -m 660 -g $CFG_INVENIO_USER -o $CFG_INVENIO_USER \
-            $file $CFG_INVENIO_PREFIX/etc/apache         
+            $file $CFG_INVENIO_PREFIX/etc/apache/
     fi
 done
 
