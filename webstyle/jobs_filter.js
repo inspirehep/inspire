@@ -80,9 +80,9 @@ $(document).ready(function(){
     // Reset search filters to default values (none selected)
     $('#reset_search').click(function () {
         $('#mainlightsearchfield').val("");
-        $('#rank :selected').attr('selected', '');
-        $('#region :selected').attr('selected', '');
-        $('#field :selected').attr('selected', '');
+        $('#rank option:selected').removeAttr('selected');
+        $('#region option:selected').removeAttr('selected');
+        $('#field option:selected').removeAttr('selected');
     });
     // Make example links carry over the selected elements to the query
     $('.examplequery').click(function (event) {
