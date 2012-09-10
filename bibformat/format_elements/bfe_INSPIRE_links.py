@@ -88,7 +88,8 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
     urls = bfo.fields('8564_')
     allowed_doctypes = ["INSPIRE-PUBLIC"]
     for url in urls:
-        if '.png' not in url['u']:
+        if '.png' not in url['u'] and not \
+        (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
             if url.get("u") and \
             url.get('y', 'Fulltext').upper() != "DOI" and not \
             url.get('u').startswith(CFG_SITE_URL):

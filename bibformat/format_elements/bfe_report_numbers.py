@@ -31,25 +31,39 @@ def format_element(bfo, separator=', ', limit='9999', extension=" etc."):
     format_element is still handy for magic parameters, e.g., prefix, suffix
     and friends.
     """
-    return get_report_numbers_formatted(bfo, separator, limit, extension, skip='arXiv')
+    return get_report_numbers_formatted(bfo, separator, limit, extension, \
+           skip=['arXiv'])
 
 
 def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None):
     """
-    Prints the report numbers of the record (037__a)
+    Prints the report numbers of the record (037__a and 088__a)
 
-    @param separator the separator between report numbers.
-    @param limit the max number of report numbers to print
-    @param extension a prefix printed when limit param is reached
+    @param separator: the separator between report numbers.
+    @param limit: the max number of report numbers to print
+    @param extension: a prefix printed when limit param is reached
+    @param skip: list or string of report-number patterns to NOT print
     """
     out = []
+
+    if type(skip) == str:
+        skip = [skip]
+
+    def _skippable(value):
+        if skip:
+            for keyword in skip:
+                if keyword.lower() in value.get('a', '').lower() or \
+                   value.get('9', '').lower() == keyword.lower():
+                   return True
+        if value.get('a', '').lower().startswith("fermilab") and \
+           bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration'):
+            return True
+
     numbers = bfo.fields("037__")
     numbers.extend(bfo.fields("088__"))
     for x in numbers:
-        if skip:
-            if (x.has_key('a') and skip.lower() in x['a'].lower()) or \
-               (x.has_key('9') and x['9'].lower() == skip.lower()):
-                continue
+        if _skippable(x):
+            continue
         if x.has_key('a'):
             out.append(x['a'])
 
