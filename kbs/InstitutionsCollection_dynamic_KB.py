@@ -10,7 +10,7 @@ from invenio import bibknowledge
 kbname = 'InstitutionsCollection'
 collection = 'Institutions'
 display_field = '110__u'
-search_field = '371__a:*%* | 110__u:*%*'
+search_field = '371__a:"*%*" | 110__u:"*%*"'
 kbdesc = "A dynamic KB which searches all 371a and 110u fields in the " +\
          "institutions collection, and returns those records' corresponding " + \
          "110u fields."
