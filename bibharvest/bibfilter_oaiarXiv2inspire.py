@@ -232,7 +232,6 @@ def main():
     # Read and wash incoming data
     file_data = open_marc_file(input_filename)
     washed_data = wash_for_xml(wash_for_utf8(file_data))
-    washed_data = washed_data.replace('&', '&amp;')
 
     # Transform MARCXML to record structure
     records = create_records(washed_data)
