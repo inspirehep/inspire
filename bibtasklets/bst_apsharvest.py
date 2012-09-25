@@ -95,7 +95,7 @@ class APSRecord(object):
         return self.recid, self.doi, self.date
 
 
-def bst_apsharvest(dois="", recids="", query="", records="", mode="correct"):
+def bst_apsharvest(dois="", recids="", query="", records="", mode="correct", hidden="yes"):
     """
     Main function to download APS fulltext given a list of arguments:
 
@@ -113,13 +113,18 @@ def bst_apsharvest(dois="", recids="", query="", records="", mode="correct"):
                     "new" - fetches all new records added
                     "modified" - fetches all modified records added
                     "both" - both of the above
+    @type records: string
 
     @param mode: which mode should the fulltext files be uploaded in:
                     "append" - adds the fulltext to the existing attached files
                     "correct" - corrects existing attached fulltext files, or adds new
                     "replace" - replaces all attached files with new fulltext file
+    @type mode: string
 
-    @type records: string
+    @param hidden: should the record be hidden? "yes" or "no"
+    @type hidden: string
+
+
     """
     # This is the list of APSRecord objects to be harvested.
     final_record_list = APSRecordList()
@@ -135,6 +140,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", mode="correct"):
         mode = "-" + mode
     else:
         mode = "--" + mode
+
+    # We hide by default
+    if hidden == "no":
+        hidden = False
+    else:
+        hidden = True
 
     # Gather IDs (if any)
     if len(dois) > 0:
@@ -203,6 +214,11 @@ def bst_apsharvest(dois="", recids="", query="", records="", mode="correct"):
     count = 0
     task_update_progress("Fetching fulltext-records")
     for recid, fft_record in perform_fulltext_harvest(final_record_list):
+        if hidden:
+            fft_record['options'] = ["HIDDEN"]
+        else:
+            fft_record['doctype'] = "INSPIRE-PUBLIC"
+
         generated_fft_xml = ffts_to_xml({recid: [fft_record]})
         new_filename = get_temporary_file(prefix="apsharvest_result_", \
                                           suffix=".xml", \
@@ -295,10 +311,7 @@ def perform_fulltext_harvest(record_list):
         fft = {}
         fft['url'] = fulltext_file
         fft['doctype'] = CFG_APSHARVEST_FFT_DOCTYPE
-        fft['options'] = ["HIDDEN"]
         yield recid, fft
-
-
 
 
 def get_doi_from_record(recid):
