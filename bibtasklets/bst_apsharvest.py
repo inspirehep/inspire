@@ -27,11 +27,13 @@ the ALREADY exists in the repository.
 import sys
 import time
 import traceback
+
 from invenio.shellutils import split_cli_ids_arg
 from invenio.bibtask import task_update_status, \
                             write_message, \
                             task_update_progress, \
-                            task_low_level_submission
+                            task_low_level_submission, \
+                            task_sleep_now_if_required
 from invenio.config import CFG_TMPDIR
 from invenio.bibdocfile import download_url
 from invenio.bibdocfilecli import ffts_to_xml
@@ -42,7 +44,8 @@ from invenio.bibformat_engine import BibFormatObject
 from invenio.apsharvest_dblayer import fetch_last_updated, \
                                        get_all_new_records, \
                                        get_all_modified_records, \
-                                       store_last_updated
+                                       store_last_updated, \
+                                       can_launch_bibupload
 from invenio.apsharvest_utils import unzip, \
                                      find_and_validate_md5_checksums, \
                                      get_temporary_file, \
@@ -53,7 +56,8 @@ from invenio.apsharvest_config import CFG_APSHARVEST_FULLTEXT_URL, \
                                       CFG_APSHARVEST_RECORD_DOI_TAG, \
                                       CFG_APSHARVEST_MD5_FILE, \
                                       CFG_APSHARVEST_FFT_DOCTYPE, \
-                                      CFG_APSHARVEST_REQUEST_TIMEOUT
+                                      CFG_APSHARVEST_REQUEST_TIMEOUT, \
+                                      CFG_APSHARVEST_BUNCH_SIZE
 
 
 class APSHarvesterSearchError(Exception):
@@ -87,6 +91,7 @@ class APSRecord(object):
         self.recid = recid
         self.doi = doi or get_doi_from_record(self.recid)
         self.date = date
+        self.fft_record = None
 
     def get_data(self):
         """
@@ -210,41 +215,84 @@ def bst_apsharvest(dois="", recids="", query="", records="", mode="correct", hid
         write_message("Nothing to harvest.")
         return
 
-    #2: Fetch fulltext
+    #2: Fetch fulltext and upload bunches of records as configured
     count = 0
-    task_update_progress("Fetching fulltext-records")
-    for recid, fft_record in perform_fulltext_harvest(final_record_list):
+    taskid = 0
+    records_to_update = []
+    for record in perform_fulltext_harvest(final_record_list):
         if hidden:
-            fft_record['options'] = ["HIDDEN"]
+            record.fft['options'] = ["HIDDEN"]
         else:
-            fft_record['doctype'] = "INSPIRE-PUBLIC"
+            record.fft['doctype'] = "INSPIRE-PUBLIC"
 
-        generated_fft_xml = ffts_to_xml({recid: [fft_record]})
-        new_filename = get_temporary_file(prefix="apsharvest_result_", \
-                                          suffix=".xml", \
-                                          dir=CFG_TMPDIR)
-        try:
-            fd = open(new_filename, 'w')
-            fd.write(generated_fft_xml)
-            fd.close()
-        except IOError, e:
-            write_message("\nException caught: %s" % e, sys.stderr)
-            write_message(traceback.format_exc()[:-1])
-            task_update_status("CERROR")
-            return
+        records_to_update.append(record)
 
-        # Submit a BibUpload task
-        # NB: we do not change the modified date of the record as we otherwise would be caught by ourselves again.
-        # We rather run the bibindex of the fulltext afterwards as post-process.
-        task_arguments = ["--notimechange", \
-                          '--post-process', 'bst_run_bibtask[taskname="bibindex", user="apsharvest", w="fulltext", i="%s"]' % (recid,), \
-                          mode, \
-                          new_filename]
-        taskid = task_low_level_submission("bibupload", "apsharvest", *tuple(task_arguments))
-        write_message("Submitted BibUpload task #%s with mode %s (%s)" % (str(taskid), mode, new_filename))
-        count += 1
+        if len(records_to_update) == CFG_APSHARVEST_BUNCH_SIZE:
+            new_filename = generate_fft_xml_for_records(records_to_update)
+
+            if not new_filename:
+                return
+
+            task_update_progress("Waiting for task to finish")
+            if taskid != 0:
+                write_message("Going to wait for %d to finish" % (taskid,))
+
+            while not can_launch_bibupload(taskid):
+                # Lets wait until the previously launched task exits.
+                task_sleep_now_if_required(can_stop_too=False)
+                time.sleep(5.0)
+
+            # Submit a BibUpload task
+            taskid = submit_bibupload_for_records(records_to_update, mode, new_filename)
+            write_message("Submitted BibUpload task #%s with mode %s (%s)" % (str(taskid), mode, new_filename))
+            count += 1
+            records_to_update = []
+            task_sleep_now_if_required(can_stop_too=True)
+        else:
+            task_sleep_now_if_required(can_stop_too=False)
+
     # We are done
     write_message("Uploaded %d fulltext documents." % (count,))
+
+
+def generate_fft_xml_for_records(records):
+    """
+    Given a list of APSRecord objects, generate a MARCXML containing FFT for all of them.
+    """
+    new_filename = get_temporary_file(prefix="apsharvest_result_", \
+                                      suffix=".xml", \
+                                      dir=CFG_TMPDIR)
+
+    generated_fft_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' \
+                        "<collection>\n%s\n</collection>" % \
+                        ("\n".join([ffts_to_xml({record.recid: [record.fft]}) for record in records]),)
+
+    try:
+        fd = open(new_filename, 'w')
+        fd.write(generated_fft_xml)
+        fd.close()
+    except IOError, e:
+        write_message("\nException caught: %s" % e, sys.stderr)
+        write_message(traceback.format_exc()[:-1])
+        task_update_status("CERROR")
+        return
+    return new_filename
+
+
+def submit_bibupload_for_records(records, mode, new_filename):
+    """
+    Given a list of APSRecord objects, generate a bibupload job with a
+    consequtive bibindex job.
+    """
+    list_of_ids = [str(rec.recid) for rec in records]
+    # NB: we do not change the modified date of the record as we otherwise would be caught by ourselves again.
+    # We rather run the bibindex of the fulltext afterwards as post-process.
+    task_arguments = ["--notimechange", \
+                      '--post-process', \
+                      'bst_run_bibtask[taskname="bibindex", user="apsharvest", N="apsharvest", w="fulltext", i="%s"]' % (','.join(list_of_ids),), \
+                      mode, \
+                      new_filename]
+    return task_low_level_submission("bibupload", "apsharvest", *tuple(task_arguments))
 
 
 def perform_fulltext_harvest(record_list):
@@ -275,7 +323,7 @@ def perform_fulltext_harvest(record_list):
                 result_file = download_url(url, format="zip")
             except StandardError, e:
                 if 'urlopen' in str(e) or 'URL could not be opened' in str(e):
-                    write_message("ERROR: Fulltext XML not found for %s: %s" % (doi, url))
+                    write_message("Error: URL could not be opened: %s" % (url,))
                     continue
                 raise
             # This means we found something, we're done.
@@ -311,7 +359,8 @@ def perform_fulltext_harvest(record_list):
         fft = {}
         fft['url'] = fulltext_file
         fft['doctype'] = CFG_APSHARVEST_FFT_DOCTYPE
-        yield recid, fft
+        record.fft = fft
+        yield record
 
 
 def get_doi_from_record(recid):
@@ -334,9 +383,7 @@ def get_doi_from_record(recid):
             # Valid DOI present, add it
             try:
                 doi_list.append(doi['a'])
-            except KeyError, e:
-                write_message("Error occured while getting DOI from %s: %s" % \
-                              (recid, str(e)))
+            except KeyError:
                 continue
     return doi_list
 
