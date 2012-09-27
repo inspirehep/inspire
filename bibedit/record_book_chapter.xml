@@ -1,0 +1,62 @@
+<!-- BibEdit-Template-Name: book chapter -->
+<!-- BibEdit-Template-Description: book chapter in Inspire -->
+  <datafield tag="024" ind1="7" ind2=" ">
+    <subfield code="a">VOLATILE:doi</subfield>
+    <subfield code="2">VOLATILE:DOI</subfield>
+  </datafield>
+  <datafield tag="041" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:language (if not English)</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="242" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:translated title (English)</subfield>
+    <subfield code="b">VOLATILE:translated subtitle (English)</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Original title</subfield>
+    <subfield code="b">VOLATILE:subtitle</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:999</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:public note</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:subject</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="9">VOLATILE:author</subfield>
+  </datafield>
+  <datafield tag="695" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:additional author</subfield>
+    <subfield code="u">VOLATILE:affiliation</subfield>
+  </datafield>
+  <datafield tag="773" ind1=" " ind2=" ">
+    <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
+    <subfield code="z">VOLATILE:ISBN</subfield>
+    <subfield code="0">VOLATILE:Inspire recid</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external links)</subfield>
+    <subfield code="y">VOLATILE:link description</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">HEP</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CORE</subfield>
+  </datafield>
+</record>

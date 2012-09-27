@@ -1,0 +1,55 @@
+<!-- BibEdit-Template-Name: conference -->
+<!-- BibEdit-Template-Description: conferences -->
+<record>
+  <datafield tag="111" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:conference title</subfield>
+    <subfield code="b">VOLATILE:subtitle</subfield>
+    <subfield code="d">VOLATILE:date from - to</subfield>
+    <subfield code="x">VOLATILE:start date</subfield>
+    <subfield code="c">VOLATILE:city, country</subfield>
+    <subfield code="e">VOLATILE:acronym</subfield>
+    <subfield code="g">VOLATILE:cnum Cyy-mm-dd[.n]</subfield>
+  </datafield>
+  <datafield tag="270" ind1=" " ind2=" ">
+    <subfield code="b">VOLATILE:extra place info</subfield>
+  </datafield>
+  <datafield tag="270" ind1=" " ind2=" ">
+    <subfield code="m">VOLATILE:conf email</subfield>
+  </datafield>
+  <datafield tag="411" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:conf series</subfield>
+    <subfield code="n">VOLATILE:nr in series</subfield>
+  </datafield>
+  <datafield tag="505" ind1=" " ind2=" ">
+    <subfield code="t">VOLATILE:session titles</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+   <subfield code="a">VOLATILE:abstract/short description</subfield>
+   </datafield>
+  <datafield tag="711" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:alternative titles, acronyms (for display)</subfield>
+    <subfield code="b">VOLATILE:alternative titles, acronyms (for searching)</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="o">VOLATILE:public note</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:arxiv category</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:free keywords</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:url</subfield>
+    <subfield code="y">VOLATILE:web page</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CORE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">CONFERENCES</subfield>
+  </datafield>
+</record>
