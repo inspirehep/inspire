@@ -2362,4 +2362,28 @@ span:hover#reset_search {
 .diff_field_added {
    color: #00aa00;
 }
+
+/* ckeditor for websubmit forms related css */
+
+.cke_editor_JOBSUBMIT_ABSTR {
+   margin-left: 10px;
+}
+
+textarea.cke_source {
+   margin: 0;
+}
+/* end of ckeditor options */
+
+/* placeholder related css */
+
+input::-webkit-input-placeholder {
+  color: #999;
+}
+input:-moz-placeholder {
+  color: #999;
+}
+input:-ms-input-placeholder {
+  color: #999;
+}
+
 /* end of inspire.css */

@@ -20,7 +20,7 @@ test:
 install:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb
+install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb create-experiments-dynamic-kb
 	@echo "Done."
 
 weblinks: load-weblinks-knowledge-base
@@ -58,6 +58,9 @@ load-pdg-knowledge-base:
 
 create-institutions-dynamic-kb:
 	$(PYTHON) InstitutionsCollection_dynamic_KB.py
+
+create-experiments-dynamic-kb:
+	$(PYTHON) ExperimentsCollection_dynamic_KB.py
 
 clean:
 	@rm -f *.orig *~

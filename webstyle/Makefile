@@ -4,9 +4,10 @@ include ../config.mk
 -include ../config-local.mk
 
 SUBDIRS = img
-CSSFILES = invenio_inspire.css
+CSSFILES = invenio_inspire.css jobsubmit.css
 JSFILES = *.js
 LIBFILES = *.py
+CKEDITORFILES = websubmit-ckeditor-config.js
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
@@ -21,6 +22,7 @@ install:
 	$(INSTALL) -m 664 $(CSSFILES) $(WEBDIR)/img
 	$(INSTALL) -m 664 $(JSFILES) $(WEBDIR)/js
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
+	$(INSTALL) -m 664 $(CKEDITORFILES) $(WEBDIR)/ckeditor
 
 install-ugly: install uglify
 

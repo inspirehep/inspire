@@ -132,14 +132,7 @@ template function generated it.
             submission_js = """
 <script type="text/javascript" src="%(site_url)s/js/jquery-ui.min.js"></script>
 <link type="text/css" href="%(site_url)s/img/jquery-ui.css" rel="stylesheet" />
-<style type="text/css">
-div.ui-datepicker{
-  font-size:12px;
-}
-input.proceedings_radio{
-  width: 20px;
-}
-</style>
+<link type="text/css" href="%(site_url)s/img/jobsubmit.css" rel="stylesheet" />
 <script type="text/javascript">
  //<![CDATA[
 function clearText(field){
@@ -153,23 +146,66 @@ function defText(field){
     }
 }
 $(function() {
-    $('.datepicker[name="CONFSUBMIT_FDAT"]').datepicker({
-      dateFormat: 'yy-mm-dd'});
-    $('.datepicker[name="CONFSUBMIT_SDAT"]').datepicker({
+  $(".datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+  $('.datepicker[name="CONFSUBMIT_SDAT"]').datepicker("destroy");
+  $('.datepicker[name="CONFSUBMIT_SDAT"]').datepicker({
       dateFormat: 'yy-mm-dd',
       altField: '.datepicker[name="CONFSUBMIT_FDAT"]'
     });
 });
 
-//hiding some useless fields
+function split(val) {
+return val.split( /;\s*/ );
+}
+
+function extractLast( term ) {
+  return split( term ).pop();
+}
+
+function autocomplete_kb(that, kb_name) {
+  $.getJSON("/kb/export", {kbname: kb_name, format: 'jquery'})
+  .done(function(json) {
+    that.autocomplete({
+    minLength: 2,
+    source: function (request, response) {
+      // delegate back to autocomplete, but extract the last term
+      response($.ui.autocomplete.filter(json, extractLast(request.term)));
+    },
+    focus: function() {
+      // prevent value inserted on focus
+      return false;
+    },
+    select: function(event, ui) {
+      var terms = split(this.value);
+      // remove the current input
+      terms.pop();
+      // add the selected item
+      terms.push( ui.item.value );
+      // add placeholder to get the semicolon-and-space at the end
+      terms.push("");
+      this.value = terms.join("; ");
+      return false;
+    }
+    });
+  })
+}
+
 $(function () {
+  if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
+     $('#mainlightsearchfield').focus();
+  }
+  //hiding some useless fields
   var hideFields = $(".submit form table tr").eq(0);
   hideFields.find("td:gt(1)").hide();
   $(".submit a img[alt='Back to main menu']").parent().hide();
+
+  $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
+  autocomplete_kb($("#jobsubmitAffil"), "InstitutionsCollection");
+  autocomplete_kb($("#jobsubmitExp"), "ExperimentsCollection");
 })
  //]]>
 </script>
-            """ % { 'site_url' : CFG_BASE_URL }
+            """ % {'site_url': CFG_BASE_URL}
 
         # Hack to add jobs filter JS to Jobs collection pages
         if "Jobs" in body_css_classes:
@@ -192,15 +228,6 @@ $(function () {
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
  <script type="text/javascript" src="%(cssurl)s/js/jquery.min.js"></script>
- <script type="text/javascript">
- //<![CDATA[
- $(document).ready(function() {
-   if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
-       $('#mainlightsearchfield').focus();
-   }
- });
- //]]>
- </script>
  %(submissionjs)s
  %(metaheaderadd)s
  %(hepDataAdditions)s

@@ -1,0 +1,25 @@
+input::-webkit-input-placeholder {
+  color: #999;
+}
+input:-moz-placeholder {
+  color: #999;
+}
+input:-ms-input-placeholder {
+  color: #999;
+}
+div.ui-datepicker{
+  font-size:12px;
+}
+.ui-autocomplete{
+  max-height: 225px;
+  overflow-y: auto;
+}
+.ui-menu-item{
+  font-size: 12px;
+}
+.submission .ui-autocomplete-loading{
+  background: white url('/img/ui-anim_basic_16x16.gif') right center no-repeat;
+}
+input.proceedings_radio{
+  width: 20px;
+}
