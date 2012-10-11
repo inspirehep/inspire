@@ -18,7 +18,7 @@ from invenio.dbquery import run_sql
 FEEDS = [
          #("http://invenio-software.org/query?status=assigned&status=in_work&status=infoneeded&status=infoneeded_new&status=new&changetime=30daysago..&keywords=~INSPIRE+NEWS&format=rss&col=id&col=summary&col=status&col=type&col=priority&col=milestone&col=component&order=priority", "Current Work"),
          #("http://invenio-software.org/query?status=closed&status=in_merge&changetime=30daysago..&keywords=~NEWS&format=rss&col=id&col=summary&col=status&col=type&col=priority&col=milestone&col=component&order=priority", "Recently Finished Work"),
-         ("http://twitter.com/statuses/user_timeline/78852440.rss", "INSPIRE News", False, 2),
+         ("http://api.twitter.com/1/statuses/user_timeline.rss?user_id=78852440", "INSPIRE News", False, 2),
         ]
 
 FEED_PRE = { 2: """
