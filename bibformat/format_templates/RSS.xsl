@@ -51,7 +51,11 @@ This stylesheet is provided only as an example of transformation.
     <xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz'"/>
     <xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'"/>
     <xsl:variable name="CC">
-      <xsl:value-of select="normalize-space(translate(datafield[@tag='980']/subfield[@code='a'], $lowercase, $uppercase))"/>
+    <xsl:for-each select="datafield[@tag='980']">
+      <xsl:if test="'CORE' != normalize-space(translate(subfield[@code='a'], $lowercase, $uppercase))">
+	  <xsl:value-of select="normalize-space(translate(subfield[@code='a'], $lowercase, $uppercase))"/>
+      </xsl:if>
+    </xsl:for-each>
     </xsl:variable>
     <xsl:variable name="SPIRES">
       <xsl:value-of select="normalize-space(translate(datafield[@tag='970']/subfield[@code='a'], $lowercase, $uppercase))"/>
@@ -89,7 +93,7 @@ This stylesheet is provided only as an example of transformation.
           <xsl:if test="datafield[@tag='037']/subfield[@code='a']">
             <xsl:for-each select="datafield[@tag='037']">
               <xsl:value-of select="subfield[@code='a']"/>
-              <xsl:text>&lt;br&gt;</xsl:text>
+              <xsl:text>&lt;br /&gt;</xsl:text>
             </xsl:for-each>
           </xsl:if>
           <xsl:choose>
@@ -111,7 +115,7 @@ This stylesheet is provided only as an example of transformation.
                       <xsl:text> </xsl:text>
                       <xsl:value-of select="subfield[@code='c']"/>
                     </xsl:if>
-                    <xsl:text>&lt;br&gt;</xsl:text>
+                    <xsl:text>&lt;br /&gt;</xsl:text>
                   </xsl:if>
                 </xsl:if>
               </xsl:for-each>
@@ -119,12 +123,12 @@ This stylesheet is provided only as an example of transformation.
             <xsl:otherwise>
               <xsl:if test="datafield[@tag='773']/subfield[@code='x']">
                 <xsl:value-of select="datafield[@tag='773']/subfield[@code='x']"/>
-                <xsl:text>&lt;br&gt;</xsl:text>
+                <xsl:text>&lt;br /&gt;</xsl:text>
               </xsl:if>
             </xsl:otherwise>
           </xsl:choose>
           <xsl:if test="datafield[(@tag='100' or @tag='110' or @tag='710')]/subfield[@code='a']">
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>by: </xsl:text>
             <xsl:value-of select="datafield[(@tag='100' or @tag='110' or @tag='710')]/subfield[@code='a']"/>
           </xsl:if>
@@ -135,12 +139,12 @@ This stylesheet is provided only as an example of transformation.
             <xsl:if test="datafield[@tag='700']/subfield[@code='a']">
               <xsl:text> et al.</xsl:text>
             </xsl:if>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='520']/subfield[@code='a']">
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>&lt;strong&gt;Abstract:&lt;/strong&gt; </xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='520']/subfield[@code='a']"/>
           </xsl:if>
         </description>
@@ -228,7 +232,7 @@ RSS for JOB
                 <xsl:text>, </xsl:text>
               </xsl:if>
             </xsl:for-each>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='693']/subfield[@code='e']">
             <xsl:text>&lt;strong&gt;Experiments:&lt;/strong&gt; </xsl:text>
@@ -242,7 +246,7 @@ RSS for JOB
                 <xsl:text>, </xsl:text>
               </xsl:if>
             </xsl:for-each>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='046']">
             <xsl:text>&lt;strong&gt;Deadline: &lt;/strong&gt;</xsl:text>
@@ -254,20 +258,20 @@ RSS for JOB
                 <xsl:value-of select="datafield[@tag='046']/subfield[@code='i']"/>
               </xsl:otherwise>
             </xsl:choose>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='043']">
             <xsl:text>&lt;strong&gt;Region: &lt;/strong&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='043']/subfield[@code='a']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
-          <xsl:text>&lt;br&gt;</xsl:text>
+          <xsl:text>&lt;br /&gt;</xsl:text>
           <xsl:if test="datafield[@tag='520']">
-            <xsl:text>&lt;strong&gt;Job description: &lt;/strong&gt;&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;strong&gt;Job description: &lt;/strong&gt;&lt;br /&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='520']/subfield[@code='a']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
-          <xsl:text>&lt;br&gt;</xsl:text>
+          <xsl:text>&lt;br /&gt;</xsl:text>
           <xsl:if test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
             <!-- PROBLEM READING THIS FIELD-->
             <xsl:text>&lt;strong&gt;More Information:&lt;/strong&gt; </xsl:text>
@@ -276,7 +280,7 @@ RSS for JOB
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>&lt;/a&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
         </description>
       </xsl:when>
@@ -312,7 +316,7 @@ RSS for EXPERIMENT
             <xsl:text>&lt;strong&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='245']/subfield[@code='a']"/>
             <xsl:text>&lt;/strong&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='046']/subfield[@code='q']">
             <xsl:text>(Proposed: </xsl:text>
@@ -330,7 +334,7 @@ RSS for EXPERIMENT
             </xsl:if>
             <xsl:text>)</xsl:text>
           </xsl:if>
-          <xsl:text>&lt;br&gt;&lt;br&gt;</xsl:text>
+          <xsl:text>&lt;br /&gt;&lt;br /&gt;</xsl:text>
           <xsl:if test="(datafield[@tag='702']/subfield[@code='a']) or (datafield[@tag='702']/subfield[@code='a']!='')">
             <xsl:text>&lt;strong&gt;Spokesperson:&lt;/strong&gt; </xsl:text>
             <xsl:for-each select="datafield[@tag='702']">
@@ -339,7 +343,7 @@ RSS for EXPERIMENT
                 <xsl:text>; </xsl:text>
               </xsl:if>
             </xsl:for-each>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='270']/subfield[@code='m']">
             <xsl:text>&lt;strong&gt;Contact Email:&lt;/strong&gt; </xsl:text>
@@ -348,7 +352,7 @@ RSS for EXPERIMENT
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='270']/subfield[@code='m']"/>
             <xsl:text>&lt;/a&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
             <!-- PROBLEM READING THIS FIELD-->
@@ -358,12 +362,12 @@ RSS for EXPERIMENT
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>&lt;/a&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
-          <xsl:text>&lt;br&gt;</xsl:text>
+          <xsl:text>&lt;br /&gt;</xsl:text>
           <xsl:if test="datafield[@tag='520']/subfield[@code='a']">
             <xsl:value-of select="datafield[@tag='520']/subfield[@code='a']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
         </description>
       </xsl:when>
@@ -395,14 +399,14 @@ RSS for HEPNAMES
             <xsl:text>)</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='371']/subfield[@code='m']">
-            <xsl:text>&lt;br&gt;&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;&lt;br /&gt;</xsl:text>
             <xsl:text>E-Mail: </xsl:text>
             <xsl:text>&lt;a href="mailto:</xsl:text>
             <xsl:value-of select="datafield[@tag='371']/subfield[@code='m']"/>
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='371']/subfield[@code='m']"/>
             <xsl:text>&lt;/a&gt;&lt;br /&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
         </description>
       </xsl:when>
@@ -435,36 +439,36 @@ RSS for INSTITUTIONS
             <xsl:text> [Future INSPIRE ID: </xsl:text>
             <xsl:value-of select="datafield[@tag='110']/subfield[@code='t']"/>
             <xsl:text>] </xsl:text>
-            <xsl:text>&lt;br&gt;&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='110']/subfield[@code='a']">
             <xsl:value-of select="datafield[@tag='110']/subfield[@code='a']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='110']/subfield[@code='b']">
             <xsl:value-of select="datafield[@tag='110']/subfield[@code='b']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='371']/subfield[@code='a']">
             <xsl:for-each select="datafield[@tag='371']/subfield[@code='a']">
               <xsl:text>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>
               <xsl:value-of select="."/>
-              <xsl:text>&lt;br&gt;</xsl:text>
+              <xsl:text>&lt;br /&gt;</xsl:text>
             </xsl:for-each>
           </xsl:if>
           <xsl:if test="datafield[@tag='371']/subfield[@code='d']">
             <xsl:text>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>
             <xsl:value-of select="datafield[@tag='371']/subfield[@code='d']"/>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>&lt;a href="</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>&lt;/a&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='410']/subfield[@code='a']">
             <xsl:text>Name Variants: </xsl:text>
@@ -474,7 +478,7 @@ RSS for INSTITUTIONS
                 <xsl:text>; </xsl:text>
               </xsl:if>
             </xsl:for-each>
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='510']/subfield[@code='a']">
             <xsl:text>Parent Institution: </xsl:text>
@@ -497,6 +501,10 @@ RSS for CONFERENCES
         </title>
         <link>
           <xsl:choose>
+	    <xsl:when test="controlfield[@tag='001']">
+	      <xsl:text>http://inspirehep.net/record/</xsl:text>
+	      <xsl:value-of select="controlfield[@tag='001']" />
+	    </xsl:when>
             <xsl:when test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
               <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             </xsl:when>
@@ -520,36 +528,38 @@ RSS for CONFERENCES
             <xsl:text>. </xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='111']/subfield[@code='g']">
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>HEP records: </xsl:text>
-            <xsl:text>&lt;a href= "/search?p=773__w%3AC71/08/04+or+773__w%3A</xsl:text>
+            <xsl:text>&lt;a href="/search?p=773__w%3A</xsl:text>
+	    <xsl:value-of select="translate(datafield[@tag='111']/subfield[@code='g'], '-', '/')" />
+            <xsl:text> or 773__w%3A</xsl:text>
             <xsl:value-of select="datafield[@tag='111']/subfield[@code='g']"/>
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='111']/subfield[@code='g']"/>
             <xsl:text>&lt;/a&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>&lt;a href="</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             <xsl:text>&lt;/a&gt;&lt;br /&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='270']/subfield[@code='m']">
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:text>E-Mail: </xsl:text>
             <xsl:text>&lt;a href="mailto:</xsl:text>
             <xsl:value-of select="datafield[@tag='270']/subfield[@code='m']"/>
             <xsl:text>"&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='270']/subfield[@code='m']"/>
             <xsl:text>&lt;/a&gt;&lt;br /&gt;</xsl:text>
-            <xsl:text>&lt;br&gt;</xsl:text>
           </xsl:if>
           <xsl:if test="datafield[@tag='773']/subfield[@code='x']">
-            <xsl:text>&lt;br&gt;</xsl:text>
+            <xsl:text>&lt;br /&gt;</xsl:text>
             <xsl:value-of select="datafield[@tag='773']/subfield[@code='x']"/>
           </xsl:if>
+	  <xsl:text>&lt;br /&gt;</xsl:text>
         </description>
       </xsl:when>
       <!--
