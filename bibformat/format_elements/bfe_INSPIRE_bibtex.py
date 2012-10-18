@@ -279,7 +279,7 @@ def format_element(bfo, width="50"):
     else:
         # No eprints, but we don't want refs to eprints[0] to error out below
         # This makes everything work nicely without a lot of extra gating
-        eprints=['']
+        eprints=[None]
 
 
     # Other report numbers
