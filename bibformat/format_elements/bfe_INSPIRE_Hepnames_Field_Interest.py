@@ -42,9 +42,6 @@ def format_element(bfo, limit, separator=', ',
     @param interactive: if yes, enable user to show/hide authors when there are too many (html + javascript)
     @param highlight: highlights authors corresponding to search query if set to 'yes'
     """
-    from urllib import quote
-    from cgi import escape
-    from invenio.config import CFG_SITE_URL
     from invenio.messages import gettext_set_language
 
     _ = gettext_set_language(bfo.lang)    # load the right message language

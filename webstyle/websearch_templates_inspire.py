@@ -35,7 +35,7 @@ from invenio.config import \
      CFG_SITE_NAME_INTL, \
      CFG_SITE_SUPPORT_EMAIL, \
      CFG_SITE_SECURE_URL, \
-     CFG_SITE_URL, \
+     CFG_BASE_URL, \
      CFG_VERSION, \
      CFG_WEBSTYLE_INSPECT_TEMPLATES, \
      CFG_WEBSTYLE_TEMPLATE_SKIN, \
@@ -256,7 +256,7 @@ class Template(DefaultTemplate):
             header = '''%(findtip)s <a href="%(siteurl)s/help/search-tips%(langlink)s">%(msg_search_tips)s</a>''' %  {
                 'findtip' : _('Use "find " for SPIRES-style search'),
                 'langlink' :  ln != CFG_SITE_LANG and '?ln=' + ln or '',
-                'siteurl' : CFG_SITE_URL,
+                'siteurl' : CFG_BASE_URL,
                 'msg_search_tips' : _('(other tips)'),
                 }
 
@@ -272,7 +272,7 @@ class Template(DefaultTemplate):
 
         if collection_id == "HEP":
             # add easy search link
-            easy_search_link = create_html_link("%s/help/easy-search%s" % (CFG_SITE_URL, langlink), {}, _("Easy Search")) + "<br/>"
+            easy_search_link = create_html_link("%s/help/easy-search%s" % (CFG_BASE_URL, langlink), {}, _("Easy Search")) + "<br/>"
 
             # add output format select box for HEP
             middle_option = '<td class="searchboxbody" align="left">%s</td>' % \
@@ -320,7 +320,7 @@ class Template(DefaultTemplate):
             ''' % {'ln' : ln,
                    'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
                    'langlink': langlink,
-                   'siteurl' : CFG_SITE_URL,
+                   'siteurl' : CFG_BASE_URL,
                    'esearch' : easy_search_link,
                    'asearch' : create_html_link(asearchurl, {}, _('Advanced Search')),
                    'header' : header,
@@ -373,7 +373,7 @@ class Template(DefaultTemplate):
                 'msg_search_tips' : _('Search Tips'),
                 'msg_help' : _('Full Help'),
                 'langlink' : ln != CFG_SITE_LANG and '?ln=' + ln or '',
-                'siteurl': CFG_SITE_URL
+                'siteurl': CFG_BASE_URL
                 }
 
 
@@ -723,7 +723,7 @@ class Template(DefaultTemplate):
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
-               'siteurl' : CFG_SITE_URL,
+               'siteurl' : CFG_BASE_URL,
                'ssearch' : create_html_link(ssearchurl, {}, _("Regular Search")),
                'advanced_search': create_html_link(self.build_search_url(rm=rm,
                                                                         aas=max(CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES),
@@ -734,7 +734,7 @@ class Template(DefaultTemplate):
                                                   {}, _("Advanced Search")),
 
                'leading' : leadingtext,
-               'search_url' : (CFG_SITE_URL + '/search?p=QUERY&amp;action_search=Search'),
+               'search_url' : (CFG_BASE_URL + '/search?p=QUERY&amp;action_search=Search'),
                'header' : header,
 
                'msg_search' : _("Search"),
@@ -939,7 +939,7 @@ class Template(DefaultTemplate):
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_LIGHTSEARCH_PATTERN_BOX_WIDTH,
                'langlink': langlink,
-               'siteurl' : CFG_SITE_URL,
+               'siteurl' : CFG_BASE_URL,
                'clear_search' : clear_button,
                'header' : header,
                'msg_search' : msg_search,
@@ -1042,7 +1042,7 @@ class Template(DefaultTemplate):
 
         out += '''
         <form name="search" action="%(siteurl)s/search" method="get">
-        ''' % {'siteurl' : CFG_SITE_URL}
+        ''' % {'siteurl' : CFG_BASE_URL}
 
         # Only add non-default hidden values
         for field, value in argd.items():
@@ -1108,7 +1108,7 @@ class Template(DefaultTemplate):
             ''' % {
                 'simple_search': create_html_link(self.build_search_url(p=p1, f=f1, rm=rm, cc=cc, ln=ln, jrec=jrec, rg=rg),
                                                   {}, _("Simple Search")),
-                'easy_search': create_html_link(CFG_SITE_URL+'/help/easy-search',   # OK to hardcode; this is what we test
+                'easy_search': create_html_link(CFG_BASE_URL+'/help/easy-search',   # OK to hardcode; this is what we test
                                                   {}, _("Easy Search")),
 
                 'leading' : leadingtext,
@@ -1149,7 +1149,7 @@ class Template(DefaultTemplate):
                                 ),
               'search' : _("Search"),
               'browse' : _("Browse"),
-              'siteurl' : CFG_SITE_URL,
+              'siteurl' : CFG_BASE_URL,
               'ln' : ln,
               'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
             }
@@ -1211,7 +1211,7 @@ class Template(DefaultTemplate):
                                 ),
               'search' : _("Search"),
               'browse' : _("Browse"),
-              'siteurl' : CFG_SITE_URL,
+              'siteurl' : CFG_BASE_URL,
               'ln' : ln,
               'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
               'search_tips': _("Search Tips"),
@@ -1490,7 +1490,7 @@ class Template(DefaultTemplate):
         ''' % {'ln' : ln,
                'sizepattern' : CFG_WEBSEARCH_ADVANCEDSEARCH_PATTERN_BOX_WIDTH,
                'langlink': ln != CFG_SITE_LANG and '?ln=' + ln or '',
-               'siteurl' : CFG_SITE_URL,
+               'siteurl' : CFG_BASE_URL,
                'ssearch' : create_html_link(ssearchurl, {}, _("Simple Search")),
                'header' : header,
 
@@ -1659,7 +1659,7 @@ class Template(DefaultTemplate):
                 out += "<!--not showing citations links-->"
         if display_claim_link: #Maybe we want not to show the link to who cannot use id?
             out += '<span class="moreinfo"> - %s</span>' % \
-                create_html_link(CFG_SITE_URL + '/person/action', {'claim':'True', 'selection':str(recID)},
+                create_html_link(CFG_BASE_URL + '/person/action', {'claim':'True', 'selection':str(recID)},
                                                                         'Attribute this paper',
                                                                         {'class': "moreinfo"})
 
@@ -1667,7 +1667,7 @@ class Template(DefaultTemplate):
             num_comments = get_nb_comments(recID, count_deleted=False)
             if num_comments:
                 out += '<span class="moreinfo"> - %s</span>' % \
-                        create_html_link(CFG_SITE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
+                        create_html_link(CFG_BASE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
                         + '/comments?ln=%s' % ln, {}, num_comments > 1 and _("%i comments")
                         % (num_comments) or _("1 comment"),
                         {'class': "moreinfo"})
@@ -1678,7 +1678,7 @@ class Template(DefaultTemplate):
             num_reviews = get_nb_reviews(recID, count_deleted=False)
             if num_reviews:
                 out += '<span class="moreinfo"> - %s</span>' % \
-                        create_html_link(CFG_SITE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
+                        create_html_link(CFG_BASE_URL + '/' + CFG_SITE_RECORD + '/' + str(recID)
                         + '/reviews?ln=%s' % ln, {}, num_reviews > 1 and _("%i reviews")
                         % (num_reviews) or _("1 review"), {'class': "moreinfo"})
             else:

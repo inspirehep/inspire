@@ -97,7 +97,7 @@
         query = query.replace(/topcite (\d+)?\+/, 'topcite $1->99999');
         query = query.replace(' and ', ' ');
         query = query.replace(/ /g, '+');
-        search_url = '<CFG_SITE_URL>/search?p=' + query;
+        search_url = '/search?p=' + query;
         window.location = search_url;
     };
 </script>

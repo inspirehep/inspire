@@ -106,7 +106,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
         if show_icons.lower() == 'yes':
             img = '<img style="border:none" \
             src="%s/img/file-icon-text-12x16.gif" alt="%s"/>' \
-            % (CFG_SITE_URL, _("Download fulltext"))
+            % (CFG_BASE_URL, _("Download fulltext"))
             links = [img + '<small>' + link + '</small>' for link in links]
         return prefix + separator.join(links) + suffix
     else:

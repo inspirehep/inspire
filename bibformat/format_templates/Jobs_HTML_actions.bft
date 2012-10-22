@@ -3,8 +3,8 @@
 
 <ul class="detailedrecordactions">
         <li>_(Export)_<br />
-                      <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/hm">MARC</a>,
-            <a style="text-decoration:underline;font-weight:normal" href="<BFE_SERVER_INFO var='CFG_SITE_URL'/>record/<BFE_RECORD_ID/>/export/xm">MARCXML</a>,
+                      <a style="text-decoration:underline;font-weight:normal" href="/record/<BFE_RECORD_ID/>/export/hm">MARC</a>,
+            <a style="text-decoration:underline;font-weight:normal" href="/record/<BFE_RECORD_ID/>/export/xm">MARCXML</a>,
           
 </li>
 

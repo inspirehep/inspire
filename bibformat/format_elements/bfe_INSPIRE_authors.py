@@ -64,7 +64,7 @@ def format_element(bfo, limit, separator='; ',
     from cgi import escape
     import re
     from invenio.messages import gettext_set_language
-    from invenio.config import CFG_SITE_URL
+    from invenio.config import CFG_BASE_URL
     from invenio.bibformat_elements.bfe_server_info import format_element as bfe_server
 
     _ = gettext_set_language(bfo.lang)    # load the right message language
@@ -135,7 +135,7 @@ def format_element(bfo, limit, separator='; ',
                 if id_links == "yes" and author.has_key('i'):
                     author['i'] = author['i'][0]  #possible to have more IDs?
                     id_link = '<a class="authoridlink" href="' + \
-                              CFG_SITE_URL + \
+                              CFG_BASE_URL + \
                               '/search?' + \
                               'ln='+ bfo.lang + \
                               '&amp;p=100__i' + escape(':' + author['i']) + \
@@ -144,7 +144,7 @@ def format_element(bfo, limit, separator='; ',
 
 
                 author['display'] = '<a class="authorlink" href="' + \
-                                    CFG_SITE_URL + \
+                                    CFG_BASE_URL + \
                                     '/author/'+ quote(author['a']) + \
                                     '?recid=' + bibrec_id + \
                                     '&amp;ln='+ bfo.lang + \
@@ -161,7 +161,7 @@ def format_element(bfo, limit, separator='; ',
 
             if author.has_key('u'):
                 author['ilink'] = ['<a class="afflink" href="' + \
-                                   CFG_SITE_URL + '/search?cc=Institutions&amp;p=institution:'+ \
+                                   CFG_BASE_URL + '/search?cc=Institutions&amp;p=institution:'+ \
                                    quote('"' + string + '"') + \
                                    '&amp;ln=' + bfo.lang + \
                                    '">' + \

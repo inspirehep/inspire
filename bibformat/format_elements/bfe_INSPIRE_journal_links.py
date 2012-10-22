@@ -28,7 +28,7 @@ __revision__ = "$Id $"
 
 
 from invenio.messages import gettext_set_language
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_SITE_URL, CFG_BASE_URL
 
 def format_element(bfo, default = '', separator = '; ', style = '', \
            show_icons = 'no', prefix='', suffix='', target = ''):
@@ -81,7 +81,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
         if show_icons.lower() == 'yes':
             img = '<img style="border:none" \
             src="%s/img/file-icon-text-12x16.gif" alt="%s"/>'\
-            % (CFG_SITE_URL, _("Download fulltext"))
+            % (CFG_BASE_URL, _("Download fulltext"))
             links = [img+'<small>'+link+'</small>' for link in links]
         return prefix+separator.join(links)+suffix
     else:

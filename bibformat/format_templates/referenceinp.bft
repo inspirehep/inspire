@@ -171,7 +171,7 @@ function openSrchWindow(winputid) {
      document.getElementById('targfield').value = winputid;
      document.getElementById('targfieldtwo').value = subfretid;
      document.getElementById('targfldthree').value = pubnretid;
-     var urlvar = '<BFE_SERVER_INFO var="CFG_SITE_URL">search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
+     var urlvar = '/search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
 
      citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
      citefind.focus();
@@ -222,7 +222,7 @@ function openSrchWindow(winputid) {
         <tr><TD class=left><span class="form_label">Comments</span></TD><TD class=right><textarea name="usercomment" id=usercomment rows="4" cols="35" wrap="virtual"></textarea><span class="form_label_optional">(Optional)</span></TD></TR>
 </table>
 
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+<a href=/help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
 <br>
 
 <small> Click on <img src="/img/add.png" alt="+"> to insert new references below existing reference</small>
@@ -236,7 +236,7 @@ function openSrchWindow(winputid) {
 </td></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
-<a href=<BFE_SERVER_INFO var="CFG_SITE_URL">help/reference_corrections><b> HELP</b> with this form</a> &nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+<a href=/help/reference_corrections><b> HELP</b> with this form</a> &nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
 </form>
 
 

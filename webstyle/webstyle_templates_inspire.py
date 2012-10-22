@@ -29,7 +29,7 @@ from invenio.config import \
      CFG_SITE_NAME_INTL, \
      CFG_SITE_SUPPORT_EMAIL, \
      CFG_SITE_SECURE_URL, \
-     CFG_SITE_URL, \
+     CFG_BASE_URL, \
      CFG_VERSION, \
      CFG_WEBSTYLE_INSPECT_TEMPLATES, \
      CFG_WEBSTYLE_TEMPLATE_SKIN
@@ -48,7 +48,7 @@ class Template(DefaultTemplate):
                         useractivities_menu="", adminactivities_menu="",
                         navtrailbox="", pageheaderadd="", uid=0,
                         secure_page_p=0, navmenuid="admin", metaheaderadd="",
-                        rssurl=CFG_SITE_URL+"/rss", body_css_classes=None):
+                        rssurl=CFG_BASE_URL+"/rss", body_css_classes=None):
 
         """Creates a page header
 
@@ -89,9 +89,9 @@ class Template(DefaultTemplate):
           - HTML code of the page headers
         """
         hepDataAdditions = """<script type="text/javascript" src="%s/js/hepdata.js"></script>""" \
-            % (CFG_SITE_URL, )
+            % (CFG_BASE_URL, )
         hepDataAdditions += """<link rel="stylesheet" href="%s/img/hepdata.css" type="text/css" />""" \
-            % (CFG_SITE_URL, )
+            % (CFG_BASE_URL, )
 
         # load the right message language
         _ = gettext_set_language(ln)
@@ -150,12 +150,12 @@ $(function() {
 });
  //]]>
 </script>
-            """ % { 'site_url' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL }
+            """ % { 'site_url' : CFG_BASE_URL }
 
         # Hack to add jobs filter JS to Jobs collection pages
         if "Jobs" in body_css_classes:
             metaheaderadd += '<script type="text/javascript" src="%s/js/jobs_filter.js"></script>' % \
-                (secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL,)
+                (CFG_BASE_URL,)
 
         out = """\
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -202,7 +202,7 @@ $(function() {
  <tr>
   <td align="left">
     <div>
-      <a class="img" href="%(siteurl)s?ln=%(ln)s">
+      <a class="img" href="%(siteurl)s/?ln=%(ln)s">
        <img border="0" src="%(cssurl)s/img/inspire_logo_hep.png" alt="INSPIRE"
  />
       </a>
@@ -219,7 +219,7 @@ $(function() {
 </table>
 
 <div class="navbar">
-<a id="nav-hep" href="%(siteurl)s?ln=%(ln)s">Hep</a>
+<a id="nav-hep" href="%(siteurl)s/?ln=%(ln)s">Hep</a>
 ::
 <a id="nav-hepnames" href="%(siteurl)s/collection/HepNames">HepNames</a>
 ::
@@ -244,9 +244,9 @@ $(function() {
 %(pageheaderadd)s
 </div>
         """ % {
-          'siteurl' : CFG_SITE_URL,
+          'siteurl' : CFG_BASE_URL,
           'sitesecureurl' : CFG_SITE_SECURE_URL,
-          'cssurl' : secure_page_p and CFG_SITE_SECURE_URL or CFG_SITE_URL,
+          'cssurl' : CFG_BASE_URL,
           'cssskin' : CFG_WEBSTYLE_TEMPLATE_SKIN != 'default' and '_' + CFG_WEBSTYLE_TEMPLATE_SKIN or '',
           'rssurl': rssurl,
           'ln' : ln,
@@ -285,7 +285,7 @@ $(function() {
 
           'feedback' : self.tmpl_feedback_box(ln),
 
-          'unAPIurl' : cgi.escape('%s/unapi' % CFG_SITE_URL),
+          'unAPIurl' : cgi.escape('%s/unapi' % CFG_BASE_URL),
           'inspect_templates_message' : inspect_templates_message,
           'hepDataAdditions' : hepDataAdditions
         }
@@ -365,7 +365,7 @@ $(function() {
 </body>
 </html>
         """ % {
-          'siteurl' : CFG_SITE_URL,
+          'siteurl' : CFG_BASE_URL,
           'sitesecureurl' : CFG_SITE_SECURE_URL,
           'ln' : ln,
           'langlink': '?ln=' + ln,

@@ -24,11 +24,6 @@ def format_element(bfo):
     """
     Prints HepNames BAI ID from 035__a if 035__9 is BAI.
     """
-    from urllib import quote
-    from cgi import escape
-    from invenio.config import CFG_SITE_URL
-    from invenio.messages import gettext_set_language
-
     bai = bfo.fields('035__')
 
     for item in bai:

@@ -22,10 +22,8 @@
 """
 __revision__ = "$Id$"
 
-import cgi
 from invenio.search_engine import search_pattern
-
-
+from invenio.config import CFG_BASE_URL
 
 def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """
@@ -36,10 +34,6 @@ def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     @param searchlink print number (if nbOnly) as a link to the search to find these items
     @param separator a separator between citations
     """
-    from urllib import quote
-
-    from invenio.config import CFG_SITE_URL
-
     primary_report_numbers = bfo.fields('037__a')
     additional_report_numbers = bfo.fields('088__a')
 
@@ -54,7 +48,7 @@ def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     if nbOnly.lower() == 'yes':
         if searchlink.lower()=='yes':
             from bfe_server_info import format_element as bfe_server
-            return '<a href="'+CFG_SITE_URL+'/search?p=recid:'+bfo.control_field('001')+'&amp;rm=citation">'+str(len(res))+'</a>'
+            return '<a href="'+CFG_BASE_URL+'/search?p=recid:'+bfo.control_field('001')+'&amp;rm=citation">'+str(len(res))+'</a>'
         else:
             return str(len(res))
     else:

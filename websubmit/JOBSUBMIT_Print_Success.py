@@ -18,7 +18,7 @@
 __revision__ = "$Id$"
 
 import os
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_BASE_URL
 from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL
 # FIXME: cannot import Request_Print(), is defined in websubmit_engine.py
 
@@ -58,5 +58,5 @@ def JOBSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
     t=t+Request_Print("A",  "The listing will not be visible until it has been fully approved by one of our catalogers. You will be notified by e-mail once the submission has been processed.<br /><br />\n")
     t=t+Request_Print("A",  'If you experience any problems with the submission or have any questions, please contact us at <a href="mailto:%s">%s</a>.' % (CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL))
     t=t+Request_Print("A",  "Thank you for using the HEP Jobs submission!")
-    t=t+Request_Print("A",  '<br /><br /><a href="%s/collection/Jobs">Return to the Jobs database</a><br /><br />' % (CFG_SITE_URL,))
+    t=t+Request_Print("A",  '<br /><br /><a href="%s/collection/Jobs">Return to the Jobs database</a><br /><br />' % (CFG_BASE_URL,))
     return t

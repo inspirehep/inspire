@@ -24,7 +24,7 @@ __revision__ = "$Id$"
 
 import urllib
 
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_BASE_URL
 
 from invenio.search_engine import perform_request_search
 
@@ -61,7 +61,7 @@ def format_element(bfo, fvalue, tag, item = "Record", printtag = "",
                 text = item + text
             else:
                 text = plural + text
-            out = "<a href=\"" + CFG_SITE_URL + "/search?p=" + urllib.quote(fvalue) + "%3A" \
+            out = "<a href=\"" + CFG_BASE_URL + "/search?p=" + urllib.quote(fvalue) + "%3A" \
                   + urllib.quote(tagvalue) + "\" >" +str(reccnt) + " " + text + " </a> "
             return out
 
