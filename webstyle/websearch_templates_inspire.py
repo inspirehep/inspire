@@ -1696,7 +1696,7 @@ class Template(DefaultTemplate):
                     create_html_link('%s/submit/managedocfiles?ln=%s&recid=%s' % \
                                      (CFG_BASE_URL, ln, str(recID)),
                                      {},
-                                     _("Edit documents"),
+                                     _("Manage files"),
                                      linkattrd={'class': "moreinfo"})
         out += '</div>'
         return out
