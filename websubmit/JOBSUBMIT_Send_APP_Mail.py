@@ -111,7 +111,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## a file called 'COM' in curdir:
         if os.path.exists("%s/COM" % curdir):
             try:
-                fh_comments = open("%s/COM" % curdir, "r")
+                fh_comments = open("%s/COM" % curdir)
                 comment = fh_comments.read()
                 fh_comments.close()
             except IOError:
@@ -130,7 +130,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## Try to read the comments from the comments file:
         if os.path.exists("%s/%s" % (curdir, comments_filename)):
             try:
-                fh_comments = open("%s/%s" % (curdir, comments_filename), "r")
+                fh_comments = open("%s/%s" % (curdir, comments_filename))
                 comment = fh_comments.read()
                 fh_comments.close()
             except IOError:
@@ -153,7 +153,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
         ## a file called 'decision' in curdir:
         if os.path.exists("%s/decision" % curdir):
             try:
-                fh_decision = open("%s/decision" % curdir, "r")
+                fh_decision = open("%s/decision" % curdir)
                 decision = fh_decision.read()
                 fh_decision.close()
             except IOError:
@@ -171,7 +171,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     else:
         ## Try to read the decision from the decision file:
         try:
-            fh_decision = open("%s/%s" % (curdir, decision_filename), "r")
+            fh_decision = open("%s/%s" % (curdir, decision_filename))
             decision = fh_decision.read()
             fh_decision.close()
         except IOError:
@@ -186,7 +186,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
             decision = decision.strip()
 
     if os.path.exists("%s/%s" % (curdir,newrnpath)):
-        fp = open("%s/%s" % (curdir,newrnpath) , "r")
+        fp = open("%s/%s" % (curdir,newrnpath))
         newrn = fp.read()
         fp.close()
     else:
@@ -218,7 +218,7 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     ## Add the record's submitter(s) into the list of recipients:
     # The submitters email address is read from the file specified by 'emailFile'
     try:
-        fp = open("%s/%s" % (curdir,parameters['emailFile']),"r")
+        fp = open("%s/%s" % (curdir,parameters['emailFile']))
         addresses += fp.read().replace ("\n"," ")
         fp.close()
     except:
