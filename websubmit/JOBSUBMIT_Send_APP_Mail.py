@@ -224,18 +224,6 @@ def JOBSUBMIT_Send_APP_Mail(parameters, curdir, form, user_info=None):
     except:
         pass
 
-    record_owners = print_record(sysno, 'tm', \
-                                 [CFG_WEBSUBMIT_RECORD_OWNER_EMAIL]).strip()
-    if record_owners != "":
-        record_owners_list = record_owners.split("\n")
-        record_owners_list = [email.lower().strip() \
-                              for email in record_owners_list]
-    else:
-        record_owners_list = []
-    record_owners = ",".join([owner for owner in record_owners_list])
-    if record_owners != "":
-        addresses += ",%s" % record_owners
-
     if decision == "approve":
         mailtitle = "%s has been approved" % rn
         mailbody = "The submitted job listing with reference number %s has been fully approved." % (rn,)
