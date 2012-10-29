@@ -166,7 +166,6 @@ if __name__ == "__main__":
         for line in outputGenerator(title,
                                     sorted(postGenerator(url.replace('UNAME', options.uname),
                                                          options.number,
-                                                         filter=filters,
                                                          transform=transforms),
                                            reverse=True),
                                     tolink
