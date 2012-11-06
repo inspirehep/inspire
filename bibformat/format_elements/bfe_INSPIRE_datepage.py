@@ -31,12 +31,12 @@ def format_element(bfo, separator=" - ", page_suffix=" pages"):
     out = []
     if date:
         out.append(date)
-        # Let us see if we have pages, if not, we're done
-        if pages:
+        # Let us see if pages are not empty, if yes, we're done
+        if pages != '':
             # We have a date and page so add page info with suffix
             out.append(separator)
             out.append(pages + page_suffix)
-    else:
+    elif pages != '':
         # We have only page info
         out.append(pages + page_suffix)
     return "".join(out)

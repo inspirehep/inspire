@@ -193,7 +193,7 @@ def format_element(bfo, limit, separator='; ',
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
         if print_affiliation_first.lower() != 'yes':
-            authors = [author.get('display', '') + author.get('u', '') \
+            authors = [author.get('display', '') + author.get('e', '') + author.get('u', '') \
                        for author in authors]
 
         else:

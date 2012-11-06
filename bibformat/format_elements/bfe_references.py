@@ -24,7 +24,6 @@
 from invenio.search_engine import search_unit
 from invenio.bibformat import format_record
 
-
 def format_element(bfo, reference_prefix, reference_suffix):
     """
     Prints the references of this record
@@ -74,6 +73,10 @@ def format_element(bfo, reference_prefix, reference_suffix):
             else:
                 display_report = reference['r'][0]
                 clean_report = reference['r'][0]
+        if reference.has_key('0'):
+            # since we already have a recID, we can assign it directly
+            # to the "hits" variable, so it will be handled in last if statement
+            hits = [int(reference['0'][0])]
         if clean_report:
             hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
