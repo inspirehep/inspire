@@ -54,6 +54,7 @@ This stylesheet is provided only as an example of transformation.
     <xsl:for-each select="datafield[@tag='980']">
       <xsl:if test="'CORE' != normalize-space(translate(subfield[@code='a'], $lowercase, $uppercase))">
 	  <xsl:value-of select="normalize-space(translate(subfield[@code='a'], $lowercase, $uppercase))"/>
+	  <xsl:text>+</xsl:text>
       </xsl:if>
     </xsl:for-each>
     </xsl:variable>
@@ -64,7 +65,7 @@ This stylesheet is provided only as an example of transformation.
 	RSS for HEP collection: 980__a:HEP and 970__a:SPIRES-\d+
     -->
     <xsl:choose>
-      <xsl:when test="($CC = 'HEP') or contains($SPIRES, 'SPIRES-')">
+      <xsl:when test="contains($CC, 'HEP+') or contains($SPIRES, 'SPIRES-')">
         <title>
           <xsl:for-each select="datafield[@tag='245']">
             <xsl:value-of select="subfield[@code='a']"/>
@@ -196,7 +197,7 @@ This stylesheet is provided only as an example of transformation.
       <!--
 RSS for JOB
 -->
-      <xsl:when test="$CC = 'JOB'">
+      <xsl:when test="contains($CC, 'JOB+')">
         <title>
           <xsl:if test="datafield[@tag='245']/subfield[@code='a']">
             <xsl:value-of select="datafield[@tag='245']/subfield[@code='a']"/>
@@ -287,7 +288,7 @@ RSS for JOB
       <!--
 RSS for EXPERIMENT
 -->
-      <xsl:when test="$CC = 'EXPERIMENT'">
+      <xsl:when test="contains($CC, 'EXPERIMENT+')">
         <title>
           <xsl:if test="datafield[@tag='119']/subfield[@code='a']">
             <xsl:for-each select="datafield[@tag='119']">
@@ -374,7 +375,7 @@ RSS for EXPERIMENT
       <!--
 RSS for HEPNAMES
 -->
-      <xsl:when test="$CC = 'HEPNAMES'">
+      <xsl:when test="contains($CC, 'HEPNAMES+')">
         <title>
           <xsl:if test="datafield[@tag='100']/subfield[@code='q']">
             <xsl:value-of select="datafield[@tag='100']/subfield[@code='q']"/>
@@ -413,7 +414,7 @@ RSS for HEPNAMES
       <!--
 RSS for INSTITUTIONS
 -->
-      <xsl:when test="$CC = 'INSTITUTION'">
+      <xsl:when test="contains($CC, 'INSTITUTION+')">
         <title>
           <xsl:if test="datafield[@tag='110']/subfield[@code='u']">
             <xsl:value-of select="datafield[@tag='110']/subfield[@code='u']"/>
@@ -493,7 +494,7 @@ RSS for INSTITUTIONS
       <!--
 RSS for CONFERENCES
 -->
-      <xsl:when test="$CC = 'CONFERENCES'">
+      <xsl:when test="contains($CC, 'CONFERENCES+')">
         <title>
           <xsl:if test="datafield[@tag='111']/subfield[@code='a']">
             <xsl:value-of select="datafield[@tag='111']/subfield[@code='a']"/>
