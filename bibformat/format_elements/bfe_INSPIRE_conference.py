@@ -32,7 +32,7 @@ def format_element(bfo, separator=', ', link="yes"):
 
     """
 
-    from invenio.bibformat_config_inspire import CFG_BIBFORMAT_INSPIRE_CONF_LINK
+    from invenio.search_engine import search_pattern
 
     confs = []
     confs = bfo.fields('773')
@@ -41,22 +41,11 @@ def format_element(bfo, separator=', ', link="yes"):
         note = ''
         if conf.has_key('w'):
             cnum = conf['w'].replace("/", "-")
-            if cnum.count('-') == 0:
-                # This is probably an ECONF pub note, which are all messed
-                # up  likely that there is another, better note on the record
-                string = cnum[:3] + '-' + cnum[3:5] + '-'
-                if len(cnum) == 8:
-                    day = cnum[5:7]
-                    nr = cnum[7]
-                    cnum = string + day + '.' + nr
-                else:
-                    day = cnum[5:]
-                    cnum = string + day
-            if link.lower() == 'yes' :
-                conf_name = '<a class="conflink" href = "' + \
-                            CFG_BIBFORMAT_INSPIRE_CONF_LINK + \
-                            cnum + '&amp;of=hd">' + \
-                            cnum + '</a>'
+            search_result = search_pattern(p="111__g:" + cnum + " and 980__a:CONFERENCES")
+            if search_result:
+                recID = list(search_result)[0]
+                conf_name = '<a class="conflink" href = "/record/' +\
+                            str(recID) + '">' + cnum + '</a>'
             else:
                 conf_name = cnum
             if conf.has_key('t'):
@@ -64,11 +53,11 @@ def format_element(bfo, separator=', ', link="yes"):
             else:
                 note += 'Conference: ' + conf_name
             if conf.has_key('x'):
-                note += ' (' + conf['x'] +')'
+                note += ' (' + conf['x'] + ')'
             if conf.has_key('c'):
                 note += ', p.' + conf['c']
 
-        if len(note)>0:
+        if len(note) > 0:
             output.append(note)
 
     return separator.join(output)
