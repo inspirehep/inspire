@@ -1,6 +1,6 @@
 <name>Text(CV)</name>
 <description>Creates text format of a record suitable for inclusion in a CV</description>
-<a href="<BFE_SERVER_INFO var="recurl" />">
+<a href="<BFE_SERVER_INFO var="absoluterecurl" />">
     <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="." force_title_case="yes" />
 </a>
 <br/>

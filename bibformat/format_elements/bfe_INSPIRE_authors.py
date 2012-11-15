@@ -64,8 +64,7 @@ def format_element(bfo, limit, separator='; ',
     from cgi import escape
     import re
     from invenio.messages import gettext_set_language
-    from invenio.config import CFG_BASE_URL
-    from invenio.bibformat_elements.bfe_server_info import format_element as bfe_server
+    from invenio.config import CFG_BASE_URL, CFG_SITE_RECORD
 
     _ = gettext_set_language(bfo.lang)    # load the right message language
 
@@ -209,7 +208,7 @@ def format_element(bfo, limit, separator='; ',
     # link the extension to detailed record
     if link_extension == 'yes' and interactive != 'yes':
         extension = '<a class="authorlink" href="' +  \
-                    bfe_server(bfo, var="recurl")+ '">' + \
+                    CFG_BASE_URL + '/' + CFG_SITE_RECORD + '∕' + str(bfo.recID) + '">' + \
                     extension + '</a>'
 
     # Detect Collaborations:
@@ -225,7 +224,7 @@ def format_element(bfo, limit, separator='; ',
         colls = [re_coll.sub('', coll) for coll in colls]
         if print_links.lower() == "yes":
             colls = ['<a class="authorlink" href="' + \
-                     bfe_server(bfo,var="searchurl") + \
+                     CFG_BASE_URL + '/search' + \
                      '?p=collaboration:' + quote("'" + coll + "'") + \
                      '&amp;ln='+ bfo.lang + \
                      '">'+escape(coll)+'</a>' for coll in colls]

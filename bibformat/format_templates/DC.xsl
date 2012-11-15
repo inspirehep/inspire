@@ -116,7 +116,7 @@ exclude-result-prefixes="marc fn">
                 <xsl:value-of select="fn:creation_date(controlfield[@tag=001])"/>
             </dc:date>
             <dc:source>
-                <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;recurl&quot; >')" />
+                <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;absoluterecurl&quot; >')" />
             </dc:source>
         <xsl:for-each select="datafield[@tag=650 and @ind1=2]">
             <xsl:if test="subfield[@code='a']">

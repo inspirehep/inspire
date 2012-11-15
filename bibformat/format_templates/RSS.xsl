@@ -83,7 +83,7 @@ This stylesheet is provided only as an example of transformation.
           </xsl:for-each>
         </title>
         <link>
-          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;recurl&quot;&gt;')"/>
+          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;absoluterecurl&quot;&gt;')"/>
         </link>
         <xsl:if test="datafield[@tag='037']/subfield[@code='c']">
           <category>
@@ -166,7 +166,7 @@ This stylesheet is provided only as an example of transformation.
           <xsl:value-of select="fn:creation_date(controlfield[@tag=001], '%a, %d %b %Y %H:%M:%S GMT')"/>
         </pubDate>
         <guid>
-          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;recurl&quot;&gt;')"/>
+          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;absoluterecurl&quot;&gt;')"/>
         </guid>
         <!-- Additional Dublic Core tags. Mainly used for books -->
         <xsl:for-each select="datafield[@tag='020' and @ind1=' ' and @ind2=' ']">
@@ -580,7 +580,7 @@ RSS for CONFERENCES
           </xsl:for-each>
         </title>
         <link>
-          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;recurl&quot;&gt;')"/>
+          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;absoluterecurl&quot;&gt;')"/>
         </link>
         <description>
           <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_ABSTRACT print_lang=&quot;auto&quot;            separator_en=&quot; &quot;   separator_fr=&quot; &quot;  escape=&quot;4&quot; &gt;')"/>
@@ -602,7 +602,7 @@ RSS for CONFERENCES
           <xsl:value-of select="fn:creation_date(controlfield[@tag=001], '%a, %d %b %Y %H:%M:%S GMT')"/>
         </pubDate>
         <guid>
-          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;recurl&quot;&gt;')"/>
+          <xsl:value-of select="fn:eval_bibformat(controlfield[@tag=001],'&lt;BFE_SERVER_INFO var=&quot;absoluterecurl&quot;&gt;')"/>
         </guid>
       </xsl:otherwise>
     </xsl:choose>
