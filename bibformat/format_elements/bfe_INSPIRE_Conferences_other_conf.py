@@ -32,31 +32,42 @@ def format_element(bfo):
     for item in conferences:
         if item.has_key('a'):
             link = '<a href ="/search?ln=en&amp;cc=Conferences&amp;p=411%3A%27' + item['a'] + '%27">' + item['a'] + '</a>'
-            out = "Part of the " + link + " series"
-        if item.has_key('n'):
-            ##anything *11
-            if item['n'][-1] == '1':
-                if len(item['n']) >1 and item['n'][-2] == '1':
-                    return item['n'] + "th conference in the " + link + " series"
+            if item.has_key('n'):
+                ##anything *11
+                if item['n'][-1] == '1':
+                    if len(item['n']) > 1 and item['n'][-2] == '1':
+                        out += item['n'] + "th conference in the " + \
+                        link + " series"
+                    else:
+                        out += item['n'] + "st conference in the " + \
+                        link + " series"
+                ##anything *12
+                elif item['n'][-1] == '2':
+                    if len(item['n']) > 1 and item['n'][-2] == '1':
+                        out += item['n'] + "th conference in the " + \
+                        link + " series"
+                    else:
+                        out += item['n'] + "nd conference in the " + \
+                        link + " series"
+                ##anything *13
+                elif item['n'][-1] == '3':
+                    if len(item['n']) > 1 and item['n'][-2] == '1':
+                        out += item['n'] + "th conference in the " + \
+                        link + " series"
+                    else:
+                        out += item['n'] + "rd conference in the " + \
+                        link + " series"
+                ##everything else
                 else:
-                    return item['n'] + "st conference in the " + link + " series"
-            ##anything *12
-            elif item['n'][-1] == '2':
-                if len(item['n']) >1 and item['n'][-2] == '1':
-                    return item['n'] + "th conference in the " + link + " series"
-                else:
-                    return item['n'] + "nd conference in the " + link + " series"
-            ##anything *13
-            elif item['n'][-1] == '3':
-                if len(item['n']) >1 and item['n'][-2] == '1':
-                    return item['n'] + "th conference in the " + link + " series"
-                else:
-                    return item['n'] + "rd conference in the " + link + " series"
-            ##everything else
+                    out += item['n'] + "th conference in the " + \
+                    link + " series"
             else:
-                return item['n'] + "th conference in the " + link + " series"
-        else:
-            return out
+                out += "Part of the " + link + " series"
+            out += "<br />"
+    # Removing last line break
+    out = out[:-6]
+
+    return out
 
 def escape_values(bfo):
     """

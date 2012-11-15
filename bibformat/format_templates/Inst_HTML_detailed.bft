@@ -25,6 +25,7 @@ extension="" instances_separator=" & " tag="110t"/>
 <BFE_FIELD tag="6781_a" prefix="Historical Data: " suffix="<br />" />
 <BFE_FIELD tag="680i" prefix="Notes: " suffix="<br />" />
 <BFE_INSPIRE_INST_RELATED_INST suffix="<br />" />
+<BFE_INSPIRE_INST_CHILDREN suffix="<br />" />
 <br />
 <!--
 Search 502a and 502c

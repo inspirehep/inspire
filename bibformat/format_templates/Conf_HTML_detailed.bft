@@ -4,7 +4,7 @@
 <table width="100%"><tr><td width="70%">
 <BFE_FIELD prefix="<b>" suffix="</b>" default="" escape="" extension="" instances_separator=" &amp; " tag="111a" />
 <BFE_FIELD prefix="<b>: "  instances_separator=" " suffix=".</b>"  tag="111b" escape="">
-<BFE_FIELD tag="111e" prefix="<b> (" suffix=")</b>" />
+<BFE_INSPIRE_CONFERENCE_NAMEABBREV prefix="<b>" suffix="</b>" />
 </td>
 <td width="30%">
 </td>
@@ -28,7 +28,7 @@ Contributions</a><br />
 <BFE_FIELD prefix=""  instances_separator=" " suffix="<br />"  tag="773x" escape="">
 
 <br />
-<BFE_INSPIRE_CONFERENCES_OTHER_CONF />
+<BFE_INSPIRE_CONFERENCES_OTHER_CONF suffix="<br />" />
 <BFE_FIELD prefix="Alternative title: "  instances_separator=" " suffix="<br />"  tag="711a" escape="">
 <BFE_FIELD prefix="Extra place info: "  instances_separator=" " suffix="<br />"  tag="270b" escape="">
 
