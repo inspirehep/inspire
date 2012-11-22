@@ -17,11 +17,16 @@ all:
 test:
 	@echo "Nothing to test."
 
-install:
+install: install-journals-knowledge install-demo-records
+
+install-journals-knowledge:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb create-experiments-dynamic-kb
+install-demo-records:
+	$(INSTALL) -D demo-records.xml $(PREFIX)/var/tmp/demobibdata.xml
 	@echo "Done."
+
+install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb create-experiments-dynamic-kb
 
 weblinks: load-weblinks-knowledge-base
 journals: load-journals-knowledge-base
