@@ -14,28 +14,28 @@
 -- Dumping data for table `idxINDEX`
 --
 
-INSERT INTO `idxINDEX` VALUES (1,'global','global','2012-10-19 12:30:29','en');
-INSERT INTO `idxINDEX` VALUES (2,'collection','collection','2012-08-06 17:52:28','');
-INSERT INTO `idxINDEX` VALUES (3,'author','author','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` VALUES (4,'keyword','keyword','2012-04-22 20:35:22','');
-INSERT INTO `idxINDEX` VALUES (5,'reference','reference','2012-04-22 20:35:37','');
-INSERT INTO `idxINDEX` VALUES (6,'reportnumber','reportnumber','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (7,'title','title','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` VALUES (8,'year','year','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (9,'journal','journal','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (10,'affiliation','affiliation','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (11,'collaboration','collaboration','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (12,'exactauthor','exactauthor','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` VALUES (14,'caption','caption','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` VALUES (13,'fulltext','fulltext','2012-04-22 20:35:37','en');
-INSERT INTO `idxINDEX` VALUES (15,'firstauthor','firstauthor','2012-04-22 20:33:21','en');
-INSERT INTO `idxINDEX` VALUES (16,'address','address','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` VALUES (17,'postalcode','postal code','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` VALUES (18,'subject','subject','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` VALUES (19,'exactfirstauthor','exactfirstauthor','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` VALUES (20,'authorcount','This index contains number of authors of the record.','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` VALUES (21,'hepdataparent','link for HepData records','2012-10-19 14:15:41','');
-INSERT INTO `idxINDEX` VALUES (22,'note','','0000-00-00 00:00:00','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (1,'global','global','2012-10-19 12:30:29','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (2,'collection','collection','2012-08-06 17:52:28','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (3,'author','author','2012-04-22 20:33:21','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (4,'keyword','keyword','2012-04-22 20:35:22','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (5,'reference','reference','2012-04-22 20:35:37','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (6,'reportnumber','reportnumber','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (7,'title','title','2012-04-22 20:34:12','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (8,'year','year','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (9,'journal','journal','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (10,'affiliation','affiliation','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (11,'collaboration','collaboration','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (12,'exactauthor','exactauthor','2012-04-22 20:33:21','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (14,'caption','caption','2012-04-22 20:34:12','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (13,'fulltext','fulltext','2012-04-22 20:35:37','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (15,'firstauthor','firstauthor','2012-04-22 20:33:21','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (16,'address','address','2012-04-22 20:34:12','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (17,'postalcode','postal code','2012-04-22 20:34:12','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (18,'subject','subject','2012-04-22 20:34:12','en');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (19,'exactfirstauthor','exactfirstauthor','2012-04-22 20:33:21','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (20,'authorcount','This index contains number of authors of the record.','2012-04-22 20:33:21','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (21,'hepdataparent','link for HepData records','2012-10-19 14:15:41','');
+INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (22,'note','','0000-00-00 00:00:00','');
 
 --
 -- Dumping data for table `idxINDEX_field`
