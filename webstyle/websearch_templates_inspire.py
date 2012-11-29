@@ -22,11 +22,8 @@ __revision__ = \
     "$Id$"
 
 import cgi
-import time
-import cgi
-import string
-import re
-import locale
+from datetime import datetime
+from urllib import quote
 
 
 from invenio.config import \
@@ -34,7 +31,6 @@ from invenio.config import \
      CFG_SITE_NAME, \
      CFG_SITE_NAME_INTL, \
      CFG_SITE_SUPPORT_EMAIL, \
-     CFG_SITE_SECURE_URL, \
      CFG_BASE_URL, \
      CFG_VERSION, \
      CFG_WEBSTYLE_INSPECT_TEMPLATES, \
@@ -51,12 +47,12 @@ from invenio.config import \
      CFG_BIBRANK_SHOW_CITATION_STATS, \
      CFG_BIBRANK_SHOW_CITATION_GRAPHS, \
      CFG_WEBSEARCH_RSS_TTL, \
-     CFG_SITE_SUPPORT_EMAIL, \
      CFG_SITE_ADMIN_EMAIL, \
      CFG_INSPIRE_SITE, \
      CFG_WEBSEARCH_DEFAULT_SEARCH_INTERFACE, \
      CFG_WEBSEARCH_ENABLED_SEARCH_INTERFACES, \
-     CFG_WEBSEARCH_MAX_RECORDS_IN_GROUPS
+     CFG_WEBSEARCH_MAX_RECORDS_IN_GROUPS, \
+     CFG_SITE_URL
 
 
 from invenio.dbquery import run_sql
@@ -1744,4 +1740,97 @@ class Template(DefaultTemplate):
                    }
 
         out += """</select>"""
+        return out
+
+    def tmpl_citesummary_title(self, ln=CFG_SITE_LANG):
+        """HTML citesummary title and breadcrumbs
+
+        A part of HCS format suite."""
+        _ = gettext_set_language(ln)
+        return '<h1>%s</h1>' % _('Citations summary')
+
+    def tmpl_citesummary2_title(self, searchpattern, ln=CFG_SITE_LANG):
+        """HTML citesummary2 title and breadcrumbs
+
+        A part of HCS2 format suite."""
+        _ = gettext_set_language(ln)
+
+        title = _('Citesummary excluding self-citations or RPP citations')
+
+        return '<h1>%s</h1>' % title
+
+    def tmpl_citesummary_prologue(self, d_recids, collections, search_patterns,
+                                  searchfield, citable_recids, total_count,
+                                  ln=CFG_SITE_LANG):
+        """HTML citesummary format, prologue. A part of HCS format suite."""
+        _ = gettext_set_language(ln)
+        out = _('<p>Generated on %s</p>') % datetime.now().strftime('%Y-%m-%d')
+        out += '<p>' + _('%(total_count)s papers found, %(citable_count)s ' \
+                         'of them citeable (published or arXiv)') % \
+            {'total_count': total_count, 'citable_count': len(citable_recids)}
+        out += '</p>'
+        out += """<table id="citesummary">
+                  <tr>
+                    <td>
+                      <strong class="headline">%(msg_title)s</strong>
+                    </td>""" % \
+               {'msg_title': _("Citation summary results"), }
+        for coll, dummy in collections:
+            out += '<td align="right">%s</td>' % _(coll)
+        out += '</tr>'
+        out += """<tr><td><strong>%(msg_recs)s</strong></td>""" % \
+               {'msg_recs': _("Total number of papers analyzed:"), }
+        for coll, colldef in collections:
+            link_url = CFG_SITE_URL + '/search?p='
+            if search_patterns[coll]:
+                p = search_patterns[coll]
+                if searchfield:
+                    if " " in p:
+                        p = searchfield + ':"' + p + '"'
+                    else:
+                        p = searchfield + ':' + p
+                link_url += quote(p)
+            if colldef:
+                link_url += '%20AND%20' + quote(colldef)
+            link_text = self.tmpl_nice_number(len(d_recids[coll]), ln)
+            out += '<td align="right"><a href="%s">%s</a></td>' % (link_url,
+                                                                   link_text)
+        out += '</tr>'
+        return out
+
+    def tmpl_citesummary_footer(self):
+        url = '%s/help/citation-metrics#citesummary_self-cites' % CFG_SITE_URL
+        out = "<p><strong>Warning</strong>: The citation search should be " \
+              "used and interpreted with great care. " \
+              " <a href=\"%s\">Read the fine print</a></p>" % url
+        return out
+
+    def tmpl_citesummary_more_links(self, searchpattern, ln=CFG_SITE_LANG):
+        _ = gettext_set_language(ln)
+        out = '<h2>%s</h2>' % _('See additional metrics')
+        msg = _('<p><a href="%(url)s">%(msg)s</a></p>')
+        params = {'ln': ln,
+                  'p': quote(searchpattern),
+                  'of': 'hcs2'}
+        url = CFG_SITE_URL + '/search?' + \
+                       '&amp;'.join(['='.join(i) for i in params.iteritems()])
+        out += msg % {'url': url,
+                      'msg': _('Exclude self-citations or RPP')}
+
+        return out
+
+    def tmpl_citesummary_h_index(self, collections,
+                                                d_h_factors, ln=CFG_SITE_LANG):
+        """HTML citesummary format, h factor output. A part of the HCS suite."""
+        out = ""
+        out += '<tr><td>h<sub style="font-size: 50%">HEP</sub> index'
+        # use ? help linking in the style of oai_repository_admin.py
+        msg = ' <small><small>[<a href="%s%s">?</a>]</small></small></td>'
+        out += msg % (CFG_BASE_URL,
+                      '/help/citation-metrics#citesummary_h-index')
+        for coll, dummy in collections:
+            h_factors = d_h_factors[coll]
+            out += '<td align="right">%s</td>' % \
+                                          self.tmpl_nice_number(h_factors, ln)
+        out += '</tr>'
         return out
