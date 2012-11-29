@@ -34,9 +34,15 @@ def format_element(bfo):
     out = []
     for pubinfo in pubinfos:
         if 'p' in pubinfo:
-            out.append("<strong>" + pubinfo['p'] + ' ' + pubinfo['v'] + ' (' + pubinfo['y'] + ') ' + pubinfo['c'] + "</strong>")
+            tmpout = []
+            tmpout.append(pubinfo.get('p', None))
+            tmpout.append(pubinfo.get('v', None))
+            if 'y' in pubinfo:
+                tmpout.append('(%s)' % (pubinfo.get('y'),))
+            tmpout.append(pubinfo.get('c', None))
+            out.append("<strong>%s</strong>" % (" ".join([a for a in tmpout if a]),))
         if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or "Also in *".lower() in pubinfo['x'].lower()):
-            out.append("<small>" + pubinfo['x'] + "</small>")
+            out.append("<small>%s</small>" % (pubinfo['x'],))
 
     return newline.join(out)
 

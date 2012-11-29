@@ -26,11 +26,9 @@ def format_element(bfo, separator=" - ", page_suffix=" pages"):
     """
     Prints the page and date of article with a given seperator.
     """
-    date = get_date_element(bfo)
+    date = str(get_date_element(bfo))
     pages = get_field(bfo, "300a", "1")
-
     out = []
-
     if date:
         out.append(date)
         # Let us see if we have pages, if not, we're done

@@ -31,7 +31,7 @@ def format_element(bfo, style=""):
     """
     out = ""
     user_info = bfo.user_info
-    if user_can_perform_action_on_collection(user_info, bfo.recID, 'runbibedit'):
+    if bfo.recID and user_can_perform_action_on_collection(user_info, bfo.recID, 'runbibedit'):
         linkattrd = {}
         if style != '':
             linkattrd['style'] = style
