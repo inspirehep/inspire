@@ -120,6 +120,8 @@ class ExtractionTest(unittest.TestCase):
     def test_fulltext_from_xml(self):
         pass
 
+
+TEST_SUITE = make_test_suite(FileTest, APSRecordTest)
+
 if __name__ == '__main__':
-    test_suite = make_test_suite(FileTest, APSRecordTest)
-    run_test_suite(test_suite)
+    run_test_suite(TEST_SUITE)
