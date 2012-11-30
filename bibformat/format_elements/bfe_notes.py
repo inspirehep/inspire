@@ -21,6 +21,7 @@
 __revision__ = "$Id$"
 
 import cgi
+from invenio.urlutils import heat_links
 
 def format_element(bfo, note_suffix, note_prefix='Note: ', separator='; '):
     """
@@ -60,7 +61,10 @@ def format_element(bfo, note_suffix, note_prefix='Note: ', separator='; '):
 
         notes  = [note_prefix + cgi.escape(x) + note_suffix
                   for x in notes]
-        return "".join(notes)
+        # make a string and replace all plain links with real links
+        return_notes = "".join(notes)
+        return_notes = heat_links(return_notes)
+        return return_notes
 
 def escape_values(bfo):
     """
