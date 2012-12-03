@@ -1,7 +1,7 @@
 <name>Default HTML brief</name>
 <description>Prototype brief format for the Inspire project</description>
 <div class="record_body">
-<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="." force_title_case="yes"/></a>
+<a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" force_title_case="yes"/></a>
 <BFE_FIELD tag="041a" prefix=" (In " suffix=")" />
 <br />
 <small>
