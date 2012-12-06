@@ -1,7 +1,7 @@
 <!-- BibEdit-Template-Name: book -->
-<!-- BibEdit-Template-Description: book in Inspire -->
+<!-- BibEdit-Template-Description: book -->
 <record>
-  <datafield tag="020" ind1="7" ind2=" ">
+  <datafield tag="020" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:ISBN</subfield>
   </datafield>
   <datafield tag="024" ind1="7" ind2=" ">
@@ -72,5 +72,8 @@
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">BOOK</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CORE</subfield>
   </datafield>
 </record>

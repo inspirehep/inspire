@@ -1,5 +1,5 @@
 <!-- BibEdit-Template-Name: proceedings -->
-<!-- BibEdit-Template-Description: proceedings in Inspire -->
+<!-- BibEdit-Template-Description: proceedings -->
 <record>
   <datafield tag="020" ind1="7" ind2=" ">
     <subfield code="a">VOLATILE:ISBN</subfield>
@@ -68,6 +68,7 @@
     <subfield code="n">VOLATILE:issue</subfield>
     <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
     <subfield code="w">VOLATILE:CNUM</subfield>
+    <subfield code="y">VOLATILE:year</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="u">VOLATILE:http: (for external links)</subfield>

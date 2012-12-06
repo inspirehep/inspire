@@ -1,5 +1,6 @@
 <!-- BibEdit-Template-Name: book chapter -->
-<!-- BibEdit-Template-Description: book chapter in Inspire -->
+<!-- BibEdit-Template-Description: book chapter -->
+<record>
   <datafield tag="024" ind1="7" ind2=" ">
     <subfield code="a">VOLATILE:doi</subfield>
     <subfield code="2">VOLATILE:DOI</subfield>
