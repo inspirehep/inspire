@@ -66,6 +66,17 @@ def format_element(bfo, default='', separator='; ', style='', \
 
     # could look for other publication info and calculate URls here
 
+    # check 520 field for HepData and set flag to True
+    hep_data = bfo.fields('520__')
+    hep_flag = False
+    for hep in hep_data:
+        if hep.get('9', '') == 'HEPDATA':
+            links.append('<a ' + style + \
+                'href="' + CFG_SITE_URL + '/record/' + str(bfo.recID) + \
+                 '/hepdata">HepData</a>')
+            hep_flag = True
+            break
+
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
@@ -76,7 +87,8 @@ def format_element(bfo, default='', separator='; ', style='', \
         (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
             if url.get("u") and \
             url.get('y', 'Fulltext').upper() != "DOI" and not \
-            url.get('u').startswith(CFG_SITE_URL):
+            url.get('u').startswith(CFG_SITE_URL) and not \
+            (hep_flag == True and url.get('y', '').upper() == "DURHAM"):
                 links.append('<a ' + style + \
                 'href="' + url.get("u") + '">' + \
                       _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
@@ -105,7 +117,7 @@ def _lookup_url_name(bfo, abbrev=''):
     """
     if abbrev == None:
         abbrev = ''
-    return bfo.kb('WEBLINKS', abbrev, 'Link to ' + abbrev.lower())
+    return bfo.kb('WEBLINKS', abbrev, 'Link to ' + abbrev)
 
 
 # we know the argument is unused, thanks
