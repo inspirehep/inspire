@@ -208,7 +208,7 @@ def format_element(bfo, limit, separator='; ',
     # link the extension to detailed record
     if link_extension == 'yes' and interactive != 'yes':
         extension = '<a class="authorlink" href="' +  \
-                    CFG_BASE_URL + '/' + CFG_SITE_RECORD + '∕' + str(bfo.recID) + '">' + \
+                    CFG_BASE_URL + '/' + CFG_SITE_RECORD + '/' + str(bfo.recID) + '">' + \
                     extension + '</a>'
 
     # Detect Collaborations:
