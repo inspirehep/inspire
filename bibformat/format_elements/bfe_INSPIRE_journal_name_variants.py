@@ -32,21 +32,22 @@ def format_element(bfo, separator=""):
 
     if len(out) >= 1:
         name_variants = """
-<a href="#" id="more_names" style="color:green;background:white;">Show name variants</a>
+<a href="#" id="more_names_%(recid)s" style="color:green;background:white;">Show name variants</a>
 <div id="content" style="display:none; padding-left:10px;">
 <i>%(content)s</i>
 </div>
 <br />
 <script type="text/javascript">
-$("#more_names").click(function(event){
-$("#content").toggle(easing='swing', function(){
+$("#more_names_%(recid)s").click(function(event){
+$(this).next().toggle(easing='swing', function(){
 var newText = $(this).is(':visible') ? 'Hide name variants' : 'Show name variants';
-$("#more_names").text(newText);
+$(this).prev().text(newText);
 })
 event.preventDefault();
 })
 </script>
-        """ % {'content': "".join(out)}
+        """ % {'content': "".join(out),
+                'recid': bfo.recID}
     return name_variants
 
 def escape_values(bfo):

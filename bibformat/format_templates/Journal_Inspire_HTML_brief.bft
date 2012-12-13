@@ -9,7 +9,7 @@
 <BFE_FIELD tag="711a" prefix="<br />" suffix="" />
 
 <br />
-<BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>
+<BFE_INSPIRE_JOURNAL_URL prefix="" suffix="<br />" default="" escape="" style="" separator="<br />"/>
 <BFE_INSPIRE_JOURNAL_PUBLISHER suffix="<br />" />
 
 </div>
