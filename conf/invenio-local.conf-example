@@ -17,7 +17,7 @@ CFG_BIBAUTHORID_AUTHOR_TICKET_ADMIN_EMAIL = root@localhost
 #CFG_BIBDOCFILE_USE_XSENDFILE = 1
 ### END-customize-me
 CFG_SITE_LANG = en
-CFG_SITE_LANGS = bg,ca,de,el,en,es,fr,hr,it,ja,no,pl,pt,sk,sv,zh_CN,zh_TW
+CFG_SITE_LANGS = bg,ca,de,el,en,es,fr,hr,it,ja,no,pl,pt,ru,sk,sv,zh_CN,zh_TW
 CFG_SITE_NAME = HEP
 CFG_SITE_NAME_INTL_en = HEP
 CFG_SITE_NAME_INTL_fr = HEP
