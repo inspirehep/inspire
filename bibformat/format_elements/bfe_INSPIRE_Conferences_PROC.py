@@ -38,7 +38,7 @@ def format_element(bfo, newline=False):
     if search_result:
         recID = list(search_result)[0]
         if recID != '':
-            out = '<a href="/record/' + str(recID) + '">Procedings</a>'
+            out = '<a href="/record/' + str(recID) + '">Proceedings</a>'
             if newline:
                 out += '<br/>'
 

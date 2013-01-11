@@ -21,7 +21,7 @@
 """BibFormat element - Prints references
 """
 
-from invenio.search_engine import search_unit
+from invenio.search_engine import search_unit, get_record
 from invenio.bibformat import format_record
 
 def format_element(bfo, reference_prefix, reference_suffix):
@@ -73,16 +73,19 @@ def format_element(bfo, reference_prefix, reference_suffix):
             else:
                 display_report = reference['r'][0]
                 clean_report = reference['r'][0]
-        if reference.has_key('0'):
-            # since we already have a recID, we can assign it directly
-            # to the "hits" variable, so it will be handled in last if statement
-            hits = [int(reference['0'][0])]
         if clean_report:
             hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
             hits = search_unit(f='journal', p=clean_journal)
         if reference.has_key('a') and len(hits)!=1:
             hits = search_unit(f='doi', p=reference['a'][0])
+        if reference.has_key('0') and len(hits)!=1:
+            # check if the record exists in the database
+            recID = int(reference['0'][0])
+            if get_record(recID):
+                # since we already have a recID, we can assign it directly
+                # to the "hits" variable, so it will be handled in the last if statement
+                hits = [recID]
         if len(hits) == 1:
             ref_out.append('<small>' + format_record(list(hits)[0],'hs') + '</small>')
         else:
