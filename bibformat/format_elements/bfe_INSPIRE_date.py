@@ -110,6 +110,13 @@ def get_date(bfo):
         if datestruct:
             return datestruct
 
+    #book year
+    date = bfo.fields('260__c')
+    if date:
+        datestruct = parse_date(date[0])
+        if datestruct:
+            return datestruct
+
     return None
 
 def parse_date(datetext):
