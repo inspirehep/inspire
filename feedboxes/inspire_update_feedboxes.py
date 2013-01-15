@@ -48,7 +48,7 @@ CFG_TWITTER_BOX_TPL = """
    <td>
     <p align="right">
      <a href="http://www.twitter.com/inspirehep">
-      <img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" alt="Follow inspirehep on Twitter">
+      <img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" alt="Follow inspirehep on Twitter" />
      </a>
     </p>
    </td>

@@ -312,7 +312,9 @@ class Template(DefaultTemplate):
                  <td class="searchboxexample">
                    %(example_query_html)s
                  </td>
-              </tr></table>
+              </tr>
+             </tbody>
+             </table>
               <!--<tr valign="baseline">
                <td class="searchboxbody" colspan="2" align="left">
                </td>
@@ -717,7 +719,6 @@ class Template(DefaultTemplate):
               </small>
             </td>
         </tr>
-
         </tbody>
         </table>
 
@@ -930,8 +931,9 @@ class Template(DefaultTemplate):
              <td class="searchboxexample">
                %(example_query_html)s
              </td>
-          </tr>
-          </table>
+           </tr>
+         </tbody>
+        </table>
           <!--<tr valign="baseline">
            <td class="searchboxbody" colspan="2" align="left">
            </td>
