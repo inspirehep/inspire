@@ -58,5 +58,5 @@ def CONFSUBMIT_Print_Success(parameters, curdir, form, user_info=None):
     t=t+Request_Print("A",  "The listing will not be visible until it has been fully approved by one of our catalogers. You will be notified by e-mail once the submission has been processed.<br /><br />\n")
     t=t+Request_Print("A",  'If you experience any problems with the submission or have any questions, please contact us at <a href="mailto:%s">%s</a>.' % (CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL))
     t=t+Request_Print("A",  "Thank you for using the HEP Conference submission!")
-    t=t+Request_Print("A",  '<br /><br /><a href="%s/collection/Conferences">Return to the Conference database</a><br /><br />' % (CFG_SITE_URL,))
+    t=t+Request_Print("A",  '<br /><br /><a class="link_active" href="%s/collection/Conferences">Return to the Conference database</a><br /><br />' % (CFG_SITE_URL,))
     return t

@@ -103,10 +103,16 @@ a:link {
    color:#0066CC;
 }
 
-
 a:visited {
 color:#6699cc;
 }
+
+/* .link_active is for links that are marked as visited
+but should be displayed as active*/
+a.link_active {
+   color:#0066CC;
+}
+
 a:hover {
 background-color:#6699CC;
 color:#FFFFFF;
