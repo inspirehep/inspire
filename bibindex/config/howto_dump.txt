@@ -1,0 +1,5 @@
+To dump the tables tag, field and field_tag, the command to be executed is:
+
+mysqldump --no-create-info --skip-extended-insert --skip-add-locks --skip-disable-keys -h 137.138.4.146 -u inspirehep -p inspirehep tag field field_tag --result-file=/tmp/dump.sql
+
+Just replace host information and tables as needed

@@ -1,8 +1,13 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: inspiretest
+-- Host: 137.138.4.146    Database: inspirehep
 -- ------------------------------------------------------
 -- Server version	5.0.95-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -170,6 +175,11 @@ INSERT INTO `tag` VALUES (154,'conference number','111__g');
 INSERT INTO `tag` VALUES (155,'toc title','505__t');
 INSERT INTO `tag` VALUES (156,'toc author','505__r');
 INSERT INTO `tag` VALUES (157,'786__w','786__w');
+INSERT INTO `tag` VALUES (158,'journal title','130__%');
+INSERT INTO `tag` VALUES (159,'CODEN','030__a');
+INSERT INTO `tag` VALUES (160,'DESYABBREV','730__a');
+INSERT INTO `tag` VALUES (161,'publisher','643__b');
+INSERT INTO `tag` VALUES (162,'ADS-CODE','065__a');
 
 --
 -- Dumping data for table `field`
@@ -219,6 +229,8 @@ INSERT INTO `field` VALUES (41,'conference number','confnumber');
 INSERT INTO `field` VALUES (42,'country code','countrycode');
 INSERT INTO `field` VALUES (43,'hepdataparent','hepdataparent');
 INSERT INTO `field` VALUES (44,'note','note');
+INSERT INTO `field` VALUES (45,'coden','coden');
+INSERT INTO `field` VALUES (46,'publisher','publisher');
 
 --
 -- Dumping data for table `field_tag`
@@ -387,11 +399,25 @@ INSERT INTO `field_tag` VALUES (1,107,255);
 INSERT INTO `field_tag` VALUES (44,18,0);
 INSERT INTO `field_tag` VALUES (44,123,1);
 INSERT INTO `field_tag` VALUES (44,124,2);
+INSERT INTO `field_tag` VALUES (1,158,255);
+INSERT INTO `field_tag` VALUES (1,159,255);
+INSERT INTO `field_tag` VALUES (1,160,255);
+INSERT INTO `field_tag` VALUES (1,161,255);
+INSERT INTO `field_tag` VALUES (1,162,255);
+INSERT INTO `field_tag` VALUES (13,158,101);
+INSERT INTO `field_tag` VALUES (13,160,102);
+INSERT INTO `field_tag` VALUES (13,159,103);
+INSERT INTO `field_tag` VALUES (45,159,0);
+INSERT INTO `field_tag` VALUES (46,161,0);
+INSERT INTO `field_tag` VALUES (46,90,1);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-01 10:04:21
+-- Dump completed on 2013-01-18 15:12:26

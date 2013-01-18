@@ -1,8 +1,13 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: inspiretest
+-- Host: 137.138.4.146    Database: inspirehep
 -- ------------------------------------------------------
 -- Server version	5.0.95-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -14,28 +19,29 @@
 -- Dumping data for table `idxINDEX`
 --
 
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (1,'global','global','2012-10-19 12:30:29','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (2,'collection','collection','2012-08-06 17:52:28','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (3,'author','author','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (4,'keyword','keyword','2012-04-22 20:35:22','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (5,'reference','reference','2012-04-22 20:35:37','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (6,'reportnumber','reportnumber','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (7,'title','title','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (8,'year','year','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (9,'journal','journal','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (10,'affiliation','affiliation','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (11,'collaboration','collaboration','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (12,'exactauthor','exactauthor','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (14,'caption','caption','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (13,'fulltext','fulltext','2012-04-22 20:35:37','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (15,'firstauthor','firstauthor','2012-04-22 20:33:21','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (16,'address','address','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (17,'postalcode','postal code','2012-04-22 20:34:12','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (18,'subject','subject','2012-04-22 20:34:12','en');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (19,'exactfirstauthor','exactfirstauthor','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (20,'authorcount','This index contains number of authors of the record.','2012-04-22 20:33:21','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (21,'hepdataparent','link for HepData records','2012-10-19 14:15:41','');
-INSERT INTO `idxINDEX` (id, name, description, last_updated, stemming_language) VALUES (22,'note','','0000-00-00 00:00:00','');
+INSERT INTO `idxINDEX` VALUES (1,'global','global','2013-01-18 12:55:14','en');
+INSERT INTO `idxINDEX` VALUES (2,'collection','collection','2013-01-18 06:24:23','');
+INSERT INTO `idxINDEX` VALUES (3,'author','author','2013-01-18 12:33:35','');
+INSERT INTO `idxINDEX` VALUES (4,'keyword','keyword','2013-01-18 07:24:13','');
+INSERT INTO `idxINDEX` VALUES (5,'reference','reference','2013-01-18 14:52:22','');
+INSERT INTO `idxINDEX` VALUES (6,'reportnumber','reportnumber','2013-01-18 07:24:13','');
+INSERT INTO `idxINDEX` VALUES (7,'title','title','2013-01-18 07:24:13','en');
+INSERT INTO `idxINDEX` VALUES (8,'year','year','2013-01-17 13:50:18','');
+INSERT INTO `idxINDEX` VALUES (9,'journal','journal','2013-01-18 07:24:13','');
+INSERT INTO `idxINDEX` VALUES (10,'affiliation','affiliation','2013-01-17 13:50:18','');
+INSERT INTO `idxINDEX` VALUES (11,'collaboration','collaboration','2013-01-17 13:50:18','');
+INSERT INTO `idxINDEX` VALUES (12,'exactauthor','exactauthor','2013-01-18 12:33:35','');
+INSERT INTO `idxINDEX` VALUES (14,'caption','caption','2013-01-18 07:24:13','en');
+INSERT INTO `idxINDEX` VALUES (13,'fulltext','fulltext','2013-01-17 10:21:34','en');
+INSERT INTO `idxINDEX` VALUES (15,'firstauthor','firstauthor','2013-01-18 12:33:35','en');
+INSERT INTO `idxINDEX` VALUES (16,'address','address','2013-01-17 13:50:18','en');
+INSERT INTO `idxINDEX` VALUES (17,'postalcode','postal code','2013-01-17 13:50:18','');
+INSERT INTO `idxINDEX` VALUES (18,'subject','subject','2013-01-17 13:50:18','en');
+INSERT INTO `idxINDEX` VALUES (19,'exactfirstauthor','exactfirstauthor','2013-01-18 12:33:35','');
+INSERT INTO `idxINDEX` VALUES (20,'authorcount','This index contains number of authors of the record.','2013-01-18 12:33:35','');
+INSERT INTO `idxINDEX` VALUES (21,'hepdataparent','','2013-01-17 23:06:46','');
+INSERT INTO `idxINDEX` VALUES (22,'note','','2013-01-18 12:55:14','');
+INSERT INTO `idxINDEX` VALUES (23,'publisher','','0000-00-00 00:00:00','');
 
 --
 -- Dumping data for table `idxINDEX_field`
@@ -65,11 +71,16 @@ INSERT INTO `idxINDEX_field` VALUES (18,7,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=
 INSERT INTO `idxINDEX_field` VALUES (20,39,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=>?@[\\]^\\_`{|}~]');
 INSERT INTO `idxINDEX_field` VALUES (21,43,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=>?@[\\]^\\_`{|}~]');
 INSERT INTO `idxINDEX_field` VALUES (22,44,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=>?@[\\]^\\_`{|}~]');
+INSERT INTO `idxINDEX_field` VALUES (9,45,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=>?@[\\]^\\_`{|}~]');
+INSERT INTO `idxINDEX_field` VALUES (23,46,'[.,:;?!\"]','[!\"#$\\%&\'()*+,-./:;<=>?@[\\]^\\_`{|}~]');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-11-01 10:03:39
+-- Dump completed on 2013-01-18 15:16:09
