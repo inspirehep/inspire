@@ -96,6 +96,10 @@ def CONFSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
 
        * abstractfile: name of the file in which the title is stored.
 
+       * seriesnamefile: name of the file where the series name is stored.
+
+       * seriesnumberfile: name of the file where the series number is stored.
+
        * directory: parameter used to create the URL to access the
                     files.
     """
@@ -136,6 +140,8 @@ def CONFSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
     shorttitle = get_file_contents(curdir, parameters['shorttitle']).replace("\n"," ")
     keywords = get_file_contents(curdir, parameters['keywords']).replace("\n"," ")
     proceedings = get_file_contents(curdir, parameters['proceedings']).replace("\n"," ")
+    seriesname = get_file_contents(curdir, parameters['seriesnamefile']).replace("\n"," ")
+    seriesnumber = get_file_contents(curdir, parameters['seriesnumberfile']).replace("\n"," ")
     abstract = get_file_contents(curdir, parameters['abstractfile'])
 
     # we get the referee password
@@ -168,6 +174,8 @@ To approve/reject the document, you should go to this URL:\n<%(access)s>\n
 Title: %(title)s
 Date: from %(stdate)s to %(fndate)s
 Place: %(city)s, %(state)s, %(country)s
+Series name: %(seriesname)s
+Series number: %(seriesnumber)s
 
 URL: %(url)s
 
@@ -199,7 +207,9 @@ Submitter email(s): %(submitteremail)s
            'keywords' : keywords,
            'access' : "%s/approve.py?access=%s" % (CFG_SITE_URL,access),
            'recordlink' : record_url,
-           'abstract' : abstract
+           'abstract' : abstract,
+           'seriesname' : seriesname,
+           'seriesnumber' : seriesnumber
            }
     #Send mail to referee
     send_email(fromaddr=CFG_WEBSUBMIT_CONF_FROMADDR, toaddr=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, subject=title_referee, \
