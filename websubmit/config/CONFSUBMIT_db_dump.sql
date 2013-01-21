@@ -1,4 +1,4 @@
--- CONFSUBMIT dump 2013-01-18 15:33:54 v1
+-- CONFSUBMIT dump 2013-01-21 11:45:47 v1
 -- Extra:NAMES (the following dump contains rows in sbmALLFUNCDESCR, sbmFUNDESC, sbmFIELD and sbmFIELDDESC tables which are not specific to this submission, but that include keyword CONFSUBMIT)
 
 DELETE FROM sbmFUNDESC WHERE function LIKE 'CONFSUBMIT%';
@@ -19,7 +19,7 @@ INSERT INTO sbmALLFUNCDESCR VALUES ('CONFSUBMIT_Send_APP_Mail','This function se
 INSERT INTO sbmALLFUNCDESCR VALUES ('CONFSUBMIT_Send_Approval_Request',NULL);
 INSERT INTO sbmCATEGORIES VALUES ('CONFSUBMIT','CONF','New Conference',1);
 INSERT INTO sbmDOCTYPE VALUES ('Conf Submission Form','CONFSUBMIT','2012-02-14','2012-02-14','Conference submission form');
-INSERT INTO sbmFIELD VALUES ('APPCONFSUBMIT',1,1,'CONFSUBMIT_IRN','<table width=\"100%\" bgcolor=\"#D3E3E2\" align=\"center\" cellspacing=\"2\" cellpadding=\"2\" border=\"1\"><tr><td align=\"left\"><br /><b>Approve or reject a JOB submission:</b><br /><br /><span style=\'color: red;\'>*</span>Job Reference Number:&nbsp;&nbsp;','M','','','2012-02-16','2012-02-16',NULL,NULL);
+INSERT INTO sbmFIELD VALUES ('APPCONFSUBMIT',1,1,'CONFSUBMIT_IRN','<table width=\"100%\" bgcolor=\"#D3E3E2\" align=\"center\" cellspacing=\"2\" cellpadding=\"2\" border=\"1\"><tr><td align=\"left\"><br /><b>Approve or reject a CONFERENCE submission:</b><br /><br /><span style=\'color: red;\'>*</span>Conference Reference Number:&nbsp;&nbsp;','M','','','2012-02-16','2013-01-21',NULL,NULL);
 INSERT INTO sbmFIELD VALUES ('APPCONFSUBMIT',1,2,'CONFSUBMIT_DCSN','<br /><br /><span style=\"color: red;\">*</span>Decision:<br />','M','','','2012-02-16','2012-02-16',NULL,NULL);
 INSERT INTO sbmFIELD VALUES ('APPCONFSUBMIT',1,3,'CONFSUBMIT_CMMT','<br /><br />Comments on Decision:<br />','O','','','2012-02-16','2012-02-16',NULL,NULL);
 INSERT INTO sbmFIELD VALUES ('APPCONFSUBMIT',1,4,'CONFSUBMIT_END','<br /><br /></td></tr></table>','O','','','2012-02-16','2012-02-16',NULL,NULL);
@@ -61,7 +61,7 @@ INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_END',NULL,'','D',NULL,NULL,NULL,NUL
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_FDAT',NULL,'','D',NULL,NULL,NULL,NULL,NULL,'<input type=\"text\" value=\"\" onBlur=\"defText(this)\" onFocus=\"clearText(this)\" placeholder=\"yyyy-mm-dd\" class=\"datepicker\" name=\"CONFSUBMIT_FDAT\">','2012-02-15','2012-02-16','<br />End Date:<br />',NULL,0);
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_FIEL',NULL,'65017a','D',NULL,NULL,NULL,NULL,NULL,'<select name=\"CONFSUBMIT_FIEL\" multiple=\"yes\"> \r\n<option value=\"astro-ph\">astro-ph</option>\r\n<option value=\"cond-mat\">cond-mat</option> \r\n<option value=\"cs\">cs</option> \r\n<option value=\"gr-qc\">gr-qc</option> \r\n<option value=\"hep-ex\">hep-ex</option> \r\n<option value=\"hep-lat\">hep-lat</option> \r\n<option value=\"hep-ph\">hep-ph</option> \r\n<option value=\"hep-th\">hep-th</option> \r\n<option value=\"math\">math</option> \r\n<option value=\"math-ph\">math-ph</option> \r\n<option value=\"nucl-ex\">nucl-ex</option> \r\n<option value=\"nucl-th\">nucl-th</option> \r\n<option value=\"physics.acc-phys\">physics.acc-phys</option> \r\n<option value=\"physics.ins-det\">physics.ins-det</option> \r\n<option value=\"physics-other\">physics-other</option> \r\n<option value=\"quant\">quant-ph</option>\r\n</select>','2012-02-15','2012-02-15','<br />Field of Interest:<br />',NULL,0);
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_FREE',NULL,'6531_a','T',NULL,5,80,NULL,NULL,NULL,'2012-02-29','2012-09-26','<br />Keywords:<br />',NULL,0);
-INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_IRN',NULL,'970__a','I',NULL,NULL,NULL,NULL,NULL,NULL,'2012-02-14','2012-02-14',NULL,NULL,0);
+INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_IRN',NULL,'970__a','I',30,NULL,NULL,NULL,NULL,NULL,'2012-02-14','2013-01-21',NULL,NULL,0);
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_NAME',NULL,'','I',NULL,NULL,NULL,NULL,NULL,NULL,'2012-09-21','2012-09-21','<br />Your name:<br />',NULL,0);
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_PROC',NULL,'773__x','D',NULL,NULL,NULL,NULL,NULL,'<input type=\"radio\" name=\"CONFSUBMIT_PROC_RADIO\" value=\"0\" class=\"proceedings_radio\" onchange=\"if ($(this).is(\':checked\')) $(\'#proceedings_text\').prop(\'disabled\', true);\" /><label>No proceedings</label>\r\n<input type=\"radio\" name=\"CONFSUBMIT_PROC_RADIO\" value=\"1\" class=\"proceedings_radio\" onchange=\"if ($(this).is(\':checked\')) $(\'#proceedings_text\').prop(\'disabled\', false);\" /><label>Published in:</label>\r\n<input type=\"radio\" name=\"CONFSUBMIT_PROC_RADIO\" value=\"2\" class=\"proceedings_radio\" onchange=\"if ($(this).is(\':checked\')) $(\'#proceedings_text\').prop(\'disabled\', false);\" /><label>Will be published in:</label>\r\n<input type=\"text\" disabled=\"disabled\" value=\"\" id=\"proceedings_text\" name=\"CONFSUBMIT_PROC_TEXT\">','2012-02-29','2012-09-26','<br />Proceedings:<br />',NULL,0);
 INSERT INTO sbmFIELDDESC VALUES ('CONFSUBMIT_REFE',NULL,'','I',NULL,NULL,NULL,NULL,NULL,NULL,'2012-02-15','2012-02-15','<br />Email for Submission:<br />',NULL,0);
@@ -156,7 +156,7 @@ INSERT INTO sbmFUNDESC VALUES ('CONFSUBMIT_Send_Approval_Request','submittername
 INSERT INTO sbmFUNDESC VALUES ('CONFSUBMIT_Send_Approval_Request','subtitle');
 INSERT INTO sbmFUNDESC VALUES ('CONFSUBMIT_Send_Approval_Request','titleFile');
 INSERT INTO sbmFUNDESC VALUES ('CONFSUBMIT_Send_Approval_Request','urlfile');
-INSERT INTO sbmIMPLEMENT VALUES ('CONFSUBMIT','APP','Y','APPCONFSUBMIT',1,'2012-02-14','2012-02-16',3,'','',0,1,'');
+INSERT INTO sbmIMPLEMENT VALUES ('CONFSUBMIT','APP','Y','APPCONFSUBMIT',1,'2012-02-14','2013-01-21',3,'','',0,1,'');
 INSERT INTO sbmIMPLEMENT VALUES ('CONFSUBMIT','MBI','Y','MBICONFSUBMIT',1,'2012-02-14','2012-02-16',2,'','',0,0,'');
 INSERT INTO sbmIMPLEMENT VALUES ('CONFSUBMIT','SBI','Y','SBICONFSUBMIT',1,'2012-02-14','2013-01-17',1,'','',0,0,' ');
 INSERT INTO sbmPARAMETERS VALUES ('CONFSUBMIT','abstractfile','CONFSUBMIT_ABST');
