@@ -15,5 +15,5 @@ INSERT into example (type,body) values
 ("Conferences", "Las Vegas"),
 ("Conferences", "SUSY08"),
 ("Experiments", "find year 1997"),
-("Journals", "find year 2007")
+("Journals", "find coden PHRVA")
 ;
