@@ -120,7 +120,7 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (6, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (7, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (8, 'metadata')" | $(BINDIR)/dbexec
-	$(BINDIR)/webcoll -u admin
+	$(BINDIR)/webcoll -f
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
 reset-inspire-rank-configuration:
@@ -311,7 +311,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
-	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+	@echo ">>> Done. You may want to run 'webcoll -f' to see the new portalboxes."
 
 # Add Inst title box
 	echo "INSERT INTO portalbox VALUES (7, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -380,7 +380,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
-	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+	@echo ">>> Done. You may want to run 'webcoll -f' to see the new portalboxes."
 
 # Add Conf title box
 	echo "INSERT INTO portalbox VALUES (13, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -426,7 +426,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
-	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+	@echo ">>> Done. You may want to run 'webcoll -f' to see the new portalboxes."
 
 # Add Exp title box
 	echo "INSERT INTO portalbox VALUES (16, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -472,7 +472,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
-	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+	@echo ">>> Done. You may want to run 'webcoll -f' to see the new portalboxes."
 
 # Add Journal title box
 	echo "INSERT INTO portalbox VALUES (18, '', 'FIXME')" | $(BINDIR)/dbexec
@@ -516,7 +516,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
-	@echo ">>> Done. You may want to run 'webcoll -u admin -f' to see the new portalboxes."
+	@echo ">>> Done. You may want to run 'webcoll -f' to see the new portalboxes."
 
 
 reset-inspire-search-sort-field-configuration:
@@ -564,7 +564,7 @@ reset-inspire-useraccess-configuration:
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
-	$(BINDIR)/webaccessadmin -u admin -c
+	$(BINDIR)/webaccessadmin -c
 	@echo ">>> Done reset-inspire-useraccess-configuration."
 
 reset-inspire-submission-configuration:
