@@ -78,7 +78,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
         if clean_journal and len(hits)!=1:
             hits = search_unit(f='journal', p=clean_journal)
         if reference.has_key('a') and len(hits)!=1:
-            hits = search_unit(f='doi', p=reference['a'][0])
+            hits = search_unit(p=reference['a'][0])
         if reference.has_key('0') and len(hits)!=1:
             # check if the record exists in the database
             recID = int(reference['0'][0])
