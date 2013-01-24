@@ -9,8 +9,11 @@ Debian GNU/Linux, use:
    $ cat config-local.mk
    INSTALL = install -g www-data -m 775
 
-To install a small INSPIRE demo site from scratch, you can use the
-attached conf/inspire-recreate-demo-site script for inspiration.
+To install a small INSPIRE demo site from scratch, you can use
+for example `inspire-recreate-demo-site' helper devscript, see
+instructions at:
+
+   <https://github.com/tiborsimko/inspire-devscripts#inspire-recreate-demo-site>
 
 You may be interested in having an RSS feed update a box on your homepage.
 If so, edit feedboxes/inspire_update_feedboxes.py with a valid FEEDS list,
