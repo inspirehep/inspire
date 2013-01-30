@@ -24,7 +24,8 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:OAI-PMH="http://www.openarchives.org/OAI/2.0/"
                 xmlns:arXiv="http://arxiv.org/OAI/arXiv/"
-                exclude-result-prefixes="OAI-PMH arXiv"
+                xmlns:fn="http://cdsweb.cern.ch/bibconvert/fn"
+                exclude-result-prefixes="OAI-PMH arXiv fn"
                 version="1.0">
   <!-- Global variables -->
 
@@ -69,15 +70,13 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
         <subfield code="a"><xsl:value-of select="$first" /></subfield>
         <subfield code="2">arXiv</subfield>
       </datafield>
-      <xsl:variable name="kb" select="document('oaiarXiv2inspire_categories.xml')/mappings"/>
-      <xsl:for-each select="$kb/category">
-        <xsl:if test="./arxiv = $first">
+      <xsl:variable name="kb" select="fn:format($first,'KB(arxiv-to-inspire-categories.kb,2)')"/>
+      <xsl:if test="not($kb='')">
           <datafield tag="650" ind1="1" ind2="7">
-            <subfield code="a"><xsl:value-of select="./inspire" /></subfield>
+            <subfield code="a"><xsl:value-of select="$kb" /></subfield>
             <subfield code="2">INSPIRE</subfield>
           </datafield>
-        </xsl:if>
-      </xsl:for-each>
+      </xsl:if>
     </xsl:if>
     <xsl:if test="$remaining">
       <xsl:call-template name="output-65017a-subfields">
