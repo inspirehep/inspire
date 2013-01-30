@@ -582,6 +582,11 @@ reset-inspire-submission-configuration:
 	echo "INSERT INTO sbmCOLLECTION_sbmCOLLECTION VALUES (0,2,2)" | $(BINDIR)/dbexec
 	echo "INSERT INTO sbmCOLLECTION_sbmDOCTYPE VALUES (2,'CONFSUBMIT',2)" | $(BINDIR)/dbexec
 	$(BINDIR)/dbexec < websubmit/config/CONFSUBMIT_db_dump.sql
+	@echo ">>> Add BibTeX form."
+	echo "INSERT INTO sbmCOLLECTION VALUES (3,'Submit BibTeX')" | $(BINDIR)/dbexec
+	echo "INSERT INTO sbmCOLLECTION_sbmCOLLECTION VALUES (0,3,3)" | $(BINDIR)/dbexec
+	echo "INSERT INTO sbmCOLLECTION_sbmDOCTYPE VALUES (3,'bibtex',3)" | $(BINDIR)/dbexec
+	$(BINDIR)/dbexec < websubmit/config/bibtex_db_dump.sql
 	@echo ">>> Done reset-inspire-submission-configuration."
 
 reset-inspire-format-configuration:

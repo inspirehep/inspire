@@ -19,98 +19,107 @@ __revision__ = "$Id$"
 
 import os
 import re
-from os.path import join, getsize
+
 from invenio.search_engine import perform_request_search
 from invenio.bibformat_elements import bfe_INSPIRE_bibtex
 from invenio.bibformat_engine import BibFormatObject
 from invenio.bibformat import format_record
 
+
 def Bibtex(parameters, curdir, form, user_info=None):
     """
-       This is the function called by the BiblioTools web app. 
-       It extracts a list of references from a LaTeX file and it converts them to BibTex or LaTeX US/EU
+    This is the function called by the BiblioTools web app.
+    It extracts a list of references from a LaTeX file and it converts them to BibTex or LaTeX US/EU
     """
-    btxt_str ="" 
-    
+    btxt_str = ""
+
     # get file name and hold it in a string
-    dirname = os.path.join(curdir, 'files', 'input_elem')
-    for r, d, f in os.walk(dirname):
-        file_name = os.path.join(dirname, f[0])    
-    
+    dirname = os.path.join(curdir, 'files', 'BibTex_input')
+    file_name = ""
+    for dummy1, dummy2, f in os.walk(dirname):
+        file_name = os.path.join(dirname, f[0])
+
+    lines = ""
     if (os.path.exists(file_name)):
-	inputTeX = open(file_name)
-    	lines = inputTeX.read()
-    	inputTeX.close()
- 
+        inputTeX = open(file_name)
+        lines = inputTeX.read()
+        inputTeX.close()
+
     #Get out_format field
     try:
         format_path = os.path.join(curdir, 'OUT_FORMAT')
         fp = open(format_path)
-        format = fp.read().replace("\n"," ")
+        output_format = fp.read().replace("\n", " ")
         fp.close()
     except:
-        format = ""
+        output_format = ""
     references = get_references(lines)
-    btxt_str = process_references(references, format)
+    btxt_str = process_references(references, output_format)
+    if not btxt_str:
+        btxt_str = "No references found. Please try another file."
     btxt_str = '<div style=\"color:#222222;background:white\"><pre>' + btxt_str + '</pre></div>'
-    
     return btxt_str
 
+
 def get_references(lines):
-    """ 
-       Extract references from LaTeX string (whole file) 
+    """
+    Extract references from LaTeX string (whole file)
     """
     references = []
     #remove comments
     #lines = re.sub('(?<!\\\\)%.*?\n', '', lines, re.MULTILINE)
     """ strip TeX comments from text strings, possibly multiline"""
-    cstrip = re.compile(r'(?<!\\)%.*$',re.M)
-    lines = cstrip.sub('',lines)
-    
+    cstrip = re.compile(r'(?<!\\)%.*$', re.M)
+    lines = cstrip.sub('', lines)
+
     #extract cites
-    cites = re.findall(r'\\cite\s*\{(.*?)\}', lines, re.M|re.DOTALL) 
-    
+    cites = re.findall(r'\\cite\s*\{(.*?)\}', lines, re.M | re.DOTALL)
+
     #extract multiple references separated by commnas
     for a in cites:
         r = a.split(',')
         for c in r:
-            c = re.sub('\s','', c)
+            c = re.sub('\s', '', c)
             if not c in references:
                 references.append(c)
 
     return references
 
-def process_references(references, format):
-    """ 
-       Process a list of references and convert them to a given format
+
+def process_references(references, output_format):
     """
-     
-    btxt_str = '' #result string
+    Process a list of references and convert them to a given output_format
+    """
+    btxt_str = '' # result string
     for x in references:
         index = None
-        if re.search('.*\:\d{4}\w\w\w?',x) : index = 'texkey'
-        elif re.search('.*\/\d{7}',x)      : index = 'eprint'
-        elif re.search('\d{4}\.\d{4}',x)   : index = 'eprint'
-        elif re.search('\w\.\w+\.\w',x) : 
+        if re.search('.*\:\d{4}\w\w\w?', x):
+            index = 'texkey'
+        elif re.search('.*\/\d{7}', x):
+            index = 'eprint'
+        elif re.search('\d{4}\.\d{4}', x):
+            index = 'eprint'
+        elif re.search('\w\.\w+\.\w', x):
             index = 'j'
-            x = re.sub('\.',',',x)
-        elif re.search('\w\-\w',x) : index = 'r'
-        if index :
-            #hack to match more records   
+            x = re.sub('\.', ',', x)
+        elif re.search('\w\-\w', x):
+            index = 'r'
+        if index:
+            # hack to match more records
             if index == 'texkey':
                 p_to_find = '035__z: ' + x
-            else: 
+            else:
                 p_to_find = 'find ' + index + ' ' + x
-            
-            recid_list = perform_request_search(p= p_to_find)
+
+            recid_list = perform_request_search(p=p_to_find)
             if recid_list:
                 bfo = BibFormatObject(recid_list[0])
-                if (format == 'hlxu' or format == 'hlxe' or format == 'hx'):
-                    formated_rec = format_record(recid_list[0], format, 'en')
-                    #update bibitem and cite if they don't match   
+                if (output_format == 'hlxu' or output_format == 'hlxe' or output_format == 'hx'):
+                    formated_rec = format_record(recid_list[0], output_format, 'en')
+                    # update bibitem and cite if they don't match
                     if not re.search('bibitem{' + x + '}', formated_rec):
                         x = re.sub(',', '.', x)
-                        if format != 'hx':
+                        if output_format != 'hx':
                             #laTek
                             formated_rec = re.sub('bibitem{(.*)}', 'bibitem{' + x + '}', formated_rec)
                             formated_rec = re.sub('cite{(.*)}', 'cite{' + x + '}', formated_rec)
