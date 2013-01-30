@@ -526,6 +526,20 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                 </datafield>
               </xsl:if>
 
+              <!-- MARC FIELD 500$$a  = Temp/Brief entry -->
+              <xsl:choose>
+                <xsl:when test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:categories, 'hep-')">
+                  <datafield tag="500" ind1=" " ind2=" ">
+                    <subfield code="a">*Temporary entry*</subfield>
+                  </datafield>
+                </xsl:when>
+                <xsl:otherwise>
+                  <datafield tag="500" ind1=" " ind2=" ">
+                    <subfield code="a">*Brief entry*</subfield>
+                  </datafield>
+                </xsl:otherwise>
+              </xsl:choose>
+
               <!-- MARC FIELD 520$$a  = metadata/arXiv/abstract -->
               <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:abstract">
                 <datafield tag="520" ind1=" " ind2=" ">
