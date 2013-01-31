@@ -16,7 +16,7 @@ FULL_INST_BASE = inst_recs
 FULL_INST_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.xml
 FULL_INST_MARC_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.marcxml
 
-XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl oaiarXiv2inspire_categories.xml inst2marc.xsl conf2marc.xsl
+XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl inst2marc.xsl conf2marc.xsl
 KBFILES = arxiv-to-inspire-categories.kb
 
 TEST_TARGETS = load-small-sample-of-records
