@@ -16,12 +16,15 @@ from invenio.bibrecord import create_records, \
                               record_get_field_instances, \
                               record_add_field, record_xml_output, \
                               field_get_subfield_values, \
-                              record_get_field_values
+                              record_get_field_values, \
+                              record_get_field_value
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
 from invenio.search_engine import perform_request_search
+from invenio.oai_harvest_daemon import create_ticket
+from invenio.urlutils import create_html_link
 
 
 def parse_actions(action_line):
@@ -177,6 +180,77 @@ def get_minimal_arxiv_id(record):
         if 'arXiv' in value:
             return value.split(':')[-1]
 
+def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code="", provenence_code="9", provenence_value="arXiv"):
+    """
+    Retrieves the value of the field with given provenence.
+    """
+    fields = record_get_field_instances(record, tag, ind1, ind2)
+    final_values = []
+    for subfields, dummy1, dummy2, dummy3, dummy4 in fields:
+        for code, value in subfields:
+            if code == provenence_code and value == provenence_value:
+                # We have a hit. Stop to look for right value
+                break
+        else:
+            # No hits.. continue to next field
+            continue
+        for code, value in subfields:
+            if code == value_code:
+                # This is the value we are looking for with the correct provenence
+                final_values.append(value)
+    return final_values
+
+def generate_ticket(record):
+    """
+    Will generate the ticket subject and body.
+    Returns a tuple of strings: (subject, body)
+    """
+    arxiv_id = get_minimal_arxiv_id(record)
+    pdfurl = "http://arxiv.org/pdf/%s" % (arxiv_id,)
+    abstracturl = "http://arxiv.org/abs/%s" % (arxiv_id,)
+
+    categories = record_get_value_with_provenence(record, "650", "1", "7", "a", provenence_code="2")
+    comments = record_get_value_with_provenence(record, "500", value_code="a")
+    authors = record_get_field_values(record, tag="100", code="a") + record_get_field_values(record, tag="700", code="a")
+
+    subject = "ARXIV:" + arxiv_id
+    text = \
+"""
+%(submitdate)s
+
+ABSTRACT: %(abstracturl)s
+PDF: %(pdfurl)s
+
+Paper: %(arxiv_id)s
+
+Title: %(title)s
+
+Comments: %(comments)s
+
+Authors: %(authors)s
+
+Categories: %(categories)s
+    
+%(abstract)s
+
+Try to find the record on INSPIRE: %(inspiresearchurl)s
+
+""" \
+    % {
+        'submitdate': record_get_field_value(record, tag="269", code="c"),
+        'pdfurl': pdfurl,
+        'abstracturl': abstracturl,
+        'arxiv_id': arxiv_id,
+        'title': record_get_field_value(record, tag="245", code="a"),
+        'comments': "; ".join(comments),
+        'categories': " ".join(categories),
+        'authors': " / ".join(authors[:10]),
+        'abstract': record_get_field_value(record, tag="520", code="a"),
+        'inspiresearchurl': "http://inspirehep.net/search?p=find%20eprint%20" + arxiv_id,
+    }
+    return subject, text.replace('%', '%%')
+
+
 def main():
     usage = """
     name:           bibfilter_oaiarXiv2inspire
@@ -268,6 +342,12 @@ def main():
         if not recid or recid == -1:
             # Record (probably) does not exist, flag for insert into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
+
+            # New CORE records creates a ticket in RT
+            if "CORE" in record_get_field_values(record, tag="980", code="a"):
+                queue = "HEP-Additions"
+                subject, body = generate_ticket(record)
+                create_ticket(queue, subject=subject, text=body)
             insert_records.append(record)
         else:
             # Record exists, fetch existing record
