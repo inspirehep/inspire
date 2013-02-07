@@ -1689,7 +1689,7 @@ class Template(DefaultTemplate):
                                      linkattrd={'class': "moreinfo"})
 
             out += '<span class="moreinfo"> - %s</span>' % \
-                    create_html_link('%s/submit/managedocfiles?ln=%s&recid=%s' % \
+                    create_html_link('%s/record/managedocfiles?ln=%s&recid=%s' % \
                                      (CFG_BASE_URL, ln, str(recID)),
                                      {},
                                      _("Manage files"),
