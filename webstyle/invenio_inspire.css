@@ -2350,4 +2350,12 @@ span:hover#reset_search {
     color: #FFFFFF;
     cursor: pointer;
 }
+
+.diff_field_deleted {
+   color: #ff0000;
+}
+
+.diff_field_added {
+   color: #00aa00;
+}
 /* end of inspire.css */
