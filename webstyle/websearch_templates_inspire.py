@@ -201,6 +201,9 @@ CFG_SEARCH_INSPIRE_JOB_FIELDS = [
                    {'value' : "nucl-th",
                     'text' : "nucl-th"
                     },
+                   {'value' : "physics",
+                    'text' : "physics"
+                    },
                    {'value' : "physics.acc-phys",
                     'text' : "physics.acc-phys"
                     },
