@@ -48,7 +48,7 @@
 	CDF96	CDF Document Server		
 	CDF97	CDF Document Server		
 	CDF98	CDF Document Server
-	CDS     CERN Document Server		
+	CDS	CERN Document Server		
 	CDSWEB	CERN Library Record		
 	CECOA	CERN Courier Server		
 	CERN	CERN Document Server		
@@ -116,7 +116,7 @@
 	CLNS97	Cornell Document Server		
 	CLNS98	Cornell Document Server		
 	CMMPE	Cambridge Monogr.Math.Phys. Server		
-	CMP	Commun. Math. Phys. Server (Access may be <a	href=/find/restrict.html> restricted )		
+	CMP	Commun. Math. Phys. Server (Access may be <a href=/find/restrict.html> restricted )		
 	CMPHF	Condensed Matter Phys. Server		
 	CNRS	CNRS Server		
 	COGPRINTS	Cogprints Server		
@@ -152,7 +152,8 @@
 	C04-04-14	DIS04 Server		
 	C04-04-19.4	ECLOUD04 Server		
 	C04-11-08.2	HHH-2004 Server		
-	C05-03-22	C05-09-12	Phystat05 Conference Server		
+	C05-03-22	Phystat05 Conference Server		
+	C05-09-12	Phystat05 Conference Server		
 	C05-09-12.10	CERN Conference Server		
 	C05-10-17	ICATPP9 Conference Server		
 	C06-09-16.1	Yalta06 Conference Server		
@@ -203,20 +204,22 @@
 	EPHJA-B	Eur.Phys.J.B Server		
 	EPHJA-C	Eur.Phys.J.C Server		
 	EPHJA-D	Eur.Phys.J.D Server		
-	EPHJA-E	EPHJD	Eur.Phys.J.direct Server		
-	EPJA	Europ. Phys. Jour. A Server (Access may be <a	href=/find/restrict.html> restricted )		
+	EPHJA-E	Eur.Phys.J.direct Server
+	EPHJD	Eur.Phys.J.direct Server
+	EPJA	Europ. Phys. Jour. A Server (Access may be <a href=/find/restrict.html> restricted )		
 	EPJB	Euro. Phys. Jour. B Server		
 	EPJC	Eur.Phys.J. C. Server		
 	EPJCD	Europ. Phys. Jour. direct C Server		
 	EPJD	Euro. Phys. Jour. D Server		
-	EPL	Europhys. Lett. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	EPL	Europhys. Lett. Server (Access may be <a href=/find/restrict.html> restricted )		
 	EPN	Europhys. News Server (Access may be restricted)		
 	EUCLID	Project Euclid Server		
 	EUPNA	Europhysics News Server		
 	EXASE	Experimental Astronomy Server		
 	FBOOKS	Fermilab BOOKS Database		
-	FBS	Few Body Sys. Server (Access may be <a href=/find/restrict.html>	restricted )		
-	FERMILAB	TODAY	FERMILABAPNOTE	Fermilab Library Server (fulltext available)		
+	FBS	Few Body Sys. Server (Access may be <a href=/find/restrict.html> restricted )		
+	FERMILAB	Fermilab Library Server (fulltext available)		
+	FERMILABAPNOTE	Fermilab Library Server (fulltext available)		
 	FERMILABBACHELORS	Fermilab Library Server (fulltext available)		
 	FERMILABBEAMDOC	Fermilab Beam Docs Server		
 	FERMILABCONF	Fermilab Library Server (fulltext available)		
@@ -257,7 +260,8 @@
 	HEPPDF	PDF Server		
 	HLTPA	Health Physics Server		
 	HSERVER	HTML_Version from a server		
-	HTTP://POS.SISSA.IT/ARCHIVE/CONFERENCES/045/026/LHC07_026.PDF	HTTP://WWW-BD.FNAL.GOV/ICFABD/NEWSLETTER45.PDF	ICTP	ICTP Trieste Preprint Server		
+	HTTP://POS.SISSA.IT/ARCHIVE/CONFERENCES/045/026/LHC07_026.PDF	HTTP://WWW-BD.FNAL.GOV/ICFABD/NEWSLETTER45.PDF
+	ICTP	ICTP Trieste Preprint Server		
 	ICTP-LNS	ICTP Lecture Notes Server		
 	IEEE	IEEExplore Server		
 	IHEP	IHEP Document Server		
@@ -285,8 +289,8 @@
 	JCAPA	JCAP Electronic Journal Server		
 	JCTPA	J. Comput. Phys. Server		
 	JDGEA	J. Diff. Geom. Server		
-	JETP	J. Exp. Theor. Phys. Server (Access may be <a	href=/find/restrict.html> restricted )		
-	JETPL	J. Exp. Theor. Phys. Lett. Server (Access may be <a	href=/find/restrict.html> restricted )		
+	JETP	J. Exp. Theor. Phys. Server (Access may be <a href=/find/restrict.html> restricted )		
+	JETPL	J. Exp. Theor. Phys. Lett. Server (Access may be <a href=/find/restrict.html> restricted )		
 	JGP	J. Geom. Phys. Document Server		
 	JGPHE	Journal of Geometry and Physics Server		
 	JHEP	JHEP Electronic Journal Server		
@@ -352,7 +356,7 @@
 	NPE	Nuclear Physics Electronic Announcements		
 	NSENA	Nucl.Sci.Eng. Server		
 	NUCIA	Nuovo Cim. PDF Server		
-	NUCLPHYS	Nuclear Physics Server (Access may be <a href=/find/restrict.html>	restricted )		
+	NUCLPHYS	Nuclear Physics Server (Access may be <a href=/find/restrict.html> restricted )		
 	NUIMA-A	Nuclear Physics Electronic		
 	NUIMA-B	Nuclear Physics Electronic		
 	NUMDAM	NUMDAM Server		
@@ -370,7 +374,8 @@
 	PANUEO	Phys.At.Nucl. Server		
 	PARTICLEZ	particlez.org Server		
 	PDG	Particle Data Group (PDG) Server		
-	PDG-RPP	PDGJOURNAL	Review of Particle Properties full record		
+	PDG-RPP	Review of Particle Properties full record		
+	PDGJOURNAL	Review of Particle Properties full record		
 	PDGLIV	pdgLive (measurements quoted by PDG) 		
 	PDG2002PDF	PDF from PDG site		
 	PDG2002PS	Postscript from PDG Site		
@@ -401,10 +406,10 @@
 	PHYSICSWEB	Physicsweb.org article		
 	PHYSICSWORLD	physicsworld.com article		
 	PHYSORG	PhysOrg.com article		
-	PHYSREV	Physical Review Server (Access may be <a href=/find/restrict.html>	restricted )		
+	PHYSREV	Physical Review Server (Access may be <a href=/find/restrict.html> restricted )		
 	PNASA	Proc.Nat.Acad.Sci. Server		
 	POS	Proceedings of Science Server		
-	PPN	Phys. Part. Nucl. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	PPN	Phys. Part. Nucl. Server (Access may be <a href=/find/restrict.html> restricted )		
 	PPNP	Prog. Part. Nucl. Phys. Document Server		
 	PPNPD	Prog. Part. Nucl. Phys. server		
 	PPNUE	Phys.Part.Nucl. Server		
@@ -414,11 +419,11 @@
 	PR	Physics Reports Document Server (Access may be restricted)		
 	PRAMC	Pramana Server		
 	PRAMCARC	Pramana Archive Server		
-	PRC	Phys. Rev. C Server (Access may be <a href=/find/restrict.html>	restricted )		
-	PRD	Phys. Rev. D Server (Access may be <a href=/find/restrict.html>	restricted )		
+	PRC	Phys. Rev. C Server (Access may be <a href=/find/restrict.html> restricted )		
+	PRD	Phys. Rev. D Server (Access may be <a href=/find/restrict.html> restricted )		
 	PRDOLA	Phys. Rev. Online Archive		
-	PRE	Phys. Rev. E Server (Access may be <a href=/find/restrict.html>	restricted )		
-	PRL	Phys. Rev. Lett. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	PRE	Phys. Rev. E Server (Access may be <a href=/find/restrict.html> restricted )		
+	PRL	Phys. Rev. Lett. Server (Access may be <a href=/find/restrict.html> restricted )		
 	PRLTA	Phys. Rev. Lett. Server		
 	PRPLC	Physics Reports Server		
 	PRSLA	Proceedings of the Royal Society Server		
@@ -432,7 +437,7 @@
 	RJMPE	Russ. J. Math. Phys. Server		
 	RMEAE	Radiation Measurements Server		
 	RMHPB	Reports on Mathematical Physics Server		
-	RMP	Rev. Mod. Phys. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	RMP	Rev. Mod. Phys. Server (Access may be <a href=/find/restrict.html> restricted )		
 	RMPHA	Rev. Mod. Phys. Server		
 	RMPHE	Reviews in Mathematical Physics Server		
 	RMXFA	Rev. Mex. Fis. Server		
@@ -440,7 +445,7 @@
 	RPDOD	Radiation Protection Dosimetry Server		
 	RPPHA	Rep. Prog. Phys. Server		
 	RRPQA	Rom. J. Phys. Server		
-	RSI	Rev.Sci.Instrum. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	RSI	Rev.Sci.Instrum. Server (Access may be <a href=/find/restrict.html> restricted )		
 	RSINA	Rev. Sci. Instrum. Server		
 	SACLAY	Saclay Document Server		
 	SALAM	ICTP Preprint Archive		
@@ -470,24 +475,24 @@
 	SSI96	SLAC Document Server		
 	SSI97	SLAC Document Server		
 	SSI98	SLAC Document Server		
-	TECHPHYS	Tech. Phys. Server (Access may be <a href=/find/restrict.html>	restricted )		
-	TECHPHYSL	Tech. Phys. Lett. Server (Access may be <a href=/find/restrict.html>	restricted )		
+	TECHPHYS	Tech. Phys. Server (Access may be <a href=/find/restrict.html> restricted )		
+	TECHPHYSL	Tech. Phys. Lett. Server (Access may be <a href=/find/restrict.html> restricted )		
 	TJPHE	Turkish Journal of Physics Server		
 	TMFZA	Teor.Mat.Fiz. Server		
 	TMPHA	Theor.Math.Phys. Server		
 	TORONTO-A	Toronto U. Astron. Thesis Server		
 	TP	Tech. Phys. Server		
-	TRIPP	UCOL	University Coll. London Server		
+	UCOL	University Coll. London Server		
 	UMI	UMI Thesis Server		
 	VAC	Vacuum Document Server		
 	VACUA	Vacuum Server		
 	VIDEO	Watch the video of the talk		
-	WEBEDS	WORLDSCI	World Scientific Books Server		
+	WORLDSCI	World Scientific Books Server		
 	ZBLATT	Zentralblatt MATH Server		
 	ZFDOF	Journal of Physical Studies Server		
 	ZNTFA	Z. Naturforsch. Server		
-	ZPA	Z. Phys. A Server (Access may be <a href=/find/restrict.html>	restricted )		
-	ZPC	Z. Phys. C Server (Access may be <a href=/find/restrict.html>	restricted )		
+	ZPA	Z. Phys. A Server (Access may be <a href=/find/restrict.html> restricted )		
+	ZPC	Z. Phys. C Server (Access may be <a href=/find/restrict.html> restricted )		
 	00070	International Journal of Mathematics Server		
 	00108	J.Knot Theor.Ramifications		
 	00140	Heavy Ion Physics Server		
@@ -498,7 +503,7 @@
 	00201	ICFA Instrum.Bull. Server		
 	00203	Adv. Theor. Math. Phys. Server		
 	00211	KFZ Nachrichten Server		
-	00220	00222	Living Reviews in Relativity Server		
+	00222	Living Reviews in Relativity Server		
 	00228	Nonlin. Phenom. Complex Syst. Server		
 	00238	Math. Phys. Anal. Geom. Server		
 	00256	Geometry and Topology Server		
@@ -511,7 +516,7 @@
 	00376	ICFA Server		
 	00411	Les Houches Lect. Notes Server		
 	00436	Int. J. Geom. Meth. Mod. Phys. Server		
-	00438	Phys.Part.Nucl.Lett. Server	  Phys.Part.Nucl.Lett. Server		
+	00438	Phys.Part.Nucl.Lett. Server
 	00462	Journal of Physics Conference Series Server		
 	00466	Prog.Phys. Server		
 	00480	SIGMA Server		

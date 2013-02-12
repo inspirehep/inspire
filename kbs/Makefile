@@ -20,110 +20,41 @@ test:
 install:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load weblinks oalinks journals talktype type subject pdg create-institutions-dynamic-kb
+install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb
 	@echo "Done."
 
-weblinks: delete-weblinks load-weblinks-knowledge-base
-oalinks: delete-oalinks load-oalinks-knowledge-base
-journals: delete-journals load-journals-knowledge-base
-talktype: delete-talktype load-talktype-knowledge-base
-type: delete-type load-type-knowledge-base
-subject: delete-subject load-subject-knowledge-base
-pdg: delete-pdg load-pdg-knowledge-base
+weblinks: load-weblinks-knowledge-base
+journals: load-journals-knowledge-base
+collection: load-collection-knowledge-base
+subject: load-subject-knowledge-base
+pdg: load-pdg-knowledge-base
+coden: load-coden-knowledge-base
 
 announce-kb-load:
 	@echo "Loading knowledge bases into DB..."
 
-delete-weblinks:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='WEBLINKS')" | $(BINDIR)/dbexec
-
-delete-coden:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='CODENS')" | $(BINDIR)/dbexec
-
-delete-oalinks:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='OALINKS')" | $(BINDIR)/dbexec
-
-delete-journals:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='JOURNALS')" | $(BINDIR)/dbexec
-
-delete-talktype:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='TALKTYPE')" | $(BINDIR)/dbexec
-
-delete-type:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='COLLECTION')" | $(BINDIR)/dbexec
-
-delete-subject:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='SUBJECT')" | $(BINDIR)/dbexec
-
-delete-pdg:
-	echo "DELETE FROM knwKBRVAL where id_knwKB=(SELECT id from knwKB where name='PDG-test')" | $(BINDIR)/dbexec
+truncate-kbs:
+	echo "TRUNCATE knwKBRVAL" | $(BINDIR)/dbexec
+	echo "TRUNCATE knwKBDDEF" | $(BINDIR)/dbexec
+	echo "TRUNCATE knwKB" | $(BINDIR)/dbexec
 
 load-weblinks-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('WEBLINKS',$(WEBDESC)) on duplicate key update description = $(WEBDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/weblinks.dat' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='WEBLINKS');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+	$(PYTHON) kb_load.py $(PWD)/weblinks.kb WEBLINKS --description="$(WEBDESC)"
 
-KBNAME="CODENS"
-KBFILE="coden.kb"
-KBTMP="tempcoden"
 load-coden-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('$(KBNAME)',$(CODDESC)) on duplicate key update description = $(CODDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table $(KBTMP) like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/$(KBFILE)' replace INTO TABLE $(KBTMP);\
-update $(KBTMP) set id_knwKB= (select id from knwKB where name='$(KBNAME)');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from $(KBTMP) ;\
-"|$(BINDIR)/dbexec
-
-load-oalinks-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('OALINKS',$(OADESC)) on duplicate key update description = $(OADESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/oalinks.dat' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='OALINKS');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+	$(PYTHON) kb_load.py $(PWD)/coden.kb CODENS --description="$(CODDESC)"
 
 load-journals-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('JOURNALS',$(JOURNALDESC)) on duplicate key update description = $(JOURNALDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/journal.kb' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='JOURNALS');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+	$(PYTHON) kb_load.py $(PWD)/journal.kb JOURNALS --description="$(JOURNALDESC)"
 
-load-type-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('COLLECTION',$(COLLECTIONDESC)) on duplicate key update description = $(COLLECTIONDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/collection.kb' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='COLLECTION');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+load-collection-knowledge-base:
+	$(PYTHON) kb_load.py $(PWD)/collection.kb COLLECTION --description="$(COLLECTIONDESC)"
 
 load-subject-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('SUBJECT',$(SUBJECTDESC)) on duplicate key update description = $(SUBJECTDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/subject.kb' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='SUBJECT');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
-
-load-talktype-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('TALKTYPE',$(TALKTYPEDESC)) on duplicate key update description = $(TALKTYPEDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/talktype.kba' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='TALKTYPE');\
-insert into  knwKBRVAL  (m_key,id_knwKB) select m_key,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+	$(PYTHON) kb_load.py $(PWD)/subject.kb SUBJECT --description="$(SUBJECTDESC)"
 
 load-pdg-knowledge-base:
-	echo "INSERT into knwKB (name, description) VALUES('PDG',$(PDGDESC)) on duplicate key update description = $(PDGDESC)" | $(BINDIR)/dbexec
-	echo " create temporary table templinks like knwKBRVAL;\
-LOAD DATA LOCAL INFILE '$(PWD)/pdg.kb' replace INTO TABLE templinks;\
-update templinks set id_knwKB= (select id from knwKB where name='PDG');\
-insert into  knwKBRVAL  (m_key,m_value,id_knwKB) select m_key,m_value,id_knwKB from templinks ;\
-"|$(BINDIR)/dbexec
+	$(PYTHON) kb_load.py $(PWD)/pdg.kb PDG --description="$(PDGDESC)"
 
 create-institutions-dynamic-kb:
 	$(PYTHON) InstitutionsCollection_dynamic_KB.py
