@@ -1,0 +1,3 @@
+feedparser
+msgpack-python
+unidecode
