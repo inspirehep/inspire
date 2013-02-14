@@ -21,4 +21,8 @@ then install it somewhere and call it with the -d flag every ten minutes or
 so.  It will rely on webcoll to regenerate the home page, so it's not really
 sensible to run it more often than webcoll runs.
 
+Required Python packages can be installed by running:
+
+  $ pip install -r requirements.txt
+
 - end of file -
