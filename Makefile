@@ -120,7 +120,11 @@ reset-inspire-collection-configuration:
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (6, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (7, 'metadata')" | $(BINDIR)/dbexec
 	echo "INSERT INTO collectiondetailedrecordpagetabs (id_collection, tabs) VALUES (8, 'metadata')" | $(BINDIR)/dbexec
-	$(BINDIR)/webcoll -f
+	if [ x"$(CFG_INSPIRE_BIBTASK_USER)" != x"" ]; then \
+	    $(BINDIR)/webcoll -u $(CFG_INSPIRE_BIBTASK_USER) -f; \
+	else \
+	    $(BINDIR)/webcoll -f; \
+	fi
 	@echo "Please run the webcoll task just submitted, if your bibsched daemon is not in an automatic mode."
 
 reset-inspire-rank-configuration:
@@ -564,7 +568,11 @@ reset-inspire-useraccess-configuration:
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
-	$(BINDIR)/webaccessadmin -c
+	if [ x"$(CFG_INSPIRE_BIBTASK_USER)" != x"" ]; then \
+	    $(BINDIR)/webaccessadmin -u $(CFG_INSPIRE_BIBTASK_USER) -c; \
+	else \
+	    $(BINDIR)/webaccessadmin -c; \
+	fi
 	@echo ">>> Done reset-inspire-useraccess-configuration."
 
 reset-inspire-submission-configuration:
