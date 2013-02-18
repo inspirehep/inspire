@@ -820,6 +820,7 @@ sub submit {
     my ($uri, $content) = @_;
     my ($req, $data);
     my $ua = new LWP::UserAgent(agent => "RT/3.0b", env_proxy => 1);
+    $ua->ssl_opts(verify_hostname => 0);
 
     # Did the caller specify any data to send with the request?
     $data = [];
