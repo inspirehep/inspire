@@ -25,7 +25,7 @@ __revision__ = "$Id$"
 import urllib
 
 from invenio.config import CFG_BASE_URL
-
+from invenio.urlutils import create_html_link
 from invenio.search_engine import perform_request_search
 
 def format_element(bfo, fvalue, tag, item = "Record", printtag = "",
@@ -46,7 +46,6 @@ def format_element(bfo, fvalue, tag, item = "Record", printtag = "",
     @param plural string for X ITEMS (default = "Records")
     """
     text = ""
-    out = ''
     reccnt = 0
     tagvalue = bfo.field(tag)
     if tagvalue:
@@ -61,9 +60,9 @@ def format_element(bfo, fvalue, tag, item = "Record", printtag = "",
                 text = item + text
             else:
                 text = plural + text
-            out = "<a href=\"" + CFG_BASE_URL + "/search?p=" + urllib.quote(fvalue) + "%3A" \
-                  + urllib.quote(tagvalue) + "\" >" +str(reccnt) + " " + text + " </a> "
-            return out
+            return create_html_link(urlbase='%s/search' % (CFG_BASE_URL,),
+                                    urlargd={'p': tagvalue, 'f': fvalue},
+                                    link_label=str(reccnt) + " " + text)
 
     if not default:
         default = "0 " + text
