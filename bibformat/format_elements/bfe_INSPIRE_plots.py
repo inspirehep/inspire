@@ -26,6 +26,7 @@ from invenio.bibdocfile import BibRecDocs
 from invenio.urlutils import create_html_link
 from invenio.config import CFG_BASE_URL, CFG_SITE_RECORD
 
+
 def format_element(bfo, width="", caption="yes", max="3"):
     """
     Display image of the plot if we are in selected plots collections
@@ -63,20 +64,20 @@ def format_element(bfo, width="", caption="yes", max="3"):
                 img = '<img style="vertical-align:middle;" src="%s" title="%s" %s/>' % \
                       (img_location, caption_text, width)
 
-                link = create_html_link(urlbase='%s/%s/%s/plots#%d' %
+                plotlink = create_html_link(urlbase='%s/%s/%s/plots#%d' %
                                                 (CFG_BASE_URL, CFG_SITE_RECORD, bfo.recID,\
                                                  index),
                                         urlargd={},
                                         link_label=img)
 
-                img_files.append((index, link))
+                img_files.append((index, plotlink))
 
     img_files = sorted(img_files, key=lambda x: x[0])
     if max > 0:
         img_files = img_files[:max]
 
     if len(img_files) >= max:
-        link = "<a href='/record/"+bfo.control_field('001')+"/plots'>Show more plots</a>"
+        link = "<a href='/record/" + bfo.control_field('001') + "/plots'>Show more plots</a>"
 
     for index in range(len(img_files)):
         img_files[index] = img_files[index][1]
@@ -86,6 +87,7 @@ def format_element(bfo, width="", caption="yes", max="3"):
 
     return '<div style="overflow-x:auto;display:inline;width:100%;">' +\
            " ".join(img_files) + ' ' + link + '</div>'
+
 
 def escape_values(bfo):
     """
