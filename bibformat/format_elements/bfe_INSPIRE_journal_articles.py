@@ -19,13 +19,14 @@
 """BibFormat element - Prints a link to the articles in the HEP using
 the search 773__p:"<711__a>"
 """
+from urllib import quote
 
 def format_element(bfo):
     search = bfo.field("711__a")
     url = ""
     if search != "":
-        url = '<a href="/search?ln=en&amp;p=773__p%3A' + search + '">' \
-        + 'Articles in HEP</a>'
+        pattern = '/search?ln=en&amp;p=' + quote('773__p:"' + search + '"')
+        url = '<a href="' + pattern + '">Articles in HEP</a>'
     return url
 
 def escape_values(bfo):
