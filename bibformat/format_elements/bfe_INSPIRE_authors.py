@@ -79,6 +79,14 @@ def format_element(bfo, limit, separator='; ',
     authors = bfo.fields('100__', repeatable_subfields_p=True)
     authors.extend(bfo.fields('700__', repeatable_subfields_p=True))
 
+    # If there are no author check for corporate author in 110__a field
+    if len(authors) == 0:
+        authors = bfo.fields('110__', repeatable_subfields_p=True)
+        # For corporate authors we don't want to reverse names order
+        name_last_first = 'yes'
+        # And we don't want to create links
+        print_links = 'no'
+
     # Keep real num of authors. fix + affiliations_separator.join(author['u']) + \
     nb_authors = len(authors)
 
