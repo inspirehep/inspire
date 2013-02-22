@@ -169,7 +169,7 @@ def CONFSUBMIT_Send_Approval_Request (parameters, curdir, form, user_info=None):
     title_referee = "Request for approval of %s" % rn
     mail_referee = """
 The document %(rn)s has been submitted to the Conferences database and it will appear here:\n%(recordlink)s.
-To approve/reject the document, you should go to this URL:\n<%(access)s>\n
+To approve/reject the document, you should go to this URL:\n%(access)s\n
 
 Title: %(title)s
 Date: from %(stdate)s to %(fndate)s
