@@ -66,7 +66,7 @@
     <subfield code="p">VOLATILE:journal</subfield>
     <subfield code="v">VOLATILE:volume</subfield>
     <subfield code="n">VOLATILE:issue</subfield>
-    <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
+    <subfield code="c">VOLATILE:pp.firstpage-lastpage (e.g. pp.1-111)</subfield>
     <subfield code="w">VOLATILE:CNUM</subfield>
     <subfield code="y">VOLATILE:year</subfield>
   </datafield>

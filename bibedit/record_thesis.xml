@@ -55,8 +55,8 @@
     <subfield code="e">VOLATILE:experiment</subfield>
   </datafield>
   <datafield tag="695" ind1=" " ind2=" ">
-    <subfield code="a">thesis</subfield>
-    <subfield code="2">INSPIRE</subfield>
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
   </datafield>
   <datafield tag="701" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:advisor familyname, firstname</subfield>
@@ -70,9 +70,6 @@
     <subfield code="a">VOLATILE:http:</subfield>
     <subfield code="d">VOLATILE:Fulltext</subfield>
     <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
-  </datafield>
-  <datafield tag="690" ind1="C" ind2=" ">
-    <subfield code="a">THESIS</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">CORE</subfield>

@@ -77,4 +77,10 @@
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">HEP</subfield>
   </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">Citeable</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">Published</subfield>
+  </datafield>
 </record>
