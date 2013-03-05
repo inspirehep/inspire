@@ -381,6 +381,19 @@ $(function () {
  </div>
 <!-- replaced page footer -->
 </div>
+<!-- Piwik -->
+ <script type="text/javascript">
+ var _paq = _paq || [];
+ (function(){ var u=(("https:" == document.location.protocol) ? "https://inspirehep.net/piwik/" : "http://inspirehep.net/piwik/");
+ _paq.push(['setSiteId', '8']);
+ _paq.push(['setTrackerUrl', u+'piwik.php']);
+ _paq.push(['trackPageView']);
+ _paq.push(['enableLinkTracking']);
+ var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript'; g.defer=true; g.async=true; g.src=u+'piwik.js';
+ s.parentNode.insertBefore(g,s); })();
+  </script>
+  <noscript><p><img src="http://inspirehep.net/piwik/piwik.php?idsite=8" style="border:0" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
 </body>
 </html>
         """ % {
