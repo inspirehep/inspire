@@ -320,11 +320,12 @@ def format_element(bfo, limit, separator='; ',
         return out
     elif nb_authors > 0:
         if markup == 'latex' and nb_authors > 1:
+            lastauthor = authors.pop()
             lastauthor = ' and ' + lastauthor
         output = separator.join(authors) + lastauthor
         # remove the dot from the end of authors list when the suffix starts with dot
         # (to avoid two consecutive dots)
-        if suffix and output[-1] == suffix[0] == '.':
+        if suffix and output and output[-1] == suffix[0] == '.':
             output = output[:-1]
         return output
 
