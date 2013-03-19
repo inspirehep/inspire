@@ -24,7 +24,6 @@ from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
 from invenio.search_engine import perform_request_search
 from invenio.oai_harvest_daemon import create_ticket
-from invenio.urlutils import create_html_link
 
 
 def parse_actions(action_line):
@@ -50,6 +49,7 @@ def parse_actions(action_line):
             sys.exit(4)
         actions.append((diff_code, action))
     return actions
+
 
 def read_actions_configuration_file(filename):
     """
@@ -86,6 +86,7 @@ def read_actions_configuration_file(filename):
         actions.setdefault(identifier, []).append(parsed_actions)
     return actions
 
+
 def get_action(tag, diff_code, action_dict):
     """
     Returns an 'action'-string describing the action to be taken.
@@ -111,6 +112,7 @@ def get_action(tag, diff_code, action_dict):
                     return act
     return None
 
+
 def create_record_from_list(recid, field_list):
     """
     Returns a new record from a list of (tag, subfields) tuples and adds the recid.
@@ -128,6 +130,7 @@ def create_record_from_list(recid, field_list):
         record_add_field(new_rec, '001', controlfield_value=str(recid))
     return new_rec
 
+
 def write_record_to_file(filename, record_list):
     """
     Writes a new MARCXML file to specified path from a list of records.
@@ -144,6 +147,7 @@ def write_record_to_file(filename, record_list):
             file_fd.write("\n".join(out))
             file_fd.close()
 
+
 def has_field_origin(field_list, origin, code):
     """
     This function checks if any of the fields for a certain tag contains
@@ -153,6 +157,7 @@ def has_field_origin(field_list, origin, code):
         if origin in field_get_subfield_values(field, code):
             return True
     return False
+
 
 def has_field(field, field_list):
     """
@@ -169,6 +174,7 @@ def has_field(field, field_list):
                     return True
     return False
 
+
 def get_minimal_arxiv_id(record):
     """
     Returns the OAI arXiv id in the given record skipping the prefixes.
@@ -179,6 +185,7 @@ def get_minimal_arxiv_id(record):
     for value in values:
         if 'arXiv' in value:
             return value.split(':')[-1]
+
 
 def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code="", provenence_code="9", provenence_value="arXiv"):
     """
@@ -199,6 +206,7 @@ def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code
                 # This is the value we are looking for with the correct provenence
                 final_values.append(value)
     return final_values
+
 
 def generate_ticket(record):
     """
@@ -317,7 +325,7 @@ def main():
 
     for rec in records:
         record = rec[0]
-        if record == None:
+        if record is None:
             sys.stderr.write("Record is None: %s" % (rec[2],))
             sys.exit(1)
         # Perform various checks to determine an suitable action to be taken for
@@ -352,7 +360,7 @@ def main():
         else:
             # Record exists, fetch existing record
             existing_record = get_record(recid)
-            if existing_record == None:
+            if existing_record is None:
                 # Did not find existing record in database
                 holdingpen_records.append(record)
                 continue
@@ -369,21 +377,21 @@ def main():
 
             difference = record_diff(existing_record, record, compare_subfields=match_subfields)
             for tag, diff in difference.iteritems():
-                if diff == None:
+                if diff is None:
                     # No difference in tag
                     continue
                 diff_code = diff[0]
-                new_field_list = record_get_field_instances(record, tag)
-                existing_field_list = record_get_field_instances(existing_record, tag)
+                new_field_list = record_get_field_instances(record, tag, ind1="%", ind2="%")
+                existing_field_list = record_get_field_instances(existing_record, tag, ind1="%", ind2="%")
                 if tag == "245" and diff_code == "c":
                     # Special handling of field 245. We add title to 245 iff origin and original is arXiv
-                    field = record_get_field_instances(record, tag)[0]
+                    field = record_get_field_instances(record, tag, ind1="%", ind2="%")[0]
                     if has_field_origin(new_field_list, "arXiv", "9") and has_field_origin(existing_field_list, "arXiv", "9"):
                         fields_to_correct.append((tag, [field]))
                     else:
                         holdingpen = True
                     # Check for duplicates and add title update as 246
-                    field_list_246 = record_get_field_instances(existing_record, "246")
+                    field_list_246 = record_get_field_instances(existing_record, "246", ind1="%", ind2="%")
                     if not has_field(field, field_list_246):
                         fields_to_add.append(("246", [field]))
                 else:
@@ -407,7 +415,7 @@ def main():
                         fields_to_correct.append((tag, corrected_fields))
 
                     if action == 'append':
-                        added_fields = record_get_field_instances(record, tag)
+                        added_fields = record_get_field_instances(record, tag, ind1="%", ind2="%")
                         fields_to_add.append((tag, added_fields))
 
             # Lets add any extracted 'append' or 'correct' fields
