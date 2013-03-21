@@ -97,7 +97,7 @@ def format_element(bfo, limit, separator='; ',
     # allows to show all of them.
     if limit.isdigit() and nb_authors > int(limit) \
            and interactive != "yes":
-        if bfo.field('710g'):   #check for colln note
+        if bfo.field('710g'):   # check for colln note
             authors = authors[:1]
         else:
 
@@ -107,8 +107,8 @@ def format_element(bfo, limit, separator='; ',
     for author in authors:
 
         if author.has_key('a'):
-            author['a'] = author['a'][0] # There should not be
-                                         # repeatable subfields here.
+            author['a'] = author['a'][0]  # There should not be
+                                          # repeatable subfields here.
             if highlight == 'yes':
                 from invenio import bibformat_utils
                 author['a'] = bibformat_utils.highlight(author['a'],
@@ -179,12 +179,9 @@ def format_element(bfo, limit, separator='; ',
                               affiliations_separator.join(author['ilink']) + \
                               affiliation_suffix
 
-
-
 #
 #  Consolidate repeated affiliations
 #
-
     last = ''
     authors.reverse()
     for author in authors:
@@ -202,13 +199,12 @@ def format_element(bfo, limit, separator='; ',
     if print_affiliations == 'yes':
 ##      100__a (100__e)  700__a (100__e) (100__u)
         if print_affiliation_first.lower() != 'yes':
-            authors = [author.get('display', '') + author.get('e', '') + author.get('u', '') \
+            authors = [author.get('display', '') + author.get('e', '') + author.get('u', '')
                        for author in authors]
 
         else:
-            authors = [author.get('u', '') + author.get('display', '')  \
+            authors = [author.get('u', '') + author.get('display', '')
                        for author in authors]
-
 
     else:
         authors = [author.get('display', '')
@@ -232,10 +228,10 @@ def format_element(bfo, limit, separator='; ',
         short_coll = False
         colls = [re_coll.sub('', coll) for coll in colls]
         if print_links.lower() == "yes":
-            colls = ['<a class="authorlink" href="' + \
-                     CFG_BASE_URL + '/search' + \
-                     '?p=collaboration:' + quote("'" + coll + "'") + \
-                     '&amp;ln='+ bfo.lang + \
+            colls = ['<a class="authorlink" href="' +
+                     CFG_BASE_URL + '/search' +
+                     '?p=collaboration:' + quote("'" + coll + "'") +
+                     '&amp;ln=' + bfo.lang +
                      '">'+escape(coll)+'</a>' for coll in colls]
 
         coll_display = " and ".join(colls)
@@ -255,14 +251,13 @@ def format_element(bfo, limit, separator='; ',
         elif nb_authors == 1:
             short_coll = True
             if markup == 'latex':
-                coll_display =  authors[0] + " [" + coll_display + "]"
+                coll_display = authors[0] + " [" + coll_display + "]"
             else:  #html
-                coll_display +=  " (" + authors[0] + " for the collaboration)"
+                coll_display += " (" + authors[0] + " for the collaboration)"
         elif nb_authors == 0:
             short_coll = True
             if markup == 'latex':
-                coll_display =  "[" + coll_display + "]"
-
+                coll_display = "[" + coll_display + "]"
 
     # Start outputting, depending on options and number of authors
     if colls and (interactive != "yes" or short_coll):
@@ -324,14 +319,14 @@ def format_element(bfo, limit, separator='; ',
         out += '<script>set_up()</script>'
         return out
     elif nb_authors > 0:
-        lastauthor = authors.pop()
-        # remove the dot from last author when the suffix starts with dot
-        # (to avoid two consecutive dots)
-        if lastauthor[-1] == suffix[0] == '.':
-            lastauthor = lastauthor[:-1]
         if markup == 'latex' and nb_authors > 1:
             lastauthor = ' and ' + lastauthor
-        return separator.join(authors) + lastauthor
+        output = separator.join(authors) + lastauthor
+        # remove the dot from the end of authors list when the suffix starts with dot
+        # (to avoid two consecutive dots)
+        if output[-1] == suffix[0] == '.':
+            output = output[:-1]
+        return output
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613
