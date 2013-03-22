@@ -247,6 +247,7 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (42,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (43,'en','ln','hepdataparent');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (45,'en','ln','coden');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (46,'en','ln','publisher');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (47,'en','ln','texkey');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -257,4 +258,4 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (46,'en','ln'
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-26 13:09:45
+-- Dump completed on 2013-03-22 15:23:50

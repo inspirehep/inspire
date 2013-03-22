@@ -232,6 +232,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (43,'hepdataparent','hepdatapa
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (44,'note','note');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (45,'coden','coden');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (46,'publisher','publisher');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (47,'texkey','texkey');
 
 --
 -- Dumping data for table `field_tag`
@@ -408,6 +409,8 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (1,162,255);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (45,159,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (46,161,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (46,90,1);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (47,2,1);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (47,3,0);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -418,4 +421,4 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (46,90,1);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-02-26 13:06:31
+-- Dump completed on 2013-03-22 15:23:17
