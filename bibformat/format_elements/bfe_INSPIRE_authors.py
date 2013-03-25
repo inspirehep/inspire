@@ -324,7 +324,7 @@ def format_element(bfo, limit, separator='; ',
         output = separator.join(authors) + lastauthor
         # remove the dot from the end of authors list when the suffix starts with dot
         # (to avoid two consecutive dots)
-        if output[-1] == suffix[0] == '.':
+        if suffix and output[-1] == suffix[0] == '.':
             output = output[:-1]
         return output
 
