@@ -5,6 +5,9 @@
     <subfield code="d">VOLATILE:longitude</subfield>
     <subfield code="d">VOLATILE:latitude</subfield>
   </datafield>
+  <datafield tag="043" ind1=" " ind2=" ">
+    <subfield code="t">VOLATILE:time zone (e.g +01)</subfield>
+  </datafield>
   <datafield tag="110" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:organization (official name)(acronym in brackets)</subfield>
     <subfield code="b">VOLATILE:department (official name) (acronym in brackets</subfield>

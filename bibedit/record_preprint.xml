@@ -7,6 +7,10 @@
   <datafield tag="041" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:language (if not English)</subfield>
   </datafield>
+    <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:pacs</subfield>
+    <subfield code="2">VOLATILE:PACS</subfield>
+  </datafield>
   <datafield tag="100" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
@@ -29,10 +33,6 @@
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
     <subfield code="2">INSPIRE</subfield>
-  </datafield>
-  <datafield tag="650" ind1="1" ind2="7">
-    <subfield code="a">VOLATILE:pacs</subfield>
-    <subfield code="2">VOLATILE:PACS</subfield>
   </datafield>
   <datafield tag="653" ind1="1" ind2=" ">
     <subfield code="a">VOLATILE:keyword</subfield>
