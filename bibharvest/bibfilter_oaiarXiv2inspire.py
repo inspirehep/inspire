@@ -124,10 +124,17 @@ def create_record_from_list(recid, field_list):
     """
     new_rec = {}
     for tag, subfields in field_list:
-        for sfield in subfields:
-            record_add_field(new_rec, tag, subfields=sfield[0])
+        for subfields, ind1, ind2, value, field_position_global in subfields:
+            record_add_field(new_rec,
+                             tag,
+                             ind1=ind1,
+                             ind2=ind2,
+                             controlfield_value=value,
+                             subfields=subfields)
     if len(new_rec) > 0:
-        record_add_field(new_rec, '001', controlfield_value=str(recid))
+        record_add_field(new_rec,
+                         tag='001',
+                         controlfield_value=str(recid))
     return new_rec
 
 
