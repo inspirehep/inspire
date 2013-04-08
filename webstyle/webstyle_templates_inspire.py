@@ -44,6 +44,155 @@ from invenio.urlutils import auto_version_url
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
 
+    def tmpl_page(self, req=None, ln=CFG_SITE_LANG, description="",
+                  keywords="", userinfobox="", useractivities_menu="",
+                  adminactivities_menu="", navtrailbox="",
+                  pageheaderadd="", boxlefttop="", boxlefttopadd="",
+                  boxleftbottom="", boxleftbottomadd="",
+                  boxrighttop="", boxrighttopadd="",
+                  boxrightbottom="", boxrightbottomadd="",
+                  titleprologue="", title="", titleepilogue="",
+                  body="", lastupdated=None, pagefooteradd="", uid=0,
+                  secure_page_p=0, navmenuid="", metaheaderadd="",
+                  rssurl=CFG_BASE_URL+"/rss",
+                  show_title_p=True, body_css_classes=None):
+
+        """Creates a complete page
+
+           Parameters:
+
+          - 'ln' *string* - The language to display
+
+          - 'description' *string* - description goes to the metadata in the header of the HTML page,
+                                     not yet escaped for HTML
+
+          - 'keywords' *string* - keywords goes to the metadata in the header of the HTML page,
+                                  not yet escaped for HTML
+
+          - 'userinfobox' *string* - the HTML code for the user information box
+
+          - 'useractivities_menu' *string* - the HTML code for the user activities menu
+
+          - 'adminactivities_menu' *string* - the HTML code for the admin activities menu
+
+          - 'navtrailbox' *string* - the HTML code for the navigation trail box
+
+          - 'pageheaderadd' *string* - additional page header HTML code
+
+          - 'boxlefttop' *string* - left-top box HTML code
+
+          - 'boxlefttopadd' *string* - additional left-top box HTML code
+
+          - 'boxleftbottom' *string* - left-bottom box HTML code
+
+          - 'boxleftbottomadd' *string* - additional left-bottom box HTML code
+
+          - 'boxrighttop' *string* - right-top box HTML code
+
+          - 'boxrighttopadd' *string* - additional right-top box HTML code
+
+          - 'boxrightbottom' *string* - right-bottom box HTML code
+
+          - 'boxrightbottomadd' *string* - additional right-bottom box HTML code
+
+          - 'title' *string* - the title of the page, not yet escaped for HTML
+
+          - 'titleprologue' *string* - what to print before page title
+
+          - 'titleepilogue' *string* - what to print after page title
+
+          - 'body' *string* - the body of the page
+
+          - 'lastupdated' *string* - when the page was last updated
+
+          - 'uid' *int* - user ID
+
+          - 'pagefooteradd' *string* - additional page footer HTML code
+
+          - 'secure_page_p' *int* (0 or 1) - are we to use HTTPS friendly page elements or not?
+
+          - 'navmenuid' *string* - the id of the navigation item to highlight for this page
+
+          - 'metaheaderadd' *string* - list of further tags to add to the <HEAD></HEAD> part of the page
+
+          - 'rssurl' *string* - the url of the RSS feed for this page
+
+          - 'show_title_p' *int* (0 or 1) - do we display the page title in the body of the page?
+
+          - 'body_css_classes' *list* - list of classes to add to the body tag
+
+           Output:
+
+          - HTML code of the page
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+        # hide title if it's "Submit New Record"
+        pagetitle = ''
+        if title and show_title_p and title != "Submit New Record":
+            pagetitle = '<div class="headline_div"><h1 class="headline">' + cgi.escape(title) + '</h1></div>'
+
+        out = self.tmpl_pageheader(req,
+                                   ln = ln,
+                                   headertitle = title,
+                                   description = description,
+                                   keywords = keywords,
+                                   metaheaderadd = metaheaderadd,
+                                   userinfobox = userinfobox,
+                                   useractivities_menu = useractivities_menu,
+                                   adminactivities_menu = adminactivities_menu,
+                                   navtrailbox = navtrailbox,
+                                   pageheaderadd = pageheaderadd,
+                                   uid=uid,
+                                   secure_page_p = secure_page_p,
+                                   navmenuid=navmenuid,
+                                   rssurl=rssurl,
+                                   body_css_classes=body_css_classes) + """
+<div class="pagebody">
+  <div class="pagebodystripeleft">
+    <div class="pageboxlefttop">%(boxlefttop)s</div>
+    <div class="pageboxlefttopadd">%(boxlefttopadd)s</div>
+    <div class="pageboxleftbottomadd">%(boxleftbottomadd)s</div>
+    <div class="pageboxleftbottom">%(boxleftbottom)s</div>
+  </div>
+  <div class="pagebodystriperight">
+    <div class="pageboxrighttop">%(boxrighttop)s</div>
+    <div class="pageboxrighttopadd">%(boxrighttopadd)s</div>
+    <div class="pageboxrightbottomadd">%(boxrightbottomadd)s</div>
+    <div class="pageboxrightbottom">%(boxrightbottom)s</div>
+  </div>
+  <div class="pagebodystripemiddle">
+    %(titleprologue)s
+    %(title)s
+    %(titleepilogue)s
+    %(body)s
+  </div>
+  <div class="clear"></div>
+</div>
+""" % {
+  'boxlefttop' : boxlefttop,
+  'boxlefttopadd' : boxlefttopadd,
+
+  'boxleftbottom' : boxleftbottom,
+  'boxleftbottomadd' : boxleftbottomadd,
+
+  'boxrighttop' : boxrighttop,
+  'boxrighttopadd' : boxrighttopadd,
+
+  'boxrightbottom' : boxrightbottom,
+  'boxrightbottomadd' : boxrightbottomadd,
+
+  'titleprologue' : titleprologue,
+  'title' : pagetitle,
+  'titleepilogue' : titleepilogue,
+
+  'body' : body,
+
+  } + self.tmpl_pagefooter(req, ln = ln,
+                           lastupdated = lastupdated,
+                           pagefooteradd = pagefooteradd)
+        return out
 
     def tmpl_pageheader(self, req, ln=CFG_SITE_LANG, headertitle="",
                         description="", keywords="", userinfobox="",
@@ -194,10 +343,6 @@ $(function () {
   if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
      $('#mainlightsearchfield').focus();
   }
-  //hiding some useless fields
-  var hideFields = $(".submit form table tr").eq(0);
-  hideFields.find("td:gt(1)").hide();
-  $(".submit a img[alt='Back to main menu']").parent().hide();
 
   $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
   autocomplete_kb($("#jobsubmitAffil"), "InstitutionsCollection");
