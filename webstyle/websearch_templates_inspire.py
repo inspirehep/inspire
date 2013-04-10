@@ -1654,6 +1654,20 @@ class Template(DefaultTemplate):
                                         {}, num_timescited > 1 and _("Cited by %i records") % num_timescited
                                         or _("Cited by 1 record"),
                                         {'class': "moreinfo"})
+                # TopCite categories: 50+, 100+, 250+, 500+, 1000+
+                if num_timescited >= 50:
+                    if 50 <= num_timescited < 100:
+                        cat_cited = 50
+                    elif 100 <= num_timescited < 250:
+                        cat_cited = 100
+                    elif 250 <= num_timescited < 500:
+                        cat_cited = 250
+                    elif 500 <= num_timescited < 1000:
+                        cat_cited = 500
+                    elif 1000 <= num_timescited:
+                        cat_cited = 1000
+                    out += '''<span class="moreinfo"> <img border="0" src="''' + CFG_BASE_URL
+                    out += '''/img/%s.png" alt="TopCite"/></span>''' % cat_cited
             else:
                 out += "<!--not showing citations links-->"
         if display_claim_link: #Maybe we want not to show the link to who cannot use id?

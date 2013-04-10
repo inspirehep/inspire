@@ -981,6 +981,10 @@ a.nearesttermsselected:hover {
    font-size: small;
    background: transparent;
 }
+.moreinfo img {
+    display: inline-block;
+    vertical-align: middle;
+}
 .rankscoreinfo {
    color: #666;
    font-size: x-small;
