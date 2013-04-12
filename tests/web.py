@@ -188,6 +188,64 @@ class DetailedRecordTests(WebTest):
                                url,
                                expected_text=["Einstein's Space-Time: An Introduction to Special and General Relativity"])
 
+    def test_hx_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/hx'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"])
+
+    def test_hm_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/hm'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"])
+
+    def test_xm_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/xm'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"],
+                               html=False)
+
+    def test_xn_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/xn'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"],
+                               html=False)
+
+    def test_xd_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/xd'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"],
+                               html=False)
+
+    def test_xe_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/xe'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"],
+                               html=False)
+
+    def test_hlxu_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/hlxu'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"])
+
+    def test_hlxe_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/hlxe'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"])
+
+    def test_hlxh_format(self):
+        url = CFG_SITE_URL + '/record/1228228/export/hlxh'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Measurement of spin observables in the quasi-free"])
+
     def test_references_tab_empty(self):
         url = CFG_SITE_URL + '/record/1226366/references'
         check_web_page_content(self,
@@ -212,6 +270,12 @@ class DetailedRecordTests(WebTest):
                                url,
                                expected_text=["Authorization failure"])
 
+    def test_citations_tab(self):
+        url = CFG_SITE_URL + '/record/854529/citations'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["New parton distributions for collider physics"])
+
 
 class RestrictedToolsTest(WebTest):
     def test_admin_index(self):
@@ -231,17 +295,143 @@ class RestrictedToolsTest(WebTest):
                                password=CFG_PASSWORD)
 
 class CollectionsTest(WebTest):
-    def test_hepnames(self):
+    def test_hepnames_home(self):
         url = CFG_SITE_URL + '/collection/HepNames'
         check_web_page_content(self,
                                url,
                                expected_text=["HEPNames Search"])
+
+    def test_hepnames_detailed(self):
+        url = CFG_SITE_URL + '/record/1048055'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["L. Moi"])
 
     def test_hepnames_search(self):
             url = CFG_SITE_URL + '/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=Lopez+Paz&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
             check_web_page_content(self,
                                    url,
                                    expected_text=["Lopez Paz, Ivan"])
+
+    def test_institutions_home(self):
+        url = CFG_SITE_URL + '/collection/Institutions'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Institutions Search"])
+
+    def test_institutions_detailed(self):
+        url = CFG_SITE_URL + '/record/902796'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Fermi National Accelerator Laboratory"])
+
+    def test_institutions_search(self):
+            url = CFG_SITE_URL + '/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=fermilab&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Fermilab", "Fermi National Accelerator Laboratory"])
+
+    def test_conferences_home(self):
+        url = CFG_SITE_URL + '/collection/Conferences'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Conferences Search"])
+
+    def test_conferences_detailed(self):
+        url = CFG_SITE_URL + '/record/1228055'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["XXIV International Workshop on Weak Interactions and Neutrinos"])
+
+    def test_conferences_search(self):
+            url = CFG_SITE_URL + '/search?ln=en&cc=Conferences&ln=en&cc=Conferences&p=ATLAS+Muon+Workshop&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["4th ATLAS Muon Workshop"])
+
+    def test_conferences_submit(self):
+        url = CFG_SITE_URL + '/submit?doctype=CONFSUBMIT&act=SBI&comboCONFSUBMIT=CONF'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Submit a Conference"])
+
+    def test_jobs_home(self):
+        url = CFG_SITE_URL + '/collection/Jobs'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Jobs Search"])
+
+    def test_jobs_detailed(self):
+        url = CFG_SITE_URL + '/record/961728'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["For further information, and to apply, please see the url below."])
+
+    def test_jobs_search(self):
+            url = CFG_SITE_URL + '/search?p1=&op1=a&p2=&action_search=Search&cc=Jobs'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["records found"],
+                                   unexpected_text=["0 records found"])
+
+    def test_jobs_submit(self):
+        url = CFG_SITE_URL + '/submit?doctype=JOBSUBMIT&act=SBI&comboJOBSUBMIT=JOB'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Submit an Job Vacancy"])
+
+    def test_jobs_rss(self):
+        url = CFG_SITE_URL + '/rss?cc=Jobs&ln=en'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["<rss", "<item>", "<title>",
+                                              "</title>", "</item>", "</rss>"],
+                                html=False)
+
+    def test_experiments_home(self):
+        url = CFG_SITE_URL + '/collection/Experiments'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Experiments Search"])
+
+    def test_experiments_detailed(self):
+        url = CFG_SITE_URL + '/record/1223143'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["GAMMA"])
+
+    def test_experiments_search(self):
+            url = CFG_SITE_URL + '/search?p1=&op1=a&p2=&action_search=Search&cc=Jobs'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["records found"],
+                                   unexpected_text=["0 records found"])
+
+    def test_journals_home(self):
+        url = CFG_SITE_URL + '/collection/Journals'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Journals Search"])
+
+    def test_journals_detailed(self):
+        url = CFG_SITE_URL + '/record/1214902'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Astronomy and Astrophysics"])
+
+    def test_journals_search(self):
+            url = CFG_SITE_URL + '/search?ln=en&cc=Journals&ln=en&cc=Journals&p=Astronomy+and+Astrophysics&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Astronomy and Astrophysics"])
+
+
+class OtherPagesTests(WebTest):
+    def test_help(self):
+        url = CFG_SITE_URL + '/help/'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Citation Metrics"])
 
 
 class _SGMLParserFactory(mechanize.DefaultFactory):
@@ -262,11 +452,12 @@ def check_web_page_content(test,
                           url,
                           username="guest",
                           password="",
-                          expected_text="</html>",
-                          unexpected_text="",
+                          expected_text=[],
+                          unexpected_text=[],
                           expected_link_target=None,
                           expected_link_label=None,
-                          require_validate_p=CFG_TESTS_REQUIRE_HTML_VALIDATION):
+                          require_validate_p=CFG_TESTS_REQUIRE_HTML_VALIDATION,
+                          html=True):
 
     error_messages = []
     browser = mechanize.Browser()
@@ -299,6 +490,9 @@ def check_web_page_content(test,
             expected_texts = [expected_text]
         else:
             expected_texts = expected_text
+
+        if html:
+            expected_text.append('</html>')
 
         for cur_expected_text in expected_texts:
             try:
