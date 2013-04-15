@@ -22,6 +22,7 @@ __revision__ = \
     "$Id$"
 
 import cgi
+import re
 
 from invenio.config import \
      CFG_SITE_LANG, \
@@ -346,6 +347,7 @@ $(function () {
 
         - HTML code of the page headers
         """
+        from invenio.search_engine import guess_primary_collection_of_a_record
 
         # load the right message language
         _ = gettext_set_language(ln)
@@ -359,6 +361,44 @@ $(function () {
             msg_lastupdated = _("Last updated") + ": " + lastupdated
         else:
             msg_lastupdated = ""
+
+        # Prepare Piwik custom variables if we are in a detailed record page
+        record_page_re = re.compile("^/record/(?P<recid>[0-9]+)/?(?P<page_type>.*)")
+
+        custom_variables = ""
+
+        record_page_match = record_page_re.match(req.uri)
+        if record_page_match:
+          record_collection = guess_primary_collection_of_a_record(record_page_match.group('recid'))
+          custom_variables = """
+_paq.push(['setCustomVariable',
+          1, // Index, the number from 1 to 5 where this custom variable name is stored
+          "Collection", // Name, the name of the variable
+          "%(collection_name)s", // Value
+          "page" // Scope of the custom variable
+          ]);
+          """ % {
+            'collection_name': record_collection
+          }
+
+          if record_page_match.group('page_type'):
+            custom_variables += """
+_paq.push(['setCustomVariable',
+          2,
+          "Type",
+          "%(page_type)s",
+          "page"
+          ]);
+_paq.push(['setCustomVariable',
+          3,
+          "CollectionType",
+          "%(page_collection_type)s",
+          "page"
+          ]);
+          """ % {
+            'page_type': record_page_match.group('page_type'),
+            'page_collection_type': record_collection + record_page_match.group('page_type')
+          }
 
         out = """
 <div class="pagefooter">
@@ -386,6 +426,7 @@ $(function () {
  var _paq = _paq || [];
  (function(){ var u=(("https:" == document.location.protocol) ? "https://inspirehep.net/piwik/" : "http://inspirehep.net/piwik/");
  _paq.push(['setSiteId', '8']);
+ %(custom_variables)s
  _paq.push(['setTrackerUrl', u+'piwik.php']);
  _paq.push(['trackPageView']);
  _paq.push(['enableLinkTracking']);
@@ -419,7 +460,7 @@ $(function () {
           'version' : self.trim_version(CFG_VERSION),
 
           'pagefooteradd' : pagefooteradd,
-
+          'custom_variables': custom_variables
           }
         return out
 
