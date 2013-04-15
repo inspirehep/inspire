@@ -133,13 +133,13 @@ class WebSearchTests(WebTest):
         url = CFG_SITE_URL + '/search?ln=en&p=&of=hcs&action_search=Search'
         check_web_page_content(self,
                                url,
-                               expected_text=["Citations summary", "Renowned papers", "</html>"])
+                               expected_text=["Citations summary", "Renowned papers"])
 
     def test_extended_citesummary(self):
         url = CFG_SITE_URL + '/search?ln=en&p=&of=hcs2'
         check_web_page_content(self,
                                url,
-                               expected_text=["Citations summary", "self-citation", "Renowned papers", "</html>"])
+                               expected_text=["Citesummary", "self-citation", "Renowned papers"])
 
 
 def build_queries_tests(cls):
