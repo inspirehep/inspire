@@ -142,12 +142,12 @@ class WebSearchTests(WebTest):
                                expected_text=["Citesummary", "self-citation", "Renowned papers"])
 
 
-def build_queries_tests(cls):
+def build_queries_checks(cls):
     def generic_search(self, query):
         url = CFG_SITE_URL + '/search?ln=en&p=%s&of=hb&action_search=Search' % query
         check_web_page_content(self,
                                url,
-                               expected_text=["records found", "</html>"])
+                               expected_text=["records found"])
 
     for index, query in enumerate(cls.popular_queries):
         def test(self):
@@ -157,7 +157,7 @@ def build_queries_tests(cls):
     return cls
 
 
-@build_queries_tests
+@build_queries_checks
 class PopularQueriesTest(WebTest):
     popular_queries = [
         'find j "Phys.Rev.Lett.,105*"',
@@ -174,7 +174,6 @@ class PopularQueriesTest(WebTest):
 
 
 class DetailedRecordTests(WebTest):
-
 
     def test_detailed_record(self):
         url = CFG_SITE_URL + '/record/1226366'
@@ -279,7 +278,7 @@ class DetailedRecordTests(WebTest):
 
 class RestrictedToolsTest(WebTest):
     def test_admin_index(self):
-        url = CFG_SITE_URL + '/youraccount/'
+        url = CFG_SITE_SECURE_URL + '/youraccount/'
         check_web_page_content(self,
                                url,
                                expected_text=["Configure BibFormat"],
@@ -287,10 +286,120 @@ class RestrictedToolsTest(WebTest):
                                password=CFG_PASSWORD)
 
     def test_references_bibedit(self):
-        url = CFG_SITE_URL + '/record/1226366/edit'
+        url = CFG_SITE_SECURE_URL + '/record/1226366/edit'
         check_web_page_content(self,
                                url,
                                expected_text=["Record Editor"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_multiedit(self):
+        url = CFG_SITE_SECURE_URL + '/record/multiedit/'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Record Editor"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_info_space_manager(self):
+        url = CFG_SITE_SECURE_URL + '/info/manage'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Info Space Manager"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_manage_format_templates(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_templates_manage'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Manage Format Templates"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_edit_template_html_brief(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_brief.bft'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Format Template Default HTML brief"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_edit_template_html_detailed(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_detailed.bft'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Format Template Default HTML detailed"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_manage_kb(self):
+        url = CFG_SITE_SECURE_URL + '/kb'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["BibKnowledge Admin", "CODENS", "PDG", "SUBJECT"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_kb_codens(self):
+        url = CFG_SITE_SECURE_URL + '/kb?kb=6&search='
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Knowledge Base CODENS", "APPOA"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_bibindex_indexes_list(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Manage Indexes", "global", "year"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_bibindex_edit_index(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py/editindex?idxID=1'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Edit Index", "global"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_bibrank(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_oaiharvest(self):
+        url = CFG_SITE_SECURE_URL + '/admin/oaiharvest/oaiharvestadmin.py'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["OAI Harvest Admin Interface"],
+                               unexpected_text=["FAILED", "DONE WITH ERRORS"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_oairepository(self):
+        url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+
+    def test_query_history(self):
+        url = CFG_SITE_SECURE_URL + '/search?p=001%3A50000'
+        check_web_page_content(self,
+                               url,
+                               username=CFG_USERNAME,
+                               password=CFG_PASSWORD)
+        url = CFG_SITE_SECURE_URL + '/youralerts/display'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Your Searches", "001:50000"],
                                username=CFG_USERNAME,
                                password=CFG_PASSWORD)
 
@@ -341,7 +450,7 @@ class CollectionsTest(WebTest):
         url = CFG_SITE_URL + '/record/1228055'
         check_web_page_content(self,
                                url,
-                               expected_text=["XXIV International Workshop on Weak Interactions and Neutrinos"])
+                               expected_text=["24th International Workshop on Weak Interactions and Neutrinos"])
 
     def test_conferences_search(self):
             url = CFG_SITE_URL + '/search?ln=en&cc=Conferences&ln=en&cc=Conferences&p=ATLAS+Muon+Workshop&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
@@ -433,6 +542,30 @@ class OtherPagesTests(WebTest):
                                url,
                                expected_text=["Citation Metrics"])
 
+    def test_easy_search(self):
+        url = CFG_SITE_URL + '/help/easy-search'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Easy Search"])
+
+    def test_bibtools(self):
+        url = CFG_SITE_URL + '/submit?ln=en&doctype=bibtex&act=SBI'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["BiblioTools: Generating Your Bibliography"])
+
+    def test_terms_of_use(self):
+        url = CFG_SITE_URL + '/info/general/terms-of-use'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Terms of Use"])
+
+    def test_privacy_policy(self):
+        url = CFG_SITE_URL + '/info/general/privacy-policy'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Privacy Policy"])
+
 
 class _SGMLParserFactory(mechanize.DefaultFactory):
     def __init__(self, i_want_broken_xhtml_support=False):
@@ -448,142 +581,172 @@ class _SGMLParserFactory(mechanize.DefaultFactory):
         )
 
 
-def check_web_page_content(test,
-                          url,
-                          username="guest",
-                          password="",
-                          expected_text=[],
-                          unexpected_text=[],
-                          expected_link_target=None,
-                          expected_link_label=None,
-                          require_validate_p=CFG_TESTS_REQUIRE_HTML_VALIDATION,
-                          html=True):
-
-    error_messages = []
-    browser = mechanize.Browser()
-    browser.set_handle_robots(False)
+def login(browser, username, password):
+    url = CFG_SITE_SECURE_URL + "/youraccount/login"
     try:
-        if username == "guest":
-            pass
-        else:
-            browser = mechanize.Browser(factory=_SGMLParserFactory(i_want_broken_xhtml_support=True))
-            browser.set_handle_robots(False)
-            browser.open(CFG_SITE_SECURE_URL + "/youraccount/login")
-            browser.select_form(nr=0)
-            browser.form['p_un'] = username
-            browser.form['p_pw'] = password
-            browser.submit()
-            username_account_page_body = browser.response().read()
-            try:
-                msg = "You are logged in as %s" % username
-                username_account_page_body.index(msg)
-            except ValueError:
-                msg = 'ERROR: Cannot login as %s.' % username
-                raise InvenioTestUtilsBrowserException(msg)
-
         browser.open(url)
-        url_body = browser.response().read()
-
-        try:
-            iter(expected_text)
-        except ValueError:
-            expected_texts = [expected_text]
-        else:
-            expected_texts = expected_text
-
-        if html:
-            expected_text.append('</html>')
-
-        for cur_expected_text in expected_texts:
-            try:
-                url_body.index(cur_expected_text)
-            except ValueError:
-                msg = 'ERROR: Page %s (login %s) does not contain %s,' \
-                      ' but contains %s'
-                msg = msg % (url, username, cur_expected_text, url_body)
-                raise InvenioTestUtilsBrowserException(msg)
-
-        try:
-            iter(unexpected_text)
-        except ValueError:
-            unexpected_texts = [unexpected_text]
-        else:
-            unexpected_texts = unexpected_text
-
-        for cur_unexpected_text in unexpected_texts:
-            try:
-                url_body.index(cur_unexpected_text)
-                raise InvenioTestUtilsBrowserException(
-                      'ERROR: Page %s (login %s) contains %s.' %
-                      (url, username, cur_unexpected_text)
-                )
-            except ValueError:
-                pass
-
-        # Test for EXPECTED_LINK_TARGET and EXPECTED_LINK_LABEL:
-        if expected_link_target or expected_link_label:
-            # At first normalize expected_link_target and expected_link_label
-            try:
-                iter(expected_link_target)
-            except ValueError:
-                expected_link_targets = [expected_link_target]
-            else:
-                expected_link_targets = expected_link_target
-
-            try:
-                iter(expected_link_label)
-            except ValueError:
-                expected_link_labels = [expected_link_label]
-            else:
-                expected_link_labels = expected_link_label
-
-            # and then test
-            for cur_expected_link_target, cur_expected_link_label \
-                           in zip(expected_link_targets, expected_link_labels):
-                try:
-                    browser.find_link(url=cur_expected_link_target,
-                                      text=cur_expected_link_label)
-                except mechanize.LinkNotFoundError:
-                    raise InvenioTestUtilsBrowserException(
-                          'ERROR: Page %s (login %s) does not contain link'
-                          ' to %s entitled %s.' %
-                          (url, username, cur_expected_link_target,
-                           cur_expected_link_label)
-                    )
-
-        # Test for validation if required
-        if require_validate_p:
-            valid_p, errors, warnings = w3c_validate(url_body)
-            if not valid_p:
-                error_text = 'ERROR: Page %s (login %s) does not' \
-                             ' validate:\n %s' % \
-                             (url, username,
-                              w3c_errors_to_str(errors, warnings))
-                raise InvenioTestUtilsBrowserException(error_text)
-
     except mechanize.HTTPError, msg:
-        error_messages.append('ERROR: Page %s (login %s) not accessible. %s' %
-                              (url, username, msg))
-    except InvenioTestUtilsBrowserException, msg:
-        error_messages.append('ERROR: Page %s (login %s) led to an error: %s' %
-                              (url, username, msg))
+        msg = 'ERROR: Page %s (login %s) not accessible. %s' % \
+                                                           (url, username, msg)
+        raise InvenioTestUtilsBrowserException(msg)
 
-    # Logout after tests:
-    browser.open(CFG_SITE_SECURE_URL + "/youraccount/logout")
-    browser.response().read()
-    browser.close()
+    browser.select_form(nr=0)
+    browser.form['p_un'] = username
+    browser.form['p_pw'] = password
+    browser.submit()
+
+    username_account_page_body = browser.response().read()
+    try:
+        msg = "You are logged in as %s" % username
+        username_account_page_body.index(msg)
+    except ValueError:
+        msg = 'ERROR: Cannot login as %s.' % username
+        raise InvenioTestUtilsBrowserException(msg)
+
+def check_web_page_content(test,
+                           url,
+                           username="guest",
+                           password="",
+                           expected_text=[],
+                           unexpected_text=[],
+                           expected_link_target=[],
+                           expected_link_label=[],
+                           require_validate_p=CFG_TESTS_REQUIRE_HTML_VALIDATION,
+                           html=True,
+                           browser_cache={}):
+    try:
+        browser = read_url(url, username, password)
+    except InvenioTestUtilsBrowserException, msg:
+        test.fail('ERROR: Page %s (login %s) led to an error: %s' %
+                                                          (url, username, msg))
+
+    url_body = browser.response().read()
+
+    # Checks for exepected text
+    try:
+        iter(expected_text)
+    except ValueError:
+        expected_texts = [expected_text]
+    else:
+        expected_texts = expected_text
+
+    if html:
+        expected_text.append('</html>')
+
+    for cur_expected_text in expected_texts:
+        try:
+            url_body.index(cur_expected_text)
+        except ValueError:
+            msg = 'ERROR: Page %s (login %s) does not contain %s,' \
+                  ' but contains %s'
+            msg = msg % (url, username, cur_expected_text, url_body)
+            test.fail(msg)
+
+    # Checks for unexepected text
+    try:
+        iter(unexpected_text)
+    except ValueError:
+        unexpected_texts = [unexpected_text]
+    else:
+        unexpected_texts = unexpected_text
+
+    for cur_unexpected_text in unexpected_texts:
+        try:
+            url_body.index(cur_unexpected_text)
+            msg = 'ERROR: Page %s (login %s) contains %s.' % \
+                                           (url, username, cur_unexpected_text)
+            test.fail(msg)
+        except ValueError:
+            pass
+
+    # Test for expected_link_target and expected_link_label:
+    if expected_link_target or expected_link_label:
+        # At first normalize expected_link_target and expected_link_label
+        try:
+            iter(expected_link_target)
+        except ValueError:
+            expected_link_targets = [expected_link_target]
+        else:
+            expected_link_targets = expected_link_target
+
+        try:
+            iter(expected_link_label)
+        except ValueError:
+            expected_link_labels = [expected_link_label]
+        else:
+            expected_link_labels = expected_link_label
+
+        # and then test
+        for cur_expected_link_target, cur_expected_link_label \
+                       in zip(expected_link_targets, expected_link_labels):
+            try:
+                browser.find_link(url=cur_expected_link_target,
+                                  text=cur_expected_link_label)
+            except mechanize.LinkNotFoundError:
+                raise InvenioTestUtilsBrowserException(
+                      'ERROR: Page %s (login %s) does not contain link'
+                      ' to %s entitled %s.' %
+                      (url, username, cur_expected_link_target,
+                       cur_expected_link_label)
+                )
+
+    # Test for validation if required
+    if require_validate_p:
+        valid_p, errors, warnings = w3c_validate(url_body)
+        if not valid_p:
+            error_text = 'ERROR: Page %s (login %s) does not' \
+                         ' validate:\n %s' % \
+                         (url, username,
+                          w3c_errors_to_str(errors, warnings))
+            raise InvenioTestUtilsBrowserException(error_text)
 
     if CFG_TESTUTILS_VERBOSE >= 9:
         print "%s check_web_page_content(), tested page `%s', login `%s'," \
-              " expected text `%s', errors `%s'." % \
+              " expected text `%s', unexpected text `%s'." % \
               (time.strftime("%Y-%m-%d %H:%M:%S -->", time.localtime()),
-               url, username, expected_text,
-               ",".join(error_messages))
+               url, username, expected_text, unexpected_text)
 
-    if error_messages:
-        test.fail(merge_error_messages(error_messages))
+    return browser
 
-    return error_messages
+
+class LoggedInBrowser(mechanize.Browser):
+    def __init__(self, username, password, *args, **kwargs):
+        # super(LoggedInBrowser, self).__init__(*args, **kwargs)
+        mechanize.Browser.__init__(self, *args, **kwargs)
+        self.set_handle_robots(False)
+        login(self, username, password)
+
+    def __del__(self):
+        # Logout after tests:
+        self.open(CFG_SITE_SECURE_URL + "/youraccount/logout")
+        self.response().read()
+        self.close()
+
+
+
+def read_url(url,
+             username="guest",
+             password="",
+             browser_cache={}):
+
+    if (username, password) in browser_cache:
+        browser = browser_cache[(username, password)]
+    else:
+        # browser = mechanize.Browser(factory=_SGMLParserFactory(i_want_broken_xhtml_support=True))
+        if username == "guest":
+            browser = mechanize.Browser()
+        else:
+            browser = LoggedInBrowser(username, password)
+        browser.set_handle_robots(False)
+
+    try:
+        browser.open(url)
+    except mechanize.HTTPError, msg:
+        msg = 'ERROR: Page %s (login %s) not accessible. %s' % \
+                                                           (url, username, msg)
+        raise InvenioTestUtilsBrowserException(msg)
+
+    return browser
 
 
 TEST_SUITE = make_test_suite(WebSearchTests,
