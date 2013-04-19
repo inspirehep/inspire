@@ -90,7 +90,7 @@
         if (j != '' && jvol != '' && jpage != '') { query += ' and j ' + j + ','+ jvol + ',' + jpage; }
         else {
             if (j != '') { query += ' and j ' + j; }
-            if (jvol != '') { query += ' and jvol ' + jvol; }
+            if (jvol != '') { query += ' and vol ' + jvol; }
             if (jpage != '') { query += ' and jp ' + jpage; }
         }
 

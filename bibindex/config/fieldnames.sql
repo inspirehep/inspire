@@ -248,7 +248,7 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (43,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (45,'en','ln','coden');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (46,'en','ln','publisher');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (47,'en','ln','texkey');
-INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (48,'en','ln','vol');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (48,'en','ln','volume');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

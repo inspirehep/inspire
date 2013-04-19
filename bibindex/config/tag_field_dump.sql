@@ -234,7 +234,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (44,'note','note');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (45,'coden','coden');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (46,'publisher','publisher');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (47,'texkey','texkey');
-INSERT INTO `field` (`id`, `name`, `code`) VALUES (48,'vol','vol');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (48,'volume','volume');
 
 --
 -- Dumping data for table `field_tag`
