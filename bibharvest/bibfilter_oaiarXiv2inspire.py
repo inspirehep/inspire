@@ -427,7 +427,20 @@ def main():
 
             # Lets add any extracted 'append' or 'correct' fields
             if len(fields_to_add) > 0:
-                append_records.append(create_record_from_list(recid, fields_to_add))
+                #Check if DOI is included in fields_to_add
+                fields_without_DOI = []
+                record_with_DOI = []
+                for tag, value in fields_to_add:
+                    if tag == '024':
+                        DOI_field = [(tag, value)]
+                        #Create record just with DOI field
+                        record_with_DOI = create_record_from_list(recid, DOI_field)
+                    else:
+                        fields_without_DOI.append((tag, value))
+                # Append extra DOI record
+                append_records.append(create_record_from_list(recid, fields_without_DOI))
+                append_records.append(record_with_DOI)
+
             if len(fields_to_correct) > 0:
                 correct_records.append(create_record_from_list(recid, fields_to_correct))
             if holdingpen:
