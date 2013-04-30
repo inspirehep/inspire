@@ -100,6 +100,12 @@
         search_url = '/search?p=' + query;
         window.location = search_url;
     };
+    $(document).keypress(function(event){
+        if (event.which == 13) {
+            event.preventDefault();
+            perform_easy_search();
+        }
+    });
 </script>
 
 <form>
@@ -110,37 +116,37 @@
 
 <tr>
 <th align="right">Author:</th>
-<td align="left"><input size="52" name="search" id="author"/></td>
+<td align="left"><input size="52" name="search" id="author" tabindex="1"/></td>
 </tr>
 
 <tr>
 <th align="right">Title:</th>
-<td align="left"><input size="52" id="title" /></td>
+<td align="left"><input size="52" id="title" tabindex="2"/></td>
 </tr>
 
 <tr>
 <th align="right">Report Number:</th>
-<td align="left"><input size="52" id="rn" /></td>
+<td align="left"><input size="52" id="rn" tabindex="3"/></td>
 </tr>
 
 <tr>
 <th align="right">Affiliation:</th>
-<td align="left"><input size="52" id="aff" /></td>
+<td align="left"><input size="52" id="aff" tabindex="4"/></td>
 </tr>
 
 <tr>
 <th align="right">Collaboration:</th>
-<td align="left"><input size="52" id="cn" /></td>
+<td align="left"><input size="52" id="cn" tabindex="5"/></td>
 </tr>
 
 <tr>
 <th align="right">Keywords:</th>
-<td align="left"><input size="52" id="k" /></td>
+<td align="left"><input size="52" id="k" tabindex="6"/></td>
 </tr>
 
 <tr>
 <th align="right">Eprint:</th>
-<td align="left"><select id="eprinttype">
+<td align="left"><select id="eprinttype" tabindex="7">
     <option value="" selected="selected">Any Type</option>
     <option value="ACC-PHYS">ACC-PHYS</option>
     <option value="ASTRO-PH">ASTRO-PH</option>
@@ -157,14 +163,14 @@
     <option value="PHYSICS">PHYSICS</option>
     <option value="QUANT-PH">QUANT-PH</option>
     </select>&nbsp;&nbsp; Number
-    <input size="14" id="eprintnumber" />
+    <input size="14" id="eprintnumber" tabindex="8"/>
 </td>
 </tr>
 
 <tr>
 <th align="right">Topcite:</th>
 <td align="left">
-<select id="topcite">
+<select id="topcite" tabindex="9">
     <option value="" selected="selected">Don't care</option>
     <option value="50+">50+</option>
     <option value="100+">100+</option>
@@ -181,7 +187,7 @@
 
 <tr>
 <th align="right">Journal:</th>
-<td align="left"><select id="j">
+<td align="left"><select id="j" tabindex="10">
     <option value="" selected="selected">Any Journal</option>
     <option value="Acta Phys.Austr.">Acta Phys.Austr.</option>
     <option value="Acta Phys.Polon.">Acta Phys.Polon.</option>
@@ -267,14 +273,14 @@
     <option value="Z.Phys.">Z.Phys.</option>
     <option value="Zh.Eksp.Teor.Fiz.">Zh.Eksp.Teor.Fiz.</option>
 </select>&nbsp;&nbsp;
-vol:<input size="8" id="jvol" />
-pg: <input size="8" id="jpage" /></td>
+vol:<input size="8" id="jvol" tabindex="11"/>
+pg: <input size="8" id="jpage" tabindex="12"/></td>
 </tr>
 </tbody>
 </table>
 </form>
 
 <div style="white-space: nowrap;" align="center">
-<input type="button" onclick="perform_easy_search()" value="Search" class="formbutton"/>
+    <input type="button" onclick="perform_easy_search()" value="Search" class="formbutton" tabindex="13"/>
 </div>
 
