@@ -429,7 +429,7 @@ def main():
             if len(fields_to_add) > 0:
                 #Check if DOI is included in fields_to_add
                 fields_without_DOI = []
-                record_with_DOI = []
+                record_with_DOI = {}
                 for tag, value in fields_to_add:
                     if tag == '024':
                         DOI_field = [(tag, value)]
@@ -439,7 +439,8 @@ def main():
                         fields_without_DOI.append((tag, value))
                 # Append extra DOI record
                 append_records.append(create_record_from_list(recid, fields_without_DOI))
-                append_records.append(record_with_DOI)
+                if record_with_DOI:
+                    append_records.append(record_with_DOI)
 
             if len(fields_to_correct) > 0:
                 correct_records.append(create_record_from_list(recid, fields_to_correct))
