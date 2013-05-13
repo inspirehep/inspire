@@ -1,0 +1,210 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of Invenio.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
+##
+## Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(INSPIRE search index)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+<style type="text/css">
+table.tips {
+	margin-left:auto;
+	margin-right:auto;
+	width: 90%;
+	border:1px solid grey;
+	}
+.tips caption {
+	caption-side:bottom;
+	padding-top:6pt;
+	}
+.tips th {
+	border-bottom:1px solid grey;
+	border-collapse:collapse;
+	text-align:left;
+	padding:4pt;
+	}
+.tips td {
+	padding:3px;
+	padding-left:6pt;
+	text-align:left;
+	border-bottom:1px solid grey;
+	border-collapse:collapse;
+	}
+.tips tr:nth-child(2n+1) {background-color:#FFF;}
+.tips tr:nth-child(2n) {background-color:#EDEDED;}
+span.alert {color:red;}
+span.note {color:orange;}
+</style>
+
+
+<p>The following table presents a list of all search terms in INSPIRE with minimalist examples. 
+For starred terms, more detailed information on using the search terms can be found on the <a href="search-tips">search tips</a> page.</p>
+
+<table class = "tips">
+  <caption>Inspire Search Index Terms</caption>
+  <!-- <tr> <td>*</td> <td></td> <td></td> <td></td> </tr> -->
+  <tr><th></th><th>Term/Abbrev</th><th>Interpretation</th><th>Example (SPIRES)</th><th>Example (Invenio) <span class="note">[requires quotes for compound search terms]</span></th></tr>
+  <tr><td>*</td> <td>a, au, author</td> <td>author name</td> 
+    <td><a href="http://inspirehep.net/search?p=find a j+smith">find a j smith</a></td>
+    <td><a href="http://inspirehep.net/search?p=a:&quot;j+smith&quot;">a:"j smith"</a></td>
+  </tr>
+  <tr> <td> </td> <td>abs, abstract</td> <td>abstract word</td>
+    <td><a href="http://inspirehep.net/search?p=find abs pion">find abs pion</a></td>
+    <td><a href="http://inspirehep.net/search?p=abstract:'pion'">abstract:'pion'</a>, <span class="note">[note use of single quotes]</span> <br />
+        <a href="http://inspirehep.net/search?p=abstract:'pion pairs'">abstract:'pion pairs'</a>
+         </td>
+  </tr>
+  <tr><td>*</td> <td>ac</td> <td>author-count (number of authors in the paper)</td>
+    <td><a href="http://inspirehep.net/search?p=find ac 100%2B">find ac 100+</a></td>
+    <td><a href="http://inspirehep.net/search?p=authorcount:100%2B">authorcount:100+</a></td>
+  </tr>
+  <tr> <td>*</td> <td>af, aff, affiliation</td> <td>affiliation</td> 
+    <td><a href="http://inspirehep.net/search?p=find af harvard u.">find af harvard u.</a></td>
+    <td><a href="http://inspirehep.net/search?p=af:&quot;harvard u.&quot;">af:"harvard u."</a></td>
+  </tr> 
+  <tr> <td>*</td> <td>c</td> <td>citations to a paper</td>
+    <td><a href="http://inspirehep.net/search?p=find c hep-th/9711200">find c hep-th/9711200</a></td>
+    <td><a href="http://inspirehep.net/search?p=c:hep-th/9711200">c:hep-th/9711200</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+  <tr> <td>*</td> <td>caption</td> <td>figure captions</td>
+    <td><a href="http://inspirehep.net/search?p=find caption soft SUSY breaking">find caption soft SUSY breaking</a>, <br />
+        <a href="http://inspirehep.net/search?p=find+caption+&quot;effective+spacetime+dimension&quot;">find caption "effective spacetime dimension"</a>
+    </td>
+    <td><a href="http://inspirehep.net/search?p=caption:soft caption:SUSY caption:breaking">caption:soft caption:SUSY caption:breaking</a>,<br />
+        <a href="http://inspirehep.net/search?p=caption:&quot;effective+spacetime+dimension&quot;">caption:"effective spacetime dimension"</a>
+    </td>   
+  </tr>
+  <tr> <td>*</td> <td>citedby</td> <td>papers cited by a set of papers</td>
+    <td><a href="http://inspirehep.net/search?p=find citedby author witten">find citedby author witten</a></td>
+    <td><a href="http://inspirehep.net/search?p=citedby:author:witten">citedby:author:witten</a></td>
+  </tr>
+  <tr> <td> </td> <td>cn, collaboration</td> <td>collaboration name</td>
+    <td><a href="http://inspirehep.net/search?p=find cn cms">find cn cms</a></td>
+    <td><a href="http://inspirehep.net/search?p=cn:cms">cn:cms</a></td>
+  </tr>
+  <tr> <td> </td> <td>cnum</td> <td>conference-number</td> 
+     <td><a href="http://inspirehep.net/search?p=find cnum C12-08-13">find cnum C12-08-13</a></td> 
+     <td><a href="http://inspirehep.net/search?p=cnum:C12-08-13">cnum:C12-08-13</a> <span class="alert">[not yet implemented]</span></td>
+  </tr> 
+  <tr> <td>*</td> <td>d, date</td> <td>date paper first appeared</td>
+    <td><a href="http://inspirehep.net/search?p=find date 2013">find date 2013</a></td>
+    <td><a href="http://inspirehep.net/search?p=date:2013">date:2013</a></td>
+  </tr>
+  <tr> <td> </td> <td>da, dadd</td> <td>date added to INSPIRE</td>
+    <td> <a href="http://inspirehep.net/search?p=find dadd 2013-01">find dadd 2013-01</a>,
+        <a href="http://inspirehep.net/search?p=find dadd today">find dadd today</a> </td>
+    <td> <a href="http://inspirehep.net/search?p=dadd:2013-01">dadd:2013-01</a> <span class="note">["today" does not work for Invenio-style ]</span>  </td>
+  </tr>
+  <tr> <td> </td> <td>doi</td> <td>doi</td>
+    <td><a href="http://inspirehep.net/search?p=find doi 10.1086/304059">find doi 10.1086/304059</a></td>
+    <td><a href="http://inspirehep.net/search?p=doi:10.1086/304059">doi:10.1086/304059</a></td>
+  </tr>
+  <tr> <td> </td> <td>du,dupd</td> <td>date updated in INSPIRE</td>
+    <td><a href="http://inspirehep.net/search?p=find du 2013-01">find du 2013-01</a>,
+        <a href="http://inspirehep.net/search?p=find du today">find du today</a></td>
+    <td> <a href="http://inspirehep.net/search?p=du:2013-01">du:2013-01</a> <span class="note">["today" does not work for Invenio-style ]</span>  </td>
+  </tr>
+  <tr> <td> </td> <td>ea, exact-author</td> <td>exact name of the author</td>
+    <td><a href="http://inspirehep.net/search?p=find ea ellis, john">find ea ellis, john</a></td>
+    <td><a href="http://inspirehep.net/search?p=ea:&quot;ellis, john&quot;">ea:"ellis, john"</a></td>
+  </tr>
+  <tr> <td> </td> <td>eprint</td> <td>arXiv eprint number</td>
+    <td><a href="http://inspirehep.net/search?p=find eprint 1302.0137">find eprint 1302.0137</a></td>
+    <td><a href="http://inspirehep.net/search?p=eprint:1302.0137">eprint:1302.0137</a></td>
+  </tr>
+  <tr> <td> </td> <td>exp, experiment</td> <td>experiment number</td>
+    <td><a href="http://inspirehep.net/search?p=find exp fnal-e-0823">find exp fnal-e-0823</a></td>
+    <td><a href="http://inspirehep.net/search?p=exp:fnal-e-0823">exp:fnal-e-0823</a></td>
+  </tr>
+  <tr> <td> </td> <td>fa, first-author</td> <td>name of first author</td>
+    <td><a href="http://inspirehep.net/search?p=find fa thomas,a w">find fa thomas,a w</a></td>
+    <td><a href="http://inspirehep.net/search?p=firstauthor:&quot;thomas,a w&quot;">firstauthor:"thomas, a w"</a></td>
+  </tr>
+  <tr> <td>*</td> <td>fc, field-code</td> <td>field code, based on arXiv eprint categories</td>
+    <td><a href="http://inspirehep.net/search?p=find fc e">find fc e</a></td>
+    <td><a href="http://inspirehep.net/search?p=fc:e">fc:e</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+  <tr> <td>*</td> <td>ft, fulltext</td> <td>full-text search</td>
+    <td><a href="http://inspirehep.net/search?p=find ft black hole decay">find ft black hole decay</a>,<br />
+        <a href="http://inspirehep.net/search?p=find ft &quot;black hole decay&quot;">find ft "black hole decay"</a>
+    </td>
+    <td><a href="http://inspirehep.net/search?p=fulltext:black fulltext:hole fulltext:decay">fulltext:black fulltext:hole fulltext:decay</a>,<br />
+        <a href="http://inspirehep.net/search?p=fulltext:&quot;black hole decay&quot;">fulltext:"black hole decay"</a>
+    </td>
+  </tr>
+  <tr> <td> </td> <td>irn</td> <td>SPIRES record ID number</td>
+    <td><a href="http://inspirehep.net/search?p=find irn 3239659">find irn 3239659</a></td>
+    <td><a href="http://inspirehep.net/search?p=irn:3239659">irn:3239659</a> <span class="alert">[not yet implemented]</span></td>
+  </tr> 
+  <tr> <td>*</td> <td>j, journal</td> <td>journal publication</td>
+    <td><a href="http://inspirehep.net/search?p=find j phys.rev.,d34,1">find j phys.rev.,d34,1</a></td>
+    <td><a href="http://inspirehep.net/search?p=j:phys.rev.,d34,1">j:phys.rev.,d34,1</a></td>
+  </tr>
+  <tr> <td> </td> <td>jy, journal-year</td> <td>year of publication in a journal</td>
+    <td><a href="http://inspirehep.net/search?p=find jy 2002">find jy 2002</a></td>
+    <td><a href="http://inspirehep.net/search?p=jy:2002">jy:2002</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+  <tr> <td> </td> <td>k, kw</td> <td>keyword</td>
+    <td><a href="http://inspirehep.net/search?p=find k unparticle">find k unparticle</a></td>
+    <td><a href="http://inspirehep.net/search?p=k:unparticle">k:unparticle</a></td>
+  </tr>
+
+  <tr> <td>*</td> <td>pacs</td> <td>pacs codes (see
+    <a href="/info/hep/test/pacs">particles and fields</a>, <a href="/info/hep/test/pacs2">nuclear physics</a>
+    and <a href="/info/hep/test/pacs3">astronomy and astrophysics</a>)</td>
+    <td><a href="http://inspirehep.net/search?p=find pacs hep-ex"></a></td>
+    <td><a href="http://inspirehep.net/search?p=084:11.10.Cd">084:11.10.Cd</a> </td>
+  </tr>
+
+
+  <tr> <td>*</td> <td>primarch</td> <td>primary eprint archive category</td>
+    <td><a href="http://inspirehep.net/search?p=find primarch hep-ex">find primarch hep-ex</a></td>
+    <td><a href="http://inspirehep.net/search?p=primarch:hep-ex">primarch:hep-ex</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+  <tr> <td> </td> <td>r, report, report-num</td> <td>report number</td>
+    <td><a href="http://inspirehep.net/search?p=find r fermilab-tm-2551-di">find r fermilab-tm-2551-di</a></td>
+    <td><a href="http://inspirehep.net/search?p=r:fermilab-tm-2551-di">r:fermilab-tm-2551-di</a></td>
+  </tr>
+  <tr> <td> </td> <td>recid</td> <td>the INSPIRE record ID number</td>
+    <td><a href="http://inspirehep.net/search?p=find recid 75932">find recid 75932</a></td>
+    <td><a href="http://inspirehep.net/search?p=recid:75932">recid:75932</a></td>
+  </tr>
+  <tr> <td>*</td> <td>refersto</td> <td>papers citing a set of papers</td>
+    <td><a href="http://inspirehep.net/search?p=find refersto cn cms">find refersto cn cms</a></td>
+    <td><a href="http://inspirehep.net/search?p=refersto:cn:cms">refersto:cn:cms</a></td>
+  </tr>
+  <tr> <td> </td> <td>t, ti, title</td> <td>title word</td>
+    <td><a href="http://inspirehep.net/search?p=find t quark">find t quark</a></td>
+    <td><a href="http://inspirehep.net/search?p=t:quark">t:quark</a></td>
+  </tr>
+
+  <tr> <td> </td> <td>texkey</td> <td>record key for LaTeX and BibTeX display</td>
+    <td><a href="http://inspirehep.net/search?p=find+texkey+Allison%3A1980vw">find texkey Allison:1980vw</a></td>
+    <td><a href="http://inspirehep.net/search?p=texkey:Allison:1980vw">texkey:Allison:1980vw</a> </td>
+  </tr>
+
+  <tr> <td>*</td> <td>tc, type-code</td> <td>type of work</td>
+    <td><a href="http://inspirehep.net/search?p=find tc thesis">find tc thesis</a></td>
+    <td><a href="http://inspirehep.net/search?p=tc:thesis">tc:thesis</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+
+  <tr> <td>*</td> <td>topcit, topcite</td> <td>number of citations</td>
+    <td><a href="http://inspirehep.net/search?p=find topcit 100%2B">find topcit 100+</a></td>
+    <td><a href="http://inspirehep.net/search?p=topcit:100%2B">topcit:100+</a> <span class="alert">[not yet implemented]</span></td>
+  </tr>
+</table>
+  
