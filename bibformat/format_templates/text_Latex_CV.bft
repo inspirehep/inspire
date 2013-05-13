@@ -12,5 +12,6 @@ same relationship.</description>
   <BFE_INSPIRE_LATEX_DOI prefix="  \\{}" />
 <BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="\\{}" suffix=""/> %(<BFE_INSPIRE_DATE>)
 %\href{<BFE_SERVER_INFO var="absoluterecurl" />}{HEP entry}
+<BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="%", suffix="" />
 
 

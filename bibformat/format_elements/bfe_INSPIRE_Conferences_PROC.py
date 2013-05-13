@@ -20,15 +20,17 @@
 """
 
 from invenio.search_engine import search_pattern
+from invenio.search_engine_utils import get_fieldvalues
 
-def format_element(bfo, newline=False):
+
+def format_element(bfo, newline=False, show_doi=False):
     """
-    Prints link to single proceeding if the proceeding exists.
+    Prints link to proceedings if the proceedings exist.
     If not, nothing is returned.
 
-    @param newline if True, add <br /> at the end
+    @param newline: if True, add <br /> at the end
+    @param show_doi: if True, show DOI of the proceeding in brackets
     """
-
     cnum = str(bfo.field('111__g'))
     out = ""
     if not cnum:
@@ -36,13 +38,26 @@ def format_element(bfo, newline=False):
         return out
     search_result = search_pattern(p="773__w:" + cnum + " and 980__a:proceedings")
     if search_result:
-        recID = list(search_result)[0]
-        if recID != '':
-            out = '<a href="/record/' + str(recID) + '">Proceedings</a>'
-            if newline:
-                out += '<br/>'
-
+        if len(search_result) > 1:
+            # multiple proceedings
+            proceedings = []
+            for i, recID in enumerate(search_result):
+                # check for the DOI and put it in brackets in the output
+                doi = get_fieldvalues(recID, '0247_a')
+                if show_doi and doi:
+                    proceedings.append('<a href="/record/%(ID)s">#%(number)s</a> (DOI: <a href="http://dx.doi.org/%(doi)s">%(doi)s</a>)'
+                                       % {'ID': recID, 'number': i+1, 'doi': doi[0]})
+                else:
+                    proceedings.append('<a href="/record/%(ID)s">#%(number)s</a>' % {'ID': recID, 'number': i+1})
+            out = 'Proceedings: '
+            out += ', '.join(proceedings)
+        elif len(search_result) == 1:
+            # only one proceeding
+            out += '<a href="/record/' + str(search_result[0]) + '">Proceedings</a>'
+        if newline:
+            out += '<br/>'
     return out
+
 
 def escape_values(bfo):
     """

@@ -21,7 +21,8 @@
 __revision__ = "$Id$"
 
 import cgi
-from invenio.urlutils import heat_links
+from invenio.htmlutils import HTMLWasher
+
 
 def format_element(bfo, note_suffix, note_prefix='Note: ', separator='; '):
     """
@@ -32,39 +33,21 @@ def format_element(bfo, note_suffix, note_prefix='Note: ', separator='; '):
     @param separator: a separator between notes of a group
     """
     notes = []
+    washer = HTMLWasher()
+    wash_and_join = lambda x: separator.join([washer.wash(item, automatic_link_transformation=True) for item in x])
 
-    notes_group_1 = bfo.fields('594__p')
-    if len(notes_group_1) > 0:
-        notes_group_1 = separator.join(notes_group_1)
-        notes.append(notes_group_1)
-
-    notes_group_2 = bfo.fields('500__a')
-    if len(notes_group_2) > 0:
-        notes_group_2 = separator.join(notes_group_2)
-        notes.append(notes_group_2)
-
-
-    notes_group_3 = bfo.fields('909CCr')
-    notes_group_3.extend(bfo.fields('909CPn'))
-    notes_group_3.extend(bfo.fields('711__a'))
-    if len(notes_group_3) > 0:
-        notes_group_3 = separator.join(notes_group_3)
-        notes.append(notes_group_3)
-
-    notes_group_4 = bfo.fields('596__a')
-
-    if len(notes_group_4) > 0:
-        notes_group_4 = separator.join(notes_group_4)
-        notes.append(notes_group_4)
+    # Get values from certain fields, wash them (so all links become clickable),
+    # join using separator and add to a list
+    if bfo.fields('500__a'):
+        notes.append(wash_and_join(bfo.fields('500__a')))
 
     if len(notes) > 0:
-
-        notes  = [note_prefix + cgi.escape(x) + note_suffix
-                  for x in notes]
-        # make a string and replace all plain links with real links
+        # Split all list elements and add prefixes and suffixes
+        notes = [note_prefix + x + note_suffix
+                 for x in notes]
         return_notes = "".join(notes)
-        return_notes = heat_links(return_notes)
         return return_notes
+
 
 def escape_values(bfo):
     """

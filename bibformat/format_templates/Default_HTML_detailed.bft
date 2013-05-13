@@ -22,11 +22,12 @@ affiliation_prefix="<small> (" affiliation_suffix=") </small>" />
 
 <ul style="list-style:none;text-align:center;margin:15px;padding:0;">
 <BFE_INSPIRE_HEP_ERRATUM prefix="<li>" suffix="</li>"/>
+<BFE_INSPIRE_SERIES prefix="<li>" suffix="</li>"/>
+<BFE_INSPIRE_HEP_PUBLISHER prefix="<li>" suffix="</li>" />
 <BFE_INSPIRE_DOI prefix="<li>DOI: " suffix="</li>"/>
+<BFE_ISBN prefix="<li>ISBN: " suffix="</li>" />
 <BFE_INSPIRE_CONFERENCE prefix="<li>" suffix="</li>" />
 <BFE_INSPIRE_PROCEEDINGS prefix="<li>" suffix="</li>" newline="True" />
-<BFE_INSPIRE_HEP_PUBLISHER prefix="<li>" suffix="</li>" />
-<BFE_ISBN prefix="<li>ISBN: " suffix="</li>" />
 <BFE_REPORT_NUMBERS prefix="<li>" suffix="</li>" />
 <BFE_INSPIRE_ARXIV_LINK prefix="<li>e-Print: " suffix="</li>" />
 <BFE_INSPIRE_EXP_LINK prefix="<li>Experiment: " suffix="</li>"/>

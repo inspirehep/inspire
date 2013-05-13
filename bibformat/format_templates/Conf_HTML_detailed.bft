@@ -17,7 +17,7 @@
 <br />
 CNUM: <BFE_INSPIRE_CONFERENCES_CNUM_LINK /><br />
 <br />
-<BFE_INSPIRE_CONFERENCES_PROC newline="True" />
+<BFE_INSPIRE_CONFERENCES_PROC newline="True" show_doi="True" />
 <a href= "/search?p=773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM />+or+773__w%3A<BFE_INSPIRE_CONFERENCES_CNUM_LINK />+and+980__a%3AConferencePaper">
 Contributions</a><br />
 <br />

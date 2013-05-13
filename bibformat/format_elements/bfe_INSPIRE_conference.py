@@ -39,7 +39,7 @@ def format_element(bfo, separator=', ', link="yes"):
     output = []
     for conf in confs:
         note = ''
-        if conf.has_key('w'):
+        if conf.get('w'):
             cnum = conf['w'].replace("/", "-")
             search_result = search_pattern(p="111__g:" + cnum + " and 980__a:CONFERENCES")
             if search_result:
@@ -48,19 +48,23 @@ def format_element(bfo, separator=', ', link="yes"):
                             str(recID) + '">' + cnum + '</a>'
             else:
                 conf_name = cnum
-            if conf.has_key('t'):
+            if conf.get('t'):
                 note += conf['t'] + ' Conference: ' + conf_name
             else:
                 note += 'Conference: ' + conf_name
-            if conf.has_key('x'):
+            if conf.get('x'):
                 note += ' (' + conf['x'] + ')'
-            if conf.has_key('c'):
+            if conf.get('c') and not conf.get('p'):
+            # Only display pages from 773__c field, when there is no 773__p field
+            # because when 773__p field exists, 773__c is already displayed in
+            # bfe_INSPIRE_Hep_Erratum element (and we don't want to repeat it)
                 note += ', p.' + conf['c']
 
         if len(note) > 0:
             output.append(note)
 
     return separator.join(output)
+
 
 def escape_values(bfo):
     """
