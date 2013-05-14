@@ -28,19 +28,26 @@ FEED_PRE = { 2: """
    <td>
     <h3>HEP</h3>
      <ul>
-      <li><a href="/help/search-tips">Search Tips</a></li>
-      <li><a href="/help/">INSPIRE Help</a></li>
-      <li><a href="/help/corrections">Corrections</a></li>
-      <li><a href="/help/additions">Additions</a></li>
-      <li><a href="mailto:feedback@inspirehep.net">Email Us</a></li>
+      <li><a href="/info/hep/additions">Additions</a></li>
+      <li><a href="/info/hep/corrections">Corrections</a></li>
+
+      <li><a href="/info/hep/search-tips">Search Tips</a></li>
+
+      <li><a href="/info/faq/general">FAQ</a></li>
+      <li><a href="/info/hep/stats/topcites/index">Topcites: annual</a> |
+          <a href="/search?p=find+topcit+100%2B+and+date+2012+or+%28topcite+50%2B+and+date+2013%29">recent</a></li>
+      <li><a href="/info/hep/reviews">Reviews</a></li>
+      <li><a href="/search?of=hcs&amp;action_search=Search">HEP Citesummary</a></li>
+      <li><a href="/info/hep/tools/index">Tools</a></li>
      </ul>
 
     <h3>INSPIRE</h3>
      <ul>
-      <li><a href="http://www.projecthepinspire.net">About INSPIRE</a></li>
-      <li><a href="/search?ln=en&amp;ln=en&amp;p=cited%3A50->30000+year%3A2011->2012&amp;of=hb&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=citation&amp;rg=25&amp;sc=0">Recent topcites</a></li>
-      <li><a href="search?ln=en&amp;p=find+tc+review&amp;f=&amp;action_search=Search&amp;sf=&amp;so=d&amp;rm=citation&amp;rg=10&amp;sc=0&amp;of=hb">HEP Reviews</a></li>
-      <li><a href="http://www.slac.stanford.edu/spires/hepback/index.shtml">SPIRES-HEP</a> <a href="http://blog.inspirehep.net/2012/04/good-bye-spires.html">[?]</a></li>
+      <li><a href="/info/general/project/index">About INSPIRE</a></li>
+      <li><a href="/help/">INSPIRE Help Central</a></li>
+      <li><a href="http://blog.inspirehep.net">Blog</a></li>
+      <li><a href="http://twitter.com/inspirehep">Twitter</a></li>
+      <li><a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></li>
      </ul>
 
     <h3>Resources</h3>
@@ -49,11 +56,11 @@ FEED_PRE = { 2: """
       <li><a href="http://arXiv.org">arXiv</a></li>
       <li><a href="http://hepdata.cedar.ac.uk/">HepData</a></li>
       <li><a href="http://pdg.lbl.gov">PDG</a></li>
+      <li><a href="https://library.web.cern.ch/library/rpp/">PDG review of online resources</a></li>
      </ul>
    </td>
   </tr>
  </table>
-
  <table class="sidebar_bugboxtable">
   <tr>
 """,
