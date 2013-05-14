@@ -6,7 +6,7 @@ include ../config.mk
 SUBDIRS = img
 CSSFILES = invenio_inspire.css
 JSFILES = *.js
-LIBFILES = web*_templates_inspire.py
+LIBFILES = *.py
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
