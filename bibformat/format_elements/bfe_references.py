@@ -81,11 +81,14 @@ def format_element(bfo, reference_prefix, reference_suffix):
             hits = search_unit(p=reference['a'][0])
         if reference.has_key('0') and len(hits)!=1:
             # check if the record exists in the database
-            recID = int(reference['0'][0])
-            if get_record(recID):
-                # since we already have a recID, we can assign it directly
-                # to the "hits" variable, so it will be handled in the last if statement
-                hits = [recID]
+            try:
+                recID = int(reference['0'][0])
+                if get_record(recID):
+                    # since we already have a recID, we can assign it directly
+                    # to the "hits" variable, so it will be handled in the last if statement
+                    hits = [recID]
+            except ValueError:
+                pass
         if len(hits) == 1:
             ref_out.append('<small>' + format_record(list(hits)[0],'hs') + '</small>')
         else:
