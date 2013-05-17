@@ -158,6 +158,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'no', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'pl', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'pt', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'ru', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'sk', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'sv', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 1, 'zh_CN', 'ne', 100)" | $(BINDIR)/dbexec
@@ -184,6 +185,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -206,6 +208,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -228,6 +231,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'no', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'pl', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'pt', 'ne', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'ru', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'sk', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'sv', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'zh_CN', 'ne', 100)" | $(BINDIR)/dbexec
@@ -250,6 +254,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -272,6 +277,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -290,6 +296,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (6, 5, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -312,6 +319,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -336,6 +344,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -359,6 +368,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -381,6 +391,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -405,6 +416,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -427,6 +439,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -451,6 +464,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'sv', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
@@ -473,6 +487,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'sv', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
@@ -497,6 +512,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'no', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'pl', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'pt', 'tp', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'ru', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'sk', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'zh_CN', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'zh_TW', 'tp', 100)" | $(BINDIR)/dbexec
@@ -518,6 +534,7 @@ reset-inspire-portalbox-configuration:
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'no', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'pl', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'pt', 'rt', 100)" | $(BINDIR)/dbexec
+	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'ru', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'sk', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'zh_CN', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'zh_TW', 'rt', 100)" | $(BINDIR)/dbexec
