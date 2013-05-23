@@ -1,5 +1,7 @@
 To dump the tables tag, field and field_tag, the command to be executed is:
 
-mysqldump --complete-insert --no-create-info --skip-extended-insert --skip-add-locks --skip-disable-keys -h 137.138.4.146 -u inspirehep -p inspirehep tag field field_tag --result-file=/tmp/dump.sql
+$ mysqldump --complete-insert --no-create-info --skip-extended-insert --skip-add-locks --skip-disable-keys -h 137.138.4.146 -u inspirehep -p inspirehep tag field field_tag --result-file=tag_field_dump.sql
+$ mysqldump --complete-insert --no-create-info --skip-extended-insert --skip-add-locks --skip-disable-keys -h 137.138.4.146 -u inspirehep -p inspirehep fieldname --result-file=fieldnames.sql
+$ mysqldump --complete-insert --no-create-info --skip-extended-insert --skip-add-locks --skip-disable-keys -h 137.138.4.146 -u inspirehep -p inspirehep idxINDEX idxINDEX_field --result-file=idxINDEX_dump.sql
 
 Just replace host information and tables as needed
