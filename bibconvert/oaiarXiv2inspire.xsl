@@ -813,6 +813,11 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                 </datafield>
               </xsl:if>
 
+              <datafield tag="541" ind1=" " ind2=" ">
+                <subfield code="a">arxiv</subfield>
+                <subfield code="c">OAI</subfield>
+              </datafield>
+
               <datafield tag="980" ind1=" " ind2=" ">
                 <subfield code="a">arXiv</subfield>
               </datafield>
