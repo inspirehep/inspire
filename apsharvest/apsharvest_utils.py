@@ -20,10 +20,17 @@
 import os
 import fnmatch
 import zipfile
+import codecs
+import re
+import datetime
+import time
+
 from invenio.config import CFG_TMPDIR
 from tempfile import mkdtemp, mkstemp
-from invenio.bibdocfile import guess_format_from_url, \
-                               calculate_md5_external
+from invenio.bibdocfile import calculate_md5_external
+from invenio.shellutils import run_shell_command
+from invenio.bibconvert_xslt_engine import CFG_BIBCONVERT_XSL_PATH
+from invenio.docextract_record import create_record
 
 
 class InvenioFileChecksumError(Exception):
@@ -32,16 +39,23 @@ class InvenioFileChecksumError(Exception):
     pass
 
 
+class APSHarvesterConversionError(Exception):
+    """Exception raised when more a record cannot be converted using Java Saxon.
+    """
+    pass
+
+
+RE_ARTICLE_DTD = re.compile('<!DOCTYPE article PUBLIC "-//American Physical'
+                            ' Society//DTD Archival Article [0-9]*?\.[0-9]*?//EN"'
+                            ' "article\.dtd">')
+
+
 def unzip(zipped_file, output_directory=None):
     """
     Uncompress a zipped file from given filepath to an (optional) location.
     If no location is given, a temporary folder will be generated inside
     CFG_TMPDIR, prefixed with "apsharvest_unzip_".
     """
-    input_extension = guess_format_from_url(zipped_file)
-    if not input_extension.endswith('.zip'):
-        # Are you sure this is a zipfile?
-        raise IOError("This is not a valid file to unzip")
     if not output_directory:
         # We create a temporary directory to extract our stuff in
         try:
@@ -79,7 +93,7 @@ def _do_unzip(zipped_file, output_directory):
 def locate(pattern, root=os.curdir):
     '''Locate all files matching supplied filename pattern in and below
     supplied root directory.'''
-    for path, dirs, files in os.walk(os.path.abspath(root)):
+    for path, dummy, files in os.walk(os.path.abspath(root)):
         for filename in fnmatch.filter(files, pattern):
             yield os.path.join(path, filename)
 ## end of http://code.activestate.com/recipes/499305/ }}}
@@ -105,29 +119,29 @@ def find_and_validate_md5_checksums(in_folder, md5key_filename):
             split_line = line.split(' ')
             if len(split_line) == 2:
                 hashkey, hashkey_target = split_line
-                hashkey_target = os.path.join(os.path.dirname(filename), \
+                hashkey_target = os.path.join(os.path.dirname(filename),
                                               hashkey_target.strip())
                 hashkey = hashkey.strip()
                 found_hashkey = calculate_md5_external(hashkey_target).strip()
                 if found_hashkey != hashkey:
                     raise InvenioFileChecksumError("Error matching checksum of %s:"
-                                                   " %s is not equal to %s" % \
-                                                   (hashkey_target, \
-                                                    found_hashkey, \
+                                                   " %s is not equal to %s" %
+                                                   (hashkey_target,
+                                                    found_hashkey,
                                                     hashkey))
                 validated_files.append(hashkey_target)
     return validated_files
 
 
-def get_temporary_file(prefix="apsharvest_test_", suffix="", dir=""):
+def get_temporary_file(prefix="apsharvest_test_", suffix="", directory=""):
     """
     Using a similar interface as tempfile.mkstemp, this function wraps
     the call to mkstemp and returns a safe and closed filepath.
     """
     try:
-        file_fd, filepath = mkstemp(prefix=prefix, \
-                                    suffix=suffix, \
-                                    dir=dir)
+        file_fd, filepath = mkstemp(prefix=prefix,
+                                    suffix=suffix,
+                                    dir=directory)
         os.close(file_fd)
     except IOError, e:
         try:
@@ -136,3 +150,73 @@ def get_temporary_file(prefix="apsharvest_test_", suffix="", dir=""):
             pass
         raise e
     return filepath
+
+
+def remove_dtd_information(fulltext_file):
+    """
+    Removes any DTD schema validation of "article.dtd" in file.
+    """
+    # Remove DTD line
+    cleaned_lines = []
+    for line in codecs.open(fulltext_file, "r", "utf-8"):
+        line = RE_ARTICLE_DTD.sub('', line)
+        cleaned_lines.append(line)
+
+    # Overwrite file
+    new_file = os.path.splitext(fulltext_file)[0] + "_cleaned.xml"
+    fulltext_file = codecs.open(new_file, 'w', "utf-8")
+    fulltext_file.writelines(cleaned_lines)
+    fulltext_file.close()
+    return new_file
+
+
+def convert_xml_using_saxon(source_file, template_file):
+    """
+    Tries to convert given source file (full path) using XSLT 2.0 Java libraries.
+
+    Looks for given XSLT stylesheet/template file (relative path) in
+    CFG_BIBCONVERT_XSL_PATH.
+
+    Path to converted file is derived from DOI in the same directory as source
+    as decided inside the template file.
+
+    For example: /path/to/sourcedir/10.1103_PhysRevA.87.052320.xml
+
+    @raise: APSHarvesterConversionError if Java saxon9he-xslt returns error.
+
+    @return: True on success.
+    """
+    if not os.path.isabs(template_file):
+        template_file = CFG_BIBCONVERT_XSL_PATH + os.sep + template_file
+    source_directory = os.path.dirname(source_file)
+    command = "cd %s && saxon9he-xslt -s:%s -xsl:%s -dtd:off" % \
+              (source_directory, source_file, template_file)
+    exit_code, stdout_buffer, stderr_buffer = run_shell_command(cmd=command)
+    if exit_code or stdout_buffer or stderr_buffer:
+        # Error may have happened
+        raise APSHarvesterConversionError("%s: %s\nOut:%s" %
+                                          (exit_code,
+                                          stderr_buffer,
+                                          stdout_buffer))
+
+
+def create_records_from_file(path_to_file):
+    """
+    Wrapping function using docextract_record.create_record function to return a
+    list of BibRecord structures.
+    """
+    fd_xml_file = open(path_to_file, "r")
+    xml = fd_xml_file.read()
+    fd_xml_file.close()
+
+    return create_record(xml)
+
+
+def validate_date(date_given, date_format="%Y-%m-%d"):
+    """
+    Returns the date given if valid date format. If not,
+    a ValueError exception is raised.
+    """
+    # FIXME: use datetime.datetime.strptime(date_given, "%Y-%m-%d")
+    # after upgrading Python => 2.5
+    return datetime.datetime(*(time.strptime(date_given, date_format)[0:6]))

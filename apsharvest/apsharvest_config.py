@@ -5,3 +5,6 @@ CFG_APSHARVEST_RECORD_DOI_TAG = "0247_a"
 CFG_APSHARVEST_MD5_FILE = "manifest-md5.txt"
 CFG_APSHARVEST_FFT_DOCTYPE = "APS"
 CFG_APSHARVEST_BUNCH_SIZE = 100
+CFG_APSHARVEST_XSLT = "/afs/cern.ch/project/inspire/xslt/aps.xsl"
+CFG_APSHARVEST_EMAIL = "desydoc@desy.de"
+CFG_APSHARVEST_APS_DIR = "/afs/cern.ch/project/inspire/uploads/aps"

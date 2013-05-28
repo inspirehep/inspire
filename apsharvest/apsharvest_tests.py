@@ -27,11 +27,11 @@ import unittest
 import zipfile
 from invenio.config import CFG_TMPSHAREDDIR
 import os
-import tempfile
 from invenio.testutils import make_test_suite, run_test_suite
 from invenio.apsharvest_utils import unzip, \
-                                     find_and_validate_md5_checksums, \
-                                     get_temporary_file
+    find_and_validate_md5_checksums, \
+    get_temporary_file, \
+    validate_date
 from invenio.bibdocfile import calculate_md5_external
 from invenio.bibsched_tasklets.bst_apsharvest import APSRecord, APSRecordList
 
@@ -81,7 +81,7 @@ class FileTest(unittest.TestCase):
         Test md5 checking done by APS Harvester.
         """
         # Create temporary file to test with
-        hashtarget_filepath = get_temporary_file(dir="/tmp")
+        hashtarget_filepath = get_temporary_file(directory="/tmp")
         tmpfd = open(hashtarget_filepath, 'w')
         tmpfd.write("this is a test")
         tmpfd.close()
@@ -91,7 +91,7 @@ class FileTest(unittest.TestCase):
 
         # Create a md5 keyfile looking like:
         # 54b0c58c7ce9f2a8b551351102ee0938 apsharvest_test_lFecZz
-        md5_keyfile = get_temporary_file(dir="/tmp")
+        md5_keyfile = get_temporary_file(directory="/tmp")
         tmpfd = open(md5_keyfile, 'w')
         tmpfd.write("%s %s\n" % (hashtarget_md5, filename))
         tmpfd.close()
@@ -113,12 +113,15 @@ class APSRecordTest(unittest.TestCase):
         self.assertEqual(1, len(l))
 
 
-class ExtractionTest(unittest.TestCase):
-    def test_refextract_from_xml(self):
-        pass
-
-    def test_fulltext_from_xml(self):
-        pass
+class APSUtilsTest(unittest.TestCase):
+    def test_date_validation(self):
+        self.assertTrue(validate_date("2012-12-12"))
+        self.assertTrue(validate_date("2012-12-12 12:12:12",
+                                      date_format="%Y-%m-%d %H:%M:%S"))
+        self.assertRaises(ValueError, validate_date, "201222-2-12")
+        self.assertRaises(ValueError, validate_date, "202-22-12")
+        self.assertRaises(ValueError, validate_date, "2012-22-12")
+        self.assertRaises(ValueError, validate_date, "2012-02-42")
 
 
 TEST_SUITE = make_test_suite(FileTest, APSRecordTest)

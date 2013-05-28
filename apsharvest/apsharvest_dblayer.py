@@ -28,20 +28,18 @@ def fetch_last_updated(name):
     Get the date and ID of last updated records from xtrJOB table for
     given task-name.
     """
-    select_sql = "SELECT last_id, last_updated FROM xtrJOB" \
+    select_sql = "SELECT last_recid, last_updated FROM xtrJOB" \
         " WHERE name = %s LIMIT 1"
     row = run_sql(select_sql, (name,))
     if not row:
-        sql = "INSERT INTO xtrJOB (name, last_updated, last_id) " \
+        sql = "INSERT INTO xtrJOB (name, last_updated, last_recid) " \
             "VALUES (%s, NOW(), 0)"
         run_sql(sql, (name,))
         row = run_sql(select_sql, (name,))
-
     # Fallback in case we receive None instead of a valid date
-    last_id = row[0][0] or 0
+    last_recid = row[0][0] or 0
     last_date = row[0][1] or datetime(year=1, month=1, day=1)
-
-    return last_id, last_date
+    return last_recid, last_date
 
 
 def store_last_updated(recid, creation_date, name):
@@ -49,7 +47,7 @@ def store_last_updated(recid, creation_date, name):
     Update the date and ID of last updated record in xtrJOB table for
     given task-name.
     """
-    sql = "UPDATE xtrJOB SET last_id = %s WHERE name=%s AND last_id < %s"
+    sql = "UPDATE xtrJOB SET last_recid = %s WHERE name=%s AND last_recid < %s"
     run_sql(sql, (recid, name, recid))
     sql = "UPDATE xtrJOB SET last_updated = %s " \
                 "WHERE name=%s AND last_updated < %s"
@@ -57,7 +55,7 @@ def store_last_updated(recid, creation_date, name):
     run_sql(sql, (iso_date, name, iso_date))
 
 
-def get_all_new_records(since, last_id):
+def get_all_new_records(since, last_recid):
     """
     Get all the newly inserted records since last run.
     """
@@ -66,10 +64,10 @@ def get_all_new_records(since, last_id):
         "WHERE `creation_date` >= %s " \
         "AND `id` > %s " \
         "ORDER BY `creation_date`"
-    return run_sql(sql, (since.isoformat(), last_id))
+    return run_sql(sql, (since.isoformat(), last_recid))
 
 
-def get_all_modified_records(since, last_id):
+def get_all_modified_records(since, last_recid):
     """
     Get all the newly modified records since last run.
     """
@@ -77,7 +75,7 @@ def get_all_modified_records(since, last_id):
         "WHERE `modification_date` >= %s " \
         "AND `id` > %s " \
         "ORDER BY `modification_date`"
-    return run_sql(sql, (since.isoformat(), last_id))
+    return run_sql(sql, (since.isoformat(), last_recid))
 
 
 def can_launch_bibupload(taskid):
@@ -88,6 +86,7 @@ def can_launch_bibupload(taskid):
         return True
 
     sql = 'SELECT status FROM schTASK WHERE id = %s'
-    if run_sql(sql, [str(taskid)])[0][0] != 'DONE':
+    status = run_sql(sql, [str(taskid)])[0][0]
+    if status not in ("DONE", "WAITING_DELETED"):
         return False
     return True

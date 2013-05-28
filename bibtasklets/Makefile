@@ -13,3 +13,4 @@ clean:
 install:
 	$(INSTALL) -m 664 $(TASKLETS) $(LIBDIR)/python/invenio/bibsched_tasklets
 
+
