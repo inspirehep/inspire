@@ -340,10 +340,6 @@ function autocomplete_kb(that, kb_name) {
 }
 
 $(function () {
-  if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
-     $('#mainlightsearchfield').focus();
-  }
-
   $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
   autocomplete_kb($("#jobsubmitAffil"), "InstitutionsCollection");
   autocomplete_kb($("#jobsubmitExp"), "ExperimentsCollection");
@@ -373,6 +369,15 @@ $(function () {
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
  <script type="text/javascript" src="%(cssurl)s/js/jquery.min.js"></script>
+ <script type="text/javascript">
+ //<![CDATA[
+ $(document).ready(function() {
+   if ((document.search) && ('baseURI' in document) && (document.baseURI.indexOf('/search?') == -1)) {
+       $('#mainlightsearchfield').focus();
+   }
+ });
+ //]]>
+ </script>
  %(submissionjs)s
  %(metaheaderadd)s
  %(hepDataAdditions)s
