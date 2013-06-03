@@ -15,6 +15,7 @@ Disallow: /admin/
 Disallow: /person/
 Disallow: /author/
 Disallow: /journal/
+Disallow: /submit
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -32,6 +33,7 @@ Disallow: /admin/
 Disallow: /person/
 Disallow: /author/
 Disallow: /journal/
+Disallow: /submit
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -49,6 +51,7 @@ Disallow: /admin/
 Disallow: /person/
 Disallow: /author/
 Disallow: /journal/
+Disallow: /submit
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -68,5 +71,6 @@ Disallow: /admin/
 Disallow: /person/
 Disallow: /author/
 Disallow: /journal/
+Disallow: /submit
 
 Sitemap: http://cds.cern.ch/sitemap_index.xml.gz
