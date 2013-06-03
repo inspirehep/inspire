@@ -371,6 +371,7 @@ $(function () {
  <meta http-equiv="Content-Language" content="%(ln)s" />
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
+ <meta name="msvalidate.01" content="EA9805F0F62E4FF22B98853713964B28" />
  <script type="text/javascript" src="%(cssurl)s/js/jquery.min.js"></script>
  <script type="text/javascript">
  //<![CDATA[
