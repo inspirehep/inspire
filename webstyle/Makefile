@@ -7,6 +7,7 @@ SUBDIRS = img
 CSSFILES = invenio_inspire.css jobsubmit.css
 JSFILES = *.js
 LIBFILES = *.py
+ROBOTSFILES = robots.txt
 CKEDITORFILES = websubmit-ckeditor-config.js
 
 all:
@@ -21,6 +22,7 @@ install:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	$(INSTALL) -m 664 $(CSSFILES) $(WEBDIR)/img
 	$(INSTALL) -m 664 $(JSFILES) $(WEBDIR)/js
+	$(INSTALL) -m 664 $(ROBOTSFILES) $(WEBDIR)
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
 	$(INSTALL) -m 664 $(CKEDITORFILES) $(WEBDIR)/ckeditor
 
