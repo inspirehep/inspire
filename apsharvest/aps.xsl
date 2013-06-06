@@ -199,22 +199,6 @@ http://www.altova.com/mapforce
 								</xsl:for-each>
 							</datafield>
 							<datafield>
-								<xsl:attribute name="tag" namespace="" select="'FFT'"/>
-								<xsl:sequence select="$var5_resultof_create_attribute_with_prefix"/>
-								<xsl:sequence select="$var6_resultof_create_attribute_with_prefix"/>
-								<subfield>
-									<xsl:sequence select="($var9_resultof_create_attribute_with_prefix, fn:concat(fn:concat(fn:concat(fn:concat('/opt/cds-invenio/var/tmp/apsharvest_unzip_E8v6_3/articlebag-', replace($var2_resultof_cast, '[./]', '-')), '-apsxml/data/'), $var2_resultof_cast), '/fulltext.xml'))"/>
-								</subfield>
-								<subfield>
-									<xsl:attribute name="code" namespace="" select="'t'"/>
-									<xsl:sequence select="$var3_APS"/>
-								</subfield>
-								<subfield>
-									<xsl:attribute name="code" namespace="" select="'o'"/>
-									<xsl:sequence select="'HIDDEN'"/>
-								</subfield>
-							</datafield>
-							<datafield>
 								<xsl:attribute name="tag" namespace="" select="'541'"/>
 								<xsl:sequence select="$var5_resultof_create_attribute_with_prefix"/>
 								<xsl:sequence select="$var6_resultof_create_attribute_with_prefix"/>
