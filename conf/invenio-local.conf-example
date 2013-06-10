@@ -119,7 +119,7 @@ CFG_BIBDOCFILE_DESIRED_CONVERSIONS = {}
 CFG_SELFCITES_PRECOMPUTE = 1
 CFG_WEBSEARCH_PREV_NEXT_HIT_FOR_GUESTS = 0
 
-CFG_BIBFORMAT_CACHED_FORMATS = wapdat,wapaff,hdref,hb,hx,ha
+# CFG_BIBFORMAT_CACHED_FORMATS = wapdat,wapaff,hdref,hb,hx,ha
 CFG_BIBDOCFILE_DOCUMENT_FILE_MANAGER_DOCTYPES = [('INSPIRE-PUBLIC', 'INSPIRE-PUBLIC'),
                                                  ('arXiv', 'arXiv'),
                                                  ('Springer','Springer'),
@@ -196,3 +196,25 @@ CFG_BIBMATCH_SEARCH_RESULT_MATCH_LIMIT = 25
 ## CFG_BIBMATCH_LOCAL_SLEEPTIME -- Determines the amount of seconds to sleep
 ## between search queries on LOCAL system.
 CFG_BIBMATCH_LOCAL_SLEEPTIME = 0.5
+
+CFG_OAI_ID_PREFIX = inspirehep.net
+CFG_OAI_SAMPLE_IDENTIFIER = oai:inspirehep.net:123
+CFG_OAI_IDENTIFY_DESCRIPTION = <description>
+  <eprints xmlns="http://www.openarchives.org/OAI/1.1/eprints"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.openarchives.org/OAI/1.1/eprints
+                               http://www.openarchives.org/OAI/1.1/eprints.xsd">
+      <content>
+       <URL>http://inspirehep.net/</URL>
+      </content>
+      <metadataPolicy>
+       <text>Free and unlimited use by anybody with obligation to refer to original record</text>
+      </metadataPolicy>
+      <dataPolicy>
+       <text>Full content</text>
+      </dataPolicy>
+      <submissionPolicy>
+       <text>Submission restricted. Submitted documents are subject of approval by OAI repository admins.</text>
+      </submissionPolicy>
+  </eprints>
+ </description>
