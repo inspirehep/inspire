@@ -73,7 +73,7 @@ def get_ids_from_recid(recid):
     other_id = ''
     for field in record_get_field_instances(record, '035'):
         subfields = dict(field_get_subfield_instances(field))
-        if '9' in subfields and subfields['9'].upper() == CFG_OTHER_SITE.upper() and subfields['a']:
+        if subfields.get('9', '').upper() == CFG_OTHER_SITE.upper() and subfields.get('a'):
             other_id = subfields['a']
     reportnumbers = record_get_field_values(record, '037', code='a')
     return [str(recid), doi, eprint, other_id] + reportnumbers
@@ -122,9 +122,9 @@ def add_other_id(other_id=None, doi="", eprint="", recid=None, reportnumbers=Non
         fields = record_get_field_instances(record, '035')
         for field in fields:
             subfields = dict(field_get_subfield_instances(field))
-            if '9' in subfields and (CFG_OTHER_SITE.upper() == subfields['9'].upper()):
-                stored_recid = int(subfields['a'])
-                if stored_recid != other_id:
+            if CFG_OTHER_SITE.upper() == subfields.get('9', '').upper():
+                stored_recid = int(subfields.get('a', 0))
+                if stored_recid and stored_recid != other_id:
                     write_message("ERROR: %s record %s matches %s record %s which already points back to a different record %s in %s" % (CFG_OTHER_SITE, other_id, CFG_THIS_SITE, recid, stored_recid, CFG_OTHER_SITE), stream=sys.stderr)
                 return
         rec = {}
