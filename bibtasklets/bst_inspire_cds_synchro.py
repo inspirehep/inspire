@@ -8,7 +8,7 @@ from invenio.config import CFG_CERN_SITE, CFG_INSPIRE_SITE, CFG_SITE_NAME, CFG_T
 from invenio.search_engine import perform_request_search, get_collection_reclist, search_pattern
 from invenio.search_engine import get_record
 from invenio.bibrecord import record_get_field_instances, record_get_field_values, field_get_subfield_instances, record_add_field, record_xml_output
-from invenio.bibtask import write_message, task_update_progress, task_low_level_submission
+from invenio.bibtask import write_message, task_update_progress, task_low_level_submission, task_sleep_now_if_required
 
 
 if CFG_INSPIRE_SITE:
@@ -137,7 +137,9 @@ def import_recid_list(input_stream=sys.stdin):
     output_file = get_out_file()
     i = 0
     for row in input_stream:
-        row = row.strip().split('\t')
+        if row.endswith('\n'):
+            row = row[:-1]
+        row = row.split('\t')
         if row:
             other_id, doi, eprint, recid, reportnumbers = row[0], row[1], row[2], row[3], row[4:]
             if other_id:
@@ -160,6 +162,7 @@ def import_recid_list(input_stream=sys.stdin):
                     output_file.close()
                     task_low_level_submission('bibupload', 'bst_inspire_cds_synchro', '-a', output_file.name, '-n')
                     write_message("Scheduled bibupload --append %s" % output_file.name)
+                    task_sleep_now_if_required()
                     output_file = get_out_file()
                     i = 0
     if i > 0:
@@ -170,10 +173,13 @@ def import_recid_list(input_stream=sys.stdin):
 def bst_inspire_cds_synchro():
     task_update_progress("Phase 1: extracting IDs for %s" % CFG_OTHER_SITE)
     export_file = open(CFG_EXPORT_FILE + '.part', "w")
-    for row in iter_export_rows():
+    for i, row in enumerate(iter_export_rows()):
         print >> export_file, row
+        if i % 100 == 0:
+            task_sleep_now_if_required(can_stop_too=True)
     export_file.close()
     shutil.move(CFG_EXPORT_FILE + '.part', CFG_EXPORT_FILE)
+    task_sleep_now_if_required(can_stop_too=True)
     if os.path.exists(CFG_IMPORT_FILE):
         task_update_progress("Phase 2: importing IDs from %s" % CFG_OTHER_SITE)
         import_recid_list(open(CFG_IMPORT_FILE))
