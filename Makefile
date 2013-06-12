@@ -57,6 +57,9 @@ reset-test-ui:
 reset-normal-ui:
 	@cd webstyle && make install && cd ..
 
+load-demo-records:
+	@cd bibconvert && make load-test-sample-of-records && cd ..
+
 clean:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make clean && cd .. ;)
 	@rm -f *.orig *~
