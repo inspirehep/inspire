@@ -55,6 +55,9 @@
     <subfield code="y">VOLATILE:link description</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">BookChapter</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">HEP</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">

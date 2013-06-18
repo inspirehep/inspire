@@ -1,5 +1,5 @@
-<!-- BibEdit-Template-Name: article -->
-<!-- BibEdit-Template-Description: article -->
+<!-- BibEdit-Template-Name: conference paper -->
+<!-- BibEdit-Template-Description: conference paper -->
 <record>
   <datafield tag="024" ind1="7" ind2=" ">
     <subfield code="a">VOLATILE:doi</subfield>
@@ -62,12 +62,15 @@
     <subfield code="g">VOLATILE:collaboration</subfield>
   </datafield>
   <datafield tag="773" ind1=" " ind2=" ">
-    <subfield code="p">VOLATILE:journal</subfield>
-    <subfield code="v">VOLATILE:volume</subfield>
-    <subfield code="n">VOLATILE:issue</subfield>
+    <subfield code="0">VOLATILE:INSPIRE recid</subfield>
     <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
-    <subfield code="w">VOLATILE:CNUM</subfield>
+    <subfield code="n">VOLATILE:issue</subfield>
+    <subfield code="p">VOLATILE:journal</subfield>
+    <subfield code="q">VOLATILE:conf acronym</subfield>
     <subfield code="t">VOLATILE:Presented at</subfield>
+    <subfield code="v">VOLATILE:volume</subfield>
+    <subfield code="w">VOLATILE:CNUM</subfield>
+    <subfield code="x">VOLATILE:freetext publication info</subfield>
     <subfield code="y">VOLATILE:year</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
@@ -80,6 +83,9 @@
     <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">ConferencePaper</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">CORE</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
@@ -87,8 +93,5 @@
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">Citeable</subfield>
-  </datafield>
-  <datafield tag="980" ind1=" " ind2=" ">
-    <subfield code="a">Published</subfield>
   </datafield>
 </record>
