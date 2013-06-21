@@ -84,6 +84,22 @@ h6 {
    background: transparent;
 }
 
+/* Bold font class*/
+.font_weight_bold {
+   font-weight: bold;
+}
+/*Normal font class*/
+.font_weight_normal {
+   font-weight: normal;
+}
+/* Font-size: large class*/
+.font_size_large {
+   font-size: large;
+}
+/* Font-size: medium class*/
+.font_size_medium {
+   font-size: medium;
+}
 
 /* Bold title links */
 element.style {

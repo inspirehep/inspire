@@ -2,9 +2,10 @@
 <description>Brief hepnames descriptions - used for search results</description>
 <div class="record_body">
 
-<a class = "titlelink" href= <BFE_SERVER_INFO var="recurl">> <strong><BFE_FIELD tag="100__a" /></strong></a>
+<a class ="titlelink" href="<BFE_SERVER_INFO var="recurl">"><BFE_INSPIRE_HEPNAMES_NAME css_class="font_weight_bold font_size_large" /> 
+<BFE_INSPIRE_HEPNAMES_NATIVE_NAME css_class="font_weight_normal" /></a>
 
-<a href= "/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22<BFE_FIELD tag="371__a" limit="1" />%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd"><BFE_FIELD tag="371__a" limit="1" prefix="(" suffix=")" /></a>
+<a href="/search?ln=en&cc=Institutions&p=110__u%3A%22<BFE_FIELD tag="371__a" limit="1" />%22&of=hd"><BFE_FIELD tag="371__a" limit="1" prefix="(" suffix=")" /></a>
 <BFE_INSPIRE_HEPNAMES_BAI_LINK />
 <br />
 
