@@ -76,7 +76,7 @@
   </datafield>
   <datafield tag="FFT" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:http:</subfield>
-    <subfield code="y">VOLATILE:Fulltext</subfield>
+    <subfield code="d">VOLATILE:Fulltext</subfield>
     <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">

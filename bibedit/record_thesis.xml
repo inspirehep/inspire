@@ -1,6 +1,9 @@
 <!-- BibEdit-Template-Name: thesis -->
 <!-- BibEdit-Template-Description: thesis -->
 <record>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:ISBN</subfield>
+  </datafield>
   <datafield tag="024" ind1="7" ind2=" ">
     <subfield code="a">VOLATILE:doi</subfield>
     <subfield code="2">VOLATILE:DOI</subfield>
