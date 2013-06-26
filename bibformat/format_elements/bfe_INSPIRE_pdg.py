@@ -23,6 +23,7 @@
 __revision__ = "$Id$"
 from invenio.bibknowledge import get_kb_mappings
 
+
 def format_element(bfo, separator=' | ', link="yes"):
     """
     Prints Conference info as best is possible.
@@ -33,7 +34,7 @@ def format_element(bfo, separator=' | ', link="yes"):
     """
 
     authors = bfo.fields('084__')
-    
+
     # Process authors to add link, highlight and format affiliation
 
     output = []
@@ -43,30 +44,27 @@ def format_element(bfo, separator=' | ', link="yes"):
     pdgcode = ""
 
     for exp in authors:
-        if pdgcount < 3:
-            if 'a' in exp:
-                values = get_kb_mappings('PDG', key=exp['a'], match_type="e")
-                pdgcode = exp['a']
-                if values:
-                    if values[0]['value'] == "THE TEXT IS MISSING FOR THIS NODE.":
-                        output.append('<a href="http://pdg.lbl.gov/beta/pdgLive/Dispatcher.action?pdgId='+pdgcode+'">'+pdgcode+' (Title Unknown)</a>')
-                    else:
-                        output.append('<a href="http://pdg.lbl.gov/beta/pdgLive/Dispatcher.action?pdgId='+pdgcode+'">'+values[0]['value']+'</a>')
+        if exp.get('9') == 'PDG' and 'a' in exp:
+            values = get_kb_mappings('PDG', key=exp['a'], match_type="e")
+            pdgcode = exp['a']
+            for ch in [':', '=']:
+                if ch in pdgcode:
+                    pdgcode = pdgcode.replace(ch, '/')
+            if values:
+                search_link = '<a href="http://pdglive.lbl.gov/view/' + pdgcode + '">'
+                if values[0]['value'] == "THE TEXT IS MISSING FOR THIS NODE.":
+                    search_link += pdgcode + ' (Title Unknown)'
+                else:
+                    search_link += values[0]['value']
+                search_link += '</a>'
                 pdgcount += 1
-    
-        else:
-            if 'a' in exp:
-                values = get_kb_mappings('PDG', key=exp['a'], match_type="e")
-                pdgcode = exp['a']
-                if values:
-                    if values[0]['value'] == "THE TEXT IS MISSING FOR THIS NODE.":
-                        output1.append('<a href="http://pdg.lbl.gov/beta/pdgLive/Dispatcher.action?pdgId='+pdgcode+'">'+pdgcode+' (Title Unknown)</a>')
-                    else:
-                        output1.append('<a href="http://pdg.lbl.gov/beta/pdgLive/Dispatcher.action?pdgId='+pdgcode+'">'+values[0]['value']+'</a>')
-                pdgcount += 1
+                if pdgcount < 3:
+                    output.append(search_link)
+                else:
+                    output1.append(search_link)
 
-            if len(output1):
-                link = """ | <a href="#" style="color:green;background:white;" onclick="toggle2('content', this)"><i>More</i></a>
+    if len(output1):
+        link = """ | <a href="#" style="color:green;background:white;" onclick="toggle2('content', this)"><i>More</i></a>
 <div id="content" style="display:none; padding-left:36px;">
 %(content)s
 </div>
@@ -84,10 +82,11 @@ link.innerHTML = '<i>Less</i>';
 }
 }
 </script>
-                """ % {'content': separator.join(output1)}   
-        
+""" % {'content': separator.join(output1)}
+
     return separator.join(output) + link
-    
+
+
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
