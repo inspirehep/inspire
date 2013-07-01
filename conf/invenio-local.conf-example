@@ -91,12 +91,12 @@ CFG_WEBSEARCH_SYNONYM_KBRS = {
   'collection': ['COLLECTION', 'exact'],
   'subject': ['SUBJECT', 'exact'],
   }
-CFG_BIBEDIT_EXTEND_RECORD_WITH_COLLECTION_TEMPLATE = {'INSTITUTION' : 'record_institution',
-                                                      'CONFERENCES' : 'record_conference',
-                                                      'THESIS': 'record_thesis',
-                                                      'PROCEEDINGS': 'record_proceedings',
-                                                      'BOOK': 'record_book',
-                                                      'HEP': 'record_article'}
+CFG_BIBEDIT_EXTEND_RECORD_WITH_COLLECTION_TEMPLATE = [('INSTITUTION', 'record_institution'),
+                                                      ('CONFERENCES', 'record_conference'),
+                                                      ('THESIS', 'record_thesis'),
+                                                      ('PROCEEDINGS', 'record_proceedings'),
+                                                      ('BOOK', 'record_book'),
+                                                      ('HEP', 'record_article')]
 CFG_BIBEDIT_QUEUE_CHECK_METHOD = regexp
 CFG_PLOTEXTRACTOR_SOURCE_BASE_URL = http://export.arxiv.org/
 CFG_BIBSCHED_MAX_NUMBER_CONCURRENT_TASKS = 4
