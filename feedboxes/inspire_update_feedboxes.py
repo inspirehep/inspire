@@ -1,190 +1,104 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-########################################################################################################################
-"""Get N most recent public items from a set of feeds; format and dump them."""
+"""
+NOTE: in order for this script to work, you have to put in
+CFG_ETCDIR/twitter-credentials.txt a four-lines text file containing in order:
 
-try:
-    import feedparser
-except ImportError:
-    print "Please install the Python feedparser library."
+* consumer_key
+* consumer_secret
+* access_token_key
+* access_token_secret
+"""
+
+import time
+import twitter
+import os
+import cgi
 import re
-import sys
-import codecs
-import optparse
 
 from invenio.dbquery import run_sql
+from invenio.config import CFG_ETCDIR, CFG_SITE_URL, CFG_SITE_SECURE_URL
+from invenio.errorlib import register_exception
 
+CFG_TWITTER_CREDENTIALS_PATH = os.path.join(CFG_ETCDIR, 'twitter-credentials.txt')
+CFG_TWITTER_INSPIRE_USER = 78852440
+CFG_PBX_ID = 2
 
-FEEDS = [
-         #("http://invenio-software.org/query?status=assigned&status=in_work&status=infoneeded&status=infoneeded_new&status=new&changetime=30daysago..&keywords=~INSPIRE+NEWS&format=rss&col=id&col=summary&col=status&col=type&col=priority&col=milestone&col=component&order=priority", "Current Work"),
-         #("http://invenio-software.org/query?status=closed&status=in_merge&changetime=30daysago..&keywords=~NEWS&format=rss&col=id&col=summary&col=status&col=type&col=priority&col=milestone&col=component&order=priority", "Recently Finished Work"),
-         ("http://api.twitter.com/1/statuses/user_timeline.rss?user_id=78852440", "INSPIRE News", False, 2),
-        ]
+RE_TWITTER_PLACEMARK = re.compile("%s(.*?)%s" % (re.escape("<!-- TWITTER_START -->"), re.escape("<!-- TWITTER_END -->")), re.M + re.S)
 
-FEED_PRE = { 2: """
-<div id="sidebar" class="portalboxbody">
- <table class="sidebar_linktable">
-  <tr>
-   <td>
-    <h3>HEP</h3>
-     <ul>
-      <li><a href="/info/hep/additions">Additions</a></li>
-      <li><a href="/info/hep/corrections">Corrections</a></li>
-
-      <li><a href="/info/hep/search-tips">Search Tips</a></li>
-
-      <li><a href="/info/faq/general">FAQ</a></li>
-      <li><a href="/info/hep/stats/topcites/index">Topcites: annual</a> |
-          <a href="/search?p=find+topcit+100%2B+and+date+2012+or+%28topcite+50%2B+and+date+2013%29">recent</a></li>
-      <li><a href="/info/hep/reviews">Reviews</a></li>
-      <li><a href="/search?of=hcs&amp;action_search=Search">HEP Citesummary</a></li>
-      <li><a href="/info/hep/tools/index">Tools</a></li>
-     </ul>
-
-    <h3>INSPIRE</h3>
-     <ul>
-      <li><a href="/info/general/project/index">About INSPIRE</a></li>
-      <li><a href="/help/">INSPIRE Help Central</a></li>
-      <li><a href="http://blog.inspirehep.net">Blog</a></li>
-      <li><a href="http://twitter.com/inspirehep">Twitter</a></li>
-      <li><a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a></li>
-     </ul>
-
-    <h3>Resources</h3>
-     <ul>
-      <li><a href="http://adswww.harvard.edu">ADS</a></li>
-      <li><a href="http://arXiv.org">arXiv</a></li>
-      <li><a href="http://hepdata.cedar.ac.uk/">HepData</a></li>
-      <li><a href="http://pdg.lbl.gov">PDG</a></li>
-      <li><a href="https://library.web.cern.ch/library/rpp/">PDG review of online resources</a></li>
-     </ul>
+CFG_TWITTER_BOX_TPL = """
+<!-- TWITTER_START -->
+<table class="sidebar_bugboxtable">
+  <tbody><tr>
+   <td class="bugboxtd">
+    <h3>INSPIRE News</h3>
+    <ul class="hanging">
+%s
+    </ul>
    </td>
   </tr>
- </table>
- <table class="sidebar_bugboxtable">
-  <tr>
-""",
-}
-
-FEED_POST = { 2: """
-  </tr>
   <tr>
    <td>
-    <p align=right>
+    <p align="right">
      <a href="http://www.twitter.com/inspirehep">
-      <img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" alt="Follow inspirehep on Twitter"/>
+      <img src="http://twitter-badges.s3.amazonaws.com/t_small-a.png" alt="Follow inspirehep on Twitter">
      </a>
     </p>
    </td>
   </tr>
- </table>
-</div>
-""",
-}
+ </tbody>
+</table>
+<!-- TWITTER_END -->
+"""
 
-def configOptParse():
-    parser = optparse.OptionParser(usage = "%prog [options] [-o outfile]")
-    parser.add_option('-n', '--number', dest="number", action="store", type="int", metavar="N",
-                      default=3, help="Get N most recent public LJ posts.  Defaults to 3")
-    parser.add_option('-u', '--uname', dest="uname", action="store", metavar="UNAME", default='anonymous',
-                      help="Substituted for UNAME into the resource URL.  Defaults to anonymous")
-    parser.add_option('-r', '--resource', dest="url", action="store", metavar="URL",
-                      default='http://cdswaredev.cern.ch/invenio/report/1?format=rss&amp;USER=UNAME',
-                      help="Updates from URL (Token UNAME substituted for value of -u). Defaults to http://cdswaredev.cern.ch/invenio/report/1?format=rss&amp;USER=UNAME")
-    parser.add_option('-o', '--outfile', dest="outfile", action="store", metavar="FILE", default=None,
-                      help="Output to FILE.  - writes to stdout.  Defaults to no output")
-    parser.add_option('-d', '--dbwrite', dest="dbwrite", action="store_true", default=False,
-                      help="Write feed data into the MySQL instance. Defaults to off.")
-    options, args = parser.parse_args()
-    return parser, options, args
+def get_twitter_api(path=CFG_TWITTER_CREDENTIALS_PATH):
+    lines = open(CFG_TWITTER_CREDENTIALS_PATH).readlines()
+    consumer_key = lines[0].strip()
+    consumer_secret = lines[1].strip()
+    access_token_key = lines[2].strip()
+    access_token_secret = lines[3].strip()
+    return twitter.Api(consumer_key=consumer_key, consumer_secret=consumer_secret, access_token_key=access_token_key, access_token_secret=access_token_secret)
 
-def postGenerator(url, max, filter = lambda x: x, transform = lambda x: x):
-    count = 0
-    date = ''
-    for post in feedparser.parse(url).entries:
-        if count == max: break
-        if filter(post.title):
-            count += 1
-            try:
-                date = post.published[:19]
-            except AttributeError:
-                date = "%d-%02d-%02d" % post.updated_parsed[0:3]
-            try:
-                title = post.title.decode('utf-8')
-            except UnicodeEncodeError:
-                title = post.title
-            yield date, transform(title), post.link
+def get_twitter_timeline(api=None, user=CFG_TWITTER_INSPIRE_USER, n=3):
+    if api is None:
+        api = get_twitter_api()
+    return api.GetUserTimeline(user)[:3]
 
-def filters(msg):
-    """Enable filtering of the entries displayed.
-
-    Multiple kinds of filtering can be done by making this a logical and of
-    several additional filter functions.
-    """
-
-    # Remove @ replies from twitter feed
-    if re.search('@[a-zA-Z]+', msg, re.IGNORECASE):
-        return False
-    return True
-
-def transforms(msg):
-    """Enable various content transformations in one place"""
-
-    # Remove 'inspirehep: ' from the front of tweets
-    if msg.startswith('inspirehep: '):
-        msg = msg[12:]
-
-    # Autoheat URLs
-    toks = msg.split()
-    ret_toks = []
-    for tok in toks:
-        if tok.startswith("http://") or tok.startswith("https://"):
-            ret_toks.append('<a href="'+tok+'">'+tok+'</a>')
+def adapt_urls(text, urls):
+    for url_from, url_to in urls.items():
+        url_from = url_from.encode('utf8')
+        url_to = url_to.encode('utf8')
+        if url_to.startswith(CFG_SITE_URL) or url_to.startswith(CFG_SITE_SECURE_URL):
+            ## Internal link, no need fot target="_blank"
+            text = text.replace(url_from, '<a href="%s">%s</a>' % (cgi.escape(url_to, True), cgi.escape(url_from)))
         else:
-            ret_toks.append(tok)
-    msg = ' '.join(ret_toks)
+            text = text.replace(url_from, '<a href="%s" target="_blank">%s</a>' % (cgi.escape(url_to, True), cgi.escape(url_from)))
+    return text
 
-    return msg
+def tweet2html(tweet):
+    tweet_time = tweet.GetCreatedAtInSeconds()
+    tweet = tweet.AsDict()
+    text = tweet['text'].encode('utf8')
+    urls = tweet.get('urls')
+    if urls:
+        text = adapt_urls(text, urls)
+    return '<li class="hanging">%s %s</li>' % (time.strftime("%Y-%m-%d", time.gmtime(tweet_time)), text)
 
-def outputGenerator(header, input, tolink):
-    yield u"   <td class=\"bugboxtd\">\n    <h3>"+header+"</h3>\n    <ul class=\"hanging\">"
-    for date, title, link in input:
-        if tolink:
-            yield u"\n     <li class=\"hanging\">%s <a href=\"%s\">%s</a></li>" % (date, link, title)
-        else:
-            yield u"\n     <li class=\"hanging\">%s %s</li>" % (date, title)
-    yield u'\n    </ul>\n   </td>'
 
+def get_twitter_box(api=None, timeline=None):
+    if timeline is None:
+        timeline = get_twitter_timeline(api=api)
+    return CFG_TWITTER_BOX_TPL % '\n'.join([tweet2html(tweet) for tweet in timeline])
+
+def update_portalbox(twitter_box=None):
+    if twitter_box is None:
+        twitter_box = get_twitter_box()
+    portalbox = run_sql("SELECT body FROM portalbox WHERE id=%s", (CFG_PBX_ID,))[0][0]
+    portalbox = RE_TWITTER_PLACEMARK.sub(twitter_box, portalbox)
+    run_sql("UPDATE portalbox SET body=%s WHERE id=%s", (portalbox, CFG_PBX_ID))
 
 if __name__ == "__main__":
-
-    parser, options, args = configOptParse()
-    out = sys.stdout
-
-    if (len(sys.argv) == 0) or ((options.outfile == None) and (options.dbwrite == False)):
-        parser.print_help()
-        sys.exit()
-    if options.outfile:
-        if options.outfile != '-':
-            out = codecs.open(options.outfile, 'w', 'utf-8')
-
-    for url, title, tolink, db_num in FEEDS:
-        portalbox_content = u'' + FEED_PRE[db_num]
-        for line in outputGenerator(title,
-                                    sorted(postGenerator(url.replace('UNAME', options.uname),
-                                                         options.number,
-                                                         transform=transforms),
-                                           reverse=True),
-                                    tolink
-                                    ):
-            portalbox_content += line
-        portalbox_content += FEED_POST[db_num]
-        if options.dbwrite:
-            run_sql("UPDATE portalbox SET body=%s WHERE id=%s", (portalbox_content, str(db_num)))
-        if options.outfile:
-            out.write(portalbox_content)
-
-    # close any working files
-    outname = out.name
-    if outname != '<stdout>':
-        out.close()
+    try:
+        update_portalbox()
+    except Exception, err:
+        register_exception(alert_admin=True)
+        print >> sys.stderr("ERROR: issue in updating twitter box: %s" % err)

@@ -171,9 +171,9 @@ reset-inspire-portalbox-configuration:
 		## sidebar portalbox:
 	echo "INSERT INTO portalbox VALUES (2, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value with placeholder text
-	echo "UPDATE portalbox SET body=' ' WHERE id=2"|$(BINDIR)/dbexec
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hep_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=2", (body,))' | $(PYTHON)
 		## and now update portalbox values with RSS feed material
-	$(PYTHON) ./feedboxes/inspire_update_feedboxes.py -d
+	$(PYTHON) ./feedboxes/inspire_update_feedboxes.py
 
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 2, 'ca', 'rt', 100)" | $(BINDIR)/dbexec

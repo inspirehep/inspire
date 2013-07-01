@@ -7,7 +7,6 @@ all:
 	@echo "Done."
 
 test:
-	$(PYTHON) test_for_feedparser.py
 	@echo "Done."
 
 install: test
