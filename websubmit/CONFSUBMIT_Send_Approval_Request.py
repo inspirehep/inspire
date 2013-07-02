@@ -214,7 +214,7 @@ Submitter email(s): %(submitteremail)s
     #Send mail to referee
     send_email(fromaddr=CFG_WEBSUBMIT_CONF_FROMADDR, toaddr=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL, subject=title_referee, \
                content=mail_referee, footer=email_footer(support_email=CFG_WEBSUBMIT_CONF_SUPPORT_EMAIL),
-               copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN, bccaddr=addresses)
+               copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN, bccaddr=addresses, replytoaddr=contactemail)
     return ""
 
 def get_file_contents(directory, filename):

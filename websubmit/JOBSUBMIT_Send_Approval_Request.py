@@ -199,7 +199,7 @@ To approve/reject the document, you should go to this URL:\n%(access)s\n
     #Send mail to referee
     send_email(fromaddr=CFG_WEBSUBMIT_JOBS_FROMADDR, toaddr=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL, subject=title_referee, \
                content=mail_referee, footer=email_footer(support_email=CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL),
-               copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN, bccaddr=addresses)
+               copy_to_admin=CFG_WEBSUBMIT_COPY_MAILS_TO_ADMIN, bccaddr=addresses, replytoaddr=contactemail)
     return ""
 
 def get_file_contents(directory, filename):
