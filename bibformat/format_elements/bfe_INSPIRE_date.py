@@ -117,6 +117,13 @@ def get_date(bfo):
         if datestruct:
             return datestruct
 
+    #thesis date
+    date = bfo.fields('502__d')
+    if date:
+        datestruct = parse_date(date[0])
+        if datestruct:
+            return datestruct
+
     return None
 
 def parse_date(datetext):
