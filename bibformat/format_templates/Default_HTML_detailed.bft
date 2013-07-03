@@ -37,11 +37,9 @@ affiliation_prefix="<small> (" affiliation_suffix=") </small>" />
 
 <div style="text-align:left; width: 70%; margin: 10px auto;">
 <p style="font-size: 85%; line-height: 135%;">
-<BFE_ABSTRACT
-prefix_en="<strong>Abstract: </strong>"
-prefix_fr="<strong>Résumé: </strong>"
+<BFE_INSPIRE_ABSTRACT
+prefix_en="<strong>Abstract </strong>"
 suffix_en=""
-suffix_fr=""
 />
 </p>
 <BFE_INSPIRE_PDG prefix="<br /><small><strong>PDG: </strong>" suffix="</small>" />
