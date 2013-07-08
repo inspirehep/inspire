@@ -360,7 +360,7 @@ def main():
 
             # New CORE records creates a ticket in RT
             if "CORE" in record_get_field_values(record, tag="980", code="a"):
-                queue = "HEP-Additions"
+                queue = "HEP_curation"
                 subject, body = generate_ticket(record)
                 create_ticket(queue, subject=subject, text=body)
             insert_records.append(record)
