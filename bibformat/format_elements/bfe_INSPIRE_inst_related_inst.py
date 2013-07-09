@@ -16,37 +16,47 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints full-text URLs
+"""BibFormat element - Prints related institutions
 """
-__revision__ = "$Id$"
+
 
 def format_element(bfo, style, separator='; '):
     """
-    This is the default format for formatting full-text URLs.
-    @param separator: the separator between urls.
+    This is the default format for printing related institutions
+    @param separator: the separator between institutions.
     @param style: CSS class of the link
     """
 
     urls_u = bfo.fields("510__")
-    prefix = ''
+
     if style != "":
         style = 'class="'+style+'"'
+    # there will be 4 different categories of institutions
+    inst_dict = {'a': [],
+                 'b': [],
+                 't': [],
+                 'r': []}
+
+    prefix_inst = {'a': 'Preceding Institution: ',
+                   'b': 'Successive Institution: ',
+                   't': 'Parent Institution: ',
+                   'r': 'Related Institution: '}
 
     for url in urls_u:
-        if url.has_key('w'):
-            if url['w'] == 'a':
-                prefix = 'Preceding Institution: '
-            if url['w'] == 'b':
-                prefix = 'Successive Institution: '
-            if url['w'] == 't':
-                prefix = 'Parent Institution: '
-            if url['w'] == 'r':
-                prefix = 'Related Institution: '
+        if url.get('w') in ['a', 'b', 't', 'r']:
+            inst_dict[url.get('w')].append('<a href="/record/' + url['0'] + '">' + url['a'] + '</a>')
         else:
-            prefix = 'Related Institution: '
-    urls = ['<a href="/record/' + url['0'] + '">' + url['a'] +'</a>'
-            for url in urls_u]
-    return prefix + separator.join(urls)
+            inst_dict['r'].append('<a href="/record/' + url['0'] + '">' + url['a'] + '</a>')
+
+    out = ''
+    for field in inst_dict:
+        # is there is something inside the list, print it with prefix
+        if inst_dict[field]:
+            out += prefix_inst[field] + separator.join(inst_dict[field]) + '<br>'
+
+    # return the string without last line break
+    return out[:-4]
+
 
 def escape_values(bfo):
     """

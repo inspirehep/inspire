@@ -20,6 +20,7 @@
    for a given institution
 """
 
+
 def format_element(bfo, separator='; '):
     """
     Prints the list of the "children" institutions
@@ -29,13 +30,19 @@ def format_element(bfo, separator='; '):
 
     recID = str(bfo.recID)
     out = ""
+    children = []
     if not recID:
         #Something is wrong, return empty string
         return out
-    search_result = search_pattern(p="510__0:" + str(recID) + " AND 510__w:t")
-    if search_result:
+    all_institutions = search_pattern(p="510__0:" + str(recID))
+    for institution_id in all_institutions:
+        for field in BibFormatObject(institution_id).fields('510__'):
+            if field.get('0') == str(recID) and field.get('w') == 't':
+                children.append(institution_id)
+
+    if children:
         out += "Subsidiary Institution: "
-        for item in search_result:
+        for item in children:
             # get the abbreviated name of the institution
             abbrev = BibFormatObject(item).field('110__t')
             # if there is no abbreviated name, we try different names
@@ -47,11 +54,12 @@ def format_element(bfo, separator='; '):
             # if no name is found, we display record ID as a text of the link
                 abbrev = item
             out += '<a href="/record/' + str(item) + '">' + str(abbrev) \
-            + '</a>' + separator
+                + '</a>' + separator
 
     # remove last separator and space, then return the string
     out = out[:-2]
     return out
+
 
 def escape_values(bfo):
     """
