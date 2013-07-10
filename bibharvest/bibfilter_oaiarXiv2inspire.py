@@ -9,6 +9,7 @@
 import os
 import sys
 import getopt
+import re
 
 from invenio.bibupload import open_marc_file
 from invenio.config import CFG_ETCDIR
@@ -16,7 +17,9 @@ from invenio.bibrecord import (create_records,
                                record_get_field_instances,
                                record_add_field, record_xml_output,
                                field_get_subfield_values,
-                               record_get_field_values)
+                               record_get_field_values,
+                               field_get_subfield_instances,
+                               record_delete_field)
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
@@ -311,6 +314,19 @@ def main():
                 # Did not find existing record in database
                 holdingpen_records.append(record)
                 continue
+
+            # We remove 500 field temporary/brief entry from revision if record already exists
+            fields_500 = record_get_field_instances(record, '500', ind1="%", ind2="%")
+            if fields_500 is not None:
+                field_positions = []
+                for field in fields_500:
+                    subfields = field_get_subfield_instances(field)
+                    for subfield in subfields:
+                        if re.match("^.?((temporary|brief) entry).?$", subfield[1].lower(), re.IGNORECASE):
+                            field_positions.append((field[1], field[2], field[4]))
+
+                for ind1, ind2, pos in field_positions:
+                    record_delete_field(record, '500', ind1=ind1, ind2=ind2, field_position_global=pos)
 
             # Now compare new version with existing one, returning a diff[tag] = (diffcode, [..])
             # None - if field is the same for both records
