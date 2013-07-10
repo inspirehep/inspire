@@ -19,6 +19,8 @@
 """BibFormat element - Hep Erratum info
 """
 
+import cgi
+
 
 def format_element(bfo):
     """
@@ -33,8 +35,14 @@ def format_element(bfo):
     newline = "<br />"
     out = []
     for pubinfo in pubinfos:
+        volume = cgi.escape(pubinfo.get('v', ''))
+        number = cgi.escape(pubinfo.get('n', ''))
+        pages = cgi.escape(pubinfo.get('c', ''))
+        doi = bfo.field('0247_a') or pubinfo.get('a', '')
         if 'p' in pubinfo:
             tmpout = []
+            if not (volume or number or pages or doi):
+                tmpout.append("Submitted to:")
             tmpout.append(pubinfo.get('p', None))
             tmpout.append(pubinfo.get('v', None))
             if 'y' in pubinfo:
