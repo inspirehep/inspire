@@ -84,7 +84,7 @@ reset-inspire-index-configuration:
 	$(BINDIR)/dbexec < bibindex/config/idxINDEX_dump.sql
 	@echo ">>> Done reset-inspire-index-configuration."
 ## Create tables for new indexes 17->22
-	$(PYTHON) ./bibindex/create_index_tables.py 17 24
+	$(PYTHON) ./bibindex/create_index_tables.py 17 25
 
 reset-inspire-collection-configuration:
 	echo "TRUNCATE collection" | $(BINDIR)/dbexec
