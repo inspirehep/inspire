@@ -14,6 +14,7 @@ import twitter
 import os
 import cgi
 import re
+import sys
 
 from invenio.dbquery import run_sql
 from invenio.config import CFG_ETCDIR, CFG_SITE_URL, CFG_SITE_SECURE_URL
@@ -101,4 +102,4 @@ if __name__ == "__main__":
         update_portalbox()
     except Exception, err:
         register_exception(alert_admin=True)
-        print >> sys.stderr("ERROR: issue in updating twitter box: %s" % err)
+        print >> sys.stderr, "ERROR: issue in updating twitter box: %s" % err
