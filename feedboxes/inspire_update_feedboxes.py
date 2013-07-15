@@ -10,11 +10,18 @@ CFG_ETCDIR/twitter-credentials.txt a four-lines text file containing in order:
 """
 
 import time
-import twitter
+import sys
+
+try:
+    import twitter
+except:
+    import warnings
+    warnings.warn("Install twitter package. Otherwise the twitter box in the main page will not work.")
+    sys.exit(0)
+
 import os
 import cgi
 import re
-import sys
 
 from invenio.dbquery import run_sql
 from invenio.config import CFG_ETCDIR, CFG_SITE_URL, CFG_SITE_SECURE_URL
