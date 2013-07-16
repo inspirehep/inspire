@@ -33,27 +33,32 @@ queue
 """
 import datetime
 
-from invenio.bibrecord import \
-    record_get_field_instances, \
-    field_get_subfield_values
-from invenio.config import \
-    CFG_SITE_SECURE_URL
+from invenio.bibrecord import (record_get_field_instances,
+                               field_get_subfield_values)
+from invenio.config import CFG_SITE_SECURE_URL
 from invenio.dbquery import run_sql
-from invenio.bibcatalog_utils import \
-    record_in_collection, \
-    record_id_from_record, \
-    load_tag_code_from_name
+from invenio.bibcatalog_utils import (record_in_collection,
+                                      record_id_from_record)
 
 
-def check_record(record):
+def check_record(ticket, record):  # pylint: disable-msg=W0613
     """
-    Expects a record object.
-
     Requirements to create ticket:
     * Record must have 980__$aCORE
     * Needs to be younger than 6 months in the system
+    * Must be an arXiv paper
 
-    Returns True if record should have a ticket created.
+    Returns True if all above is true.
+
+    @param ticket: a ticket object as created by BibCatalogTicket() containing
+                   the subject, body and queue to create a ticket in.
+    @type ticket: record object of BibCatalogTicket.
+
+    @param record: a recstruct object as created by bibrecord.create_record()
+    @type record: record object of BibRecord.
+
+    @return: True if ticket should be created.
+    @rtype: bool
     """
     # It has to be a CORE record
     if not record_in_collection(record, "CORE"):
@@ -68,29 +73,45 @@ def check_record(record):
     if creation_date < datetime.datetime.now() - datetime.timedelta(days=7*26):
         return
 
-    return True
+    # Finally it has to be an arXiv record
+    for report_tag in record_get_field_instances(record, "037"):
+        for report_number in field_get_subfield_values(report_tag, 'a'):
+            if report_number.lower().startswith('arxiv'):
+                return True
+    return False
 
 
-def generate_ticket(record):
+def generate_ticket(ticket, record):
     """
-    Expects a record object.
+    Generates a ticket to be created, filling subject, body and queue values
+    of the passed BibCatalogTicket object. The enriched object is returned.
 
-    Returns tuple of: (subject, body, queue) of the ticket.
+    @param ticket: a ticket object as created by BibCatalogTicket() containing
+                   the subject, body and queue to create a ticket in.
+    @type ticket: record object of BibCatalogTicket.
+
+    @param record: a recstruct object as created by bibrecord.create_record()
+    @type record: record object of BibRecord.
+
+    @return: the modified ticket object to create.
+    @rtype: BibCatalogTicket
     """
     recid = record_id_from_record(record)
-    subject = ""
+    subject = []
 
     # Add report number in the subjecet
     report_number = ""
     for report_tag in record_get_field_instances(record, "037"):
         for report_number in field_get_subfield_values(report_tag, 'a'):
-            subject += " " + report_number
+            subject.append(report_number)
             break
 
-    subject += " (#%s)" % (recid,)
+    subject.append("(#%s)" % (recid,))
     text = 'Curate record here: %s/record/edit/#state=edit&recid=%s' % \
            (CFG_SITE_SECURE_URL, recid)
 
-    #return subject, text.replace('%', '%%'), CFG_REFEXTRACT_TICKET_QUEUE
-    #"HEP_curation"
-    return subject, text.replace('%', '%%'), "Test"
+    # FIXME: replace queue with "HEP_curation"
+    ticket.subject = " ".join(subject)
+    ticket.body = text.replace('%', '%%')
+    ticket.queue = "Test"
+    return ticket
