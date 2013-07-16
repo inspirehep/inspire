@@ -12,6 +12,7 @@ clean:
 	@echo "Done."
 
 install:
+	mkdir -p $(PYLIBDIR)
 	$(INSTALL) $(PYLIBS) $(PYLIBDIR)
 
 # end of file
