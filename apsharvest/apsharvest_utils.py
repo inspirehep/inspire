@@ -31,6 +31,7 @@ from invenio.bibdocfile import calculate_md5_external
 from invenio.shellutils import run_shell_command
 from invenio.bibconvert_xslt_engine import CFG_BIBCONVERT_XSL_PATH
 from invenio.docextract_record import create_record
+from invenio.dateutils import utc_to_localtime
 
 
 class InvenioFileChecksumError(Exception):
@@ -220,3 +221,57 @@ def validate_date(date_given, date_format="%Y-%m-%d"):
     # FIXME: use datetime.datetime.strptime(date_given, "%Y-%m-%d")
     # after upgrading Python => 2.5
     return datetime.datetime(*(time.strptime(date_given, date_format)[0:6]))
+
+
+def get_file_modified_date(filepath):
+    """
+    Returns the last modified date for given file as returned by os.stat(),
+    but instead as a datetime object.
+    """
+    return datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
+
+
+def get_utc_from_datetime(datetime_obj, fmt="%Y-%m-%d %H:%M:%S"):
+    """
+    Convert to UTC date string in given format from datetime object.
+
+    Ex: '2013-04-17 16:04:25'
+    """
+    return time.strftime(fmt, time.gmtime(time.mktime(datetime_obj.timetuple())))
+
+
+def compare_datetime_to_iso8601_date(date_obj, iso8601_date):
+    """
+    Compares the given *local-time* object with a proper ISO8601
+    date string. Date string expected to be '2013-07-18T16:31:46-0400'.
+
+    The UTC offset will be taken into account.
+
+    Returns True if the file modification date is older than given date.
+    """
+    # First we need to make all dates UTC
+    date_obj_utc = get_utc_from_datetime(date_obj)
+
+    if 'Z' not in iso8601_date:
+        # Incoming date format looks like: '2013-07-18T16:31:46-0400'
+        offset_from_utc = iso8601_date[-5:]  # Ex: '-0400'
+        offset_from_utc_hour = int(offset_from_utc[1:-2])
+        offset_from_utc_minutes = int(offset_from_utc[-2:])
+        offset_from_utc_operator = offset_from_utc[0]
+
+        stripped_date = iso8601_date[:-5]  # Ex: '2013-07-18T16:31:46'
+        iso8601_date_obj = datetime.datetime(*time.strptime(stripped_date,
+                                             "%Y-%m-%dT%H:%M:%S")[:-3])
+        time_dt = datetime.timedelta(hours=int(offset_from_utc[1:-3]),
+                                     minutes=int(offset_from_utc[-2:]))
+
+        if offset_from_utc_operator == "-":
+            iso8601_date_utc = iso8601_date_obj + time_dt
+        elif offset_from_utc_operator == "+":
+            iso8601_date_utc = iso8601_date_obj - time_dt
+        iso8601_date_utc = iso8601_date_utc.strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        # Incoming date format looks like: '2013-07-18T16:31:46Z'
+        iso8601_date_utc = iso8601_date.replace("Z", "").replace("T", " ")
+
+    return date_obj_utc < iso8601_date_utc

@@ -45,21 +45,23 @@ from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 from invenio.bibdocfile import open_url
 from invenio.search_engine import perform_request_search, search_pattern
 from invenio.bibformat_engine import BibFormatObject
-from invenio.downloadutils import download_file
+from invenio.downloadutils import download_file, InvenioDownloadError
 from invenio.apsharvest_dblayer import fetch_last_updated, \
     get_all_new_records, \
     get_all_modified_records, \
     store_last_updated, \
     can_launch_bibupload
-from invenio.apsharvest_utils import unzip, \
-    find_and_validate_md5_checksums, \
-    get_temporary_file, \
-    InvenioFileChecksumError, \
-    remove_dtd_information, \
-    convert_xml_using_saxon, \
-    APSHarvesterConversionError, \
-    create_records_from_file, \
-    validate_date
+from invenio.apsharvest_utils import (unzip,
+                                      find_and_validate_md5_checksums,
+                                      get_temporary_file,
+                                      InvenioFileChecksumError,
+                                      remove_dtd_information,
+                                      convert_xml_using_saxon,
+                                      APSHarvesterConversionError,
+                                      create_records_from_file,
+                                      validate_date,
+                                      get_file_modified_date,
+                                      compare_datetime_to_iso8601_date)
 
 from invenio.apsharvest_config import CFG_APSHARVEST_FULLTEXT_URL, \
     CFG_APSHARVEST_SEARCH_COLLECTION, \
@@ -92,6 +94,15 @@ class APSHarvesterSubmissionError(Exception):
     pass
 
 
+class APSHarvesterFileExits(Exception):
+    """Exception raised when local file is the newest.
+    """
+    pass
+
+
+CFG_WORKDIR = os.path.join(CFG_TMPSHAREDDIR, "apsharvest")
+
+
 class APSRecordList(list):
     """
     Class representing the list of records to harvest.
@@ -113,11 +124,12 @@ class APSRecord(object):
     """
     Class representing a record to harvest.
     """
-    def __init__(self, recid, doi=None, date=None):
+    def __init__(self, recid, doi=None, date=None, last_modified=None):
         self.recid = recid
         self.doi = doi or get_doi_from_record(self.recid)
         self.date = date
         self.record = BibRecord(recid or None)
+        self.last_modified = last_modified
 
     def add_metadata(self, marcxml_file):
         """
@@ -397,14 +409,22 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         write_message("Nothing to harvest.")
         return
 
+    # Create working directory if not exists
+    if not os.path.exists(CFG_WORKDIR):
+        os.makedirs(CFG_WORKDIR)
+
     #2: Fetch fulltext/metadata XML and upload bunches of records as configured
     count = 0
     taskid = 0
     records_harvested = []
     records_to_insert = []
     records_to_update = []
-    for record in perform_fulltext_harvest(final_record_list, metadata,
-                                           fulltext, hidden):
+    records_failed = []
+    for record, error_message in perform_fulltext_harvest(final_record_list, metadata,
+                                                          fulltext, hidden):
+        if error_message:
+            records_failed.append(record)
+            continue
         records_harvested.append(record)
         count += 1
         # When in BibUpload mode, check if we are on the limit and ready to submit
@@ -479,6 +499,10 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                 # Something went wrong
                 write_message("Records were not submitted correctly")
 
+    if records_failed:
+        submit_records_via_mail(subject="APSHarvest failed records",
+                                body="%s" % ("\n".join([rec.doi for rec in records_failed])))
+
     if from_date == "last":
         # Harvest of new records from APS successful
         # we update last harvested date
@@ -487,7 +511,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                            name="apsharvest_api_download")
 
     # We are done
-    write_message("Harvested %d records." % (count,))
+    write_message("Harvested %d records. (%d failed)" % (count, len(records_failed)))
 
 
 def APS_connect(from_param, until_param=None, page=1, perpage=100):
@@ -546,7 +570,7 @@ def harvest_aps(from_param, until_param, perpage):
     write_message("Data received from APS: \n%s" % (data,), verbose=5)
     records = []
     for d in data:
-        records.append(APSRecord(None, d["doi"]))
+        records.append(APSRecord(None, d["doi"], last_modified=d['last_modified_at']))
 
     # Check for more pages
     if last_page > 1:
@@ -555,7 +579,7 @@ def harvest_aps(from_param, until_param, perpage):
             data = json.loads(conn.next())
             write_message("Data received from APS: \n%s" % (data,), verbose=5)
             for d in data:
-                records.append(APSRecord(None, d["doi"]))
+                records.append(APSRecord(None, d["doi"], last_modified=d['last_modified_at']))
 
     return records
 
@@ -600,7 +624,7 @@ def check_records(records):
 
 
 def generate_xml_for_records(records, prefix="apsharvest_result_",
-                             suffix=".xml", directory=CFG_TMPSHAREDDIR,
+                             suffix=".xml", directory=CFG_WORKDIR,
                              pretty=True):
     """
     Given a list of APSRecord objects, generate a MARCXML containing Metadata
@@ -780,38 +804,69 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
     For every record in given list APSRecord(record ID, DOI, date last
     updated), yield a APSRecord with added FFT dictionary containing URL to
     fulltext/metadata XML downloaded locally.
+
+    If a download is unsucessful, an error message is given.
+
+    @return: tuple of (APSRecord, error_message)
     """
     count = 0
+    request_end = None
+    request_start = None
     for record in record_list:
         # Unless this is the first request, lets sleep a bit
-        if count != 0:
-            time.sleep(CFG_APSHARVEST_REQUEST_TIMEOUT)
+        if request_end and request_start:
+            request_dt = request_end-request_start
+            write_message("Checking request time", verbose=3)
+            if count != 0 and request_dt < CFG_APSHARVEST_REQUEST_TIMEOUT:
+                write_message("Intiating sleep for %.1f seconds" % (request_dt,), verbose=3)
+                time.sleep(request_dt)
 
         count += 1
         task_update_progress("Harvesting record (%d/%d)" % (count,
                                                             len(record_list)))
 
         if not record.doi:
-            write_message("No DOI found for record %d" % (record.recid or "",))
+            write_message("No DOI found for record %d" % (record.recid or "",),
+                          stream=sys.stderr)
             continue
 
         url = CFG_APSHARVEST_FULLTEXT_URL % {'doi': record.doi}
-        result_file = get_temporary_file(prefix="apsharvest_result_",
-                                         suffix=".zip",
-                                         directory=CFG_TMPSHAREDDIR)
+        result_file = os.path.join(CFG_WORKDIR,
+                                   "%s.zip" % (record.doi.replace('/', '_')))
         try:
+            if os.path.exists(result_file):
+                # File already downloaded recently, lets see if it is the same
+                file_last_modified = get_file_modified_date(result_file)
+                if not compare_datetime_to_iso8601_date(file_last_modified, record.last_modified):
+                    # File is not older than APS version, we should not download.
+                    raise APSHarvesterFileExits
+
+            request_start = time.time()
+
+            write_message("Trying to save to %s" % (result_file,), verbose=5)
+
             result_file = download_file(url_for_file=url,
                                         downloaded_file=result_file,
-                                        content_type="zip")
+                                        content_type="zip",
+                                        retry_count=5,
+                                        timeout=60.0)
+            write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
+        except InvenioDownloadError, e:
+            write_message("Error: URL could not be opened: %s" % (url,),
+                          stream=sys.stderr)
+            yield record, "%s cannot be opened." % (url,)
+
+        except APSHarvesterFileExits:
+            write_message("File exists at %s" % (result_file,), verbose=2)
+
         except StandardError, e:
             if 'urlopen' in str(e) or 'URL could not be opened' in str(e):
-                write_message("Error: URL could not be opened: %s" % (url,))
+                write_message("Error: URL could not be opened: %s" % (url,),
+                              stream=sys.stderr)
                 write_message("No fulltext found for %s" %
                              (record.recid or record.doi,))
-                continue
+                yield record, "%s cannot be opened." % (url,)
             raise
-
-        write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
 
         # Unzip the compressed file
         unzipped_folder = unzip(result_file)
@@ -862,8 +917,8 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                 write_message("File: %s" % (path_to_converted,), verbose=2)
                 record.add_metadata(path_to_converted)
             except APSHarvesterConversionError, e:
-                write_message("Metadata conversion failed: %s" %
-                             (str(e),))
+                write_message("Metadata conversion failed: %s" % (str(e),),
+                              stream=sys.stderr)
                 record.add_metadata(None)
 
         if attach_fulltext:
@@ -872,7 +927,8 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         if record.date:
             store_last_updated(record.recid, record.date, name="apsharvest")
 
-        yield record
+        request_end = time.time()
+        yield record, ""
 
 
 def get_doi_from_record(recid):

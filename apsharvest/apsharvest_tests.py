@@ -28,10 +28,12 @@ import zipfile
 from invenio.config import CFG_TMPSHAREDDIR
 import os
 from invenio.testutils import make_test_suite, run_test_suite
-from invenio.apsharvest_utils import unzip, \
-    find_and_validate_md5_checksums, \
-    get_temporary_file, \
-    validate_date
+from invenio.apsharvest_utils import (unzip,
+                                      find_and_validate_md5_checksums,
+                                      get_temporary_file,
+                                      validate_date,
+                                      get_file_modified_date,
+                                      compare_datetime_to_iso8601_date)
 from invenio.bibdocfile import calculate_md5_external
 from invenio.bibsched_tasklets.bst_apsharvest import APSRecord, APSRecordList
 
@@ -62,18 +64,18 @@ class FileTest(unittest.TestCase):
 
         desired_dir = CFG_TMPSHAREDDIR
         unzipped_folder = unzip(test_zipped_file, desired_dir)
-        self.assertTrue(unzipped_folder.startswith(desired_dir), \
-                        "Unzipped folder is located in the wrong place %s!" % \
+        self.assertTrue(unzipped_folder.startswith(desired_dir),
+                        "Unzipped folder is located in the wrong place %s!" %
                         unzipped_folder)
 
         unzipped_folder = unzip(test_zipped_file)
-        self.assertTrue(os.path.exists(unzipped_folder), \
+        self.assertTrue(os.path.exists(unzipped_folder),
                         "Unzipped folder does not exist!")
 
         z = zipfile.ZipFile(test_zipped_file)
         list_of_zipfiles = z.namelist()
         found_list_of_files = get_files_and_folders(unzipped_folder)
-        self.assertTrue(len(list_of_zipfiles) == len(found_list_of_files), \
+        self.assertTrue(len(list_of_zipfiles) == len(found_list_of_files),
                         "Looks like all files were not extracted!")
 
     def test_md5_check(self):
@@ -123,8 +125,17 @@ class APSUtilsTest(unittest.TestCase):
         self.assertRaises(ValueError, validate_date, "2012-22-12")
         self.assertRaises(ValueError, validate_date, "2012-02-42")
 
+    def test_date_comparison(self):
+        target_filepath = get_temporary_file(directory="/tmp")
+        file_last_modified = get_file_modified_date(target_filepath)
+        comparison_date = "2013-07-18T16:31:46-0400"
+        self.assertFalse(compare_datetime_to_iso8601_date(file_last_modified,
+                                                          comparison_date))
+        comparison_date = "2013-07-18T16:31:46Z"
+        self.assertFalse(compare_datetime_to_iso8601_date(file_last_modified,
+                                                          comparison_date))
 
-TEST_SUITE = make_test_suite(FileTest, APSRecordTest)
+TEST_SUITE = make_test_suite(FileTest, APSRecordTest, APSUtilsTest)
 
 if __name__ == '__main__':
     run_test_suite(TEST_SUITE)
