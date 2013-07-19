@@ -855,6 +855,7 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
             write_message("Error: URL could not be opened: %s" % (url,),
                           stream=sys.stderr)
             yield record, "%s cannot be opened." % (url,)
+            continue
 
         except APSHarvesterFileExits:
             write_message("File exists at %s" % (result_file,), verbose=2)
