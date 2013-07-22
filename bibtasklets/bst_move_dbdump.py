@@ -24,9 +24,10 @@ Move a local dbdump to AFS.
 
 import shutil
 import os
-from invenio.config import CFG_DATABASE_NAME
+from invenio.dbquery import CFG_DATABASE_NAME
 from invenio.bibtask import write_message, task_update_progress
 from invenio.dbdump import _delete_old_dumps
+
 
 def bst_move_dbdump(sourcedir, destdir, number_to_keep):
     """
@@ -39,7 +40,7 @@ def bst_move_dbdump(sourcedir, destdir, number_to_keep):
     @type destdir: string
     """
     output_file_prefix = CFG_DATABASE_NAME + '-dbdump-'
-    files = [x for x in os.listdir(sourcedir) \
+    files = [x for x in os.listdir(sourcedir)
              if x.startswith(output_file_prefix)]
     task_update_progress("Starting moving of database-dump")
     if len(files) != 1:
@@ -52,7 +53,7 @@ def bst_move_dbdump(sourcedir, destdir, number_to_keep):
     try:
         shutil.copy(full_path_source, full_path_destination)
     except Exception, e:
-        write_message("... could not move %s to %s: %s" % \
+        write_message("... could not move %s to %s: %s" %
                       (full_path_source, full_path_destination, str(e)))
         return
     if os.path.getsize(full_path_source) == \
