@@ -136,7 +136,7 @@ def parse_pdg_line(line):
         search_terms.append("irn " + str(values[0]))
     else:
         search_terms.append("j " + values[0] + "," + values[1] + "," + values[2])
-        vol = values[1][-1] + values[:-1]
+        vol = str(values[1][-1]) + str(values[1][:-1])
         search_terms.append("j " + values[0] + "," + vol + "," + values[2])
 
     if not search_terms:
