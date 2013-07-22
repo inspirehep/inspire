@@ -22,16 +22,12 @@ Inspire PDG Update Identifiers
 """
 
 import sys
-import os
-import getopt
 import datetime
-import re
 
 from copy import deepcopy
 
 from invenio.search_engine import (perform_request_search,
                                    get_record)
-from invenio.search_engine_utils import get_fieldvalues
 from invenio.bibrecord import (record_get_field_instances,
                                field_get_subfield_values,
                                record_add_field,
@@ -77,7 +73,6 @@ def get_lines_from_file(input_file):
 
     _print_out("Reading from file " + input_file)
     lines = []
-    count = 0
     for line in f:
         if not line.startswith('#'):
             lines.append(line.strip())
