@@ -25,7 +25,6 @@ import sys
 import os
 import getopt
 import datetime
-import argparse
 import re
 
 from copy import deepcopy
@@ -248,38 +247,6 @@ def check_existing_pdg_fields(recids, pdg_data, current_records):
     return records
 
 
-def parse_arguments():
-    # Not with the wife
-    input_file = ''
-    dry_run = False
-
-    parser = argparse.ArgumentParser(description=MESSAGE_DESCRIPTION,
-                                     epilog=MESSAGE_COPYRIGHT)
-    parser.add_argument("input_file", help="Location of the text file containing updated PDG information")
-    parser.add_argument("output_dir", help="Directory to store operation results in.", default=CFG_TMPSHAREDDIR)
-    parser.add_argument("-d", "--dry-run", help="Outputs changes without modifying records in the database.", action='store_true')
-    parser.add_argument("-v", "--verbose", help="Verbose output (for debugging)", action='store_true')
-    args = parser.parse_args()
-
-    if not os.path.isfile(args.input_file):
-        _print_out("Error: Not a valid file: " + args.input_file)
-        sys.exit(2)
-
-    if not os.path.isdir(args.output_dir):
-        _print_out("Error: Not a valid directory: " + args.output_dir)
-        sys.exit(2)
-    elif not os.access(args.output_dir, os.W_OK):
-        _print_out("Error: Cannot write to directory: " + args.output_dir)
-        sys.exit(2)
-
-    if args.output_dir[-1] is '/':
-        out_dir = args.output_dir
-    else:
-        out_dir = args.output_dir + '/'
-
-    return args.input_file, args.dry_run, out_dir
-
-
 def main(input_file, dry_run, output_dir):
     # Ensure we have data to update first
     _print_out("--------------- Fetching current data ---------------")
@@ -398,7 +365,3 @@ def bst_pdg_update_idents(input_file, dry=False, outdir=CFG_TMPSHAREDDIR):
     Part of Inspire (http://www.inspirehep.net) - Copyright (C) 2013 CERN.
     """
     main(input_file, dry, outdir)
-
-if __name__ == '__main__':
-    f_in, dry, outdir = parse_arguments()
-    main(f_in, dry, outdir)
