@@ -12,18 +12,16 @@ import getopt
 
 from invenio.bibupload import open_marc_file
 from invenio.config import CFG_ETCDIR
-from invenio.bibrecord import create_records, \
-                              record_get_field_instances, \
-                              record_add_field, record_xml_output, \
-                              field_get_subfield_values, \
-                              record_get_field_values, \
-                              record_get_field_value
+from invenio.bibrecord import (create_records,
+                               record_get_field_instances,
+                               record_add_field, record_xml_output,
+                               field_get_subfield_values,
+                               record_get_field_values)
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
 from invenio.search_engine import perform_request_search
-from invenio.oai_harvest_daemon import create_ticket
 
 
 def parse_actions(action_line):
@@ -104,13 +102,11 @@ def get_action(tag, diff_code, action_dict):
         for code, act in actions:
             if diff_code in code:
                 return act
-    else:
-        # tag->code not specified in configuration file, lets do defaults
-        for actions in action_dict["default"]:
-            for code, act in actions:
-                if diff_code in code:
-                    return act
-    return None
+    # tag->code not specified in configuration file, lets do defaults
+    for actions in action_dict["default"]:
+        for code, act in actions:
+            if diff_code in code:
+                return act
 
 
 def create_record_from_list(recid, field_list):
@@ -124,7 +120,8 @@ def create_record_from_list(recid, field_list):
     """
     new_rec = {}
     for tag, subfields in field_list:
-        for subfields, ind1, ind2, value, field_position_global in subfields:
+        for t in subfields:
+            subfields, ind1, ind2, value = t[:4]
             record_add_field(new_rec,
                              tag,
                              ind1=ind1,
@@ -213,57 +210,6 @@ def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code
                 # This is the value we are looking for with the correct provenence
                 final_values.append(value)
     return final_values
-
-
-def generate_ticket(record):
-    """
-    Will generate the ticket subject and body.
-    Returns a tuple of strings: (subject, body)
-    """
-    arxiv_id = get_minimal_arxiv_id(record)
-    pdfurl = "http://arxiv.org/pdf/%s" % (arxiv_id,)
-    abstracturl = "http://arxiv.org/abs/%s" % (arxiv_id,)
-
-    categories = record_get_value_with_provenence(record, "650", "1", "7", "a", provenence_code="2")
-    comments = record_get_value_with_provenence(record, "500", value_code="a")
-    authors = record_get_field_values(record, tag="100", code="a") + record_get_field_values(record, tag="700", code="a")
-
-    subject = "ARXIV:" + arxiv_id
-    text = \
-"""
-%(submitdate)s
-
-ABSTRACT: %(abstracturl)s
-PDF: %(pdfurl)s
-
-Paper: %(arxiv_id)s
-
-Title: %(title)s
-
-Comments: %(comments)s
-
-Authors: %(authors)s
-
-Categories: %(categories)s
-    
-%(abstract)s
-
-Try to find the record on INSPIRE: %(inspiresearchurl)s
-
-""" \
-    % {
-        'submitdate': record_get_field_value(record, tag="269", code="c"),
-        'pdfurl': pdfurl,
-        'abstracturl': abstracturl,
-        'arxiv_id': arxiv_id,
-        'title': record_get_field_value(record, tag="245", code="a"),
-        'comments': "; ".join(comments),
-        'categories': " ".join(categories),
-        'authors': " / ".join(authors[:10]),
-        'abstract': record_get_field_value(record, tag="520", code="a"),
-        'inspiresearchurl': "http://inspirehep.net/search?p=find%20eprint%20" + arxiv_id,
-    }
-    return subject, text.replace('%', '%%')
 
 
 def main():
@@ -355,14 +301,8 @@ def main():
                     recid = results[0]
 
         if not recid or recid == -1:
-            # Record (probably) does not exist, flag for insert into database
+            # Record (probably) does not exist, flag for inserting into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
-
-            # New CORE records creates a ticket in RT
-            if "CORE" in record_get_field_values(record, tag="980", code="a"):
-                queue = "HEP_curation"
-                subject, body = generate_ticket(record)
-                create_ticket(queue, subject=subject, text=body)
             insert_records.append(record)
         else:
             # Record exists, fetch existing record
@@ -422,7 +362,15 @@ def main():
                         fields_to_correct.append((tag, corrected_fields))
 
                     if action == 'append':
-                        added_fields = record_get_field_instances(record, tag, ind1="%", ind2="%")
+                        # Before appending we are checking if there are any duplicate fields already
+                        # FIXME: Not needed when BibUpload treats duplicate fields nicely
+                        original_fields = record_get_field_instances(existing_record, tag, ind1="%", ind2="%")
+                        new_fields = record_get_field_instances(record, tag, ind1="%", ind2="%")
+
+                        # We need to remove position from the picture before comparison
+                        original_fields = [field[:-1] for field in original_fields]
+                        added_fields = [field[:-1] for field in new_fields if field[:-1] not in original_fields]
+
                         fields_to_add.append((tag, added_fields))
 
             # Lets add any extracted 'append' or 'correct' fields
