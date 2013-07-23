@@ -75,7 +75,8 @@ def get_lines_from_file(input_file):
     lines = []
     for line in f:
         if not line.startswith('#'):
-            lines.append(line.strip())
+            if line is not '':
+                lines.append(line.strip())
 
     _print_out(str(len(lines)) + " lines parsed from file")
 
@@ -131,14 +132,23 @@ def parse_pdg_line(line):
     if len(values) < 3:
         return ParseResult.Invalid, None, None
 
-    search_terms = []
-    if values[1] is '' and values[2] is '':
-        search_terms.append("irn " + str(values[0]))
-    else:
-        search_terms.append("j " + values[0] + "," + values[1] + "," + values[2])
-        vol = str(values[1][-1]) + str(values[1][:-1])
-        search_terms.append("j " + values[0] + "," + vol + "," + values[2])
+    journal, vol, pages = values[:3]
 
+    search_terms = []
+    if vol is '' and pages is '':
+        search_terms.append("irn " + str(journal))
+    else:
+        search_terms.append("j " + journal + "," + vol + "," + pages)
+        if vol and vol[0].isalpha():
+            search_terms.append("j " + journal + "," + vol[1:] + vol[0] + "," + pages)
+            search_terms.append("j " + journal + "," + vol[1:] + "," + pages)
+
+        if vol and vol[-1].isalpha():
+            search_terms.append("j " + journal + "," + vol[-1] + vol[:-1] + "," + pages)
+            search_terms.append("j " + journal + "," + vol[:-1] + "," + pages)
+
+        if pages.startswith('R'):
+            search_terms.append("j " + journal + "," + vol + "," + pages[1:])
     if not search_terms:
         return ParseResult.Invalid, None, None
 
@@ -184,14 +194,15 @@ def remove_pdg_fields(recids, current_records):
     _print_out("Removing PDG data from " + str(len(recids)) + " records...")
     records = {}
     for recid in recids:
-        record_mod = deepcopy(current_records[recid])
-        fields = record_get_field_instances(record_mod, '084')
+        record_mod = {}
+        record_mod['001'] = current_records[recid]['001']
+        record_mod['084'] = []
+        fields = record_get_field_instances(current_records[recid], '084')
         count = 0
         for field in fields:
             count = count + 1
             if is_pdg_field(field):
-                record_delete_field(record_mod, '084', ind1=' ', ind2=' ',
-                                    field_position_global=field[4])
+                record_mod['084'].append(field)
 
         _print_verbose(str(count) + " of " + str(len(fields)) +
                        " fields to be removed from record #" + str(recid))
@@ -264,6 +275,7 @@ def main(input_file, dry_run, output_dir):
         _print_out("WARNING: Bad record IDs found! Printing to file")
         write_list_to_file(output_dir, "bad_record_ids", bad_record_ids)
 
+    _print_out("--------------- Input Parsing ---------------")
     new_lines = get_lines_from_file(input_file)
     new_pdg_data = {}  # Struct {'recid': [pdg_data]}
     lines_missing = []
@@ -285,8 +297,7 @@ def main(input_file, dry_run, output_dir):
             lines_ambiguous.append(line)
             _print_verbose("line #"+str(i)+": Ambiguous line: "+line)
 
-    # Results
-    _print_out("--------------- Input Parsing ---------------")
+    _print_out("--------------- Matching records ---------------")
     _print_out("Records matched to PDG data (valid): "+str(len(new_pdg_data)))
     _print_out("Missing records (not found): "+str(len(lines_missing)))
     _print_out("Ambiguous (multiple results): "+str(len(lines_ambiguous)))
@@ -330,17 +341,17 @@ def main(input_file, dry_run, output_dir):
     if appends is not None:
         write_records_to_file(output_dir, "append.xml", appends, dry_run)
     else:
-        _print_out("No records to append.")
+        _print_out("No records to append to.")
 
-    if updates is not None:
+    if len(updates) > 0:
         write_records_to_file(output_dir, "correct.xml", updates, dry_run)
     else:
         _print_out("No records to correct.")
 
     if deletions is not None:
-        write_records_to_file(output_dir, "replace.xml", deletions, dry_run)
+        write_records_to_file(output_dir, "delete.xml", deletions, dry_run)
     else:
-        _print_out("No records to replace.")
+        _print_out("No records to delete from.")
 
 
 def bst_pdg_update_idents(input_file, dry=False, outdir=CFG_TMPSHAREDDIR):
@@ -349,14 +360,13 @@ def bst_pdg_update_idents(input_file, dry=False, outdir=CFG_TMPSHAREDDIR):
     Updates the PDG identifiers for records included in The Review of Particle
     Physics (http://pdg.lbl.gov/)
 
-    positional arguments:
-      input_file     Location of the text file containing updated PDG information
-
-    optional arguments:
-      -h, --help     show this help message and exit
-      -d, --dry-run  Outputs changes without modifying records in the database.
-      -v, --verbose  Verbose output (for debugging)
+    Arguments:
+    input_file - path to the PDG data to be read
+    dry - if True, won't output the final XML (debugging)
+    outdir - where files are written to, default CFG_TMPSHAREDDIR
 
     Part of Inspire (http://www.inspirehep.net) - Copyright (C) 2013 CERN.
     """
+    if outdir[-1] is not '/':
+        outdir = outdir + '/'
     main(input_file, dry, outdir)
