@@ -62,23 +62,14 @@ def check_record(ticket, record):  # pylint: disable-msg=W0613
     """
     # It has to be a CORE record
     if not record_in_collection(record, "CORE"):
-        return
-
-    recid = record_id_from_record(record)
-    # Do not create tickets for old records
-    creation_date = run_sql("""SELECT creation_date FROM bibrec
-                               WHERE id = %s""", [recid])[0][0]
-
-    # No older than 6 months
-    if creation_date < datetime.datetime.now() - datetime.timedelta(days=7*26):
-        return
+        return False
 
     # Finally it has to be an arXiv record
-    for report_tag in record_get_field_instances(record, "037"):
-        for report_number in field_get_subfield_values(report_tag, 'a'):
-            if report_number.lower().startswith('arxiv'):
-                return True
-    return False
+    if not record_in_collection(record, "ARXIV"):
+        return False
+
+    # We are arXiv!
+    return True
 
 
 def generate_ticket(ticket, record):
@@ -110,8 +101,7 @@ def generate_ticket(ticket, record):
     text = 'Curate record here: %s/record/edit/#state=edit&recid=%s' % \
            (CFG_SITE_SECURE_URL, recid)
 
-    # FIXME: replace queue with "HEP_curation"
     ticket.subject = " ".join(subject)
     ticket.body = text.replace('%', '%%')
-    ticket.queue = "Test"
+    ticket.queue = "HEP_curation"
     return ticket
