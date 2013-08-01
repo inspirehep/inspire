@@ -25,7 +25,7 @@ import re
 import datetime
 import time
 
-from invenio.config import CFG_TMPDIR
+from invenio.config import CFG_TMPSHAREDDIR
 from tempfile import mkdtemp, mkstemp
 from invenio.bibdocfile import calculate_md5_external
 from invenio.shellutils import run_shell_command
@@ -60,7 +60,7 @@ def unzip(zipped_file, output_directory=None):
     if not output_directory:
         # We create a temporary directory to extract our stuff in
         try:
-            output_directory = mkdtemp(prefix="apsharvest_unzip_", dir=CFG_TMPDIR)
+            output_directory = mkdtemp(prefix="apsharvest_unzip_", dir=CFG_TMPSHAREDDIR)
         except Exception, e:
             try:
                 os.removedirs(output_directory)
