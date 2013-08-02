@@ -3,7 +3,7 @@
 include ../../config.mk
 -include ../../config-local.mk
 
-LIBFILES = *.py
+LIBFILES = bibtaskutils.py
 
 LIBDIR = $(PREFIX)/lib/python/invenio/
 
