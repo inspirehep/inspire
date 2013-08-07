@@ -37,7 +37,7 @@ def add_kb_values(kbname, kbfile):
     num_added = 0
     kb_fd = open(kbfile)
     for line in kb_fd:
-        splitted_line = line.split('\t')
+        splitted_line = line.split('---')
         pair = []
         for part in splitted_line:
             if not part.strip():

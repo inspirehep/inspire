@@ -4588,6 +4588,8 @@ CENT EURO ASTRO BULL---Cent.Euro.Astro.Bull.
 HIST REC AUSTRAL SCI---Hist.Rec.Austral.Sci.
 ADV SOLID STATE PHYS---Adv.Solid State Phys.
 ASTRON ANDASTROPHYS---Astron.Astrophys.
+PROG THEOR EXP PHYS---PTEP
+J PHYS A MATH THEOR---J.Phys.;A
 ASTRON ASTROPHYSICS---Astron.Astrophys.
 #JL ASTRON ASTROPYS---Astron.Astrophys.
 ACTAAPPLICANDAEMATH---Acta Appl.Math.
@@ -4727,6 +4729,7 @@ COMMENTSONASTROPHYS---Comments Astrophys.
 COMMENTSAP SPACESCI---Comments Astrophys.
 CURR OPIN CHEM BIOL---Curr.Opin.Chem.Biol.
 COMPUT AND GRAPHICS---Comput.And Graphics
+COMPT REND ACAD SCI---Compt.Rend.Acad.Sci
 COMPT REND ACAD SCI---Compt.Rend.Math.
 COMM PURE APPL MATH---Commun.Pure Appl.Math.
 COMMUN PUREAPP MATH---Commun.Pure Appl.Math.
@@ -5226,6 +5229,7 @@ EARTH PLANETS SPACE---Earth Planets Space
 J MATER ENG PERFORM---J.Mater.Eng.Perform.
 PROC SYMP APPL MATH---Proc.Symp.Appl.Math.
 J THEOR COMPUT STUD---J.Theor.Comput.Stud.
+J OF PHYS CONF SER---J.Phys.Conf.Ser.
 AKN ACAD BRASIL CI---Anales Acad.Bras.Cienc.
 ADV APPL CLIFF ALG---Adv.Appl.Clifford Algebras
 ASTRONOM ASTROPHYS---Astron.Astrophys.
@@ -5365,6 +5369,7 @@ CONNECTION SCIENCE---Connection Sci.
 COMMENTS ASTROPHYS---Comments Astrophys.
 COMM ASTR SPA PHYS---Comments Astrophys.
 COMMENTS ASTROPHYS---Comments Astrophys.
+C R ACAD SCI PARIS---Compt.Rend.Acad.Sci.
 C R ACAD SCI PARIS---Compt.Rend.Math.
 COMM PURE APP MATH---Commun.Pure Appl.Math.
 COMM PUREAPPL MATH---Commun.Pure Appl.Math.
@@ -6746,6 +6751,7 @@ COMMENTSONASTRPH---Comments Astrophys.
 COMMENTSASTROPHS---Comments Astrophys.
 COGNITIVESCIENCE---Cognitive Sci.
 COMMUN MATH HELV---Comment.Math.Helv.
+C R ACAD SCI SER---Compt.Rend.Acad.Sci.
 C R ACAD SCI SER---Compt.Rend.Math.
 COMM PUREAP MATH---Commun.Pure Appl.Math.
 COM PART DIFF EQ---Commun.Part.Diff.Eq.
@@ -9641,6 +9647,7 @@ CL QUAN GRAV---Class.Quant.Grav.
 CLASS Q GRAV---Class.Quant.Grav.
 QUANTUM GRAV---Class.Quant.Grav.
 C R ACAD SCI---Compt.Rend.Acad.Sci.Bulg.
+C R ACAD SCI---Compt.Rend.Acad.Sci.
 CHEM SCRIPTA---Chem.Scripta
 CHEM SOC REV---Chem.Soc.Rev.
 CONTEMP MATH---Contemp.Math.
@@ -11001,6 +11008,7 @@ PUBL I H E---Inst.Hautes Etudes Sci.Publ.Math.
 PROGR MATH---Progr.Math.
 PRZ GEOFIZ---Prz.Geofiz.
 PHYSREVLET---Phys.Rev.Lett.
+PHYS REP C---Phys.Rept.;C
 PHYS REP C---Phys.Rept.
 PHYS REPTS---Phys.Rept.
 PHYS RPRTS---Phys.Rept.
@@ -11827,6 +11835,7 @@ YAD PHYS---Yad.Fiz.
 A F ASTR---Z.Astrophys.
 Z F PHYS---Z.Phys.
 Z PHYS C---Z.Phys.
+Z PHYS C---Z.Phys.;C
 Z PHYSIK---Z.Phys.
 Z PHYZIK---Z.Phys.
 ZEITPHYS---Z.Phys.
@@ -13514,6 +13523,7 @@ JBJSA---J.Bone Joint.Surg.
 JBNSA---J.Br.Nucl.Energy Soc.
 JBPHB---J.Biol.Phys.
 JBSIA---J.Phys.;E
+JBSIA---J.Phys.
 JCAMD---J.Comput.Appl.Math.
 JCAPA---JCAP
 JCATD---J.Comput.Assist.Tomogr.
@@ -13720,6 +13730,7 @@ JOUSE---J.Supercond.
 JOVIA---J.Virology
 JPAAA---J.Pure Appl.Algebra
 JPAGB---J.Phys.;A
+JPAGB---J.Phys.
 JPAHE---J.Phys.II
 JPAIE---J.Phys.III
 JPAPB---J.Phys.;D
@@ -14878,6 +14889,7 @@ ZEASA---Z.Astrophys.
 ZECEA---Z.Chem.
 ZEELA---Z.Elektrochem.
 ZEPYA---Z.Phys.
+ZEPYA---Z.Phys.;A
 ZETFA---Zh.Eksp.Teor.Fiz.
 ZFDOF---J.Phys.Stud.
 ZFKHA---Zh.Fiz.Khim.
@@ -15881,3 +15893,6 @@ EJS---Elec.J.Stat.
 #PS---Phys.Scripta
 #YF---Yad.Fiz.
 #ZP---Z.Phys.
+
+
+

@@ -1,14 +1,14 @@
-	P	Phenomenology-HEP
-	T	Theory-HEP
-	E	Experiment-HEP
-	L	Lattice
-	A	Astrophysics
-	B	Accelerators
-	N	Theory-Nucl
-	X	Experiment-Nucl
-	C	Computing
-	G	Gravitation and Cosmology
-	I	Instrumentation
-	M	Math and Math Physics
-	O	Other
-	Q	General Physics
+A---Astrophysics
+B---Accelerators
+C---Computing
+E---Experiment-HEP
+G---Gravitation and Cosmology
+I---Instrumentation
+L---Lattice
+M---Math and Math Physics
+N---Theory-Nucl
+O---Other
+P---Phenomenology-HEP
+Q---General Physics
+T---Theory-HEP
+X---Experiment-Nucl

@@ -1,8 +1,8 @@
-	S	Published
-	P	Published
-	C	Conference Paper
-	T	Thesis
-	I	Introductory
-	R	Review
-	L	Lectures
-	B	Book
+B---Book
+C---Conference Paper
+I---Introductory
+L---Lectures
+P---Published
+R---Review
+S---Published
+T---Thesis
