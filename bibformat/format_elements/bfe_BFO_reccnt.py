@@ -24,7 +24,11 @@ __revision__ = "$Id$"
 
 import urllib
 
-from invenio.config import CFG_BASE_URL
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    from invenio.config import CFG_SITE_URL
+    CFG_BASE_URL = CFG_SITE_URL
 from invenio.urlutils import create_html_link
 from invenio.search_engine import perform_request_search
 

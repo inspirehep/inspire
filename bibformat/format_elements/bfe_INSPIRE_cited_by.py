@@ -23,7 +23,12 @@
 __revision__ = "$Id$"
 
 from invenio.search_engine import search_pattern
-from invenio.config import CFG_BASE_URL
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    from invenio.config import CFG_SITE_URL
+    CFG_BASE_URL = CFG_SITE_URL
+
 
 def format_element(bfo, separator='; ', nbOnly='no', searchlink='no'):
     """

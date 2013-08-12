@@ -20,7 +20,14 @@
 """
 
 from invenio.urlutils import create_html_link
-from invenio.config import CFG_BASE_URL, CFG_SITE_RECORD
+from invenio.config import CFG_SITE_RECORD
+
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    from invenio.config import CFG_SITE_URL
+    CFG_BASE_URL = CFG_SITE_URL
+
 from invenio.access_control_engine import acc_authorize_action
 from invenio.search_engine import get_all_collections_of_a_record
 

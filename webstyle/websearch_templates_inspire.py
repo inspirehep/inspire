@@ -31,7 +31,6 @@ from invenio.config import \
      CFG_SITE_NAME, \
      CFG_SITE_NAME_INTL, \
      CFG_SITE_SUPPORT_EMAIL, \
-     CFG_BASE_URL, \
      CFG_VERSION, \
      CFG_WEBSTYLE_INSPECT_TEMPLATES, \
      CFG_WEBSTYLE_TEMPLATE_SKIN, \
@@ -54,6 +53,10 @@ from invenio.config import \
      CFG_WEBSEARCH_MAX_RECORDS_IN_GROUPS, \
      CFG_SITE_URL
 
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    CFG_BASE_URL = CFG_SITE_URL
 
 from invenio.dbquery import run_sql
 from invenio.messages import gettext_set_language

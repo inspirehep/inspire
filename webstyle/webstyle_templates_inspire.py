@@ -30,10 +30,15 @@ from invenio.config import \
      CFG_SITE_NAME_INTL, \
      CFG_SITE_SUPPORT_EMAIL, \
      CFG_SITE_SECURE_URL, \
-     CFG_BASE_URL, \
      CFG_VERSION, \
      CFG_WEBSTYLE_INSPECT_TEMPLATES, \
      CFG_WEBSTYLE_TEMPLATE_SKIN
+
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    from invenio.config import CFG_SITE_URL
+    CFG_BASE_URL = CFG_SITE_URL
 
 from invenio.messages import gettext_set_language
 from invenio.dateutils import convert_datestruct_to_dategui, \
@@ -55,7 +60,8 @@ class Template(DefaultTemplate):
                   body="", lastupdated=None, pagefooteradd="", uid=0,
                   secure_page_p=0, navmenuid="", metaheaderadd="",
                   rssurl=CFG_BASE_URL+"/rss",
-                  show_title_p=True, body_css_classes=None):
+                  show_title_p=True, body_css_classes=None,
+                  show_header=True, show_footer=True):
 
         """Creates a complete page
 
@@ -121,6 +127,10 @@ class Template(DefaultTemplate):
 
           - 'body_css_classes' *list* - list of classes to add to the body tag
 
+          - 'show_header' *boolean* - tells whether page header should be displayed or not
+
+          - 'show_footer' *boolean* - tells whether page footer should be displayed or not
+
            Output:
 
           - HTML code of the page
@@ -133,23 +143,26 @@ class Template(DefaultTemplate):
         if title and show_title_p and title != "Submit New Record":
             pagetitle = '<div class="headline_div"><h1 class="headline">' + cgi.escape(title) + '</h1></div>'
 
-        out = self.tmpl_pageheader(req,
-                                   ln = ln,
-                                   headertitle = title,
-                                   description = description,
-                                   keywords = keywords,
-                                   metaheaderadd = metaheaderadd,
-                                   userinfobox = userinfobox,
-                                   useractivities_menu = useractivities_menu,
-                                   adminactivities_menu = adminactivities_menu,
-                                   navtrailbox = navtrailbox,
-                                   pageheaderadd = pageheaderadd,
-                                   uid=uid,
-                                   secure_page_p = secure_page_p,
-                                   navmenuid=navmenuid,
-                                   rssurl=rssurl,
-                                   body_css_classes=body_css_classes) + """
-<div class="pagebody">
+        out = ""
+        if show_header:
+            out += self.tmpl_pageheader(req,
+                                        ln=ln,
+                                        headertitle=title,
+                                        description=description,
+                                        keywords=keywords,
+                                        metaheaderadd=metaheaderadd,
+                                        userinfobox=userinfobox,
+                                        useractivities_menu=useractivities_menu,
+                                        adminactivities_menu=adminactivities_menu,
+                                        navtrailbox=navtrailbox,
+                                        pageheaderadd=pageheaderadd,
+                                        uid=uid,
+                                        secure_page_p=secure_page_p,
+                                        navmenuid=navmenuid,
+                                        rssurl=rssurl,
+                                        body_css_classes=body_css_classes)
+        out += """
+  <div class="pagebody">
   <div class="pagebodystripeleft">
     <div class="pageboxlefttop">%(boxlefttop)s</div>
     <div class="pageboxlefttopadd">%(boxlefttopadd)s</div>
@@ -171,27 +184,24 @@ class Template(DefaultTemplate):
   <div class="clear"></div>
 </div>
 """ % {
-  'boxlefttop' : boxlefttop,
-  'boxlefttopadd' : boxlefttopadd,
-
-  'boxleftbottom' : boxleftbottom,
-  'boxleftbottomadd' : boxleftbottomadd,
-
-  'boxrighttop' : boxrighttop,
-  'boxrighttopadd' : boxrighttopadd,
-
-  'boxrightbottom' : boxrightbottom,
-  'boxrightbottomadd' : boxrightbottomadd,
-
-  'titleprologue' : titleprologue,
-  'title' : pagetitle,
-  'titleepilogue' : titleepilogue,
-
-  'body' : body,
-
-  } + self.tmpl_pagefooter(req, ln = ln,
-                           lastupdated = lastupdated,
-                           pagefooteradd = pagefooteradd)
+       'boxlefttop': boxlefttop,
+       'boxlefttopadd': boxlefttopadd,
+       'boxleftbottom': boxleftbottom,
+       'boxleftbottomadd': boxleftbottomadd,
+       'boxrighttop': boxrighttop,
+       'boxrighttopadd': boxrighttopadd,
+       'boxrightbottom': boxrightbottom,
+       'boxrightbottomadd': boxrightbottomadd,
+       'titleprologue': titleprologue,
+       'title': pagetitle,
+       'titleepilogue': titleepilogue,
+       'body': body,
+      }
+        if show_footer:
+            out += self.tmpl_pagefooter(req,
+                                        ln=ln,
+                                        lastupdated=lastupdated,
+                                        pagefooteradd=pagefooteradd)
         return out
 
     def tmpl_pageheader(self, req, ln=CFG_SITE_LANG, headertitle="",

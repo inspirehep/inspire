@@ -18,7 +18,13 @@
 __revision__ = "$Id$"
 
 import os
-from invenio.config import CFG_BASE_URL
+
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    from invenio.config import CFG_SITE_URL
+    CFG_BASE_URL = CFG_SITE_URL
+
 from invenio.websubmit_functions.JOBSUBMIT_Mail_Submitter import CFG_WEBSUBMIT_JOBS_SUPPORT_EMAIL
 # FIXME: cannot import Request_Print(), is defined in websubmit_engine.py
 

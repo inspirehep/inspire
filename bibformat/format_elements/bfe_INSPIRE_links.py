@@ -24,7 +24,13 @@ does not include arXiv.
 """
 
 from invenio.messages import gettext_set_language
-from invenio.config import CFG_SITE_URL, CFG_BASE_URL
+from invenio.config import CFG_SITE_URL
+
+try:
+    from invenio.config import CFG_BASE_URL
+except ImportError:
+    CFG_BASE_URL = CFG_SITE_URL
+
 from invenio.bibdocfile import bibdocfile_url_to_bibdoc
 
 
