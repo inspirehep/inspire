@@ -25,7 +25,7 @@ affiliation_prefix="<small> (" affiliation_suffix=") </small>" />
 <BFE_INSPIRE_SERIES prefix="<li>" suffix="</li>"/>
 <BFE_INSPIRE_HEP_PUBLISHER prefix="<li>" suffix="</li>" />
 <BFE_INSPIRE_DOI prefix="<li>DOI: " suffix="</li>"/>
-<BFE_ISBN prefix="<li>ISBN: " suffix="</li>" />
+<BFE_INSPIRE_ISBN prefix="<li>ISBN: " suffix="</li>" />
 <BFE_INSPIRE_CONFERENCE prefix="<li>" suffix="</li>" />
 <BFE_INSPIRE_PROCEEDINGS prefix="<li>" suffix="</li>" newline="True" />
 <BFE_REPORT_NUMBERS prefix="<li>" suffix="</li>" />
