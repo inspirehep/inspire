@@ -3,7 +3,7 @@
 include ../../config.mk
 -include ../../config-local.mk
 
-IMGFILES = *.png
+IMGFILES = *.png *.jpg
 
 all:
 	@echo "Done."
