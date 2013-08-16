@@ -37,12 +37,14 @@ def format_element(bfo, separator=" "):
     out = []
 
     for item in date_list:
-        if 'a' in item:
-            out.append(item['a'] + ':')
-        if 'b' in item:
-            out.append(' ' + item['b'])
-        if 'c' in item:
-            out.append(' (' + item['c'] + ')')
+        text = []
+        if item.has_key('a'):
+            text.append(item['a'] + ':')
+        if item.has_key('b'):
+            text.append(' ' + item['b'])
+        if item.has_key('c'):
+            text.append(' (' + item['c'] + ')')
+        out.append(" ".join(text))
 
     if out:
         return separator.join(out)

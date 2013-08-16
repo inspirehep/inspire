@@ -23,7 +23,7 @@ affiliation_prefix="<small> (" affiliation_suffix=") </small>" />
 <ul style="list-style:none;text-align:center;margin:15px;padding:0;">
 <BFE_INSPIRE_HEP_ERRATUM prefix="<li>" suffix="</li>"/>
 <BFE_INSPIRE_SERIES prefix="<li>" suffix="</li>"/>
-<BFE_INSPIRE_HEP_PUBLISHER prefix="<li>" suffix="</li>" />
+<BFE_INSPIRE_HEP_PUBLISHER prefix="<li>" suffix="</li>" separator="<br/>"/>
 <BFE_INSPIRE_DOI prefix="<li>DOI: " suffix="</li>"/>
 <BFE_INSPIRE_ISBN prefix="<li>ISBN: " suffix="</li>" />
 <BFE_INSPIRE_CONFERENCE prefix="<li>" suffix="</li>" />
