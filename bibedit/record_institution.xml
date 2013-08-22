@@ -48,9 +48,6 @@
   <datafield tag="680" ind1=" " ind2=" ">
     <subfield code="i">VOLATILE:public note</subfield>
   </datafield>
-  <datafield tag="690" ind1="C" ind2=" ">
-    <subfield code="a">VOLATILE:CORE</subfield>
-  </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="u">VOLATILE:http: (for external link)</subfield>
   </datafield>
