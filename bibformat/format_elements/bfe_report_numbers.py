@@ -22,7 +22,7 @@ import cgi
 from invenio.urlutils import create_html_link
 
 
-def format_element(bfo, separator=', ', limit='9999', extension=" etc."):
+def format_element(bfo, separator=', ', limit='9999', extension=" etc.", just_one='no'):
     """
     Print the report numbers of the record (037__a and 088__a)
 
@@ -31,11 +31,12 @@ def format_element(bfo, separator=', ', limit='9999', extension=" etc."):
     format_element is still handy for magic parameters, e.g., prefix, suffix
     and friends.
     """
-    return get_report_numbers_formatted(bfo, separator, limit, extension, \
-           skip=['arXiv'])
+    just_one = just_one == 'yes'
+    return get_report_numbers_formatted(bfo, separator, limit, extension,
+           skip=['arXiv'], just_one=just_one)
 
 
-def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None):
+def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None, just_one=False):
     """
     Prints the report numbers of the record (037__a and 088__a)
 
@@ -54,17 +55,22 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
             for keyword in skip:
                 if keyword.lower() in value.get('a', '').lower() or \
                    value.get('9', '').lower() == keyword.lower():
-                   return True
+                    return True
         if value.get('a', '').lower().startswith("fermilab") and \
            bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration'):
             return True
 
     numbers = bfo.fields("037__")
     numbers.extend(bfo.fields("088__"))
+
+    # Only display the first one
+    if just_one:
+        numbers = numbers[:1]
+
     for x in numbers:
         if _skippable(x):
             continue
-        if x.has_key('a'):
+        if 'a' in x:
             out.append(x['a'])
 
     if limit.isdigit() and int(limit) <= len(out):
