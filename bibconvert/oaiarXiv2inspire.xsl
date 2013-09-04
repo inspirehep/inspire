@@ -769,29 +769,15 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                   </xsl:otherwise>
                 </xsl:choose>
 
-                <!-- MARC FIELD 690C$a,2 980$$a  - journal collection indicators  -->
-
-                <datafield tag="690" ind1="C" ind2=" ">
-                  <subfield code="a">Published</subfield>
-                  <subfield code="2">INSPIRE</subfield>
-                </datafield>
-
                 <datafield tag="980" ind1=" " ind2=" ">
                   <subfield code="a">Published</subfield>
                 </datafield>
 
               </xsl:if>
 
-              <!-- MARC FIELD 690C$a 980$$a collection indicators  -->
-
               <xsl:choose>
                 <!-- Is this a thesis?  -->
                 <xsl:when test="contains($commentslow,' diploma ') or contains($commentslow,' diplomarbeit ') or contains($commentslow,' diplome ') or contains($commentslow,' dissertation ') or contains($commentslow,' doctoraal ') or contains($commentslow,' doctoral ') or contains($commentslow,' doctorat ') or contains($commentslow,' doctorate ') or contains($commentslow,' doktorarbeit ') or contains($commentslow,' dottorato ') or contains($commentslow,' habilitationsschrift ') or contains($commentslow,' hochschule ') or contains($commentslow,' inauguraldissertation ') or contains($commentslow,' memoire ') or contains($commentslow,' phd ') or contains($commentslow,' proefschrift ') or contains($commentslow,' schlussbericht ') or contains($commentslow,' staatsexamensarbeit ') or contains($commentslow,' tesi ') or contains($commentslow,' thesis ') or contains($commentslow,' travail ') or contains($commentslow,' diploma,') or contains($commentslow,' diplomarbeit,') or contains($commentslow,' diplome,') or contains($commentslow,' dissertation,') or contains($commentslow,' doctoraal,') or contains($commentslow,' doctoral,') or contains($commentslow,' doctorat,') or contains($commentslow,' doctorate,') or contains($commentslow,' doktorarbeit,') or contains($commentslow,' dottorato,') or contains($commentslow,' habilitationsschrift,') or contains($commentslow,' hochschule,') or contains($commentslow,' inauguraldissertation,') or contains($commentslow,' memoire,') or contains($commentslow,' phd,') or contains($commentslow,' proefschrift,') or contains($commentslow,' schlussbericht,') or contains($commentslow,' staatsexamensarbeit,') or contains($commentslow,' tesi,') or contains($commentslow,' thesis,') or contains($commentslow,' travail,') or contains($commentslow,' diploma.') or contains($commentslow,' diplomarbeit.') or contains($commentslow,' diplome.') or contains($commentslow,' dissertation.') or contains($commentslow,' doctoraal.') or contains($commentslow,' doctoral.') or contains($commentslow,' doctorat.') or contains($commentslow,' doctorate.') or contains($commentslow,' doktorarbeit.') or contains($commentslow,' dottorato.') or contains($commentslow,' habilitationsschrift.') or contains($commentslow,' hochschule.') or contains($commentslow,' inauguraldissertation.') or contains($commentslow,' memoire.') or contains($commentslow,' phd.') or contains($commentslow,' proefschrift.') or contains($commentslow,' schlussbericht.') or contains($commentslow,' staatsexamensarbeit.') or contains($commentslow,' tesi.') or contains($commentslow,' thesis.') or contains($commentslow,' travail.') or contains($commentslow,' diploma;') or contains($commentslow,' diplomarbeit;') or contains($commentslow,' diplome;') or contains($commentslow,' dissertation;') or contains($commentslow,' doctoraal;') or contains($commentslow,' doctoral;') or contains($commentslow,' doctorat;') or contains($commentslow,' doctorate;') or contains($commentslow,' doktorarbeit;') or contains($commentslow,' dottorato;') or contains($commentslow,' habilitationsschrift;') or contains($commentslow,' hochschule;') or contains($commentslow,' inauguraldissertation;') or contains($commentslow,' memoire;') or contains($commentslow,' phd;') or contains($commentslow,' proefschrift;') or contains($commentslow,' schlussbericht;') or contains($commentslow,' staatsexamensarbeit;') or contains($commentslow,' tesi;') or contains($commentslow,' thesis;') or contains($commentslow,' travail;')">
-
-                  <datafield tag="690" ind1="C" ind2=" ">
-                    <subfield code="a">Thesis</subfield>
-                    <subfield code="2">INSPIRE</subfield>
-                  </datafield>
 
                   <datafield tag="980" ind1=" " ind2=" ">
                     <subfield code="a">Thesis</subfield>
@@ -832,11 +818,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                                 contains($lkrmatch,' talks ') or
                                 contains($lkrmatch,' workshop ') or
                                 contains($lkrmatch,' workshops ') ">
-
-                  <datafield tag="690" ind1="C" ind2=" ">
-                    <subfield code="a">Conference Paper</subfield>
-                    <subfield code="2">INSPIRE</subfield>
-                  </datafield>
 
                   <datafield tag="980" ind1=" " ind2=" ">
                     <subfield code="a">ConferencePaper</subfield>
