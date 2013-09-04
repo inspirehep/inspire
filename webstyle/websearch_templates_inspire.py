@@ -1605,7 +1605,7 @@ class Template(DefaultTemplate):
         # load the right message language
         _ = gettext_set_language(ln)
 
-        out = '''<br /><span class="moreinfo">%(detailed)s - %(similar)s</span>''' % {
+        out = '''<br /><span class="moreinfo">%(detailed)s</span>''' % {
             'detailed': create_html_link(self.build_search_url(recid=recid, ln=ln),
                                          {},
                                          _("Detailed record"), {'class': "moreinfo"})}
@@ -1854,4 +1854,123 @@ class Template(DefaultTemplate):
             out += '<td align="right">%s</td>' % \
                                           self.tmpl_nice_number(h_factors, ln)
         out += '</tr>'
+        return out
+
+    def tmpl_record_format_htmlbrief_body(self, ln, recid,
+                                          row_number, relevance,
+                                          record, relevances_prologue,
+                                          relevances_epilogue,
+                                          display_add_to_basket=False):
+        """Returns the html brief format of one record. Used in the
+        search results list for each record.
+
+        See also: tmpl_record_format_htmlbrief_header(..),
+                  tmpl_record_format_htmlbrief_footer(..)
+
+        Parameters:
+
+          - 'ln' *string* - The language to display
+
+          - 'row_number' *int* - The position of this record in the list
+
+          - 'recid' *int* - The recID
+
+          - 'relevance' *string* - The relevance of the record
+
+          - 'record' *string* - The formatted record
+
+          - 'relevances_prologue' *string* - HTML code to prepend the relevance indicator
+
+          - 'relevances_epilogue' *string* - HTML code to append to the relevance indicator (used mostly for formatting)
+
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = """
+                <tr><td valign="top" align="right" style="white-space: nowrap;">
+                    <abbr class="unapi-id" title="%(recid)s"></abbr>
+
+                %(number)s.
+               """ % {'recid': recid,
+                      'number': row_number}
+
+        if relevance:
+            out += """
+                   <br /><div class="rankscoreinfo">
+                   <a title="rank score">%(prologue)s%(relevance)s%(epilogue)s</a>
+                   </div>""" % {
+                'prologue': relevances_prologue,
+                'epilogue': relevances_epilogue,
+                'relevance': relevance
+            }
+        out += """</td><td valign="top">%s</td></tr>""" % record
+
+        return out
+
+    def tmpl_alert_rss_teaser_box_for_query(self,
+                                            id_query,
+                                            ln,
+                                            display_email_alert_part=False):
+        """Propose teaser for setting up this query as alert or RSS feed.
+
+        Parameters:
+          - 'id_query' *int* - ID of the query we make teaser for
+          - 'ln' *string* - The language to display
+          - 'display_email_alert_part' *bool* - whether to display email alert part
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        # get query arguments:
+        res = run_sql("SELECT urlargs FROM query WHERE id=%s", (id_query,))
+        argd = {}
+        if res:
+            argd = cgi.parse_qs(res[0][0])
+
+        rssurl = self.build_rss_url(argd)
+
+        feedurl = '<a href="%s"><img src="%s/img/feed-icon-12x12.gif" border="0" alt="" /></a> ' % \
+                  (rssurl, CFG_SITE_URL) + ' <a class="google" href="%s">' % rssurl
+
+        msg_alert = """
+                    Subscribe to the %(x_url2_open)sRSS feed%(x_url2_close)s.
+                    """ % {
+            'x_url2_open': feedurl,
+            'x_url2_close': '</a>'
+        }
+
+        msg_similar = "Interested in being notified about new results for this query?"
+        out = """
+              <a name="googlebox"></a>
+              <table class="googlebox"><tr><th class="googleboxheader">%(similar)s</th></tr>
+              <tr><td class="googleboxbody">%(msg_alert)s</td></tr>
+              </table>
+              """ % {
+            'similar': _(msg_similar),
+            'msg_alert': _(msg_alert)
+        }
+        return out
+
+    def tmpl_record_format_htmlbrief_footer(self, ln, display_add_to_basket=False):
+        """Returns the footer of the search results list when output
+        is html brief. Note that this function is called for each collection
+        results when 'split by collection' is enabled.
+
+        See also: tmpl_record_format_htmlbrief_header(..),
+                  tmpl_record_format_htmlbrief_body(..)
+
+        Parameters:
+
+          - 'ln' *string* - The language to display
+          - 'display_add_to_basket' *bool* - whether to display Add-to-basket button
+        """
+
+        # load the right message language
+        _ = gettext_set_language(ln)
+
+        out = "</table>"
+
         return out
