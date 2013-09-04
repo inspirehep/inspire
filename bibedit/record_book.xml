@@ -5,7 +5,7 @@
     <subfield code="a">VOLATILE:ISBN</subfield>
   </datafield>
   <datafield tag="024" ind1="7" ind2=" ">
-    <subfield code="a">VOLATILE:10.1103/PhysRevSTAB.16.032801</subfield>
+    <subfield code="a">VOLATILE:e.g 10.1103/example.doi.for.inspire</subfield>
     <subfield code="2">VOLATILE:DOI</subfield>
   </datafield>
   <datafield tag="041" ind1=" " ind2=" ">

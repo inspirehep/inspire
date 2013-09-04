@@ -66,7 +66,7 @@
     <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
-    <subfield code="a">CORE</subfield>
+    <subfield code="a">VOLATILE:CORE</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">HEP</subfield>
