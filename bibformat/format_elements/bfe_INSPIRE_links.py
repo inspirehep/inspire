@@ -72,25 +72,38 @@ def format_element(bfo, default='', separator='; ', style='', \
 
     # could look for other publication info and calculate URls here
 
+    #links moved to new field 035
+    urls = bfo.fields('035__')
+    allowed_doctypes = ["INSPIRE-PUBLIC"]
+    for url in urls:
+        if "9" in url:
+            if url["9"].lower() == "msnet":
+                links.append('<a ' + style + ' href="http://www.ams.org/mathscinet-getitem?mr=' + url["a"] + '">AMS MathSciNet</a>')
+            if url["9"].lower() == "zblatt":
+                links.append('<a ' + style + ' href="http://www.zentralblatt-math.org/zmath/en/search/?an=' + url["a"] + '">zbMATH</a>')
+            if url["9"].lower() == "euclid":
+                links.append('<a ' + style + ' href="http://projecteuclid.org/euclid.cmp/=' + url["a"] + '">Project Euclid</a>')
+
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
     urls = bfo.fields('8564_')
     allowed_doctypes = ["INSPIRE-PUBLIC"]
     for url in urls:
-        if '.png' not in url['u'] and not \
-        (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
-            if url.get('y', '').upper() != "DURHAM":
-                if url.get("u") and \
-                url.get('y', 'Fulltext').upper() != "DOI" and not \
-                url.get('u').startswith(CFG_SITE_URL):
-                    links.append('<a ' + style + \
-                    'href="' + url.get("u") + '">' + \
-                          _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
-                elif url.get("u").startswith(CFG_SITE_URL) and \
-                url.get("u")[-3:].lower() == "pdf" and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
-                    links.append('<a ' + style + 'href="' + url.get("u") + '">' + \
-                    _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+        if url.get("y", "").lower() not in ("msnet", "zblatt", "euclid"):
+            if '.png' not in url['u'] and not \
+            (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
+                if url.get('y', '').upper() != "DURHAM":
+                    if url.get("u") and \
+                    url.get('y', 'Fulltext').upper() != "DOI" and not \
+                    url.get('u').startswith(CFG_SITE_URL):
+                        links.append('<a ' + style + \
+                        'href="' + url.get("u") + '">' + \
+                              _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+                    elif url.get("u").startswith(CFG_SITE_URL) and \
+                    url.get("u")[-3:].lower() == "pdf" and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
+                        links.append('<a ' + style + 'href="' + url.get("u") + '">' + \
+                        _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
     #put it all together
     if links:
