@@ -30,6 +30,7 @@ name_last_first="no" link_extension="yes"/>
  <BFE_INSPIRE_MARCFORMAT prefix="| " />
 </li>
 <li><BFE_INSPIRE_LINKS /></li>
+<li><BFE_INSPIRE_DATASETS_LINK /></li>
 </ul>
 
 </div>

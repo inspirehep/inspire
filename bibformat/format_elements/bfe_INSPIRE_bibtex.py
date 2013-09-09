@@ -247,9 +247,14 @@ def format_element(bfo, width="50"):
         out += texified("pages", ". ".join(pages))
 
     # DOI
-    if collection == "article":
-        dois = bfo.fields("0247_a") + bfo.fields("773__a")
-        out += texified("doi", ", ".join(set(dois)))
+    if collection == "article" or \
+            collection == "data":
+        if bfo.field("0247_2") == 'DOI':
+            dois = bfo.fields("0247_a") + bfo.fields("773__a")
+            out += texified("doi", ", ".join(set(dois)))
+        elif bfo.field("0247_2") == 'HDL':
+            handles = bfo.fields("0247_a") + bfo.fields("773__a")
+            out += texified("handle", ", ".join(set(handles)))
 
     # Year
     year = bfo.field("773__y")
