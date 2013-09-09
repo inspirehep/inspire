@@ -216,6 +216,13 @@ def append_to_record(rec_id, doi, published_date):
         for code, value in new_field_773.iteritems():
             new_field.add_subfield(code, value)
 
+    field_260 = record.find_subfields("260__a")
+
+    if len(field_260) == 0:
+        # We add 260__c publication date
+        new_field = new_record.add_field('260__')
+        new_field.add_subfield("c", published_date)
+
     if len(new_record.record) > 0:
         return new_record.to_xml()
     else:
