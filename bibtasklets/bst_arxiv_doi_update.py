@@ -70,8 +70,8 @@ def bst_arxiv_doi_update(input_uri=None,
 
     # Testing builds characters
     bibupload = ChunkedBibUpload(mode='a', user=SCRIPT_NAME, notimechange=True)
-    bibindex = ChunkedBibIndex(indexes='reportnumber', user=SCRIPT_NAME)
-
+    bibindex = ChunkedBibIndex(indexes='year,global,journal',
+                               user=SCRIPT_NAME)
     # open url and parse xml
     try:
         tree = ET.parse(urllib.urlopen(input_uri))
