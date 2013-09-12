@@ -37,24 +37,34 @@ def format_element(bfo):
         return out
 
     out += "Data: "
+    hepdata_out = ""
+    dataverse_out = ""
     hep_data = bfo.fields('520__')
     for hep in hep_data:
-        if hep.get('9', '') == 'HEPDATA' or hep.get('9', '') == 'Dataverse':
-            #internal
-            out += ' <a href="' + CFG_BASE_URL + '/record/' + str(bfo.recID) + '/hepdata">INSPIRE</a> '
-            #hepdata
+        if not hepdata_out and hep.get('9', '') == 'HEPDATA':
+            # add hepdata link
+            hepdata_out = '| <a href="http://hepdata.cedar.ac.uk/view/ins%s">HepData</a> ' % \
+                          (str(bfo.recID),)
+        if not dataverse_out and hep.get('9', '') == 'Dataverse':
+            # add dataverse link
             links = bfo.fields('8564_')
             for link in links:
-                if link.get('y', '') == 'DURHAM':
-                    out += '| <a href="' + link.get('u', '') + '">HepData</a> '
                 if link.get('y', '') == 'Dataverse':
-                    out += '| <a href="' + link.get('u', '') + '">Dataverse</a> '
-            break
+                    dataverse_out += '| <a href="%s">Dataverse</a> ' % \
+                                     (link.get('u', ''),)
+                    break
+    if hepdata_out or dataverse_out:
+        #internal
+        out += ' <a href="%s/record/%s/hepdata">INSPIRE</a> ' % \
+               (CFG_BASE_URL, str(bfo.recID))
+        out += hepdata_out
+        out += dataverse_out
 
     if len(out) > 6:
         return out
     else:
         return ""
+
 
 # we know the argument is unused, thanks
 # pylint: disable-msg=W0613
