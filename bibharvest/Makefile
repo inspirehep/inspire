@@ -1,9 +1,9 @@
 include ../config.mk
 -include ../config-local.mk
 
-FILTERCFGFILES = oaiarXiv_bibfilter_actions.cfg
+FILTERCFGFILES = oaiarXiv_bibfilter_actions.cfg oaicds_bibfilter_config.json
 FILTERCFGDIR = $(ETCDIR)/bibharvest/
-FILTERBINFILES = bibfilter_oaiarXiv2inspire.py
+FILTERBINFILES = bibfilter_oaiarXiv2inspire.py bibfilter_oaicds2inspire.py
 FILTERBINDIR = $(BINDIR)
 # main targets:
 
