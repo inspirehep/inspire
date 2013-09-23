@@ -43,8 +43,8 @@
     <subfield code="u">VOLATILE:url of file specifying access rights</subfield>
   </datafield>
   <datafield tag="542" ind1=" " ind2=" ">
-    <subfield code="u">VOLATILE:copyright statement</subfield>
-    <subfield code="f">VOLATILE:url of copyright statement</subfield>
+    <subfield code="f">VOLATILE:copyright statement</subfield>
+    <subfield code="u">VOLATILE:url of copyright statement</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
