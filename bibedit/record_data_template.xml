@@ -1,0 +1,56 @@
+<!-- BibEdit-Template-Name: data set -->
+<!-- BibEdit-Template-Description: data set in Inspire -->
+<record>
+  <datafield tag="024" ind1="7" ind2=" ">
+    <subfield code="a">VOLATILE:doi</subfield>
+    <subfield code="2">VOLATILE:DOI</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+	<subfield code="j">VOLATILE:External author ID</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Original title</subfield>
+    <subfield code="b">VOLATILE:subtitle</subfield>
+	<subfield code="9">VOLATILE:source</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="t">VOLATILE:DATASET</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:public note</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="h">VOLATILE:abstract</subfield>
+	<subfield code="9">VOLATILE:data source</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="9">VOLATILE:author</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:additional author</subfield>
+    <subfield code="u">VOLATILE:affiliation</subfield>
+  </datafield>
+  <datafield tag="710" ind1=" " ind2=" ">
+    <subfield code="g">VOLATILE:collaboration</subfield>
+  </datafield>
+  <datafield tag="786" ind1=" " ind2=" ">
+    <subfield code="h">VOLATILE:physical description of data source entry</subfield>
+	<subfield code="r">VOLATILE:report number</subfield>
+	<subfield code="w">VOLATILE:INSPIRE record number</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external links)</subfield>
+    <subfield code="y">VOLATILE:link description</subfield>
+  </datafield>
+  <datafield tag="910" ind1=" " ind2=" ">
+    <subfield code="d">VOLATILE:column header</subfield>
+	<subfield code="n">VOLATILE:column number</subfield>
+	<subfield code="t">VOLATILE:column title</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">DATA</subfield>
+  </datafield>
+</record>
