@@ -22,7 +22,7 @@
 <BFE_INSPIRE_HEPNAMES_GSCHOLAR prefix="<strong>Google Scholar: </strong>" suffix="<br />" />
 <BFE_INSPIRE_HEPNAMES_FIELD_INTEREST prefix="<strong>Field: </strong>" suffix="<br />" />
 <BFE_INSPIRE_EXP_LINK prefix="<strong>Experiment: </strong>" suffix="<br />"/>
-<BFE_INSPIRE_HEPNAMES_BAI prefix="<strong>Author ID: </strong>" suffix="<br />"/>
+<BFE_INSPIRE_HEPNAMES_BAI prefix="<strong>Author Profile: </strong>" suffix="<br />"/>
 <BFE_INSPIRE_HEPNAMES_INSPIREID prefix="<strong>Inspire ID: </strong>" suffix="<br />"/>
 <BFE_FIELD tag="667a" prefix="<strong>Note: </strong>" suffix="<br />"/>
 

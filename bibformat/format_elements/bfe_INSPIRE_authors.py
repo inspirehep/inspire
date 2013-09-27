@@ -159,7 +159,7 @@ def format_element(bfo, limit, separator='; ',
 
                 author['display'] = '<a class="authorlink" href="' + \
                                     CFG_BASE_URL + \
-                                    '/author/'+ quote(author['a']) + \
+                                    '/author/profile/'+ quote(author['a']) + \
                                     '?recid=' + bibrec_id + \
                                     '&amp;ln='+ bfo.lang + \
                                     '">' + escape(author['display'])+'</a>' + \

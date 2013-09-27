@@ -30,9 +30,9 @@ def format_element(bfo, separator='; '):
 
     for item in bai:
         if item.has_key('9') and item['9'] == 'BAI' and item.has_key('a'):
-            return '<a href="/author/' + item['a'] + '">[Publication list]</a>'
+            return '<a href="/author/profile/' + item['a'] + '">[Author Profile]</a>'
 
-    return '<a href="/person/search?q=' + bfo.field('100__a') + '">[Publication list]</a>'
+    return '<a href="/author/search?q=' + bfo.field('100__a') + '">[Author Profile]</a>'
 
 def escape_values(bfo):
     """

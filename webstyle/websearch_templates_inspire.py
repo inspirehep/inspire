@@ -1675,7 +1675,8 @@ class Template(DefaultTemplate):
                 out += "<!--not showing citations links-->"
         if display_claim_link: #Maybe we want not to show the link to who cannot use id?
             out += '<span class="moreinfo"> - %s</span>' % \
-                create_html_link(CFG_BASE_URL + '/person/action', {'claim':'True', 'selection':str(recID)},
+                create_html_link(CFG_BASE_URL + '/author/claim/action', {'confirm':True,
+									'selection':str(recID)},
                                                                         'Attribute this paper',
                                                                         {'class': "moreinfo"})
 
