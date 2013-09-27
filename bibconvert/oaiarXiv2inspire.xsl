@@ -319,6 +319,16 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
           <xsl:value-of select="substring-after(./OAI-PMH:header/OAI-PMH:setSpec,':')"/>
         </xsl:variable>
 
+        <!-- Preparing base determination : getting category -->
+        <xsl:variable name="setspec">
+          <xsl:value-of select="./OAI-PMH:header/OAI-PMH:setSpec"/>
+        </xsl:variable>
+
+        <!-- Getting category -->
+        <xsl:variable name="category">
+          <xsl:value-of select="./OAI-PMH:metadata/arXiv:arXiv/arXiv:categories"/>
+        </xsl:variable>
+
         <!-- Preparing data : is this a thesis ? (we can find this in the abstract)-->
         <xsl:variable name="commentslow">
           <xsl:value-of select="translate(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments,$ucletters,$lcletters)"/>
@@ -348,6 +358,13 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
             </record>
           </xsl:when>
           <!-- HANDLING NON-DELETED RECORDS -->
+          <!-- FIXME: temporary way to filter out records -->
+          <xsl:when test="contains($setspec, 'astro-ph') and not(contains($category, 'astro-ph.HE'))">
+          </xsl:when>
+
+          <xsl:when test="contains($setspec, 'physics') and not(contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
+          </xsl:when>
+
           <xsl:otherwise>
             <record>
               <!-- MARC FIELD 0247_$$2,a  = metadata/arXiv/doi  -->
