@@ -321,7 +321,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
 
         <!-- Preparing base determination : getting category -->
         <xsl:variable name="setspec">
-          <xsl:value-of select="./OAI-PMH:header/OAI-PMH:setSpec"/>
+          <xsl:call-template name="print-sets" />
         </xsl:variable>
 
         <!-- Getting category -->
@@ -340,7 +340,35 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
 
         <xsl:variable name="detectPR">accepted@appear@press@publ@review@submitted></xsl:variable>
 
+        <xsl:variable name="allow">
+          <xsl:choose>
+            <!-- Special rules -->
+            <xsl:when test="contains($setspec, 'physics:astro-ph') and contains($category, 'astro-ph.HE')">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($setspec, 'physics:physics') and (contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($setspec, 'physics:physics') and substring-before($category, ' ') = 'physics.data-an'">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+
+            <!-- CORE: physics:gr-qc physics:hep-* physics:nucl-* -->
+            <xsl:when test="contains($setspec, 'physics:gr-qc')">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($setspec, 'physics:hep-')">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+            <xsl:when test="contains($setspec, 'physics:nucl-')">
+              <xsl:text>Yes</xsl:text>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:variable>
+
         <!-- *** END GLOBAL RECIRD VARS *** -->
+
+        <!-- *** START OUTPUT *** -->
 
         <xsl:choose>
           <!-- HANDLING DELETED RECORDS -->
@@ -358,14 +386,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
             </record>
           </xsl:when>
           <!-- HANDLING NON-DELETED RECORDS -->
-          <!-- FIXME: temporary way to filter out records -->
-          <xsl:when test="contains($setspec, 'physics:astro-ph') and not(contains($category, 'astro-ph.HE'))">
-          </xsl:when>
-
-          <xsl:when test="contains($setspec, 'physics:physics') and not(contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
-          </xsl:when>
-
-          <xsl:otherwise>
+          <xsl:when test="contains($allow, 'Yes')">
             <record>
               <!-- MARC FIELD 0247_$$2,a  = metadata/arXiv/doi  -->
               <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:doi">
@@ -848,7 +869,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
               </datafield>
 
             </record>
-          </xsl:otherwise>
+          </xsl:when>
         </xsl:choose>
       </xsl:for-each>
     </collection>
