@@ -359,10 +359,10 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
           </xsl:when>
           <!-- HANDLING NON-DELETED RECORDS -->
           <!-- FIXME: temporary way to filter out records -->
-          <xsl:when test="contains($setspec, 'astro-ph') and not(contains($category, 'astro-ph.HE'))">
+          <xsl:when test="contains($setspec, 'physics:astro-ph') and not(contains($category, 'astro-ph.HE'))">
           </xsl:when>
 
-          <xsl:when test="contains($setspec, 'physics') and not(contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
+          <xsl:when test="contains($setspec, 'physics:physics') and not(contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
           </xsl:when>
 
           <xsl:otherwise>
