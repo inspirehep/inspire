@@ -341,29 +341,31 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
         <xsl:variable name="detectPR">accepted@appear@press@publ@review@submitted></xsl:variable>
 
         <xsl:variable name="allow">
-          <xsl:choose>
-            <!-- Special rules -->
-            <xsl:when test="contains($setspec, 'physics:astro-ph') and contains($category, 'astro-ph.HE')">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
-            <xsl:when test="contains($setspec, 'physics:physics') and (contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
-            <xsl:when test="contains($setspec, 'physics:physics') and substring-before($category, ' ') = 'physics.data-an'">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
+	        <!-- Special rules -->
+	        <xsl:if test="contains($setspec, 'physics:astro-ph') and contains($category, 'astro-ph.HE')">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
 
-            <!-- CORE: physics:gr-qc physics:hep-* physics:nucl-* -->
-            <xsl:when test="contains($setspec, 'physics:gr-qc')">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
-            <xsl:when test="contains($setspec, 'physics:hep-')">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
-            <xsl:when test="contains($setspec, 'physics:nucl-')">
-              <xsl:text>Yes</xsl:text>
-            </xsl:when>
-          </xsl:choose>
+	        <xsl:if test="contains($setspec, 'physics:physics') and (contains($category, 'physics.ins-det') or contains($category, 'physics.acc-ph'))">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
+
+	        <xsl:if test="contains($setspec, 'physics:physics') and substring-before($category, ' ') = 'physics.data-an'">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
+
+	        <!-- CORE: physics:gr-qc physics:hep-* physics:nucl-* -->
+	        <xsl:if test="contains($setspec, 'physics:gr-qc')">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
+
+	        <xsl:if test="contains($setspec, 'physics:hep-')">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
+
+	        <xsl:if test="contains($setspec, 'physics:nucl-')">
+	          <xsl:text>Yes</xsl:text>
+	        </xsl:if>
         </xsl:variable>
 
         <!-- *** END GLOBAL RECIRD VARS *** -->
