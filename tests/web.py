@@ -29,7 +29,7 @@ from datetime import datetime
 
 import ClientForm
 import mechanize
-import requests
+import urllib2
 
 from invenio.w3c_validator import w3c_validate, \
                                   w3c_errors_to_str, \
@@ -82,9 +82,9 @@ class WebSearchTests(WebTest):
 
     def test_css(self):
         url = CFG_SITE_URL + '/img/invenio_inspire.css?55f550a194e21b1712a73d2c82d34be4'
-        r = requests.get(url)
-        self.assertEqual(r.status_code, 200)
-        self.assert_(u'body {' in r.text)
+        r = urllib2.urlopen(url)
+        self.assertEqual(r.code, 200)
+        self.assert_(u'body {' in r.read())
 
     def test_author_page(self):
         url = CFG_SITE_URL + '/author/S.Mele.1/'
@@ -157,7 +157,6 @@ def build_queries_checks(cls):
     return cls
 
 
-@build_queries_checks
 class PopularQueriesTest(WebTest):
     popular_queries = [
         'find j "Phys.Rev.Lett.,105*"',
@@ -171,6 +170,8 @@ class PopularQueriesTest(WebTest):
         'find field hep-ex and rank postdoc and region asia',
         'cited:50->30000 year:2011->2012',
     ]
+
+PopularQueriesTest = build_queries_checks(PopularQueriesTest)
 
 
 class DetailedRecordTests(WebTest):
@@ -487,7 +488,7 @@ class CollectionsTest(WebTest):
         url = CFG_SITE_URL + '/submit?doctype=JOBSUBMIT&act=SBI&comboJOBSUBMIT=JOB'
         check_web_page_content(self,
                                url,
-                               expected_text=["Submit an Job Vacancy"])
+                               expected_text=["Submit a Job Vacancy"])
 
     def test_jobs_rss(self):
         url = CFG_SITE_URL + '/rss?cc=Jobs&ln=en'
