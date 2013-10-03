@@ -48,6 +48,7 @@ URI_DEFAULT = "https://vendor.ridge.aps.org/arXiv/latest_pub.xml"
 
 # ======================== MAIN =======================
 
+
 def bst_arxiv_doi_update(input_uri=None,
                          log_dir=CFG_TMPSHAREDDIR, logging=True):
     """
@@ -109,8 +110,8 @@ def bst_arxiv_doi_update(input_uri=None,
                 bibupload.add(record_xml)
                 bibindex.add(rec_id)
         elif len(rec_id) > 1:
-            _print('ERROR: ' + len(rec_id) + ' records found with' +
-                   'matching arXiv ID' + arxiv)
+            _print('ERROR: %d records found with matching arXiv ID %s' %
+                   (len(rec_id), arxiv))
         else:
             missing_count += 1
             _print('No record found matching arxiv ID: ' + arxiv, 9)
@@ -135,6 +136,7 @@ def bst_arxiv_doi_update(input_uri=None,
     return True
 
 # ======================== FUNCTIONS =======================
+
 
 def _print(string, verbose=3):
     """ Writes message to log and bibsched log """
@@ -258,7 +260,7 @@ def create_pubnote(doi, published_date):
         doi_part = doi.split('/')[1]
         segments = doi_part.split('.')
         if (len(segments[0]) is 8 and segments[0][:7] == 'PhysRev'
-            and segments[0][-1:].isupper()):
+                and segments[0][-1:].isupper()):
             # If PhysRevX then X suffixes journal num
             field_773['p'] = add_dots(segments[0][:-1])
             field_773['v'] = segments[0][-1:] + segments[1]
