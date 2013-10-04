@@ -355,7 +355,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
           </xsl:if>
 
           <!-- Case where physics.data-an is primary category -->
-          <xsl:if test="substring-before($category, ' ') = 'physics.data-an'">
+          <xsl:if test="starts-with($category, 'physics.data-an')">
             <xsl:text>Yes</xsl:text>
           </xsl:if>
 
