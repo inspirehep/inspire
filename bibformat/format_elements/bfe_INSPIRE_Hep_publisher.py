@@ -22,23 +22,33 @@
 """
 __revision__ = "$Id$"
 
-def format_element(bfo, separator=" "):
 
-    date = bfo.fields('260__')
+def format_element(bfo, separator=" "):
+    """
+    Adds information from 260__x datafield.
+    """
+    date_fields = bfo.fields('260__')
+    # Make sure the same information is only printed once
+
+    date_list = []
+    for date in date_fields:
+        if date not in date_list:
+            date_list.append(date)
     out = []
 
-    for item in date:
-        if item.has_key('a'):
+    for item in date_list:
+        if 'a' in item:
             out.append(item['a'] + ':')
-        if item.has_key('b'):
+        if 'b' in item:
             out.append(' ' + item['b'])
-        if item.has_key('c'):
+        if 'c' in item:
             out.append(' (' + item['c'] + ')')
 
     if out:
         return separator.join(out)
     else:
         return ''
+
 
 def escape_values(bfo):
     """
