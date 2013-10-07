@@ -218,7 +218,7 @@ def append_to_record(rec_id, doi, published_date):
         for code, value in new_field_773.iteritems():
             new_field.add_subfield(code, value)
 
-    field_260 = record.find_subfields("260__a")
+    field_260 = record.find_subfields("260__c")
 
     if len(field_260) == 0:
         # We add 260__c publication date
