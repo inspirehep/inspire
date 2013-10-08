@@ -31,7 +31,7 @@ CFG_TWITTER_CREDENTIALS_PATH = os.path.join(CFG_ETCDIR, 'twitter-credentials.txt
 CFG_TWITTER_INSPIRE_USER = 78852440
 CFG_PBX_ID = 2
 
-RE_TWITTER_PLACEMARK = re.compile("%s(.*?)%s" % (re.escape("<!-- TWITTER_START -->"), re.escape("<!-- TWITTER_END -->")), re.M + re.S)
+RE_TWITTER_PLACEMARK = re.compile("\n*%s(.*?)%s\n*" % (re.escape("<!-- TWITTER_START -->"), re.escape("<!-- TWITTER_END -->")), re.M + re.S)
 
 CFG_TWITTER_BOX_TPL = """
 <!-- TWITTER_START -->
