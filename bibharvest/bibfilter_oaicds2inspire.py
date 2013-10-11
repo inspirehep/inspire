@@ -18,7 +18,10 @@ try:
 except ImportError:
     import simplejson as json
 
-from invenio.config import CFG_ETCDIR
+from invenio.dateutils import datetime
+from invenio.apsharvest_utils import (unzip, locate)
+from invenio.downloadutils import download_file
+from invenio.config import (CFG_ETCDIR, CFG_TMPSHAREDDIR)
 from invenio.bibrecord import (create_record,
                                record_get_field_instances,
                                record_add_field, record_xml_output,
@@ -30,11 +33,11 @@ from invenio.bibrecord import (create_record,
                                create_field, record_get_field_values,
                                record_strip_controlfields,
                                record_xml_output)
-from invenio.search_engine import get_record, perform_request_search
-from invenio.bibmerge_differ import record_diff, match_subfields
+from invenio.search_engine import (get_record, perform_request_search)
+from invenio.bibmerge_differ import (record_diff, match_subfields)
 from invenio.bibupload import retrieve_rec_id
 from invenio.bibmatch_engine import match_record
-from invenio.textutils import wash_for_xml, wash_for_utf8
+from invenio.textutils import (wash_for_xml, wash_for_utf8)
 from invenio.search_engine import perform_request_search
 from invenio.bibconvert_xslt_engine import convert
 
@@ -150,6 +153,22 @@ def load_config(json_file=CONFIG_FILE):
         CONFIG['config'][key] = parse_dict
 
 
+def get_languages():
+    return CONFIG['config']['languages']
+
+
+def get_journals():
+    return CONFIG["config"]["journals"]
+
+
+def get_experiments():
+    return CONFIG["config"]["experiments"]
+
+
+def get_categories():
+    return CONFIG['config']['categories']
+
+
 def determine_collection(setspec):
     """ Splits setSpec header attribute for collection """
     return setspec.split(':')[-1:][0].upper()
@@ -183,14 +202,15 @@ def element_tree_to_record(tree):
     oai_records = tree.getroot()
     for record_element in oai_records.getchildren():
         marc_root = record_element.find('metadata').find('record')
+        identifier = record_element.find('header').find('identifier')
         marcxml = ET.tostring(marc_root)
+        identifier = ET.tostring(identifier)
         record, status, errors = create_record(marcxml)
         if status == 1:
             records.append(record)
         else:
-            _print("ERROR: Could not create record from MARCXML")
-            for err in errors:
-                _print(" * %r" % (errors,))
+            _print("ERROR: Could not create record from %s" % (identifier,))
+            _print(" * %r" % (errors,))
         # set_spec = record_element.find('header').find('setSpec').text
     return records
 
@@ -248,9 +268,14 @@ def apply_filter(rec):
     record_strip_controlfields(rec)
 
     # Clear other uninteresting fields
-    uninteresting_fields = ["903", "963", "690", "859", "937"]
-    for tag in uninteresting_fields:
-        record_delete_fields(rec, tag)
+    interesting_fields = ["024", "041", "035", "037", "088", "100",
+                          "110", "111", "242", "245", "246", "260",
+                          "269", "300", "502", "650", "653", "693",
+                          "700", "710", "773", "856", "520", "500",
+                          "980"]
+    for tag in rec.keys():
+        if tag not in interesting_fields:
+            record_delete_fields(rec, tag)
 
     # 980 Determine Collections
     collections = set([])
@@ -285,37 +310,18 @@ def apply_filter(rec):
                        val.split('CMS', 1)[-1])
                 record_add_field(rec, '856', ind1='4', subfields=[('u', url)])
 
-    # FFT (856) Dealing with graphs
-    for _idx, field in enumerate(record_get_field_instances(rec, '856')):
-        subs = field_get_subfields(field)
-        if 'z' in subs and 'Figure' in subs['z']:
-            if not ('u' in subs and 'subformat' in subs['u']):
-                newsubs = []
-                url = ('/afs/cern.ch/project/inspire/uploads/cms-pas/%s_%s.png'
-                       % (cds_id, subs['y'][0]))
-                newsubs.append(('a', url))
-                newsubs.append(('n', subs['y'][0]))
-                newsubs.append(('f', '.png'))
-                pos = '0000%s' % str(_idx + 1)
-                newsubs.append(('d', pos))
-                newsubs.append(('t', 'Plot'))
-                newsubs.append(('z', 'KEEP-OLD-VALUE'))
-                newsubs.append(('r', 'KEEP-OLD-VALUE'))
-                record_add_field(rec, 'FFT', subfields=newsubs)
-
     # 041 Language
-    languages = CONFIG['config']['languages']
-    lang_fields = record_get_field_instances(rec, '041')
-    for field in lang_fields:
-        subs = []
-        for key, value in field_get_subfield_instances(field):
-            if key == 'a' and value in languages.keys():
-                subs.append(('a', languages[value]))
-            else:
-                subs.append((key, value))
-        new_field = field_swap_subfields(field, subs)
-        record_replace_field(rec, '041', new_field,
-                             field_position_global=field[4])
+    languages = get_languages()
+    language_fields = record_get_field_instances(rec, '041')
+    record_delete_fields(rec, "041")
+    for field in language_fields:
+        subs = field_get_subfields(field)
+        if 'a' in subs:
+            if "eng" in subs['a']:
+                continue
+            new_value = translate_config(subs['a'][0], languages)
+            new_subs = [('a', new_value)]
+            record_add_field(rec, "041", subfields=new_subs)
 
     # 035 Externals
     scn_035_fields = record_get_field_instances(rec, '035')
@@ -381,6 +387,14 @@ def apply_filter(rec):
         record_add_field(rec, '246', subfields=field[0])
     record_delete_fields(rec, '242')
 
+    # 269 Date normalization
+    for field in record_get_field_instances(rec, '269'):
+        for idx, (key, value) in enumerate(field[0]):
+            if key == "c":
+                date = datetime.strptime(value, "%d %b %Y")
+                field[0][idx] = ("c", date.strftime("%Y-%m-%d"))
+                record_delete_fields(rec, "260")
+
     if not 'THESIS' in collections:
         for field in record_get_field_instances(rec, '260'):
             record_add_field(rec, '269', subfields=field[0])
@@ -430,10 +444,20 @@ def apply_filter(rec):
         fields_501[idx] = field_swap_subfields(field, new_subs)
 
     # 650 Translate Categories
-    for field in record_get_field_instances(rec, '650', ind1='1', ind2='7'):
+    categories = get_categories()
+    category_fields = record_get_field_instances(rec, '650', ind1='1', ind2='7')
+    record_delete_fields(rec, "650")
+    for field in category_fields:
         for idx, (key, value) in enumerate(field[0]):
-            if key == 'a' and translate_category(value) is not None:
-                field[0][idx] = ('a', translate_category(value))
+            if key == 'a':
+                new_value = translate_config(value, categories)
+                if new_value != value:
+                    new_subs = [('2', 'INSPIRE'), ('a', new_value)]
+                else:
+                    new_subs = [('2', 'SzGeCERN'), ('a', value)]
+                record_add_field(rec, "650", ind1="1", ind2="7",
+                                 subfields=new_subs)
+                break
 
     # 653 Free Keywords
     for field in record_get_field_instances(rec, '653', ind1='1'):
@@ -445,6 +469,7 @@ def apply_filter(rec):
         new_field = create_field(subfields=new_subs)
         record_replace_field(rec, '653', new_field, field_position_global=field[4])
 
+    experiments = get_experiments()
     # 693 Remove if 'not applicable'
     for field in record_get_field_instances(rec, '693'):
         subs = field_get_subfields(field)
@@ -452,12 +477,29 @@ def apply_filter(rec):
             if 'not applicable' in [x.lower() for x in subs['e']]:
                 record_delete_field(rec, '693',
                                     field_position_global=field[4])
+        new_subs = []
+        experiment_a = ""
+        experiment_e = ""
+        for (key, value) in subs.iteritems():
+            if key == 'a':
+                experiment_a = value[0]
+                new_subs.append((key, value[0]))
+            elif key == 'e':
+                experiment_e = value[0]
+        experiment = "%s---%s" % (experiment_a.replace(" ", "-"),
+                                  experiment_e)
+        translated_experiments = translate_config(experiment,
+                                                  experiments)
+        new_subs.append(("e", translated_experiments))
+        record_delete_field(rec, tag="693",
+                            field_position_global=field[4])
+        record_add_field(rec, "693", subfields=new_subs)
 
     # 710 Collaboration
     for field in record_get_field_instances(rec, '710'):
         subs = field_get_subfield_instances(field)
         for idx, (key, value) in enumerate(subs[:]):
-            if key == 'c':
+            if key == '5':
                 subs.pop(idx)
             elif value.startswith('CERN. Geneva'):
                 subs.pop(idx)
@@ -465,37 +507,69 @@ def apply_filter(rec):
             record_delete_field(rec, '710', field_position_global=field[4])
 
     # 773 journal translations
-    journals = CONFIG["config"]["journals"]
-
-    def _translate_journal(cds_jour):
-        for the_d in journals:
-            if the_d['cds'] == cds_jour:
-                return the_d['inspire']
-        return cds_jour
-
+    journals = get_journals()
     for field in record_get_field_instances(rec, '773'):
         subs = field_get_subfield_instances(field)
+        new_subs = []
         for idx, (key, value) in enumerate(subs):
             if key == 'p':
-                subs[idx] = _translate_journal(value)
+                new_subs.append((key, translate_config(value, journals)))
+            else:
+                new_subs.append((key, value))
+        record_delete_field(rec, tag="773",
+                            field_position_global=field[4])
+        record_add_field(rec, "773", subfields=new_subs)
 
-    # 856(4_) Figures!
+    # FFT (856) Dealing with graphs
+    figure_counter = 0
     for field in record_get_field_instances(rec, '856', ind1='4'):
         subs = field_get_subfields(field)
-        try:
-            if not 'Figure' in subs['z']:
-                for val in subs['u']:
-                    if 'http://cdsweb.cern.ch' in val and val.endswith('.pdf'):
-                        newsubs = [('t', 'NSPIRE-PUBLIC'), ('a', val)]
-                        record_add_field(rec, 'FFT', subfields=newsubs)
-        except KeyError:
-            pass
 
-        remove = True
-        if 'u' in subs:
+        newsubs = []
+        remove = False
+
+        if 'z' in subs:
+            is_figure = [s for s in subs['z'] if "figure" in s.lower()]
+            if is_figure and 'u' in subs:
+                is_subformat = [s for s in subs['u'] if "subformat" in s.lower()]
+                if not is_subformat:
+                    newsubs.append(('u', subs['u'][0]))
+                    newsubs.append(('t', 'Plot'))
+                    if 'y' in subs:
+                        figure_counter += 1
+                        newsubs.append(('d', "%05d %s" % (figure_counter, subs['y'][0])))
+
+        if not newsubs and 'u' in subs:
+            is_fulltext = [s for s in subs['u'] if ".pdf" in s]
+            if is_fulltext:
+                newsubs = [('t', 'INSPIRE-PUBLIC'), ('a', subs['u'][0])]
+
+        if not newsubs and 'u' in subs:
+            remove = True
+            is_zipfile = [s for s in subs['u'] if ".zip" in s]
+            if is_zipfile:
+                url = is_zipfile[0]
+                local_url = os.path.join(CFG_TMPSHAREDDIR, os.path.basename(url))
+                _print("Downloading %s into %s" % (url, local_url))
+
+                zipped_archive = download_file(url_for_file=is_zipfile[0],
+                                               downloaded_file=local_url)
+
+                unzipped_archive = unzip(zipped_archive)
+                list_of_pngs = locate("*.png", unzipped_archive)
+                for png in list_of_pngs:
+                    figure_counter += 1
+                    plotsubs = []
+                    plotsubs.append(('a', png))
+                    caption = '%05d %s' % (figure_counter, os.path.basename(png))
+                    plotsubs.append(('d', caption))
+                    plotsubs.append(('t', 'Plot'))
+                    record_add_field(rec, 'FFT', subfields=plotsubs)
+
+        if not remove and not newsubs and 'u' in subs:
             urls = ('http://cdsweb.cern.ch', 'http://cms.cern.ch',
                     'http://cmsdoc.cern.ch', 'http://documents.cern.ch',
-                    'http://preprints.cern.ch')
+                    'http://preprints.cern.ch', 'http://cds.cern.ch')
             for val in subs['u']:
                 if any(url in val for url in urls):
                     remove = True
@@ -503,9 +577,17 @@ def apply_filter(rec):
                 if val.endswith('ps.gz'):
                     remove = True
 
-            if remove:
-                record_delete_field(rec, '856', ind1='4',
-                                    field_position_global=field[4])
+        if newsubs:
+            record_add_field(rec, 'FFT', subfields=newsubs)
+            remove = True
+
+        if remove:
+            record_delete_field(rec, '856', ind1='4',
+                                field_position_global=field[4])
+
+    # 500 - Preliminary results
+    subs = [('a', "Preliminary results")]
+    record_add_field(rec, "500", subfields=subs)
 
     for collection in collections:
         record_add_field(rec, '980', subfields=[('a', collection)])
@@ -553,14 +635,13 @@ def is_published(record):
     return False
 
 
-def translate_category(cds_cat):
-    """ Given the string of a CDS category, this returns the Inspire
-    equivilant by searching the imported configuration """
-    categories = CONFIG["config"]["categories"]
-    for the_d in categories:
-        if the_d['cds'] == cds_cat:
-            return the_d['inspire']
-    return cds_cat
+def translate_config(key, config_dict):
+    """ Given a string, this returns the Inspire equivilant
+    found in the given config dictionary by searching the
+    imported configuration """
+    if key in config_dict:
+        return config_dict[key]
+    return key
 
 
 def punctuate_authorname(an):
