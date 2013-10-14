@@ -533,7 +533,7 @@ def apply_filter(rec):
             if is_figure and 'u' in subs:
                 is_subformat = [s for s in subs['u'] if "subformat" in s.lower()]
                 if not is_subformat:
-                    newsubs.append(('u', subs['u'][0]))
+                    newsubs.append(('a', subs['u'][0]))
                     newsubs.append(('t', 'Plot'))
                     if 'y' in subs:
                         figure_counter += 1
@@ -558,6 +558,8 @@ def apply_filter(rec):
                 unzipped_archive = unzip(zipped_archive)
                 list_of_pngs = locate("*.png", unzipped_archive)
                 for png in list_of_pngs:
+                    if "_vti_" in png or "__MACOSX" in png:
+                        continue
                     figure_counter += 1
                     plotsubs = []
                     plotsubs.append(('a', png))
