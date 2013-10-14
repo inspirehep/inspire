@@ -51,7 +51,8 @@ RE_ARTICLE_DTD = re.compile('<!DOCTYPE article PUBLIC "-//American Physical'
                             ' "article\.dtd">')
 
 
-def unzip(zipped_file, output_directory=None):
+def unzip(zipped_file, output_directory=None,
+          prefix="apsharvest_unzip_", suffix=""):
     """
     Uncompress a zipped file from given filepath to an (optional) location.
     If no location is given, a temporary folder will be generated inside
@@ -60,7 +61,9 @@ def unzip(zipped_file, output_directory=None):
     if not output_directory:
         # We create a temporary directory to extract our stuff in
         try:
-            output_directory = mkdtemp(prefix="apsharvest_unzip_", dir=CFG_TMPSHAREDDIR)
+            output_directory = mkdtemp(suffix=suffix,
+                                       prefix=prefix,
+                                       dir=CFG_TMPSHAREDDIR)
         except Exception, e:
             try:
                 os.removedirs(output_directory)
@@ -82,6 +85,9 @@ def _do_unzip(zipped_file, output_directory):
             if relative_path.endswith(os.sep) and not os.path.exists(dirname):
                 os.makedirs(relative_path)
             elif not os.path.exists(relative_path):
+                dirname = os.path.join(output_directory, os.path.dirname(path))
+                if os.path.dirname(path) and not os.path.exists(dirname):
+                    os.makedirs(dirname)
                 fd = open(relative_path, "w")
                 fd.write(z.read(path))
                 fd.close()
