@@ -10,7 +10,6 @@
 
 import os
 import sys
-import getopt
 import re
 
 try:
@@ -25,21 +24,13 @@ from invenio.config import (CFG_ETCDIR, CFG_TMPSHAREDDIR)
 from invenio.bibrecord import (create_record,
                                record_get_field_instances,
                                record_add_field, record_xml_output,
-                               field_get_subfield_values,
                                record_get_field_values,
                                record_delete_field, record_delete_fields,
                                record_replace_field,
                                field_get_subfield_instances,
-                               create_field, record_get_field_values,
-                               record_strip_controlfields,
-                               record_xml_output)
-from invenio.search_engine import (get_record, perform_request_search)
-from invenio.bibmerge_differ import (record_diff, match_subfields)
-from invenio.bibupload import retrieve_rec_id
-from invenio.bibmatch_engine import match_record
-from invenio.textutils import (wash_for_xml, wash_for_utf8)
+                               create_field,
+                               record_strip_controlfields)
 from invenio.search_engine import perform_request_search
-from invenio.bibconvert_xslt_engine import convert
 
 # NB: For future reference, elementtree.ElementTree is depreciated after
 # Python 2.4, Inspire instances on higher Python versions should use xml.etree
@@ -86,9 +77,16 @@ def main(args):
         sys.exit(1)
 
     load_config(config_path)
-    record_tree = clean_oai_xml(input_filename)
-    records = element_tree_to_record(record_tree)
+
+    # Hack to activate UTF-8
+    reload(sys)
+    sys.setdefaultencoding("utf8")
+    assert sys.getdefaultencoding() == "utf8"
+
+    record_tree, header_subs = clean_oai_xml(input_filename)
+    records, deleted_records = element_tree_to_record(record_tree, header_subs)
     insert_records = []
+    append_records = []
 
     for record in records:
         # Step 1: Attempt to match the record to those already in Inspire
@@ -103,11 +101,22 @@ def main(args):
         else:
             _print("Record %s found in INSPIRE: %r Skipping.." % (recid, res))
 
+    for record in deleted_records:
+        recid = record_get_field_values(record, tag="035", code="a")[0].split(":")[-1]
+        res = attempt_record_match(recid)
+        if res:
+            # Record exists and we should then delete it
+            append_records.append(record)
+
     # Output results. Create new files, if necessary.
     write_record_to_file("%s.insert.xml" % (input_filename,), insert_records)
-    print "%s.insert.xml" % (input_filename,)
+    _print("%s.insert.xml" % (input_filename,))
     sys.stdout.write("Number of records to insert:  %d\n"
                      % (len(insert_records),))
+    write_record_to_file("%s.append.xml" % (input_filename,), append_records)
+    _print("%s.append.xml" % (input_filename,))
+    sys.stdout.write("Number of records to append:  %d\n"
+                     % (len(append_records),))
 
 
 # ==============================| Functions |==============================
@@ -174,12 +183,12 @@ def determine_collection(setspec):
     return setspec.split(':')[-1:][0].upper()
 
 
-def element_tree_to_record(tree):
+def element_tree_to_record(tree, header_subs=None):
     """ Takes an ElementTree and converts the nodes
     into BibRecord records so they can be worked with
-    This expects a clean OAI response with the tree root as GetRecord
+    This expects a clean OAI response with the tree root as ListRecords or GetRecord
     and record as the subtag like so:
-    <ListRecords>
+    <ListRecords|GetRecord>
         <record>
             <header>
                 <!--- Record Information --->
@@ -190,37 +199,86 @@ def element_tree_to_record(tree):
                 </record>
             </metadata>
         </record>
-    </ListRecords>
+    </ListRecords|GetRecord>
 
-    Parameters:
-     * tree - ElementTree: Tree object corresponding to GetRecord node from
-                           OAI request
-    Returns: [(bibrecord, collection), ...] A list of tuples, with a BibRecord
-        format in the first position and collection (string from setSpec) second
+    @param tree: ElementTree: Tree object corresponding to GetRecord node from
+                              OAI request
+    @param header_subs: OAI header subfields, if any
+
+    @return: (record_list, deleted_list) A tuple, with first a list of BibRecords
+             found and second a list of BibRecords to delete.
     """
     records = []
+    deleted_records = []
+    if not header_subs:
+        header_subs = []
+    # Make it a tuple, this information should not be changed
+    header_subs = tuple(header_subs)
+
     oai_records = tree.getroot()
     for record_element in oai_records.getchildren():
+        header = record_element.find('header')
+
+        # Add to OAI subfield
+        datestamp = header.find('datestamp')
+        identifier = header.find('identifier')
+        identifier = identifier.text
+
+        # The record's subfield is based on header information
+        subs = list(header_subs)
+        subs.append(("a", identifier))
+        subs.append(("d", datestamp.text))
+
+        if "status" in header.attrib and header.attrib["status"] == "deleted":
+            # Record was deleted - create delete record
+            recid = identifier.split(":")[-1]
+            deleted_record = {}
+            record_add_field(deleted_record, "035", subfields=subs)
+            record_add_field(deleted_record, "035", subfields=[("9", "CDS"), ("a", recid)])
+            record_add_field(deleted_record, "980", subfields=[("c", "DELETED")])
+            deleted_records.append(deleted_record)
+            _print("Record has been deleted: %s" % (identifier,))
+            continue
+
         marc_root = record_element.find('metadata').find('record')
-        identifier = record_element.find('header').find('identifier')
-        marcxml = ET.tostring(marc_root)
-        identifier = ET.tostring(identifier)
+        marcxml = ET.tostring(marc_root, encoding="utf-8")
         record, status, errors = create_record(marcxml)
         if status == 1:
+            # Add OAI request information
+            record_add_field(record, "035", subfields=subs)
             records.append(record)
         else:
             _print("ERROR: Could not create record from %s" % (identifier,))
             _print(" * %r" % (errors,))
-        # set_spec = record_element.find('header').find('setSpec').text
-    return records
+    return records, deleted_records
+
+
+def get_request_subfields(root):
+    """
+    Builds a basic 035 subfield with basic information from the OAI-PMH request.
+
+    @param root: ElementTree root node
+
+    @return: list of subfield tuples [(..),(..)]
+    """
+    request = root.find('request')
+    responsedate = root.find('responseDate')
+
+    subs = [("9", request.text),
+            ("h", responsedate.text),
+            ("m", request.attrib["metadataPrefix"])]
+    return subs
 
 
 def clean_oai_xml(xml):
-    """ Cleans MARCXML harvested from OAI, allowing in
+    """
+    Cleans MARCXML harvested from OAI, allowing in
     to be used with BibUpload or BibRecord
-    Parameters:
-     * xml - either XML as a string or path to an XML file
-    Returns: ElementTree of clean data """
+
+    @param xml: either XML as a string or path to an XML file
+
+    @return: ElementTree of clean data
+    """
     try:
         if os.path.isfile(xml):
             tree = ET.parse(xml)
@@ -233,25 +291,34 @@ def clean_oai_xml(xml):
         raise e
     root = tree.getroot()
     root = strip_xml_namespace(root)
-    records = root.find('ListRecords')
+    header_subs = get_request_subfields(root)
 
-    return ET.ElementTree(records)
+    records = root.find('ListRecords')
+    if records is None:
+        records = root.find('GetRecords')
+    if records is None:
+        raise ValueError("Cannot find ListRecords or GetRecords!")
+
+    return ET.ElementTree(records), header_subs
 
 
 def strip_xml_namespace(root):
-    """ Strips out namespace data from an ElementTree
+    """
+    Strips out namespace data from an ElementTree
     This function is recursive and will traverse all
     subnodes to the root element
-    Parameters:
-     * root - the root element
-    Returns: the same root element, minus namespace """
+
+    @param root: the root element
+
+    @return: the same root element, minus namespace
+    """
     try:
         root.tag = root.tag.split('}')[1]
     except IndexError:
         pass
 
     for element in root.getchildren():
-        element = strip_xml_namespace(element)
+        strip_xml_namespace(element)
     return root
 
 
@@ -262,7 +329,7 @@ def apply_filter(rec):
     Returns: dictionary, BibRecord structure
     """
     # Move recid from 001 to 035
-    cds_id, pos = rec['001'][0][-2:]
+    cds_id = rec['001'][0][3]
     record_add_field(rec, '035', subfields=[('9', 'CDS'), ('a', cds_id)])
     # Clear control fields
     record_strip_controlfields(rec)
@@ -391,8 +458,7 @@ def apply_filter(rec):
     for field in record_get_field_instances(rec, '269'):
         for idx, (key, value) in enumerate(field[0]):
             if key == "c":
-                date = datetime.strptime(value, "%d %b %Y")
-                field[0][idx] = ("c", date.strftime("%Y-%m-%d"))
+                field[0][idx] = ("c", convert_date_to_iso(value))
                 record_delete_fields(rec, "260")
 
     if not 'THESIS' in collections:
@@ -613,7 +679,7 @@ def field_get_subfields(field):
 
 def field_swap_subfields(field, subs):
     """ Recreates a field with a new set of subfields """
-    return (subs, field[1], field[2], field[3], field[4])
+    return subs, field[1], field[2], field[3], field[4]
 
 
 def attempt_record_match(recid):
@@ -668,7 +734,21 @@ def punctuate_authorname(an):
     return ret_str.strip()
 
 
-def _print(message, verbose=3):
+def convert_date_to_iso(value):
+    """
+    Will try to convert a date-value to the ISO date standard.
+    """
+    date_formats = ["%d %b %Y", "%Y/%m/%d"]
+    for dformat in date_formats:
+        try:
+            date = datetime.strptime(value, dformat)
+            return date.strftime("%Y-%m-%d")
+        except ValueError:
+            pass
+    return value
+
+
+def _print(message):
     """ Print - verbosity to be included later """
     print message
 
