@@ -403,8 +403,28 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
     if asana_key:
         try:
             from asana.asana import AsanaAPI, AsanaException
+
+            class AsanaAPIMod(AsanaAPI):
+                """ Extends AsanaAPI """
+                def create_unassigned_subtask(self, parent_id, name,
+                                              completed=False, assignee=None,
+                                              notes=None, followers=None):
+                    """ Modified version of create_subtask """
+                    if assignee:
+                        payload = {'assignee': assignee}
+                    else:
+                        payload = {'assignee_status': 'later'}
+                    payload['name'] = name
+                    if followers:
+                        for pos, person in enumerate(followers):
+                            payload['followers[%d]' % pos] = person
+                    if notes:
+                        payload['notes'] = notes
+                    if completed:
+                        payload['completed'] = 'true'
+                    return self._asana_post('tasks/%s/subtasks' % parent_id, payload)
             try:
-                asana_instance = AsanaAPI(asana_key)
+                asana_instance = AsanaAPIMod(asana_key)
                 send_asana_tasks(dois, log_dir, count_total, count_new,
                                  asana_instance, asana_parent_task_id)
             except AsanaException as ex:
@@ -515,9 +535,9 @@ available in the following directory: '%s'
 """ % (SCRIPT_NAME, count_total, count_new, log_dir)
 
     # Create the subtasks
-    parent_task = asana.create_subtask(parent,
-                                       "DOI Update on %s" % date_str,
-                                       notes=msg)
+    parent_task = asana.create_unassigned_subtask(parent,
+                                                  "DOI Update on %s" % date_str,
+                                                  notes=msg)
     par_id = parent_task['id']
 
     categories = [
@@ -534,7 +554,7 @@ available in the following directory: '%s'
     for dic, title, desc, structure in categories:
         if len(dois[dic]) > 0:
             msg = "%s\n\nLine Structure: %s" % (desc, structure)
-            _parent = asana.create_subtask(par_id, title, notes=msg)
+            _parent = asana.create_unassigned_subtask(par_id, title, notes=msg)
             for prt1, prt2, prt3 in dois[dic]:
-                asana.create_subtask(_parent['id'],
-                                     "%s | %s | %s" % (prt1, prt2, prt3))
+                asana.create_unassigned_subtask(_parent['id'],
+                                                "%s | %s | %s" % (prt1, prt2, prt3))
