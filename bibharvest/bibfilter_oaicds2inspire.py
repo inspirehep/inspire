@@ -7,6 +7,7 @@
 
                     Based on bibfilter_oaiarXiv2inspire
 """
+from tempfile import mkstemp
 
 import os
 import sys
@@ -18,19 +19,26 @@ except ImportError:
     import simplejson as json
 
 from invenio.dateutils import datetime
-from invenio.apsharvest_utils import (unzip, locate)
-from invenio.downloadutils import download_file
-from invenio.config import (CFG_ETCDIR, CFG_TMPSHAREDDIR)
+from invenio.apsharvest_utils import (unzip,
+                                      locate)
+from invenio.downloadutils import (download_file,
+                                   InvenioDownloadError)
+from invenio.config import (CFG_ETCDIR,
+                            CFG_TMPSHAREDDIR)
 from invenio.bibrecord import (create_record,
                                record_get_field_instances,
-                               record_add_field, record_xml_output,
+                               record_add_field,
+                               record_xml_output,
                                record_get_field_values,
-                               record_delete_field, record_delete_fields,
+                               record_delete_field,
+                               record_delete_fields,
                                record_replace_field,
                                field_get_subfield_instances,
                                create_field,
                                record_strip_controlfields)
 from invenio.search_engine import perform_request_search
+from invenio.plotextractor_converter import convert_images
+from invenio.bibtask import write_message
 
 # NB: For future reference, elementtree.ElementTree is depreciated after
 # Python 2.4, Inspire instances on higher Python versions should use xml.etree
@@ -93,30 +101,31 @@ def main(args):
         recid = record['001'][0][3]
         res = attempt_record_match(recid)
         if not res:
-            _print("Record %s not in INSPIRE" % (recid,))
+            _print("Record %s does not exist: inserting" % (recid,))
             # No record found
             # Step 2: Appply filter to transform CDS MARC to Inspire MARC
             insert_records.append(apply_filter(record))
             #insert_records.append(record)
         else:
-            _print("Record %s found in INSPIRE: %r Skipping.." % (recid, res))
+            _print("Record %s found: %r" % (recid, res))
 
     for record in deleted_records:
         recid = record_get_field_values(record, tag="035", code="a")[0].split(":")[-1]
         res = attempt_record_match(recid)
         if res:
             # Record exists and we should then delete it
+            _print("Record %s exists. Delete it" % (recid,))
             append_records.append(record)
 
     # Output results. Create new files, if necessary.
     write_record_to_file("%s.insert.xml" % (input_filename,), insert_records)
     _print("%s.insert.xml" % (input_filename,))
-    sys.stdout.write("Number of records to insert:  %d\n"
-                     % (len(insert_records),))
+    _print("Number of records to insert:  %d\n"
+           % (len(insert_records),))
     write_record_to_file("%s.append.xml" % (input_filename,), append_records)
     _print("%s.append.xml" % (input_filename,))
-    sys.stdout.write("Number of records to append:  %d\n"
-                     % (len(append_records),))
+    _print("Number of records to append:  %d\n"
+           % (len(append_records),))
 
 
 # ==============================| Functions |==============================
@@ -141,7 +150,7 @@ def write_record_to_file(filename, record_list):
 
 def load_config(json_file=CONFIG_FILE):
     """ Loads configuration from JSON file """
-    _print('Loading config from %s' % json_file)
+    _print('Loading config from %s' % json_file, verbose=5)
     try:
         handle = open(json_file, 'r')
         conf = json.load(handle)
@@ -599,11 +608,37 @@ def apply_filter(rec):
             if is_figure and 'u' in subs:
                 is_subformat = [s for s in subs['u'] if "subformat" in s.lower()]
                 if not is_subformat:
-                    newsubs.append(('a', subs['u'][0]))
-                    newsubs.append(('t', 'Plot'))
-                    if 'y' in subs:
+                    url = subs['u'][0]
+                    if url.endswith(".pdf"):
+                        # We try to convert
+                        fd, local_url = mkstemp(suffix=os.path.basename(url), dir=CFG_TMPSHAREDDIR)
+                        os.close(fd)
+                        _print("Downloading %s into %s" % (url, local_url), verbose=5)
+                        plotfile = ""
+                        try:
+                            plotfile = download_file(url_for_file=url,
+                                                     downloaded_file=local_url,
+                                                     timeout=30.0)
+                        except InvenioDownloadError:
+                            _print("Download failed while attempting to reach %s. Skipping.." % (url,))
+                            remove = True
+                        if plotfile:
+                            converted = convert_images([plotfile])
+                            if converted:
+                                url = converted.pop()
+                                _print("Successfully converted %s to %s" % (local_url, url), verbose=5)
+                            else:
+                                _print("Conversion failed on %s" % (local_url,))
+                                url = None
+                                remove = True
+                    if url:
+                        newsubs.append(('a', url))
+                        newsubs.append(('t', 'Plot'))
                         figure_counter += 1
-                        newsubs.append(('d', "%05d %s" % (figure_counter, subs['y'][0])))
+                        if 'y' in subs:
+                            newsubs.append(('d', "%05d %s" % (figure_counter, subs['y'][0])))
+                        else:
+                            newsubs.append(('d', "%05d %s" % (figure_counter, os.path.basename(url))))
 
         if not newsubs and 'u' in subs:
             is_fulltext = [s for s in subs['u'] if ".pdf" in s]
@@ -616,23 +651,29 @@ def apply_filter(rec):
             if is_zipfile:
                 url = is_zipfile[0]
                 local_url = os.path.join(CFG_TMPSHAREDDIR, os.path.basename(url))
-                _print("Downloading %s into %s" % (url, local_url))
-
-                zipped_archive = download_file(url_for_file=is_zipfile[0],
-                                               downloaded_file=local_url)
-
-                unzipped_archive = unzip(zipped_archive)
-                list_of_pngs = locate("*.png", unzipped_archive)
-                for png in list_of_pngs:
-                    if "_vti_" in png or "__MACOSX" in png:
-                        continue
-                    figure_counter += 1
-                    plotsubs = []
-                    plotsubs.append(('a', png))
-                    caption = '%05d %s' % (figure_counter, os.path.basename(png))
-                    plotsubs.append(('d', caption))
-                    plotsubs.append(('t', 'Plot'))
-                    record_add_field(rec, 'FFT', subfields=plotsubs)
+                _print("Downloading %s into %s" % (url, local_url), verbose=5)
+                zipped_archive = ""
+                try:
+                    zipped_archive = download_file(url_for_file=is_zipfile[0],
+                                                   downloaded_file=local_url,
+                                                   timeout=30.0)
+                except InvenioDownloadError:
+                    _print("Download failed while attempting to reach %s. Skipping.."
+                           % (is_zipfile[0],))
+                    remove = True
+                if zipped_archive:
+                    unzipped_archive = unzip(zipped_archive)
+                    list_of_pngs = locate("*.png", unzipped_archive)
+                    for png in list_of_pngs:
+                        if "_vti_" in png or "__MACOSX" in png:
+                            continue
+                        figure_counter += 1
+                        plotsubs = []
+                        plotsubs.append(('a', png))
+                        caption = '%05d %s' % (figure_counter, os.path.basename(png))
+                        plotsubs.append(('d', caption))
+                        plotsubs.append(('t', 'Plot'))
+                        record_add_field(rec, 'FFT', subfields=plotsubs)
 
         if not remove and not newsubs and 'u' in subs:
             urls = ('http://cdsweb.cern.ch', 'http://cms.cern.ch',
@@ -748,9 +789,9 @@ def convert_date_to_iso(value):
     return value
 
 
-def _print(message):
-    """ Print - verbosity to be included later """
-    print message
+def _print(message, verbose=1):
+    """ Used for logging """
+    write_message(message, verbose=verbose)
 
 
 # ==============================| Init, innit? |==============================
