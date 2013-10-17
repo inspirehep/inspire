@@ -35,18 +35,18 @@ def format_element(bfo, harvmac='', generate_missing_key=''):
 
 def get_spires_texkey(bfo):
     """Return spires/inspire texkey, if one is set, or else empty string."""
-    # first check for SPIRES texkey
+    # checks for SPIRES or INSPIRE texkey in field $a first and in field $z
+    # if it was not found
     for keys in bfo.fields("035__"):
         try:
-            if keys['9'] == "SPIRESTeX" and keys['z']:
-                return keys['z']
+            if keys['9'] == "SPIRESTeX" or "INSPIRETeX" and keys['a']:
+                return keys['a']
         except KeyError:
             return ''
-    # if not found - check for INSPIRE texkey or return ''
     for keys in bfo.fields("035__"):
         try:
-            if keys['9'] == "INSPIRETeX" and keys['a']:
-                return keys['a']
+            if keys['9'] == "SPIRESTeX" or "INSPIRETeX" and keys['z']:
+                return keys['z']
         except KeyError:
             return ''
     return ''

@@ -52,7 +52,8 @@ def format_element(bfo, separator=', ', link="yes"):
                 note += conf['t'] + ' Conference: ' + conf_name
             else:
                 note += 'Conference: ' + conf_name
-            if conf.get('x'):
+            # Do not display 773_x when it refers on book chapters
+            if conf.get('x') and not( "In *".lower() in conf.get('x').lower() or "Also in *".lower() in conf.get('x').lower() ):
                 note += ' (' + conf['x'] + ')'
             if conf.get('c') and not conf.get('p'):
             # Only display pages from 773__c field, when there is no 773__p field
