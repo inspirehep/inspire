@@ -21,8 +21,8 @@ except ImportError:
 from invenio.dateutils import datetime
 from invenio.apsharvest_utils import (unzip,
                                       locate)
-from invenio.downloadutils import (download_file,
-                                   InvenioDownloadError)
+from invenio.filedownloadutils import (download_url,
+                                       InvenioFileDownloadError)
 from invenio.config import (CFG_ETCDIR,
                             CFG_TMPSHAREDDIR)
 from invenio.bibrecord import (create_record,
@@ -654,10 +654,10 @@ def apply_filter(rec):
                 _print("Downloading %s into %s" % (url, local_url), verbose=5)
                 zipped_archive = ""
                 try:
-                    zipped_archive = download_file(url_for_file=is_zipfile[0],
-                                                   downloaded_file=local_url,
-                                                   timeout=30.0)
-                except InvenioDownloadError:
+                    zipped_archive = download_url(url=is_zipfile[0],
+                                                  download_to_file=local_url,
+                                                  timeout=30.0)
+                except InvenioFileDownloadError:
                     _print("Download failed while attempting to reach %s. Skipping.."
                            % (is_zipfile[0],))
                     remove = True

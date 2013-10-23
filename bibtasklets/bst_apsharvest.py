@@ -45,7 +45,7 @@ from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 from invenio.bibdocfile import open_url
 from invenio.search_engine import perform_request_search, search_pattern
 from invenio.bibformat_engine import BibFormatObject
-from invenio.downloadutils import download_file, InvenioDownloadError
+from invenio.filedownloadutils import download_url, InvenioFileDownloadError
 from invenio.apsharvest_dblayer import fetch_last_updated, \
     get_all_new_records, \
     get_all_modified_records, \
@@ -845,13 +845,13 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
 
             write_message("Trying to save to %s" % (result_file,), verbose=5)
 
-            result_file = download_file(url_for_file=url,
-                                        downloaded_file=result_file,
-                                        content_type="zip",
-                                        retry_count=5,
-                                        timeout=60.0)
+            result_file = download_url(url=url,
+                                       download_to_file=result_file,
+                                       content_type="zip",
+                                       retry_count=5,
+                                       timeout=60.0)
             write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
-        except InvenioDownloadError, e:
+        except InvenioFileDownloadError, e:
             write_message("Error: URL could not be opened: %s" % (url,),
                           stream=sys.stderr)
             yield record, "%s cannot be opened." % (url,)
