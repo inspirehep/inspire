@@ -49,17 +49,15 @@ def format_element(bfo, default='', separator='; ', style='', \
 
     links = []
 
-    # KEKSCAN links
+    # KEKSCAN/CDS links
     identifiers = bfo.fields('035__')
 
     for ident in identifiers:
-        if ident['9'] == 'KEKSCAN':
+        if ident.get('9', '') == 'KEKSCAN' and ident.get('a', None) is not None:
             out = ident['a'].replace("-", "")
             links.append('<a href="http://www-lib.kek.jp/cgi-bin/img_index?' + out + '"> KEK scanned document </a>')
 
-    # CDS links
-    for ident in identifiers:
-        if ident['9'] == 'CDS':
+        if ident.get('9', '') == 'CDS' and ident.get('a', None) is not None:
             links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
 
     # ADS links
@@ -67,16 +65,14 @@ def format_element(bfo, default='', separator='; ', style='', \
     current_links = bfo.field('8564_y')
 
     for ident in identifiers:
-        if ident.get('9', '') == 'arXiv' and not ("ADSABS" in current_links):
+        if ident.get('9', '') == 'arXiv' and not ("ADSABS" in current_links) and ident.get('a', None) is not None:
             links.append('<a href="http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch=' + ident.get('a', '') + '">ADS Abstract Service</a>')
-
-    # could look for other publication info and calculate URls here
 
     #links moved to new field 035
     urls = bfo.fields('035__')
     allowed_doctypes = ["INSPIRE-PUBLIC"]
     for url in urls:
-        if "9" in url:
+        if "9" in url and "a" in url:
             if url["9"].lower() == "msnet":
                 links.append('<a ' + style + ' href="http://www.ams.org/mathscinet-getitem?mr=' + url["a"] + '">AMS MathSciNet</a>')
             if url["9"].lower() == "zblatt":
