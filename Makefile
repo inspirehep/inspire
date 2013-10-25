@@ -17,7 +17,8 @@ SUBDIRS = bibconvert \
 		  websubmit \
 		  bibtasklets \
 		  apsharvest \
-		  miscutil
+		  miscutil \
+		  bibsort
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
