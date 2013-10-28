@@ -7,6 +7,7 @@ SUBDIRS = img
 CSSFILES = invenio_inspire.css jobsubmit.css
 JSFILES = *.js
 LIBFILES = *.py
+FAVICON = favicon.ico
 ROBOTSFILES = robots.txt
 CKEDITORFILES = websubmit-ckeditor-config.js
 
@@ -25,6 +26,7 @@ install:
 	$(INSTALL) -m 664 $(ROBOTSFILES) $(WEBDIR)
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
 	$(INSTALL) -m 664 $(CKEDITORFILES) $(WEBDIR)/ckeditor
+	$(INSTALL) -m 664 $(FAVICON) $(WEBDIR)
 
 install-ugly: install uglify
 
