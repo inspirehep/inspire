@@ -10,6 +10,8 @@ COLLECTIONDESC='690C aliases'
 SUBJECTDESC='65017 aliases'
 PDGDESC='PDG codes'
 NOTEDESC='A list of 088 report-number prefixes for which the 980-collection 'NOTE' should be appended.'
+DEGREEDESC='List of type of Degrees'
+HEPCOLLECTIONSDESC='List of possible HEP Collections'
 PWD=`pwd`
 
 all:
@@ -23,15 +25,18 @@ install: install-journals-knowledge
 install-journals-knowledge:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg notes coden create-institutions-dynamic-kb create-experiments-dynamic-kb
+install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection hep-collections subject pdg coden degree create-institutions-dynamic-kb create-experiments-dynamic-kb
+	@echo "Done."
 
 weblinks: load-weblinks-knowledge-base
 journals: load-journals-knowledge-base
 collection: load-collection-knowledge-base
+hep-collections: load-hep-collections-knowledge-base
 subject: load-subject-knowledge-base
 pdg: load-pdg-knowledge-base
 notes: load-note-collections-knowledge-base
 coden: load-coden-knowledge-base
+degree: load-degree-knowledge-base
 
 announce-kb-load:
 	@echo "Loading knowledge bases into DB..."
@@ -53,8 +58,14 @@ load-journals-knowledge-base:
 load-collection-knowledge-base:
 	$(PYTHON) kb_load.py $(PWD)/collection.kb COLLECTION --description="$(COLLECTIONDESC)"
 
+load-hep-collections-knowledge-base:
+	$(PYTHON) kb_load.py $(PWD)/hep-collections.kb HEPCOLLECTIONS --description="$(HEPCOLLECTIONSDESC)"
+
 load-subject-knowledge-base:
 	$(PYTHON) kb_load.py $(PWD)/subject.kb SUBJECT --description="$(SUBJECTDESC)"
+
+load-degree-knowledge-base:
+	$(PYTHON) kb_load.py $(PWD)/degree.kb DEGREE --description="$(DEGREEDESC)"
 
 load-pdg-knowledge-base:
 	$(PYTHON) kb_load.py $(PWD)/pdg.kb PDG --description="$(PDGDESC)"
