@@ -1,8 +1,8 @@
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.1.69, for redhat-linux-gnu (x86_64)
 --
--- Host: 137.138.4.146    Database: inspirehep
+-- Host: localhost    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.0.95-log
+-- Server version	5.5.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -238,6 +238,9 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (46,'publisher','publisher');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (47,'texkey','texkey');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (48,'volume','volume');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (49,'exact title','exacttitle');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (50,'refers to excluding self cites','referstoexcludingselfcites');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (51,'cited by excluding self cites','citedbyexcludingselfcites');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (52,'cataloguer nickname','cataloguer');
 
 --
 -- Dumping data for table `field_tag`
@@ -430,4 +433,4 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,166,0);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-23 14:14:08
+-- Dump completed on 2013-10-29 13:17:08

@@ -1,8 +1,8 @@
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.1.69, for redhat-linux-gnu (x86_64)
 --
--- Host: 137.138.4.146    Database: inspirehep
+-- Host: localhost    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.0.95-log
+-- Server version	5.5.32-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -19,31 +19,31 @@
 -- Dumping data for table `idxINDEX`
 --
 
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (1,'global','global','2013-05-23 14:00:41','en');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (2,'collection','collection','2013-05-23 13:07:20','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (3,'author','author','2013-05-23 14:03:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (4,'keyword','keyword','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (5,'reference','reference','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (6,'reportnumber','reportnumber','2013-05-23 14:04:01','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (7,'title','title','2013-05-23 13:57:21','en');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (8,'year','year','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (9,'journal','journal','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (10,'affiliation','affiliation','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (11,'collaboration','collaboration','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (12,'exactauthor','exactauthor','2013-05-23 14:03:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (14,'caption','caption','2013-05-23 13:57:21','en');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (13,'fulltext','fulltext','2013-05-23 13:17:48','en');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (15,'firstauthor','firstauthor','2013-05-23 14:03:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (16,'address','address','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (17,'postalcode','postal code','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (18,'subject','subject','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (19,'exactfirstauthor','exactfirstauthor','2013-05-23 14:03:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (20,'authorcount','This index contains number of authors of the record.','2013-05-23 14:03:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (21,'hepdataparent','','2013-05-23 13:41:23','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (22,'note','','2013-05-23 14:00:41','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (23,'publisher','','2013-05-23 13:57:21','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (24,'hepdata','','0000-00-00 00:00:00','');
-INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`) VALUES (25,'exacttitle','','0000-00-00 00:00:00','');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (1,'global','global','2013-10-29 11:27:18','en','native','INDEX-SYNONYM-TITLE,exact','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (2,'collection','collection','2013-10-29 13:15:25','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (3,'author','author','0000-00-00 00:00:00','','native','','No','No','No','BibIndexAuthorTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (4,'keyword','keyword','2013-10-29 13:13:12','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (5,'reference','reference','2013-10-29 13:14:21','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (6,'reportnumber','reportnumber','2013-10-29 13:17:38','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (7,'title','title','2013-10-29 13:15:03','en','native','INDEX-SYNONYM-TITLE,exact','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (8,'year','year','2013-10-29 13:15:30','','native','','No','No','No','BibIndexYearTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (9,'journal','journal','2013-10-29 13:16:13','','native','','No','No','No','BibIndexJournalTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (10,'affiliation','affiliation','2013-10-29 13:17:49','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (11,'collaboration','collaboration','2013-10-29 13:13:01','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (12,'exactauthor','exactauthor','2013-10-24 21:40:54','','native','','No','No','No','BibIndexExactAuthorTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (14,'caption','caption','2013-10-29 13:13:38','en','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (13,'fulltext','fulltext','2013-10-23 08:06:10','en','SOLR','','No','No','No','BibIndexFulltextTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (15,'firstauthor','firstauthor','2013-10-24 21:40:56','','native','','No','No','No','BibIndexAuthorTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (16,'address','address','2013-10-29 13:13:49','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (17,'postalcode','postal code','2013-10-29 13:13:17','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (18,'subject','subject','2013-10-29 13:14:15','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (19,'exactfirstauthor','exactfirstauthor','2013-10-23 09:09:53','','native','','No','No','No','BibIndexExactAuthorTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (20,'authorcount','This index contains number of authors of the record.','2013-10-23 09:09:53','','native','','No','No','No','BibIndexAuthorCountTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (21,'hepdataparent','','2013-10-29 12:52:36','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (22,'note','','2013-10-29 11:21:36','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (23,'publisher','','2013-10-29 13:14:42','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (24,'hepdata','','0000-00-00 00:00:00','','native','','No','No','No','BibIndexDefaultTokenizer');
+INSERT INTO `idxINDEX` (`id`, `name`, `description`, `last_updated`, `stemming_language`, `indexer`, `synonym_kbrs`, `remove_stopwords`, `remove_html_markup`, `remove_latex_markup`, `tokenizer`) VALUES (25,'exacttitle','','2013-10-29 13:12:56','','native','','No','No','No','BibIndexDefaultTokenizer');
 
 --
 -- Dumping data for table `idxINDEX_field`
@@ -86,4 +86,4 @@ INSERT INTO `idxINDEX_field` (`id_idxINDEX`, `id_field`, `regexp_punctuation`, `
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-23 14:16:03
+-- Dump completed on 2013-10-29 13:17:55
