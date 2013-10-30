@@ -36,12 +36,25 @@ install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
 	$(INSTALL) -m 664 $(KBFILES) $(ETCDIR)/bibconvert/KB
 
+load-records:
+	$(BINDIR)/bibupload -ir demo-records.xml
+	if [ x"$(CFG_INSPIRE_BIBTASK_USER)" != x"" ]; then \
+	    $(BINDIR)/bibindex -u $(CFG_INSPIRE_BIBTASK_USER); \
+	    $(BINDIR)/webcoll -u $(CFG_INSPIRE_BIBTASK_USER) -f; \
+	    $(BINDIR)/bibrank -u $(CFG_INSPIRE_BIBTASK_USER) -w citation; \
+	else \
+	    $(BINDIR)/bibindex; \
+	    $(BINDIR)/webcoll -f; \
+	    $(BINDIR)/bibrank -w citation; \
+	fi
+	@echo "* Done.  Please see via 'bibsched' the task progress."
+
+
 convert-test-sample-of-records: get-test convert-test
 load-test-sample-of-records: get-test convert-test upload-test
 
 convert-test-sample-of-inst: get-test-inst convert-test-inst
 load-test-sample-of-inst: get-test-inst convert-test-inst upload-test-inst
-
 
 
 # helper targets:

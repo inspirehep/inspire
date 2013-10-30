@@ -21,7 +21,7 @@
 """WebSearch Test Suite
 This suite tests web functionality on INSPIRE"""
 
-
+import os
 import time
 import unittest
 
@@ -30,6 +30,7 @@ from datetime import datetime
 import ClientForm
 import mechanize
 import urllib2
+import urllib
 
 from invenio.w3c_validator import w3c_validate, \
                                   w3c_errors_to_str, \
@@ -40,16 +41,20 @@ from invenio.testutils import InvenioTestUtilsBrowserException, \
 
 # Local config
 try:
-    from config import CFG_SITE_URL, \
-                       CFG_SITE_SECURE_URL
+    from config import (CFG_SITE_URL,
+                        CFG_SITE_RECORD,
+                        CFG_SITE_SECURE_URL,
+                        CFG_USERNAME,
+                        CFG_PASSWORD)
+    CFG_RESTRICTED_TOOLS = True
 except ImportError:
-    from invenio.config import CFG_SITE_URL, \
-                               CFG_SITE_SECURE_URL
+    from invenio.config import (CFG_SITE_URL,
+                                CFG_SITE_RECORD,
+                                CFG_SITE_SECURE_URL)
+    CFG_RESTRICTED_TOOLS = False
 
-from config import CFG_USERNAME, \
-                   CFG_PASSWORD, \
-                   CFG_TESTUTILS_VERBOSE
-
+CFG_TESTUTILS_VERBOSE = 1
+CFG_AUTHORTEST_ENABLE = False
 
 def merge_error_messages(error_messages):
     out = ""
@@ -86,36 +91,38 @@ class WebSearchTests(WebTest):
         self.assertEqual(r.code, 200)
         self.assert_(u'body {' in r.read())
 
-    def test_author_page(self):
-        url = CFG_SITE_URL + '/author/S.Mele.1/'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Mele, Salvatore", "This is me.  Verify my publication list."])
+    if CFG_AUTHORTEST_ENABLE:
+        # FIXME: THIS IS LEGACY AUTHOR TESTS
+        def test_author_page(self):
+            url = CFG_SITE_URL + '/author/profile/S.Mele.1/'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Mele, Salvatore", "This is me.  Verify my publication list."])
 
-    def test_author_claims_page_anonymous(self):
-        url = CFG_SITE_URL + '/person/claimstub?person=S.Mele.1'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["You are going to claim papers"])
+        def test_author_claims_page_anonymous(self):
+            url = CFG_SITE_URL + '/person/claimstub?person=S.Mele.1'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["You are going to claim papers"])
 
-    def test_author_claims_page_logged_in(self):
-        url = CFG_SITE_URL + '/person/S.Mele.1?open_claim=True'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Mele, Salvatore", "Muon pair and tau pair production in two photon collisions at LEP"])
+        def test_author_claims_page_logged_in(self):
+            url = CFG_SITE_URL + '/person/S.Mele.1?open_claim=True'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Mele, Salvatore", "Muon pair and tau pair production in two photon collisions at LEP"])
 
-    def test_author_claim_action_anonymous(self):
-        url = CFG_SITE_URL + '/person/action?repeal=True&selection=700:133386,501369&pid=273672'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Please review your actions"])
+        def test_author_claim_action_anonymous(self):
+            url = CFG_SITE_URL + '/person/action?repeal=True&selection=700:133386,501369&pid=273672'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Please review your actions"])
 
-    def test_author_page_recompute(self):
-        today_str = datetime.today().strftime('%Y-%m-%d')
-        url = CFG_SITE_URL + '/author/S.Mele.1/?recompute=1'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Mele, Salvatore", "This is me.  Verify my publication list.", "Generated: %s" % today_str])
+        def test_author_page_recompute(self):
+            today_str = datetime.today().strftime('%Y-%m-%d')
+            url = CFG_SITE_URL + '/author/S.Mele.1/?recompute=1'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Mele, Salvatore", "This is me.  Verify my publication list.", "Generated: %s" % today_str])
 
     def test_empty_search(self):
         url = CFG_SITE_URL + '/search?ln=en&p=&of=hb&action_search=Search'
@@ -142,269 +149,243 @@ class WebSearchTests(WebTest):
                                expected_text=["Citesummary", "self-citation", "Renowned papers"])
 
 
-def build_queries_checks(cls):
-    def generic_search(self, query):
-        url = CFG_SITE_URL + '/search?ln=en&p=%s&of=hb&action_search=Search' % query
-        check_web_page_content(self,
-                               url,
-                               expected_text=["records found"])
-
-    for index, query in enumerate(cls.popular_queries):
-        def test(self):
-            return generic_search(self, query)
-        setattr(cls, 'test_query_%s' % index, test)
-
-    return cls
-
-
 class PopularQueriesTest(WebTest):
     popular_queries = [
         'find j "Phys.Rev.Lett.,105*"',
         'find ea witten, edward',
         'find a horvathy',
-        'find date > today',
-        'zhitnitsky, a',
-        'author:"J.D.Holt.1" AND collection:citeable',
-        'author:"nishinaka, takahiro"',
-        'exactauthor:J.Serra.3',
-        'find field hep-ex and rank postdoc and region asia',
-        'cited:50->30000 year:2011->2012',
+        'cited:20->300 year:1976',
     ]
 
-PopularQueriesTest = build_queries_checks(PopularQueriesTest)
+    def test_queries(self):
+        for query in self.popular_queries:
+            url = CFG_SITE_URL + '/search?ln=en&p=%s&of=hb&action_search=Search'\
+                  % (urllib.quote(query),)
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["records found"])
+
+
+class FormatExportTest(WebTest):
+    recid = "303"
+    expected_text = "Quark Elastic Scattering as a Source of High Transverse Momentum Mesons"
+
+    formats = [
+        'hb', 'hx', 'hm', 'xm', 'xn', 'xd', 'xe',
+        'hlxu', 'hlxe', 'hlxh'
+    ]
+
+    def test_formats(self):
+        for format in self.formats:
+            url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD,
+                               self.recid, 'export', format)
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=[self.expected_text],
+                                   html=format.startswith('h'))
 
 
 class DetailedRecordTests(WebTest):
+    def setUp(self):
+        self.hb_record_id = "1"
+        self.norefs_record_id = "305"
+        self.hasref_record_id = "302"
+        self.hascites_record_id = "303"
+        if 'inspirehep' in CFG_SITE_URL:
+           self.hb_record_id = "212819"
+           self.norefs_record_id = "1226366"
+           self.hasref_record_id = "332965"
+           self.hascites_record_id = "303"
+
 
     def test_detailed_record(self):
-        url = CFG_SITE_URL + '/record/1226366'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hb_record_id)
         check_web_page_content(self,
                                url,
-                               expected_text=["Einstein's Space-Time: An Introduction to Special and General Relativity"])
+                               expected_text=["Charged Multiplicity of Hadronic Events Containing Heavy Quark Jets"])
 
-    def test_hb_format(self):
-        url = CFG_SITE_URL + '/search?p=001%3A1226366&of=hb'
+    def test_hb_format_search(self):
+        url = CFG_SITE_URL + '/search?p=001%%3A%s&of=hb' % (self.hb_record_id,)
         check_web_page_content(self,
                                url,
-                               expected_text=["Einstein's Space-Time: An Introduction to Special and General Relativity"])
-
-    def test_hx_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/hx'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"])
-
-    def test_hm_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/hm'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"])
-
-    def test_xm_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/xm'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"],
-                               html=False)
-
-    def test_xn_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/xn'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"],
-                               html=False)
-
-    def test_xd_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/xd'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"],
-                               html=False)
-
-    def test_xe_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/xe'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"],
-                               html=False)
-
-    def test_hlxu_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/hlxu'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"])
-
-    def test_hlxe_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/hlxe'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"])
-
-    def test_hlxh_format(self):
-        url = CFG_SITE_URL + '/record/1228228/export/hlxh'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Measurement of spin observables in the quasi-free"])
+                               expected_text=["Charged Multiplicity of Hadronic Events Containing Heavy Quark Jets"])
 
     def test_references_tab_empty(self):
-        url = CFG_SITE_URL + '/record/1226366/references'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.norefs_record_id, 'references')
         check_web_page_content(self,
                                url,
                                expected_text=["Update these references", "No references were found for that record."])
 
     def test_references_tab_not_empty(self):
-        url = CFG_SITE_URL + '/record/854529/references'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hasref_record_id, 'references')
         check_web_page_content(self,
                                url,
-                               expected_text=["Update these references", "A Higher Order Perturbative Parton Evolution Toolkit (HOPPET)"])
+                               expected_text=["Update these references", "Quark Elastic Scattering as a Source of High Transverse Momentum Mesons"])
 
     def test_references_tab_update_refs(self):
-        url = CFG_SITE_URL + '/record/854529/export/hrf'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hasref_record_id, 'export/hrf')
         check_web_page_content(self,
                                url,
-                               expected_text=["A Higher Order Perturbative Parton Evolution Toolkit (HOPPET)"])
+                               expected_text=["Quark Elastic Scattering as a Source of High Transverse Momentum Mesons"])
 
     def test_references_bibedit_anonymous(self):
-        url = CFG_SITE_URL + '/record/1226366/edit'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hb_record_id, 'edit')
         check_web_page_content(self,
                                url,
                                expected_text=["Authorization failure"])
 
     def test_citations_tab(self):
-        url = CFG_SITE_URL + '/record/854529/citations'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hascites_record_id, 'citations')
         check_web_page_content(self,
                                url,
-                               expected_text=["New parton distributions for collider physics"])
+                               expected_text=["Why multi-jet studies?"])
 
+if CFG_RESTRICTED_TOOLS:
+    class RestrictedToolsTest(WebTest):
+        def test_admin_index(self):
+            url = CFG_SITE_SECURE_URL + '/youraccount/'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Configure BibFormat"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-class RestrictedToolsTest(WebTest):
-    def test_admin_index(self):
-        url = CFG_SITE_SECURE_URL + '/youraccount/'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Configure BibFormat"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_references_bibedit(self):
+            url = CFG_SITE_SECURE_URL + '/record/1226366/edit'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Record Editor"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_references_bibedit(self):
-        url = CFG_SITE_SECURE_URL + '/record/1226366/edit'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Record Editor"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_multiedit(self):
+            url = CFG_SITE_SECURE_URL + '/record/multiedit/'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Record Editor"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_multiedit(self):
-        url = CFG_SITE_SECURE_URL + '/record/multiedit/'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Record Editor"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_info_space_manager(self):
+            url = CFG_SITE_SECURE_URL + '/info/manage'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Info Space Manager"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_info_space_manager(self):
-        url = CFG_SITE_SECURE_URL + '/info/manage'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Info Space Manager"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_manage_format_templates(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_templates_manage'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Manage Format Templates"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_manage_format_templates(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_templates_manage'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Manage Format Templates"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_edit_template_html_brief(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_brief.bft'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Format Template Default HTML brief"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_edit_template_html_brief(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_brief.bft'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Format Template Default HTML brief"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_edit_template_html_detailed(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_detailed.bft'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Format Template Default HTML detailed"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_edit_template_html_detailed(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibformat/bibformatadmin.py/format_template_show?bft=Default_HTML_detailed.bft'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Format Template Default HTML detailed"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_manage_kb(self):
+            url = CFG_SITE_SECURE_URL + '/kb'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["BibKnowledge Admin", "CODENS", "PDG", "SUBJECT"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_manage_kb(self):
-        url = CFG_SITE_SECURE_URL + '/kb'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["BibKnowledge Admin", "CODENS", "PDG", "SUBJECT"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_kb_codens(self):
+            url = CFG_SITE_SECURE_URL + '/kb?kb=6&search='
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Knowledge Base CODENS", "APPOA"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_kb_codens(self):
-        url = CFG_SITE_SECURE_URL + '/kb?kb=6&search='
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Knowledge Base CODENS", "APPOA"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_bibindex_indexes_list(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Manage Indexes", "global", "year"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_bibindex_indexes_list(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Manage Indexes", "global", "year"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_bibindex_edit_index(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py/editindex?idxID=1'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Edit Index", "global"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_bibindex_edit_index(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibindex/bibindexadmin.py/editindex?idxID=1'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Edit Index", "global"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_bibrank(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_bibrank(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_oaiharvest(self):
+            url = CFG_SITE_SECURE_URL + '/admin/oaiharvest/oaiharvestadmin.py'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["OAI Harvest Admin Interface"],
+                                   unexpected_text=["FAILED", "DONE WITH ERRORS"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_oaiharvest(self):
-        url = CFG_SITE_SECURE_URL + '/admin/oaiharvest/oaiharvestadmin.py'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["OAI Harvest Admin Interface"],
-                               unexpected_text=["FAILED", "DONE WITH ERRORS"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_oairepository(self):
+            url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
-    def test_oairepository(self):
-        url = CFG_SITE_SECURE_URL + '/admin/bibrank/bibrankadmin.py'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["BibRank Admin Interface", "citation", "inst_papers", "selfcites"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
-
-    def test_query_history(self):
-        url = CFG_SITE_SECURE_URL + '/search?p=001%3A50000'
-        check_web_page_content(self,
-                               url,
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
-        url = CFG_SITE_SECURE_URL + '/youralerts/display'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Your Searches", "001:50000"],
-                               username=CFG_USERNAME,
-                               password=CFG_PASSWORD)
+        def test_query_history(self):
+            url = CFG_SITE_SECURE_URL + '/search?p=001%3A50000'
+            check_web_page_content(self,
+                                   url,
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
+            url = CFG_SITE_SECURE_URL + '/youralerts/display'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Your Searches", "001:50000"],
+                                   username=CFG_USERNAME,
+                                   password=CFG_PASSWORD)
 
 class CollectionsTest(WebTest):
+
+    def setUp(self):
+        self.hepnames_id = "62"
+        self.inst_id = "306"
+        self.conf_id = "4"
+        self.jobs_id = "102"
+        self.exp_id = "41"
+        self.journal_id = "315"
+        if 'inspirehep' in CFG_SITE_URL:
+           self.hepnames_id = "1002589"
+           self.inst_id = "903206"
+           self.conf_id = "974612"
+           self.jobs_id = "1088203"
+           self.exp_id = "1110662"
+           self.journal_id = "1214495"
+
+
     def test_hepnames_home(self):
         url = CFG_SITE_URL + '/collection/HepNames'
         check_web_page_content(self,
@@ -412,16 +393,16 @@ class CollectionsTest(WebTest):
                                expected_text=["HEPNames Search"])
 
     def test_hepnames_detailed(self):
-        url = CFG_SITE_URL + '/record/1048055'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.hepnames_id)
         check_web_page_content(self,
                                url,
-                               expected_text=["L. Moi"])
+                               expected_text=["Josef Kluson"])
 
     def test_hepnames_search(self):
-            url = CFG_SITE_URL + '/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=Lopez+Paz&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            url = CFG_SITE_URL + '/search?ln=en&cc=HepNames&p=Steven+Chu&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
             check_web_page_content(self,
                                    url,
-                                   expected_text=["Lopez Paz, Ivan"])
+                                   expected_text=["Steven Chu"])
 
     def test_institutions_home(self):
         url = CFG_SITE_URL + '/collection/Institutions'
@@ -430,16 +411,16 @@ class CollectionsTest(WebTest):
                                expected_text=["Institutions Search"])
 
     def test_institutions_detailed(self):
-        url = CFG_SITE_URL + '/record/902796'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.inst_id)
         check_web_page_content(self,
                                url,
-                               expected_text=["Fermi National Accelerator Laboratory"])
+                               expected_text=["SLAC"])
 
     def test_institutions_search(self):
-            url = CFG_SITE_URL + '/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=fermilab&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            url = CFG_SITE_URL + '/search?ln=no&p=find+address+menlo+park&cc=Institutions'
             check_web_page_content(self,
                                    url,
-                                   expected_text=["Fermilab", "Fermi National Accelerator Laboratory"])
+                                   expected_text=["SLAC", "SLAC National Accelerator Laboratory"])
 
     def test_conferences_home(self):
         url = CFG_SITE_URL + '/collection/Conferences'
@@ -448,16 +429,16 @@ class CollectionsTest(WebTest):
                                expected_text=["Conferences Search"])
 
     def test_conferences_detailed(self):
-        url = CFG_SITE_URL + '/record/1228055'
+        url = os.path.join(CFG_SITE_URL, CFG_SITE_RECORD, self.conf_id)
         check_web_page_content(self,
                                url,
-                               expected_text=["24th International Workshop on Weak Interactions and Neutrinos"])
+                               expected_text=["Workshop on Nuclear Physics at JHF"])
 
     def test_conferences_search(self):
-            url = CFG_SITE_URL + '/search?ln=en&cc=Conferences&ln=en&cc=Conferences&p=ATLAS+Muon+Workshop&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            url = CFG_SITE_URL + '/search?ln=no&p=Las+Vegas&cc=Conferences'
             check_web_page_content(self,
                                    url,
-                                   expected_text=["4th ATLAS Muon Workshop"])
+                                   expected_text=["RPSD, IRD, BMD 2010 Joint Topical Meeting"])
 
     def test_conferences_submit(self):
         url = CFG_SITE_URL + '/submit?doctype=CONFSUBMIT&act=SBI&comboCONFSUBMIT=CONF'
@@ -472,10 +453,10 @@ class CollectionsTest(WebTest):
                                expected_text=["Jobs Search"])
 
     def test_jobs_detailed(self):
-        url = CFG_SITE_URL + '/record/961728'
+        url = CFG_SITE_URL + '/record/' + self.jobs_id
         check_web_page_content(self,
                                url,
-                               expected_text=["For further information, and to apply, please see the url below."])
+                               expected_text=["Proton spin polarizabilites"])
 
     def test_jobs_search(self):
             url = CFG_SITE_URL + '/search?p1=&op1=a&p2=&action_search=Search&cc=Jobs'
@@ -496,7 +477,7 @@ class CollectionsTest(WebTest):
                                url,
                                expected_text=["<rss", "<item>", "<title>",
                                               "</title>", "</item>", "</rss>"],
-                                html=False)
+                               html=False)
 
     def test_experiments_home(self):
         url = CFG_SITE_URL + '/collection/Experiments'
@@ -505,13 +486,13 @@ class CollectionsTest(WebTest):
                                expected_text=["Experiments Search"])
 
     def test_experiments_detailed(self):
-        url = CFG_SITE_URL + '/record/1223143'
+        url = CFG_SITE_URL + '/record/' + self.exp_id
         check_web_page_content(self,
                                url,
-                               expected_text=["GAMMA"])
+                               expected_text=["CERN-ISOLDE"])
 
     def test_experiments_search(self):
-            url = CFG_SITE_URL + '/search?p1=&op1=a&p2=&action_search=Search&cc=Jobs'
+            url = CFG_SITE_URL + '/search?p1=&op1=a&p2=&action_search=Search&cc=Experiments'
             check_web_page_content(self,
                                    url,
                                    expected_text=["records found"],
@@ -524,16 +505,16 @@ class CollectionsTest(WebTest):
                                expected_text=["Journals Search"])
 
     def test_journals_detailed(self):
-        url = CFG_SITE_URL + '/record/1214902'
+        url = CFG_SITE_URL + '/record/' + self.journal_id
         check_web_page_content(self,
                                url,
-                               expected_text=["Astronomy and Astrophysics"])
+                               expected_text=["Physical Review Letters"])
 
     def test_journals_search(self):
-            url = CFG_SITE_URL + '/search?ln=en&cc=Journals&ln=en&cc=Journals&p=Astronomy+and+Astrophysics&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
+            url = CFG_SITE_URL + '/search?ln=en&cc=Journals&p=Physical+Review+Letters&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hb'
             check_web_page_content(self,
                                    url,
-                                   expected_text=["Astronomy and Astrophysics"])
+                                   expected_text=["Physical Review Letters"])
 
 
 class OtherPagesTests(WebTest):
@@ -554,18 +535,19 @@ class OtherPagesTests(WebTest):
         check_web_page_content(self,
                                url,
                                expected_text=["BiblioTools: Generating Your Bibliography"])
+    if 'inspirehep' in CFG_SITE_URL:
 
-    def test_terms_of_use(self):
-        url = CFG_SITE_URL + '/info/general/terms-of-use'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Terms of Use"])
+        def test_terms_of_use(self):
+            url = CFG_SITE_URL + '/info/general/terms-of-use'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Terms of Use"])
 
-    def test_privacy_policy(self):
-        url = CFG_SITE_URL + '/info/general/privacy-policy'
-        check_web_page_content(self,
-                               url,
-                               expected_text=["Privacy Policy"])
+        def test_privacy_policy(self):
+            url = CFG_SITE_URL + '/info/general/privacy-policy'
+            check_web_page_content(self,
+                                   url,
+                                   expected_text=["Privacy Policy"])
 
 
 class _SGMLParserFactory(mechanize.DefaultFactory):

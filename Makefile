@@ -61,6 +61,9 @@ reset-normal-ui:
 	@cd webstyle && make install && cd ..
 
 load-demo-records:
+	@cd bibconvert && make load-records && cd ..
+
+load-legacy-records:
 	@cd bibconvert && make load-test-sample-of-records && cd ..
 
 clean:
@@ -592,6 +595,8 @@ reset-inspire-useraccess-configuration:
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='statisticsusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='basketusers'" | $(BINDIR)/dbexec
 	echo "UPDATE accROLE SET firerole_def_src='deny all' WHERE name='alertusers'" | $(BINDIR)/dbexec
+	# Activate guest submission for all submissions
+	echo "INSERT INTO accROLE_accACTION_accARGUMENT (id_accROLE, id_accACTION, id_accARGUMENT, argumentlistid) VALUES (3, 33, -1, -1)" | $(BINDIR)/dbexec
 	if [ x"$(CFG_INSPIRE_BIBTASK_USER)" != x"" ]; then \
 	    $(BINDIR)/webaccessadmin -u $(CFG_INSPIRE_BIBTASK_USER) -c; \
 	else \
