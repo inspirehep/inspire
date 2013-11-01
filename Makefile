@@ -18,7 +18,8 @@ SUBDIRS = bibconvert \
 		  bibtasklets \
 		  apsharvest \
 		  miscutil \
-		  bibsort
+		  bibsort \
+		  bibexport
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
