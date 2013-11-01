@@ -73,4 +73,4 @@ Disallow: /author/
 Disallow: /journal/
 Disallow: /submit
 
-Sitemap: http://inspirehep.net/sitemap_index.xml.gz
+Sitemap: http://inspirehep.net/sitemap-index.xml.gz
