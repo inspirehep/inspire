@@ -12,6 +12,7 @@ from tempfile import mkstemp
 import os
 import sys
 import re
+import getopt
 
 try:
     import json
@@ -69,6 +70,33 @@ CONFIG = {}
 
 
 def main(args):
+    usage = """
+    name:           bibfilter_oaicds2inspire
+    decription:     Program to filter and analyse MARCXML records
+                    harvested from external OAI sources, in particular CDS.
+    usage:
+                    bibfilter_oaicds2inspire [-nh] MARCXML-FILE
+    options:
+                -n
+                    forces the script not to check if the record exists in the database
+                    (useful when re-harvesting existing record)
+    """
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "nh", [])
+    except getopt.GetoptError, err_obj:
+        sys.stderr.write("Error:" + err_obj + "\n")
+        print usage
+        sys.exit(1)
+
+    skip_recid_check = False
+
+    for opt, opt_value in opts:
+        if opt in ['-n']:
+            skip_recid_check = True
+        if opt in ['-h']:
+            print usage
+            sys.exit(0)
+
     config_path = CFG_ETCDIR + "/bibharvest/" + CONFIG_FILE
 
     if len(args) != 1:
@@ -100,7 +128,7 @@ def main(args):
         # Step 1: Attempt to match the record to those already in Inspire
         recid = record['001'][0][3]
         res = attempt_record_match(recid)
-        if not res:
+        if skip_recid_check or not res:
             _print("Record %s does not exist: inserting" % (recid,))
             # No record found
             # Step 2: Appply filter to transform CDS MARC to Inspire MARC
@@ -616,10 +644,10 @@ def apply_filter(rec):
                         _print("Downloading %s into %s" % (url, local_url), verbose=5)
                         plotfile = ""
                         try:
-                            plotfile = download_file(url_for_file=url,
-                                                     downloaded_file=local_url,
-                                                     timeout=30.0)
-                        except InvenioDownloadError:
+                            plotfile = download_url(url=url,
+                                                    download_to_file=local_url,
+                                                    timeout=30.0)
+                        except InvenioFileDownloadError:
                             _print("Download failed while attempting to reach %s. Skipping.." % (url,))
                             remove = True
                         if plotfile:
@@ -637,8 +665,12 @@ def apply_filter(rec):
                         figure_counter += 1
                         if 'y' in subs:
                             newsubs.append(('d', "%05d %s" % (figure_counter, subs['y'][0])))
+                            newsubs.append(('n', subs['y'][0]))
                         else:
-                            newsubs.append(('d', "%05d %s" % (figure_counter, os.path.basename(url))))
+                            # Get basename without extension.
+                            name = os.path.basename(os.path.splitext(subs['u'][0])[0])
+                            newsubs.append(('d', "%05d %s" % (figure_counter, name)))
+                            newsubs.append(('n', name))
 
         if not newsubs and 'u' in subs:
             is_fulltext = [s for s in subs['u'] if ".pdf" in s]
