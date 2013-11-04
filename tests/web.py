@@ -74,7 +74,8 @@ class InvenioConnectorAuthError(Exception):
 
 class WebTest(unittest.TestCase):
     def tearDown(self):
-        time.sleep(3)
+        if 'inspirehep' in CFG_SITE_URL:
+            time.sleep(3)
 
 
 class WebSearchTests(WebTest):
@@ -167,13 +168,18 @@ class PopularQueriesTest(WebTest):
 
 
 class FormatExportTest(WebTest):
-    recid = "303"
-    expected_text = "Quark Elastic Scattering as a Source of High Transverse Momentum Mesons"
 
-    formats = [
-        'hb', 'hx', 'hm', 'xm', 'xn', 'xd', 'xe',
-        'hlxu', 'hlxe', 'hlxh'
-    ]
+    def setUp(self):
+        self.recid = "303"
+        if 'inspirehep' in CFG_SITE_URL:
+            self.recid = "1115227"
+
+        self.expected_text = "Quark Elastic Scattering as a Source of High Transverse Momentum Mesons"
+
+        self.formats = [
+            'hb', 'hx', 'hm', 'xm', 'xn', 'xd', 'xe',
+            'hlxu', 'hlxe', 'hlxh'
+        ]
 
     def test_formats(self):
         for format in self.formats:
@@ -195,7 +201,7 @@ class DetailedRecordTests(WebTest):
            self.hb_record_id = "212819"
            self.norefs_record_id = "1226366"
            self.hasref_record_id = "332965"
-           self.hascites_record_id = "303"
+           self.hascites_record_id = "1115227"
 
 
     def test_detailed_record(self):
@@ -240,8 +246,13 @@ class DetailedRecordTests(WebTest):
                                url,
                                expected_text=["Why multi-jet studies?"])
 
-if CFG_RESTRICTED_TOOLS:
-    class RestrictedToolsTest(WebTest):
+
+class RestrictedToolsTest(WebTest):
+
+    def setUp(self):
+        pass
+
+    if CFG_RESTRICTED_TOOLS:
         def test_admin_index(self):
             url = CFG_SITE_SECURE_URL + '/youraccount/'
             check_web_page_content(self,
@@ -251,7 +262,7 @@ if CFG_RESTRICTED_TOOLS:
                                    password=CFG_PASSWORD)
 
         def test_references_bibedit(self):
-            url = CFG_SITE_SECURE_URL + '/record/1226366/edit'
+            url = CFG_SITE_SECURE_URL + '/record/123/edit'
             check_web_page_content(self,
                                    url,
                                    expected_text=["Record Editor"],
@@ -356,7 +367,7 @@ if CFG_RESTRICTED_TOOLS:
                                    password=CFG_PASSWORD)
 
         def test_query_history(self):
-            url = CFG_SITE_SECURE_URL + '/search?p=001%3A50000'
+            url = CFG_SITE_SECURE_URL + '/search?p=001%3A50'
             check_web_page_content(self,
                                    url,
                                    username=CFG_USERNAME,
@@ -364,7 +375,7 @@ if CFG_RESTRICTED_TOOLS:
             url = CFG_SITE_SECURE_URL + '/youralerts/display'
             check_web_page_content(self,
                                    url,
-                                   expected_text=["Your Searches", "001:50000"],
+                                   expected_text=["Your Searches", "001:50"],
                                    username=CFG_USERNAME,
                                    password=CFG_PASSWORD)
 
@@ -733,7 +744,12 @@ def read_url(url,
 
 
 TEST_SUITE = make_test_suite(WebSearchTests,
-                             DetailedRecordTests)
+                             DetailedRecordTests,
+                             CollectionsTest,
+                             PopularQueriesTest,
+                             OtherPagesTests,
+                             FormatExportTest,
+                             RestrictedToolsTest)
 
 if __name__ == "__main__":
     run_test_suite(TEST_SUITE, warn_user=True)
