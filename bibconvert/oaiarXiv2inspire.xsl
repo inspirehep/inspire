@@ -346,6 +346,10 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
             <xsl:text>Yes</xsl:text>
           </xsl:if>
 
+          <xsl:if test="contains($category, 'astro-ph.CO')">
+            <xsl:text>Yes</xsl:text>
+          </xsl:if>
+
           <xsl:if test="contains($category, 'physics.ins-det')">
             <xsl:text>Yes</xsl:text>
           </xsl:if>
