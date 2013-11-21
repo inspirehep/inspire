@@ -35,6 +35,7 @@ Methodology:
 
 import os
 import time
+import traceback
 
 from cStringIO import StringIO
 from urllib2 import HTTPError
@@ -43,7 +44,8 @@ from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_CERN_SITE, CFG_INSPIRE_SITE)
 from invenio.search_engine import perform_request_search
 from invenio.bibtask import (write_message,
-                             task_update_progress)
+                             task_update_progress,
+                             task_sleep_now_if_required)
 from invenio.bibrecord import (record_add_field, record_add_subfield_into,
                                record_xml_output, create_record,
                                record_get_field_values)
@@ -52,7 +54,7 @@ from invenio.filedownloadutils import download_url, InvenioFileDownloadError
 from invenio.bibtaskutils import ChunkedBibUpload
 
 # LOOK AT ALL THE LOVELY VARIABLES!
-SCRIPT_NAME = "bst_sync_cds_inspire_recids"
+SCRIPT_NAME = "bst_synchronize_recids"
 NOW = time.strftime('%Y-%m-%d_%Hh%Mm%Ss')
 LOG_DIR = CFG_TMPSHAREDDIR
 LOG_FILE = "%s_%s.log" % (SCRIPT_NAME, NOW)
@@ -65,7 +67,7 @@ if CFG_INSPIRE_SITE:
     REMOTE_URL_TEST = "http://cdstest.cern.ch"
     SEARCH_TERMS = "035:inspire"
     COLLECTION = ""
-    FILTER_VALUE = "^(CDS|cds)$"
+    FILTER_VALUE = "^(Inspire|INSPIRE|inspire)$"
 elif CFG_CERN_SITE:
     LOCAL_INSTANCE = "CDS"
     REMOTE_INSTANCE = "Inspire"
@@ -73,14 +75,14 @@ elif CFG_CERN_SITE:
     REMOTE_URL_TEST = "http://inspireheptest.cern.ch"
     SEARCH_TERMS = "035:cds"
     COLLECTION = ""
-    FILTER_VALUE = "^(Inspire|INSPIRE|inspire)$"
+    FILTER_VALUE = "^(CDS|cds)$"
 
 
 # Begin!
-def bst_sync_cds_inspire_recids(search_terms=SEARCH_TERMS, log_dir=None,
-                                collection=COLLECTION, batch_size=BATCH_SIZE,
-                                debug=False):
-    """Synchronize record IDs between the CERN Document Server (CDS) and Inspire.
+def bst_synchronize_recids(search_terms=SEARCH_TERMS, log_dir=None,
+                           collection=COLLECTION, batch_size=BATCH_SIZE,
+                           debug=False, remote_ids=None):
+    """Synchronize record IDs between the CERN Document Server (CDS) and Inspire
 
 This BibTasklet is intended to be a general purpose replacement for
 'bst_inspire_cds_synchro' and 'bst_update_cds_inspire_id', it should
@@ -103,14 +105,20 @@ Parameters:
               (Default 200)
  debug - If True, this script will run against the TEST instances
          (Default false)
+ remote_ids - Comma seperated values of remote IDs, if this is
+              specified, remote IDs will not be searched for.
     """
     configure_globals(search_terms, log_dir, debug)
     _print("All messages will be logged to %s/%s" % (LOG_DIR, LOG_FILE))
 
-    task_update_progress("Finding remote records on %s with %s IDs"
-                         % (REMOTE_INSTANCE, LOCAL_INSTANCE))
-    remote_ids = get_remote_ids(search_terms, collection)
+    if not remote_ids:
+        task_update_progress("Finding remote records on %s with %s IDs"
+                             % (REMOTE_INSTANCE, LOCAL_INSTANCE))
+        remote_ids = get_remote_ids(search_terms, collection)
+    else:
+        remote_ids = [int(rid) for rid in remote_ids.split(',')]
 
+    task_sleep_now_if_required(can_stop_too=True)
     task_update_progress("Matching remote IDs to local records")
     missing_ids = match_remote_ids(remote_ids)
 
@@ -119,7 +127,7 @@ Parameters:
     _print("======================== FINAL SCORE ========================", 1)
     _print(" Records matched: %d" % (len(remote_ids)-len(missing_ids)), 1)
     _print(" Records appended: %d" % count_appends, 1)
-    _print(" IDs not matched: %d" % count_problems, 1)
+    _print(" IDs not matched (broken link!): %d" % count_problems, 1)
     _print("=============================================================", 1)
 
     _print("Finishing, messages logged to: %s/%s" % (LOG_DIR, LOG_FILE))
@@ -173,7 +181,7 @@ def write_to_file(filename, data, output_dir=LOG_DIR, message=None,
                     handle.write("# %s\n" % message)
                 handle.write(data_string)
             _print("Wrote %d lines to file %s" % (data_string.count('\n'),
-                                                  qpath))
+                                                  path))
         except IOError:
             _print("ERROR: Could not write output to %s" % path, 1)
     else:
@@ -234,7 +242,8 @@ def get_remote_record(recid):
         bibrec = None
         tmp_file = download_url(url, retry_count=10, timeout=61.0)
         with open(tmp_file, 'r') as temp:
-            bibrec, code, errors = create_record(temp.read())
+            content = temp.read()
+            bibrec, code, errors = create_record(content)
             if code != 1 or errors:
                 _print("Warning: There were errors creating BibRec structure " +
                        "from remote record #%d" % recid, 4)
@@ -242,7 +251,8 @@ def get_remote_record(recid):
         return bibrec
     except (StandardError, InvenioFileDownloadError, HTTPError) as err:
         _print("Error: Could not download remote record #%d" % recid, 4)
-        _print(err.message, 5)
+        _print(str(err), 4)
+        _print(traceback.format_exc(), 4)
 
 
 def extract_035_id(record):
@@ -255,27 +265,26 @@ def extract_035_id(record):
                                              filter_subfield_code="9",
                                              filter_subfield_value=FILTER_VALUE,
                                              filter_subfield_mode="r")
-        field_vals = set(field_vals)
+        field_vals = [x for x in set(field_vals) if x.isdigit()]
         if not field_vals:
             return None
-        if len(field_vals) == 1 and field_vals[0].isdigit():
-            return field_vals[0].isdigit()
+        if len(field_vals) == 1 and field_vals[0]:
+            return field_vals[0]
         elif len(field_vals) > 1:
             _print("Warning: Multiple recids found in 035 for record", 6)
-            for val in field_vals:
-                if val.isdigit():
-                    _print("Assuming local recid is %s" % val, 6)
-                    return val
+            _print("Assuming local recid is %s" % field_vals[0], 6)
+            return field_vals[0]
     except (KeyError, ValueError, IndexError) as exc:
         _print(exc.message, 5)
 
 
 def local_record_exists(recid):
     """ Checks if the given record exists locally """
-    if perform_request_search(p="001:%s" % recid, of='id'):
-        return True
-    else:
-        return False
+    query = "001:%s" % (recid,)
+    _print("Querying local server: %s" % (query,), 5)
+    result = perform_request_search(p=query, of='id')
+    _print("Result: %s" % (result,), 5)
+    return bool(result)
 
 
 # =========================| Major Functions |=========================
@@ -313,6 +322,7 @@ def match_remote_ids(remote_ids):
 
     missing = []
     for i, recid in enumerate(remote_ids):
+        task_sleep_now_if_required(can_stop_too=True)
         per_last = percent_update(i, per_last)
         term = "035__9:%s and 035__a:%d" % (REMOTE_INSTANCE, recid)
         result = perform_request_search(p=term)
@@ -344,6 +354,7 @@ def match_missing_ids(remote_ids, batch_size):
            % len(remote_ids))
     _print("Processing %d batches of size %d" % (len(batches), batch_size))
     for i, batch in enumerate(batches, 1):
+        task_sleep_now_if_required(can_stop_too=True)
         task_update_progress("Batch %d of %d" % (i, len(batches)))
         _print("Batch %d of %d" % (i, len(batches)))
         try:
@@ -353,8 +364,11 @@ def match_missing_ids(remote_ids, batch_size):
             write_to_file('missing_ids.txt', problems, append=True)
             _print("Submitting batch #%d to BibUpload for appending..." % i, 4)
             start_bibupload_job(appends)
-        except StandardError:
-            _print("Error occured during match of batch %d" % i, 2)
+        except StandardError, e:
+            _print("Error occured during match of batch %d: %s\n%s"
+                   % (i, e, traceback.format_exc()), 2)
+        # Here we are taking a rest
+        time.sleep(batch_size)
     return count_appends, count_problems
 
 
@@ -366,19 +380,21 @@ def process_record_batch(batch):
     appends = {}
     problems = []
     for recid in batch:
-        _print("Processing recid %d" % recid, 5)
+        task_sleep_now_if_required(can_stop_too=True)
+        _print("Processing recid %d" % recid, 9)
         record = get_remote_record(recid)
         if record is None:
-            problems.append(recid)
+            _print("Error: Could not fetch remote record %s" % (str(recid),), 5)
             continue
         else:
             local_id = extract_035_id(record)
             if not local_record_exists(local_id):
+                _print("Local record does not exist", 5)
                 problems.append(recid)
                 continue
             else:
                 _print("Matching remote id %d to local record %s"
-                       % (recid, local_id))
+                       % (recid, local_id), 5)
                 appends[local_id] = recid
     _print("Batch matching done: %d IDs matched, %d IDs not matched"
            % (len(appends), len(problems)), 4)
