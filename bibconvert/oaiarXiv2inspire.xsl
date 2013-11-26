@@ -233,7 +233,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
         <xsl:when test="contains($knlowfn, 'collab') or contains($knlowfn, 'team') or contains($knlowfn,'group') or contains($knlowfn, 'for the')">
     <xsl:value-of select="concat($node/arXiv:keyname , ' ', $node/arXiv:forenames)"/>
         </xsl:when>
-        <xsl:when test="contains($knlowkn, 'collab') or contains($knlowkn, 'team') or contains($knlowkn,'group') or contains($knlowkn, 'for the')">
+        <xsl:when test="contains($knlowkn, 'collab') or contains($knlowkn, 'team') or contains($knlowkn, 'for the')">
     <xsl:value-of select="concat($node/arXiv:forenames, ' ', $node/arXiv:keyname)"/>
         </xsl:when>
         <xsl:otherwise>
@@ -487,7 +487,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                                                                      or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'TEAM')
                                                                      or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'TEAM')
                                                                      or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'GROUP')
-                                                                     or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'GROUP')
                                                                      or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'GROUP')
                                                                      or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE')
                                                                      or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE')
@@ -501,7 +500,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'TEAM')
                                                               or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'TEAM')
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'GROUP')
-                                                              or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'GROUP')
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE')
                                                               or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE')
                                                               or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'FOR THE')
