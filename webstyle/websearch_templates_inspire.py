@@ -1974,3 +1974,18 @@ class Template(DefaultTemplate):
         out = "</table>"
 
         return out
+
+    def tmpl_record_format_htmlbrief_header(self, ln):
+        """Returns the header of the search results list when output
+        is html brief. Note that this function is called for each collection
+        results when 'split by collection' is enabled.
+
+        See also: tmpl_record_format_htmlbrief_footer,
+                  tmpl_record_format_htmlbrief_body
+
+        Parameters:
+
+          - 'ln' *string* - The language to display
+
+        """
+        return "<table>"
