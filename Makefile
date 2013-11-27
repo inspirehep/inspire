@@ -19,7 +19,8 @@ SUBDIRS = bibconvert \
 		  apsharvest \
 		  miscutil \
 		  bibsort \
-		  bibexport
+		  bibexport \
+		  webaccess
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
