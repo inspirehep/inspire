@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 5.1.69, for redhat-linux-gnu (x86_64)
 --
--- Host: localhost    Database: inspirehep
+-- Host: 188.184.3.55    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.5.32-MariaDB
+-- Server version	5.5.32-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -433,4 +433,4 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,166,0);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-10-29 13:17:08
+-- Dump completed on 2013-11-27 11:42:53
