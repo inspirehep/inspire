@@ -58,7 +58,7 @@ SCRIPT_NAME = "bst_synchronize_recids"
 NOW = time.strftime('%Y-%m-%d_%Hh%Mm%Ss')
 LOG_DIR = CFG_TMPSHAREDDIR
 LOG_FILE = "%s_%s.log" % (SCRIPT_NAME, NOW)
-BATCH_SIZE = 200
+BATCH_SIZE = 400
 
 if CFG_INSPIRE_SITE:
     LOCAL_INSTANCE = "Inspire"
@@ -71,7 +71,7 @@ if CFG_INSPIRE_SITE:
 elif CFG_CERN_SITE:
     LOCAL_INSTANCE = "CDS"
     REMOTE_INSTANCE = "Inspire"
-    REMOTE_URL = "http://www.inspire.net"
+    REMOTE_URL = "http://inspirehep.net"
     REMOTE_URL_TEST = "http://inspireheptest.cern.ch"
     SEARCH_TERMS = "035:cds"
     COLLECTION = ""
@@ -367,8 +367,6 @@ def match_missing_ids(remote_ids, batch_size):
         except StandardError, e:
             _print("Error occured during match of batch %d: %s\n%s"
                    % (i, e, traceback.format_exc()), 2)
-        # Here we are taking a rest
-        time.sleep(batch_size)
     return count_appends, count_problems
 
 
@@ -381,6 +379,10 @@ def process_record_batch(batch):
     problems = []
     for recid in batch:
         task_sleep_now_if_required(can_stop_too=True)
+
+        # Here we are taking a rest
+        time.sleep(0.5)
+
         _print("Processing recid %d" % recid, 9)
         record = get_remote_record(recid)
         if record is None:
