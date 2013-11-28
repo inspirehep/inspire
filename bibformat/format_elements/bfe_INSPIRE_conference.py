@@ -32,7 +32,7 @@ def format_element(bfo, separator=', ', link="yes"):
 
     """
 
-    from invenio.search_engine import search_pattern
+    from invenio.search_engine import perform_request_search
 
     confs = []
     confs = bfo.fields('773')
@@ -41,7 +41,7 @@ def format_element(bfo, separator=', ', link="yes"):
         note = ''
         if conf.get('w'):
             cnum = conf['w'].replace("/", "-")
-            search_result = search_pattern(p="111__g:" + cnum + " and 980__a:CONFERENCES")
+            search_result = perform_request_search(p="111__g:" + cnum, c="Conferences")
             if search_result:
                 recID = list(search_result)[0]
                 conf_name = '<a class="conflink" href = "/record/' +\
