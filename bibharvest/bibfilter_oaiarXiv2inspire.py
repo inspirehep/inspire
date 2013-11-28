@@ -19,12 +19,15 @@ from invenio.bibrecord import (create_records,
                                field_get_subfield_values,
                                record_get_field_values,
                                field_get_subfield_instances,
-                               record_delete_field)
+                               record_delete_field,
+                               create_field,
+                               record_replace_field)
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
 from invenio.search_engine import perform_request_search
+from invenio.refextract_api import extract_journal_reference
 
 
 def parse_actions(action_line):
@@ -302,6 +305,24 @@ def main():
                 if len(results) > 0:
                     # FIXME: Ambiguous results may happen. Now just taking first result..
                     recid = results[0]
+
+        # 773 RefExtract PubNote extraction
+        for field in record_get_field_instances(record, '773'):
+            for value in field_get_subfield_values(field, 'x'):
+                extract = extract_journal_reference(value)
+                if extract:
+                    subfields = [('x', value)]
+                    if extract.get('volume', False):
+                        subfields.append(('v', str(extract['volume'])))
+                    if extract.get('title', False):
+                        subfields.append(('p', str(extract['title'])))
+                    if extract.get('year', False):
+                        subfields.append(('y', str(extract['year'])))
+                    if extract.get('page', False):
+                        subfields.append(('c', str(extract['page'])))
+                    new_field = create_field(subfields, global_position=field[4])
+                    record_replace_field(record, '773', new_field, field[4])
+                    break
 
         if not recid or recid == -1:
             # Record (probably) does not exist, flag for inserting into database
