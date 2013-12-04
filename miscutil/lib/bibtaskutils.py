@@ -5,7 +5,8 @@ from tempfile import mkstemp
 
 from invenio.dbquery import run_sql
 from invenio.config import CFG_TMPSHAREDDIR
-from invenio.bibtask import task_low_level_submission
+from invenio.bibtask import (task_low_level_submission,
+                             task_sleep_now_if_required)
 
 
 def all_recids(start=1):
@@ -23,6 +24,7 @@ def loop(recids, callback):
 def wait_for_task(task_id):
     sql = 'select status from schTASK where id = %s'
     while run_sql(sql, [task_id])[0][0] not in ('DONE', 'ACK', 'ACK DONE'):
+        task_sleep_now_if_required()
         time.sleep(5)
 
 
