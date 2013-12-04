@@ -600,10 +600,18 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
               <!-- MARC FIELD 540$$a  License info = metadata/arXiv/license -->
               <xsl:if test="./OAI-PMH:metadata/arXiv:arXiv/arXiv:license">
                 <datafield tag="540" ind1=" " ind2=" ">
-                  <subfield code="a">
+                  <subfield code="u">
                     <xsl:value-of select="normalize-space(./OAI-PMH:metadata/arXiv:arXiv/arXiv:license)"/>
                   </subfield>
                   <subfield code="b">arXiv</subfield>
+                  <xsl:choose>
+                    <xsl:when test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:license, 'creativecommons.org/licenses/by/3.0')">
+                      <subfield code="a">CC-BY-3.0</subfield>
+                    </xsl:when>
+                    <xsl:when test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:license, 'creativecommons.org/licenses/by-nc-sa/3.0')">
+                      <subfield code="a">CC-BY-NC-SA-3.0</subfield>
+                    </xsl:when>
+                  </xsl:choose>
                 </datafield>
               </xsl:if>
 
