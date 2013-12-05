@@ -20,7 +20,8 @@ SUBDIRS = bibconvert \
 		  miscutil \
 		  bibsort \
 		  bibexport \
-		  webaccess
+		  webaccess \
+		  tests
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)
