@@ -92,38 +92,42 @@ class WebSearchTests(WebTest):
         self.assertEqual(r.code, 200)
         self.assert_(u'body {' in r.read())
 
-    if CFG_AUTHORTEST_ENABLE:
-        # FIXME: THIS IS LEGACY AUTHOR TESTS
-        def test_author_page(self):
-            url = CFG_SITE_URL + '/author/profile/S.Mele.1/'
-            check_web_page_content(self,
-                                   url,
-                                   expected_text=["Mele, Salvatore", "This is me.  Verify my publication list."])
+    def test_author_page(self):
+        url = CFG_SITE_URL + '/author/profile/S.Mele.1/'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Mele, Salvatore"])
 
-        def test_author_claims_page_anonymous(self):
-            url = CFG_SITE_URL + '/person/claimstub?person=S.Mele.1'
-            check_web_page_content(self,
-                                   url,
-                                   expected_text=["You are going to claim papers"])
+    def test_author_claims_page(self):
+        url = CFG_SITE_URL + '/author/claim/S.Mele.1/'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Mele, Salvatore", "Paper Short Info"])
 
-        def test_author_claims_page_logged_in(self):
-            url = CFG_SITE_URL + '/person/S.Mele.1?open_claim=True'
-            check_web_page_content(self,
-                                   url,
-                                   expected_text=["Mele, Salvatore", "Muon pair and tau pair production in two photon collisions at LEP"])
+    def test_author_manage_publications(self):
+        url = CFG_SITE_URL + '/author/manage_profile/S.Mele.1'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Mele, Salvatore", "Manage publications"])
 
-        def test_author_claim_action_anonymous(self):
-            url = CFG_SITE_URL + '/person/action?repeal=True&selection=700:133386,501369&pid=273672'
-            check_web_page_content(self,
-                                   url,
-                                   expected_text=["Please review your actions"])
+    def test_author_help(self):
+        url = CFG_SITE_URL + '/author/help'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["A step by step guide to the author management page"])
 
-        def test_author_page_recompute(self):
-            today_str = datetime.today().strftime('%Y-%m-%d')
-            url = CFG_SITE_URL + '/author/S.Mele.1/?recompute=1'
-            check_web_page_content(self,
-                                   url,
-                                   expected_text=["Mele, Salvatore", "This is me.  Verify my publication list.", "Generated: %s" % today_str])
+    def test_author_search(self):
+        url = CFG_SITE_URL + '/author/search'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Find author clusters by name. e.g: Ellis, J: "])
+
+    def test_author_page_recompute(self):
+        today_str = datetime.today().strftime('%Y-%m-%d')
+        url = CFG_SITE_URL + '/author/profile/S.Mele.1?recompute=1'
+        check_web_page_content(self,
+                               url,
+                               expected_text=["Mele, Salvatore", "Generated: %s" % today_str])
 
     def test_empty_search(self):
         url = CFG_SITE_URL + '/search?ln=en&p=&of=hb&action_search=Search'
