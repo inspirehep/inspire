@@ -816,8 +816,8 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         # Unless this is the first request, lets sleep a bit
         if request_end and request_start:
             request_dt = request_end-request_start
-            write_message("Checking request time", verbose=3)
-            if count != 0 and request_dt < CFG_APSHARVEST_REQUEST_TIMEOUT:
+            write_message("Checking request time (%d)" % (request_dt,), verbose=3)
+            if count and request_dt > 0 and request_dt < CFG_APSHARVEST_REQUEST_TIMEOUT:
                 write_message("Intiating sleep for %.1f seconds" % (request_dt,), verbose=3)
                 time.sleep(request_dt)
 
@@ -834,14 +834,13 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         result_file = os.path.join(CFG_WORKDIR,
                                    "%s.zip" % (record.doi.replace('/', '_')))
         try:
+            request_start = time.time()
             if os.path.exists(result_file):
                 # File already downloaded recently, lets see if it is the same
                 file_last_modified = get_file_modified_date(result_file)
                 if not compare_datetime_to_iso8601_date(file_last_modified, record.last_modified):
                     # File is not older than APS version, we should not download.
                     raise APSHarvesterFileExits
-
-            request_start = time.time()
 
             write_message("Trying to save to %s" % (result_file,), verbose=5)
 
@@ -868,6 +867,8 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                              (record.recid or record.doi,))
                 yield record, "%s cannot be opened." % (url,)
             raise
+        finally:
+            request_end = time.time()
 
         # Unzip the compressed file
         unzipped_folder = unzip(result_file)
@@ -928,7 +929,6 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         if record.date:
             store_last_updated(record.recid, record.date, name="apsharvest")
 
-        request_end = time.time()
         yield record, ""
 
 
