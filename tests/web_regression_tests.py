@@ -46,15 +46,16 @@ try:
                         CFG_SITE_SECURE_URL,
                         CFG_USERNAME,
                         CFG_PASSWORD)
-    CFG_RESTRICTED_TOOLS = True
 except ImportError:
     from invenio.config import (CFG_SITE_URL,
                                 CFG_SITE_RECORD,
                                 CFG_SITE_SECURE_URL)
-    CFG_RESTRICTED_TOOLS = False
+    CFG_USERNAME = 'admin'
+    CFG_PASSWORD = ''
 
 CFG_TESTUTILS_VERBOSE = 1
-CFG_AUTHORTEST_ENABLE = False
+CFG_RESTRICTED_TOOLS = True
+
 
 def merge_error_messages(error_messages):
     out = ""
