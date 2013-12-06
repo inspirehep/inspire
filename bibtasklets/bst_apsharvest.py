@@ -32,6 +32,8 @@ import re
 import datetime
 import shutil
 
+from lxml import etree
+
 from invenio.jsonutils import json
 from invenio.shellutils import split_cli_ids_arg, \
     run_shell_command
@@ -40,7 +42,8 @@ from invenio.bibtask import task_update_status, \
     write_message, \
     task_update_progress, \
     task_low_level_submission, \
-    task_sleep_now_if_required
+    task_sleep_now_if_required, \
+    task_set_task_param
 from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 from invenio.bibdocfile import open_url
 from invenio.search_engine import perform_request_search, search_pattern
@@ -160,7 +163,8 @@ class APSRecord(object):
 
 def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                    update_mode="email", from_date="", until_date=None,
-                   metadata="yes", fulltext="yes", hidden="yes", match="no"):
+                   metadata="yes", fulltext="yes", hidden="yes", match="no",
+                   reportonly="no", threshold_date=None, devmode="no"):
     """
     Task to download APS metadata + fulltext given a list of arguments.
 
@@ -250,7 +254,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                       harvest.
     @type from_date: string
 
-    @param until_date: comma-separated list of DOIs to download fulltext/metadata for.
+    @param until_date: ISO date for when to harvest records until. Ex. 2013-01-01
     @type until_date: string
 
     @param fulltext: should the record have fulltext attached? "yes" or "no"
@@ -261,6 +265,15 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
     @param match: should a simple match with the database be done? "yes" or "no"
     @type match: string
+
+    @param reportonly: only report number of records to harvest, then exit? "yes" or "no"
+    @type reportonly: string
+
+    @param threshold_date: ISO date for when to harvest records since. Ex. 2013-01-01
+    @type threshold_date: string
+
+    @param devmode: Activate devmode. Full verbosity and no uploads/mails.
+    @type devmode: string
     """
     # This is the list of APSRecord objects to be harvested.
     final_record_list = APSRecordList()
@@ -297,6 +310,29 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         match = True
     else:
         match = False
+
+    # We do not reportonly by default
+    if devmode.lower() == "yes":
+        devmode = True
+        task_set_task_param('verbose', 9)
+    else:
+        devmode = False
+
+    # We do not reportonly by default
+    if reportonly.lower() == "yes":
+        reportonly = True
+    else:
+        reportonly = False
+
+    if threshold_date:
+        # Input from user. Validate date
+        try:
+            harvest_from_date = validate_date(threshold_date)
+        except ValueError, e:
+            write_message("Error parsing from_date, use (YYYY-MM-DD): %s" %
+                          (str(e),),
+                          stream=sys.stderr)
+            return 1
 
     if from_date:
         # We get records from APS directly
@@ -404,6 +440,10 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
     write_message("Found %d record(s) to download." % (len(final_record_list),))
 
+    if reportonly:
+        write_message("'Report-only' mode. We exit now.")
+        return
+
     if not final_record_list:
         # No records to harvest, quit.
         write_message("Nothing to harvest.")
@@ -421,9 +461,9 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     records_to_update = []
     records_failed = []
     for record, error_message in perform_fulltext_harvest(final_record_list, metadata,
-                                                          fulltext, hidden):
+                                                          fulltext, hidden, threshold_date):
         if error_message:
-            records_failed.append(record)
+            records_failed.append((record, error_message))
             continue
         records_harvested.append(record)
         count += 1
@@ -442,7 +482,10 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                 # Submit new records
                 record_filename = generate_xml_for_records(records_to_insert,
                                                            suffix="_insert.xml")
-                taskid = submit_records(record_filename, records_to_insert, new_mode)
+                taskid = submit_records(record_filename,
+                                        records_to_insert,
+                                        new_mode,
+                                        devmode=devmode)
                 if not taskid:
                     # Something went wrong
                     err_string = "New records (%s)" \
@@ -457,7 +500,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                                            suffix="_update.xml")
                 taskid = submit_records(record_filename, records_to_update,
                                         update_mode,
-                                        silent=records and True or False)
+                                        silent=records and True or False,
+                                        devmode=devmode)
                 if not taskid:
                     # Something went wrong
                     err_string = "Existing records (%s)" \
@@ -484,7 +528,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                                        suffix="_insert.xml")
             taskid = submit_records(record_filename, records_to_insert,
                                     new_mode, taskid,
-                                    silent=records and True or False)
+                                    silent=records and True or False,
+                                    devmode=devmode)
             if not taskid:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
@@ -494,14 +539,19 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                                        suffix="_update.xml")
             taskid = submit_records(record_filename, records_to_update,
                                     update_mode, taskid,
-                                    silent=records and True or False)
+                                    silent=records and True or False,
+                                    devmode=devmode)
             if not taskid:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
 
     if records_failed:
-        submit_records_via_mail(subject="APSHarvest failed records",
-                                body="%s" % ("\n".join([rec.doi for rec in records_failed])))
+        body = "\n".join(["%s failed with error: %s"
+                          % (rec.doi or rec.recid, msg)
+                          for rec, msg in records_failed])
+        if not devmode:
+            submit_records_via_mail(subject="APSHarvest failed records",
+                                    body=body)
 
     if from_date == "last":
         # Harvest of new records from APS successful
@@ -561,9 +611,9 @@ def harvest_aps(from_param, until_param, perpage):
         links = conn.headers['link'].split(",")
         for l in links:
             if l.find('rel="next"') > 0:
-                next_page = int(re.search('(?<=(page=))\w+', l).group(0))
+                next_page = int(re.search(r'(?<=(page=))\w+', l).group(0))
             if l.find('rel="last"') > 0:
-                last_page = int(re.search('(?<=(page=))\w+', l).group(0))
+                last_page = int(re.search(r'(?<=(page=))\w+', l).group(0))
 
     # Fetch first page of data
     data = json.loads(conn.next())
@@ -701,7 +751,8 @@ def submit_bibupload_for_records(mode, new_filename, silent):
                                      *tuple(task_arguments))
 
 
-def submit_records(records_filename, records_list, mode, taskid=0, silent=False):
+def submit_records(records_filename, records_list, mode, taskid=0,
+                   silent=False, devmode=False):
     """
     Performs the logic to submit given file (filepath) of records
     either by e-mail or using BibUpload with given mode.
@@ -724,7 +775,7 @@ def submit_records(records_filename, records_list, mode, taskid=0, silent=False)
     @param taskid: bibsched taskid, wait for task to complete before submission
     @type taskid: int
 
-    @param silent: filepath to XML file containing records.
+    @param silent: do not update the modification date of the records
     @type silent: bool
 
     @return: returns the given taskid upon submission, or True/False from email.
@@ -756,29 +807,31 @@ def submit_records(records_filename, records_list, mode, taskid=0, silent=False)
             body = "%s\nRecords harvested (%s total):\n%s\n" % (body,
                                                                 str(len(list_of_dois)),
                                                                 "\n".join(list_of_dois))
-            res = submit_records_via_mail(subject, body)
-            write_message("Sent e-mail to %s with path to %s" %
-                         (CFG_APSHARVEST_EMAIL, records_filename))
-        return res
+            if not devmode:
+                res = submit_records_via_mail(subject, body)
+                write_message("Sent e-mail to %s with path to %s" %
+                              (CFG_APSHARVEST_EMAIL, records_filename))
+                return res
     else:
-        # We submit a BibUpload task and wait for it to finish
-        task_update_progress("Waiting for task to finish")
+        if not devmode:
+            # We submit a BibUpload task and wait for it to finish
+            task_update_progress("Waiting for task to finish")
 
-        if taskid != 0:
-            write_message("Going to wait for %d to finish" % (taskid,))
+            if taskid != 0:
+                write_message("Going to wait for %d to finish" % (taskid,))
 
-        while not can_launch_bibupload(taskid):
-            # Lets wait until the previously launched task exits.
-            task_sleep_now_if_required(can_stop_too=False)
-            time.sleep(5.0)
+            while not can_launch_bibupload(taskid):
+                # Lets wait until the previously launched task exits.
+                task_sleep_now_if_required(can_stop_too=False)
+                time.sleep(5.0)
 
-        taskid = submit_bibupload_for_records(mode, records_filename, silent)
-        write_message("Submitted BibUpload task #%s with mode %s" %
-                     (str(taskid), mode))
-        return taskid
+            taskid = submit_bibupload_for_records(mode, records_filename, silent)
+            write_message("Submitted BibUpload task #%s with mode %s" %
+                         (str(taskid), mode))
+            return taskid
 
 
-def submit_records_via_mail(subject, body):
+def submit_records_via_mail(subject, body, toaddr=CFG_APSHARVEST_EMAIL):
     """
     Performs the call to mailutils.send_email to attach XML and submit
     via e-mail to the desired receipient (CFG_APSHARVEST_EMAIL).
@@ -793,13 +846,13 @@ def submit_records_via_mail(subject, body):
     @rtype: int
     """
     return send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
-                      toaddr=CFG_APSHARVEST_EMAIL,
+                      toaddr=toaddr,
                       subject=subject,
                       content=body)
 
 
 def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
-                             hidden_fulltext):
+                             hidden_fulltext, threshold_date=None):
     """
     For every record in given list APSRecord(record ID, DOI, date last
     updated), yield a APSRecord with added FFT dictionary containing URL to
@@ -826,8 +879,9 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                                                             len(record_list)))
 
         if not record.doi:
-            write_message("No DOI found for record %d" % (record.recid or "",),
-                          stream=sys.stderr)
+            msg = "No DOI found for record %d" % (record.recid or "",)
+            write_message("Error: %s" % (msg,), stream=sys.stderr)
+            yield record, msg
             continue
 
         url = CFG_APSHARVEST_FULLTEXT_URL % {'doi': record.doi}
@@ -851,9 +905,10 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                                        timeout=60.0)
             write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
         except InvenioFileDownloadError, e:
-            write_message("Error: URL could not be opened: %s" % (url,),
+            msg = "URL could not be opened: %s" % (url,)
+            write_message("Error: %s" % (msg,),
                           stream=sys.stderr)
-            yield record, "%s cannot be opened." % (url,)
+            yield record, msg
             continue
 
         except APSHarvesterFileExits:
@@ -861,11 +916,13 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
 
         except StandardError, e:
             if 'urlopen' in str(e) or 'URL could not be opened' in str(e):
-                write_message("Error: URL could not be opened: %s" % (url,),
+                msg = "URL could not be opened: %s" % (url,)
+                write_message("Error: %s" % (msg,),
                               stream=sys.stderr)
                 write_message("No fulltext found for %s" %
                              (record.recid or record.doi,))
-                yield record, "%s cannot be opened." % (url,)
+                yield record, msg
+                continue
             raise
         finally:
             request_end = time.time()
@@ -879,17 +936,22 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                 in_folder=unzipped_folder,
                 md5key_filename=CFG_APSHARVEST_MD5_FILE)
         except InvenioFileChecksumError, e:
-            write_message("Error while validating checksum: %s" % (str(e),))
-            write_message("Skipping %s in %s" %
-                         (record.recid or record.doi, unzipped_folder))
+            info_msg = "Skipping %s in %s" % \
+                        (record.recid or record.doi, unzipped_folder)
+            msg = "Error while validating checksum: %s\n%s\n%s" % \
+                  (info_msg, str(e), traceback.format_exc()[:-1])
+            write_message(msg)
+            yield record, msg
             continue
         if not checksum_validated_files:
             write_message("Warning: No files found to perform checksum"
                           " validation on inside %s" % (unzipped_folder,))
         elif len(checksum_validated_files) != 1 or \
                 not 'fulltext.xml' in checksum_validated_files[0]:
-            write_message("Warning: No fulltext file found inside %s for %s" %
-                         (unzipped_folder, record.recid or record.doi))
+            msg = "Warning: No fulltext file found inside %s for %s" % \
+                  (unzipped_folder, record.recid or record.doi)
+            write_message(msg)
+            yield record, msg
             continue
 
         # We have the fulltext file as fulltext.xml as expected.
@@ -898,6 +960,25 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         write_message("Harvested record %s (%s)" %
                      (record.recid or "new record", count))
         write_message("File: %s" % (fulltext_file,), verbose=2)
+
+        # Check if published date is after treshold:
+        if threshold_date:
+            write_message("Checking the threshold...", verbose=3)
+            parsed_xml_tree = etree.parse(fulltext_file)
+            # Looking for the published tag
+            try:
+                published_date = parsed_xml_tree.find('meta/history/published').values().pop()
+            except AttributeError:
+                write_message("Warning: Unable to find published tag, continuing...")
+            else:
+                if published_date < threshold_date:
+                    # The published date is beyond the threshold, we continue
+                    msg = "Warning: Article published beyond threshold: %s" % (record.doi,)
+                    write_message(msg)
+                    yield record, msg
+                    continue
+                else:
+                    write_message("OK. Record is below the threshold.", verbose=3)
 
         if add_metadata:
             # Remove any DTD info in the file before converting
@@ -919,9 +1000,11 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                 write_message("File: %s" % (path_to_converted,), verbose=2)
                 record.add_metadata(path_to_converted)
             except APSHarvesterConversionError, e:
-                write_message("Metadata conversion failed: %s" % (str(e),),
-                              stream=sys.stderr)
+                msg = "Metadata conversion failed: %s\n%s" % \
+                      (str(e), traceback.format_exc()[:-1])
+                write_message(msg, stream=sys.stderr)
                 record.add_metadata(None)
+                yield record, msg
 
         if attach_fulltext:
             record.add_fft(fulltext_file, hidden_fulltext)
