@@ -14,6 +14,8 @@ import sys
 import re
 import getopt
 
+from itertools import product
+
 try:
     import json
 except ImportError:
@@ -61,10 +63,9 @@ except NameError:
 
 
 CONFIG_FILE = 'oaicds_bibfilter_config.json'
-
 CONF_SERVER = 'localhost'
-
 CONFIG = {}
+PRINT_OUT = False
 
 # ==============================| Main |==============================
 
@@ -77,8 +78,7 @@ def main(args):
     usage:
                     bibfilter_oaicds2inspire [-nh] MARCXML-FILE
     options:
-                -n
-                    forces the script not to check if the record exists in the database
+                -n  forces the script not to check if the record exists in the database
                     (useful when re-harvesting existing record)
     """
     try:
@@ -119,15 +119,22 @@ def main(args):
     sys.setdefaultencoding("utf8")
     assert sys.getdefaultencoding() == "utf8"
 
-    record_tree, header_subs = clean_oai_xml(input_filename)
-    records, deleted_records = element_tree_to_record(record_tree, header_subs)
+    record_tree, next_process, header_subs = clean_xml(input_filename)
+    records, deleted_records = next_process(record_tree, header_subs)
     insert_records = []
     append_records = []
+    error_records = []
 
     for record in records:
         # Step 1: Attempt to match the record to those already in Inspire
-        recid = record['001'][0][3]
-        res = attempt_record_match(recid)
+        try:
+            recid = record['001'][0][3]
+            res = attempt_record_match(recid)
+        except (KeyError, IndexError) as err:
+            _print('Error: Cannot process record without 001:recid')
+            error_records.append(record)
+            continue
+
         if skip_recid_check or not res:
             _print("Record %s does not exist: inserting" % (recid,))
             # No record found
@@ -146,6 +153,10 @@ def main(args):
             append_records.append(record)
 
     # Output results. Create new files, if necessary.
+    if input_filename[-4:].lower() == '.xml':
+        input_filename = input_filename[:-4]
+
+
     write_record_to_file("%s.insert.xml" % (input_filename,), insert_records)
     _print("%s.insert.xml" % (input_filename,))
     _print("Number of records to insert:  %d\n"
@@ -153,6 +164,10 @@ def main(args):
     write_record_to_file("%s.append.xml" % (input_filename,), append_records)
     _print("%s.append.xml" % (input_filename,))
     _print("Number of records to append:  %d\n"
+           % (len(append_records),))
+    write_record_to_file("%s.errors.xml" % (input_filename,), error_records)
+    _print("%s.errors.xml" % (input_filename,))
+    _print("Number of records with errors:  %d\n"
            % (len(append_records),))
 
 
@@ -221,21 +236,52 @@ def determine_collection(setspec):
 
 
 def element_tree_to_record(tree, header_subs=None):
+    marcxml = ET.tostring(tree.getroot(), encoding="utf-8")
+    record, status, errors = create_record(marcxml)
+    if errors:
+        _print(str(status))
+    return [record], []
+
+
+def element_tree_collection_to_records(tree, header_subs=None):
     """ Takes an ElementTree and converts the nodes
-    into BibRecord records so they can be worked with
+    into BibRecord records so they can be worked with.
+    This function is for a tree root of collection as such:
+    <collection>
+        <record>
+            <!-- MARCXML -->
+        </record>
+        <record> ... </record>
+    </collection>
+    """
+    records = []
+    collection = tree.getroot()
+    for record_element in collection.getchildren():
+        marcxml = ET.tostring(record_element, encoding="utf-8")
+        record, status, errors = create_record(marcxml)
+        if errors:
+            _print(str(status))
+        records.append(record)
+    return records, []
+
+
+def element_tree_oai_to_records(tree, header_subs=None):
+    """ Takes an ElementTree and converts the nodes
+    into BibRecord records so they can be worked with.
     This expects a clean OAI response with the tree root as ListRecords or GetRecord
     and record as the subtag like so:
     <ListRecords|GetRecord>
         <record>
             <header>
-                <!--- Record Information --->
+                <!-- Record Information -->
             </header>
             <metadata>
                 <record>
-                    <!--- MARCXML --->
+                    <!-- MARCXML -->
                 </record>
             </metadata>
         </record>
+        <record> ... </record>
     </ListRecords|GetRecord>
 
     @param tree: ElementTree: Tree object corresponding to GetRecord node from
@@ -270,8 +316,8 @@ def element_tree_to_record(tree, header_subs=None):
             # Record was deleted - create delete record
             recid = identifier.split(":")[-1]
             deleted_record = {}
-            record_add_field(deleted_record, "035", subfields=subs)
             record_add_field(deleted_record, "035", subfields=[("9", "CDS"), ("a", recid)])
+            record_add_field(deleted_record, "037", subfields=subs)
             record_add_field(deleted_record, "980", subfields=[("c", "DELETED")])
             deleted_records.append(deleted_record)
             _print("Record has been deleted: %s" % (identifier,))
@@ -307,7 +353,7 @@ def get_request_subfields(root):
     return subs
 
 
-def clean_oai_xml(xml):
+def clean_xml(xml):
     """
     Cleans MARCXML harvested from OAI, allowing in
     to be used with BibUpload or BibRecord
@@ -327,16 +373,23 @@ def clean_oai_xml(xml):
         _print("ERROR: Could not read OAI XML, aborting filter!")
         raise e
     root = tree.getroot()
-    root = strip_xml_namespace(root)
+    strip_xml_namespace(root)
+    if root.tag.lower() == 'collection':
+        return ET.ElementTree(root), element_tree_collection_to_records, None
+    elif root.tag.lower() == 'record':
+        new_root = ET.Element('collection')
+        new_root.append(root)
+        return ET.ElementTree(new_root), element_tree_to_record, None
+
     header_subs = get_request_subfields(root)
 
     records = root.find('ListRecords')
     if records is None:
-        records = root.find('GetRecords')
+        records = root.find('GetRecord')
     if records is None:
-        raise ValueError("Cannot find ListRecords or GetRecords!")
+        raise ValueError("Cannot find ListRecords or GetRecord!")
 
-    return ET.ElementTree(records), header_subs
+    return ET.ElementTree(records), element_tree_oai_to_records, header_subs
 
 
 def strip_xml_namespace(root):
@@ -356,7 +409,6 @@ def strip_xml_namespace(root):
 
     for element in root.getchildren():
         strip_xml_namespace(element)
-    return root
 
 
 def apply_filter(rec):
@@ -365,9 +417,11 @@ def apply_filter(rec):
      * rec - dictionary: BibRecord structure
     Returns: dictionary, BibRecord structure
     """
-    # Move recid from 001 to 035
+    # Move recid from 001 to 035 if not hidden
     cds_id = rec['001'][0][3]
-    record_add_field(rec, '035', subfields=[('9', 'CDS'), ('a', cds_id)])
+    if not 'hidden' in [x.lower() for x in record_get_field_values(rec, "980",
+                                                                   code="a")]:
+        record_add_field(rec, '035', subfields=[('9', 'CDS'), ('a', cds_id)])
     # Clear control fields
     record_strip_controlfields(rec)
 
@@ -392,6 +446,16 @@ def apply_filter(rec):
     if is_published(rec):
         collections.add("PUBLISHED")
         collections.add("CITEABLE")
+
+    if not 'NOTE' in collections:
+        # TODO: Move this to a KB
+        kb = ['ATLAS-CONF-', 'CMS-PAS-', 'ATL-', 'CMS-DP-',
+              'ALICE-INT-', 'LHCb-PUB-']
+        values = record_get_field_values(rec, "088", code='a')
+        for val, rep in product(values, kb):
+            if val.startswith(rep):
+                collections.add('NOTE')
+                break
 
     # 980 Arxiv tag
     if record_get_field_values(rec, '035', filter_subfield_code="a",
@@ -447,8 +511,8 @@ def apply_filter(rec):
                 # No forbidden values (We did not "break")
                 suffixes = [s.lower() for s in subs['9']]
                 if 'spires' in suffixes:
-                    new_sub = ('a', 'SPIRES-%s' % subs['a'])
-                    record_add_field(rec, '970', subfields=new_sub)
+                    new_subs = [('a', 'SPIRES-%s' % subs['a'][0])]
+                    record_add_field(rec, '970', subfields=new_subs)
                     continue
         if 'a' in subs:
             for sub in subs['a']:
@@ -824,8 +888,11 @@ def convert_date_to_iso(value):
 def _print(message, verbose=1):
     """ Used for logging """
     write_message(message, verbose=verbose)
+    if PRINT_OUT:
+        print message
 
 
 # ==============================| Init, innit? |==============================
 if __name__ == '__main__':
+    PRINT_OUT = True
     main(sys.argv[1:])
