@@ -180,6 +180,7 @@ function openSrchWindow(winputid) {
 
 </script>
 </head>
+<h1>Detailed reference correction</h1>
 
 <form name="referenceinp" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
 
@@ -216,13 +217,18 @@ function openSrchWindow(winputid) {
 
 </div>
 <div style="clear:both;height:1px">&nbsp;</div>
+<br />
 <table>
-        <TR><TD class=left><span class="form_label">Your Email</span></TD><TD class=right><INPUT size=35 name="username" id="username"><span class="form_label_required">(Required)</span></TD></TR>
+        <TR><TD class=left><span class="form_label">Your Email</span></TD><TD class=right><INPUT size=35 name="username" id="username"><small><strong>&nbsp;Required</strong></small></TD></TR>
         <TR><TD class=left><span class="form_label">Your Name</span></TD><TD class=right><INPUT size=35 name=realname id=realname><span class="form_label_optional">(Optional)</span></TD></TR>
         <tr><TD class=left><span class="form_label">Comments</span></TD><TD class=right><textarea name="usercomment" id=usercomment rows="4" cols="35" wrap="virtual"></textarea><span class="form_label_optional">(Optional)</span></TD></TR>
 </table>
 
-<a href=/help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp; <input type="submit" name="submit" value="Send" class="formbutton" />
+<br />
+<a href=/help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp;
+<br />
+<br />
+<input type="submit" name="submit" value="Send" class="formbutton" />
 <br>
 
 <small> Click on <img src="/img/add.png" alt="+"> to insert new references below existing reference</small>

@@ -40,8 +40,8 @@ function valtoReferenceinp(recid) {
 <p>
  <div id="detailedrecordshortreminder">
     <form  action="" method="POST">
-    <input type="button" value="Select this reference" onClick="valtoReferenceinp(<BFE_RECORD_ID>); return(false);" >
-    <br>
+    <input type="button" class="formbutton" value="Select this reference" onClick="valtoReferenceinp(<BFE_RECORD_ID>); return(false);" >
+    <br><br>
      <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
      <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" brief="yes" />
      </a><br />

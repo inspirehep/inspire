@@ -277,11 +277,14 @@ class Template(DefaultTemplate):
             easy_search_link = create_html_link("%s/help/easy-search%s" % (CFG_BASE_URL, langlink), {}, _("Easy Search")) + "<br/>"
 
             # add output format select box for HEP
+            fields = CFG_SEARCH_INSPIRE_OUTPUT_FORMATS[:]
+            if of == "hca":
+              fields.append({'value': "hca", 'text': "Reference selection"})
             middle_option = '<td class="searchboxbody" align="left">%s</td>' % \
                 (self.tmpl_select(
                  fieldname='of',
                  selected=of,
-                 values=self._add_mark_to_field(value=of, fields=CFG_SEARCH_INSPIRE_OUTPUT_FORMATS, chars=3, ln=ln),
+                 values=self._add_mark_to_field(value=of, fields=fields, chars=3, ln=ln),
                  css_class=''),)
         # print commentary start:
         if collection_id == "Jobs":

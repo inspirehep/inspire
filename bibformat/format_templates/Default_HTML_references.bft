@@ -2,11 +2,8 @@
 <description>Outputs the references of a record</description>
 
 <div style="margin-left:30px;min-height:100px;">
+	<BFE_UPDATE_REFERENCES_BUTTON position='top'/>
+	<BFE_REFERENCES default="<h2>No references were found for that record.</h2><br/>" prefix='' suffix='' reference_prefix='' reference_suffix=''/>
+	<BFE_UPDATE_REFERENCES_BUTTON position='bottom'/>
+</div>
 
-<div id='referenceinp_link_box'>
-<span id='referenceinp_link_span'>
-	<a id='referenceinp_link' href='/record/<BFE_FIELD tag="001" />/export/hrf'>Update these references</a>
-</span>
-</div>
-<BFE_REFERENCES default="<h2>No references were found for that record.<h2>" prefix='' suffix='' reference_prefix='' reference_suffix=''/>
-</div>

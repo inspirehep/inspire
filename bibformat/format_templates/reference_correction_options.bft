@@ -1,0 +1,95 @@
+<style>
+.radio {
+  margin-top:10px;
+}
+
+.tiny {
+  font-size: 85%;
+  color: grey;
+}
+
+#ref-form {
+  font-size: 80%;
+}
+
+#email-required {
+  color: red;
+  font-style: italic;
+}
+</style>
+
+<script>
+$().ready(function() {
+  if ( !$('#arxiv').is(':checked') ) {
+    $("#ref-extra-comments").hide();
+  }
+
+  $( "input[type=radio]" ).change(function() {
+  if( $(this).is(':checked') && $(this).attr("value") != "arxiv"){
+    $("#ref-extra-comments").slideUp();
+  }
+  else {
+    $("#ref-extra-comments").slideDown();
+  }
+  });
+
+  $("#ref-form").on("submit", function(event) {
+    /* Snippet from http://stackoverflow.com/questions/4964691/super-simple-email-validation-with-javascript*/
+    var email = $("#email").val();
+    if ( !$('#arxiv').is(':checked') || /(.+)@(.+){2,}\.(.+){2,}/.test(email) ){
+      return;
+    } else {
+      $("#email-required").html("Please, input a valid email address");
+      event.preventDefault();
+    }
+  })
+});
+</script>
+
+<h1>Reference correction</h1>
+
+<div id="detailedrecordshortreminder">
+  <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+   <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" brief="yes" />
+  </a>
+  <br />
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" />
+  <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" /><br />
+  <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape=""
+      category="yes" links="no" mirrors="no"/>
+</div>
+<br/>
+
+<form method="POST" action="/reference_update.py/reference_correction" id="ref-form">
+<input type="hidden" name="record_id" id="record_id" value=<BFE_FIELD tag="001"/> />
+
+<div id="ref-questions">
+  <label>What's wrong with the current reference list?</label>
+  <br/>
+  <input type = "radio" name="problem" id="arxiv" value="arxiv" class="radio" checked="checked" />
+  <label for="arxiv">A revised arXiv version exists with an updated reference list</label>
+  <br/>
+  <input type = "radio" name="problem" id="published" value="published" class="radio" />
+  <label for="published">The published version has an updated reference list</label>
+  <br/>
+  <input type = "radio" name="problem" id="wrong" value="wrong" class="radio" />
+  <label for="wrong">Some references have not been correctly identified</label>
+  <br/>
+  <br/>
+</div>
+<div id="ref-extra-comments">
+<br/>
+Your email address <span class="tiny">(we will notify you as soon as the references have been updated)</span><br/>
+<input type="text" name="email" id="email" size="50" placeholder="youremail@example.com"><span><strong>&nbsp;Required</strong></span>
+<div id="email-required">
+</div>
+<br/><br/>
+Add extra comments to help us identifying the correct references:
+<br/>
+<textarea name="comments" cols="80" rows="5">
+</textarea>
+<br/>
+<br/>
+</div>
+<input type="submit" class="formbutton" value="Next">
+</form>

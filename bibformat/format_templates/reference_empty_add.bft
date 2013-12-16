@@ -1,0 +1,114 @@
+<style>
+.tiny {
+  font-size: 85%;
+  color: grey;
+}
+
+#ref-form {
+  font-size: 80%;
+}
+
+#email-required {
+  color: red;
+  font-style: italic;
+}
+
+.tooltip {
+  display: inline;
+  position: relative;
+}
+
+.tooltip:hover:after{
+  background: #333;
+  background: rgba(0,0,0,.8);
+  border-radius: 5px;
+  bottom: 26px;
+  color: #fff;
+  left: 20%;
+  padding: 5px 15px;
+  position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+
+.tooltip:hover:before{
+  border: solid;
+  border-color: #333 transparent;
+  border-width: 6px 6px 0 6px;
+  bottom: 20px;
+  content: "";
+  left: 50%;
+  position: absolute;
+  z-index: 99;
+}
+
+.tooltip_1:hover:after {
+  content: "Copy all the content present in the reference section as it appears in the original source";
+}
+
+.tooltip_2:hover:after {
+  content: "Accessible refers to not needing a subscription to access the content";
+}
+
+.aligned-image {
+  vertical-align: top;
+}
+</style>
+
+<script>
+$().ready(function() {
+  $("#ref-form").on("submit", function(event) {
+    /* Snippet from http://stackoverflow.com/questions/4964691/super-simple-email-validation-with-javascript*/
+    var email = $("#email").val();
+    if ( /(.+)@(.+){2,}\.(.+){2,}/.test(email) ){
+      return;
+    } else {
+      $("#email-required").html("Please, input a valid email address");
+      event.preventDefault();
+    }
+  })
+});
+</script>
+
+<h1>Add references to record</h1>
+
+<div id="detailedrecordshortreminder">
+  <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
+   <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" brief="yes" />
+  </a>
+  <br />
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" />
+  <BFE_INSPIRE_PUBLI_INFO prefix="<br />Published in <b>" suffix="</b>" /><br />
+   <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape=""
+      category="yes" links="no" mirrors="no"/>
+</div>
+<br/>
+
+<form method="POST" action="/reference_update.py/reference_add" id="ref-form">
+  Please paste the reference list in the following text area:
+  <br />
+  <input type="hidden" name="record_id" id="record_id" value=<BFE_FIELD tag="001"/> />
+  <textarea name="references" cols="80" rows="15">
+  </textarea>
+
+  <br/><br/>
+  If available, please provide us with an accessible URL for the pdf:
+  <br />
+  <input type="text" name="url" size="50" placeholder="http://www.url.com/document.pdf">
+<br/>
+<br/>
+<br/>
+  Your email address <span class="tiny">(we will notify you as soon as the references have been updated)</span><br/>
+  <input type="text" name="email" id="email" size="50" placeholder="youremail@example.com"><span><strong>&nbsp;Required</strong></span>
+  <div id="email-required">
+  </div>
+  <br/>
+  Add extra comments to help us identifying the correct references:
+  <br/>
+
+  <textarea name="comments" cols="80" rows="5"></textarea>
+<br/>
+<br/>
+<input type="submit" value="Submit" class="formbutton">
+
+</form>
