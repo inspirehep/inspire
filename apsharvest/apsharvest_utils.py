@@ -63,7 +63,7 @@ def unzip(zipped_file, output_directory=None,
         try:
             output_directory = mkdtemp(suffix=suffix,
                                        prefix=prefix,
-                                       dir=CFG_TMPSHAREDDIR)
+                                       dir=os.path.join(CFG_TMPSHAREDDIR, 'apsharvest'))
         except Exception, e:
             try:
                 os.removedirs(output_directory)

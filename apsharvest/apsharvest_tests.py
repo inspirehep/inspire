@@ -62,7 +62,7 @@ class FileTest(unittest.TestCase):
         """
         test_zipped_file = "./test/test.zip"
 
-        desired_dir = CFG_TMPSHAREDDIR
+        desired_dir = os.path.join(CFG_TMPSHAREDDIR, 'apsharvest')
         unzipped_folder = unzip(test_zipped_file, desired_dir)
         self.assertTrue(unzipped_folder.startswith(desired_dir),
                         "Unzipped folder is located in the wrong place %s!" %
