@@ -83,12 +83,15 @@ def format_element(bfo, limit, separator='; ',
     bibrec_id = bfo.control_field("001")
     authors = []
     lastauthor = ''
+    only_corporate_author = False
     authors = bfo.fields('100__', repeatable_subfields_p=True)
     authors.extend(bfo.fields('700__', repeatable_subfields_p=True))
 
     # If there are no author check for corporate author in 110__a field
     if len(authors) == 0:
         authors = bfo.fields('110__', repeatable_subfields_p=True)
+        if len(authors) > 0:
+            only_corporate_author = True
         # For corporate authors we don't want to reverse names order
         name_last_first = 'yes'
         # And we don't want to create links
@@ -259,7 +262,8 @@ def format_element(bfo, limit, separator='; ',
             if markup == 'latex':
                 coll_display = authors[0] + " [" + coll_display + "]"
             else:  #html
-                coll_display += " (" + authors[0] + " for the collaboration)"
+                if not only_corporate_author:
+                    coll_display += " (" + authors[0] + " for the collaboration)"
         elif nb_authors == 0:
             short_coll = True
             if markup == 'latex':
