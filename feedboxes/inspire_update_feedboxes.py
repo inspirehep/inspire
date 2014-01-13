@@ -59,7 +59,7 @@ CFG_TWITTER_BOX_TPL = """
 """
 
 def get_twitter_api(path=CFG_TWITTER_CREDENTIALS_PATH):
-    lines = open(CFG_TWITTER_CREDENTIALS_PATH).readlines()
+    lines = open(path).readlines()
     consumer_key = lines[0].strip()
     consumer_secret = lines[1].strip()
     access_token_key = lines[2].strip()
