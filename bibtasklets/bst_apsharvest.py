@@ -148,7 +148,7 @@ class APSRecord(object):
         """
         Adds FFT information as required from given fulltext.
         """
-        fft = self.record.add_field("FFT")
+        fft = self.record.add_field("FFT__")
         fft.add_subfield('a', fulltext_file)
 
         if hidden:
