@@ -866,6 +866,7 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
     request_end = None
     request_start = None
     for record in record_list:
+        task_sleep_now_if_required(can_stop_too=False)
         # Unless this is the first request, lets sleep a bit
         if request_end and request_start:
             request_dt = request_end-request_start
