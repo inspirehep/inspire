@@ -9,6 +9,7 @@ TALKTYPEDESC='List of types of talks'
 COLLECTIONDESC='690C aliases'
 SUBJECTDESC='65017 aliases'
 PDGDESC='PDG codes'
+NOTEDESC='A list of 088 report-number prefixes for which the 980-collection 'NOTE' should be appended.'
 PWD=`pwd`
 
 all:
@@ -22,13 +23,14 @@ install: install-journals-knowledge
 install-journals-knowledge:
 	$(INSTALL) -D journal-titles-inspire.kb $(ETCDIR)/docextract/journal-titles-inspire.kb
 
-install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg coden create-institutions-dynamic-kb create-experiments-dynamic-kb
+install-dbchanges: announce-kb-load truncate-kbs weblinks journals collection subject pdg notes coden create-institutions-dynamic-kb create-experiments-dynamic-kb
 
 weblinks: load-weblinks-knowledge-base
 journals: load-journals-knowledge-base
 collection: load-collection-knowledge-base
 subject: load-subject-knowledge-base
 pdg: load-pdg-knowledge-base
+notes: load-note-collections-knowledge-base
 coden: load-coden-knowledge-base
 
 announce-kb-load:
@@ -56,6 +58,9 @@ load-subject-knowledge-base:
 
 load-pdg-knowledge-base:
 	$(PYTHON) kb_load.py $(PWD)/pdg.kb PDG --description="$(PDGDESC)"
+
+load-note-collections-knowledge-base:
+	$(PYTHON) kb_load.py $(PWD)/note_collections.kb NOTE_COLLECTIONS --description="$(NOTEDESC)"
 
 create-institutions-dynamic-kb:
 	$(PYTHON) InstitutionsCollection_dynamic_KB.py
