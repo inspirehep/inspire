@@ -33,7 +33,7 @@ def format_element(bfo):
                 return "<a href=%s>%s</a>" % (orcid, orcid)
             else:
                 link = "http://orcid.org/" + orcid
-                return "<a href=%s>%s</a>" % (link, link)
+                return "<a href=%s>%s</a>" % (link, orcid)
 
 
 def escape_values(bfo):
