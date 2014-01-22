@@ -7,8 +7,9 @@
   </datafield>
   <datafield tag="100" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
-	<subfield code="j">VOLATILE:External author ID</subfield>
+	  <subfield code="j">VOLATILE:External author ID</subfield>
   </datafield>
   <datafield tag="245" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Original title</subfield>
@@ -31,6 +32,7 @@
   </datafield>
   <datafield tag="700" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:additional author</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:affiliation</subfield>
   </datafield>
   <datafield tag="710" ind1=" " ind2=" ">

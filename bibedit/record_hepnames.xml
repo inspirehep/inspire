@@ -14,16 +14,17 @@
     <subfield code="b">VOLATILE:numeration (e.g. III or Jr.)</subfield>
     <subfield code="c">VOLATILE:title (e.g. Sir)</subfield>
     <subfield code="d">VOLATILE:dates</subfield>
-    <subfield code="q">VOLATILE:preferred name</subfield>
     <subfield code="g">VOLATILE:active, retired...</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
+    <subfield code="q">VOLATILE:preferred name</subfield>
   </datafield>
   <datafield tag="400" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:variant name</subfield>
   </datafield>
   <datafield tag="701" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Name of advisor</subfield>
-    <subfield code="b">VOLATILE:Inspire id of advisor</subfield>
     <subfield code="g">VOLATILE:degree (PhD, master, diploma...)</subfield>
+    <subfield code="i">VOLATILE:Inspire id of advisor</subfield>
   </datafield>
   <datafield tag="371" ind1=" " ind2=" ">
     <subfield code="m">VOLATILE:public email</subfield>
