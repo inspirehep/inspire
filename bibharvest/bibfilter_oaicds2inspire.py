@@ -442,6 +442,9 @@ def apply_filter(rec):
             collections.add('NOTE')
         if 'THESIS' in value.upper():
             collections.add('THESIS')
+        if 'CONFERENCEPAPER' in value.upper():
+            collections.add('ConferencePaper')
+
 
     if is_published(rec):
         collections.add("PUBLISHED")
@@ -465,6 +468,13 @@ def apply_filter(rec):
     # 980 HEP && CORE
     collections.add('HEP')
     collections.add('CORE')
+
+    # 980 Conference Note
+    if not 'ConferencePaper' in collections:
+        for value in record_get_field_values(rec, '962', code='n'):
+            if value[-2:].isdigit():
+                collections.add('ConferencePaper')
+                break
 
     record_delete_fields(rec, "980")
 
@@ -533,6 +543,7 @@ def apply_filter(rec):
                 record_add_field(rec, '037', subfields=[('a', val)])
     record_delete_fields(rec, "088")
 
+    # 037 Externals also...
     rep_037_fields = record_get_field_instances(rec, '037')
     for field in rep_037_fields:
         subs = field_get_subfields(field)
@@ -633,7 +644,7 @@ def apply_filter(rec):
         if 'a' in subs:
             for val in subs['a']:
                 new_subs.extend([('9', 'author'), ('a', val)])
-        new_field = create_field(subfields=new_subs)
+        new_field = create_field(subfields=new_subs, ind1='1')
         record_replace_field(rec, '653', new_field, field_position_global=field[4])
 
     experiments = get_experiments()
