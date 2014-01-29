@@ -76,7 +76,7 @@ function toggle_abstract(event, element) {
         if abstract.get('9', "").lower() == 'arxiv':
             # there should be only one arXiv abstract, so we can overwrite the arxiv variable
             arxiv = abstract
-        else:
+        elif abstract.get('a'):
             other_abstract.append(abstract)
 
     if other_abstract:
