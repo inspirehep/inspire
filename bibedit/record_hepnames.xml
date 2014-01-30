@@ -15,7 +15,6 @@
     <subfield code="c">VOLATILE:title (e.g. Sir)</subfield>
     <subfield code="d">VOLATILE:dates</subfield>
     <subfield code="g">VOLATILE:active, retired...</subfield>
-    <subfield code="m">VOLATILE:email</subfield>
     <subfield code="q">VOLATILE:preferred name</subfield>
   </datafield>
   <datafield tag="400" ind1=" " ind2=" ">
@@ -32,6 +31,7 @@
   </datafield>
   <datafield tag="371" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:affiliation</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
     <subfield code="s">VOLATILE:start year</subfield>
     <subfield code="t">VOLATILE:end year</subfield>
     <subfield code="r">VOLATILE:rank</subfield>

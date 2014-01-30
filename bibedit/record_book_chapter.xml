@@ -21,6 +21,11 @@
     <subfield code="a">VOLATILE:Original title</subfield>
     <subfield code="b">VOLATILE:subtitle</subfield>
   </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:place of publication</subfield>
+    <subfield code="b">VOLATILE:publisher</subfield>
+    <subfield code="c">VOLATILE:date</subfield>
+  </datafield>
   <datafield tag="300" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:999</subfield>
   </datafield>
