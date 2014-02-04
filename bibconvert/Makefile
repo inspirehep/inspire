@@ -16,7 +16,10 @@ FULL_INST_BASE = inst_recs
 FULL_INST_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.xml
 FULL_INST_MARC_URL = ${FTP_LOC}inst/${FULL_INST_BASE}.marcxml
 
-XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl inst2marc.xsl conf2marc.xsl cds2inspire.xsl oaiarXiv2inspire_nofilter.xsl
+XSLFILES = SPIRES2MARC.xsl oaiarXiv2inspire.xsl inst2marc.xsl conf2marc.xsl \
+           cds2inspire.xsl oaiarXiv2inspire_nofilter.xsl inspire2cds.xsl
+XMLFILES = cds_inspire_693.xml cds_inspire_categories_65017.xml \
+           cds_inspire_journal_abbreviations.xml cds_inspire_languages.xml
 KBFILES = arxiv-to-inspire-categories.kb
 
 TEST_TARGETS = load-small-sample-of-records
@@ -34,6 +37,7 @@ clean:
 
 install:
 	$(INSTALL) -m 664 $(XSLFILES) $(ETCDIR)/bibconvert/config
+	$(INSTALL) -m 664 $(XMLFILES) $(ETCDIR)/bibconvert/config
 	$(INSTALL) -m 664 $(KBFILES) $(ETCDIR)/bibconvert/KB
 
 load-records:

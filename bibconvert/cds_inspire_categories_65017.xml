@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<categories>
+  <category>
+    <cds>General Relativity and Cosmology</cds>
+    <inspire>Gravitation and Cosmology</inspire>
+  </category>
+  <category>
+    <cds>General Theoretical Physics</cds>
+    <inspire>General Physics</inspire>
+  </category>
+  <category>
+    <cds>Detectors and Experimental Techniques</cds>
+    <inspire>Instrumentation</inspire>
+  </category>
+  <category>
+    <cds>Engineering</cds>
+    <inspire>Instrumentation</inspire>
+  </category>
+  <category>
+    <cds>Accelerators and Storage Rings</cds>
+    <inspire>Accelerators</inspire>
+  </category>
+  <category>
+    <cds>Computing and Computers</cds>
+    <inspire>Computing</inspire>
+  </category>
+  <category>
+    <cds>Mathematical Physics and Mathematics</cds>
+    <inspire>Math and Math Physics</inspire>
+  </category>
+  <category>
+    <cds>Astrophysics and Astronomy</cds>
+    <inspire>Astrophysics</inspire>
+  </category>
+  <category>
+    <cds>Condensed Matter</cds>
+    <inspire>General Physics</inspire>
+  </category>
+  <category>
+    <cds>General Theoretical Physics</cds>
+    <inspire>General Physics</inspire>
+  </category>
+  <category>
+    <cds>Physics in General</cds>
+    <inspire>General Physics</inspire>
+  </category>
+  <category>
+    <cds>Other</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Chemical Physics and Chemistry</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Information Transfer and Management</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Commerce, Economics, Social Science</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Biography, Geography, History</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Science in General</cds>
+    <inspire>Other</inspire>
+  </category>
+  <category>
+    <cds>Particle Physics - Experiment</cds>
+    <inspire>Experiment-HEP</inspire>
+  </category>
+  <category>
+    <cds>Particle Physics - Phenomenology</cds>
+    <inspire>Phenomenology-HEP</inspire>
+  </category>
+  <category>
+    <cds>Particle Physics - Theory</cds>
+    <inspire>Theory-HEP</inspire>
+  </category>
+  <category>
+    <cds>Particle Physics - Lattice</cds>
+    <inspire>Lattice</inspire>
+  </category>
+  <category>
+    <cds>Nuclear Physics - Experiment</cds>
+    <inspire>Experiment-Nucl</inspire>
+  </category>
+  <category>
+    <cds>Nuclear Physics - Theory</cds>
+    <inspire>Theory-Nucl</inspire>
+  </category>
+</categories>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<experiments>
+  <experiment>
+    <cds>CERN LHC---ATLAS</cds>
+    <inspire>CERN-LHC-ATLAS</inspire>
+  </experiment>
+  <experiment>
+    <cds>CERN LHC---CMS</cds>
+    <inspire>CERN-LHC-CMS</inspire>
+  </experiment>
+  <experiment>
+    <cds>CERN LHC---LHCb</cds>
+    <inspire>CERN-LHC-LHCb</inspire>
+  </experiment>
+  <experiment>
+    <cds>CERN LHC---ALICE</cds>
+    <inspire>CERN-LHC-ALICE</inspire>
+  </experiment>
+  <experiment>
+    <cds>CERN SPS---NA</cds>
+    <inspire>CERN-NA-</inspire>
+  </experiment>
+  <experiment>
+    <cds>CERN SPS---NA</cds>
+    <inspire>CERN-NA-</inspire>
+  </experiment>
+  <experiment>
+    <cds>DESY HERA---ZEUS</cds>
+    <inspire>DESY-HERA-ZEUS</inspire>
+  </experiment>
+</experiments>
