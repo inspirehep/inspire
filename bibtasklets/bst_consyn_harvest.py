@@ -70,8 +70,7 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
         write_message("URL could not be opened: %s" % (CONSYNATOMURL,))
         task_update_status("CERROR")
         return
-
-    #xmlString = urllib.urlopen(CONSYNATOMURL).read()
+        
     dom = xml.dom.minidom.parseString(xmlString)
     entries = dom.getElementsByTagName("entry")
     downloaded_files = []
@@ -155,8 +154,8 @@ def fetch_xml_files(folder,els):
                 xmlFile.close()
                 dom_xml = xml.dom.minidom.parseString(xmlString)
                 title = get_title(dom_xml).lower()
-                print subfolder
-                print dom_xml.getElementsByTagName("prism:doi")[0].firstChild.data
+                #print subfolder
+                #print dom_xml.getElementsByTagName("prism:doi")[0].firstChild.data
                 #ignore index pages
                 if not title.startswith("cumulative author index") and \
                 not title in NOT_ARTICLE_TITLES:                   
