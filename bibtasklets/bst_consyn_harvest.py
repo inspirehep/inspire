@@ -70,7 +70,7 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
         write_message("URL could not be opened: %s" % (CONSYNATOMURL,))
         task_update_status("CERROR")
         return
-        
+
     dom = xml.dom.minidom.parseString(xmlString)
     entries = dom.getElementsByTagName("entry")
     downloaded_files = []
@@ -92,14 +92,14 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
             write_message("Not downloading %s, already found %s\n" %
             (fileUrl, outFilename))
         else:
-            write_message("Downloading %s to %s\n" % (fileUrl, outFilename))
-            download_url(fileUrl, "zip", outFilename, 5, 60.0)
             try:
-                webFile = urllib.urlopen(fileUrl)
-                size = webFile.headers.get("content-length")
-            except Exception:
-                size = "N/A"
-            webFile.close()
+                write_message("Downloading %s to %s\n" % (fileUrl, outFilename))
+                download_url(fileUrl, "zip", outFilename, 5, 60.0)
+            except InvenioFileDownloadError, e:
+                write_message("URL could not be opened: %s" % (fileUrl,))
+                task_update_status("CERROR")
+                return           
+            size = os.path.getsize(outFilename)
             run_sql("INSERT INTO CONSYNHARVEST"
                 "(filename,date,size)"
                 "VALUES (%s,%s,%s)",
@@ -111,11 +111,15 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
                 write_message("Error BadZipfile %s",(outFilename,))
                 task_update_status("CERROR")
                 os.remove(outFilename)
-                return
+                run_sql("DELETE FROM CONSYNHARVEST"
+                        "WHERE filename =%s",
+                        (outFilename,))
+                
     task_sleep_now_if_required(can_stop_too=True)
     consyn_files = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
     consyn_files = consyn_files.lstrip()
     els = ElsevierPackage(path = "whatever",CONSYN=True)
+    task_update_progress("Converting files 3/3...")
     fetch_xml_files(consyn_files,els)
     task_sleep_now_if_required(can_stop_too=False)
     create_collection()    
@@ -144,7 +148,9 @@ def extractAll(zipName):
 
 
 def fetch_xml_files(folder,els):
-    task_update_progress("Converting files 3/3...")
+    """Recursively gets the downloaded xml files 
+    converts them to marc xml format and stores them
+    in the "marc_files" folder."""
     if os.path.exists(folder):
         for subfolder in os.listdir(folder):
             subfolder = os.path.join(folder, subfolder).lstrip()
@@ -163,7 +169,8 @@ def fetch_xml_files(folder,els):
                     marc_fld = marc_fld.lstrip()
                     if not os.path.exists(marc_fld):
                         os.mkdir(os.path.join(marc_fld))                    
-                    #errata
+                    #Errata must be linked to the referencing paper
+                    #so we store them in separate folder
                     if title.startswith("errat"):
                         errata_folder = os.path.join(marc_fld, "errata")
                         errata_folder = errata_folder.lstrip()
@@ -211,6 +218,8 @@ def fetch_xml_files(folder,els):
 
 
 def create_collection():
+    """Create a single xml file "collection.xml" 
+    that contains all the records."""
     folder = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files").lstrip()
     collection = open(os.path.join(CFG_CONSYN_OUT_DIRECTORY,"collection.xml").lstrip(), 'w')
     collection.write("<collection>\n")
@@ -219,6 +228,8 @@ def create_collection():
     collection.close()
 
 def parse_files(folder,collection):
+    """Reads all the xml files contained in a folders
+    and appends them in the file "collection"."""
     if os.path.exists(folder):
         for subfolder in os.listdir(folder):
             subfolder = os.path.join(folder, subfolder).lstrip()
