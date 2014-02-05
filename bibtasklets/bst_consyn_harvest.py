@@ -51,6 +51,14 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
 
     @param CONSYNATOMURL: The URL of the atom feed to download.
     """
+    if not os.path.exists(CFG_CONSYN_OUT_DIRECTORY):
+        folders = CFG_CONSYN_OUT_DIRECTORY.split("/")
+        folder = "/"
+        for i in range(1,len(folders)):
+            folder = os.path.join(folder,folders[i]).strip()
+            if not os.path.exists(folder):
+                os.mkdir(folder)
+            
     try:
         run_sql("SELECT filename FROM CONSYNHARVEST")
     except:
@@ -168,7 +176,7 @@ def fetch_xml_files(folder,els):
                     marc_fld = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files")
                     marc_fld = marc_fld.lstrip()
                     if not os.path.exists(marc_fld):
-                        os.mkdir(os.path.join(marc_fld))                    
+                        os.mkdir(marc_fld)                    
                     #Errata must be linked to the referencing paper
                     #so we store them in separate folder
                     if title.startswith("errat"):
