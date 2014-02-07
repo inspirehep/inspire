@@ -467,7 +467,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'GROUP')
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE')
                                                               or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE')
-                                                              or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'FOR THE')
                                                               )
                                                               or contains(./arXiv:forenames, 'Collaboration:')
                                                               or contains(./arXiv:forenames, 'Consortium:')]"/>
@@ -489,7 +488,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
               <xsl:call-template name="collaboration">
                 <xsl:with-param name="node" select="."/>
               </xsl:call-template>
-              <collaboration></collaboration>
             </xsl:for-each>
                 </xsl:if>
 
