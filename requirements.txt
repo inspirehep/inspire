@@ -1,3 +1,5 @@
 python-twitter
 msgpack-python
 unidecode
+git+git://github.com/inspirehep/harvesting-kit.git#master
+BeautifulSoup

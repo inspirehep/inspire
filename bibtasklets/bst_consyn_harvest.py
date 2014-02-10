@@ -18,11 +18,13 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
 import sys
-import urllib
 import xml.dom.minidom
-import os.path
+import os
 import sys
+import traceback
+
 from zipfile import ZipFile, BadZipfile
 from invenio.dbquery import run_sql
 from invenio.filedownloadutils import download_url, InvenioFileDownloadError
@@ -32,12 +34,12 @@ from invenio.config import CFG_TMPSHAREDDIR
 from invenio.bibtask import task_update_status, \
     write_message, \
     task_update_progress, \
-    task_sleep_now_if_required, \
-    task_set_task_param
+    task_sleep_now_if_required
 try:
     from invenio.config import CFG_CONSYN_OUT_DIRECTORY
 except ImportError:
     CFG_CONSYN_OUT_DIRECTORY = os.path.join(CFG_TMPSHAREDDIR, "consynharvest")
+
 
 NOT_ARTICLE_TITLES = ["editorial board", "author index", "subject index",
 "announcement from the publisher", "index"
@@ -54,8 +56,8 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
     if not os.path.exists(CFG_CONSYN_OUT_DIRECTORY):
         folders = CFG_CONSYN_OUT_DIRECTORY.split("/")
         folder = "/"
-        for i in range(1,len(folders)):
-            folder = os.path.join(folder,folders[i]).strip()
+        for i in range(1, len(folders)):
+            folder = os.path.join(folder, folders[i]).strip()
             if not os.path.exists(folder):
                 os.mkdir(folder)
             
@@ -63,19 +65,21 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
         run_sql("SELECT filename FROM CONSYNHARVEST")
     except:
         run_sql("CREATE TABLE CONSYNHARVEST ("
-            "filename VARCHAR(100) NOT NULL PRIMARY KEY,"
-            "date VARCHAR(50),"
-            "size VARCHAR(30) );")
+                "filename VARCHAR(100) NOT NULL PRIMARY KEY,"
+                "date VARCHAR(50),"
+                "size VARCHAR(30) );")
     # Get list of entries from XML document
     xmlString = ""
     try:
         task_update_progress("Downloading and extracting files 1/2...")
         result_file = download_url(url=CONSYNATOMURL,
-                               retry_count=5,
-                               timeout=60.0)
-        xmlString = open(result_file,'r').read()
-    except InvenioFileDownloadError, e:
+                                   retry_count=5,
+                                   timeout=60.0)
+        xmlString = open(result_file, 'r').read()
+    except InvenioFileDownloadError, err:
         write_message("URL could not be opened: %s" % (CONSYNATOMURL,))
+        write_message(str(err))
+        write_message(traceback.format_exc()[:-1])
         task_update_status("CERROR")
         return
 
@@ -98,20 +102,22 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
         #file has already been fetched
         if outFilename in downloaded_files:
             write_message("Not downloading %s, already found %s\n" %
-            (fileUrl, outFilename))
+                          (fileUrl, outFilename))
         else:
             try:
                 write_message("Downloading %s to %s\n" % (fileUrl, outFilename))
                 download_url(fileUrl, "zip", outFilename, 5, 60.0)
-            except InvenioFileDownloadError, e:
+            except InvenioFileDownloadError, err:
                 write_message("URL could not be opened: %s" % (fileUrl,))
+                write_message(str(err))
+                write_message(traceback.format_exc()[:-1])
                 task_update_status("CERROR")
-                return           
+                return
             size = os.path.getsize(outFilename)
             run_sql("INSERT INTO CONSYNHARVEST"
-                "(filename,date,size)"
-                "VALUES (%s,%s,%s)",
-                 (outFilename, updated, size))
+                    "(filename,date,size)"
+                    "VALUES (%s,%s,%s)",
+                    (outFilename, updated, size))
             downloaded_files.append(outFilename)
             try:
                 extractAll(outFilename)
@@ -126,11 +132,11 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
     task_sleep_now_if_required(can_stop_too=True)
     consyn_files = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
     consyn_files = consyn_files.lstrip()
-    els = ElsevierPackage(path = "whatever",CONSYN=True)
+    els = ElsevierPackage(path="whatever", CONSYN=True)
     task_update_progress("Converting files 2/2...")
-    fetch_xml_files(consyn_files,els)
+    fetch_xml_files(consyn_files, els)
     task_sleep_now_if_required(can_stop_too=False)
-    create_collection()    
+    create_collection()
 
 
 def get_title(xmlFile):
@@ -142,7 +148,7 @@ def get_title(xmlFile):
 
 def extractAll(zipName):
     """Unzip a zip file"""
-    write_message("Unziping: " + zipName +"\n")
+    write_message("Unziping: " + zipName + "\n")
     z = ZipFile(zipName)
     for f in z.namelist():
         extract_fld = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
@@ -150,12 +156,12 @@ def extractAll(zipName):
         if not os.path.exists(os.path.join(extract_fld, f)):
             z.extract(f, extract_fld)
     #delete the zip file after the extraction
-    write_message("Deleting zip file: " + zipName +"\n")
+    write_message("Deleting zip file: " + zipName + "\n")
     os.remove(zipName)
 
 
-def fetch_xml_files(folder,els):
-    """Recursively gets the downloaded xml files 
+def fetch_xml_files(folder, els):
+    """Recursively gets the downloaded xml files
     converts them to marc xml format and stores them
     in the "marc_files" folder."""
     if os.path.exists(folder):
@@ -171,11 +177,11 @@ def fetch_xml_files(folder,els):
                 #print dom_xml.getElementsByTagName("prism:doi")[0].firstChild.data
                 #ignore index pages
                 if not title.startswith("cumulative author index") and \
-                not title in NOT_ARTICLE_TITLES:                   
+                not title in NOT_ARTICLE_TITLES:
                     marc_fld = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files")
                     marc_fld = marc_fld.lstrip()
                     if not os.path.exists(marc_fld):
-                        os.mkdir(marc_fld)                    
+                        os.mkdir(marc_fld)
                     #Errata must be linked to the referencing paper
                     #so we store them in separate folder
                     if title.startswith("errat"):
@@ -191,7 +197,7 @@ def fetch_xml_files(folder,els):
                         for i in range(len(folders)):
                             folder = errata_folder
                             for f in range(i):
-                                folder = os.path.join(folder,folders[f])
+                                folder = os.path.join(folder, folders[f])
                                 if not os.path.exists(folder):
                                     os.mkdir(folder)
                         file_loc = os.path.join(errata_folder, outfolder)
@@ -204,37 +210,38 @@ def fetch_xml_files(folder,els):
                     else:
                         extract_fld = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
                         extract_fld = extract_fld.lstrip()
-                        outfolder = subfolder[len(extract_fld)+1:]                        
+                        outfolder = subfolder[len(extract_fld) + 1:]
                         #create folders
                         folders = outfolder.split('/')
                         for i in range(len(folders)):
                             folder = marc_fld
                             for f in range(i):
-                                folder = os.path.join(folder,folders[f])
+                                folder = os.path.join(folder, folders[f])
                                 if not os.path.exists(folder):
-                                    os.mkdir(folder) 
+                                    os.mkdir(folder)
                         file_loc = os.path.join(marc_fld, outfolder)
                         file_loc = file_loc.lstrip()
-                        if not os.path.exists(file_loc):                            
+                        if not os.path.exists(file_loc):
                             marcfile = open(file_loc, 'w')
                             marcfile.write(els.get_record(subfolder, True))
                             marcfile.close()
                             task_sleep_now_if_required(can_stop_too=False)
             else:
-                fetch_xml_files(subfolder,els)
+                fetch_xml_files(subfolder, els)
 
 
 def create_collection():
     """Create a single xml file "collection.xml" 
     that contains all the records."""
     folder = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files").lstrip()
-    collection = open(os.path.join(CFG_CONSYN_OUT_DIRECTORY,"collection.xml").lstrip(), 'w')
+    collection = open(os.path.join(CFG_CONSYN_OUT_DIRECTORY, "collection.xml"). lstrip(), 'w')
     collection.write("<collection>\n")
-    parse_files(folder,collection)
+    parse_files(folder, collection)
     collection.write("\n</collection>")
     collection.close()
 
-def parse_files(folder,collection):
+
+def parse_files(folder, collection):
     """Reads all the xml files contained in a folders
     and appends them in the file "collection"."""
     if os.path.exists(folder):
@@ -246,8 +253,8 @@ def parse_files(folder,collection):
                 xmlFile.close()
                 collection.write(xmlString+'\n')
             else:
-                parse_files(subfolder,collection)
+                parse_files(subfolder, collection)
 
 
 if __name__ == "__main__":
-    bst_consyn_harvest()    
+    bst_consyn_harvest()
