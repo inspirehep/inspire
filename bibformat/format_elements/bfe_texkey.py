@@ -37,20 +37,14 @@ def get_spires_texkey(bfo):
     """Return spires/inspire texkey, if one is set, or else empty string."""
     # checks for SPIRES or INSPIRE texkey in field $a first and in field $z
     # if it was not found
+    texkey = ''
     for keys in bfo.fields("035__"):
-        try:
-            if keys['9'] == "SPIRESTeX" or "INSPIRETeX" and keys['a']:
-                return keys['a']
-        except KeyError:
-            return ''
-    for keys in bfo.fields("035__"):
-        try:
-            if keys['9'] == "SPIRESTeX" or "INSPIRETeX" and keys['z']:
-                return keys['z']
-        except KeyError:
-            return ''
-    return ''
-
+        source = keys.get('9')
+        if source and source in ('SPIRESTeX', 'INSPIRETeX'):
+            texkey = keys.get('a')
+            if not texkey:
+                texkey = keys.get('z','')
+    return texkey
 
 def get_generated_texkey(bfo):
     """Return a spires-like texkey generated on the fly from the record.
