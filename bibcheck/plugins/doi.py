@@ -70,8 +70,8 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
                         doi,
                         record_id,
                         dup_doi_recid,
-                        "%s/record/%s/edit" % (CFG_SITE_URL, record_id),
-                        "%s/record/%s/edit" % (CFG_SITE_URL, dup_doi_recid),
+                        "%s/record/%s" % (CFG_SITE_URL, record_id),
+                        "%s/record/%s" % (CFG_SITE_URL, dup_doi_recid),
                         "%s/record/merge/?#recid1=%s&recid2=%s" % (CFG_SITE_URL, dup_doi_recid, record_id)
                     )
                     if isinstance(msg, unicode):
