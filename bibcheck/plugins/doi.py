@@ -50,7 +50,7 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
         if dup_doi_recid:
             record.warn("DOI %s to be added to record %s already exists in record/s %s" % (doi, record_id, dup_doi_recid))
             if create_ticket:
-                subject = "DOI conflict record #%s" % record_id
+                subject = "DOI conflict record #%s" % str(record_id)
                 res = BIBCATALOG_SYSTEM.ticket_submit(
                     subject=subject,
                     recordid=record_id,
@@ -74,6 +74,8 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
                         "%s/record/%s/edit" % (CFG_SITE_URL, dup_doi_recid),
                         "%s/record/merge/?#recid1=%s&recid2=%s" % (CFG_SITE_URL, dup_doi_recid, record_id)
                     )
+                    if isinstance(msg, unicode):
+                        msg = msg.encode("utf-8")
                     BIBCATALOG_SYSTEM.ticket_comment(None, res, msg)
             continue
         subfields = [(doi_field[5], doi.encode("utf-8"))] + map(tuple, extra_subfields)
