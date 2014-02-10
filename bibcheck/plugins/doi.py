@@ -59,7 +59,7 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
                 )
                 if res > 0:
                     msg = """
-                        "DOI %s to be added to record %s already exists in record/s %s" % (doi, record_id, dup_doi_recid)
+                        DOI %s to be added to record %s already exists in record/s %s
 
                         Record with conflict: %s
                         Record with original DOI: %s
