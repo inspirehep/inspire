@@ -42,7 +42,9 @@ def get_spires_texkey(bfo):
         source = keys.get('9')
         if source and source in ('SPIRESTeX', 'INSPIRETeX'):
             texkey = keys.get('a')
-            if not texkey:
+            if texkey:
+                return texkey
+            else:
                 texkey = keys.get('z','')
     return texkey
 
