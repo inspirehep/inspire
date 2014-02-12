@@ -42,8 +42,8 @@ function toggle_abstract(event, element) {
 """
 
     def create_abstract_element(field, hide=False):
+        element = ""
         if field.get('a'):
-            element = ""
             source = field.get('9')
             if hide:
                 element += '<a href="#" onclick="toggle_abstract(event, this)">' + prefix_en
@@ -62,7 +62,7 @@ function toggle_abstract(event, element) {
                 element += "<span>" + field.get('a')
                 element += separator_en + '</span>'
 
-            return element
+        return element
 
     try:
         escape_mode_int = int(escape)
