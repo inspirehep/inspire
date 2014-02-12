@@ -42,8 +42,8 @@ except ImportError:
 
 
 NOT_ARTICLE_TITLES = ["editorial board", "author index", "subject index",
-"announcement from the publisher", "index"
-"papers to appear in forthcoming issues of nuclear physics b[fs]"]
+                      "announcement from the publisher", "index"
+                      "papers to appear in forthcoming issues of nuclear physics b[fs]"]
 
 
 def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key=QUhvbHRrYW1wOzM0Mjc%253d"):
@@ -60,7 +60,6 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
             folder = os.path.join(folder, folders[i]).strip()
             if not os.path.exists(folder):
                 os.mkdir(folder)
-            
     try:
         run_sql("SELECT filename FROM CONSYNHARVEST")
     except:
@@ -122,13 +121,12 @@ def bst_consyn_harvest(CONSYNATOMURL="https://consyn.elsevier.com/batch/atom?key
             try:
                 extractAll(outFilename)
             except BadZipfile:
-                write_message("Error BadZipfile %s",(outFilename,))
+                write_message("Error BadZipfile %s", (outFilename,))
                 task_update_status("CERROR")
                 os.remove(outFilename)
                 run_sql("DELETE FROM CONSYNHARVEST"
                         "WHERE filename =%s",
                         (outFilename,))
-                
     task_sleep_now_if_required(can_stop_too=True)
     consyn_files = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
     consyn_files = consyn_files.lstrip()
@@ -177,7 +175,7 @@ def fetch_xml_files(folder, els):
                 #print dom_xml.getElementsByTagName("prism:doi")[0].firstChild.data
                 #ignore index pages
                 if not title.startswith("cumulative author index") and \
-                not title in NOT_ARTICLE_TITLES:
+                        not title in NOT_ARTICLE_TITLES:
                     marc_fld = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files")
                     marc_fld = marc_fld.lstrip()
                     if not os.path.exists(marc_fld):
@@ -231,7 +229,7 @@ def fetch_xml_files(folder, els):
 
 
 def create_collection():
-    """Create a single xml file "collection.xml" 
+    """Create a single xml file "collection.xml"
     that contains all the records."""
     folder = os.path.join(CFG_CONSYN_OUT_DIRECTORY, "marc_files").lstrip()
     collection = open(os.path.join(CFG_CONSYN_OUT_DIRECTORY, "collection.xml"). lstrip(), 'w')
