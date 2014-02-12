@@ -21,15 +21,17 @@
 """BibFormat element - Prints address for Institution.
 """
 
+
 def format_element(bfo, separator=""):
     """Print Address marc fields for an Inst record"""
     out = []
     fulladdress = bfo.fields("730__", repeatable_subfields_p=True)
 
     for printaddress in fulladdress:
-        if printaddress.has_key('a'):
+        if 'a' in printaddress:
             out.append(separator.join(printaddress['a']) + "<br />")
 
+    name_variants = ""
     if len(out) >= 1:
         name_variants = """
 <a href="#" id="more_names_%(recid)s" style="color:green;background:white;">Show name variants</a>
@@ -47,8 +49,9 @@ event.preventDefault();
 })
 </script>
         """ % {'content': "".join(out),
-                'recid': bfo.recID}
+               'recid': bfo.recID}
     return name_variants
+
 
 def escape_values(bfo):
     return 0
