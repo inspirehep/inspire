@@ -30,11 +30,11 @@ def format_element(bfo):
     out = ""
 
     for item in conferences:
-        if item.has_key('a'):
+        if 'a' in item:
             link = '<a href ="/search?ln=en&amp;cc=Conferences&amp;p=411__a%3A%22' + item['a'] + '%22">' + item['a'] + '</a>'
-            if item.has_key('n'):
+            if 'n' in item:
                 ##anything *11
-                if item['n'][-1] == '1':
+                if item['n'][-1:] == '1':
                     if len(item['n']) > 1 and item['n'][-2] == '1':
                         out += item['n'] + "th conference in the " + \
                         link + " series"
@@ -42,7 +42,7 @@ def format_element(bfo):
                         out += item['n'] + "st conference in the " + \
                         link + " series"
                 ##anything *12
-                elif item['n'][-1] == '2':
+                elif item['n'][-1:] == '2':
                     if len(item['n']) > 1 and item['n'][-2] == '1':
                         out += item['n'] + "th conference in the " + \
                         link + " series"
@@ -50,7 +50,7 @@ def format_element(bfo):
                         out += item['n'] + "nd conference in the " + \
                         link + " series"
                 ##anything *13
-                elif item['n'][-1] == '3':
+                elif item['n'][-1:] == '3':
                     if len(item['n']) > 1 and item['n'][-2] == '1':
                         out += item['n'] + "th conference in the " + \
                         link + " series"
@@ -69,7 +69,7 @@ def format_element(bfo):
 
     return out
 
-def escape_values(bfo):
+def escape_values(bfo):  # pylint: disable=W0613
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
