@@ -97,7 +97,8 @@ def format_element(bfo, default='', separator='; ', style='', \
                         'href="' + url.get("u", '') + '">' + \
                               _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
                     elif url.get("u", '').startswith(CFG_SITE_URL) and \
-                    url.get("u", '')[-3:].lower() == "pdf" and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
+                    (url.get("u", '').lower().endswith(".pdf") or
+                     url.get("u", '').lower().endswith('.pdf?subformat=pdfa')) and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
                         links.append('<a ' + style + 'href="' + url.get("u", '') + '">' + \
                         _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
