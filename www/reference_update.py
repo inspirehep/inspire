@@ -195,7 +195,7 @@ def reference_correction(req, record_id, email, comments, problem):
     email = wash_url_argument(email, "str")
     problem = wash_url_argument(problem, "str")
     comments = wash_url_argument(comments, "str")
-    record_id = wash_url_argument(record_id, "str")
+    record_id = wash_url_argument(record_id, "int")
 
     if problem == "wrong":
         # Send users to the old reference update form
