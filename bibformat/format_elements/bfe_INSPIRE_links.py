@@ -70,7 +70,6 @@ def format_element(bfo, default='', separator='; ', style='', \
 
     #links moved to new field 035
     urls = bfo.fields('035__')
-    allowed_doctypes = ["INSPIRE-PUBLIC"]
     for url in urls:
         if "9" in url and "a" in url:
             if url["9"].lower() == "msnet":
@@ -84,23 +83,23 @@ def format_element(bfo, default='', separator='; ', style='', \
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
     urls = bfo.fields('8564_')
-    allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3"]
+    allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS"]
     for url in urls:
         if url.get("y", "").lower() not in ("msnet", "zblatt", "euclid"):
             if '.png' not in url.get('u', '') and not \
-            (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
+               (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
                 if url.get('y', '').upper() != "DURHAM":
                     if url.get("u", '') and \
-                    url.get('y', 'Fulltext').upper() != "DOI" and not \
-                    url.get('u', '').startswith(CFG_SITE_URL):
-                        links.append('<a ' + style + \
-                        'href="' + url.get("u", '') + '">' + \
-                              _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+                       url.get('y', 'Fulltext').upper() != "DOI" and not \
+                       url.get('u', '').startswith(CFG_SITE_URL):
+                        links.append('<a ' + style
+                                     + 'href="' + url.get("u", '') + '">'
+                                     + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
                     elif url.get("u", '').startswith(CFG_SITE_URL) and \
-                    (url.get("u", '').lower().endswith(".pdf") or
-                     url.get("u", '').lower().endswith('.pdf?subformat=pdfa')) and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
-                        links.append('<a ' + style + 'href="' + url.get("u", '') + '">' + \
-                        _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+                         (url.get("u", '').lower().endswith(".pdf") or
+                          url.get("u", '').lower().endswith('.pdf?subformat=pdfa')) and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
+                        links.append('<a ' + style + 'href="' + url.get("u", '') + '">'
+                                     + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
     #put it all together
     if links:
