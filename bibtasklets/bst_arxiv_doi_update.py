@@ -38,9 +38,12 @@ from invenio.mailutils import send_email
 # Python 2.4, Inspire instances on higher Python versions should use xml.etree
 # instead. The root.getiterator() function should also be updated.
 try:
-    import elementtree.ElementTree as ET
-except ImportError:
     from xml.etree import ElementTree as ET
+    from xml.parsers.expat import ExpatError
+except ImportError:
+    import elementtree.ElementTree as ET
+    class ExpatError(Exception):
+        pass
 
 try:
     from invenio.config import CFG_ASANA_API_KEY
@@ -52,6 +55,19 @@ ERRORS = []
 SCRIPT_NAME = "bst_arxiv_doi_update"
 URI_DEFAULT = "https://vendor.ridge.aps.org/arXiv/latest_pub.xml"
 ASANA_PARENT_TASK_ID = 8115229241606
+OUTPUT_RESULT_TYPES = ['missing', 'ambigous', 'incorrect']
+
+CATEGORIES = [
+    ('missing', 'Missing Records',
+     "No records could be found to match the following arXiv tags.",
+     "DOI, ArXiv PrePrint ID, Date of Publishing"),
+    ('ambiguous', 'Ambigous Records (duplicates)',
+     "Multiple records were found for the following arXiv tags.",
+     "DOI, ArXiv PrePrint ID, Inspire Record IDs"),
+    ('incorrect', 'Incorrect DOIs',
+     "Records found by arXiv tags, but had a different DOI.",
+     "Record ID, DOI from Inspire, DOI from APS")
+]
 
 
 class DOIError(Exception):
@@ -63,27 +79,33 @@ class DOIError(Exception):
 
 def bst_arxiv_doi_update(input_uri=None, log_dir=CFG_TMPSHAREDDIR, logging=True,
                          asana_key=CFG_ASANA_API_KEY,
-                         asana_parent_id=ASANA_PARENT_TASK_ID):
+                         asana_parent_id=ASANA_PARENT_TASK_ID,
+                         skip_result_types=''):
     """
     bst_arxiv_doi_update
     Updates DOIs on documents harvested from ArXiv.
 
     Parameters:
-        * input_uri - Link to new URI data
-            DEFAULT: https://vendor.ridge.aps.org/arXiv/latest_pub.xml
-            NOTE: Test data can be taken from http://arxiv.org/schemas/doi_feed_test.xml
-        * log_dir - Directory to store log files in
-        * logging - True or False, default True
-        * asana_key - The Asana API, by default uses the value of CFG_ASANA_API_KEY
-            NOTE: Passing the value of None for this parameter will skip writing
-            to Asana and instead email the instance admin
-        * asana_parent_id - The task in Asana to log subtasks to
+    :param input_uri: Link to new URI data
+        DEFAULT: https://vendor.ridge.aps.org/arXiv/latest_pub.xml
+        NOTE: Test data can be taken from http://arxiv.org/schemas/doi_feed_test.xml
+    :param log_dir: Directory to store log files in
+    :param logging: True or False, default True
+    :param asana_key: The Asana API, by default uses the value of CFG_ASANA_API_KEY
+        NOTE: Passing the value of None for this parameter will skip writing
+        to Asana and instead email the instance admin
+    :param asana_parent_id: The taskID of the task in Asana to log subtasks to
+    :param skip_result_types: Error messages to not bother with during
+        reporting, input as Comma Seperated Values CSVs
+        Possible values: missing, ambigous, incorrect
     """
+    skip_results = verify_skip_results(skip_result_types)
+
     if input_uri is None:
         _print("Notice: No URI specified, defaulting to " + URI_DEFAULT)
         input_uri = URI_DEFAULT
 
-    task_update_progress("Resolving URI...")
+    task_update_progress("Resolving URI: %s" % (input_uri,))
 
     # Testing builds characters
     bibupload = ChunkedBibUpload(mode='a', user=SCRIPT_NAME, notimechange=True)
@@ -98,6 +120,12 @@ def bst_arxiv_doi_update(input_uri=None, log_dir=CFG_TMPSHAREDDIR, logging=True,
         task_update_progress("Failed retreiving DOI data")
         task_update_status("FAILED")
         return False
+    except ExpatError:
+        _print("FATAL ERROR: Could not parse XML from: " + input_uri, 1)
+        task_update_progress("Failed parsing DOI data")
+        task_update_status("FAILED")
+        return False
+
     root = tree.getroot()
 
     try:
@@ -150,7 +178,7 @@ def bst_arxiv_doi_update(input_uri=None, log_dir=CFG_TMPSHAREDDIR, logging=True,
             _print('No record found matching arxiv ID: %s' % arxiv, 9)
             problem_dois['missing'].append((doi, arxiv, published_date))
 
-    _print("========================| FINAL SCORE |========================", 1)
+    _print("========================| FINAL SCORE |=======================", 1)
     _print("DOIs found and processed: %d" % doi_count, 1)
     _print("Arxiv IDs without corresponding records: %d"
            % len(problem_dois['missing']), 1)
@@ -159,6 +187,7 @@ def bst_arxiv_doi_update(input_uri=None, log_dir=CFG_TMPSHAREDDIR, logging=True,
     _print("Inspire records with an incorrect DOI: %d"
            % len(problem_dois['incorrect']), 1)
     _print("Records without DOIs requiring appends: %d" % new_count, 1)
+    _print("==============================================================", 1)
 
     if logging:
         task_update_progress("Logging...")
@@ -166,10 +195,10 @@ def bst_arxiv_doi_update(input_uri=None, log_dir=CFG_TMPSHAREDDIR, logging=True,
         write_list_to_file(log_dir, 'messages', MESSAGES)
 
     notify_on_errors(problem_dois, log_dir, doi_count, new_count,
-                     asana_key, asana_parent_id)
+                     asana_key, asana_parent_id, skip_results)
 
-    task_update_progress(SCRIPT_NAME + " finished. %s DOIs processed, %s to add"
-                         % (str(doi_count), str(new_count)))
+    task_update_progress("%s finished. %s DOIs processed, %s to add"
+                         % (SCRIPT_NAME, str(doi_count), str(new_count)))
     task_update_status("DONE")
 
     bibupload.__del__()
@@ -206,6 +235,19 @@ def write_list_to_file(output_dir, name, list_to_write):
         _print("-> " + str(len(list_to_write))+" lines written to " + path)
     else:
         _print("Nothing to write to file " + name)
+
+
+def verify_skip_results(types_csv):
+    """ Verifies that the result types to skip are valid
+    selections, returns a list of those types """
+    result = []
+    for skip_type in types_csv.split(','):
+        typ = skip_type.strip().lower()
+        if typ in OUTPUT_RESULT_TYPES:
+            result.append(typ)
+        else:
+            _print("Warning: %s is not a valid result type" % (typ))
+    return result
 
 
 def is_marked_published(record):
@@ -383,7 +425,7 @@ def add_dots(string):
 
 
 def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
-                     asana_parent_task_id):
+                     asana_parent_task_id, skip_results):
     """ If the dictionary dois is empty, this function does nothing.
     Else it will attempt to write information about DOI errors to either
     Asana or, failing that, emailing the admin.
@@ -395,8 +437,16 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
      * asana_key - string: The API Key of the user account being used.
      * asana_parent_task_id -  int: ID of the parent task in Asana for this
                                     information to be appended to. """
-    if (len(dois['missing']) == 0 and len(dois['ambiguous']) == 0 and
-            len(dois['incorrect']) == 0):
+
+    for cid in skip_results:
+        if len(dois[cid]) > 0:
+            _print("Ignore: %d issues of type '%s' being ignored."
+                   % (len(dois[cid]), cid))
+
+    # Return immediately if there's no (interesting) results to output
+    if ((len(dois['missing']) == 0 or 'missing' in skip_results) and
+        (len(dois['ambiguous']) == 0 or 'ambiguous' in skip_results) and
+        (len(dois['incorrect']) == 0 or 'incorrect' in skip_results)):
         return
 
     mail = False
@@ -426,7 +476,8 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
             try:
                 asana_instance = AsanaAPIMod(asana_key)
                 send_asana_tasks(dois, log_dir, count_total, count_new,
-                                 asana_instance, asana_parent_task_id)
+                                 asana_instance, asana_parent_task_id,
+                                 skip_results)
             except AsanaException as ex:
                 _print("Error occured during Asana update, sending email " +
                        "instead.")
@@ -440,10 +491,12 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
         mail = True
 
     if mail:
-        send_notification_email(dois, log_dir, count_total, count_new)
+        send_notification_email(dois, log_dir, count_total, count_new,
+                                skip_results)
 
 
-def send_notification_email(dois, log_dir, count_total, count_new):
+def send_notification_email(dois, log_dir, count_total, count_new,
+                            skip_results):
     """ If any issues occured during the DOI update, this function
     notifies the appropriate authorities with details of the error
     Parameters:
@@ -455,69 +508,38 @@ def send_notification_email(dois, log_dir, count_total, count_new):
 processed, of which %d were processed succesfully.</p>
 
 <p>Further details on these errors can be found in the log files, they should be
-available here: '%s'</p>
+available here: '%s/'</p>
 """ % (SCRIPT_NAME, count_total, count_new, log_dir)
 
-    if len(dois['missing']) > 0:
-        msg_html += """
-<h3>No records could be found to match the following arXiv tags:</h3>
+    categories = [cat for cat in CATEGORIES if not cat[0] in skip_results]
+
+    for cid, title, desc, structure in categories:
+        str1, str2, str3 = structure.split(', ')
+        if len(dois[cid]) > 0 and not cid in skip_results:
+            msg_html += """
+<h3>%s</h3>
+<p>%s:</p>
 <table>
     <tr>
-        <td><p><strong>DOI</strong></p></td>
-        <td><p><strong>ArXiv PrePrint ID</strong></p></td>
-        <td><p><strong>Date of Publishing</strong></p></td>
+        <td><p><strong>%s</strong></p></td>
+        <td><p><strong>%s</strong></p></td>
+        <td><p><strong>%s</strong></p></td>
     </tr>
-"""
-        for doi, arxiv, date in dois['missing']:
-            msg_html += """<tr>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                      </tr>""" % (doi, arxiv, date)
-        msg_html += "</table>"
-
-    if len(dois['ambiguous']) > 0:
-        msg_html += """
-<h3>Multiple records were found for the following arXiv tags:</h3>
-<table>
-    <tr>
-        <td><p><strong>DOI</strong></p></td>
-        <td><p><strong>ArXiv PrePrint ID</strong></p></td>
-        <td><p><strong>RecIDs found</strong></p></td>
-    </tr>
-"""
-        for doi, arxiv, rec_ids in dois['ambiguous']:
-            msg_html += """<tr>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                      </tr>""" % (doi, arxiv, rec_ids)
-        msg_html += "</table>"
-
-    if len(dois['incorrect']) > 0:
-        msg_html += """
-<h3>Records found by arXiv tags, but had a different DOI:</h3>
-<table>
-    <tr>
-        <td><p><strong>Record ID</strong></p></td>
-        <td><p><strong>Current DOI</strong></p></td>
-        <td><p><strong>New DOI</strong></p></td>
-    </tr>
-"""
-
-        for r_id, old_doi, new_doi in dois['incorrect']:
-            msg_html += """<tr>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                        <td><p>%s</p></td>
-                      </tr>""" % (r_id, old_doi, new_doi)
-        msg_html += "</table>"
+""" % (title, desc, str1, str2, str3)
+            for doi, arxiv, data in dois[cid]:
+                msg_html += """<tr>
+                            <td><p>%s</p></td>
+                            <td><p>%s</p></td>
+                            <td><p>%s</p></td>
+                          </tr>""" % (doi, arxiv, str(data))
+            msg_html += "</table>"
 
     send_email(CFG_SITE_ADMIN_EMAIL, CFG_SITE_ADMIN_EMAIL,
-               "Errors during ArXiv DOI Update", html_content=msg_html)
+               "Issues during ArXiv DOI Update", html_content=msg_html)
 
 
-def send_asana_tasks(dois, log_dir, count_total, count_new, asana, parent):
+def send_asana_tasks(dois, log_dir, count_total, count_new, asana, parent,
+                     skip_results):
     """ If any issues occured during the DOI update, this function
     logs the faulty DOIs to Asana
     Parameters:
@@ -525,7 +547,7 @@ def send_asana_tasks(dois, log_dir, count_total, count_new, asana, parent):
      * log_dir - the directory where the logs are stored """
 
     date_str = datetime.datetime.now().strftime("%Y-%m-%d at %H:%M")
-    msg = """Message from BibTasklet %s:
+    msg = """ *** AUTOMATED MESSAGE FROM BIBTASKLET %s ***
 
 Problems have occurred while updating the DOIs of records. In total %d DOIs were
 processed, of which %d were processed succesfully.
@@ -540,21 +562,12 @@ available in the following directory: '%s'
                                                   notes=msg)
     par_id = parent_task['id']
 
-    categories = [
-        ('missing', 'Missing Records',
-         "No records could be found to match the following arXiv tags.",
-         "DOI, ArXiv PrePrint ID, Date of Publishing"),
-        ('ambiguous', 'Ambigous Records (duplicates)',
-         "Multiple records were found for the following arXiv tags.",
-         "DOI, ArXiv PrePrint ID, Inspire Record IDs"),
-        ('incorrect', 'Incorrect DOIs',
-         "Records found by arXiv tags, but had a different DOI.",
-         "Record ID, DOI from Inspire, DOI from APS")]
+    categories = [cat for cat in CATEGORIES if not cat[0] in skip_results]
 
-    for dic, title, desc, structure in categories:
-        if len(dois[dic]) > 0:
+    for cid, title, desc, structure in categories:
+        if len(dois[cid]) > 0:
             msg = "%s\n\nLine Structure: %s" % (desc, structure)
             _parent = asana.create_unassigned_subtask(par_id, title, notes=msg)
-            for prt1, prt2, prt3 in dois[dic]:
+            for prt1, prt2, prt3 in dois[cid]:
                 asana.create_unassigned_subtask(_parent['id'],
                                                 "%s | %s | %s" % (prt1, prt2, prt3))
