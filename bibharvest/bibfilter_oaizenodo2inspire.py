@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+##
 ## This file is part of INSPIRE.
 ## Copyright (C) 2014 CERN.
 ##
@@ -16,6 +17,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
 """
     name:           bibfilter_zenodo2inspire
     decription:     Program to filter and analyse MARCXML records

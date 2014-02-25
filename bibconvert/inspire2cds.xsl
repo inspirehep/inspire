@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id$
-This file is part of CDS Invenio.
-Copyright (C) 2002-2010 CERN.
+<!--
+This file is part of INSPIRE.
+Copyright (C) 2013, 2014 CERN.
 
-CDS Invenio is free software; you can redistribute it and/or
+INSPIRE is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
 
-CDS Invenio is distributed in the hope that it will be useful, but
+INSPIRE is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
+along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 -->
 <!-- inspire2cds.xsl converts from Inspire to CDS MarcXML
@@ -98,7 +98,7 @@ Ensure that these files are here or else the conversion will not work!!!
           <xsl:if test="$newvolume != '' and $newvolume != '-'">
               <xsl:text> </xsl:text><xsl:value-of select="$newvolume" />
           </xsl:if>
-      </xsl:variable> 
+      </xsl:variable>
       <xsl:choose>
         <xsl:when test="$title = 'PoS'">
           <xsl:value-of select="$title" />
@@ -270,7 +270,7 @@ Ensure that these files are here or else the conversion will not work!!!
       </xsl:choose>
     </xsl:if>
   </xsl:template>
- 
+
   <!-- FUNCTION  translate-language will translate subject categories from Inspire -->
   <xsl:template name="translate-language">
     <xsl:param name="text"/>
@@ -345,7 +345,7 @@ Ensure that these files are here or else the conversion will not work!!!
             <xsl:when test="@code='c'">
               <xsl:variable name="datebase">
                 <xsl:value-of select="." />
-                <!-- Find the best place to fetch date 
+                <!-- Find the best place to fetch date
                 <xsl:choose>
                   <xsl:when test="string-length($record/marc:datafield[@tag='961']/marc:subfield[@code='x']) &gt; string-length(@code='c')">
                     <xsl:value-of select="$record/marc:datafield[@tag='961']/marc:subfield[@code='x']" />
@@ -718,7 +718,7 @@ Ensure that these files are here or else the conversion will not work!!!
     </xsl:choose>
 </xsl:template>
 
-    <!-- Directly copy identical tags 
+    <!-- Directly copy identical tags
 <xsl:template match="marc:datafield[@tag='999']">
   <xsl:element name="{local-name(.)}">
     <xsl:copy-of select="@*"/>

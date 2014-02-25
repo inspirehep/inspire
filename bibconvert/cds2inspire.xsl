@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- $Id$
+<!--
 This file is part of INSPIRE.
 Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015 CERN.
 
