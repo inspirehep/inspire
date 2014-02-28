@@ -219,6 +219,14 @@ def create_records_from_file(path_to_file):
     return create_record(xml)
 
 
+def create_records_from_string(xml):
+    """
+    Wrapping function using docextract_record.create_record function to return a
+    list of BibRecord structures.
+    """
+    return create_record(xml)
+
+
 def validate_date(date_given, date_format="%Y-%m-%d"):
     """
     Returns the date given if valid date format. If not,

@@ -62,6 +62,7 @@ from invenio.apsharvest_utils import (unzip,
                                       convert_xml_using_saxon,
                                       APSHarvesterConversionError,
                                       create_records_from_file,
+                                      create_records_from_string,
                                       validate_date,
                                       get_file_modified_date,
                                       compare_datetime_to_iso8601_date)
@@ -141,6 +142,15 @@ class APSRecord(object):
         """
         if marcxml_file:
             self.record = create_records_from_file(marcxml_file)
+            if self.recid:
+                self.record['001'] = [BibRecordControlField(str(self.recid))]
+
+    def add_metadata_by_string(self, marcxml_text):
+        """
+        Adds metadata from given text.
+        """
+        if marcxml_text:
+            self.record = create_records_from_string(marcxml_text)
             if self.recid:
                 self.record['001'] = [BibRecordControlField(str(self.recid))]
 
@@ -620,7 +630,9 @@ def harvest_aps(from_param, until_param, perpage):
     write_message("Data received from APS: \n%s" % (data,), verbose=5)
     records = []
     for d in data:
-        records.append(APSRecord(None, d["doi"], last_modified=d['last_modified_at']))
+        records.append(APSRecord(None,
+                                 d["doi"],
+                                 last_modified=d['metadata_last_modified_at']))
 
     # Check for more pages
     if last_page > 1:
@@ -629,7 +641,9 @@ def harvest_aps(from_param, until_param, perpage):
             data = json.loads(conn.next())
             write_message("Data received from APS: \n%s" % (data,), verbose=5)
             for d in data:
-                records.append(APSRecord(None, d["doi"], last_modified=d['last_modified_at']))
+                records.append(APSRecord(None,
+                                         d["doi"],
+                                         last_modified=d['metadata_last_modified_at']))
 
     return records
 
@@ -963,49 +977,25 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         write_message("File: %s" % (fulltext_file,), verbose=2)
 
         # Check if published date is after treshold:
-        if threshold_date:
-            write_message("Checking the threshold...", verbose=3)
-            parsed_xml_tree = etree.parse(fulltext_file)
-            # Looking for the published tag
-            try:
-                published_date = parsed_xml_tree.find('meta/history/published').values().pop()
-            except AttributeError:
-                write_message("Warning: Unable to find published tag, continuing...")
-            else:
-                if published_date < threshold_date:
-                    # The published date is beyond the threshold, we continue
-                    msg = "Warning: Article published beyond threshold: %s" % (record.doi,)
-                    write_message(msg)
-                    yield record, msg
-                    continue
-                else:
-                    write_message("OK. Record is below the threshold.", verbose=3)
+        if is_beyond_threshold_date(threshold_date, fulltext_file):
+            # The published date is beyond the threshold, we continue
+            msg = "Warning: Article published beyond threshold: %s" % \
+                  (record.doi,)
+            write_message(msg)
+            yield record, msg
+            continue
+        else:
+            write_message("OK. Record is below the threshold.", verbose=3)
 
         if add_metadata:
-            # Remove any DTD info in the file before converting
-            cleaned_fulltext_file = remove_dtd_information(fulltext_file)
+            from harvestingkit.aps_package import ApsPackage
 
             # Generate Metadata,FFT and yield it
-            try:
-                convert_xml_using_saxon(cleaned_fulltext_file,
-                                        CFG_APSHARVEST_XSLT)
-
-                # Conversion is a success. Let's derive location of converted file
-                source_directory = os.path.dirname(cleaned_fulltext_file)
-                path_to_converted = "%s%s%s.xml" % \
-                                    (source_directory,
-                                     os.sep,
-                                     record.doi.replace('/', '_'))
-                write_message("Converted fulltext for %s" %
-                             (record.recid or "new record"), verbose=2)
-                write_message("File: %s" % (path_to_converted,), verbose=2)
-                record.add_metadata(path_to_converted)
-            except APSHarvesterConversionError, e:
-                msg = "Metadata conversion failed: %s\n%s" % \
-                      (str(e), traceback.format_exc()[:-1])
-                write_message(msg, stream=sys.stderr)
-                record.add_metadata(None)
-                yield record, msg
+            aps = ApsPackage()
+            xml = aps.get_record(fulltext_file)
+            write_message("Converted metadata for %s" %
+                          (record.recid or "new record"), verbose=2)
+            record.add_metadata_by_string(xml)
 
         if attach_fulltext:
             record.add_fft(fulltext_file, hidden_fulltext)
@@ -1014,6 +1004,26 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
             store_last_updated(record.recid, record.date, name="apsharvest")
 
         yield record, ""
+
+
+def is_beyond_threshold_date(threshold_date, fulltext_file):
+    """
+    Checks the given fulltext file to see if the published date is
+    beyond the threshold or not. Returns True if it is beyond and
+    False if not.
+    """
+    write_message("Checking the threshold...", verbose=3)
+    parsed_xml_tree = etree.parse(fulltext_file)
+
+    # Looking for the published tag
+    pub_element = parsed_xml_tree.xpath(
+        "/article/front/article-meta/pub-date[@pub-type='epub']"
+    )
+    if not pub_element:
+        # No published date found, impossible to check
+        return False
+    published_date = pub_element.pop().get('iso-8601-date')
+    return published_date < threshold_date
 
 
 def get_doi_from_record(recid):
