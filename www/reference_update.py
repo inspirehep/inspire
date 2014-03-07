@@ -215,7 +215,7 @@ def reference_new_published(req, record_id, references, url, email, comments):
     Used when there is a new published version
 
     """
-    record_id = wash_url_argument(record_id, "str")
+    record_id = wash_url_argument(record_id, "int")
     references = wash_url_argument(references, "str")
     url = wash_url_argument(url, "str")
     email = wash_url_argument(email, "str")
@@ -233,7 +233,7 @@ def reference_add(req, record_id, references, url, email, comments):
     Used when the record has no references
 
     """
-    record_id = wash_url_argument(record_id, "str")
+    record_id = wash_url_argument(record_id, "int")
     references = wash_url_argument(references, "str")
     url = wash_url_argument(url, "str")
     email = wash_url_argument(email, "str")
