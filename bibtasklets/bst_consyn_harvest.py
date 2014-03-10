@@ -48,8 +48,8 @@ except ImportError:
     CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
 
 NOT_ARTICLE_TITLES = ["editorial board", "author index", "subject index",
-                      "announcement from the publisher", "index"
-                      "papers to appear in forthcoming issues of nuclear physics b[fs]"]
+                      "announcement from the publisher", "index", "preface",
+                      "list of participants"]
 new_files = []
 new_sources = []
 
@@ -158,7 +158,8 @@ def fetch_xml_files(folder, els):
                         title = get_title(dom_xml).lower()
                         #ignore index pages
                         if not title.startswith("cumulative author index") and \
-                                not title in NOT_ARTICLE_TITLES:
+                                not title in NOT_ARTICLE_TITLES and \
+                                not title.startswith("papers"):
                             marcfile = open(file_loc, 'w')
                             marcfile.write(els.get_record(subfolder, True))
                             marcfile.close()
