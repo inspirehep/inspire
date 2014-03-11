@@ -3,8 +3,7 @@
     name:           bibfilter_pos_fulltext_uploader
     decription:     Program to filter and analyse MARCXML records
                     from PoS oaiharvest, download the fulltexs,
-                    extract the references and add this information
-                    to the records harvested.
+                    and create the xml files for bibupload.
 
                     Based on bibfilter_oaicds2inspire
 """
@@ -17,21 +16,18 @@ from os import mkdir
 from os.path import join, exists
 from bs4 import BeautifulSoup
 from xml.dom.minidom import Document
-
+from datetime import datetime
 from invenio.filedownloadutils import download_url, \
     InvenioFileDownloadError
 from invenio.invenio_connector import InvenioConnector
 from invenio.bibtask import write_message
-from invenio.config import CFG_TMPSHAREDDIR
+from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_URL
 try:
-    from invenio.config import CFG_FULLTEXT_DOWNLOAD_DIR,\
-        CFG_OUTPUT_DIRECTORY
+    from invenio.config import CFG_FULLTEXT_DOWNLOAD_DIR
 except ImportError:
     CFG_FULLTEXT_DOWNLOAD_DIR = join(CFG_TMPSHAREDDIR, 'fulltexts')
-    CFG_OUTPUT_DIRECTORY = CFG_TMPSHAREDDIR
 
 base_url = "http://pos.sissa.it/contribution?id="
-inspire_url = 'http://inspirehep.net/'
 
 
 # ==============================| Main |==============================
@@ -43,14 +39,22 @@ def main(args):
 
     #create folders if they dont exist
     create_folders(CFG_FULLTEXT_DOWNLOAD_DIR)
-    create_folders(CFG_OUTPUT_DIRECTORY)
+
+    run = 1
+    date = datetime.now().strftime("%Y.%m.%d")
+    out_folder = join(CFG_FULLTEXT_DOWNLOAD_DIR, date + "-" + str(run))
+    while(exists(out_folder)):
+        run += 1
+        out_folder = join(CFG_FULLTEXT_DOWNLOAD_DIR, date + "-" + str(run))
+
+    mkdir(out_folder)
 
     # Hack to activate UTF-8
     reload(sys)
     sys.setdefaultencoding("utf8")
     assert sys.getdefaultencoding() == "utf8"
 
-    inspire = InvenioConnector(inspire_url)
+    inspire = InvenioConnector(CFG_SITE_URL)
 
     records = ''
     input_file = open(input_filename, 'r')
@@ -61,11 +65,11 @@ def main(args):
         input_file.close()
 
     #allready existing records
-    append = open(join(CFG_OUTPUT_DIRECTORY, 'append.xml'), 'w')
+    append = open(input_filename + '.append.xml', 'w')
     #non existing records
-    insert = open(join(CFG_OUTPUT_DIRECTORY, 'insert.xml'), 'w')
+    insert = open(input_filename + '.insert.xml', 'w')
     #fulltext not found
-    not_found = open(join(CFG_OUTPUT_DIRECTORY, 'not_found.xml'), 'w')
+    not_found = open(input_filename + '.not_found.xml', 'w')
 
     try:
         insert.write('<collection>')
@@ -90,7 +94,7 @@ def main(args):
                 url = urllib.quote(link['href'], safe=":/")
                 if url.endswith('.pdf'):
                     found = True
-                    filename = join(CFG_FULLTEXT_DOWNLOAD_DIR, identifier + ".pdf")
+                    filename = join(out_folder, identifier + ".pdf")
                     datafield = doc.createElement("datafield")
                     datafield.setAttribute("ind1", '')
                     datafield.setAttribute("ind2", '')
@@ -128,7 +132,7 @@ def main(args):
                         try:
                             write_message('downloading ' + url)
                             download_url(url, "pdf", filename, 5, 60.0)
-                        except InvenioFileDownloadError, err:
+                        except InvenioFileDownloadError:
                             write_message("Download of %s failed" % (url,))
 
                         rec.appendChild(datafield)
