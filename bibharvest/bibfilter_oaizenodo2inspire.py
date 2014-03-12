@@ -473,7 +473,7 @@ def attempt_record_match(recid):
     return perform_request_search(
         p="035:Zenodo and 035:%s and 980:DATA" % (recid,),
         of="id",
-        c="DATA"
+        c="Data"
     )
 
 
