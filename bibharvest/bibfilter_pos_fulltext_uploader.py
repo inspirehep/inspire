@@ -19,9 +19,10 @@ from xml.dom.minidom import Document
 from datetime import datetime
 from invenio.filedownloadutils import download_url, \
     InvenioFileDownloadError
-from invenio.invenio_connector import InvenioConnector
 from invenio.bibtask import write_message
-from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_URL
+from invenio.config import CFG_TMPSHAREDDIR
+from invenio.search_engine import perform_request_search
+
 try:
     from invenio.config import CFG_FULLTEXT_DOWNLOAD_DIR
 except ImportError:
@@ -54,8 +55,6 @@ def main(args):
     sys.setdefaultencoding("utf8")
     assert sys.getdefaultencoding() == "utf8"
 
-    inspire = InvenioConnector(CFG_SITE_URL)
-
     records = ''
     input_file = open(input_filename, 'r')
     try:
@@ -81,7 +80,8 @@ def main(args):
             identifier, conference, contribution, date = get_information(record)
             query = "773__p:pos 773__v:%s 773__c:%s" % \
                     (conference.replace(' ', ''), contribution)
-            results = inspire.search(p=query)
+            write_message("Querying with: %s" % (query,))
+            results = perform_request_search(p=query, of="id")
 
             #harvest fulltext
             url = base_url + identifier
