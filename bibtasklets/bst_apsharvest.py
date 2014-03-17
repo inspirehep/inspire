@@ -32,7 +32,7 @@ import re
 import datetime
 import shutil
 
-from lxml import etree
+from bs4 import BeautifulSoup
 
 from invenio.jsonutils import json
 from invenio.shellutils import split_cli_ids_arg, \
@@ -496,7 +496,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                         records_to_insert,
                                         new_mode,
                                         devmode=devmode)
-                if not taskid:
+                if not taskid and not devmode:
                     # Something went wrong
                     err_string = "New records (%s)" \
                                  " were not submitted correctly" % \
@@ -512,7 +512,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                         update_mode,
                                         silent=records and True or False,
                                         devmode=devmode)
-                if not taskid:
+                if not taskid and not devmode:
                     # Something went wrong
                     err_string = "Existing records (%s)" \
                                  " were not submitted correctly" % \
@@ -540,7 +540,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                     new_mode, taskid,
                                     silent=records and True or False,
                                     devmode=devmode)
-            if not taskid:
+            if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
 
@@ -551,7 +551,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                     update_mode, taskid,
                                     silent=records and True or False,
                                     devmode=devmode)
-            if not taskid:
+            if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
 
@@ -794,6 +794,9 @@ def submit_records(records_filename, records_list, mode, taskid=0,
 
     @return: returns the given taskid upon submission, or True/False from email.
     """
+    if devmode:
+        return None
+
     # Check if we should create bibupload or e-mail
     if mode == "email":
         # Lets parse the records and find our IDs.
@@ -821,28 +824,26 @@ def submit_records(records_filename, records_list, mode, taskid=0,
             body = "%s\nRecords harvested (%s total):\n%s\n" % (body,
                                                                 str(len(list_of_dois)),
                                                                 "\n".join(list_of_dois))
-            if not devmode:
-                res = submit_records_via_mail(subject, body)
-                write_message("Sent e-mail to %s with path to %s" %
-                              (CFG_APSHARVEST_EMAIL, records_filename))
-                return res
+            res = submit_records_via_mail(subject, body)
+            write_message("Sent e-mail to %s with path to %s" %
+                          (CFG_APSHARVEST_EMAIL, records_filename))
+            return res
     else:
-        if not devmode:
-            # We submit a BibUpload task and wait for it to finish
-            task_update_progress("Waiting for task to finish")
+        # We submit a BibUpload task and wait for it to finish
+        task_update_progress("Waiting for task to finish")
 
-            if taskid != 0:
-                write_message("Going to wait for %d to finish" % (taskid,))
+        if taskid != 0:
+            write_message("Going to wait for %d to finish" % (taskid,))
 
-            while not can_launch_bibupload(taskid):
-                # Lets wait until the previously launched task exits.
-                task_sleep_now_if_required(can_stop_too=False)
-                time.sleep(5.0)
+        while not can_launch_bibupload(taskid):
+            # Lets wait until the previously launched task exits.
+            task_sleep_now_if_required(can_stop_too=False)
+            time.sleep(5.0)
 
-            taskid = submit_bibupload_for_records(mode, records_filename, silent)
-            write_message("Submitted BibUpload task #%s with mode %s" %
-                         (str(taskid), mode))
-            return taskid
+        taskid = submit_bibupload_for_records(mode, records_filename, silent)
+        write_message("Submitted BibUpload task #%s with mode %s" %
+                     (str(taskid), mode))
+        return taskid
 
 
 def submit_records_via_mail(subject, body, toaddr=CFG_APSHARVEST_EMAIL):
@@ -1013,16 +1014,14 @@ def is_beyond_threshold_date(threshold_date, fulltext_file):
     False if not.
     """
     write_message("Checking the threshold...", verbose=3)
-    parsed_xml_tree = etree.parse(fulltext_file)
+    parsed_xml_tree = BeautifulSoup(fulltext_file, features="xml")
 
     # Looking for the published tag
-    pub_element = parsed_xml_tree.xpath(
-        "/article/front/article-meta/pub-date[@pub-type='epub']"
-    )
+    pub_element = parsed_xml_tree.find("pub-date", attrs={"pub-type": 'epub'})
     if not pub_element:
         # No published date found, impossible to check
         return False
-    published_date = pub_element.pop().get('iso-8601-date')
+    published_date = pub_element.get('iso-8601-date')
     return published_date < threshold_date
 
 
