@@ -1,10 +1,14 @@
 import os
 import re
+import datetime
 import time
+import pytz
 from cgi import escape
 from invenio.search_engine import perform_request_search
 from invenio.search_engine_utils import get_fieldvalues
 from invenio.bibtask import write_message
+
+chicago_timezone = pytz.timezone('America/Chicago')
 
 SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal', 'workbook', 'bachelors', 'masters', 'design', 'loi', 'pbar', 'nal', 'annual', 'upc', 'ap', 'en', 'exp', 'lu', 'habil', 'vlhcpub']
 SERIES2 = ['PUB', 'CONF']
@@ -75,8 +79,7 @@ def bst_fermilab():
         output.write('<body>\n')
         output.write('<a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>\n')
         output.write('<br /><br />')
-        os.environ['TZ'] = 'CEST+5'
-        dateTimeStamp = '<i>Updated ' + time.strftime('%Y-%m-%d %H:%M:%S') + '</i>\n'
+        dateTimeStamp = '<i>Updated ' + chicago_timezone.fromutc(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S') + '</i>\n'
         output.write(dateTimeStamp)
         output.write('<br />\n<table>\n')
         for report in reports :
@@ -157,8 +160,7 @@ def bst_fermilab():
     output.write('<body>\n')
     output.write('<a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>\n')
     output.write('<br /><br />')
-    os.environ['TZ'] = 'CEST+5'
-    dateTimeStamp = '<i>Updated '+time.strftime('%Y-%m-%d %H:%M:%S')+'</i>\n'
+    dateTimeStamp = '<i>Updated ' + chicago_timezone.fromutc(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S') + '</i>\n'
     output.write(dateTimeStamp)
     output.write('<br />\n<table>\n')
     for report in reports :
