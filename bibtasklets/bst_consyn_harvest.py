@@ -21,7 +21,6 @@
 
 import sys
 import xml.dom.minidom
-import sys
 import traceback
 
 from os import remove, listdir, mkdir
@@ -33,6 +32,7 @@ from invenio.mailutils import send_email
 from invenio.filedownloadutils import download_url, InvenioFileDownloadError
 from harvestingkit.minidom_utils import get_value_in_tag
 from harvestingkit.elsevier_package import ElsevierPackage
+from invenio.search_engine import perform_request_search
 from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 try:
     from invenio.config import CFG_CONSYNHARVEST_EMAIL
@@ -46,16 +46,15 @@ try:
     from invenio.config import CFG_CONSYN_OUT_DIRECTORY
 except ImportError:
     CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
+from invenio.config import CFG_CONSYN_ATOM_KEY
 
 NOT_ARTICLE_TITLES = ["editorial board", "author index", "subject index",
                       "announcement from the publisher", "index", "preface",
                       "list of participants"]
-new_files = []
-new_sources = []
 
 
-def bst_consyn_harvest(feed="https://consyn.elsevier.com/batch/atom?key=QUhvbHRrYW1wOzM0Mjc%253d",
-                       package=None, package_list=None, batch_size='500', delete_zip='False'):
+def bst_consyn_harvest(feed=None, package=None, package_list=None,
+                       batch_size='500', delete_zip='False'):
     """
     Task to convert xml files from consyn.elsevier.com to marc xml files.
     There are three excecution modes:
@@ -79,7 +78,11 @@ def bst_consyn_harvest(feed="https://consyn.elsevier.com/batch/atom?key=QUhvbHRr
                        should be kept on the disk or not
     @type delete_zip: boolean
     """
-
+    if not feed:
+        feed = "https://consyn.elsevier.com/batch/atom?key=%s" % \
+               (CFG_CONSYN_ATOM_KEY,)
+    new_files = []
+    new_sources = []
     message = ''
     try:
         batch_size = int(batch_size)
@@ -105,11 +108,21 @@ def bst_consyn_harvest(feed="https://consyn.elsevier.com/batch/atom?key=QUhvbHRr
                 "date VARCHAR(50),"
                 "size VARCHAR(30) );")
     if not package and not package_list:
-        download_feed(feed, batch_size, delete_zip)
+        download_feed(feed, batch_size, delete_zip, new_sources)
     elif package:
         extract_package(package, batch_size, delete_zip)
     elif package_list:
-        extract_multiple_packages(package_list, batch_size, delete_zip)
+        extract_multiple_packages(package_list, batch_size,
+                                  delete_zip, new_sources)
+
+    task_sleep_now_if_required(can_stop_too=True)
+    consyn_files = join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
+    consyn_files = consyn_files.lstrip()
+    els = ElsevierPackage(path="whatever", CONSYN=True)
+    task_update_progress("Converting files 2/2...")
+    fetch_xml_files(consyn_files, els, new_files)
+    task_sleep_now_if_required(can_stop_too=False)
+    create_collection(batch_size, new_files, new_sources)
 
     if message:
         write_message(message)
@@ -138,7 +151,7 @@ def extractAll(zipName, delete_zip):
         remove(zipName)
 
 
-def fetch_xml_files(folder, els):
+def fetch_xml_files(folder, els, new_files):
     """Recursively gets the downloaded xml files
     converts them to marc xml format and stores them
     in the same directory with the name "upload.xml"."""
@@ -155,22 +168,30 @@ def fetch_xml_files(folder, els):
                         xmlString = xmlFile.read()
                         xmlFile.close()
                         dom_xml = xml.dom.minidom.parseString(xmlString)
-                        title = get_title(dom_xml).lower()
-                        #ignore index pages
-                        if not title.startswith("cumulative author index") and \
-                                not title in NOT_ARTICLE_TITLES and \
-                                not title.startswith("papers"):
-                            marcfile = open(file_loc, 'w')
-                            marcfile.write(els.get_record(subfolder, True))
-                            marcfile.close()
-                            new_files.append(file_loc)
-                            task_sleep_now_if_required(can_stop_too=False)
+                        doi = els.get_publication_information(dom_xml)[-1]
+                        write_message("DOI in record: %s" % (doi,))
+                        res = perform_request_search(p="doi:%s" % (doi,),
+                                                     of="id")
+                        if not res:
+                            write_message("DOI not found")
+                            title = get_title(dom_xml).lower()
+                            #ignore index pages
+                            if not title.startswith("cumulative author index") and \
+                                    not title in NOT_ARTICLE_TITLES and \
+                                    not title.startswith("papers"):
+                                marcfile = open(file_loc, 'w')
+                                marcfile.write(els.get_record(subfolder, True))
+                                marcfile.close()
+                                new_files.append(file_loc)
+                                task_sleep_now_if_required(can_stop_too=False)
+                        else:
+                            write_message("DOI found: %s" % (res,))
             else:
-                fetch_xml_files(subfolder, els)
+                fetch_xml_files(subfolder, els, new_files)
 
 
-def download_feed(feed, batch_size, delete_zip):
-    # Get list of entries from XML document
+def download_feed(feed, batch_size, delete_zip, new_sources):
+    """ Get list of entries from XML document """
     xmlString = ""
     try:
         task_update_progress("Downloading and extracting files 1/2...")
@@ -240,9 +261,9 @@ def download_feed(feed, batch_size, delete_zip):
     consyn_files = consyn_files.lstrip()
     els = ElsevierPackage(path="whatever", CONSYN=True)
     task_update_progress("Converting files 2/2...")
-    fetch_xml_files(consyn_files, els)
+    fetch_xml_files(consyn_files, els, new_files)
     task_sleep_now_if_required(can_stop_too=False)
-    create_collection(batch_size)
+    create_collection(batch_size, new_files)
 
 
 def extract_package(package, batch_size, delete_zip):
@@ -252,17 +273,10 @@ def extract_package(package, batch_size, delete_zip):
         write_message("Error BadZipfile %s", (package,))
         task_update_status("CERROR")
         remove(package)
-    task_sleep_now_if_required(can_stop_too=True)
-    consyn_files = join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
-    consyn_files = consyn_files.lstrip()
-    els = ElsevierPackage(path="whatever", CONSYN=True)
-    task_update_progress("Converting files 2/2...")
-    fetch_xml_files(consyn_files, els)
-    task_sleep_now_if_required(can_stop_too=False)
-    create_collection(batch_size)
 
 
-def extract_multiple_packages(package_list, batch_size, delete_zip):
+def extract_multiple_packages(package_list, batch_size,
+                              delete_zip, new_sources):
     packages_file = open(package_list, 'r')
     for line in packages_file:
         if line:
@@ -270,7 +284,7 @@ def extract_multiple_packages(package_list, batch_size, delete_zip):
             new_sources.append(line)
 
 
-def create_collection(batch_size):
+def create_collection(batch_size, new_files, new_sources):
     """Create a single xml file "collection.xml"
     that contains all the records."""
     if new_files:
@@ -318,6 +332,7 @@ def create_collection(batch_size):
                 write_message("%s (%s records)\n" % (filename, batch_size))
                 body += "%s (%s records)\n" % (filename, batch_size)
 
+        write_message(body)
         report_records_via_mail(subject, body)
 
 
