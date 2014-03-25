@@ -651,10 +651,10 @@ def apply_filter(rec):
     # 693 Remove if 'not applicable'
     for field in record_get_field_instances(rec, '693'):
         subs = field_get_subfields(field)
-        if 'not applicable' in [x.lower() for x in subs['a']]:
-            if 'not applicable' in [x.lower() for x in subs['e']]:
-                record_delete_field(rec, '693',
-                                    field_position_global=field[4])
+        all_subs = subs.get('a', []) + subs.get('e', [])
+        if 'not applicable' in [x.lower() for x in all_subs]:
+            record_delete_field(rec, '693',
+                                field_position_global=field[4])
         new_subs = []
         experiment_a = ""
         experiment_e = ""
