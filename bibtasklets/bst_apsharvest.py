@@ -1014,15 +1014,22 @@ def is_beyond_threshold_date(threshold_date, fulltext_file):
     False if not.
     """
     write_message("Checking the threshold...", verbose=3)
-    parsed_xml_tree = BeautifulSoup(fulltext_file, features="xml")
-
-    # Looking for the published tag
-    pub_element = parsed_xml_tree.find("pub-date", attrs={"pub-type": 'epub'})
-    if not pub_element:
-        # No published date found, impossible to check
-        return False
-    published_date = pub_element.get('iso-8601-date')
-    return published_date < threshold_date
+    with open(fulltext_file, "r") as fd:
+        parsed_xml_tree = BeautifulSoup(fd, features="xml")
+        # Looking for the published tag
+        pub_element = parsed_xml_tree.find("pub-date", attrs={"pub-type": 'epub'})
+        if not pub_element:
+            # Is it old format?
+            pub_element = parsed_xml_tree.find('published')
+            if not pub_element:
+                return False
+            published_date = pub_element.get("date")
+        else:
+            # It is new format
+            published_date = pub_element.get('iso-8601-date')
+        return published_date < threshold_date
+    # No published date found, impossible to check
+    return False
 
 
 def get_doi_from_record(recid):
