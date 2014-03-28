@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-
 ##
-## This file is part of Invenio.
+## This file is part of INSPIRE.
 ## Copyright (C) 2014 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
