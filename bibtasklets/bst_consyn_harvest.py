@@ -256,14 +256,6 @@ def download_feed(feed, batch_size, delete_zip, new_sources):
                 run_sql("DELETE FROM CONSYNHARVEST"
                         "WHERE filename =%s",
                         (outFilename,))
-    task_sleep_now_if_required(can_stop_too=True)
-    consyn_files = join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
-    consyn_files = consyn_files.lstrip()
-    els = ElsevierPackage(path="whatever", CONSYN=True)
-    task_update_progress("Converting files 2/2...")
-    fetch_xml_files(consyn_files, els, new_files)
-    task_sleep_now_if_required(can_stop_too=False)
-    create_collection(batch_size, new_files)
 
 
 def extract_package(package, batch_size, delete_zip):
