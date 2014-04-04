@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 """
-    name:           bibfilter_pos_fulltext_uploader
+    name:           bibfilter_oaipos2inspire
     decription:     Program to filter and analyse MARCXML records
                     from PoS oaiharvest, download the fulltexs,
                     and create the xml files for bibupload.
@@ -94,6 +94,7 @@ def main(args):
                 record_add_field(rec, '856', ind1='4', subfields=[('u', url)])
                 record_add_field(rec, 'FFT', subfields=[('a', filename),
                                                         ('t', 'PoS'),
+                                                        ('o', 'INSPIRE-PUBLIC'),
                                                         ('d', 'Fulltext')])
                 try:
                     write_message('downloading ' + url)
