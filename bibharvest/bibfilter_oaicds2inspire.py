@@ -802,8 +802,9 @@ def apply_filter(rec):
                                 field_position_global=field[4])
 
     # 500 - Preliminary results
-    subs = [('a', "Preliminary results")]
-    record_add_field(rec, "500", subfields=subs)
+    if "THESIS" not in collections:
+        subs = [('a', "Preliminary results")]
+        record_add_field(rec, "500", subfields=subs)
 
     for collection in collections:
         record_add_field(rec, '980', subfields=[('a', collection)])
