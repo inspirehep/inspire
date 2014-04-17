@@ -169,7 +169,7 @@ def format_element(bfo):
     urls = bfo.fields('8564_', repeatable_subfields_p=True)
     for url in urls:
         if url.has_key('y') and "FERMILAB" in url['y'][0] and url.has_key('u'):
-            node(rec, 'url').text = '%s.pdf' % unicode(url['u'][0], "utf-8")
+            node(rec, 'url').text = unicode(url['u'][0], "utf-8")
 
     if eprint:
         node(rec, 'availability').text = \
