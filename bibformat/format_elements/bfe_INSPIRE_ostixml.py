@@ -58,11 +58,11 @@ def format_element(bfo):
     rec = etree.Element("rec")
     recid = bfo.recID
     if record_exists(recid) == -1:
-        return etree.tostring(rec, encoding='UTF-8', declaration=False)
+        return etree.tostring(rec, encoding='UTF-8', xml_declaration=False)
 
     node = etree.SubElement
 
-    for recnum in [x.replace('SPIRES-','') for x in \
+    for recnum in [x.replace('SPIRES-', '') for x in \
                        [r for r in get_fieldvalues(recid, "970__a") \
                             if r.startswith('SPIRES-')]]:
         # SPIRES record number is used if available to prevent OSTI loading
@@ -138,7 +138,7 @@ def format_element(bfo):
                     if val:
                         conf_info[subfield] = val[0]
                 confstring += '%s. %s, %s.' % \
-                    tuple(conf_info.get(x, '') for x in ('a','c','d'))
+                    tuple(conf_info.get(x, '') for x in ('a', 'c', 'd'))
         if journal.has_key('c') and confstring != '':
             confstring += ' pp: %s' % journal['c'][0]
 
@@ -169,7 +169,7 @@ def format_element(bfo):
     urls = bfo.fields('8564_', repeatable_subfields_p=True)
     for url in urls:
         if url.has_key('y') and "FERMILAB" in url['y'][0] and url.has_key('u'):
-            node(rec, 'url').text =  '%s.pdf' % url['u'][0]
+            node(rec, 'url').text = '%s.pdf' % unicode(url['u'][0], "utf-8")
 
     if eprint:
         node(rec, 'availability').text = \
@@ -201,7 +201,7 @@ def get_modification_date(recid, fmt="%Y-%m-%d"):
         return date[0][0]
     return ''
 
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
@@ -209,4 +209,4 @@ def escape_values(bfo):
     """
 
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
