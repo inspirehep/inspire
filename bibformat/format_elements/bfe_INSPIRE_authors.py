@@ -24,20 +24,20 @@ __revision__ = "$Id$"
 
 def format_element(bfo, limit, separator='; ',
            extension='[...]',
-           print_links = "yes",
+           print_links="yes",
            print_affiliations='no',
-           affiliation_prefix = ' (',
-           affiliation_suffix = ')',
+           affiliation_prefix=' (',
+           affiliation_suffix=')',
            print_affiliation_first='no',
            interactive="no",
            highlight="no",
            affiliations_separator=" ; ",
-           name_last_first = "yes",
-           collaboration = "yes",
-           id_links = "no",
-           markup = "html",
-           link_extension = "no",
-           suffix = ''
+           name_last_first="yes",
+           collaboration="yes",
+           id_links="no",
+           markup="html",
+           link_extension="no",
+           suffix=''
            ):
     """
     Prints the list of authors of a record.
@@ -77,7 +77,7 @@ def format_element(bfo, limit, separator='; ',
 
     #regex for parsing last and first names and initials
     re_last_first = re.compile('^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')
-    re_initials = re.compile(r'(?P<initial>\w)(\w+|\.)\s*')
+    re_initials = re.compile(r'(?P<initial>\w)(\w+|\.)\s*', re.UNICODE)
     re_coll = re.compile(r'\s*collaborations?', re.IGNORECASE)
 
     bibrec_id = bfo.control_field("001")
@@ -139,7 +139,7 @@ def format_element(bfo, limit, separator='; ',
             if markup == 'latex':
                 if first_last_match:
                     first = re_initials.sub('\g<initial>.~', \
-                                        first_last_match.group('first_names'))
+                                            unicode(first_last_match.group('first_names'), 'utf8'))
                     author['display'] = first  + \
                                         first_last_match.group('last') + \
                                         first_last_match.group('extension')
@@ -250,7 +250,7 @@ def format_element(bfo, limit, separator='; ',
                 coll_display += 's'
         if nb_authors > 1:
             if markup == 'latex':
-                coll_display =  authors[0] + extension + "  [" + \
+                coll_display = authors[0] + extension + "  [" + \
                                coll_display + "]"
             elif interactive == "yes":
                 coll_display += " ("  + authors[0] + " "
@@ -340,7 +340,7 @@ def format_element(bfo, limit, separator='; ',
         return output
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 
 
 def escape_values(bfo):
@@ -349,4 +349,4 @@ def escape_values(bfo):
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
