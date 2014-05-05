@@ -3,7 +3,15 @@
 # in your top level directory
 #
 
-PREFIX = /opt/invenio
+PREFIX = $(VIRTUAL_ENV)
+
+ifeq "$(PREFIX)" ""
+    PREFIX = $(CFG_INVENIO_PREFIX)
+endif
+
+ifeq "$(PREFIX)" ""
+    PREFIX = /opt/invenio
+endif
 
 BINDIR = $(PREFIX)/bin
 ETCDIR = $(PREFIX)/etc
@@ -11,9 +19,9 @@ TMPDIR = $(PREFIX)/tmp
 LIBDIR = $(PREFIX)/lib
 WEBDIR = $(PREFIX)/var/www
 
-INSTALL = install -g apache -m 775
+INSTALL = install -g `whoami` -m 775
 
-PYTHON = /usr/bin/python
+PYTHON = /usr/bin/env python
 
 # bibconvert options
 #
