@@ -94,7 +94,6 @@ def main(args):
                 record_add_field(rec, '856', ind1='4', subfields=[('u', url)])
                 record_add_field(rec, 'FFT', subfields=[('a', filename),
                                                         ('t', 'PoS'),
-                                                        ('o', 'INSPIRE-PUBLIC'),
                                                         ('d', 'Fulltext')])
                 try:
                     write_message('downloading ' + url)
