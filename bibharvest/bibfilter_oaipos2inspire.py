@@ -7,12 +7,15 @@
 
                     Based on bibfilter_oaicds2inspire
 """
+from __future__ import print_function
+
 import sys
 import requests
 import urllib
 from os import mkdir
-from os.path import join, \
-    exists
+from os.path import (join,
+                     exists,
+                     basename)
 from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -21,7 +24,6 @@ from invenio.bibrecord import record_add_field, \
     record_xml_output
 from invenio.filedownloadutils import download_url, \
     InvenioFileDownloadError
-from invenio.bibtask import write_message
 from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 from invenio.search_engine import perform_request_search
 from invenio.mailutils import send_email
@@ -41,9 +43,9 @@ base_url = "http://pos.sissa.it/contribution?id="
 # ==============================| Main |==============================
 def main(args):
     if len(args) != 1:
-        write_message("usage: python bibfilter_oaipos2inspire.py input_filename")
+        print("usage: python bibfilter_oaipos2inspire.py input_filename")
         raise Exception("Wrong usage!!")
-    input_file = args[0]
+    input_filename = args[0]
 
     #create folders if they dont exist
     create_folders(CFG_POS_OUT_DIRECTORY)
@@ -57,12 +59,12 @@ def main(args):
 
     mkdir(out_folder)
 
-    insert = []
-    append = []
-    not_found = []
+    insert_records = []
+    append_records = []
+    error_records = []
 
     pos = PosPackage()
-    xml_doc = parse(input_file)
+    xml_doc = parse(input_filename)
     for record in xml_doc.getElementsByTagName('record'):
         rec = pos.get_record(record)
         identifier = pos.get_identifier()
@@ -73,7 +75,7 @@ def main(args):
         identifier = "PoS(%s)%s" % (conference, contribution)
         query = "773__p:pos 773__v:%s 773__c:%s" % \
                 (conference.replace(' ', ''), contribution)
-        write_message("Querying with: %s" % (query,))
+        print("Querying with: %s" % (query,))
         results = perform_request_search(p=query, of="id")
 
         #harvest fulltext
@@ -91,61 +93,74 @@ def main(args):
                 if results:
                     rec = {}
                 filename = join(out_folder, identifier + ".pdf")
-                record_add_field(rec, '856', ind1='4', subfields=[('u', url)])
+                record_add_field(rec, '856', ind1='4', subfields=[
+                    ('u', url),
+                    ('y', "Fulltext")
+                ])
                 record_add_field(rec, 'FFT', subfields=[('a', filename),
                                                         ('t', 'PoS'),
                                                         ('d', 'Fulltext')])
                 try:
-                    write_message('downloading ' + url)
+                    print('Downloading ' + url)
                     download_url(url, "pdf", filename, 5, 60.0)
                     if results:
-                        recid = results[0]["001__"][0]
+                        recid = results[0]
                         record_add_field(rec, '001', controlfield_value=recid)
-                        append.append(record_xml_output(rec))
+                        append_records.append(rec)
                     else:
-                        insert.append(record_xml_output(rec))
+                        insert_records.append(rec)
                 except InvenioFileDownloadError:
-                    write_message("Download of %s failed" % (url,))
+                    print("Download of %s failed" % (url,))
                 break
         if not found:
-            not_found.append(record_xml_output(rec))
+            error_records.append(rec)
 
-    try:
-        #allready existing records
-        append_file = open(input_file + '.append.xml', 'w')
-        #non existing records
-        insert_file = open(input_file + '.insert.xml', 'w')
-        #fulltext not found
-        not_found_file = open(input_file + '.not_found.xml', 'w')
-        append_file.write("<collection>\n" + "\n".join(append) + "\n</collection>")
-        insert_file.write("<collection>\n" + "\n".join(insert) + "\n</collection>")
-        not_found_file.write("<collection>\n" + "\n".join(not_found) + "\n</collection>")
-    finally:
-        not_found_file.close()
-        insert_file.close()
-        append_file.close()
+    insert_filename = "%s.insert.xml" % (input_filename,)
+    append_filename = "%s.append.xml" % (input_filename,)
+    errors_filename = "%s.errors.xml" % (input_filename,)
 
-    #keep a copy of the files on AFS
-    copy(input_file + '.append.xml', out_folder)
-    copy(input_file + '.insert.xml', out_folder)
-    copy(input_file + '.not_found.xml', out_folder)
+    created_files = []
 
-    total_records = len(append) + len(insert) + len(not_found)
+    if write_record_to_file(insert_filename, insert_records):
+        copy(insert_filename, out_folder)
+        created_files.append(join(out_folder, basename(insert_filename)))
+    if write_record_to_file(append_filename, append_records):
+        copy(append_filename, out_folder)
+        created_files.append(join(out_folder, basename(append_filename)))
+    if write_record_to_file(errors_filename, error_records):
+        copy(errors_filename, errors_filename)
+        created_files.append(join(out_folder, basename(errors_filename)))
+
+    total_records = len(append_records) + len(insert_records) + len(error_records)
     subject = "PoS Harvest results: " + datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    body = """Total of %d records processed: \n
-              %d new records,\n
-              %d records already existing in the system,\n
-              %d records that failed to retrieve the fulltext""" %\
-           (total_records, len(insert), len(append), len(not_found))
-    write_message(body)
-    send_email(CFG_SITE_SUPPORT_EMAIL,
-               CFG_POSHARVEST_EMAIL,
-               subject,
-               body)
+    body = """
+    Total of %d records processed:
+
+    %d new records,
+    %d records already existing in the system,
+    %d records that failed to retrieve the fulltext
+
+    Location of new records:
+    %s
+    """ % \
+           (total_records,
+            len(insert_records),
+            len(append_records),
+            len(error_records),
+            "\n".join(created_files))
+    print(subject)
+    print(body)
+    if not send_email(CFG_SITE_SUPPORT_EMAIL,
+                      CFG_POSHARVEST_EMAIL,
+                      subject,
+                      body):
+        print("ERROR: Mail not sent")
+    else:
+        print("Mail sent to %s" % (CFG_POSHARVEST_EMAIL,))
 
 
 def create_folders(new_folder):
-    #create folders if they dont exist
+    """Create folders if they dont exist"""
     if not exists(new_folder):
         folders = new_folder.split("/")
         folder = "/"
@@ -154,6 +169,21 @@ def create_folders(new_folder):
             if not exists(folder):
                 mkdir(folder)
 
+
+def write_record_to_file(filename, record_list):
+    """Writes a new MARCXML file to specified path from record list."""
+    if len(record_list) > 0:
+        out = []
+        out.append("<collection>")
+        for record in record_list:
+            if record != {}:
+                out.append(record_xml_output(record))
+        out.append("</collection>")
+        if len(out) > 2:
+            file_fd = open(filename, 'w')
+            file_fd.write("\n".join(out))
+            file_fd.close()
+            return True
 
 if __name__ == '__main__':
     main(sys.argv[1:])
