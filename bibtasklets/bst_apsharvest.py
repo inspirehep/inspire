@@ -477,6 +477,11 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         os.makedirs(CFG_WORKDIR)
 
     #2: Fetch fulltext/metadata XML and upload bunches of records as configured
+
+    now = datetime.datetime.now()
+    mail_subject = "APS harvest results: %s" % \
+                   (now.strftime("%Y-%m-%d %H:%M:%S"),)
+
     count = 0
     taskid = 0
     records_harvested = []
@@ -508,7 +513,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                 taskid = submit_records(record_filename,
                                         records_to_insert,
                                         new_mode,
-                                        devmode=devmode)
+                                        devmode=devmode,
+                                        subject=mail_subject)
                 if not taskid and not devmode:
                     # Something went wrong
                     err_string = "New records (%s)" \
@@ -524,7 +530,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                 taskid = submit_records(record_filename, records_to_update,
                                         update_mode,
                                         silent=records and True or False,
-                                        devmode=devmode)
+                                        devmode=devmode,
+                                        subject=mail_subject)
                 if not taskid and not devmode:
                     # Something went wrong
                     err_string = "Existing records (%s)" \
@@ -552,7 +559,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             taskid = submit_records(record_filename, records_to_insert,
                                     new_mode, taskid,
                                     silent=records and True or False,
-                                    devmode=devmode)
+                                    devmode=devmode,
+                                    subject=mail_subject)
             if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
@@ -563,7 +571,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             taskid = submit_records(record_filename, records_to_update,
                                     update_mode, taskid,
                                     silent=records and True or False,
-                                    devmode=devmode)
+                                    devmode=devmode,
+                                    subject=mail_subject)
             if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
@@ -573,7 +582,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                           % (rec.doi or rec.recid, msg)
                           for rec, msg in records_failed])
         if not devmode:
-            submit_records_via_mail(subject="APSHarvest failed records",
+            submit_records_via_mail(subject="%s (failed records)" % (mail_subject,),
                                     body=body)
 
     if from_date == "last":
@@ -779,7 +788,7 @@ def submit_bibupload_for_records(mode, new_filename, silent):
 
 
 def submit_records(records_filename, records_list, mode, taskid=0,
-                   silent=False, devmode=False):
+                   silent=False, devmode=False, subject=None):
     """
     Performs the logic to submit given file (filepath) of records
     either by e-mail or using BibUpload with given mode.
@@ -809,6 +818,9 @@ def submit_records(records_filename, records_list, mode, taskid=0,
     """
     if devmode:
         return None
+    if not subject:
+        now = datetime.datetime.now()
+        subject = "APS harvest results: %s" % (now.strftime("%Y-%m-%d %H:%M:%S"),)
 
     # Check if we should create bibupload or e-mail
     if mode == "email":
@@ -818,8 +830,6 @@ def submit_records(records_filename, records_list, mode, taskid=0,
             # We strip away the first part of the DOI for readability.
             list_of_dois.append('/'.join(record.doi.split('/')[1:]))
         # We send an e-mail to CFG_APSHARVEST_EMAIL and put file on AFS.
-        now = datetime.datetime.now()
-        subject = "APS harvest results: %s" % (now.strftime("%Y-%m-%d %H:%M:%S"),)
         body = "Harvested new records: %s" % (records_filename,)
         try:
             try:
