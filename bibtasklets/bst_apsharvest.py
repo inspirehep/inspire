@@ -73,11 +73,24 @@ from invenio.apsharvest_config import CFG_APSHARVEST_FULLTEXT_URL, \
     CFG_APSHARVEST_MD5_FILE, \
     CFG_APSHARVEST_FFT_DOCTYPE, \
     CFG_APSHARVEST_REQUEST_TIMEOUT, \
-    CFG_APSHARVEST_BUNCH_SIZE, \
-    CFG_APSHARVEST_XSLT, \
-    CFG_APSHARVEST_EMAIL, \
-    CFG_APSHARVEST_APS_DIR
+    CFG_APSHARVEST_BUNCH_SIZE
+
 from invenio.docextract_record import BibRecord, BibRecordControlField
+
+try:
+    from invenio.config import CFG_APSHARVEST_XSLT
+except ImportError:
+    CFG_APSHARVEST_XSLT = "/afs/cern.ch/project/inspire/xslt/aps.xsl"
+
+try:
+    from invenio.config import CFG_APSHARVEST_EMAIL
+except ImportError:
+    CFG_APSHARVEST_EMAIL = "desydoc@desy.de"
+
+try:
+    from invenio.config import CFG_APSHARVEST_APS_DIR
+except ImportError:
+    CFG_APSHARVEST_APS_DIR = "/afs/cern.ch/project/inspire/uploads/aps"
 
 
 class APSHarvesterSearchError(Exception):
