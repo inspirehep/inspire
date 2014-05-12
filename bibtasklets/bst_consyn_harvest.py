@@ -83,21 +83,21 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
                (CFG_CONSYN_ATOM_KEY,)
     new_files = []
     new_sources = []
-    message = ''
+
     try:
         batch_size = int(batch_size)
     except ValueError:
         batch_size = 500
-        message += 'Warning batch_size parameter is not a valid integer\n' +\
-                   'the default value \'500\' has been used!\n'
+        write_message('Warning batch_size parameter is not a valid integer\n' +
+                      'the default value \'500\' has been used!\n')
     if delete_zip.lower() == 'true':
         delete_zip = True
     elif delete_zip.lower() == 'false':
         delete_zip = False
     else:
         delete_zip = False
-        message += 'Warning delete_zip parameter is not a valid Boolean (True/False)\n' +\
-                   'the default value \'False\' has been used!\n'
+        write_message('Warning delete_zip parameter is not a valid Boolean (True/False)\n' +
+                      'the default value \'False\' has been used!\n')
 
     create_folders(CFG_CONSYN_OUT_DIRECTORY)
     try:
@@ -123,10 +123,6 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
     fetch_xml_files(consyn_files, els, new_files)
     task_sleep_now_if_required(can_stop_too=False)
     create_collection(batch_size, new_files, new_sources)
-
-    if message:
-        write_message(message)
-        task_update_status("DONE WITH WARNINGS")
 
 
 def get_title(xmlFile):
@@ -279,6 +275,8 @@ def extract_multiple_packages(package_list, batch_size,
 def create_collection(batch_size, new_files, new_sources):
     """Create a single xml file "collection.xml"
     that contains all the records."""
+    subject = "Consyn harvest results: %s" % \
+              (datetime.now().strftime("%Y-%m-%d %H:%M:%S"),)
     if new_files:
         batch = 1
         counter = 0
@@ -306,10 +304,7 @@ def create_collection(batch_size, new_files, new_sources):
             counter += 1
         collection.write("</collection>")
         collection.close()
-        write_message("""From %s sources, found and converted %s records\n
-                      %s files ready to upload:\n""" %
-                      (len(new_sources), len(new_files), (batch - 1) * 500 + counter))
-        subject = "Consyn harvest results: %s" % (datetime.now().strftime("%Y-%m-%d %H:%M:%S"),)
+
         body = """From %s sources, found and converted %s records\n
                %s files ready to upload:\n""" %\
                (len(new_sources), len(new_files), (batch - 1) * 500 + counter)
@@ -318,14 +313,16 @@ def create_collection(batch_size, new_files, new_sources):
             filename = join(CFG_CONSYN_OUT_DIRECTORY, filename)
             filename = filename.lstrip()
             if i == batch:
-                write_message("%s (%s records)\n" % (filename, counter))
                 body += "%s (%s records)\n" % (filename, counter)
             else:
-                write_message("%s (%s records)\n" % (filename, batch_size))
                 body += "%s (%s records)\n" % (filename, batch_size)
 
+        write_message(subject)
         write_message(body)
         report_records_via_mail(subject, body)
+    else:
+        write_message(subject)
+        write_message("No new files")
 
 
 def report_records_via_mail(subject, body, toaddr=CFG_CONSYNHARVEST_EMAIL):
@@ -338,18 +335,18 @@ def report_records_via_mail(subject, body, toaddr=CFG_CONSYNHARVEST_EMAIL):
 
     @param body: email contents.
     @type body: string
-
-    @return: returns the given taskid upon submission.
-    @rtype: int
     """
-    return send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
-                      toaddr=toaddr,
-                      subject=subject,
-                      content=body)
+    if send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
+                  toaddr=toaddr,
+                  subject=subject,
+                  content=body):
+        write_message("Mail sent to %r" % (toaddr,))
+    else:
+        write_message("ERROR: Cannot send mail.")
 
 
 def create_folders(new_folder):
-    #create folders if they dont exist
+    """Create folders if they don't exist"""
     if not exists(new_folder):
         folders = new_folder.split("/")
         folder = "/"
