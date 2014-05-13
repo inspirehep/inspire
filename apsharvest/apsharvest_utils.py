@@ -45,27 +45,27 @@ RE_ARTICLE_DTD = re.compile('<!DOCTYPE article PUBLIC "-//American Physical'
                             ' "article\.dtd">')
 
 
-def unzip(zipped_file, output_directory=None,
+def unzip(zipped_file, base_directory=None,
           prefix="apsharvest_unzip_", suffix=""):
     """
     Uncompress a zipped file from given filepath to an (optional) location.
     If no location is given, a temporary folder will be generated inside
-    CFG_TMPDIR, prefixed with "apsharvest_unzip_".
+    CFG_TMPSHAREDDIR of Invenio.
     """
-    from invenio.config import CFG_TMPSHAREDDIR
-
-    if not output_directory:
-        # We create a temporary directory to extract our stuff in
+    if not base_directory:
+        from invenio.config import CFG_TMPSHAREDDIR
+        base_directory = os.path.join(CFG_TMPSHAREDDIR, 'apsharvest')
+    # We create a temporary directory to extract our stuff in
+    try:
+        output_directory = mkdtemp(suffix=suffix,
+                                   prefix=prefix,
+                                   dir=base_directory)
+    except Exception, e:
         try:
-            output_directory = mkdtemp(suffix=suffix,
-                                       prefix=prefix,
-                                       dir=os.path.join(CFG_TMPSHAREDDIR, 'apsharvest'))
-        except Exception, e:
-            try:
-                os.removedirs(output_directory)
-            except TypeError:
-                pass
-            raise e
+            os.removedirs(output_directory)
+        except TypeError:
+            pass
+        raise e
     return _do_unzip(zipped_file, output_directory)
 
 

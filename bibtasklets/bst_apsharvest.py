@@ -995,7 +995,7 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
             request_end = time.time()
 
         # Unzip the compressed file
-        unzipped_folder = unzip(result_file)
+        unzipped_folder = unzip(result_file, base_directory=out_folder)
 
         # Validate the checksum of the compressed fulltext file.
         try:
