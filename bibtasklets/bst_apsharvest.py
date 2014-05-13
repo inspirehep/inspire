@@ -476,6 +476,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     # Create working directory if not exists
     out_folder = create_work_folder(CFG_APSHARVEST_DIR)
 
+    from invenio.refextract_kbs import get_kbs
+    journal_mappings = get_kbs()
+    if journal_mappings and "journals" in journal_mappings:
+        journal_mappings = journal_mappings['journals'][1]
+    else:
+        journal_mappings = None
+
     now = datetime.datetime.now()
     mail_subject = "APS harvest results: %s" % \
                    (now.strftime("%Y-%m-%d %H:%M:%S"),)
@@ -486,9 +493,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     records_to_insert = []
     records_to_update = []
     records_failed = []
-    for record, error_message in perform_fulltext_harvest(final_record_list, metadata,
-                                                          fulltext, hidden, out_folder,
-                                                          threshold_date):
+    for record, error_message in perform_fulltext_harvest(final_record_list,
+                                                          metadata,
+                                                          fulltext,
+                                                          hidden,
+                                                          out_folder,
+                                                          threshold_date,
+                                                          journal_mappings):
         if error_message:
             records_failed.append((record, error_message))
             continue
@@ -904,7 +915,8 @@ def submit_records_via_mail(subject, body, toaddr=CFG_APSHARVEST_EMAIL):
 
 
 def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
-                             hidden_fulltext, out_folder, threshold_date=None):
+                             hidden_fulltext, out_folder, threshold_date=None,
+                             journal_mappings=None):
     """
     For every record in given list APSRecord(record ID, DOI, date last
     updated), yield a APSRecord with added FFT dictionary containing URL to
@@ -1030,9 +1042,8 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         if add_metadata:
             from harvestingkit.aps_package import (ApsPackage,
                                                    ApsPackageXMLError)
-
             # Generate Metadata,FFT and yield it
-            aps = ApsPackage()
+            aps = ApsPackage(journal_mappings)
             try:
                 xml = aps.get_record(fulltext_file)
                 record.add_metadata_by_string(xml)
