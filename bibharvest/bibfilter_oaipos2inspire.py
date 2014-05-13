@@ -12,22 +12,20 @@ from __future__ import print_function
 import sys
 import requests
 import urllib
-from os import mkdir
 from os.path import (join,
-                     exists,
                      basename)
+
 from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
 from xml.dom.minidom import parse
-from invenio.bibrecord import record_add_field, \
-    record_xml_output
+from invenio.bibrecord import record_add_field
 from invenio.filedownloadutils import download_url, \
     InvenioFileDownloadError
 from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 from invenio.search_engine import perform_request_search
 from invenio.mailutils import send_email
-from harvestingkit.pos_package import PosPackage
+
 try:
     from invenio.config import CFG_POSHARVEST_EMAIL
 except ImportError:
@@ -36,6 +34,10 @@ try:
     from invenio.config import CFG_POS_OUT_DIRECTORY
 except ImportError:
     CFG_POS_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, 'fulltexts')
+
+from harvestingkit.pos_package import PosPackage
+from invenio.apsharvest_utils import (create_work_folder,
+                                      write_record_to_file)
 
 base_url = "http://pos.sissa.it/contribution?id="
 
@@ -47,17 +49,7 @@ def main(args):
         raise Exception("Wrong usage!!")
     input_filename = args[0]
 
-    #create folders if they dont exist
-    create_folders(CFG_POS_OUT_DIRECTORY)
-
-    run = 1
-    date = datetime.now().strftime("%Y.%m.%d")
-    out_folder = join(CFG_POS_OUT_DIRECTORY, date + "-" + str(run))
-    while(exists(out_folder)):
-        run += 1
-        out_folder = join(CFG_POS_OUT_DIRECTORY, date + "-" + str(run))
-
-    mkdir(out_folder)
+    out_folder = create_work_folder(CFG_POS_OUT_DIRECTORY)
 
     insert_records = []
     append_records = []
@@ -158,32 +150,6 @@ def main(args):
     else:
         print("Mail sent to %s" % (CFG_POSHARVEST_EMAIL,))
 
-
-def create_folders(new_folder):
-    """Create folders if they dont exist"""
-    if not exists(new_folder):
-        folders = new_folder.split("/")
-        folder = "/"
-        for i in range(1, len(folders)):
-            folder = join(folder, folders[i]).strip()
-            if not exists(folder):
-                mkdir(folder)
-
-
-def write_record_to_file(filename, record_list):
-    """Writes a new MARCXML file to specified path from record list."""
-    if len(record_list) > 0:
-        out = []
-        out.append("<collection>")
-        for record in record_list:
-            if record != {}:
-                out.append(record_xml_output(record))
-        out.append("</collection>")
-        if len(out) > 2:
-            file_fd = open(filename, 'w')
-            file_fd.write("\n".join(out))
-            file_fd.close()
-            return True
 
 if __name__ == '__main__':
     main(sys.argv[1:])

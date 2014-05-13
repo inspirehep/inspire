@@ -44,7 +44,7 @@ from invenio.bibtask import task_update_status, \
     task_low_level_submission, \
     task_sleep_now_if_required, \
     task_set_task_param
-from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
+from invenio.config import CFG_SITE_SUPPORT_EMAIL
 from invenio.bibdocfile import open_url
 from invenio.search_engine import perform_request_search, search_pattern
 from invenio.bibformat_engine import BibFormatObject
@@ -54,6 +54,7 @@ from invenio.apsharvest_dblayer import fetch_last_updated, \
     get_all_modified_records, \
     store_last_updated, \
     can_launch_bibupload
+
 from invenio.apsharvest_utils import (unzip,
                                       find_and_validate_md5_checksums,
                                       get_temporary_file,
@@ -65,7 +66,8 @@ from invenio.apsharvest_utils import (unzip,
                                       create_records_from_string,
                                       validate_date,
                                       get_file_modified_date,
-                                      compare_datetime_to_iso8601_date)
+                                      compare_datetime_to_iso8601_date,
+                                      create_work_folder)
 
 from invenio.apsharvest_config import CFG_APSHARVEST_FULLTEXT_URL, \
     CFG_APSHARVEST_SEARCH_COLLECTION, \
@@ -88,9 +90,9 @@ except ImportError:
     CFG_APSHARVEST_EMAIL = "desydoc@desy.de"
 
 try:
-    from invenio.config import CFG_APSHARVEST_APS_DIR
+    from invenio.config import CFG_APSHARVEST_DIR
 except ImportError:
-    CFG_APSHARVEST_APS_DIR = "/afs/cern.ch/project/inspire/uploads/aps"
+    CFG_APSHARVEST_DIR = "/afs/cern.ch/project/inspire/uploads/aps"
 
 
 class APSHarvesterSearchError(Exception):
@@ -115,9 +117,6 @@ class APSHarvesterFileExits(Exception):
     """Exception raised when local file is the newest.
     """
     pass
-
-
-CFG_WORKDIR = os.path.join(CFG_TMPSHAREDDIR, "apsharvest")
 
 
 class APSRecordList(list):
@@ -472,11 +471,10 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         write_message("Nothing to harvest.")
         return
 
-    # Create working directory if not exists
-    if not os.path.exists(CFG_WORKDIR):
-        os.makedirs(CFG_WORKDIR)
-
     #2: Fetch fulltext/metadata XML and upload bunches of records as configured
+
+    # Create working directory if not exists
+    out_folder = create_work_folder(CFG_APSHARVEST_DIR)
 
     now = datetime.datetime.now()
     mail_subject = "APS harvest results: %s" % \
@@ -489,7 +487,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     records_to_update = []
     records_failed = []
     for record, error_message in perform_fulltext_harvest(final_record_list, metadata,
-                                                          fulltext, hidden, threshold_date):
+                                                          fulltext, hidden, out_folder,
+                                                          threshold_date):
         if error_message:
             records_failed.append((record, error_message))
             continue
@@ -500,7 +499,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
             # Go over next bunch and add to totals
             if match:
-                new_records, existing_records = check_records(records_harvested)
+                new_records, existing_records = check_records(records_harvested,
+                                                              out_folder)
                 records_to_insert.extend(new_records)
                 records_to_update.extend(existing_records)
             else:
@@ -509,10 +509,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             if new_mode != "email":
                 # Submit new records
                 record_filename = generate_xml_for_records(records_to_insert,
+                                                           out_folder,
                                                            suffix="_insert.xml")
                 taskid = submit_records(record_filename,
                                         records_to_insert,
                                         new_mode,
+                                        out_folder,
                                         devmode=devmode,
                                         subject=mail_subject)
                 if not taskid and not devmode:
@@ -526,9 +528,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             if update_mode != "email":
                 # Submit records to be updated
                 record_filename = generate_xml_for_records(records_to_update,
+                                                           out_folder,
                                                            suffix="_update.xml")
-                taskid = submit_records(record_filename, records_to_update,
+                taskid = submit_records(record_filename,
+                                        records_to_update,
                                         update_mode,
+                                        out_folder,
                                         silent=records and True or False,
                                         devmode=devmode,
                                         subject=mail_subject)
@@ -547,7 +552,8 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     # Check for any remains
     if records_harvested or records_to_update or records_to_insert:
         if match:
-            new_records, existing_records = check_records(records_harvested)
+            new_records, existing_records = check_records(records_harvested,
+                                                          out_folder)
             records_to_insert.extend(new_records)
             records_to_update.extend(existing_records)
         else:
@@ -555,9 +561,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
         if records_to_insert:
             record_filename = generate_xml_for_records(records_to_insert,
+                                                       out_folder,
                                                        suffix="_insert.xml")
-            taskid = submit_records(record_filename, records_to_insert,
-                                    new_mode, taskid,
+            taskid = submit_records(record_filename,
+                                    records_to_insert,
+                                    new_mode,
+                                    out_folder,
+                                    taskid,
                                     silent=records and True or False,
                                     devmode=devmode,
                                     subject=mail_subject)
@@ -567,9 +577,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
         if records_to_update:
             record_filename = generate_xml_for_records(records_to_update,
+                                                       out_folder,
                                                        suffix="_update.xml")
-            taskid = submit_records(record_filename, records_to_update,
-                                    update_mode, taskid,
+            taskid = submit_records(record_filename,
+                                    records_to_update,
+                                    update_mode,
+                                    out_folder,
+                                    taskid,
                                     silent=records and True or False,
                                     devmode=devmode,
                                     subject=mail_subject)
@@ -670,7 +684,7 @@ def harvest_aps(from_param, until_param, perpage):
     return records
 
 
-def check_records(records):
+def check_records(records, directory):
     """
     Checks if given records exists on the system and then returns
     a tuple of records that is new and records that exists:
@@ -692,6 +706,7 @@ def check_records(records):
 
                 # Problem detected, send mail immediately:
                 problem_rec = generate_xml_for_records(records=[record],
+                                                       directory=directory,
                                                        suffix="problem.xml")
                 now = datetime.datetime.now()
                 subject = "APS harvest problem: %s" % \
@@ -709,9 +724,8 @@ def check_records(records):
     return new_records, existing_records
 
 
-def generate_xml_for_records(records, prefix="apsharvest_result_",
-                             suffix=".xml", directory=CFG_WORKDIR,
-                             pretty=True):
+def generate_xml_for_records(records, directory, prefix="apsharvest_result_",
+                             suffix=".xml", pretty=True):
     """
     Given a list of APSRecord objects, generate a MARCXML containing Metadata
     and FFT for all of them.
@@ -787,8 +801,8 @@ def submit_bibupload_for_records(mode, new_filename, silent):
                                      *tuple(task_arguments))
 
 
-def submit_records(records_filename, records_list, mode, taskid=0,
-                   silent=False, devmode=False, subject=None):
+def submit_records(records_filename, records_list, mode, directory,
+                   taskid=0, silent=False, devmode=False, subject=None):
     """
     Performs the logic to submit given file (filepath) of records
     either by e-mail or using BibUpload with given mode.
@@ -833,8 +847,8 @@ def submit_records(records_filename, records_list, mode, taskid=0,
         body = "Harvested new records: %s" % (records_filename,)
         try:
             try:
-                shutil.move(records_filename, CFG_APSHARVEST_APS_DIR)
-                records_filename = os.path.join(CFG_APSHARVEST_APS_DIR,
+                shutil.move(records_filename, directory)
+                records_filename = os.path.join(directory,
                                                 os.path.basename(records_filename))
                 body = "Harvested new records on %s. They are located here:\n %s" % \
                        (now.strftime("%Y-%m-%d %H:%M:%S"), records_filename)
@@ -890,13 +904,13 @@ def submit_records_via_mail(subject, body, toaddr=CFG_APSHARVEST_EMAIL):
 
 
 def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
-                             hidden_fulltext, threshold_date=None):
+                             hidden_fulltext, out_folder, threshold_date=None):
     """
     For every record in given list APSRecord(record ID, DOI, date last
     updated), yield a APSRecord with added FFT dictionary containing URL to
     fulltext/metadata XML downloaded locally.
 
-    If a download is unsucessful, an error message is given.
+    If a download is unsuccessful, an error message is given.
 
     @return: tuple of (APSRecord, error_message)
     """
@@ -908,9 +922,11 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
         # Unless this is the first request, lets sleep a bit
         if request_end and request_start:
             request_dt = request_end-request_start
-            write_message("Checking request time (%d)" % (request_dt,), verbose=3)
+            write_message("Checking request time (%d)"
+                          % (request_dt,), verbose=3)
             if count and request_dt > 0 and request_dt < CFG_APSHARVEST_REQUEST_TIMEOUT:
-                write_message("Intiating sleep for %.1f seconds" % (request_dt,), verbose=3)
+                write_message("Initiating sleep for %.1f seconds"
+                              % (request_dt,), verbose=3)
                 time.sleep(request_dt)
 
         count += 1
@@ -924,7 +940,7 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
             continue
 
         url = CFG_APSHARVEST_FULLTEXT_URL % {'doi': record.doi}
-        result_file = os.path.join(CFG_WORKDIR,
+        result_file = os.path.join(out_folder,
                                    "%s.zip" % (record.doi.replace('/', '_')))
         try:
             request_start = time.time()
@@ -976,7 +992,7 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
                 md5key_filename=CFG_APSHARVEST_MD5_FILE)
         except InvenioFileChecksumError, e:
             info_msg = "Skipping %s in %s" % \
-                        (record.recid or record.doi, unzipped_folder)
+                       (record.recid or record.doi, unzipped_folder)
             msg = "Error while validating checksum: %s\n%s\n%s" % \
                   (info_msg, str(e), traceback.format_exc()[:-1])
             write_message(msg)

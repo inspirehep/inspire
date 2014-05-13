@@ -25,13 +25,7 @@ import re
 import datetime
 import time
 
-from invenio.config import CFG_TMPSHAREDDIR
 from tempfile import mkdtemp, mkstemp
-from invenio.bibdocfile import calculate_md5_external
-from invenio.shellutils import run_shell_command
-from invenio.bibconvert_xslt_engine import CFG_BIBCONVERT_XSL_PATH
-from invenio.docextract_record import create_record
-from invenio.dateutils import utc_to_localtime
 
 
 class InvenioFileChecksumError(Exception):
@@ -58,6 +52,8 @@ def unzip(zipped_file, output_directory=None,
     If no location is given, a temporary folder will be generated inside
     CFG_TMPDIR, prefixed with "apsharvest_unzip_".
     """
+    from invenio.config import CFG_TMPSHAREDDIR
+
     if not output_directory:
         # We create a temporary directory to extract our stuff in
         try:
@@ -118,6 +114,8 @@ def find_and_validate_md5_checksums(in_folder, md5key_filename):
 
     hashkey filepath
     """
+    from invenio.bibdocfile import calculate_md5_external
+
     validated_files = []
     for filename in locate(md5key_filename, root=in_folder):
         file_fd = open(filename, 'r')
@@ -193,6 +191,9 @@ def convert_xml_using_saxon(source_file, template_file):
 
     @return: True on success.
     """
+    from invenio.bibconvert_xslt_engine import CFG_BIBCONVERT_XSL_PATH
+    from invenio.shellutils import run_shell_command
+
     if not os.path.isabs(template_file):
         template_file = CFG_BIBCONVERT_XSL_PATH + os.sep + template_file
     source_directory = os.path.dirname(source_file)
@@ -203,8 +204,8 @@ def convert_xml_using_saxon(source_file, template_file):
         # Error may have happened
         raise APSHarvesterConversionError("%s: %s\nOut:%s" %
                                           (exit_code,
-                                          stderr_buffer,
-                                          stdout_buffer))
+                                           stderr_buffer,
+                                           stdout_buffer))
 
 
 def create_records_from_file(path_to_file):
@@ -212,6 +213,8 @@ def create_records_from_file(path_to_file):
     Wrapping function using docextract_record.create_record function to return a
     list of BibRecord structures.
     """
+    from invenio.docextract_record import create_record
+
     fd_xml_file = open(path_to_file, "r")
     xml = fd_xml_file.read()
     fd_xml_file.close()
@@ -224,6 +227,7 @@ def create_records_from_string(xml):
     Wrapping function using docextract_record.create_record function to return a
     list of BibRecord structures.
     """
+    from invenio.docextract_record import create_record
     return create_record(xml)
 
 
@@ -269,8 +273,8 @@ def compare_datetime_to_iso8601_date(date_obj, iso8601_date):
     if 'Z' not in iso8601_date:
         # Incoming date format looks like: '2013-07-18T16:31:46-0400'
         offset_from_utc = iso8601_date[-5:]  # Ex: '-0400'
-        offset_from_utc_hour = int(offset_from_utc[1:-2])
-        offset_from_utc_minutes = int(offset_from_utc[-2:])
+        # offset_from_utc_hour = int(offset_from_utc[1:-2])
+        # offset_from_utc_minutes = int(offset_from_utc[-2:])
         offset_from_utc_operator = offset_from_utc[0]
 
         stripped_date = iso8601_date[:-5]  # Ex: '2013-07-18T16:31:46'
@@ -289,3 +293,52 @@ def compare_datetime_to_iso8601_date(date_obj, iso8601_date):
         iso8601_date_utc = iso8601_date.replace("Z", "").replace("T", " ")
 
     return date_obj_utc < iso8601_date_utc
+
+
+def create_work_folder(base_folder):
+    """Returns the path of a working folder with a naming schema.
+
+    Will return the path of a folder with a naming schema using dates
+    in the specified base folder, with increment.
+
+    For example: 2014-05.05.1
+    """
+    create_folders(base_folder)
+
+    run = 1
+    date = datetime.datetime.now().strftime("%Y.%m.%d")
+    out_folder = os.path.join(base_folder, date + "-" + str(run))
+    while(os.path.exists(out_folder)):
+        run += 1
+        out_folder = os.path.join(base_folder, date + "-" + str(run))
+    os.mkdir(out_folder)
+    return out_folder
+
+
+def create_folders(new_folder):
+    """Create folders if they do not exist"""
+    if not os.path.exists(new_folder):
+        folders = new_folder.split("/")
+        folder = "/"
+        for i in range(1, len(folders)):
+            folder = os.path.join(folder, folders[i]).strip()
+            if not os.path.exists(folder):
+                os.mkdir(folder)
+
+
+def write_record_to_file(filename, record_list):
+    """Writes a new MARCXML file to specified path from BibRecord list."""
+    from invenio.bibrecord import record_xml_output
+
+    if len(record_list) > 0:
+        out = []
+        out.append("<collection>")
+        for record in record_list:
+            if record != {}:
+                out.append(record_xml_output(record))
+        out.append("</collection>")
+        if len(out) > 2:
+            file_fd = open(filename, 'w')
+            file_fd.write("\n".join(out))
+            file_fd.close()
+            return True

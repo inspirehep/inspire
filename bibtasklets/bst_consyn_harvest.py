@@ -27,12 +27,15 @@ from os import remove, listdir, mkdir
 from datetime import datetime
 from os.path import join, exists, isfile, getsize
 from zipfile import ZipFile, BadZipfile
+from MySQLdb import ProgrammingError
+
 from invenio.dbquery import run_sql
 from invenio.mailutils import send_email
 from invenio.filedownloadutils import download_url, InvenioFileDownloadError
 from harvestingkit.minidom_utils import get_value_in_tag
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
+from invenio.apsharvest_utils import create_work_folder
 from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
 try:
     from invenio.config import CFG_CONSYNHARVEST_EMAIL
@@ -99,30 +102,34 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
         write_message('Warning delete_zip parameter is not a valid Boolean (True/False)\n' +
                       'the default value \'False\' has been used!\n')
 
-    create_folders(CFG_CONSYN_OUT_DIRECTORY)
+    out_folder = create_work_folder(CFG_CONSYN_OUT_DIRECTORY)
+
     try:
         run_sql("SELECT filename FROM CONSYNHARVEST")
-    except:
+    except ProgrammingError:
+        # Table missing, create it.
         run_sql("CREATE TABLE CONSYNHARVEST ("
                 "filename VARCHAR(100) NOT NULL PRIMARY KEY,"
                 "date VARCHAR(50),"
                 "size VARCHAR(30) );")
+
     if not package and not package_list:
-        download_feed(feed, batch_size, delete_zip, new_sources)
+        download_feed(feed, batch_size, delete_zip, new_sources, out_folder)
     elif package:
-        extract_package(package, batch_size, delete_zip)
+        extract_package(package, batch_size, delete_zip, out_folder)
     elif package_list:
         extract_multiple_packages(package_list, batch_size,
-                                  delete_zip, new_sources)
+                                  delete_zip, new_sources,
+                                  out_folder)
 
     task_sleep_now_if_required(can_stop_too=True)
-    consyn_files = join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
+    consyn_files = join(out_folder, "consyn-files")
     consyn_files = consyn_files.lstrip()
     els = ElsevierPackage(path="whatever", CONSYN=True)
     task_update_progress("Converting files 2/2...")
     fetch_xml_files(consyn_files, els, new_files)
     task_sleep_now_if_required(can_stop_too=False)
-    create_collection(batch_size, new_files, new_sources)
+    create_collection(batch_size, new_files, new_sources, out_folder)
 
 
 def get_title(xmlFile):
@@ -132,12 +139,12 @@ def get_title(xmlFile):
         print >> sys.stderr, "Can't find title"
 
 
-def extractAll(zipName, delete_zip):
+def extractAll(zipName, delete_zip, directory):
     """Unzip a zip file"""
     write_message("Unziping: " + zipName + "\n")
     z = ZipFile(zipName)
     for f in z.namelist():
-        extract_fld = join(CFG_CONSYN_OUT_DIRECTORY, "consyn-files")
+        extract_fld = join(directory, "consyn-files")
         extract_fld = extract_fld.lstrip()
         if not exists(join(extract_fld, f)):
             z.extract(f, extract_fld)
@@ -186,7 +193,8 @@ def fetch_xml_files(folder, els, new_files):
                 fetch_xml_files(subfolder, els, new_files)
 
 
-def download_feed(feed, batch_size, delete_zip, new_sources):
+def download_feed(feed, batch_size, delete_zip, new_sources,
+                  directory):
     """ Get list of entries from XML document """
     xmlString = ""
     try:
@@ -219,8 +227,8 @@ def download_feed(feed, batch_size, delete_zip, new_sources):
         fileUrl = entry.getElementsByTagName("link")[0].getAttribute("href")
         fileName = entry.getElementsByTagName("title")[0].firstChild.data
         updated = entry.getElementsByTagName("updated")[0].firstChild.data
-        # Output location is CFG_CONSYN_OUT_DIRECTORY + filename
-        outFilename = join(CFG_CONSYN_OUT_DIRECTORY, fileName)
+        # Output location is directory + filename
+        outFilename = join(directory, fileName)
         outFilename = outFilename.lstrip()
 
         #file has already been fetched
@@ -244,7 +252,7 @@ def download_feed(feed, batch_size, delete_zip, new_sources):
                     "VALUES (%s,%s,%s)",
                     (outFilename, updated, size))
             try:
-                extractAll(outFilename, delete_zip)
+                extractAll(outFilename, delete_zip, directory)
             except BadZipfile:
                 write_message("Error BadZipfile %s", (outFilename,))
                 task_update_status("CERROR")
@@ -254,9 +262,9 @@ def download_feed(feed, batch_size, delete_zip, new_sources):
                         (outFilename,))
 
 
-def extract_package(package, batch_size, delete_zip):
+def extract_package(package, batch_size, delete_zip, directory):
     try:
-        extractAll(package, delete_zip)
+        extractAll(package, delete_zip, directory)
     except BadZipfile:
         write_message("Error BadZipfile %s", (package,))
         task_update_status("CERROR")
@@ -264,15 +272,17 @@ def extract_package(package, batch_size, delete_zip):
 
 
 def extract_multiple_packages(package_list, batch_size,
-                              delete_zip, new_sources):
+                              delete_zip, new_sources,
+                              directory):
     packages_file = open(package_list, 'r')
     for line in packages_file:
         if line:
-            extract_package(line, batch_size, delete_zip)
+            extract_package(line, batch_size, delete_zip, directory)
             new_sources.append(line)
 
 
-def create_collection(batch_size, new_files, new_sources):
+def create_collection(batch_size, new_files, new_sources,
+                      directory):
     """Create a single xml file "collection.xml"
     that contains all the records."""
     subject = "Consyn harvest results: %s" % \
@@ -282,7 +292,7 @@ def create_collection(batch_size, new_files, new_sources):
         counter = 0
         date = datetime.now().strftime("%Y.%m.%d")
         filename = "elsevier-%s-%s.xml" % (date, batch)
-        filename = join(CFG_CONSYN_OUT_DIRECTORY, filename)
+        filename = join(directory, filename)
         filename = filename.lstrip()
         collection = open(filename, 'w')
         collection.write("<collection>\n")
@@ -293,7 +303,7 @@ def create_collection(batch_size, new_files, new_sources):
                 collection.write("</collection>")
                 collection.close()
                 filename = "elsevier-%s-%s.xml" % (date, batch)
-                filename = join(CFG_CONSYN_OUT_DIRECTORY, filename)
+                filename = join(directory, filename)
                 filename = filename.lstrip()
                 collection = open(filename, 'w')
                 collection.write("<collection>\n")
@@ -310,7 +320,7 @@ def create_collection(batch_size, new_files, new_sources):
                (len(new_sources), len(new_files), (batch - 1) * 500 + counter)
         for i in range(1, batch + 1):
             filename = "elsevier-%s-%s.xml" % (date, i)
-            filename = join(CFG_CONSYN_OUT_DIRECTORY, filename)
+            filename = join(directory, filename)
             filename = filename.lstrip()
             if i == batch:
                 body += "%s (%s records)\n" % (filename, counter)
