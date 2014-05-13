@@ -1028,14 +1028,41 @@ def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
             write_message("OK. Record is below the threshold.", verbose=3)
 
         if add_metadata:
-            from harvestingkit.aps_package import ApsPackage
+            from harvestingkit.aps_package import (ApsPackage,
+                                                   ApsPackageXMLError)
 
             # Generate Metadata,FFT and yield it
             aps = ApsPackage()
-            xml = aps.get_record(fulltext_file)
+            try:
+                xml = aps.get_record(fulltext_file)
+                record.add_metadata_by_string(xml)
+            except ApsPackageXMLError, e:
+                # This must be old-format XML
+                write_message("Warning: old-style metadata detected for %s" %
+                              (fulltext_file))
+                # Remove any DTD info in the file before converting
+                cleaned_fulltext_file = remove_dtd_information(fulltext_file)
+                try:
+                    convert_xml_using_saxon(cleaned_fulltext_file,
+                                            CFG_APSHARVEST_XSLT)
+
+                    # Conversion is a success. Let's derive location of converted file
+                    source_directory = os.path.dirname(cleaned_fulltext_file)
+                    path_to_converted = "%s%s%s.xml" % \
+                                        (source_directory,
+                                         os.sep,
+                                         record.doi.replace('/', '_'))
+                    write_message("Converted meta-data for %s" %
+                                 (record.recid or "new record"), verbose=2)
+                    record.add_metadata(path_to_converted)
+                except APSHarvesterConversionError, e:
+                    msg = "Metadata conversion failed: %s\n%s" % \
+                          (str(e), traceback.format_exc()[:-1])
+                    write_message(msg, stream=sys.stderr)
+                    yield record, msg
+
             write_message("Converted metadata for %s" %
                           (record.recid or "new record"), verbose=2)
-            record.add_metadata_by_string(xml)
 
         if attach_fulltext:
             record.add_fft(fulltext_file, hidden_fulltext)
