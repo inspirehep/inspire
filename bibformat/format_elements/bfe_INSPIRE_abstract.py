@@ -20,7 +20,7 @@
 """
 
 
-def format_element(bfo, prefix_en, suffix_en, escape="3", separator_en="<br/>"):
+def format_element(bfo, prefix_en, suffix_en, escape="0", separator_en="<br/>"):
     """ Prints the abstract of a record in HTML in English.
 
     @param prefix_en: a prefix for english abstract (printed only if english abstract exists)

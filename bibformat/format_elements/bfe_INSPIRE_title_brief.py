@@ -20,7 +20,7 @@
 """
 
 
-def format_element(bfo, highlight="no", force_title_case="no", brief="no", esctitle='1', oldtitles="no"):
+def format_element(bfo, highlight="no", force_title_case="no", brief="no", esctitle='0', oldtitles="no"):
     """
     Prints a title, with optional subtitles, and optional highlighting.
 
