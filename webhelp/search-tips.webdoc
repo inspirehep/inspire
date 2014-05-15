@@ -480,7 +480,6 @@ provides a simple way to search on journal references.</p>
       <p>All dates must be in the ISO format, yyyy(-mm(-dd)), e.g. "2003", "2003-06", "2003-06-27" or 
       "nov 1997", "18 nov 1997". Dates such as "today", "yesterday", "last month" and "this month" also work.</p>
       <p>There are also indexes for date-added (da or dadd) and date-updated (du dupd)</p>
-      <p>Note that in all date searching INSPIRE interprets "&gt;" and "&lt;" as "&ge;" and "&le;", so "find date > 2000" will find 2000, 2001, 2002, etc.</p> 
      </td>
    </tr>
  </table>
