@@ -45,10 +45,9 @@
   <hu>Üdvözöljük a <CFG_SITE_NAME_INTL> _(Easy Search)_ szolgáltatásában.</hu>
 </lang>
 </p>
-<blockquote>
-<dl>
 
 <script type="text/javascript">
+<!--
     function perform_easy_search() {
         // get values
         author = document.getElementById('author').value;
@@ -106,13 +105,15 @@
             perform_easy_search();
         }
     });
+-->
 </script>
 
-<form>
+<form action="">
 <table border="0">
 <tbody>
 <tr valign="bottom">
-<td class="searchboxbody" style="white-space: nowrap;">
+<td class="searchboxbody" style="white-space: nowrap;"></td>
+</tr>
 
 <tr>
 <th align="right">Author:</th>
@@ -187,7 +188,8 @@
 
 <tr>
 <th align="right">Journal:</th>
-<td align="left"><select id="j" tabindex="10">
+<td align="left">
+<select id="j" tabindex="10">
     <option value="" selected="selected">Any Journal</option>
     <option value="Acta Phys.Austr.">Acta Phys.Austr.</option>
     <option value="Acta Phys.Polon.">Acta Phys.Polon.</option>
@@ -274,7 +276,8 @@
     <option value="Zh.Eksp.Teor.Fiz.">Zh.Eksp.Teor.Fiz.</option>
 </select>&nbsp;&nbsp;
 vol:<input size="8" id="jvol" tabindex="11"/>
-pg: <input size="8" id="jpage" tabindex="12"/></td>
+pg: <input size="8" id="jpage" tabindex="12"/>
+</td>
 </tr>
 </tbody>
 </table>
