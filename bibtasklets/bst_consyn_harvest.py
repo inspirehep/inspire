@@ -51,10 +51,7 @@ except ImportError:
     CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
 from invenio.config import CFG_CONSYN_ATOM_KEY
 
-NOT_ARTICLE_TITLES = ["editorial board", "author index", "subject index",
-                      "announcement from the publisher", "index", "preface",
-                      "list of participants"]
-
+INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
 def bst_consyn_harvest(feed=None, package=None, package_list=None,
                        batch_size='500', delete_zip='False'):
@@ -177,13 +174,11 @@ def fetch_xml_files(folder, els, new_files):
                                                      of="id")
                         if not res:
                             write_message("DOI not found")
-                            title = get_title(dom_xml).lower()
+                            doctype = els.get_doctype(dom_xml).lower()
                             #ignore index pages
-                            if not title.startswith("cumulative author index") and \
-                                    not title in NOT_ARTICLE_TITLES and \
-                                    not title.startswith("papers"):
+                            if doctype in INTERESTING_DOCTYPES:
                                 marcfile = open(file_loc, 'w')
-                                marcfile.write(els.get_record(subfolder, True))
+                                marcfile.write(els.get_record(subfolder))
                                 marcfile.close()
                                 new_files.append(file_loc)
                                 task_sleep_now_if_required(can_stop_too=False)
