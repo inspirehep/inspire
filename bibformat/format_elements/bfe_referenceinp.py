@@ -41,7 +41,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
     out = ""
     tableid = 0
-    for reference in bfo.fields("999C5", escape=1):
+    for reference in bfo.fields("999C5", escape=0):
         tableid += 1
 
         ordinal       = reference.get('o', '')

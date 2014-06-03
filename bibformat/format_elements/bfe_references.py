@@ -31,7 +31,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
     @param reference_prefix a prefix displayed before each reference
     @param reference_suffix a suffix displayed after each reference
     """
-    references = bfo.fields("999C5", escape=1, repeatable_subfields_p=True)
+    references = bfo.fields("999C5", escape=0, repeatable_subfields_p=True)
 
     out = ""
     last_o = ""
