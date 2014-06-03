@@ -35,26 +35,27 @@ import shutil
 from bs4 import BeautifulSoup
 
 from invenio.jsonutils import json
-from invenio.shellutils import split_cli_ids_arg, \
-    run_shell_command
+from invenio.shellutils import (split_cli_ids_arg,
+                                run_shell_command)
 from invenio.mailutils import send_email
-from invenio.bibtask import task_update_status, \
-    write_message, \
-    task_update_progress, \
-    task_low_level_submission, \
-    task_sleep_now_if_required, \
-    task_set_task_param
+from invenio.bibtask import (task_update_status,
+                             write_message,
+                             task_update_progress,
+                             task_low_level_submission,
+                             task_sleep_now_if_required,
+                             task_set_task_param)
 from invenio.config import CFG_SITE_SUPPORT_EMAIL
 from invenio.bibdocfile import open_url
-from invenio.search_engine import perform_request_search, search_pattern
+from invenio.search_engine import (perform_request_search,
+                                   search_pattern)
 from invenio.bibformat_engine import BibFormatObject
-from invenio.filedownloadutils import download_url, InvenioFileDownloadError
-from invenio.apsharvest_dblayer import fetch_last_updated, \
-    get_all_new_records, \
-    get_all_modified_records, \
-    store_last_updated, \
-    can_launch_bibupload
-
+from invenio.filedownloadutils import (download_url,
+                                       InvenioFileDownloadError)
+from invenio.apsharvest_dblayer import (fetch_last_updated,
+                                        get_all_new_records,
+                                        get_all_modified_records,
+                                        store_last_updated,
+                                        can_launch_bibupload)
 from invenio.apsharvest_utils import (unzip,
                                       find_and_validate_md5_checksums,
                                       get_temporary_file,
@@ -67,18 +68,17 @@ from invenio.apsharvest_utils import (unzip,
                                       validate_date,
                                       get_file_modified_date,
                                       compare_datetime_to_iso8601_date,
-                                      create_work_folder)
-
-from invenio.apsharvest_config import CFG_APSHARVEST_FULLTEXT_URL, \
-    CFG_APSHARVEST_SEARCH_COLLECTION, \
-    CFG_APSHARVEST_RECORD_DOI_TAG, \
-    CFG_APSHARVEST_MD5_FILE, \
-    CFG_APSHARVEST_FFT_DOCTYPE, \
-    CFG_APSHARVEST_REQUEST_TIMEOUT, \
-    CFG_APSHARVEST_BUNCH_SIZE
-
-from invenio.docextract_record import BibRecord, BibRecordControlField
-
+                                      create_work_folder,
+                                      upload_to_FTP)
+from invenio.apsharvest_config import (CFG_APSHARVEST_FULLTEXT_URL,
+                                       CFG_APSHARVEST_SEARCH_COLLECTION,
+                                       CFG_APSHARVEST_RECORD_DOI_TAG,
+                                       CFG_APSHARVEST_MD5_FILE,
+                                       CFG_APSHARVEST_FFT_DOCTYPE,
+                                       CFG_APSHARVEST_REQUEST_TIMEOUT,
+                                       CFG_APSHARVEST_BUNCH_SIZE)
+from invenio.docextract_record import (BibRecord,
+                                       BibRecordControlField)
 try:
     from invenio.config import CFG_APSHARVEST_XSLT
 except ImportError:
@@ -505,6 +505,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             continue
         records_harvested.append(record)
         count += 1
+        files_uploaded = []
         # When in BibUpload mode, check if we are on the limit and ready to submit
         if len(records_harvested) == CFG_APSHARVEST_BUNCH_SIZE:
 
@@ -528,6 +529,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                         out_folder,
                                         devmode=devmode,
                                         subject=mail_subject)
+                try:
+                    upload_to_FTP(record_filename)
+                    files_uploaded.append(record_filename)
+                    write_message("%s successfully uploaded to FTP server" % record_filename)
+                except:
+                    write_message("Failed to upload %s to FTP server" % record_filename)
                 if not taskid and not devmode:
                     # Something went wrong
                     err_string = "New records (%s)" \
@@ -548,6 +555,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                         silent=records and True or False,
                                         devmode=devmode,
                                         subject=mail_subject)
+                try:
+                    upload_to_FTP(record_filename)
+                    files_uploaded.append(record_filename)
+                    write_message("%s successfully uploaded to FTP server" % record_filename)
+                except:
+                    write_message("Failed to upload %s to FTP server" % record_filename)
+
                 if not taskid and not devmode:
                     # Something went wrong
                     err_string = "Existing records (%s)" \
@@ -582,6 +596,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                     silent=records and True or False,
                                     devmode=devmode,
                                     subject=mail_subject)
+            try:
+                upload_to_FTP(record_filename)
+                files_uploaded.append(record_filename)
+                write_message("%s successfully uploaded to FTP server" % record_filename)
+            except:
+                write_message("Failed to upload %s to FTP server" % record_filename)
             if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
@@ -598,6 +618,13 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                                     silent=records and True or False,
                                     devmode=devmode,
                                     subject=mail_subject)
+            try:
+                upload_to_FTP(record_filename)
+                files_uploaded.append(record_filename)
+                write_message("%s successfully uploaded to FTP server" % record_filename)
+            except:
+                write_message("Failed to upload %s to FTP server" % record_filename)
+
             if not taskid and not devmode:
                 # Something went wrong
                 write_message("Records were not submitted correctly")
@@ -1154,3 +1181,8 @@ def get_record_from_doi(doi):
         raise APSHarvesterSearchError("DOI mismatch: %s did not find only 1 record: %s" %
                                       ",".join(recids))
     return int(recids[0])
+
+if __name__ == '__main__':
+    bst_apsharvest(from_date="2014-05-05",
+                   until_date="2014-05-06",
+                   threshold_date='2014-05-04')

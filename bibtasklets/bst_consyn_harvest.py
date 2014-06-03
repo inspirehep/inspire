@@ -23,28 +23,37 @@ import sys
 import xml.dom.minidom
 import traceback
 
-from os import remove, listdir, mkdir
+from os import (remove,
+                listdir,
+                mkdir)
 from datetime import datetime
-from os.path import join, exists, isfile, getsize
-from zipfile import ZipFile, BadZipfile
+from os.path import (join,
+                     exists,
+                     isfile,
+                     getsize)
+from zipfile import (ZipFile,
+                     BadZipfile)
 from MySQLdb import ProgrammingError
 
 from invenio.dbquery import run_sql
 from invenio.mailutils import send_email
-from invenio.filedownloadutils import download_url, InvenioFileDownloadError
+from invenio.filedownloadutils import (download_url,
+                                       InvenioFileDownloadError)
 from harvestingkit.minidom_utils import get_value_in_tag
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
-from invenio.apsharvest_utils import create_work_folder
-from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
+from invenio.apsharvest_utils import (create_work_folder,
+                                      upload_to_FTP)
+from invenio.config import (CFG_TMPSHAREDDIR,
+                            CFG_SITE_SUPPORT_EMAIL)
 try:
     from invenio.config import CFG_CONSYNHARVEST_EMAIL
 except ImportError:
     CFG_CONSYNHARVEST_EMAIL = CFG_SITE_SUPPORT_EMAIL
-from invenio.bibtask import task_update_status,\
-    write_message,\
-    task_update_progress,\
-    task_sleep_now_if_required
+from invenio.bibtask import (task_update_status,
+                             write_message,
+                             task_update_progress,
+                             task_sleep_now_if_required)
 try:
     from invenio.config import CFG_CONSYN_OUT_DIRECTORY
 except ImportError:
@@ -53,11 +62,11 @@ from invenio.config import CFG_CONSYN_ATOM_KEY
 
 INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
+
 def bst_consyn_harvest(feed=None, package=None, package_list=None,
                        batch_size='500', delete_zip='False'):
-    """
-    Task to convert xml files from consyn.elsevier.com to marc xml files.
-    There are three excecution modes:
+    """ Task to convert xml files from consyn.elsevier.com to Marc xml files.
+    There are three execution modes:
     1. Download from an atom feed.
     2. Extract a zip package.
     3. Extract a list of zip packages.
@@ -286,41 +295,46 @@ def create_collection(batch_size, new_files, new_sources,
         batch = 1
         counter = 0
         date = datetime.now().strftime("%Y.%m.%d")
-        filename = "elsevier-%s-%s.xml" % (date, batch)
-        filename = join(directory, filename)
-        filename = filename.lstrip()
-        collection = open(filename, 'w')
-        collection.write("<collection>\n")
-        for f in new_files:
-            if counter == batch_size:
-                counter = 0
-                batch += 1
-                collection.write("</collection>")
-                collection.close()
-                filename = "elsevier-%s-%s.xml" % (date, batch)
-                filename = join(directory, filename)
-                filename = filename.lstrip()
-                collection = open(filename, 'w')
-                collection.write("<collection>\n")
-            xmlFile = open(f, 'r')
-            xmlString = xmlFile.read()
-            xmlFile.close()
-            collection.write(xmlString+'\n')
-            counter += 1
-        collection.write("</collection>")
-        collection.close()
-
-        body = """From %s sources, found and converted %s records\n
-               %s files ready to upload:\n""" %\
-               (len(new_sources), len(new_files), (batch - 1) * 500 + counter)
-        for i in range(1, batch + 1):
-            filename = "elsevier-%s-%s.xml" % (date, i)
-            filename = join(directory, filename)
-            filename = filename.lstrip()
-            if i == batch:
-                body += "%s (%s records)\n" % (filename, counter)
-            else:
-                body += "%s (%s records)\n" % (filename, batch_size)
+        filepath = "elsevier-%s-%s.xml" % (date, batch)
+        filepath = join(directory, filepath)
+        filepath = filepath.lstrip()
+        files_to_upload = []
+        with open(filepath, 'w') as collection:
+            collection.write("<collection>\n")
+            for f in new_files:
+                if counter == batch_size:
+                    counter = 0
+                    batch += 1
+                    collection.write("</collection>")
+                    collection.close()
+                    files_to_upload.append(filepath)
+                    filepath = "elsevier-%s-%s.xml" % (date, batch)
+                    filepath = join(directory, filepath)
+                    filepath = filepath.lstrip()
+                    collection = open(filepath, 'w')
+                    collection.write("<collection>\n")
+                xmlFile = open(f, 'r')
+                xmlString = xmlFile.read()
+                xmlFile.close()
+                collection.write(xmlString+'\n')
+                counter += 1
+            collection.write("</collection>")
+            files_to_upload.append(filepath)
+        body = ['From %s sources, found and converted %s records' % (len(new_sources), len(new_files)),
+                '\t%s records ready to upload:\n' % ((batch - 1) * 500 + counter,),
+                '\tFiles uploaded to Server:']
+        for filepath in files_to_upload:
+            try:
+                upload_to_FTP(filepath)
+                filename = filepath.split('/')[-1]
+                body.append("\t%s (%s records)" % (filename, batch_size))
+                write_message("%s successfully uploaded to FTP server" % filepath)
+            except:
+                write_message("Failed to upload %s to FTP server" % filepath)
+        if len(body) > 3:
+            #update the last line of the message
+            body[-1] = "\t%s (%s records)" % (filename, counter)
+            body = '\n'.join(body)
 
         write_message(subject)
         write_message(body)
