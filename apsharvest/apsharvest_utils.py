@@ -26,6 +26,9 @@ import datetime
 import time
 
 from tempfile import mkdtemp, mkstemp
+from invenio.config import (CFG_FTP_SERVER,
+                            CFG_FTP_AUTHENTICATION_FILE)
+from harvestingkit.ftp_utils import FtpHandler
 
 
 class InvenioFileChecksumError(Exception):
@@ -342,3 +345,10 @@ def write_record_to_file(filename, record_list):
             file_fd.write("\n".join(out))
             file_fd.close()
             return True
+
+
+def upload_to_FTP(filename, location=''):
+    """ Uploads a file to the FTP server"""
+    ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
+    ftp.upload(filename, location)
+    ftp.close()
