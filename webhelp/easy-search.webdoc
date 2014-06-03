@@ -65,6 +65,8 @@
         j = j.options[j.selectedIndex].value;
         jvol = document.getElementById('jvol').value;
         jpage = document.getElementById('jpage').value;
+        date = document.getElementById('date').value;
+        dateuntil = document.getElementById('dateuntil').value;
 
         // filter and build
         query = 'find';
@@ -92,6 +94,12 @@
             if (jvol != '') { query += ' and vol ' + jvol; }
             if (jpage != '') { query += ' and jp ' + jpage; }
         }
+
+        if (date != '' && dateuntil != '') {
+            query += ' and date ' + date + '->' + dateuntil; 
+        }
+        else if (date != '') { query += ' and date ' + date; }
+        else if (dateuntil != '') { query += ' and date 0->' + dateuntil; }
 
         query = query.replace(/topcite (\d+)?\+/, 'topcite $1->99999');
         query = query.replace(' and ', ' ');
@@ -279,11 +287,20 @@ vol:<input size="8" id="jvol" tabindex="11"/>
 pg: <input size="8" id="jpage" tabindex="12"/>
 </td>
 </tr>
+
+<tr>
+<th align="right">Date:</th>
+<td align="left">
+    <input size="22" id="date" tabindex="13"/>&nbsp;
+    until:
+    <input size="22" id="dateuntil" tabindex="14"/>
+</td>
+</tr>
 </tbody>
 </table>
 </form>
 
 <div style="white-space: nowrap;" align="center">
-    <input type="button" onclick="perform_easy_search()" value="Search" class="formbutton" tabindex="13"/>
+    <input type="button" onclick="perform_easy_search()" value="Search" class="formbutton" tabindex="15"/>
 </div>
 
