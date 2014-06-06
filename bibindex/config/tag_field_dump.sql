@@ -184,6 +184,7 @@ INSERT INTO `tag` (`id`, `name`, `value`) VALUES (163,'additional report number'
 INSERT INTO `tag` (`id`, `name`, `value`) VALUES (164,'490__v','490__v');
 INSERT INTO `tag` (`id`, `name`, `value`) VALUES (165,'main title','245__%');
 INSERT INTO `tag` (`id`, `name`, `value`) VALUES (166,'additional title','246__%');
+INSERT INTO `tag` (`id`, `name`, `value`) VALUES (167,'110__%','110__%');
 
 --
 -- Dumping data for table `field`
@@ -337,7 +338,6 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (10,60,90);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (10,105,80);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (10,43,70);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (11,26,100);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,86,101);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (12,74,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (13,56,103);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (14,55,100);
@@ -362,13 +362,6 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (24,8,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (24,11,90);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (38,8,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (38,11,90);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,149,100);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,68,100);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,95,90);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,66,80);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,69,80);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,71,80);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,70,80);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (26,66,90);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (27,67,90);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (27,150,90);
@@ -399,8 +392,6 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (41,41,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (41,154,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (42,97,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (8,59,101);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,85,102);
-INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,84,103);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (34,105,101);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (43,157,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (15,102,101);
@@ -423,6 +414,10 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (48,40,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (48,164,1);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,165,1);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,166,0);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,65,100);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,167,98);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,70,80);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (25,102,70);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
