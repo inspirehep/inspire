@@ -241,6 +241,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (49,'exact title','exacttitle'
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (50,'refers to excluding self cites','referstoexcludingselfcites');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (51,'cited by excluding self cites','citedbyexcludingselfcites');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (52,'cataloguer nickname','cataloguer');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (53,'parent','parent');
 
 --
 -- Dumping data for table `field_tag`
@@ -324,6 +325,7 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (3,29,70);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (3,32,60);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (3,101,60);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (3,134,60);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (3,157,60);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (4,20,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (5,28,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (5,24,90);
@@ -355,6 +357,7 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (17,8,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (17,11,90);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (17,29,70);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (17,32,60);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (17,157,60);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (18,49,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (22,44,100);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (23,46,100);
@@ -423,6 +426,7 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (48,40,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (48,164,1);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,165,1);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (49,166,0);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (53,157,10);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
