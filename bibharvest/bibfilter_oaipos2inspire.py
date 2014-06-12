@@ -87,7 +87,7 @@ def main(args):
                 filename = join(out_folder, identifier + ".pdf")
                 record_add_field(rec, '856', ind1='4', subfields=[
                     ('u', url),
-                    ('y', "Fulltext")
+                    ('y', 'PoS server')
                 ])
                 record_add_field(rec, 'FFT', subfields=[('a', filename),
                                                         ('t', 'PoS'),
