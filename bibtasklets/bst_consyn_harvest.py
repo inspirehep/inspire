@@ -18,8 +18,6 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-
-import sys
 import xml.dom.minidom
 import traceback
 
@@ -39,7 +37,6 @@ from invenio.dbquery import run_sql
 from invenio.mailutils import send_email
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
-from harvestingkit.minidom_utils import get_value_in_tag
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
 from invenio.apsharvest_utils import (create_work_folder,
@@ -64,28 +61,32 @@ INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
 
 def bst_consyn_harvest(feed=None, package=None, package_list=None,
-                       batch_size='500', delete_zip='False'):
+                       batch_size='500', delete_zip='False', upload_FTP='True'):
     """ Task to convert xml files from consyn.elsevier.com to Marc xml files.
     There are three execution modes:
     1. Download from an atom feed.
     2. Extract a zip package.
     3. Extract a list of zip packages.
 
-    @param feed: The URL of the atom feed to download.
-    @type feed: string
+    :param feed: The URL of the atom feed to download.
+    :type feed: string
 
-    @param package: A path to a zip package
-    @type package: string
+    :param package: A path to a zip package
+    :type package: string
 
-    @param package_list: A path to a file with a list of paths to zip packages
-    @type package_list: string
+    :param package_list: A path to a file with a list of paths to zip packages
+    :type package_list: string
 
-    @param batch_size: The number of records contained in each output file
-    @type batch_size: int
+    :param batch_size: The number of records contained in each output file
+    :type batch_size: string representation of an integer
 
-    @param delete_zip: Flag to indicate if the downloaded zip files
+    :param delete_zip: Flag to indicate if the downloaded zip files
                        should be kept on the disk or not
-    @type delete_zip: boolean
+    :type delete_zip: string representation of a boolean
+
+    :param upload_FTP: Flag to indicate whether the result files
+                       should be uploaded to the FTP server
+    :type upload_FTP: string representation of a boolean
     """
     if not feed:
         feed = "https://consyn.elsevier.com/batch/atom?key=%s" % \
@@ -107,6 +108,14 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
         delete_zip = False
         write_message('Warning delete_zip parameter is not a valid Boolean (True/False)\n' +
                       'the default value \'False\' has been used!\n')
+    if upload_FTP.lower() == 'true':
+        upload_FTP = True
+    elif upload_FTP.lower() == 'false':
+        upload_FTP = False
+    else:
+        upload_FTP = True
+        write_message('Warning upload_FTP parameter is not a valid Boolean (True/False)\n' +
+                      'the default value \'True\' has been used!\n')
 
     out_folder = create_work_folder(CFG_CONSYN_OUT_DIRECTORY)
 
@@ -135,14 +144,7 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
     task_update_progress("Converting files 2/2...")
     fetch_xml_files(consyn_files, els, new_files)
     task_sleep_now_if_required(can_stop_too=False)
-    create_collection(batch_size, new_files, new_sources, out_folder)
-
-
-def get_title(xmlFile):
-    try:
-        return get_value_in_tag(xmlFile, "ce:title")
-    except Exception:
-        print >> sys.stderr, "Can't find title"
+    create_collection(batch_size, new_files, new_sources, out_folder, upload_FTP)
 
 
 def extractAll(zipName, delete_zip, directory):
@@ -212,7 +214,7 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
         finally:
             result_file.close()
             remove(result_path)
-    except InvenioFileDownloadError, err:
+    except InvenioFileDownloadError as err:
         write_message("URL could not be opened: %s" % (feed,))
         write_message(str(err))
         write_message(traceback.format_exc()[:-1])
@@ -244,7 +246,7 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
                 write_message("Downloading %s to %s\n" % (fileUrl, outFilename))
                 download_url(fileUrl, "zip", outFilename, 5, 60.0)
                 new_sources.append(outFilename)
-            except InvenioFileDownloadError, err:
+            except InvenioFileDownloadError as err:
                 write_message("URL could not be opened: %s" % (fileUrl,))
                 write_message(str(err))
                 write_message(traceback.format_exc()[:-1])
@@ -286,7 +288,7 @@ def extract_multiple_packages(package_list, batch_size,
 
 
 def create_collection(batch_size, new_files, new_sources,
-                      directory):
+                      directory, upload_FTP):
     """Create a single xml file "collection.xml"
     that contains all the records."""
     subject = "Consyn harvest results: %s" % \
@@ -316,19 +318,21 @@ def create_collection(batch_size, new_files, new_sources,
                 xmlFile = open(f, 'r')
                 xmlString = xmlFile.read()
                 xmlFile.close()
-                collection.write(xmlString+'\n')
+                collection.write(xmlString + '\n')
                 counter += 1
             collection.write("</collection>")
             files_to_upload.append(filepath)
         body = ['From %s sources, found and converted %s records' % (len(new_sources), len(new_files)),
-                '\t%s records ready to upload:\n' % ((batch - 1) * 500 + counter,),
-                '\tFiles uploaded to Server:']
+                '\t%s records ready to upload:\n' % ((batch - 1) * 500 + counter,)]
+        if upload_FTP:
+            body += ['\tFiles uploaded to Server:']
+        else:
+            body += ['\tFiles ready for upload:']
         for filepath in files_to_upload:
             try:
                 submit_records_via_ftp(filepath)
                 filename = filepath.split('/')[-1]
                 body.append("\t%s (%s records)" % (filename, batch_size))
-                write_message("%s successfully uploaded to FTP server" % filepath)
             except:
                 write_message("Failed to upload %s to FTP server" % filepath)
         if len(body) > 3:
@@ -347,13 +351,13 @@ def create_collection(batch_size, new_files, new_sources,
 def report_records_via_mail(subject, body, toaddr=CFG_CONSYNHARVEST_EMAIL):
     """
     Performs the call to mailutils.send_email and reports the new
-    records via e-mail to the desired receipient (CFG_CONSYNHARVEST_EMAIL).
+    records via e-mail to the desired recipient (CFG_CONSYNHARVEST_EMAIL).
 
-    @param subject: email subject.
-    @type subject: string
+    :param subject: email subject.
+    :type subject: string
 
-    @param body: email contents.
-    @type body: string
+    :param body: email contents.
+    :type body: string
     """
     if send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
                   toaddr=toaddr,
