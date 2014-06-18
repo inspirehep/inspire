@@ -12,20 +12,22 @@ from __future__ import print_function
 import sys
 import requests
 import urllib
+from os import remove
 from os.path import (join,
                      basename)
-
 from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
 from xml.dom.minidom import parse
-from invenio.bibrecord import record_add_field
-from invenio.filedownloadutils import download_url, \
-    InvenioFileDownloadError
-from invenio.config import CFG_TMPSHAREDDIR, CFG_SITE_SUPPORT_EMAIL
+from invenio.bibrecord import (record_add_field,
+                               record_xml_output)
+from invenio.filedownloadutils import (download_url,
+                                       InvenioFileDownloadError)
+from invenio.config import (CFG_TMPSHAREDDIR,
+                            CFG_SITE_SUPPORT_EMAIL)
 from invenio.search_engine import perform_request_search
 from invenio.mailutils import send_email
-
+from invenio.bibtask import write_message
 try:
     from invenio.config import CFG_POSHARVEST_EMAIL
 except ImportError:
@@ -37,7 +39,8 @@ except ImportError:
 
 from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
-                                      write_record_to_file)
+                                      write_record_to_file,
+                                      upload_to_FTP)
 
 base_url = "http://pos.sissa.it/contribution?id="
 
@@ -54,6 +57,7 @@ def main(args):
     insert_records = []
     append_records = []
     error_records = []
+    files_uploaded = []
 
     pos = PosPackage()
     xml_doc = parse(input_filename)
@@ -107,6 +111,18 @@ def main(args):
         if not found:
             error_records.append(rec)
 
+        #upload to FTP
+        tempfile_path = '/tmp/%s.xml' % (contribution,)
+        with open(tempfile_path, 'w') as tempfile:
+            tempfile.write(record_xml_output(rec))
+        try:
+            upload_to_FTP(tempfile_path, conference)
+            files_uploaded.append('%s/%s.xml' % (conference, contribution))
+            write_message("%s successfully uploaded to FTP server" % tempfile_path)
+        except:
+            write_message("Failed to upload %s to FTP server" % tempfile_path)
+        remove(tempfile_path)
+
     insert_filename = "%s.insert.xml" % (input_filename,)
     append_filename = "%s.append.xml" % (input_filename,)
     errors_filename = "%s.errors.xml" % (input_filename,)
@@ -140,8 +156,12 @@ def main(args):
             len(append_records),
             len(error_records),
             "\n".join(created_files))
-    print(subject)
-    print(body)
+    if files_uploaded:
+        body += "\nFiles uploaded:"
+        for fl in files_uploaded:
+            body += "\n\t%s file uploaded on the FTP Server\n" % (fl,)
+    write_message(subject)
+    write_message(body)
     if not send_email(CFG_SITE_SUPPORT_EMAIL,
                       CFG_POSHARVEST_EMAIL,
                       subject,
