@@ -43,7 +43,7 @@ from harvestingkit.minidom_utils import get_value_in_tag
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
 from invenio.apsharvest_utils import (create_work_folder,
-                                      upload_to_FTP)
+                                      submit_records_via_ftp)
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_SUPPORT_EMAIL)
 try:
@@ -325,7 +325,7 @@ def create_collection(batch_size, new_files, new_sources,
                 '\tFiles uploaded to Server:']
         for filepath in files_to_upload:
             try:
-                upload_to_FTP(filepath)
+                submit_records_via_ftp(filepath)
                 filename = filepath.split('/')[-1]
                 body.append("\t%s (%s records)" % (filename, batch_size))
                 write_message("%s successfully uploaded to FTP server" % filepath)

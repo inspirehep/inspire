@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 ##
-## This file is part of Invenio.
-## Copyright (C) 2012 CERN.
+## This file is part of INSPIRE.
+## Copyright (C) 2012, 2013, 2014 CERN.
 ##
-## Invenio is free software; you can redistribute it and/or
+## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
 ## published by the Free Software Foundation; either version 2 of the
 ## License, or (at your option) any later version.
 ##
-## Invenio is distributed in the hope that it will be useful, but
+## INSPIRE is distributed in the hope that it will be useful, but
 ## WITHOUT ANY WARRANTY; without even the implied warranty of
 ## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ## General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with Invenio; if not, write to the Free Software Foundation, Inc.,
+## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 """APS harvester.
@@ -25,162 +25,38 @@ the ALREADY exists in the repository.
 """
 
 import sys
-import os
-import time
-import traceback
 import re
 import datetime
-import shutil
-
-from bs4 import BeautifulSoup
 
 from invenio.jsonutils import json
-from invenio.shellutils import (split_cli_ids_arg,
-                                run_shell_command)
-from invenio.mailutils import send_email
-from invenio.bibtask import (task_update_status,
-                             write_message,
+from invenio.bibtask import (write_message,
                              task_update_progress,
-                             task_low_level_submission,
-                             task_sleep_now_if_required,
                              task_set_task_param)
-from invenio.config import CFG_SITE_SUPPORT_EMAIL
+from invenio.shellutils import split_cli_ids_arg
 from invenio.bibdocfile import open_url
-from invenio.search_engine import (perform_request_search,
-                                   search_pattern)
-from invenio.bibformat_engine import BibFormatObject
-from invenio.filedownloadutils import (download_url,
-                                       InvenioFileDownloadError)
+from invenio.search_engine import (perform_request_search,)
 from invenio.apsharvest_dblayer import (fetch_last_updated,
                                         get_all_new_records,
                                         get_all_modified_records,
-                                        store_last_updated,
-                                        can_launch_bibupload)
-from invenio.apsharvest_utils import (unzip,
-                                      find_and_validate_md5_checksums,
-                                      get_temporary_file,
-                                      InvenioFileChecksumError,
-                                      remove_dtd_information,
-                                      convert_xml_using_saxon,
-                                      APSHarvesterConversionError,
-                                      create_records_from_file,
-                                      create_records_from_string,
-                                      validate_date,
-                                      get_file_modified_date,
-                                      compare_datetime_to_iso8601_date,
-                                      create_work_folder,
-                                      upload_to_FTP)
-from invenio.apsharvest_config import (CFG_APSHARVEST_FULLTEXT_URL,
-                                       CFG_APSHARVEST_SEARCH_COLLECTION,
-                                       CFG_APSHARVEST_RECORD_DOI_TAG,
-                                       CFG_APSHARVEST_MD5_FILE,
-                                       CFG_APSHARVEST_FFT_DOCTYPE,
-                                       CFG_APSHARVEST_REQUEST_TIMEOUT,
+                                        store_last_updated)
+from invenio.apsharvest_utils import (validate_date,
+                                      get_record_from_doi,
+                                      )
+from invenio.apsharvest_config import (CFG_APSHARVEST_SEARCH_COLLECTION,
                                        CFG_APSHARVEST_BUNCH_SIZE)
-from invenio.docextract_record import (BibRecord,
-                                       BibRecordControlField)
-try:
-    from invenio.config import CFG_APSHARVEST_XSLT
-except ImportError:
-    CFG_APSHARVEST_XSLT = "/afs/cern.ch/project/inspire/xslt/aps.xsl"
+from invenio.apsharvest_engine import (APSHarvestJob,
+                                       APSRecordList,
+                                       APSRecord,
+                                       )
+from invenio.apsharvest_errors import (APSHarvesterSearchError,
+                                       APSHarvesterConnectionError,
+                                       )
 
-try:
-    from invenio.config import CFG_APSHARVEST_EMAIL
-except ImportError:
-    CFG_APSHARVEST_EMAIL = "desydoc@desy.de"
 
 try:
     from invenio.config import CFG_APSHARVEST_DIR
 except ImportError:
     CFG_APSHARVEST_DIR = "/afs/cern.ch/project/inspire/uploads/aps"
-
-
-class APSHarvesterSearchError(Exception):
-    """Exception raised when more then one record is found while DOI matching.
-    """
-    pass
-
-
-class APSHarvesterConnectionError(Exception):
-    """Exception raised when unable to connect to APS servers.
-    """
-    pass
-
-
-class APSHarvesterSubmissionError(Exception):
-    """Exception raised when unable to submit new/updated records.
-    """
-    pass
-
-
-class APSHarvesterFileExits(Exception):
-    """Exception raised when local file is the newest.
-    """
-    pass
-
-
-class APSRecordList(list):
-    """
-    Class representing the list of records to harvest.
-    """
-    def __init__(self):
-        super(APSRecordList, self).__init__()
-        self.recids = []
-
-    def append(self, record):
-        """
-        Append a APSRecord to the list if it is not already there.
-        """
-        if record.recid not in self.recids:
-            super(APSRecordList, self).append(record)
-            self.recids.append(record.recid)
-
-
-class APSRecord(object):
-    """
-    Class representing a record to harvest.
-    """
-    def __init__(self, recid, doi=None, date=None, last_modified=None):
-        self.recid = recid
-        self.doi = doi or get_doi_from_record(self.recid)
-        self.date = date
-        self.record = BibRecord(recid or None)
-        self.last_modified = last_modified
-
-    def add_metadata(self, marcxml_file):
-        """
-        Adds metadata from given file. Removes any DTD definitions
-        and translates the metadata to MARCXML using BibConvert.
-        """
-        if marcxml_file:
-            self.record = create_records_from_file(marcxml_file)
-            if self.recid:
-                self.record['001'] = [BibRecordControlField(str(self.recid))]
-
-    def add_metadata_by_string(self, marcxml_text):
-        """
-        Adds metadata from given text.
-        """
-        if marcxml_text:
-            self.record = create_records_from_string(marcxml_text)
-            if self.recid:
-                self.record['001'] = [BibRecordControlField(str(self.recid))]
-
-    def add_fft(self, fulltext_file, hidden=True):
-        """
-        Adds FFT information as required from given fulltext.
-        """
-        fft = self.record.add_field("FFT__")
-        fft.add_subfield('a', fulltext_file)
-
-        if hidden:
-            fft.add_subfield('t', CFG_APSHARVEST_FFT_DOCTYPE)
-            fft.add_subfield('o', "HIDDEN")
-        else:
-            fft.add_subfield('t', "INSPIRE-PUBLIC")
-
-    def to_xml(self):
-        return self.record.to_xml()
 
 
 def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
@@ -297,9 +173,6 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     @param devmode: Activate devmode. Full verbosity and no uploads/mails.
     @type devmode: string
     """
-    # This is the list of APSRecord objects to be harvested.
-    final_record_list = APSRecordList()
-
     task_update_progress("Parsing input parameters")
 
     # Validate modes
@@ -346,23 +219,70 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     else:
         reportonly = False
 
-    if threshold_date:
+    # Unify all parameters into a dict using locals
+    parameters = locals()
+
+    # 1: We analyze parameters and fetch all requested records from APS
+    final_record_list, new_harvest_date = get_records_to_harvest(parameters)
+    write_message("Found %d record(s) to download." % (len(final_record_list),))
+
+    if reportonly:
+        write_message("'Report-only' mode. We exit now.")
+        return
+
+    if not final_record_list:
+        # No records to harvest, quit.
+        write_message("Nothing to harvest.")
+        return
+
+    # 2: Extract fulltext/metadata XML and upload bunches of
+    #    records as configured
+    job = APSHarvestJob(CFG_APSHARVEST_DIR)
+    count = process_records(job,
+                            parameters,
+                            final_record_list)
+
+    if parameters.get("from_date") == "last":
+        # Harvest of new records from APS successful
+        # we update last harvested date
+        store_last_updated(None,
+                           new_harvest_date,
+                           name="apsharvest_api_download")
+    # We are done
+    write_message("Harvested %d records. (%d failed)"
+                  % (count, len(job.records_failed)))
+
+
+def get_records_to_harvest(parameters):
+    """ Get APSRecord to harvest.
+
+    Using the given parameters dict (from bst_apsharvest), we check how
+    to get the list of records to process.
+
+    Returns a tuple of (record_list, date_checked) where record_list is
+    the list of APSRecord instances and date_checked is the datetime when
+    checking was done.
+    """
+    # This is the list of APSRecord objects to be harvested.
+    final_record_list = APSRecordList()
+    new_harvest_date = None
+
+    if parameters.get("threshold_date"):
         # Input from user. Validate date
         try:
-            harvest_from_date = validate_date(threshold_date)
+            harvest_from_date = validate_date(parameters.get("threshold_date"))
         except ValueError, e:
             write_message("Error parsing from_date, use (YYYY-MM-DD): %s" %
                           (str(e),),
                           stream=sys.stderr)
-            return 1
+            raise
 
-    if from_date:
+    if parameters.get("from_date"):
         # We get records from APS directly
-        new_harvest_date = None
         perpage = 100
 
         # Are we harvesting from last time or a specific date?
-        if from_date == "last":
+        if parameters.get("from_date") == "last":
             dummy, harvest_from_date = fetch_last_updated(name="apsharvest_api_download")
 
             # Keeping current time until completed harvest.
@@ -370,42 +290,42 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         else:
             # Input from user. Validate date
             try:
-                harvest_from_date = validate_date(from_date)
+                harvest_from_date = validate_date(parameters.get("from_date"))
             except ValueError, e:
                 write_message("Error parsing from_date, use (YYYY-MM-DD): %s" %
                               (str(e),),
                               stream=sys.stderr)
-                return 1
+                raise
 
         # Turn harvest_from_date back into a string (away from datetime object)
         harvest_from_date = harvest_from_date.strftime("%Y-%m-%d")
 
         status_message = "Checking for new records from APS from %s" % \
                          (harvest_from_date,)
-        if until_date:
+        if parameters.get("until_date"):
             # Input from user. Validate date
             try:
-                validate_date(until_date)
+                validate_date(parameters.get("until_date"))
             except ValueError, e:
                 write_message("Error parsing until_date, use (YYYY-MM-DD): %s" %
                               (str(e),),
                               stream=sys.stderr)
-                return 1
-            status_message += " until %s" % (until_date,)
+                raise
+            status_message += " until %s" % (parameters.get("until_date"),)
         else:
             status_message += " until today"
         write_message(status_message)
 
-        final_record_list = harvest_aps(harvest_from_date, until_date, perpage)
+        final_record_list = harvest_aps(harvest_from_date,
+                                        parameters.get("until_date"),
+                                        perpage)
     else:
-        # We use any given IDs or records from the system.
-
-        # Gather IDs (if any)
-        if len(dois) > 0:
+        # We use any given IDs or records from the local Invenio instance.
+        if len(parameters.get("dois")) > 0:
             write_message("Parsing DOIs...")
 
             # We are doing DOIs, we need to get record ids
-            for doi in dois.split(','):
+            for doi in parameters.get("dois").split(','):
                 doi = doi.strip()
                 try:
                     recid = get_record_from_doi(doi)
@@ -419,19 +339,19 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                     recid = None
                 final_record_list.append(APSRecord(recid, doi))
 
-        if len(recids) > 0:
+        if len(parameters.get("recids")) > 0:
             write_message("Parsing record IDs...")
 
             # We are doing rec ids
-            recids = split_cli_ids_arg(recids)
+            recids = split_cli_ids_arg(parameters.get("recids"))
             for recid in recids:
                 final_record_list.append(APSRecord(recid))
 
-        if query:
+        if parameters.get("query"):
             write_message("Performing a search query...")
 
             # We are doing a search query, rg=0 allows the return of all results.
-            result = perform_request_search(p=query,
+            result = perform_request_search(p=parameters.get("query"),
                                             cc=CFG_APSHARVEST_SEARCH_COLLECTION,
                                             of='id',
                                             rg=0,
@@ -439,19 +359,19 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             for recid in result:
                 final_record_list.append(APSRecord(recid))
 
-        if records in ("new", "modified", "both"):
+        if parameters.get("records") in ("new", "modified", "both"):
             write_message("Fetching records to update...")
 
             # We fetch records from the database
             last_recid, last_date = fetch_last_updated(name="apsharvest")
             records_found = []
-            if records == "new":
+            if parameters.get("records") == "new":
                 records_found = get_all_new_records(since=last_date,
                                                     last_recid=last_recid)
-            elif records == "modified":
+            elif parameters.get("records") == "modified":
                 records_found = get_all_modified_records(since=last_date,
                                                          last_recid=last_recid)
-            elif records == "both":
+            elif parameters.get("records") == "both":
                 records_found.extend(get_all_new_records(since=last_date,
                                                          last_recid=last_recid))
                 records_found.extend(get_all_modified_records(since=last_date,
@@ -460,192 +380,45 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
             for recid, date in records_found:
                 final_record_list.append(APSRecord(recid, date=date))
 
-    write_message("Found %d record(s) to download." % (len(final_record_list),))
+    return final_record_list, new_harvest_date
 
-    if reportonly:
-        write_message("'Report-only' mode. We exit now.")
-        return
 
-    if not final_record_list:
-        # No records to harvest, quit.
-        write_message("Nothing to harvest.")
-        return
+def process_records(job, parameters, final_record_list):
+    """ Process given records with parameters.
 
-    #2: Fetch fulltext/metadata XML and upload bunches of records as configured
+    Process records by using the perform_fulltext_harvest generator which
+    downloads the article packages, unzip's them and returns a record
+    object.
 
+    For every record object, we assign it to a list of new records or,
+    if matching is done, to a list of records to update. These records are
+    also written to a result file and submitted via e-mail and/or FTP.
+    """
     # Create working directory if not exists
-    out_folder = create_work_folder(CFG_APSHARVEST_DIR)
-
-    from invenio.refextract_kbs import get_kbs
-    journal_mappings = get_kbs()
-    if journal_mappings and "journals" in journal_mappings:
-        journal_mappings = journal_mappings['journals'][1]
-    else:
-        journal_mappings = None
-
-    now = datetime.datetime.now()
-    mail_subject = "APS harvest results: %s" % \
-                   (now.strftime("%Y-%m-%d %H:%M:%S"),)
-
     count = 0
-    taskid = 0
-    records_harvested = []
-    records_to_insert = []
-    records_to_update = []
-    records_failed = []
-    for record, error_message in perform_fulltext_harvest(final_record_list,
-                                                          metadata,
-                                                          fulltext,
-                                                          hidden,
-                                                          out_folder,
-                                                          threshold_date,
-                                                          journal_mappings):
+    bunch = "email" not in [parameters.get("new_mode"),
+                            parameters.get("update_mode")]
+
+    for record, error_message in job.perform_fulltext_harvest(final_record_list,
+                                                              parameters):
         if error_message:
-            records_failed.append((record, error_message))
+            job.records_failed.append((record, error_message))
             continue
-        records_harvested.append(record)
+        job.records_harvested.append(record)
         count += 1
-        files_uploaded = []
-        # When in BibUpload mode, check if we are on the limit and ready to submit
-        if len(records_harvested) == CFG_APSHARVEST_BUNCH_SIZE:
 
+        # Depending on the bunch size, we start submitting or just continue
+        # to harvest next record.
+        if bunch and len(job.records_harvested) != CFG_APSHARVEST_BUNCH_SIZE:
             # Go over next bunch and add to totals
-            if match:
-                new_records, existing_records = check_records(records_harvested,
-                                                              out_folder)
-                records_to_insert.extend(new_records)
-                records_to_update.extend(existing_records)
-            else:
-                records_to_insert.extend(records_harvested)
+            job.process_record_submission(parameters, bunch=True)
+            job.reset_bunch()
 
-            if new_mode != "email":
-                # Submit new records
-                record_filename = generate_xml_for_records(records_to_insert,
-                                                           out_folder,
-                                                           suffix="_insert.xml")
-                taskid = submit_records(record_filename,
-                                        records_to_insert,
-                                        new_mode,
-                                        out_folder,
-                                        devmode=devmode,
-                                        subject=mail_subject)
-                try:
-                    upload_to_FTP(record_filename)
-                    files_uploaded.append(record_filename)
-                    write_message("%s successfully uploaded to FTP server" % record_filename)
-                except:
-                    write_message("Failed to upload %s to FTP server" % record_filename)
-                if not taskid and not devmode:
-                    # Something went wrong
-                    err_string = "New records (%s)" \
-                                 " were not submitted correctly" % \
-                                 (record_filename,)
-                    raise APSHarvesterSubmissionError(err_string)
-                records_to_insert = []
+    # Are there any remaining records to submit?
+    if job.check_for_records():
+        job.process_record_submission(parameters)
 
-            if update_mode != "email":
-                # Submit records to be updated
-                record_filename = generate_xml_for_records(records_to_update,
-                                                           out_folder,
-                                                           suffix="_update.xml")
-                taskid = submit_records(record_filename,
-                                        records_to_update,
-                                        update_mode,
-                                        out_folder,
-                                        silent=records and True or False,
-                                        devmode=devmode,
-                                        subject=mail_subject)
-                try:
-                    upload_to_FTP(record_filename)
-                    files_uploaded.append(record_filename)
-                    write_message("%s successfully uploaded to FTP server" % record_filename)
-                except:
-                    write_message("Failed to upload %s to FTP server" % record_filename)
-
-                if not taskid and not devmode:
-                    # Something went wrong
-                    err_string = "Existing records (%s)" \
-                                 " were not submitted correctly" % \
-                                 (record_filename,)
-                    raise APSHarvesterSubmissionError(err_string)
-                records_to_update = []
-            # Reset
-            records_harvested = []
-
-        task_sleep_now_if_required(can_stop_too=not records_harvested)
-
-    # Check for any remains
-    if records_harvested or records_to_update or records_to_insert:
-        if match:
-            new_records, existing_records = check_records(records_harvested,
-                                                          out_folder)
-            records_to_insert.extend(new_records)
-            records_to_update.extend(existing_records)
-        else:
-            records_to_insert.extend(records_harvested)
-
-        if records_to_insert:
-            record_filename = generate_xml_for_records(records_to_insert,
-                                                       out_folder,
-                                                       suffix="_insert.xml")
-            taskid = submit_records(record_filename,
-                                    records_to_insert,
-                                    new_mode,
-                                    out_folder,
-                                    taskid,
-                                    silent=records and True or False,
-                                    devmode=devmode,
-                                    subject=mail_subject)
-            try:
-                upload_to_FTP(record_filename)
-                files_uploaded.append(record_filename)
-                write_message("%s successfully uploaded to FTP server" % record_filename)
-            except:
-                write_message("Failed to upload %s to FTP server" % record_filename)
-            if not taskid and not devmode:
-                # Something went wrong
-                write_message("Records were not submitted correctly")
-
-        if records_to_update:
-            record_filename = generate_xml_for_records(records_to_update,
-                                                       out_folder,
-                                                       suffix="_update.xml")
-            taskid = submit_records(record_filename,
-                                    records_to_update,
-                                    update_mode,
-                                    out_folder,
-                                    taskid,
-                                    silent=records and True or False,
-                                    devmode=devmode,
-                                    subject=mail_subject)
-            try:
-                upload_to_FTP(record_filename)
-                files_uploaded.append(record_filename)
-                write_message("%s successfully uploaded to FTP server" % record_filename)
-            except:
-                write_message("Failed to upload %s to FTP server" % record_filename)
-
-            if not taskid and not devmode:
-                # Something went wrong
-                write_message("Records were not submitted correctly")
-
-    if records_failed:
-        body = "\n".join(["%s failed with error: %s"
-                          % (rec.doi or rec.recid, msg)
-                          for rec, msg in records_failed])
-        if not devmode:
-            submit_records_via_mail(subject="%s (failed records)" % (mail_subject,),
-                                    body=body)
-
-    if from_date == "last":
-        # Harvest of new records from APS successful
-        # we update last harvested date
-        store_last_updated(None,
-                           new_harvest_date,
-                           name="apsharvest_api_download")
-
-    # We are done
-    write_message("Harvested %d records. (%d failed)" % (count, len(records_failed)))
+    return count
 
 
 def APS_connect(from_param, until_param=None, page=1, perpage=100):
@@ -721,466 +494,6 @@ def harvest_aps(from_param, until_param, perpage):
 
     return records
 
-
-def check_records(records, directory):
-    """
-    Checks if given records exists on the system and then returns
-    a tuple of records that is new and records that exists:
-
-    @return: a tuple of (new_records, existing_records)
-    @rtype: tuple
-    """
-    # We check if any records already exists
-    new_records = []
-    existing_records = []
-    for record in records:
-        # Do we already have the record id perhaps?
-        if not record.recid:
-            try:
-                record.recid = get_record_from_doi(record.doi)
-            except APSHarvesterSearchError, e:
-                write_message("Error while getting recid from %s: %s" %
-                              (record.doi, str(e)))
-
-                # Problem detected, send mail immediately:
-                problem_rec = generate_xml_for_records(records=[record],
-                                                       directory=directory,
-                                                       suffix="problem.xml")
-                now = datetime.datetime.now()
-                subject = "APS harvest problem: %s" % \
-                          (now.strftime("%Y-%m-%d %H:%M:%S"),)
-                body = "There was a problem harvesting %s. \n %s \n Path: \n%s" % \
-                       (record.doi, str(e), problem_rec)
-                submit_records_via_mail(subject, body)
-                continue
-
-        # What about now?
-        if record.recid:
-            existing_records.append(record)
-        else:
-            new_records.append(record)
-    return new_records, existing_records
-
-
-def generate_xml_for_records(records, directory, prefix="apsharvest_result_",
-                             suffix=".xml", pretty=True):
-    """
-    Given a list of APSRecord objects, generate a MARCXML containing Metadata
-    and FFT for all of them.
-    """
-    new_filename = get_temporary_file(prefix=prefix,
-                                      suffix=suffix,
-                                      directory=directory)
-
-    generated_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' \
-                    "<collection>\n%s\n</collection>" % \
-                    ("\n".join([record.to_xml() for record in records]),)
-
-    try:
-        fd = open(new_filename, 'w')
-        fd.write(generated_xml)
-        fd.close()
-    except IOError, e:
-        write_message("\nException caught: %s" % e, sys.stderr)
-        write_message(traceback.format_exc()[:-1])
-        task_update_status("CERROR")
-        return
-
-    if pretty:
-        return prettify_xml(new_filename)
-    return new_filename
-
-
-def prettify_xml(filepath):
-    """
-    Will prettify an XML file for better readability.
-
-    Returns the new, pretty, file.
-    """
-    cmd = "xmllint --format %s" % (filepath,)
-    exit_code, std_out, err_msg = run_shell_command(cmd=cmd)
-    if exit_code:
-        write_message("\nError caught: %s" % (err_msg,))
-        task_update_status("CERROR")
-        return
-
-    new_filename = "%s.pretty" % (filepath,)
-    try:
-        fd = open(new_filename, 'w')
-        fd.write(std_out)
-        fd.close()
-    except IOError, e:
-        write_message("\nException caught: %s" % e, sys.stderr)
-        write_message(traceback.format_exc()[:-1])
-        task_update_status("CERROR")
-        return
-
-    return new_filename
-
-
-def submit_bibupload_for_records(mode, new_filename, silent):
-    """
-    Given a list of APSRecord objects, generate a bibupload job.
-
-    NB: we do not change the modified date of the record as we otherwise
-    would be caught by ourselves again.
-    """
-    if len(mode) == 1:
-        mode = "-" + mode
-    else:
-        mode = "--" + mode
-
-    task_arguments = []
-    if silent:
-        task_arguments.append("--notimechange")
-    task_arguments.append(mode)
-    task_arguments.append(new_filename)
-    return task_low_level_submission("bibupload", "apsharvest",
-                                     *tuple(task_arguments))
-
-
-def submit_records(records_filename, records_list, mode, directory,
-                   taskid=0, silent=False, devmode=False, subject=None):
-    """
-    Performs the logic to submit given file (filepath) of records
-    either by e-mail or using BibUpload with given mode.
-
-    Taskid is given to indicate if the task submission should wait for any
-    previously submitted tasks.
-
-    The submission can also be made "silent" in the sense of not
-    updating the modification date of the records.
-
-    @param records_filename: filepath to XML file containing records.
-    @type records_filename: string
-
-    @param records_list: list of APSRecord objects for records
-    @type records_list: list
-
-    @param mode: which submission mode is it?
-    @type mode: string
-
-    @param taskid: bibsched taskid, wait for task to complete before submission
-    @type taskid: int
-
-    @param silent: do not update the modification date of the records
-    @type silent: bool
-
-    @return: returns the given taskid upon submission, or True/False from email.
-    """
-    if devmode:
-        return None
-    if not subject:
-        now = datetime.datetime.now()
-        subject = "APS harvest results: %s" % (now.strftime("%Y-%m-%d %H:%M:%S"),)
-
-    # Check if we should create bibupload or e-mail
-    if mode == "email":
-        # Lets parse the records and find our IDs.
-        list_of_dois = []
-        for record in records_list:
-            # We strip away the first part of the DOI for readability.
-            list_of_dois.append('/'.join(record.doi.split('/')[1:]))
-        # We send an e-mail to CFG_APSHARVEST_EMAIL and put file on AFS.
-        body = "Harvested new records: %s" % (records_filename,)
-        try:
-            try:
-                shutil.move(records_filename, directory)
-                records_filename = os.path.join(directory,
-                                                os.path.basename(records_filename))
-                body = "Harvested new records on %s. They are located here:\n %s" % \
-                       (now.strftime("%Y-%m-%d %H:%M:%S"), records_filename)
-            except IOError, e:
-                # Some IOError
-                body = "Error while harvesting records: \nError saving %s - %s" % \
-                       (records_filename, str(e))
-                raise e
-        finally:
-            body = "%s\nRecords harvested (%s total):\n%s\n" % (body,
-                                                                str(len(list_of_dois)),
-                                                                "\n".join(list_of_dois))
-            res = submit_records_via_mail(subject, body)
-            write_message("Sent e-mail to %s with path to %s" %
-                          (CFG_APSHARVEST_EMAIL, records_filename))
-            return res
-    else:
-        # We submit a BibUpload task and wait for it to finish
-        task_update_progress("Waiting for task to finish")
-
-        if taskid != 0:
-            write_message("Going to wait for %d to finish" % (taskid,))
-
-        while not can_launch_bibupload(taskid):
-            # Lets wait until the previously launched task exits.
-            task_sleep_now_if_required(can_stop_too=False)
-            time.sleep(5.0)
-
-        taskid = submit_bibupload_for_records(mode, records_filename, silent)
-        write_message("Submitted BibUpload task #%s with mode %s" %
-                     (str(taskid), mode))
-        return taskid
-
-
-def submit_records_via_mail(subject, body, toaddr=CFG_APSHARVEST_EMAIL):
-    """
-    Performs the call to mailutils.send_email to attach XML and submit
-    via e-mail to the desired receipient (CFG_APSHARVEST_EMAIL).
-
-    @param subject: email subject.
-    @type subject: string
-
-    @param body: email contents.
-    @type body: string
-
-    @return: returns the given taskid upon submission.
-    @rtype: int
-    """
-    return send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
-                      toaddr=toaddr,
-                      subject=subject,
-                      content=body)
-
-
-def perform_fulltext_harvest(record_list, add_metadata, attach_fulltext,
-                             hidden_fulltext, out_folder, threshold_date=None,
-                             journal_mappings=None):
-    """
-    For every record in given list APSRecord(record ID, DOI, date last
-    updated), yield a APSRecord with added FFT dictionary containing URL to
-    fulltext/metadata XML downloaded locally.
-
-    If a download is unsuccessful, an error message is given.
-
-    @return: tuple of (APSRecord, error_message)
-    """
-    count = 0
-    request_end = None
-    request_start = None
-    for record in record_list:
-        task_sleep_now_if_required(can_stop_too=False)
-        # Unless this is the first request, lets sleep a bit
-        if request_end and request_start:
-            request_dt = request_end-request_start
-            write_message("Checking request time (%d)"
-                          % (request_dt,), verbose=3)
-            if count and request_dt > 0 and request_dt < CFG_APSHARVEST_REQUEST_TIMEOUT:
-                write_message("Initiating sleep for %.1f seconds"
-                              % (request_dt,), verbose=3)
-                time.sleep(request_dt)
-
-        count += 1
-        task_update_progress("Harvesting record (%d/%d)" % (count,
-                                                            len(record_list)))
-
-        if not record.doi:
-            msg = "No DOI found for record %d" % (record.recid or "",)
-            write_message("Error: %s" % (msg,), stream=sys.stderr)
-            yield record, msg
-            continue
-
-        url = CFG_APSHARVEST_FULLTEXT_URL % {'doi': record.doi}
-        result_file = os.path.join(out_folder,
-                                   "%s.zip" % (record.doi.replace('/', '_')))
-        try:
-            request_start = time.time()
-            if os.path.exists(result_file):
-                # File already downloaded recently, lets see if it is the same
-                file_last_modified = get_file_modified_date(result_file)
-                if not compare_datetime_to_iso8601_date(file_last_modified, record.last_modified):
-                    # File is not older than APS version, we should not download.
-                    raise APSHarvesterFileExits
-
-            write_message("Trying to save to %s" % (result_file,), verbose=5)
-
-            result_file = download_url(url=url,
-                                       download_to_file=result_file,
-                                       content_type="zip",
-                                       retry_count=5,
-                                       timeout=60.0)
-            write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
-        except InvenioFileDownloadError, e:
-            msg = "URL could not be opened: %s" % (url,)
-            write_message("Error: %s" % (msg,),
-                          stream=sys.stderr)
-            yield record, msg
-            continue
-
-        except APSHarvesterFileExits:
-            write_message("File exists at %s" % (result_file,), verbose=2)
-
-        except StandardError, e:
-            if 'urlopen' in str(e) or 'URL could not be opened' in str(e):
-                msg = "URL could not be opened: %s" % (url,)
-                write_message("Error: %s" % (msg,),
-                              stream=sys.stderr)
-                write_message("No fulltext found for %s" %
-                             (record.recid or record.doi,))
-                yield record, msg
-                continue
-            raise
-        finally:
-            request_end = time.time()
-
-        # Unzip the compressed file
-        unzipped_folder = unzip(result_file, base_directory=out_folder)
-
-        # Validate the checksum of the compressed fulltext file.
-        try:
-            checksum_validated_files = find_and_validate_md5_checksums(
-                in_folder=unzipped_folder,
-                md5key_filename=CFG_APSHARVEST_MD5_FILE)
-        except InvenioFileChecksumError, e:
-            info_msg = "Skipping %s in %s" % \
-                       (record.recid or record.doi, unzipped_folder)
-            msg = "Error while validating checksum: %s\n%s\n%s" % \
-                  (info_msg, str(e), traceback.format_exc()[:-1])
-            write_message(msg)
-            yield record, msg
-            continue
-        if not checksum_validated_files:
-            write_message("Warning: No files found to perform checksum"
-                          " validation on inside %s" % (unzipped_folder,))
-        elif len(checksum_validated_files) != 1 or \
-                not 'fulltext.xml' in checksum_validated_files[0]:
-            msg = "Warning: No fulltext file found inside %s for %s" % \
-                  (unzipped_folder, record.recid or record.doi)
-            write_message(msg)
-            yield record, msg
-            continue
-
-        # We have the fulltext file as fulltext.xml as expected.
-        fulltext_file = checksum_validated_files[0]
-
-        write_message("Harvested record %s (%s)" %
-                     (record.recid or "new record", count))
-        write_message("File: %s" % (fulltext_file,), verbose=2)
-
-        # Check if published date is after treshold:
-        if is_beyond_threshold_date(threshold_date, fulltext_file):
-            # The published date is beyond the threshold, we continue
-            msg = "Warning: Article published beyond threshold: %s" % \
-                  (record.doi,)
-            write_message(msg)
-            yield record, msg
-            continue
-        else:
-            write_message("OK. Record is below the threshold.", verbose=3)
-
-        if add_metadata:
-            from harvestingkit.aps_package import (ApsPackage,
-                                                   ApsPackageXMLError)
-            # Generate Metadata,FFT and yield it
-            aps = ApsPackage(journal_mappings)
-            try:
-                xml = aps.get_record(fulltext_file)
-                record.add_metadata_by_string(xml)
-            except ApsPackageXMLError, e:
-                # This must be old-format XML
-                write_message("Warning: old-style metadata detected for %s" %
-                              (fulltext_file))
-                # Remove any DTD info in the file before converting
-                cleaned_fulltext_file = remove_dtd_information(fulltext_file)
-                try:
-                    convert_xml_using_saxon(cleaned_fulltext_file,
-                                            CFG_APSHARVEST_XSLT)
-
-                    # Conversion is a success. Let's derive location of converted file
-                    source_directory = os.path.dirname(cleaned_fulltext_file)
-                    path_to_converted = "%s%s%s.xml" % \
-                                        (source_directory,
-                                         os.sep,
-                                         record.doi.replace('/', '_'))
-                    write_message("Converted meta-data for %s" %
-                                 (record.recid or "new record"), verbose=2)
-                    record.add_metadata(path_to_converted)
-                except APSHarvesterConversionError, e:
-                    msg = "Metadata conversion failed: %s\n%s" % \
-                          (str(e), traceback.format_exc()[:-1])
-                    write_message(msg, stream=sys.stderr)
-                    yield record, msg
-
-            write_message("Converted metadata for %s" %
-                          (record.recid or "new record"), verbose=2)
-
-        if attach_fulltext:
-            record.add_fft(fulltext_file, hidden_fulltext)
-
-        if record.date:
-            store_last_updated(record.recid, record.date, name="apsharvest")
-
-        yield record, ""
-
-
-def is_beyond_threshold_date(threshold_date, fulltext_file):
-    """
-    Checks the given fulltext file to see if the published date is
-    beyond the threshold or not. Returns True if it is beyond and
-    False if not.
-    """
-    write_message("Checking the threshold...", verbose=3)
-    with open(fulltext_file, "r") as fd:
-        parsed_xml_tree = BeautifulSoup(fd, features="xml")
-        # Looking for the published tag
-        pub_element = parsed_xml_tree.find("pub-date", attrs={"pub-type": 'epub'})
-        if not pub_element:
-            # Is it old format?
-            pub_element = parsed_xml_tree.find('published')
-            if not pub_element:
-                return False
-            published_date = pub_element.get("date")
-        else:
-            # It is new format
-            published_date = pub_element.get('iso-8601-date')
-        return published_date < threshold_date
-    # No published date found, impossible to check
-    return False
-
-
-def get_doi_from_record(recid):
-    """
-    Given a record ID we fetch it from the DB and return
-    the first DOI found as specified by the config variable
-    CFG_APSHARVEST_RECORD_DOI_TAG.
-
-    @param recid:  record id record containing a DOI
-    @type recid: string/int
-
-    @return: first DOI found in record
-    @rtype: string
-    """
-    record = BibFormatObject(int(recid))
-    possible_dois = record.fields(CFG_APSHARVEST_RECORD_DOI_TAG[:-1])
-    for doi in possible_dois:
-        if '2' in doi and doi.get('2', "") == "DOI":
-            # Valid DOI present, add it
-            try:
-                return doi['a']
-            except KeyError:
-                continue
-
-
-def get_record_from_doi(doi):
-    """
-    Given a DOI we fetch the record from the DB and return
-    tuple of record id and last record update.
-
-    @param doi: DOI identifier to match a record against
-    @type doi: string/int
-
-    @return: record ID of record found
-    @rtype: int
-    """
-    if not doi:
-        return
-
-    # Search pattern returns intbitset, lets make it a list instead
-    recids = list(search_pattern(p=doi, f=CFG_APSHARVEST_RECORD_DOI_TAG, m='e'))
-    if not recids:
-        return
-    elif len(recids) != 1:
-        raise APSHarvesterSearchError("DOI mismatch: %s did not find only 1 record: %s" %
-                                      ",".join(recids))
-    return int(recids[0])
 
 if __name__ == '__main__':
     bst_apsharvest(from_date="2014-05-05",

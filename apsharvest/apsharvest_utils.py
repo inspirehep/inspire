@@ -18,6 +18,8 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 import os
+import sys
+import traceback
 import fnmatch
 import zipfile
 import codecs
@@ -25,22 +27,25 @@ import re
 import datetime
 import time
 
+from bs4 import BeautifulSoup
+
 from tempfile import mkdtemp, mkstemp
 from invenio.config import (CFG_FTP_SERVER,
-                            CFG_FTP_AUTHENTICATION_FILE)
+                            CFG_FTP_AUTHENTICATION_FILE,
+                            CFG_SITE_SUPPORT_EMAIL)
+from invenio.mailutils import send_email
+from invenio.search_engine import search_pattern
+from invenio.shellutils import run_shell_command
+from invenio.bibformat_engine import BibFormatObject
+from invenio.bibtask import (task_update_status,
+                             write_message,
+                             task_low_level_submission,
+                             )
+from invenio.apsharvest_errors import (APSHarvesterSearchError,
+                                       APSFileChecksumError,
+                                       APSHarvesterConversionError)
+from invenio.apsharvest_config import CFG_APSHARVEST_RECORD_DOI_TAG
 from harvestingkit.ftp_utils import FtpHandler
-
-
-class InvenioFileChecksumError(Exception):
-    """Exception raised when a file is not matching its checksum.
-    """
-    pass
-
-
-class APSHarvesterConversionError(Exception):
-    """Exception raised when more a record cannot be converted using Java Saxon.
-    """
-    pass
 
 
 RE_ARTICLE_DTD = re.compile('<!DOCTYPE article PUBLIC "-//American Physical'
@@ -110,7 +115,7 @@ def find_and_validate_md5_checksums(in_folder, md5key_filename):
     Given a root folder to search in and the name of a file containing
     textual info about file checksums to validate, this function will
     return True if the checksum is correct. Otherwise an
-    InvenioFileChecksumError is returned.
+    APSFileChecksumError is returned.
 
     The filename containing the MD5 hashkey is expected to follow this
     structure:
@@ -132,11 +137,11 @@ def find_and_validate_md5_checksums(in_folder, md5key_filename):
                 hashkey = hashkey.strip()
                 found_hashkey = calculate_md5_external(hashkey_target).strip()
                 if found_hashkey != hashkey:
-                    raise InvenioFileChecksumError("Error matching checksum of %s:"
-                                                   " %s is not equal to %s" %
-                                                   (hashkey_target,
-                                                    found_hashkey,
-                                                    hashkey))
+                    raise APSFileChecksumError("Error matching checksum of %s:"
+                                               " %s is not equal to %s" %
+                                               (hashkey_target,
+                                                found_hashkey,
+                                                hashkey))
                 validated_files.append(hashkey_target)
     return validated_files
 
@@ -347,8 +352,185 @@ def write_record_to_file(filename, record_list):
             return True
 
 
-def upload_to_FTP(filename, location=''):
-    """ Uploads a file to the FTP server"""
-    ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
-    ftp.upload(filename, location)
-    ftp.close()
+def get_record_from_doi(doi):
+    """
+    Given a DOI we fetch the record from the DB and return
+    tuple of record id and last record update.
+
+    @param doi: DOI identifier to match a record against
+    @type doi: string/int
+
+    @return: record ID of record found
+    @rtype: int
+    """
+    if not doi:
+        return
+
+    # Search pattern returns intbitset, lets make it a list instead
+    recids = list(search_pattern(p=doi, f=CFG_APSHARVEST_RECORD_DOI_TAG, m='e'))
+    if not recids:
+        return
+    elif len(recids) != 1:
+        raise APSHarvesterSearchError("DOI mismatch: %s did not find only 1 record: %s" %
+                                      ",".join(recids))
+    return int(recids[0])
+
+
+def get_doi_from_record(recid):
+    """
+    Given a record ID we fetch it from the DB and return
+    the first DOI found as specified by the config variable
+    CFG_APSHARVEST_RECORD_DOI_TAG.
+
+    @param recid:  record id record containing a DOI
+    @type recid: string/int
+
+    @return: first DOI found in record
+    @rtype: string
+    """
+    record = BibFormatObject(int(recid))
+    possible_dois = record.fields(CFG_APSHARVEST_RECORD_DOI_TAG[:-1])
+    for doi in possible_dois:
+        if '2' in doi and doi.get('2', "") == "DOI":
+            # Valid DOI present, add it
+            try:
+                return doi['a']
+            except KeyError:
+                continue
+
+
+def generate_xml_for_records(records, directory, prefix="apsharvest_result_",
+                             suffix=".xml", pretty=True):
+    """
+    Given a list of APSRecord objects, generate a MARCXML containing Metadata
+    and FFT for all of them.
+    """
+    new_filename = get_temporary_file(prefix=prefix,
+                                      suffix=suffix,
+                                      directory=directory)
+
+    generated_xml = '<?xml version="1.0" encoding="UTF-8"?>\n' \
+                    "<collection>\n%s\n</collection>" % \
+                    ("\n".join([record.to_xml() for record in records]),)
+
+    try:
+        fd = open(new_filename, 'w')
+        fd.write(generated_xml)
+        fd.close()
+    except IOError, e:
+        write_message("\nException caught: %s" % e, sys.stderr)
+        write_message(traceback.format_exc()[:-1])
+        task_update_status("CERROR")
+        return
+
+    if pretty:
+        return prettify_xml(new_filename)
+    return new_filename
+
+
+def prettify_xml(filepath):
+    """
+    Will prettify an XML file for better readability.
+
+    Returns the new, pretty, file.
+    """
+    new_filename = "%s_pretty.xml" % (os.path.splitext(filepath)[0],)
+    cmd = "xmllint --format %s" % (filepath,)
+    exit_code, std_out, err_msg = run_shell_command(cmd=cmd,
+                                                    filename_out=new_filename)
+    if exit_code:
+        write_message("\nError caught: %s" % (err_msg,))
+        task_update_status("CERROR")
+        return
+
+    return new_filename
+
+
+def submit_bibupload_for_records(mode, new_filename, silent):
+    """
+    Given a list of APSRecord objects, generate a bibupload job.
+
+    NB: we do not change the modified date of the record as we otherwise
+    would be caught by ourselves again.
+    """
+    if len(mode) == 1:
+        mode = "-" + mode
+    else:
+        mode = "--" + mode
+
+    task_arguments = []
+    if silent:
+        task_arguments.append("--notimechange")
+    task_arguments.append(mode)
+    task_arguments.append(new_filename)
+    return task_low_level_submission("bibupload", "apsharvest",
+                                     *tuple(task_arguments))
+
+
+def is_beyond_threshold_date(threshold_date, fulltext_file):
+    """
+    Checks the given fulltext file to see if the published date is
+    beyond the threshold or not. Returns True if it is beyond and
+    False if not.
+    """
+    write_message("Checking the threshold...", verbose=3)
+    with open(fulltext_file, "r") as fd:
+        parsed_xml_tree = BeautifulSoup(fd, features="xml")
+        # Looking for the published tag
+        pub_element = parsed_xml_tree.find("pub-date", attrs={"pub-type": 'epub'})
+        if not pub_element:
+            # Is it old format?
+            pub_element = parsed_xml_tree.find('published')
+            if not pub_element:
+                return False
+            published_date = pub_element.get("date")
+        else:
+            # It is new format
+            published_date = pub_element.get('iso-8601-date')
+        return published_date < threshold_date
+    # No published date found, impossible to check
+    return False
+
+
+def submit_records_via_ftp(filename, location=""):
+    """Submits given file to FTP server as defined.
+
+    The FTP server uploaded to is controlled with the config variables:
+
+    CFG_FTP_AUTHENTICATION_FILE (netrc_file)
+    CFG_FTP_SERVER
+
+    @param filename: file to upload
+    @type filename: str
+
+    @param location: location on FTP server. Defaults to root.
+    @type location: str
+    """
+    try:
+        ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
+        ftp.upload(filename, location)
+        ftp.close()
+        write_message("%s successfully uploaded to FTP server" % filename)
+    except Exception as e:
+        write_message("Failed to upload %s to FTP server: %s\n%s"
+                      % (filename, str(e), traceback.format_exc()))
+
+
+def submit_records_via_mail(subject, body, toaddr):
+    """
+    Performs the call to mailutils.send_email to attach XML and submit
+    via e-mail to the desired receipient (CFG_APSHARVEST_EMAIL).
+
+    @param subject: email subject.
+    @type subject: string
+
+    @param body: email contents.
+    @type body: string
+
+    @return: returns the given taskid upon submission.
+    @rtype: int
+    """
+    return send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
+                      toaddr=toaddr,
+                      subject=subject,
+                      content=body)

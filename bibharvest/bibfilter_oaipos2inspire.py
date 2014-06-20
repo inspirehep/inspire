@@ -40,7 +40,7 @@ except ImportError:
 from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
                                       write_record_to_file,
-                                      upload_to_FTP)
+                                      submit_records_via_ftp)
 
 base_url = "http://pos.sissa.it/contribution?id="
 
@@ -116,7 +116,7 @@ def main(args):
         with open(tempfile_path, 'w') as tempfile:
             tempfile.write(record_xml_output(rec))
         try:
-            upload_to_FTP(tempfile_path, conference)
+            submit_records_via_ftp(tempfile_path, conference)
             files_uploaded.append('%s/%s.xml' % (conference, contribution))
             write_message("%s successfully uploaded to FTP server" % tempfile_path)
         except:
