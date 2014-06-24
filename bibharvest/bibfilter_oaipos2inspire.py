@@ -19,8 +19,9 @@ from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
 from xml.dom.minidom import parse
-from invenio.bibrecord import (record_add_field,
-                               record_xml_output)
+from harvestingkit.utils import (record_add_field,
+                                 create_record,
+                                 record_xml_output)
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from invenio.config import (CFG_TMPSHAREDDIR,
@@ -39,7 +40,6 @@ except ImportError:
 
 from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
-                                      write_record_to_file,
                                       submit_records_via_ftp)
 
 base_url = "http://pos.sissa.it/contribution?id="
@@ -87,7 +87,7 @@ def main(args):
             if url.endswith('.pdf'):
                 found = True
                 if results:
-                    rec = {}
+                    rec = create_record()
                 filename = join(out_folder, identifier + ".pdf")
                 record_add_field(rec, '856', ind1='4', subfields=[
                     ('u', url),
@@ -170,6 +170,20 @@ def main(args):
     else:
         print("Mail sent to %s" % (CFG_POSHARVEST_EMAIL,))
 
+
+def write_record_to_file(filename, record_list):
+    """Writes a new MARCXML file to specified path from BibRecord list."""
+    if len(record_list) > 0:
+        out = []
+        out.append("<collection>")
+        for record in record_list:
+            out.append(record_xml_output(record))
+        out.append("</collection>")
+        if len(out) > 2:
+            file_fd = open(filename, 'w')
+            file_fd.write("\n".join(out))
+            file_fd.close()
+            return True
 
 if __name__ == '__main__':
     main(sys.argv[1:])
