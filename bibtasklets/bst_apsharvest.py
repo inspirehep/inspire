@@ -270,7 +270,7 @@ def get_records_to_harvest(parameters):
     if parameters.get("threshold_date"):
         # Input from user. Validate date
         try:
-            harvest_from_date = validate_date(parameters.get("threshold_date"))
+            validate_date(parameters.get("threshold_date"))
         except ValueError, e:
             write_message("Error parsing from_date, use (YYYY-MM-DD): %s" %
                           (str(e),),
@@ -296,6 +296,9 @@ def get_records_to_harvest(parameters):
                               (str(e),),
                               stream=sys.stderr)
                 raise
+            # If threshold is not given, set it to from_date
+            if not parameters.get("threshold_date"):
+                parameters["threshold_date"] = parameters.get("from_date")
 
         # Turn harvest_from_date back into a string (away from datetime object)
         harvest_from_date = harvest_from_date.strftime("%Y-%m-%d")
