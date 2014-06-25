@@ -89,6 +89,7 @@ reset-inspire-field-configuration:
 reset-inspire-index-configuration:
 	@echo ">>> Resetting table idxINDEX:"
 	echo "TRUNCATE idxINDEX" | $(BINDIR)/dbexec
+	-echo "TRUNCATE idxINDEX_idxINDEX" | $(BINDIR)/dbexec
 	echo "TRUNCATE idxINDEX_field" | $(BINDIR)/dbexec
 	$(BINDIR)/dbexec < bibindex/config/idxINDEX_dump.sql
 	@echo ">>> Done reset-inspire-index-configuration."
