@@ -27,8 +27,7 @@ from os import (remove,
 from datetime import datetime
 from os.path import (join,
                      exists,
-                     isfile,
-                     getsize)
+                     isfile)
 from zipfile import (ZipFile,
                      BadZipfile)
 
@@ -37,8 +36,7 @@ from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
-from invenio.apsharvest_utils import (create_work_folder,
-                                      submit_records_via_ftp,
+from invenio.apsharvest_utils import (submit_records_via_ftp,
                                       locate)
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_SUPPORT_EMAIL)
@@ -116,7 +114,7 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
         write_message('Warning upload_FTP parameter is not a valid Boolean (True/False)\n' +
                       'the default value \'True\' has been used!\n')
 
-    out_folder = create_work_folder(CFG_CONSYN_OUT_DIRECTORY)
+    out_folder = CFG_CONSYN_OUT_DIRECTORY
 
     if not package and not package_list:
         download_feed(feed, batch_size, delete_zip, new_sources, out_folder)
@@ -130,7 +128,7 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
     task_sleep_now_if_required(can_stop_too=True)
     consyn_files = join(out_folder, "consyn-files")
     consyn_files = consyn_files.lstrip()
-    els = ElsevierPackage(path="whatever", CONSYN=True)
+    els = ElsevierPackage(CONSYN=True)
     task_update_progress("Converting files 2/2...")
     fetch_xml_files(consyn_files, els, new_files)
     task_sleep_now_if_required(can_stop_too=False)
