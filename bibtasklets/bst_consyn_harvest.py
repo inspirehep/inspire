@@ -31,16 +31,15 @@ from os.path import (join,
                      getsize)
 from zipfile import (ZipFile,
                      BadZipfile)
-from MySQLdb import ProgrammingError
 
-from invenio.dbquery import run_sql
 from invenio.mailutils import send_email
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
 from invenio.apsharvest_utils import (create_work_folder,
-                                      submit_records_via_ftp)
+                                      submit_records_via_ftp,
+                                      locate)
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_SUPPORT_EMAIL)
 try:
@@ -119,15 +118,6 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
 
     out_folder = create_work_folder(CFG_CONSYN_OUT_DIRECTORY)
 
-    try:
-        run_sql("SELECT filename FROM CONSYNHARVEST")
-    except ProgrammingError:
-        # Table missing, create it.
-        run_sql("CREATE TABLE CONSYNHARVEST ("
-                "filename VARCHAR(100) NOT NULL PRIMARY KEY,"
-                "date VARCHAR(50),"
-                "size VARCHAR(30) );")
-
     if not package and not package_list:
         download_feed(feed, batch_size, delete_zip, new_sources, out_folder)
     elif package:
@@ -149,7 +139,7 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
 
 def extractAll(zipName, delete_zip, directory):
     """Unzip a zip file"""
-    write_message("Unziping: " + zipName + "\n")
+    write_message("Unzipping: " + zipName + "\n")
     z = ZipFile(zipName)
     for f in z.namelist():
         extract_fld = join(directory, "consyn-files")
@@ -223,24 +213,23 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
 
     dom = xml.dom.minidom.parseString(xmlString)
     entries = dom.getElementsByTagName("entry")
-    downloaded_files = []
-    for tup in run_sql("SELECT filename FROM CONSYNHARVEST"):
-        downloaded_files.append(tup[0])
 
     # Loop through entries
     for entry in entries:
         # Get URL and filename
         fileUrl = entry.getElementsByTagName("link")[0].getAttribute("href")
         fileName = entry.getElementsByTagName("title")[0].firstChild.data
-        updated = entry.getElementsByTagName("updated")[0].firstChild.data
+
         # Output location is directory + filename
         outFilename = join(directory, fileName)
         outFilename = outFilename.lstrip()
 
-        #file has already been fetched
-        if outFilename in downloaded_files:
-            write_message("Not downloading %s, already found %s\n" %
-                          (fileUrl, outFilename))
+        # Check if file has already been fetched
+        existing_files = list(locate(fileName, root=CFG_CONSYN_OUT_DIRECTORY))
+
+        if len(existing_files) == 1:
+            write_message("Not downloading %s, already found %s in %s\n" %
+                          (fileUrl, existing_files[0], outFilename))
         else:
             try:
                 write_message("Downloading %s to %s\n" % (fileUrl, outFilename))
@@ -252,20 +241,12 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
                 write_message(traceback.format_exc()[:-1])
                 task_update_status("CERROR")
                 continue
-            size = getsize(outFilename)
-            run_sql("INSERT INTO CONSYNHARVEST"
-                    "(filename,date,size)"
-                    "VALUES (%s,%s,%s)",
-                    (outFilename, updated, size))
             try:
                 extractAll(outFilename, delete_zip, directory)
             except BadZipfile:
                 write_message("Error BadZipfile %s", (outFilename,))
                 task_update_status("CERROR")
                 remove(outFilename)
-                run_sql("DELETE FROM CONSYNHARVEST"
-                        "WHERE filename =%s",
-                        (outFilename,))
 
 
 def extract_package(package, batch_size, delete_zip, directory):
