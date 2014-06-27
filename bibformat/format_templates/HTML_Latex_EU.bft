@@ -8,5 +8,5 @@
   <BFE_INSPIRE_TITLE_BRIEF prefix="%``" suffix=",''"  force_title_case="yes" /><BFE_INSPIRE_PUBLI_INFO_LATEX pubnotestyle="eu" pubnotemark="latex" 
   pubnotepre="<br>&nbsp;&nbsp;" pubnotesuf="" pubnotesep="<br>&nbsp; &nbsp;"
   arxivlinks="no" arxivcategory="yes" arxivprepubnote="<br>&nbsp;&nbsp;[" arxivsufpubnote="]." arxivprenopub="<br>&nbsp;&nbsp;" arxivsufnopub="."
-  reportpre="<br>&nbsp;&nbsp;" reportsuf="." reportlimit="1" reportsep=", " reportext="" /><BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="<br />  %", suffix="" />
+  reportpre="<br>&nbsp;&nbsp;" reportsuf="." reportlimit="unlimited" reportsep=", " reportext="" /><BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="<br />  %", suffix="" />
 </pre>
