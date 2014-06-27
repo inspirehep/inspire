@@ -18,27 +18,26 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-import xml.dom.minidom
 import traceback
-
+from xml.dom.minidom import (parse,
+                             parseString)
 from os import (remove,
-                listdir,
-                mkdir)
+                walk,
+                rmdir)
 from datetime import datetime
 from os.path import (join,
                      exists,
-                     isfile,
                      dirname)
 from zipfile import (ZipFile,
                      BadZipfile)
-
-from invenio.mailutils import send_email
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.search_engine import perform_request_search
 from invenio.apsharvest_utils import (submit_records_via_ftp,
-                                      locate)
+                                      locate,
+                                      submit_records_via_mail,
+                                      create_work_folder)
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_SUPPORT_EMAIL)
 try:
@@ -115,6 +114,8 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
         write_message('Warning upload_FTP parameter is not a valid Boolean (True/False)\n' +
                       'the default value \'True\' has been used!\n')
 
+    if not exists(CFG_CONSYN_OUT_DIRECTORY):
+        rmdir(create_work_folder(CFG_CONSYN_OUT_DIRECTORY))
     out_folder = CFG_CONSYN_OUT_DIRECTORY
 
     if not package and not package_list:
@@ -168,39 +169,31 @@ def fetch_xml_files(folder, els, new_files):
     """Recursively gets the downloaded xml files
     converts them to marc xml format and stores them
     in the same directory with the name "upload.xml"."""
-    if exists(folder):
-        for subfolder in listdir(folder):
-            subfolder = join(folder, subfolder).lstrip()
-            if isfile(subfolder):
-                if not subfolder.endswith('upload.xml'):
-                    folders = subfolder.split('/')
-                    folders[-1] = 'upload.xml'
-                    file_loc = "/".join(folders)
-                    if not exists(file_loc):
-                        xmlFile = open(subfolder, "r")
-                        xmlString = xmlFile.read()
-                        xmlFile.close()
-                        dom_xml = xml.dom.minidom.parseString(xmlString)
-                        doi = els.get_publication_information(dom_xml)[-1]
-                        res = None
-                        if doi:
-                            write_message("DOI in record: %s" % (doi,))
-                            res = perform_request_search(p="doi:%s" % (doi,),
-                                                         of="id")
-                        if not res:
-                            write_message("DOI not found in record: \n%s" % (subfolder,))
-                            doctype = els.get_doctype(dom_xml).lower()
-                            #ignore index pages
-                            if doctype in INTERESTING_DOCTYPES:
-                                marcfile = open(file_loc, 'w')
-                                marcfile.write(els.get_record(subfolder))
-                                marcfile.close()
-                                new_files.append(file_loc)
-                                task_sleep_now_if_required(can_stop_too=False)
+    for path, folders, files in walk(folder):
+        for fl in files:
+            if fl != 'upload.xml':
+                file_loc = join(path, 'upload.xml')
+                if not exists(file_loc):
+                    record_path = join(path, fl)
+                    dom_xml = parse(record_path)
+                    doi = els.get_publication_information(dom_xml)[-1]
+                    res = None
+                    if doi:
+                        write_message("DOI in record: %s" % (doi,))
+                        res = perform_request_search(p="doi:%s" % (doi,),
+                                                     of="id")
+                    if not res:
+                        write_message("DOI not found in record: \n%s" % (join(path, fl),))
+                        doctype = els.get_doctype(dom_xml).lower()
+                        #ignore index pages
+                        if doctype in INTERESTING_DOCTYPES:
+                            marcfile = open(file_loc, 'w')
+                            marcfile.write(els.get_record(record_path))
+                            marcfile.close()
+                            new_files.append(file_loc)
+                            task_sleep_now_if_required(can_stop_too=False)
                         else:
                             write_message("DOI found: %s" % (res,))
-            else:
-                fetch_xml_files(subfolder, els, new_files)
 
 
 def download_feed(feed, batch_size, delete_zip, new_sources,
@@ -225,7 +218,7 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
         task_update_status("CERROR")
         return
 
-    dom = xml.dom.minidom.parseString(xmlString)
+    dom = parseString(xmlString)
     entries = dom.getElementsByTagName("entry")
 
     # Loop through entries
@@ -312,7 +305,7 @@ def create_collection(batch_size, new_files, new_sources,
                     collection.close()
                     files_to_upload.append(filepath)
                     filepath = "elsevier-%s-%s.xml" % (date, batch)
-                    filepath = join(directory, filepath)
+                    filepath = join(directory, filepath).lstrip()
                     filepath = filepath.lstrip()
                     collection = open(filepath, 'w')
                     collection.write("<collection>\n")
@@ -343,41 +336,13 @@ def create_collection(batch_size, new_files, new_sources,
 
         write_message(subject)
         write_message(body)
-        report_records_via_mail(subject, body)
+        if submit_records_via_mail(subject, body, CFG_CONSYNHARVEST_EMAIL):
+            write_message("Mail sent to %r" % (CFG_CONSYNHARVEST_EMAIL,))
+        else:
+            write_message("ERROR: Cannot send mail.")
     else:
         write_message(subject)
         write_message("No new files")
-
-
-def report_records_via_mail(subject, body, toaddr=CFG_CONSYNHARVEST_EMAIL):
-    """
-    Performs the call to mailutils.send_email and reports the new
-    records via e-mail to the desired recipient (CFG_CONSYNHARVEST_EMAIL).
-
-    :param subject: email subject.
-    :type subject: string
-
-    :param body: email contents.
-    :type body: string
-    """
-    if send_email(fromaddr=CFG_SITE_SUPPORT_EMAIL,
-                  toaddr=toaddr,
-                  subject=subject,
-                  content=body):
-        write_message("Mail sent to %r" % (toaddr,))
-    else:
-        write_message("ERROR: Cannot send mail.")
-
-
-def create_folders(new_folder):
-    """Create folders if they don't exist"""
-    if not exists(new_folder):
-        folders = new_folder.split("/")
-        folder = "/"
-        for i in range(1, len(folders)):
-            folder = join(folder, folders[i]).strip()
-            if not exists(folder):
-                mkdir(folder)
 
 
 if __name__ == "__main__":
