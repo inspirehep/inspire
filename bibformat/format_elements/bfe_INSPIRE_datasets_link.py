@@ -55,7 +55,7 @@ def format_element(bfo):
                     break
     if hepdata_out or dataverse_out:
         #internal
-        out += ' <a href="%s/record/%s/hepdata">INSPIRE</a> ' % \
+        out += ' <a href="%s/record/%s/data">INSPIRE</a> ' % \
                (CFG_BASE_URL, str(bfo.recID))
         out += hepdata_out
         out += dataverse_out
