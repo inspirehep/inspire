@@ -35,12 +35,17 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
     """
     records_to_check = {}
     for record in records:
-        has_doi = False
+        check_record = True
         for position, value in record.iterfield("0247_2"):
             if value.lower() == "doi":
-                has_doi = True
+                check_record = False
                 break
-        if not has_doi:
+        # Do not consider records in the proceedings collection
+        for position, value in record.iterfield("980__a"):
+            if value.lower() == "proceedings":
+                check_record = False
+                break
+        if check_record:
             records_to_check[record.record_id] = record
 
     dois = get_doi_for_records(records_to_check.values())
