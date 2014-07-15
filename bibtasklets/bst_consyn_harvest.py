@@ -168,11 +168,13 @@ def fetch_xml_files(folder, els, new_files):
                         xmlFile.close()
                         dom_xml = xml.dom.minidom.parseString(xmlString)
                         doi = els.get_publication_information(dom_xml)[-1]
-                        write_message("DOI in record: %s" % (doi,))
-                        res = perform_request_search(p="doi:%s" % (doi,),
-                                                     of="id")
+                        res = None
+                        if doi:
+                            write_message("DOI in record: %s" % (doi,))
+                            res = perform_request_search(p="doi:%s" % (doi,),
+                                                         of="id")
                         if not res:
-                            write_message("DOI not found")
+                            write_message("DOI not found in record: \n%s" % (subfolder,))
                             doctype = els.get_doctype(dom_xml).lower()
                             #ignore index pages
                             if doctype in INTERESTING_DOCTYPES:
