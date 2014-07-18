@@ -69,7 +69,7 @@ def get_twitter_api(path=CFG_TWITTER_CREDENTIALS_PATH):
 def get_twitter_timeline(api=None, user=CFG_TWITTER_INSPIRE_USER, n=3):
     if api is None:
         api = get_twitter_api()
-    return api.GetUserTimeline(user)[:3]
+    return api.GetUserTimeline(user, include_rts=False, exclude_replies=True)[:3]
 
 def adapt_urls(text, urls):
     for url_from, url_to in urls.items():
