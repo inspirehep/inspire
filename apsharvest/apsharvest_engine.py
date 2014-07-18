@@ -166,7 +166,7 @@ class APSHarvestJob(object):
             if parameters.get("until_date"):
                 date_list.append(parameters.get("until_date"))
         else:
-            date_list.append(self.date_started)
+            date_list.append(self.date_started.strftime("%Y-%m-%d"))
         return "aps_%s_" % ("_".join(date_list), )
 
     def check_for_records(self):
@@ -285,7 +285,7 @@ class APSHarvestJob(object):
                          (record.recid or "new record", count))
             write_message("File: %s" % (fulltext_file,), verbose=2)
 
-            # Check if published date is after treshold:
+            # Check if published date is after threshold:
             if is_beyond_threshold_date(parameters.get("threshold_date"), fulltext_file):
                 # The published date is beyond the threshold, we continue
                 msg = "Warning: Article published beyond threshold: %s" % \

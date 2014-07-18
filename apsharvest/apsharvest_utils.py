@@ -30,9 +30,7 @@ import time
 from bs4 import BeautifulSoup
 
 from tempfile import mkdtemp, mkstemp
-from invenio.config import (CFG_FTP_SERVER,
-                            CFG_FTP_AUTHENTICATION_FILE,
-                            CFG_SITE_SUPPORT_EMAIL)
+from invenio.config import CFG_SITE_SUPPORT_EMAIL
 from invenio.mailutils import send_email
 from invenio.search_engine import search_pattern
 from invenio.shellutils import run_shell_command
@@ -506,6 +504,9 @@ def submit_records_via_ftp(filename, location=""):
     @param location: location on FTP server. Defaults to root.
     @type location: str
     """
+    from invenio.config import (CFG_FTP_SERVER,
+                                CFG_FTP_AUTHENTICATION_FILE,)
+
     try:
         ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
         ftp.upload(filename, location)
