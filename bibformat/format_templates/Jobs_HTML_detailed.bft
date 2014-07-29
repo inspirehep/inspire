@@ -31,7 +31,7 @@ suffix_fr="<br />" escape="0"
 
 <BFE_INSPIRE_JOBS_REFERENCE_EMAIL prefix="<strong>Letters of Reference should be sent to: </strong>" suffix="<br />" /><br />
 
-To remove this listing: <a href="mailto:jobs@inspirehep.net?subject=Remove-listing-<BFE_FIELD tag='037__a' />&body=Please remove listing <BFE_FIELD tag="037__a"/> (https://inspirehep.net/record/<BFE_FIELD tag='001'/>/edit)">Click here</a><br />
+To remove this listing: <a href="mailto:jobs@inspirehep.net?subject=Remove-listing-<BFE_FIELD tag='037__a' />&body=Please remove listing <BFE_FIELD tag="037__a"/> https://inspirehep.net/record/<BFE_FIELD tag='001'/>/edit">Click here</a><br />
 
 <BFE_INSPIRE_DATE_CREATED prefix="<small>Date added: " suffix="</small>"/>
 </div>
