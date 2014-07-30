@@ -175,7 +175,7 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
     <xsl:for-each select="$node/arXiv:affiliation">
       <xsl:variable name="knlow"><xsl:value-of select="normalize-space(translate(., $ucletters, $lcletters))"/></xsl:variable>
       <xsl:if test="not (contains($knlow,'collab') or contains($knlow,'team') or contains($knlow,'group') or contains($knlow, 'for the'))">
-        <subfield code="u"><xsl:value-of select="."/></subfield>
+        <subfield code="v"><xsl:value-of select="."/></subfield>
       </xsl:if>
     </xsl:for-each>
   </xsl:template>
