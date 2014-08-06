@@ -748,7 +748,7 @@ def apply_filter(rec):
                             newsubs.append(('n', name))
 
         if not newsubs and 'u' in subs:
-            is_fulltext = [s for s in subs['u'] if ".pdf" in s]
+            is_fulltext = [s for s in subs['u'] if ".pdf" in s and not "subformat=pdfa" in s]
             if is_fulltext:
                 newsubs = [('t', 'INSPIRE-PUBLIC'), ('a', subs['u'][0])]
 
