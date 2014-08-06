@@ -27,7 +27,8 @@ from os import (remove,
 from datetime import datetime
 from os.path import (join,
                      exists,
-                     isfile)
+                     isfile,
+                     dirname)
 from zipfile import (ZipFile,
                      BadZipfile)
 
@@ -118,12 +119,21 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
 
     if not package and not package_list:
         download_feed(feed, batch_size, delete_zip, new_sources, out_folder)
-    elif package:
-        extract_package(package, batch_size, delete_zip, out_folder)
-    elif package_list:
-        extract_multiple_packages(package_list, batch_size,
-                                  delete_zip, new_sources,
-                                  out_folder)
+    else:
+        xml_files = []
+        if package:
+            xml_files = extract_package(package, batch_size, delete_zip, out_folder)
+        elif package_list:
+            xml_files = extract_multiple_packages(
+                package_list, batch_size,
+                delete_zip, new_sources,
+                out_folder
+            )
+        # Remove the files to re-convert and add to bundle
+        for xml_file in xml_files:
+            file_to_look_for = join(dirname(xml_file), "upload.xml")
+            if exists(file_to_look_for):
+                remove(file_to_look_for)
 
     task_sleep_now_if_required(can_stop_too=True)
     consyn_files = join(out_folder, "consyn-files")
@@ -139,7 +149,10 @@ def extractAll(zipName, delete_zip, directory):
     """Unzip a zip file"""
     write_message("Unzipping: " + zipName + "\n")
     z = ZipFile(zipName)
+    xml_files_extracted = []
     for f in z.namelist():
+        if f.endswith(".xml"):
+            xml_files_extracted.append(f)
         extract_fld = join(directory, "consyn-files")
         extract_fld = extract_fld.lstrip()
         if not exists(join(extract_fld, f)):
@@ -148,6 +161,7 @@ def extractAll(zipName, delete_zip, directory):
         #delete the zip file after the extraction
         write_message("Deleting zip file: " + zipName + "\n")
         remove(zipName)
+    return xml_files_extracted
 
 
 def fetch_xml_files(folder, els, new_files):
@@ -251,7 +265,7 @@ def download_feed(feed, batch_size, delete_zip, new_sources,
 
 def extract_package(package, batch_size, delete_zip, directory):
     try:
-        extractAll(package, delete_zip, directory)
+        return extractAll(package, delete_zip, directory)
     except BadZipfile:
         write_message("Error BadZipfile %s", (package,))
         task_update_status("CERROR")
@@ -261,11 +275,17 @@ def extract_package(package, batch_size, delete_zip, directory):
 def extract_multiple_packages(package_list, batch_size,
                               delete_zip, new_sources,
                               directory):
-    packages_file = open(package_list, 'r')
-    for line in packages_file:
-        if line:
-            extract_package(line, batch_size, delete_zip, directory)
-            new_sources.append(line)
+
+    xml_files_extracted = []
+    with open(package_list, 'r') as package_file:
+        for line in package_file:
+            line = line.strip()
+            if line:
+                xml_files_extracted.extend(extract_package(
+                    line, batch_size, delete_zip, directory)
+                )
+                new_sources.append(line)
+    return xml_files_extracted
 
 
 def create_collection(batch_size, new_files, new_sources,
