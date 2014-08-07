@@ -77,7 +77,8 @@ def format_element(bfo, limit, separator='; ',
 
     #regex for parsing last and first names and initials
     re_last_first = re.compile('^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')
-    re_initials = re.compile(r'(?P<initial>\w)(\w+|\.)\s*', re.UNICODE)
+    re_initials = re.compile(r'(?P<initial>\w)([\w`\']+)?.?\s*', re.UNICODE)
+    re_tildehyph = re.compile(ur'(?<=\.)~(?P<hyphen>[\u002D\u00AD\u2010-\u2014-])(?=\w)', re.UNICODE)
     re_coll = re.compile(r'\s*collaborations?', re.IGNORECASE)
 
     bibrec_id = bfo.control_field("001")
@@ -140,6 +141,7 @@ def format_element(bfo, limit, separator='; ',
                 if first_last_match:
                     first = re_initials.sub('\g<initial>.~', \
                                             unicode(first_last_match.group('first_names'), 'utf8'))
+                    first = re_tildehyph.sub('\g<hyphen>', first)
                     author['display'] = first  + \
                                         first_last_match.group('last') + \
                                         first_last_match.group('extension')
