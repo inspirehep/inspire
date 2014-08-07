@@ -150,9 +150,10 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
             )
             task_update_progress("Converting files 2/3...")
             results = convert_files(xml_files, els, prefix=consyn_files)
-            for status_code, result in results:
+
+            for dummy, (status_code, result) in results.iteritems():
                 if status_code == StatusCodes.OK:
-                    new_files.append(results)
+                    new_files.append(result)
     task_update_progress("Compiling output 3/3...")
     create_collection(batch_size, new_files, new_sources, out_folder, upload_FTP)
 
@@ -197,6 +198,7 @@ def convert_files(xml_files, els, prefix=""):
         else:
             doctype = els.get_doctype(dom_xml).lower()
             if doctype in INTERESTING_DOCTYPES:
+                new_full_xml_filepath = join(dirname(full_xml_filepath), "upload.xml")
                 try:
                     converted_xml = els.get_record(full_xml_filepath)
                 except Exception:
@@ -207,10 +209,9 @@ def convert_files(xml_files, els, prefix=""):
                                                   error_trace)
                     write_message("Error converting: \n {0}".format(error_trace))
                     continue
-
-                new_full_xml_filepath = join(dirname(full_xml_filepath), "upload.xml")
-                with open(new_full_xml_filepath, "w") as marcfile:
-                    marcfile.write(converted_xml)
+                if not exists(new_full_xml_filepath):
+                    with open(new_full_xml_filepath, "w") as marcfile:
+                        marcfile.write(converted_xml)
                 results[full_xml_filepath] = (StatusCodes.OK, new_full_xml_filepath)
             else:
                 results[full_xml_filepath] = (StatusCodes.DOCTYPE_WRONG, doctype)
