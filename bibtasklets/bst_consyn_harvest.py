@@ -57,6 +57,16 @@ from invenio.config import CFG_CONSYN_ATOM_KEY
 INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
 
+class StatusCodes(object):
+
+    """Error codes."""
+
+    DOCTYPE_WRONG = "Wrong doctype"
+    DOI_FOUND = "DOI found"
+    CONVERSION_ERROR = "Error while converting"
+    OK = "Record OK"
+
+
 def bst_consyn_harvest(feed=None, package=None, package_list=None,
                        batch_size='500', delete_zip='False', upload_FTP='True'):
     """ Task to convert xml files from consyn.elsevier.com to Marc xml files.
@@ -117,9 +127,17 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
     if not exists(CFG_CONSYN_OUT_DIRECTORY):
         rmdir(create_work_folder(CFG_CONSYN_OUT_DIRECTORY))
     out_folder = CFG_CONSYN_OUT_DIRECTORY
+    els = ElsevierPackage(CONSYN=True)
+
+    consyn_files = join(out_folder, "consyn-files")
+    consyn_files = consyn_files.lstrip()
 
     if not package and not package_list:
         download_feed(feed, batch_size, delete_zip, new_sources, out_folder)
+        task_update_progress("Converting files 2/3...")
+        task_sleep_now_if_required(can_stop_too=True)
+        fetch_xml_files(consyn_files, els, new_files)
+        task_sleep_now_if_required(can_stop_too=False)
     else:
         xml_files = []
         if package:
@@ -130,19 +148,12 @@ def bst_consyn_harvest(feed=None, package=None, package_list=None,
                 delete_zip, new_sources,
                 out_folder
             )
-        # Remove the files to re-convert and add to bundle
-        for xml_file in xml_files:
-            file_to_look_for = join(dirname(xml_file), "upload.xml")
-            if exists(file_to_look_for):
-                remove(file_to_look_for)
-
-    task_sleep_now_if_required(can_stop_too=True)
-    consyn_files = join(out_folder, "consyn-files")
-    consyn_files = consyn_files.lstrip()
-    els = ElsevierPackage(CONSYN=True)
-    task_update_progress("Converting files 2/2...")
-    fetch_xml_files(consyn_files, els, new_files)
-    task_sleep_now_if_required(can_stop_too=False)
+            task_update_progress("Converting files 2/3...")
+            results = convert_files(xml_files, els, prefix=consyn_files)
+            for status_code, result in results:
+                if status_code == StatusCodes.OK:
+                    new_files.append(results)
+    task_update_progress("Compiling output 3/3...")
     create_collection(batch_size, new_files, new_sources, out_folder, upload_FTP)
 
 
@@ -163,6 +174,48 @@ def extractAll(zipName, delete_zip, directory):
         write_message("Deleting zip file: " + zipName + "\n")
         remove(zipName)
     return xml_files_extracted
+
+
+def convert_files(xml_files, els, prefix=""):
+    """Convert the list of publisher XML to MARCXML using given instance."""
+    results = {}
+    for xml_file in xml_files:
+        full_xml_filepath = join(prefix, xml_file)
+        dom_xml = parse(full_xml_filepath)
+        doi = els.get_publication_information(dom_xml)[-1]
+        res = None
+        if doi:
+            write_message("DOI in record: {0}".format(doi))
+            res = perform_request_search(p="doi:{0}".format(doi),
+                                         of="id")
+        else:
+            write_message("DOI not found in record: \n{0}".format(full_xml_filepath))
+
+        if res:
+            write_message("DOI found in: {0}".format(res))
+            results[full_xml_filepath] = (StatusCodes.DOI_FOUND, res)
+        else:
+            doctype = els.get_doctype(dom_xml).lower()
+            if doctype in INTERESTING_DOCTYPES:
+                try:
+                    converted_xml = els.get_record(full_xml_filepath)
+                except Exception:
+                    import traceback
+                    error_trace = traceback.format_exc()
+                    # Some error happened, lets gracefully quit
+                    results[full_xml_filepath] = (StatusCodes.CONVERSION_ERROR,
+                                                  error_trace)
+                    write_message("Error converting: \n {0}".format(error_trace))
+                    continue
+
+                new_full_xml_filepath = join(dirname(full_xml_filepath), "upload.xml")
+                with open(new_full_xml_filepath, "w") as marcfile:
+                    marcfile.write(converted_xml)
+                results[full_xml_filepath] = (StatusCodes.OK, new_full_xml_filepath)
+            else:
+                results[full_xml_filepath] = (StatusCodes.DOCTYPE_WRONG, doctype)
+                write_message("Doctype not interesting: {0}".format(doctype))
+    return results
 
 
 def fetch_xml_files(folder, els, new_files):
