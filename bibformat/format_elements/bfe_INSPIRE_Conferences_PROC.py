@@ -19,7 +19,7 @@
 """BibFormat element - Prints link to proceedings for conferences
 """
 
-from invenio.search_engine import search_pattern
+from invenio.search_engine import perform_request_search
 from invenio.search_engine_utils import get_fieldvalues
 
 
@@ -36,7 +36,7 @@ def format_element(bfo, newline=False, show_doi=False):
     if not cnum:
         #Something is wrong, return empty string
         return out
-    search_result = search_pattern(p="773__w:" + cnum + " and 980__a:proceedings")
+    search_result = perform_request_search(p="773__w:" + cnum + " and 980__a:proceedings")
     if search_result:
         if len(search_result) > 1:
             # multiple proceedings
