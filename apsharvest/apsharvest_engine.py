@@ -115,7 +115,7 @@ class APSHarvestJob(object):
         if journal_mappings and "journals" in journal_mappings:
             journal_mappings = journal_mappings['journals'][1]
         else:
-            journal_mappings = None
+            journal_mappings = {}
         self.journal_mappings = journal_mappings
 
     def check_records(self):
