@@ -39,6 +39,7 @@ from invenio.filedownloadutils import (download_url,
 from invenio.apsharvest_utils import (create_records_from_file,
                                       create_records_from_string,
                                       create_work_folder,
+                                      create_folders,
                                       get_record_from_doi,
                                       get_doi_from_record,
                                       generate_xml_for_records,
@@ -104,6 +105,7 @@ class APSHarvestJob(object):
         self.records_to_insert = []
         self.records_to_update = []
         self.records_failed = []
+        self.zip_folder = create_folders(os.join(directory, "zips"))
         self.out_folder = create_work_folder(directory)
         self.date_started = datetime.datetime.now()
         self.mail_subject = "APS harvest results: %s" % \
@@ -209,7 +211,7 @@ class APSHarvestJob(object):
                 continue
 
             url = CFG_APSHARVEST_FULLTEXT_URL % {'doi': record.doi}
-            result_file = os.path.join(self.out_folder,
+            result_file = os.path.join(self.zip_folder,
                                        "%s.zip" % (record.doi.replace('/', '_')))
             try:
                 request_start = time.time()

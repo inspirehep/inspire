@@ -324,12 +324,7 @@ def create_work_folder(base_folder):
 def create_folders(new_folder):
     """Create folders if they do not exist"""
     if not os.path.exists(new_folder):
-        folders = new_folder.split("/")
-        folder = "/"
-        for i in range(1, len(folders)):
-            folder = os.path.join(folder, folders[i]).strip()
-            if not os.path.exists(folder):
-                os.mkdir(folder)
+        os.makedirs(new_folder)
 
 
 def write_record_to_file(filename, record_list):
