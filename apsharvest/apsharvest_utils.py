@@ -325,6 +325,7 @@ def create_folders(new_folder):
     """Create folders if they do not exist"""
     if not os.path.exists(new_folder):
         os.makedirs(new_folder)
+    return new_folder
 
 
 def write_record_to_file(filename, record_list):
