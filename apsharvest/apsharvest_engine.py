@@ -105,7 +105,7 @@ class APSHarvestJob(object):
         self.records_to_insert = []
         self.records_to_update = []
         self.records_failed = []
-        self.zip_folder = create_folders(os.join(directory, "zips"))
+        self.zip_folder = create_folders(os.path.join(directory, "zips"))
         self.out_folder = create_work_folder(directory)
         self.date_started = datetime.datetime.now()
         self.mail_subject = "APS harvest results: %s" % \
