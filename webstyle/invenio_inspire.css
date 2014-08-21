@@ -764,6 +764,12 @@ a.footer:hover {
     font-size: small;
 }
 
+.searchservicebox {
+   margin-top: 15px;
+}
+.journalhint {
+   font-weight: bold;
+}
 
 .bugboxtd {
    vertical-align: top;
