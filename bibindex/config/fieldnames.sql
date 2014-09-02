@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.69, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
 --
--- Host: 188.184.3.55    Database: inspirehep
+-- Host: inspire01    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.5.32-MariaDB-log
+-- Server version	5.5.35-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -250,6 +250,7 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (46,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (47,'en','ln','texkey');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (48,'en','ln','volume');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (49,'en','ln','exact title');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (54,'en','ln','journal page');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -260,4 +261,4 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (49,'en','ln'
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-27 11:43:25
+-- Dump completed on 2014-09-02 10:36:41
