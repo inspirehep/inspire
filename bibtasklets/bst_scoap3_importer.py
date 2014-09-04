@@ -65,6 +65,8 @@ def bst_scoap3_importer():
 
     # We strip the first line.
     for line in request.text.split("\n")[1:]:
+        if not line.strip():
+            continue
         task_sleep_now_if_required(can_stop_too=True)
         recid, arxiv_id, cr_date, checksum, link, type, doi = [x.strip() for x in line.split(',')]
         write_message(line.strip())
