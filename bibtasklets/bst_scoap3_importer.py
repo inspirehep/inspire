@@ -1,8 +1,31 @@
-import urllib
+# -*- coding: utf-8 -*-
+##
+## This file is part of INSPIRE.
+## Copyright (C) 2014 CERN.
+##
+## INSPIRE is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## INSPIRE is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+"""SCOAP3 importer."""
+
 import sys
+import requests
+
 from os import fdopen, remove
-from os.path import join
 from tempfile import mkstemp
+from requests.exceptions import HTTPError, ConnectionError, Timeout
+
 from invenio.errorlib import register_exception
 from invenio.search_engine import perform_request_search
 from invenio.bibdocfile import BibRecDocs
@@ -10,25 +33,41 @@ from invenio.bibrecord import record_add_field, record_xml_output
 from invenio.config import CFG_TMPSHAREDDIR
 from invenio.bibtask import task_low_level_submission, write_message, task_sleep_now_if_required
 
-def bst_scoap3_importer():
-    task_sleep_now_if_required(can_stop_too=True)
-    f = urllib.urlopen('http://repo.scoap3.org/ffts_for_inspire.py/csv')
 
-    fd_update, name_update = mkstemp(suffix='.xml', prefix='bibupload_scoap3_', dir=CFG_TMPSHAREDDIR)
+def bst_scoap3_importer():
+    """Import from SCOAP3."""
+    try:
+        request = requests.get('http://repo.scoap3.org/ffts_for_inspire.py/csv')
+    except (HTTPError, ConnectionError, Timeout):
+        register_exception()
+        return
+    task_sleep_now_if_required(can_stop_too=True)
+
+    fd_update, name_update = mkstemp(
+        suffix='.xml',
+        prefix='bibupload_scoap3_',
+        dir=CFG_TMPSHAREDDIR
+    )
+
     out_update = fdopen(fd_update, 'w')
-    fd_new, name_new = mkstemp(suffix='.xml', prefix='bibupload_scoap3_', dir=CFG_TMPSHAREDDIR)
+    fd_new, name_new = mkstemp(
+        suffix='.xml',
+        prefix='bibupload_scoap3_',
+        dir=CFG_TMPSHAREDDIR
+    )
     out_new = fdopen(fd_new, 'w')
+
     print >> out_update, "<collection>"
     print >> out_new, "<collection>"
 
     line_count_new = 0  # to avoid empty bibupload
     line_count_update = 0  # to avoid empty bibupload
-    f.readline() ## Let's strip the header line
 
-    for d in f:
+    # We strip the first line.
+    for line in request.text.split("\n")[1:]:
         task_sleep_now_if_required(can_stop_too=True)
-        recid, arxiv_id, cr_date, checksum, link, type, doi = [x.strip() for x in d.split(',')]
-        write_message(d.strip())
+        recid, arxiv_id, cr_date, checksum, link, type, doi = [x.strip() for x in line.split(',')]
+        write_message(line.strip())
         if checksum == "None":
             write_message("... no PDF. Skipping")
             continue
