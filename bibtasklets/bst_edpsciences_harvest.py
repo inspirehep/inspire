@@ -37,6 +37,10 @@ from harvestingkit.edpsciences_package import EDPSciencesPackage
 from invenio.apsharvest_utils import (write_message,
                                       submit_records_via_ftp,
                                       submit_records_via_mail)
+from invenio.refextract_api import (
+    extract_references_from_string_xml as refextract
+)
+from invenio.refextract_kbs import get_kbs
 
 
 def bst_edpsciences_harvest(from_date="", to_date=""):
@@ -121,7 +125,8 @@ def convert_files(files_to_convert, source_folder, marc_folder,
                   from_date, to_date):
     """Converts the xml source files to marc xml files"""
     converted_files = []
-    edp = EDPSciencesPackage()
+    journal_mappings = get_kbs()['journals'][1]
+    edp = EDPSciencesPackage(journal_mappings)
     counter = 1
     for filename in files_to_convert:
         task_update_progress('Converting files 3/3 \t%s of %s' %
@@ -148,20 +153,20 @@ def convert_files(files_to_convert, source_folder, marc_folder,
                     converted_files.append(target_file)
         else:
             if 'xml_rich' in filename:
-                record = edp.get_record_rich(filename)
+                record = edp.get_record_rich(filename, refextract)
             else:
                 if from_date and to_date:
                     if datestamp >= from_date and\
                             datestamp <= to_date:
-                        record = edp.get_record(filename)
+                        record = edp.get_record(filename, refextract)
                 elif from_date:
                     if datestamp >= from_date:
-                        record = edp.get_record(filename)
+                        record = edp.get_record(filename, refextract)
                 elif to_date:
                     if datestamp <= to_date:
-                        record = edp.get_record(filename)
+                        record = edp.get_record(filename, refextract)
                 else:
-                    record = edp.get_record(filename)
+                    record = edp.get_record(filename, refextract)
             if record:
                 write_message("Converted file: %s" % (filename,))
                 with open(target_file, 'w') as out:
