@@ -30,7 +30,8 @@ def format_element(bfo, separator='; '):
 
     for item in bai:
         if item.has_key('9') and item['9'].lower() == 'arxiv' and item.has_key('a'):
-            return '<a href="http://arxiv.org/a/' + item['a'] + '">http://arxiv.org/a/' + item['a'] + '</a>'
+            
+            return '<a href="http://arxiv.org/a/' + item['a'] + '">' + item['a'] + '</a>'
 
 def escape_values(bfo):
     """
