@@ -49,6 +49,10 @@ try:
 except ImportError:
     CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
 from invenio.config import CFG_CONSYN_ATOM_KEY
+from invenio.refextract_api import (
+    extract_references_from_string_xml as refextract
+)
+from invenio.refextract_kbs import get_kbs
 
 INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
@@ -142,7 +146,9 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
     if not exists(CFG_CONSYN_OUT_DIRECTORY):
         makedirs(CFG_CONSYN_OUT_DIRECTORY)
     out_folder = CFG_CONSYN_OUT_DIRECTORY
-    els = ElsevierPackage(CONSYN=True)
+    journal_mappings = get_kbs()['journals'][1]
+    els = ElsevierPackage(CONSYN=True,
+                          journal_mappings=journal_mappings)
 
     consyn_files = join(out_folder, "consyn-files")
     consyn_files = consyn_files.lstrip()
@@ -210,7 +216,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
     if feed_location and not _errors_detected:
         remove(feed_location)
     for error in _errors_detected:
-        write_message(str(err))
+        write_message(str(error))
 
 
 def extractAll(zipName, delete_zip, directory):
@@ -256,7 +262,8 @@ def convert_files(xml_files, els, prefix=""):
                 new_full_xml_filepath = join(dirname(full_xml_filepath),
                                              "upload.xml")
                 try:
-                    converted_xml = els.get_record(full_xml_filepath)
+                    converted_xml = els.get_record(
+                        full_xml_filepath, refextract_callback=refextract)
                 except Exception as e:
                     _errors_detected.append(e)
                     error_trace = traceback.format_exc()
