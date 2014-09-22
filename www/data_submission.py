@@ -17,9 +17,7 @@
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-"""
-Receives data submission requests, generates an email for manual curation
-"""
+"""Receive data submission requests, generate email for manual curation."""
 
 from invenio.urlutils import wash_url_argument
 from invenio.config import CFG_SITE_URL
@@ -28,10 +26,10 @@ from invenio.urlutils import redirect_to_url
 from invenio.config import CFG_TMPSHAREDDIR
 
 
-def new_dataset(req, title=None, paper=None, authors=None, description=None, dataset_file=None, doi="", submitter_name=None, submitter_email=None, comments=None):
-    """
-    Form handler for dataset submissions
-    """
+def new_dataset(req, title=None, paper=None, authors=None, description=None,
+                dataset_file=None, doi="", submitter_name=None,
+                submitter_email=None, comments=None):
+    """Form handler for dataset submissions."""
     import uuid
 
     title = wash_url_argument(title, "str")
@@ -49,18 +47,26 @@ def new_dataset(req, title=None, paper=None, authors=None, description=None, dat
         f.write(req.form["dataset_file"].file.read())
         f.close()
 
-    res = submit_email_ticket(title, paper, authors, description, tmp_id, req.form["dataset_file"].filename, doi, submitter_name, submitter_email, comments)
+    res = submit_email_ticket(title, paper, authors, description,
+                              tmp_id, req.form["dataset_file"].filename,
+                              doi, submitter_name, submitter_email, comments)
 
     if res:
-        return redirect_to_url(req, "%s/data_submission.py/data_submission_success?title=%s" % (CFG_SITE_URL, title))
+        return redirect_to_url(
+            req,
+            "%s/data_submission.py/data_submission_success?title=%s" % (CFG_SITE_URL, title)
+        )
     else:
-        return redirect_to_url(req, "%s/data_submission.py/data_submission_fail?title=%s" % (CFG_SITE_URL, title))
+        return redirect_to_url(
+            req,
+            "%s/data_submission.py/data_submission_fail?title=%s" % (CFG_SITE_URL, title)
+        )
 
 
-def submit_email_ticket(title, paper, authors, description, dataset_file, dataset_name, doi, submitter_name, submitter_email, comments):
-    """
-    Submits a multipart email containing the metadata and the dataset file
-    """
+def submit_email_ticket(title, paper, authors, description, dataset_file,
+                        dataset_name, doi, submitter_name, submitter_email,
+                        comments):
+    """Submit a multipart email containing the metadata and the dataset file."""
     import smtplib
     from email.MIMEMultipart import MIMEMultipart
     from email.MIMEBase import MIMEBase
@@ -68,10 +74,12 @@ def submit_email_ticket(title, paper, authors, description, dataset_file, datase
     from email import Encoders
     from invenio.config import CFG_MISCUTIL_SMTP_HOST, CFG_MISCUTIL_SMTP_PORT
 
-    curators = ("laura.rueda@cern.ch", "particia.herterich@cern.ch", "sunje.dallmeier-tiessen@cern.ch")
-    
+    curators = ("laura.rueda@cern.ch",
+                "particia.herterich@cern.ch",
+                "sunje.dallmeier-tiessen@cern.ch")
+
     msg = MIMEMultipart()
-    msg['Subject'] = "New dataset submission from %s" % (submitter_name) 
+    msg['Subject'] = "New dataset submission from %s" % (submitter_name)
     msg['From'] = submitter_email
     msg['To'] = ', '.join(curators)
 
@@ -85,7 +93,8 @@ def submit_email_ticket(title, paper, authors, description, dataset_file, datase
     Submitter: %s
     E-mail: %s
     Comments: %s
-    """ % (title, paper, authors, description, doi, submitter_name, submitter_email, comments)
+    """ % (title, paper, authors, description, doi,
+           submitter_name, submitter_email, comments)
     part1 = MIMEText(text, 'plain')
 
     part2 = MIMEBase('application', 'octet-stream')
@@ -104,10 +113,7 @@ def submit_email_ticket(title, paper, authors, description, dataset_file, datase
 
 
 def data_submission_success(req, title, ticketres=None):
-    """
-    Submission confirmation message
-    """
-
+    """Submission confirmation message."""
     body = """
     <br/><b>Thanks for your submission!</b><br/>
     <p>We will get back to you as soon as the the submission of the dataset <i>%s</i> is processed!</p>
@@ -115,11 +121,9 @@ def data_submission_success(req, title, ticketres=None):
 
     return page(req=req, title="Dataset submitted", body=body)
 
-def data_submission_fail(req, title, ticketres=None):
-    """
-    Submission error message
-    """
 
+def data_submission_fail(req, title, ticketres=None):
+    """Submission error message."""
     body = """
     <br/><b>Your submission of "%s" failed!</b><br/>
     <p>We are sorry for this inconvenience, please try again.</p>
