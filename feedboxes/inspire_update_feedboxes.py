@@ -116,7 +116,7 @@ def update_portalbox(twitter_box=None):
 
 def dump_all_portalboxes():
     for name, portalbox_id, position, score, body in run_sql("SELECT DISTINCT name, id_portalbox, position, score, body FROM collection_portalbox JOIN collection ON id_collection=collection.id JOIN portalbox ON id_portalbox=portalbox.id"):
-        RE_TWITTER_PLACEMARK.sub(CFG_TWITTER_BOX_EMPTY_TPL, body)
+        body = RE_TWITTER_PLACEMARK.sub(CFG_TWITTER_BOX_EMPTY_TPL, body)
         filename = "portalbox-%03d-%s-%s-%s.html" % (portalbox_id, name, position, score)
         open(filename, "w").write(body)
         print "%s created" % filename
