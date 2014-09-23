@@ -13,3 +13,4 @@ bibconvert/inst_recs.xml
 *.bk
 *.orig
 config-local.mk
+*.kdev4
