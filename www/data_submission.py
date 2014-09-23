@@ -74,12 +74,14 @@ def submit_email_ticket(title, paper, authors, description, dataset_file,
     from email import Encoders
     from invenio.config import CFG_MISCUTIL_SMTP_HOST, CFG_MISCUTIL_SMTP_PORT
 
-    curators = ("laura.rueda@cern.ch",
-                "particia.herterich@cern.ch",
-                "sunje.dallmeier-tiessen@cern.ch")
+    curators = (
+        "laura.rueda@cern.ch",
+        "patricia.herterich@cern.ch",
+        "sunje.dallmeier-tiessen@cern.ch"
+    )
 
     msg = MIMEMultipart()
-    msg['Subject'] = "New dataset submission from %s" % (submitter_name)
+    msg['Subject'] = "New dataset submission from {0}".format(submitter_name).encode("utf-8")
     msg['From'] = submitter_email
     msg['To'] = ', '.join(curators)
 
@@ -95,7 +97,7 @@ def submit_email_ticket(title, paper, authors, description, dataset_file,
     Comments: %s
     """ % (title, paper, authors, description, doi,
            submitter_name, submitter_email, comments)
-    part1 = MIMEText(text, 'plain')
+    part1 = MIMEText(text, 'plain', "utf-8")
 
     part2 = MIMEBase('application', 'octet-stream')
     part2.set_payload(open(CFG_TMPSHAREDDIR + 'dataset-submission-' + dataset_file, "rb").read())
