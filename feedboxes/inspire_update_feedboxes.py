@@ -129,9 +129,9 @@ def load_all_portalboxes():
         portalbox_id, name, position, score = filename[len("portalbox-"):-len(".html")].split('-')
         body = open(filename).read()
         print "%s loaded" % filename
-        run_sql("INSERT INTO portalbox(id, body) VALUES(%s, %s)", (portalbox_id, body, ))
+        run_sql("INSERT INTO portalbox(id, title, body) VALUES(%s, '', %s)", (portalbox_id, body, ))
         if "<!-- TWITTER_START -->" in body:
-            if CFG_PBX_ID != portalbox_id:
+            if CFG_PBX_ID != int(portalbox_id):
                 print >> sys.stderr, "WARNING, Update CFG_PBX_ID to %s" % portalbox_id
                 CFG_PBX_ID = portalbox_id
             update_portalbox()
