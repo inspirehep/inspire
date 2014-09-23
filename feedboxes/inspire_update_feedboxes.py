@@ -11,7 +11,6 @@ CFG_ETCDIR/twitter-credentials.txt a four-lines text file containing in order:
 
 import time
 import sys
-
 try:
     import twitter
 except:
@@ -23,8 +22,10 @@ import os
 import cgi
 import re
 
+from glob import glob
+
 from invenio.dbquery import run_sql
-from invenio.config import CFG_ETCDIR, CFG_SITE_URL, CFG_SITE_SECURE_URL
+from invenio.config import CFG_ETCDIR, CFG_SITE_URL, CFG_SITE_SECURE_URL, CFG_SITE_LANGS
 from invenio.errorlib import register_exception
 
 CFG_TWITTER_CREDENTIALS_PATH = os.path.join(CFG_ETCDIR, 'twitter-credentials.txt')
@@ -56,6 +57,11 @@ CFG_TWITTER_BOX_TPL = """
  </tbody>
 </table>
 <!-- TWITTER_END -->
+"""
+
+CFG_TWITTER_BOX_EMPTY_TPL = """
+ <!-- TWITTER_START -->
+ <!-- TWITTER_END -->
 """
 
 def get_twitter_api(path=CFG_TWITTER_CREDENTIALS_PATH):
@@ -98,15 +104,49 @@ def get_twitter_box(api=None, timeline=None):
     return CFG_TWITTER_BOX_TPL % '\n'.join([tweet2html(tweet) for tweet in timeline])
 
 def update_portalbox(twitter_box=None):
-    if twitter_box is None:
-        twitter_box = get_twitter_box()
-    portalbox = run_sql("SELECT body FROM portalbox WHERE id=%s", (CFG_PBX_ID,))[0][0]
-    portalbox = RE_TWITTER_PLACEMARK.sub(twitter_box, portalbox)
-    run_sql("UPDATE portalbox SET body=%s WHERE id=%s", (portalbox, CFG_PBX_ID))
-
-if __name__ == "__main__":
     try:
-        update_portalbox()
+        if twitter_box is None:
+            twitter_box = get_twitter_box()
+        portalbox = run_sql("SELECT body FROM portalbox WHERE id=%s", (CFG_PBX_ID,))[0][0]
+        portalbox = RE_TWITTER_PLACEMARK.sub(twitter_box, portalbox)
+        run_sql("UPDATE portalbox SET body=%s WHERE id=%s", (portalbox, CFG_PBX_ID))
     except Exception, err:
         register_exception(alert_admin=True)
         print >> sys.stderr, "ERROR: issue in updating twitter box: %s" % err
+
+def dump_all_portalboxes():
+    for name, portalbox_id, position, score, body in run_sql("SELECT DISTINCT name, id_portalbox, position, score, body FROM collection_portalbox JOIN collection ON id_collection=collection.id JOIN portalbox ON id_portalbox=portalbox.id"):
+        RE_TWITTER_PLACEMARK.sub(CFG_TWITTER_BOX_EMPTY_TPL, body)
+        filename = "portalbox-%03d-%s-%s-%s.html" % (portalbox_id, name, position, score)
+        open(filename, "w").write(body)
+        print "%s created" % filename
+
+def load_all_portalboxes():
+    global CFG_PBX_ID
+    run_sql("TRUNCATE portalbox")
+    run_sql("TRUNCATE collection_portalbox")
+    for filename in glob("portalbox-*.html"):
+        portalbox_id, name, position, score = filename[len("portalbox-"):-len(".html")].split('-')
+        body = open(filename).read()
+        print "%s loaded" % filename
+        run_sql("INSERT INTO portalbox(id, body) VALUES(%s, %s)", (portalbox_id, body, ))
+        if "<!-- TWITTER_START -->" in body:
+            if CFG_PBX_ID != portalbox_id:
+                print >> sys.stderr, "WARNING, Update CFG_PBX_ID to %s" % portalbox_id
+                CFG_PBX_ID = portalbox_id
+            update_portalbox()
+        collection_id = run_sql("SELECT id FROM collection WHERE name=%s", (name, ))[0][0]
+        for ln in CFG_SITE_LANGS:
+            run_sql("INSERT INTO collection_portalbox(id_collection, id_portalbox, ln, position, score) VALUES(%s, %s, %s, %s, %s)", (collection_id, portalbox_id, ln, position, score))
+
+
+if __name__ == "__main__":
+    if '--help' in sys.argv:
+        print "%s [--dump|--load|--help]" % sys.argv[0]
+        print "NOTE: by default refresh of the twitter box will be performed."
+    elif '--dump' in sys.argv:
+        dump_all_portalboxes()
+    elif '--load' in sys.argv:
+        load_all_portalboxes()
+    else:
+        update_portalbox()
