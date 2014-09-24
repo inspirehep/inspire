@@ -15,8 +15,4 @@ install: test
 clean:
 	@rm -f *.orig *~
 
-reset-inspire-portalbox-configuration:
-	./inspire_update_feedboxes.py --load
-
-
 # end of file
