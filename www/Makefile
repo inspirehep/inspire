@@ -3,7 +3,7 @@
 include ../config.mk
 -include ../config-local.mk
 
-LIBFILES = reference_update.py
+LIBFILES = *.py
 LIBDIR = $(WEBDIR)
 
 all:

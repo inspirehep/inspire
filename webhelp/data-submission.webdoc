@@ -1,0 +1,86 @@
+## -*- mode: html; coding: utf-8; -*-
+
+## This file is part of Invenio.
+## Copyright (C) 2014 CERN.
+##
+## Invenio is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## Invenio is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with Invenio; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
+<!-- WebDoc-Page-Title: _(New dataset/code submission)_ -->
+<!-- WebDoc-Page-Revision: $Id$ -->
+
+
+<style>
+.tiny {
+  font-size: 85%;
+  color: grey;
+}
+
+#ref-form {
+  font-size: 80%;
+}
+
+.aligned-image {
+  vertical-align: top;
+}
+</style>
+
+<form method="POST" enctype="multipart/form-data" action="/data_submission.py/new_dataset" id="data-form">
+  <br/><br/>
+  <b>Dataset Information: </b>
+  <br /><br />
+
+  Title:<br />
+  <input type="text" name="title" size="50" placeholder="Data from Figure 2...">
+  <br/><br/>
+
+  Supplements the publication: <span class="tiny">(DOI, arXiv ID, INSPIRE record ID, title... or leave it empty for standalone data)</span> <br />
+  <input type="text" name="paper" size="50" placeholder="10.1234/Paper.1234.5678">
+  <br/><br/>
+
+  Author names: <span class="tiny">(leave empty to use the same ones as the publication abovementioned)</span> <br />
+  <input type="text" name="authors" size="50" placeholder="Alice, Bob...">
+  <br/><br/>
+
+  Description: <br />
+  <textarea name="description" cols="60" rows="8"></textarea>
+  <br/><br/>
+
+  Upload file: (for a set of files, please upload a compressed file=<br />
+  <input type="file" name="dataset_file" >
+  <br/><br/>
+
+  Assign a DOI to the dataset? <span class="tiny">(example: 10.7484/INSPIREHEP.DATA.1234.5678)</span> <br />
+  <input type="radio" name="doi" value="doi_yes" checked> Yes<br>
+  <input type="radio" name="doi" value="doi_no"> No<br>
+  <br/><br/>
+
+  <b>Contact Information: </b>
+  <br /><br />
+
+  Your name: <br />
+  <input type="text" name="submitter_name" size="50" placeholder="John Doe">
+  <br/><br/>
+
+  Your e-mail address: <br />
+  <input type="text" name="submitter_email" size="50" placeholder="John.Doe@cern.ch">
+  <br/><br/>
+
+  Comments: <br />
+  <textarea name="comments" cols="60" rows="4"></textarea>
+  <br/><br/>
+
+  <input type="submit" value="Submit" class="formbutton">
+
+</form>
