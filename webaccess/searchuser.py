@@ -19,7 +19,7 @@ def _get_personid_info(uid):
         if datablob is not None:
             datablob = loads(datablob)
         out += "<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>" % (
-            escape(personid), escape(tag), escape(data), escape(opt1), escape(opt2), escape(opt3), escape(str(last_updated)), escape(str(datablob)))
+            escape(str(personid)), escape(tag), escape(data), escape(str(opt1)), escape(str(opt2)), escape(str(opt3)), escape(str(last_updated)), escape(str(datablob)))
     out += "</tbody></table>"
     return out
 
