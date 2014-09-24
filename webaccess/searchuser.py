@@ -31,7 +31,7 @@ def index(req, p=""):
     users = []
     if p:
         users = run_sql(
-            "SELECT id, nickname, email, last_login FROM user WHERE email<>'' AND nickname LIKE %s OR email LIKE %s ORDER BY email LIMIT 100", ('%%%s%%' % p, '%%%s%%' % p))
+            "SELECT id, nickname, email, last_login FROM user WHERE email<>'' AND nickname LIKE %s OR email LIKE %s OR id=%s ORDER BY email LIMIT 100", ('%%%s%%' % p, '%%%s%%' % p, p))
     body = """
 <form>
 <label for="searchuser">Search user:</label> <input name="p" id="searchuser" value="%s" /></input><input type="submit" value="Search" />
@@ -41,7 +41,7 @@ def index(req, p=""):
         body += """<h2>Users found</h2>
 <p>This is the list of the first 100 users found matching the criteria.</p>
 <table border="1">
-  <thead><tr><th>ID</th><th>Nickname</th><th>Email</th><th>Last login</th></tr></thead>
+  <thead><tr><th>ID</th><th>Nickname</th><th>Email</th><th>Last login</th><th>Profile info</th></tr></thead>
   <tbody>
 """
         for user in users:
