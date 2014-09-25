@@ -71,7 +71,7 @@ _errors_detected = []
 
 def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
                        package_list_file=None, batch_size='500',
-                       delete_zip='False', submit='False'):
+                       delete_zip='False', submit='False', threshold_date=None):
     """ Task to convert xml files from consyn.elsevier.com to Marc xml files.
     There are four execution modes:
     1. Download from an atom feed url.
@@ -110,6 +110,9 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
                        should be submited by email and uploaded
                        to FTP server.
     :type submit: string representation of a boolean.
+    :param threshold_date: threshold date only converts records that they were
+                      published after threshold_date
+    :type threshold_date: string in the format YYYY-MM-DD
     """
     if not feed_url:
         feed_url = "https://consyn.elsevier.com/batch/atom?key=%s" % \
@@ -142,6 +145,20 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         write_message('Warning upload_FTP parameter is not'
                       ' a valid Boolean (True/False)\n'
                       'the default value \'False\' has been used!\n')
+    if threshold_date:
+        import time
+        date_format = "%Y-%m-%d"
+        try:
+            date = datetime.datetime(*(time.strptime(
+                threshold_date, date_format)[0:6])
+            )
+            threshold_date = date.strftime('%Y-%m-%d')
+        except ValueError:
+            write_message('Error threshold_date parameter is not '
+                          'in the right format. It should be in '
+                          'form "YYYY-MM-DD".')
+            task_update_status("ERROR")
+            return
 
     if not exists(CFG_CONSYN_OUT_DIRECTORY):
         makedirs(CFG_CONSYN_OUT_DIRECTORY)
@@ -206,7 +223,9 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         xml_files = download_feed(feed_url, batch_size, delete_zip,
                                   new_sources, out_folder, feed_location)
     task_update_progress("Converting files 2/3...")
-    results = convert_files(xml_files, els, prefix=consyn_files)
+    results = convert_files(xml_files, els,
+                            prefix=consyn_files,
+                            threshold_date=threshold_date)
     for dummy, (status_code, result) in results.iteritems():
         if status_code == StatusCodes.OK:
             new_files.append(result)
@@ -238,13 +257,16 @@ def extractAll(zipName, delete_zip, directory):
     return xml_files_extracted
 
 
-def convert_files(xml_files, els, prefix=""):
+def convert_files(xml_files, els, prefix="", threshold_date=None):
     """Convert the list of publisher XML to MARCXML using given instance."""
     results = {}
     for xml_file in xml_files:
         full_xml_filepath = join(prefix, xml_file)
         dom_xml = parse(full_xml_filepath)
         doi = els.get_publication_information(dom_xml)[-1]
+        date = els.get_publication_information(dom_xml)[-2]
+        if threshold_date and date < threshold_date:
+            continue
         res = None
         if doi:
             write_message("DOI in record: {0}".format(doi))
