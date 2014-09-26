@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2014 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,22 +16,21 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Invenio; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
-"""BibFormat element - Prints BAI link
+"""BibFormat element - Prints arXiv BAI hotlink
 """
-__revision__ = "$Id$"
 
-def format_element(bfo, separator='; '):
+def format_element(bfo):
     """
-    This is the default format for formatting full-text URLs.
-    @param separator: the separator between urls.
-    @param style: CSS class of the link
+    Provides HepNames detailed BFT with an arXiv author ID url
+    using 035__a if 035__9 is arxiv.
     """
+
     bai = bfo.fields('035__')
 
     for item in bai:
-        if item.has_key('9') and item['9'].lower() == 'arxiv' and item.has_key('a'):
-            
-            return '<a href="http://arxiv.org/a/' + item['a'] + '">' + item['a'] + '</a>'
+        if item.get('9') and item['9'].lower() == 'arxiv' and item.get('a'):
+            return '<a href="http://arxiv.org/a/' + item['a'] + '">' \
++ item['a'] + '</a>'
 
 def escape_values(bfo):
     """
