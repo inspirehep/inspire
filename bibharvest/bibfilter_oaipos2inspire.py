@@ -12,6 +12,8 @@ from __future__ import print_function
 import sys
 import requests
 import urllib
+
+from tempfile import mkdtemp
 from os import remove
 from os.path import (join,
                      basename)
@@ -20,7 +22,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from xml.dom.minidom import parse
 from harvestingkit.utils import (record_add_field,
-                                 create_record,
                                  record_xml_output)
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
@@ -37,6 +38,10 @@ try:
     from invenio.config import CFG_POS_OUT_DIRECTORY
 except ImportError:
     CFG_POS_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, 'fulltexts')
+try:
+    from invenio.config import CFG_POS_DEBUG
+except ImportError:
+    CFG_POS_DEBUG = False
 
 from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
@@ -86,8 +91,6 @@ def main(args):
             url = urllib.quote(link['href'], safe=":/")
             if url.endswith('.pdf'):
                 found = True
-                if results:
-                    rec = create_record()
                 filename = join(out_folder, identifier + ".pdf")
                 record_add_field(rec, '856', ind1='4', subfields=[
                     ('u', url),
@@ -111,17 +114,14 @@ def main(args):
         if not found:
             error_records.append(rec)
 
-        #upload to FTP
-        tempfile_path = '/tmp/%s.xml' % (contribution,)
-        with open(tempfile_path, 'w') as tempfile:
-            tempfile.write(record_xml_output(rec))
-        try:
+        # upload to FTP
+        if not CFG_POS_DEBUG:
+            tempfile_path = join(mkdtemp(), "{0}.xml".format(contribution))
+            with open(tempfile_path, 'w') as tempfile:
+                tempfile.write(record_xml_output(rec))
             submit_records_via_ftp(tempfile_path, conference)
             files_uploaded.append('%s/%s.xml' % (conference, contribution))
-            write_message("%s successfully uploaded to FTP server" % tempfile_path)
-        except:
-            write_message("Failed to upload %s to FTP server" % tempfile_path)
-        remove(tempfile_path)
+            remove(tempfile_path)
 
     insert_filename = "%s.insert.xml" % (input_filename,)
     append_filename = "%s.append.xml" % (input_filename,)
