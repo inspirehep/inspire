@@ -408,14 +408,13 @@ def create_collection(batch_size, new_files, new_sources,
               (datetime.now().strftime("%Y-%m-%d %H:%M:%S"),)
     batch = 1
     counter = 1
-    date = datetime.now().strftime("%Y.%m.%d")
     files_to_upload = []
     collection = None
+    date = datetime.now().strftime("%Y.%m.%d")
+    prefix = "elsevier-{0}".format(date)
     for filename in new_files:
         if counter == 1:
-            filepath = "elsevier-%s-%s.xml" % (date, batch)
-            filepath = join(directory, filepath)
-            filepath = filepath.lstrip()
+            filepath = get_available_filename(directory, prefix, batch)
             collection = open(filepath, 'w')
             collection.write("<collection>\n")
         with open(filename) as f:
@@ -466,6 +465,15 @@ def create_collection(batch_size, new_files, new_sources,
         else:
             write_message("ERROR: Cannot send mail.")
 
+
+def get_available_filename(directory, file_prefix, number_suffix):
+    """Return the next available filename in directory."""
+    filepath = "{0}-{1}.xml".format(file_prefix, number_suffix)
+    filepath = join(directory, filepath)
+    filepath = filepath.lstrip()
+    if exists(filepath):
+        return get_available_filename(directory, file_prefix, number_suffix + 1)
+    return filepath
 
 if __name__ == "__main__":
     bst_consyn_harvest()
