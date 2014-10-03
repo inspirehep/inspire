@@ -181,7 +181,7 @@ reset-inspire-portalbox-configuration:
 		## sidebar portalbox:
 	echo "INSERT INTO portalbox VALUES (2, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value with placeholder text
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hep_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=2", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-002-HEP-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=2", (body,))' | $(PYTHON)
 		## and now update portalbox values with RSS feed material
 	$(PYTHON) ./feedboxes/inspire_update_feedboxes.py
 
@@ -206,7 +206,7 @@ reset-inspire-portalbox-configuration:
 ## Now add HEP portalbox to INST collection
 	echo "INSERT INTO portalbox VALUES (15, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_inst_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=15", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-015-Institutions-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=15", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 15, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -229,7 +229,7 @@ reset-inspire-portalbox-configuration:
 ## Now add JOBS collection portalbox
 	echo "INSERT INTO portalbox VALUES (3, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the main portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_jobs.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=3", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-003-Jobs-ne-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=3", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'bg', 'ne', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 3, 'ca', 'ne', 100)" | $(BINDIR)/dbexec
@@ -252,7 +252,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (4, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_jobs_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=4", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-004-Jobs-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=4", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 4, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -275,7 +275,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (5, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_jobs_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=5", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-005-Jobs-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=5", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (3, 5, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -317,7 +317,7 @@ reset-inspire-portalbox-configuration:
 # Add HEP title box
 	echo "INSERT INTO portalbox VALUES (6, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hep_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=6", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-006-HEP-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=6", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (1, 6, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -342,7 +342,7 @@ reset-inspire-portalbox-configuration:
 # Add Inst title box
 	echo "INSERT INTO portalbox VALUES (7, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_inst_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=7", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-007-Institutions-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=7", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (2, 7, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -366,7 +366,7 @@ reset-inspire-portalbox-configuration:
 # Add Hepnames title box
 	echo "INSERT INTO portalbox VALUES (8, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hepnames_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=8", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-008-HepNames-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=8", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 8, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -389,7 +389,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (9, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_hepnames_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=9", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-009-HepNames-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=9", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (5, 9, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -414,7 +414,7 @@ reset-inspire-portalbox-configuration:
 # Add Conf title box
 	echo "INSERT INTO portalbox VALUES (13, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=13", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-013-Conferences-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=13", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 13, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -437,7 +437,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (14, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_conf_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=14", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-014-Conferences-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=14", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (4, 14, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -462,7 +462,7 @@ reset-inspire-portalbox-configuration:
 # Add Exp title box
 	echo "INSERT INTO portalbox VALUES (16, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_exp_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=16", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-016-Experiments-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=16", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 16, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -485,7 +485,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (17, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_exp_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=17", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-017-Experiments-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=17", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (7, 17, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
@@ -510,7 +510,7 @@ reset-inspire-portalbox-configuration:
 # Add Journal title box
 	echo "INSERT INTO portalbox VALUES (18, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_journal_title.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=18", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-018-Journals-tp-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=18", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'bg', 'tp', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 18, 'ca', 'tp', 100)" | $(BINDIR)/dbexec
@@ -532,7 +532,7 @@ reset-inspire-portalbox-configuration:
 
 	echo "INSERT INTO portalbox VALUES (19, '', 'FIXME')" | $(BINDIR)/dbexec
 		# now update portalbox value from the right top portalbox file:
-	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox_journal_right_top.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=19", (body,))' | $(PYTHON)
+	echo 'from invenio.dbquery import run_sql;body = open("feedboxes/portalbox-019-Journals-rt-100.html").read();run_sql("UPDATE portalbox SET body=%s WHERE id=19", (body,))' | $(PYTHON)
 
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'bg', 'rt', 100)" | $(BINDIR)/dbexec
 	echo "INSERT INTO collection_portalbox VALUES (8, 19, 'ca', 'rt', 100)" | $(BINDIR)/dbexec
