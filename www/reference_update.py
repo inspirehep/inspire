@@ -57,7 +57,7 @@ def submit_ticket(msg, subject, record_id, queue="Test", email=""):
         queue=queue,
         requestor=email
     )
-    if res > 0:
+    if res:
         BIBCATALOG_SYSTEM.ticket_comment(None, res, msg)
 
 

@@ -62,7 +62,7 @@ def check_records(records, doi_field="0247_a", extra_subfields=(("2", "DOI"), ("
                     text=subject,
                     queue="Bibcheck"
                 )
-                if res > 0:
+                if res:
                     msg = """
                         DOI %s to be added to record %s already exists in record/s %s
 
