@@ -192,6 +192,7 @@ INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (171,'data sou
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (172,'report number hidden','037__z','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (173,'conference start date','111__x','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (174,'experiment name','119__a','');
+INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (175,'journal title','130__a','');
 
 --
 -- Dumping data for table `field`
@@ -251,7 +252,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (51,'cited by excluding self c
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (52,'cataloguer nickname','cataloguer');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (53,'data source','datasource');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (54,'journal page','journalpage');
-INSERT INTO `field` (`id`, `name`, `code`) VALUES (56,'date ingested','dateingested');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (56,'earliest date','earliestdate');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (57,'conference start date','conferencestartdate');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (58,'experiment name','experimentname');
 
@@ -446,6 +447,7 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (54,37,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (6,172,101);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (57,173,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (58,174,0);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (2,175,101);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -456,4 +458,4 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (58,174,0);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-22 14:19:01
+-- Dump completed on 2014-10-09 22:07:11

@@ -252,7 +252,7 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (48,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (49,'en','ln','exact title');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (54,'en','ln','journal page');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (55,'en','ln','report number hidden');
-INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (56,'en','ln','date ingested');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (56,'en','ln','earliest date');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (57,'en','ln','conference start date');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (58,'en','ln','experiment name');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -265,4 +265,4 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (58,'en','ln'
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-22 14:19:10
+-- Dump completed on 2014-10-09 22:07:18
