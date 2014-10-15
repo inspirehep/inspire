@@ -450,20 +450,17 @@ def create_collection(batch_size, new_files, new_sources,
         body += ['\tFiles ready for upload:']
         for filename in files_to_upload:
             body.append("\t%s (%s records)" % (filename, batch_size))
-    if len(body) > 3:
-        #update the last line of the message
-        body[-1] = "\t%s (%s records)" % (filename, counter)
+    if files_to_upload:
         body = '\n'.join(body)
         write_message(subject)
         write_message(body)
+        if submit:
+            if submit_records_via_mail(subject, body, CFG_CONSYNHARVEST_EMAIL):
+                write_message("Mail sent to %r" % (CFG_CONSYNHARVEST_EMAIL,))
+            else:
+                write_message("ERROR: Cannot send mail.")
     else:
-        write_message(subject)
         write_message("No new files!")
-    if submit:
-        if submit_records_via_mail(subject, body, CFG_CONSYNHARVEST_EMAIL):
-            write_message("Mail sent to %r" % (CFG_CONSYNHARVEST_EMAIL,))
-        else:
-            write_message("ERROR: Cannot send mail.")
 
 
 def get_available_filename(directory, file_prefix, number_suffix):
