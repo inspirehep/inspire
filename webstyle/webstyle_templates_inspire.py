@@ -422,7 +422,9 @@ $(function () {
    <div class="feedbackboxbody">
  Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>, the High Energy Physics information system.
  Please direct questions, comments or concerns to <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
-   </div>
+ <p style="color:red; margin: 2px 0px; font-weight: bold;">Due to the major power cut in our
+Computer Center the INSPIRE service is currently experiencing instability while we are working towards restoring normal conditions</p>
+ </div>
   </td>
  </tr>
 </table>
