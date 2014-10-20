@@ -100,14 +100,15 @@ class APSRecordList(list):
 
 class APSHarvestJob(object):
     """Represents a harvesting job"""
-    def __init__(self, directory):
+    def __init__(self, directory, date_started=None, date_harvested_from=None):
         self.records_harvested = []
         self.records_to_insert = []
         self.records_to_update = []
         self.records_failed = []
         self.zip_folder = create_folders(os.path.join(directory, "zips"))
         self.out_folder = create_work_folder(directory)
-        self.date_started = datetime.datetime.now()
+        self.date_started = date_started or datetime.datetime.now()
+        self.date_harvested_from = date_harvested_from
         self.mail_subject = "APS harvest results: %s" % \
                             (self.date_started.strftime("%Y-%m-%d %H:%M:%S"),)
         from invenio.refextract_kbs import get_kbs
@@ -164,9 +165,13 @@ class APSHarvestJob(object):
         """Return a nicely formatted filename prefix."""
         date_list = []
         if parameters.get("from_date"):
-            date_list.append(parameters.get("from_date"))
-            if parameters.get("until_date"):
-                date_list.append(parameters.get("until_date"))
+            if parameters.get("from_date") == "last":
+                date_list.append(self.date_harvested_from or "last")
+                date_list.append(self.date_started.strftime("%Y-%m-%d"))
+            else:
+                date_list.append(parameters.get("from_date"))
+                if parameters.get("until_date"):
+                    date_list.append(parameters.get("until_date"))
         else:
             date_list.append(self.date_started.strftime("%Y-%m-%d"))
         return "aps_%s_" % ("_".join(date_list), )

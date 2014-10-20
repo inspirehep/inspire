@@ -43,7 +43,8 @@ from invenio.apsharvest_utils import (validate_date,
                                       get_record_from_doi,
                                       )
 from invenio.apsharvest_config import (CFG_APSHARVEST_SEARCH_COLLECTION,
-                                       CFG_APSHARVEST_BUNCH_SIZE)
+                                       CFG_APSHARVEST_BUNCH_SIZE,
+                                       CFG_APSHARVEST_THRESHOLD_DAYS)
 from invenio.apsharvest_engine import (APSHarvestJob,
                                        APSRecordList,
                                        APSRecord,
@@ -223,7 +224,7 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
     parameters = locals()
 
     # 1: We analyze parameters and fetch all requested records from APS
-    final_record_list, new_harvest_date = get_records_to_harvest(parameters)
+    final_record_list, harvest_from_date, new_harvest_date = get_records_to_harvest(parameters)
     write_message("Found %d record(s) to download." % (len(final_record_list),))
 
     if reportonly:
@@ -237,7 +238,9 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
     # 2: Extract fulltext/metadata XML and upload bunches of
     #    records as configured
-    job = APSHarvestJob(CFG_APSHARVEST_DIR)
+    job = APSHarvestJob(CFG_APSHARVEST_DIR,
+                        date_started=new_harvest_date,
+                        date_harvested_from=harvest_from_date)
     count = process_records(job,
                             parameters,
                             final_record_list)
@@ -259,13 +262,15 @@ def get_records_to_harvest(parameters):
     Using the given parameters dict (from bst_apsharvest), we check how
     to get the list of records to process.
 
-    Returns a tuple of (record_list, date_checked) where record_list is
-    the list of APSRecord instances and date_checked is the datetime when
-    checking was done.
+    Returns a tuple of (record_list, harvest_from_date, date_checked) where
+    record_list is the list of APSRecord instances, harvest_from_date is the
+    decided date to harvest from and date_checked is the datetime when the
+    harvest was initiated.
     """
     # This is the list of APSRecord objects to be harvested.
     final_record_list = APSRecordList()
     new_harvest_date = None
+    harvest_from_date = None
 
     if parameters.get("threshold_date"):
         # Input from user. Validate date
@@ -296,9 +301,14 @@ def get_records_to_harvest(parameters):
                               (str(e),),
                               stream=sys.stderr)
                 raise
-            # If threshold is not given, set it to from_date
-            if not parameters.get("threshold_date"):
-                parameters["threshold_date"] = parameters.get("from_date")
+
+        # If threshold is not given, set it to from_date - CFG_APSHARVEST_THRESHOLD_DAYS
+        if not parameters.get("threshold_date"):
+            new_threshold_date = harvest_from_date - datetime.timedelta(days=CFG_APSHARVEST_THRESHOLD_DAYS)
+            parameters["threshold_date"] = new_threshold_date.strftime("%Y-%m-%d")
+            write_message("Setting dynamic threshold date to %s." % (
+                parameters["threshold_date"],
+            ))
 
         # Turn harvest_from_date back into a string (away from datetime object)
         harvest_from_date = harvest_from_date.strftime("%Y-%m-%d")
@@ -383,7 +393,7 @@ def get_records_to_harvest(parameters):
             for recid, date in records_found:
                 final_record_list.append(APSRecord(recid, date=date))
 
-    return final_record_list, new_harvest_date
+    return final_record_list, harvest_from_date, new_harvest_date
 
 
 def process_records(job, parameters, final_record_list):
