@@ -118,8 +118,10 @@ def bst_scoap3_importer():
     out_update.close()
 
     if line_count_new:
-        id = task_low_level_submission("bibupload", "admin", "-N", "SCOAP3-import", "-a", name_new)
-        write_message("Scheduled bibupload --append %s with ID #%s" % (name_new, id))
+        # We use correct here instead of append to deal with potential sync issues.
+        # Basically BibUpload should handle "new" corrections as "append" if it is not there.
+        id = task_low_level_submission("bibupload", "admin", "-N", "SCOAP3-import", "-c", name_new)
+        write_message("Scheduled bibupload --correct %s with ID #%s" % (name_new, id))
     else:
         remove(name_new)
     if line_count_update:
