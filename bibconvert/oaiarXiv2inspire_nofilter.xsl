@@ -554,9 +554,6 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                   <subfield code="x"><xsl:value-of select="./OAI-PMH:metadata/arXiv:arXiv/arXiv:journal-ref"/></subfield>
                 </datafield>
 
-                <datafield tag="980" ind1=" " ind2=" ">
-                  <subfield code="a">Published</subfield>
-                </datafield>
               </xsl:if>
 
               <xsl:choose>
