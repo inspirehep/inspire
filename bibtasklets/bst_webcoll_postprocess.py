@@ -38,14 +38,17 @@ def bst_webcoll_postprocess(recids=[]):
         recids = recids.split(",")
     cache = get_redis()
     cached_ids = cache.get("webcoll_pending_recids") or []
-    recids += cached_ids
+    if cached_ids and not cached_ids == "[]":
+        if isinstance(cached_ids, str):
+            cached_ids = eval(cached_ids)
+        recids += cached_ids
 
     if not CFG_WEBCOLL_POST_REQUEST_URL:
         write_message("CFG_WEBCOLL_POST_REQUEST_URL is not set.")
         task_update_status('ERROR')
         return 1
 
-    if recids:
+    if recids or not recids == "[]":
         write_message("Going to POST callback to {0}: {1} (total: {2})".format(
             CFG_WEBCOLL_POST_REQUEST_URL,
             recids[:10],
