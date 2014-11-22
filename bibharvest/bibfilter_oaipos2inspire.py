@@ -136,7 +136,7 @@ def main(args):
         copy(append_filename, out_folder)
         created_files.append(join(out_folder, basename(append_filename)))
     if write_record_to_file(errors_filename, error_records):
-        copy(errors_filename, errors_filename)
+        copy(errors_filename, out_folder)
         created_files.append(join(out_folder, basename(errors_filename)))
 
     total_records = len(append_records) + len(insert_records) + len(error_records)
