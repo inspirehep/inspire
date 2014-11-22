@@ -29,7 +29,7 @@ def format_element(bfo, separator='; '):
         return ''
 
     url = "/person/update?IRN=" + urllib.quote(hepnames_id)
-    return '<a href="' + url + '">' + '<img src="/img/update.jpg"></a>'
+    return '<a href="' + url + '">' + '<img src="/img/update.jpg" alt="Update"/></a>'
 
 def escape_values(bfo):
     """
