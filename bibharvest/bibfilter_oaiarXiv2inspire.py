@@ -21,7 +21,8 @@ from invenio.bibrecord import (create_records,
                                field_get_subfield_instances,
                                record_delete_field,
                                create_field,
-                               record_replace_field)
+                               record_replace_field,
+                               record_drop_duplicate_fields)
 from invenio.search_engine import get_record
 from invenio.bibmerge_differ import record_diff, match_subfields
 from invenio.bibupload import retrieve_rec_id
@@ -150,6 +151,7 @@ def write_record_to_file(filename, record_list):
         out.append("<collection>")
         for record in record_list:
             if record != {}:
+                record = record_drop_duplicate_fields(record)
                 out.append(record_xml_output(record))
         out.append("</collection>")
         if len(out) > 2:
@@ -159,10 +161,7 @@ def write_record_to_file(filename, record_list):
 
 
 def has_field_origin(field_list, origin, code):
-    """
-    This function checks if any of the fields for a certain tag contains
-    origin in given subfield code. I.e. $9 arXiv.
-    """
+    """Check if any of the fields for a certain tag contains  origin in given subfield code."""
     for field in field_list:
         if origin in field_get_subfield_values(field, code):
             return True
@@ -170,10 +169,7 @@ def has_field_origin(field_list, origin, code):
 
 
 def has_field(field, field_list):
-    """
-    This function checks if the given list of fields contains an field
-    identical to passed field.
-    """
+    """Check if the given list of fields contains an field identical to passed field."""
     if len(field_list) > 0:
         for subfields, ind1, ind2, value, dummy in field_list:
             if (ind1, ind2, value) == field[1:4]:
@@ -186,8 +182,8 @@ def has_field(field, field_list):
 
 
 def get_minimal_arxiv_id(record):
-    """
-    Returns the OAI arXiv id in the given record skipping the prefixes.
+    """Return the OAI arXiv id in the given record skipping the prefixes.
+
     I.e. oai:arxiv.org:1234.1234 becomes 1234.1234 and oai:arxiv.org:hep-ex/2134123
     becomes hep-ex/2134123. Used for searching.
     """
@@ -197,10 +193,10 @@ def get_minimal_arxiv_id(record):
             return value.split(':')[-1]
 
 
-def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code="", provenence_code="9", provenence_value="arXiv"):
-    """
-    Retrieves the value of the field with given provenence.
-    """
+def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ",
+                                     value_code="", provenence_code="9",
+                                     provenence_value="arXiv"):
+    """Retrieve the value of the field with given provenence."""
     fields = record_get_field_instances(record, tag, ind1, ind2)
     final_values = []
     for subfields, dummy1, dummy2, dummy3, dummy4 in fields:
@@ -218,8 +214,22 @@ def record_get_value_with_provenence(record, tag, ind1=" ", ind2=" ", value_code
     return final_values
 
 
+def record_drop_fields_matching_pattern(record, pattern, fields, tag):
+    """Remove fields matching given pattern from record."""
+    field_positions = []
+    for field in fields:
+        subfields = field_get_subfield_instances(field)
+        for subfield in subfields:
+            if re.match(pattern, subfield[1].lower(), re.IGNORECASE):
+                field_positions.append((field[1], field[2], field[4]))
+                break
+
+    for ind1, ind2, pos in field_positions:
+        record_delete_field(record, tag, ind1=ind1, ind2=ind2, field_position_global=pos)
+
+
 def main():
-    usage = """
+    """
     name:           bibfilter_oaiarXiv2inspire
     decription:     Program to filter and analyse MARCXML records
                     harvested from external OAI sources, in order to determine
@@ -237,6 +247,7 @@ def main():
                     forces the script not to check if the record exists in the database
                     (useful when re-harvesting existing record)
     """
+    usage = __doc__
     try:
         opts, args = getopt.getopt(sys.argv[1:], "c:nh", [])
     except getopt.GetoptError, err_obj:
@@ -339,15 +350,12 @@ def main():
             # We remove 500 field temporary/brief entry from revision if record already exists
             fields_500 = record_get_field_instances(record, '500', ind1="%", ind2="%")
             if fields_500 is not None:
-                field_positions = []
-                for field in fields_500:
-                    subfields = field_get_subfield_instances(field)
-                    for subfield in subfields:
-                        if re.match("^.?((temporary|brief) entry).?$", subfield[1].lower(), re.IGNORECASE):
-                            field_positions.append((field[1], field[2], field[4]))
+                record_drop_fields_matching_pattern(record, "^.?((temporary|brief) entry).?$", fields_500, "500")
 
-                for ind1, ind2, pos in field_positions:
-                    record_delete_field(record, '500', ind1=ind1, ind2=ind2, field_position_global=pos)
+            # We remove also 980 Thesis/ConferencePaper added in conversion on updates
+            fields_980 = record_get_field_instances(record, '980', ind1="%", ind2="%")
+            if fields_980 is not None:
+                record_drop_fields_matching_pattern(record, "^.?(ConferencePaper|Thesis).?$", fields_980, "980")
 
             # Now compare new version with existing one, returning a diff[tag] = (diffcode, [..])
             # None - if field is the same for both records
