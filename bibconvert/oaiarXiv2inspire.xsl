@@ -590,7 +590,59 @@ along with Invenio; if not, write to the Free Software Foundation, Inc.,
                 <datafield tag="773" ind1=" " ind2=" ">
                   <subfield code="x"><xsl:value-of select="./OAI-PMH:metadata/arXiv:arXiv/arXiv:journal-ref"/></subfield>
                 </datafield>
+
               </xsl:if>
+
+              <xsl:choose>
+                <!-- Is this a thesis?  -->
+                <xsl:when test="contains($commentslow,' diploma ') or contains($commentslow,' diplomarbeit ') or contains($commentslow,' diplome ') or contains($commentslow,' dissertation ') or contains($commentslow,' doctoraal ') or contains($commentslow,' doctoral ') or contains($commentslow,' doctorat ') or contains($commentslow,' doctorate ') or contains($commentslow,' doktorarbeit ') or contains($commentslow,' dottorato ') or contains($commentslow,' habilitationsschrift ') or contains($commentslow,' hochschule ') or contains($commentslow,' inauguraldissertation ') or contains($commentslow,' memoire ') or contains($commentslow,' phd ') or contains($commentslow,' proefschrift ') or contains($commentslow,' schlussbericht ') or contains($commentslow,' staatsexamensarbeit ') or contains($commentslow,' tesi ') or contains($commentslow,' thesis ') or contains($commentslow,' travail ') or contains($commentslow,' diploma,') or contains($commentslow,' diplomarbeit,') or contains($commentslow,' diplome,') or contains($commentslow,' dissertation,') or contains($commentslow,' doctoraal,') or contains($commentslow,' doctoral,') or contains($commentslow,' doctorat,') or contains($commentslow,' doctorate,') or contains($commentslow,' doktorarbeit,') or contains($commentslow,' dottorato,') or contains($commentslow,' habilitationsschrift,') or contains($commentslow,' hochschule,') or contains($commentslow,' inauguraldissertation,') or contains($commentslow,' memoire,') or contains($commentslow,' phd,') or contains($commentslow,' proefschrift,') or contains($commentslow,' schlussbericht,') or contains($commentslow,' staatsexamensarbeit,') or contains($commentslow,' tesi,') or contains($commentslow,' thesis,') or contains($commentslow,' travail,') or contains($commentslow,' diploma.') or contains($commentslow,' diplomarbeit.') or contains($commentslow,' diplome.') or contains($commentslow,' dissertation.') or contains($commentslow,' doctoraal.') or contains($commentslow,' doctoral.') or contains($commentslow,' doctorat.') or contains($commentslow,' doctorate.') or contains($commentslow,' doktorarbeit.') or contains($commentslow,' dottorato.') or contains($commentslow,' habilitationsschrift.') or contains($commentslow,' hochschule.') or contains($commentslow,' inauguraldissertation.') or contains($commentslow,' memoire.') or contains($commentslow,' phd.') or contains($commentslow,' proefschrift.') or contains($commentslow,' schlussbericht.') or contains($commentslow,' staatsexamensarbeit.') or contains($commentslow,' tesi.') or contains($commentslow,' thesis.') or contains($commentslow,' travail.') or contains($commentslow,' diploma;') or contains($commentslow,' diplomarbeit;') or contains($commentslow,' diplome;') or contains($commentslow,' dissertation;') or contains($commentslow,' doctoraal;') or contains($commentslow,' doctoral;') or contains($commentslow,' doctorat;') or contains($commentslow,' doctorate;') or contains($commentslow,' doktorarbeit;') or contains($commentslow,' dottorato;') or contains($commentslow,' habilitationsschrift;') or contains($commentslow,' hochschule;') or contains($commentslow,' inauguraldissertation;') or contains($commentslow,' memoire;') or contains($commentslow,' phd;') or contains($commentslow,' proefschrift;') or contains($commentslow,' schlussbericht;') or contains($commentslow,' staatsexamensarbeit;') or contains($commentslow,' tesi;') or contains($commentslow,' thesis;') or contains($commentslow,' travail;')">
+
+                  <datafield tag="980" ind1=" " ind2=" ">
+                    <subfield code="a">Thesis</subfield>
+                  </datafield>
+
+                </xsl:when>
+
+                <!-- or Is this a conference?  -->
+                <xsl:when test="contains($lkrmatch,' colloquium ') or
+                                contains($lkrmatch,' colloquiums ') or
+                                contains($lkrmatch,' conf ') or
+                                contains($lkrmatch,' conference ') or
+                                contains($lkrmatch,' conferences ') or
+                                contains($lkrmatch,' contrib ') or
+                                contains($lkrmatch,' contributed ') or
+                                contains($lkrmatch,' contribution ') or
+                                contains($lkrmatch,' contributions ') or
+                                contains($lkrmatch,' forum ') or
+                                contains($lkrmatch,' lecture ') or
+                                contains($lkrmatch,' lectures ') or
+                                contains($lkrmatch,' meeting ') or
+                                contains($lkrmatch,' meetings ') or
+                                contains($lkrmatch,' pres ') or
+                                contains($lkrmatch,' presented ') or
+                                contains($lkrmatch,' proc ') or
+                                contains($lkrmatch,' proceeding ') or
+                                contains($lkrmatch,' proceedings ') or
+                                contains($lkrmatch,' rencontre ') or
+                                contains($lkrmatch,' rencontres ') or
+                                contains($lkrmatch,' school ') or
+                                contains($lkrmatch,' schools ') or
+                                contains($lkrmatch,' seminar ') or
+                                contains($lkrmatch,' seminars ') or
+                                contains($lkrmatch,' symp ') or
+                                contains($lkrmatch,' symposium ') or
+                                contains($lkrmatch,' symposiums ') or
+                                contains($lkrmatch,' talk ') or
+                                contains($lkrmatch,' talks ') or
+                                contains($lkrmatch,' workshop ') or
+                                contains($lkrmatch,' workshops ') ">
+
+                  <datafield tag="980" ind1=" " ind2=" ">
+                    <subfield code="a">ConferencePaper</subfield>
+                  </datafield>
+                </xsl:when>
+
+              </xsl:choose>
 
               <xsl:if test="contains(./OAI-PMH:metadata/arXiv:arXiv/arXiv:categories, 'hep-')">
                 <datafield tag="980" ind1=" " ind2=" ">
