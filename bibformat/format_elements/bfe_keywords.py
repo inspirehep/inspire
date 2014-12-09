@@ -20,7 +20,6 @@
 """
 __revision__ = "$Id$"
 
-import cgi
 from urllib import quote
 
 try:
@@ -30,7 +29,7 @@ except ImportError:
     CFG_BASE_URL = CFG_SITE_URL
 
 
-def format_element(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='yes'):
+def format_element(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='yes', escape="0"):
     """
     Display keywords of the record.
 
@@ -40,7 +39,12 @@ def format_element(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='y
     @param link: links the keywords if 'yes' (HTML links)
     """
 
-    keywords = bfo.fields('695__a')
+    try:
+        escape_mode_int = int(escape)
+    except ValueError:
+        escape_mode_int = 0
+
+    keywords = bfo.fields('695__a', escape=escape_mode_int)
     out = ""
     if len(keywords) > 0:
         out += "<small>INSPIRE:</small> " + \
@@ -48,7 +52,7 @@ def format_element(bfo, keyword_prefix, keyword_suffix, separator=' | ', link='y
                         keyword_prefix,
                         keyword_suffix,
                         separator, link, keywords)
-    keywords = bfo.fields('6531_a')
+    keywords = bfo.fields('6531_a', escape=escape_mode_int)
     if len(keywords) > 0:
         out += '<br /><small>Author supplied:</small> ' + \
                print_kw(bfo,
@@ -77,10 +81,7 @@ def print_kw(bfo,
         keywords = ['<a href="' + CFG_BASE_URL + '/search?p=keyword:'+ \
                     quote('"' + keyword + '"') + \
                     '&amp;ln=' + bfo.lang + \
-                    '">' + cgi.escape(keyword) + '</a>'
-                    for keyword in keywords]
-    else:
-        keywords = [cgi.escape(keyword)
+                    '">' + keyword + '</a>'
                     for keyword in keywords]
 
     keywords = [keyword_prefix + keyword + keyword_suffix
