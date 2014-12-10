@@ -102,7 +102,7 @@ def process_references(references, output_format):
             index = 'texkey'
         elif re.search(r'.*\/\d{7}', ref):
             index = 'eprint'
-        elif re.search(r'\d{4}\.\d{4}', ref):
+        elif re.search(r'\d{4}\.\d{4,5}', ref):
             index = 'eprint'
         elif re.search(r'\w\.\w+\.\w', ref):
             index = 'j'
