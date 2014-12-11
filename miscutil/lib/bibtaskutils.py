@@ -22,8 +22,8 @@ def loop(recids, callback):
 
 
 def wait_for_task(task_id):
-    sql = 'select status from schTASK where id = %s'
-    while run_sql(sql, [task_id])[0][0] not in ('DONE', 'ACK', 'ACK DONE'):
+    from invenio.bibsched import bibsched_task_finished
+    while not bibsched_task_finished(task_id):
         task_sleep_now_if_required()
         time.sleep(5)
 
