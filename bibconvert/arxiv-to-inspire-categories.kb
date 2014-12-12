@@ -10,7 +10,7 @@ math---Math and Math Physics
 nlin---General Physics
 nucl-ex---Experiment-Nucl
 nucl-th---Theory-Nucl
-physics.acc-phys---Accelerators
+physics.acc-ph---Accelerators
 physics.data-an---Instrumentation
 physics.ins-det---Instrumentation
 physics---General Physics
@@ -128,3 +128,34 @@ cs.SE---Computing
 cs.SD---Computing
 cs.SC---Computing
 cs.SY---Computing
+math-ph---Math and Math Physics
+stat.AP---Other
+stat.CO---Other
+stat.ML---Other
+stat.ME---Other
+stat.OT---Other
+stat.TH---Other
+q-bio.GN---Other
+q-bio.BM---Other
+q-bio.CB---Other
+q-bio.MN---Other
+q-bio.NC---Other
+q-bio.OT---Other
+q-bio.PE---Other
+q-bio.QM---Other
+q-bio.SC---Other
+q-bio.TO---Other
+q-fin.CP---Other
+q-fin.EC---Other
+q-fin.GN---Other
+q-fin.MF---Other
+q-fin.PM---Other
+q-fin.PR---Other
+q-fin.RM---Other
+q-fin.ST---Other
+q-fin.TR---Other
+q-alg---Math and Math Physics
+alg-geom---Math and Math Physics
+dg-ga---Math and Math Physics
+patt-sol---Math and Math Physics
+solv-int---Math and Math Physics
