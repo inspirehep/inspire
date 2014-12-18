@@ -96,7 +96,7 @@
         }
 
         if (date != '' && dateuntil != '') {
-            query += ' and date ' + date + '->' + dateuntil; 
+            query += ' and date ' + date + '->' + dateuntil;
         }
         else if (date != '') { query += ' and date ' + date; }
         else if (dateuntil != '') { query += ' and date 0->' + dateuntil; }
@@ -267,6 +267,7 @@
 
     <option value="Prog.Part.Nucl.Phys.">Prog.Part.Nucl.Phys.</option>
     <option value="Prog.Theor.Phys.">Prog.Theor.Phys.</option>
+    <option value="PTEP">PTEP</option>
     <option value="Rept.Math.Phys.">Rept.Math.Phys.</option>
     <option value="Rept.Prog.Phys.">Rept.Prog.Phys.</option>
     <option value="Rev.Mod.Phys.">Rev.Mod.Phys.</option>
