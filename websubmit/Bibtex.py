@@ -33,6 +33,7 @@ def Bibtex(parameters, curdir, form, user_info=None):
     them to BibTex or LaTeX US/EU
 
     """
+
     btxt_str = ""
 
     # get file name and hold it in a string
@@ -42,7 +43,7 @@ def Bibtex(parameters, curdir, form, user_info=None):
         file_name = os.path.join(dirname, myfile[0])
 
     lines = ""
-    if (os.path.exists(file_name)):
+    if os.path.exists(file_name):
         input_tex = open(file_name)
         lines = input_tex.read()
         input_tex.close()
@@ -51,7 +52,7 @@ def Bibtex(parameters, curdir, form, user_info=None):
     try:
         format_path = os.path.join(curdir, 'OUT_FORMAT')
         filep = open(format_path)
-        output_format = filep.read().replace("\n", " ")
+        output_format = filep.read().rstrip('\r\n')
         filep.close()
     except:
         output_format = ""
@@ -59,8 +60,8 @@ def Bibtex(parameters, curdir, form, user_info=None):
     btxt_str = process_references(references, output_format)
     if not btxt_str:
         btxt_str = "No references found. Please try another file."
-    btxt_str = ('<div style=\"color:#222222;background:white\"><pre>'
-                    + btxt_str + '</pre></div>')
+    btxt_str = '<div style=\"color:#222222;background:white\"><pre>' \
+                + btxt_str + '</pre></div>'
     return btxt_str
 
 
@@ -83,6 +84,8 @@ def get_references(lines):
         ref_list = ref_line.split(',')
         for one_ref in ref_list:
             one_ref = re.sub(r'\s', '', one_ref)
+            if re.match(r'^#\d{1,2}$', one_ref):
+                continue
             if not one_ref in references:
                 references.append(one_ref)
 
@@ -96,6 +99,8 @@ def process_references(references, output_format):
     """
 
     btxt_str = '' # result string
+    nfmsg = '*** Not Found with lookup:'
+    nsmsg = '*** Non-standard form, no INSPIRE lookup performed ***'
     for ref in references:
         index = None
         if re.search(r'.*\:\d{4}\w\w\w?', ref):
@@ -128,29 +133,47 @@ def process_references(references, output_format):
                 if (output_format == 'hlxu' or
                         output_format == 'hlxe' or
                         output_format == 'hx'):
-                    formated_rec = format_record(recid_list[0],
-                                    output_format, 'en')
+                    formated_rec = format_record(recid_list[0], \
+                                                 output_format, 'en')
                     # update bibitem and cite if they don't match
                     if not re.search('bibitem{' + ref + '}', formated_rec):
                         ref = re.sub(',', '.', ref)
                         if output_format != 'hx':
                             #laTeX
-                            formated_rec = re.sub('bibitem{(.*)}',
-                                    'bibitem{' + ref + '}', formated_rec)
-                            formated_rec = re.sub('cite{(.*)}',
-                                            'cite{' + ref + '}', formated_rec)
+                            formated_rec = re.sub('bibitem{(.*)}', \
+                                                  'bibitem{' + ref + '}', \
+                                                  formated_rec)
+                            formated_rec = re.sub('cite{(.*)}', \
+                                                  'cite{' + ref + '}', \
+                                                  formated_rec)
                         else:
                             #bibtex
-                            if not re.search(r'\@article\{' + ref + '}',
-                                              formated_rec):
-                                formated_rec = re.sub(r'\@article\{(.*)\,',
-                                        r'@article{' + ref + ',', formated_rec)
+                            if not re.search(r'\@article\{' + ref + '}', \
+                                             formated_rec):
+                                formated_rec = re.sub(r'\@article\{(.*)\,', \
+                                                      r'@article{' + ref + ',', \
+                                                      formated_rec)
                     btxt_str = btxt_str + formated_rec + '\n'
                 else:
-                    btxt_str = (btxt_str +
-                                bfe_INSPIRE_bibtex.format_element(bfo) + '\n')
+                    btxt_str = btxt_str + \
+                                bfe_INSPIRE_bibtex.format_element(bfo) + '\n'
             else:
-                btxt_str = (btxt_str + '*** Not Found: ' + ref + ' ' +
-                            p_to_find + '\n\n')
+                if output_format == 'hx':
+                    btxt_str = btxt_str + \
+                               '<div class="%s">\n@MISC{%s,\n\t%s \'%s\'\n}\n</div>\n' \
+                               % ('notfound', ref, nfmsg, p_to_find,)
+                else:
+                    btxt_str = btxt_str + \
+                               '<div class="%s">\\bibitem{%s}\n\t%s \'%s\'\n</div>\n' \
+                               % ('notfound', ref, nfmsg, p_to_find,)
+        else:
+            if output_format == 'hx':
+                btxt_str = btxt_str + \
+                           '<div class="%s">\n@MISC{%s,\n\t%s\n}\n</div>\n' \
+                           % ('nonstandard', ref, nsmsg,)
+            else:
+                btxt_str = btxt_str + \
+                           '<div class="%s">\\bibitem{%s}\n\t%s\n</div>\n' \
+                           % ('nonstandard', ref, nsmsg,)
 
     return btxt_str
