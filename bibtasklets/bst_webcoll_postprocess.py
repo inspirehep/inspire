@@ -22,8 +22,7 @@
 
 import requests
 
-from invenio.bibtask import (write_message,
-                             task_update_status)
+from invenio.bibtask import write_message
 from invenio.redisutils import get_redis
 
 try:
@@ -45,10 +44,9 @@ def bst_webcoll_postprocess(recids=[]):
 
     if not CFG_WEBCOLL_POST_REQUEST_URL:
         write_message("CFG_WEBCOLL_POST_REQUEST_URL is not set.")
-        task_update_status('ERROR')
-        return 1
+        return
 
-    if recids or not recids == "[]":
+    if recids and len(recids) > 0 and not recids == "[]":
         write_message("Going to POST callback to {0}: {1} (total: {2})".format(
             CFG_WEBCOLL_POST_REQUEST_URL,
             recids[:10],
@@ -65,7 +63,6 @@ def bst_webcoll_postprocess(recids=[]):
         else:
             write_message("Post request failed!")
             write_message(response.text)
-            task_update_status('ERROR')
             cache.set("webcoll_pending_recids", recids)
         session.close()
     else:
