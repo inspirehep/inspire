@@ -630,12 +630,12 @@ _paq.push(['setCustomVariable',
     catch(err) {
         (function() {
             var img = document.createElement('img');
-            img.src = '//piwik.inspirehep.net/piwik.php?idsite=8&rec=1&bots=1';
+            img.src = '//piwik.inspirehep.net/piwik.php?idsite=8&amp;rec=1&amp;bots=1';
             document.body.appendChild(img);
     })();
     }
 </script>
-<noscript><p><img src="//piwik.inspirehep.net/piwik.php?idsite=8&rec=1&bots=1" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//piwik.inspirehep.net/piwik.php?idsite=8&amp;rec=1&amp;bots=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 </body>
 </html>
