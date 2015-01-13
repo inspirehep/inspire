@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 """
     name:           bibfilter_oaicds2inspire
     decription:     Program to filter and analyse MARCXML records
@@ -51,23 +51,11 @@ try:
 except ImportError:
     from xml.etree import ElementTree as ET
 
-#python2.4 compatibility layer. Function any() is not included in 2.4
-try:
-    any([True])
-except NameError:
-    def any(x):
-        for element in x:
-            if element:
-                return True
-        return False
-
 
 CONFIG_FILE = 'oaicds_bibfilter_config.json'
 CONF_SERVER = 'localhost'
 CONFIG = {}
 PRINT_OUT = False
-
-# ==============================| Main |==============================
 
 
 def main(args):
@@ -438,13 +426,13 @@ def apply_filter(rec):
     # 980 Determine Collections
     collections = set([])
     for value in record_get_field_values(rec, '980', code='a'):
-        if 'NOTE' in value.upper():
+        value = value.upper()
+        if 'NOTE' in value or "CMS-PHYSICS-ANALYSIS-SUMMARIES" in value:
             collections.add('NOTE')
-        if 'THESIS' in value.upper():
+        if 'THESIS' in value:
             collections.add('THESIS')
-        if 'CONFERENCEPAPER' in value.upper():
+        if 'CONFERENCEPAPER' in value:
             collections.add('ConferencePaper')
-
 
     if is_published(rec):
         collections.add("PUBLISHED")
