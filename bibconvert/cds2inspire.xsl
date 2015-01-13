@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id$
-This file is part of CDS Invenio.
-Copyright (C) 2002-2010 CERN.
+This file is part of INSPIRE.
+Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015 CERN.
 
-CDS Invenio is free software; you can redistribute it and/or
+INSPIRE is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License as
 published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
 
-CDS Invenio is distributed in the hope that it will be useful, but
+INSPIRE is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
+along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 -->
-<!-- cds2inspire-cmsnotes.xsl converts MarcXML from CMS Notes in CDS to Inspire MarcXML -->
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:str="http://exslt.org/strings"
@@ -76,6 +75,38 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
       </xsl:when>
     </xsl:choose>
     </xsl:if>
+  </xsl:template>
+
+  <!-- FUNCTION   output-693ae-subfields TODO: KB for accelerator/experiment-->
+  <xsl:template name="output-693-subfields">
+    <xsl:param name="text_a" />
+    <xsl:param name="text_e" />
+
+    <xsl:variable name="key">
+      <xsl:value-of select="$text_a" />---<xsl:value-of select="$text_e" />
+    </xsl:variable>
+
+    <xsl:variable name="kb" select="document('cds_inspire_693.xml')/experiments"/>
+    <xsl:variable name="newcat">
+      <xsl:for-each select="$kb/experiment">
+        <xsl:if test="./cds=$key">
+          <xsl:value-of select="./inspire" />
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="$newcat != ''">
+        <datafield tag="693" ind1=" " ind2=" ">
+          <subfield code="e"><xsl:value-of select="$newcat" /></subfield>
+        </datafield>
+      </xsl:when>
+      <xsl:otherwise>
+        <datafield tag="693" ind1=" " ind2=" ">
+          <subfield code="e"><xsl:value-of select="translate($text_a, ' ', '-')" />-<xsl:value-of select="$text_e" /></subfield>
+        </datafield>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- FUNCTION  add-punctuation-authorname -->
@@ -244,7 +275,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
         <datafield tag="041" ind1=" " ind2=" ">
           <subfield code="a"><xsl:value-of select="$newlang"/></subfield>
         </datafield>
-      </xsl:if> 
+      </xsl:if>
     </xsl:if>
   </xsl:template>
 
@@ -289,7 +320,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
 
 <xsl:template match="marc:record">
     <xsl:element name="{local-name(.)}">
-     
+
       <datafield tag="035" ind1=" " ind2=" ">
         <subfield code="9">CDS</subfield>
         <subfield code="a"><xsl:value-of select="./marc:controlfield[@tag='001']"/></subfield>
@@ -301,18 +332,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
     -->
       <xsl:apply-templates select="@*|./node()"/>
       <xsl:variable name="recid" select="./marc:controlfield[@tag='001']"/>
-      <!-- Thesis -->
-      <xsl:if test="key('collection', 'THESIS')">
-        <datafield tag="690" ind1="C" ind2=" ">
-          <subfield code="a">THESIS</subfield>
-        </datafield>
-      </xsl:if>
-      <datafield tag="690" ind1="C" ind2=" ">
-        <subfield code="a">NOTE</subfield>
-      </datafield>
       <xsl:if test="./marc:datafield[@tag='690']/marc:subfield[code='a']='INTNOTE'">
-        <!-- 690C Add NOTE -->
-
         <!-- 856 Add fulltext URL indicator (CMS Note Specific) -->
         <xsl:if test="contains(./marc:datafield[@tag='088']/marc:subfield[@code='a'], 'CMS')">
             <datafield tag="856" ind1="4" ind2=" ">
@@ -478,7 +498,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
       <xsl:for-each select="./marc:subfield[@code='c']">
         <!--<xsl:choose>
           <xsl:when test="@code='c'">
-             Find the best place to fetch date 
+             Find the best place to fetch date
             <xsl:choose>
               <xsl:when test="string-length(./marc:datafield[@tag='961']/marc:subfield[@code='x']) &gt; string-length(translate(.,' ', ''))">
                 <xsl:variable name="datebase" select="./marc:datafield[@tag='961']/marc:subfield[@code='x']" />
@@ -603,21 +623,18 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
   </datafield>
 </xsl:template>
 
-<xsl:template match="marc:datafield[@tag=693]">
+<!-- MARC FIELD 693_$$a,e ACCELERATOR/EXPERIMENT -->
+<xsl:template match="marc:datafield[@tag='693']">
   <xsl:if test="not(translate(./marc:subfield[@code='a'], $uppercase, $smallcase) = 'not applicable')">
       <xsl:if test="not(translate(./marc:subfield[@code='e'], $uppercase, $smallcase) = 'not applicable')">
-        <xsl:element name="{local-name(.)}">
-          <xsl:copy-of select="@*"/>
-          <xsl:for-each select="./marc:subfield">
-            <xsl:element name="{local-name(.)}">
-              <xsl:copy-of select="@*"/>
-              <xsl:value-of select="normalize-space(.)"/>
-            </xsl:element>
-          </xsl:for-each>
-        </xsl:element>
+        <xsl:call-template name="output-693-subfields">
+          <xsl:with-param name="text_a" select="./marc:subfield[@code='a']" />
+          <xsl:with-param name="text_e" select="./marc:subfield[@code='e']" />
+        </xsl:call-template>
       </xsl:if>
   </xsl:if>
 </xsl:template>
+
 
 <xsl:template match="marc:datafield[@tag=710]">
     <xsl:choose>
@@ -659,7 +676,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
 
 <xsl:template match="marc:datafield[@tag=856 and @ind1='4']">
     <xsl:choose>
-      <xsl:when test="contains(./marc:subfield[@code='u'], 'http://cdsweb.cern.ch') and not(./marc:subfield[@code='z'] = 'Figure') and substring(./marc:subfield[@code='u'], (string-length(./marc:subfield[@code='u']) - string-length('pdf')) + 1) = 'pdf'">
+      <xsl:when test="contains(./marc:subfield[@code='u'], 'http://cds.cern.ch') and not(./marc:subfield[@code='z'] = 'Figure') and substring(./marc:subfield[@code='u'], (string-length(./marc:subfield[@code='u']) - string-length('pdf')) + 1) = 'pdf'">
         <datafield tag="FFT" ind1="" ind2="">
           <subfield code="a">
             <xsl:value-of select="./marc:subfield[@code='u']" />
@@ -667,7 +684,7 @@ along with CDS Invenio; if not, write to the Free Software Foundation, Inc.,
           <subfield code="t">INSPIRE-PUBLIC</subfield>
         </datafield>
       </xsl:when>
-      <xsl:when test="not(contains(./marc:subfield[@code='u'], 'http://cdsweb.cern.ch'))  and not(contains(./marc:subfield[@code='u'], 'http://cms.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://cmsdoc.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://documents.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://preprints.cern.ch')) and not(substring(./marc:subfield[@code='u'], (string-length(./marc:subfield[@code='u']) - string-length('ps.gz')) + 1) = 'ps.gz')">
+      <xsl:when test="not(contains(./marc:subfield[@code='u'], 'http://cds.cern.ch'))  and not(contains(./marc:subfield[@code='u'], 'http://cms.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://cmsdoc.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://documents.cern.ch')) and not(contains(./marc:subfield[@code='u'], 'http://preprints.cern.ch')) and not(substring(./marc:subfield[@code='u'], (string-length(./marc:subfield[@code='u']) - string-length('ps.gz')) + 1) = 'ps.gz')">
         <xsl:element name="{local-name(.)}">
           <xsl:copy-of select="@*"/>
           <xsl:for-each select="./marc:subfield">
