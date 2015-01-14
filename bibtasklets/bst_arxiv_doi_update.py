@@ -24,13 +24,12 @@ Inspire arXiv DOI update script
 import urllib
 import datetime
 
-from invenio.bibtaskutils import ChunkedBibUpload, ChunkedBibIndex
+from invenio.bibtaskutils import ChunkedBibUpload
 from invenio.docextract_record import get_record, BibRecord
 from invenio.search_engine import perform_request_search
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_ADMIN_EMAIL)
 from invenio.bibtask import (write_message,
-                             task_update_status,
                              task_update_progress)
 from invenio.mailutils import send_email
 
@@ -44,7 +43,8 @@ except ImportError:
     import elementtree.ElementTree as ET
 
     class ExpatError(Exception):
-        pass
+
+        """ExpatError."""
 
 try:
     from invenio.config import CFG_ASANA_API_KEY
@@ -72,10 +72,8 @@ CATEGORIES = [
 
 
 class DOIError(Exception):
-    """ Exception to be raised for incorrect DOIs """
-    pass
 
-# ======================== MAIN =======================
+    """Exception to be raised for incorrect DOIs."""
 
 
 def bst_arxiv_doi_update(input_uri=None,
@@ -84,9 +82,7 @@ def bst_arxiv_doi_update(input_uri=None,
                          asana_key=CFG_ASANA_API_KEY,
                          asana_parent_id=ASANA_PARENT_TASK_ID,
                          skip_result_types='missing'):
-    """
-    bst_arxiv_doi_update
-    Updates DOIs on documents harvested from ArXiv.
+    """Update DOIs on documents harvested from ArXiv.
 
     Parameters:
     :param input_uri: Link to new URI data
@@ -112,21 +108,18 @@ def bst_arxiv_doi_update(input_uri=None,
 
     # Testing builds characters
     bibupload = ChunkedBibUpload(mode='a', user=SCRIPT_NAME, notimechange=True)
-    bibindex = ChunkedBibIndex(indexes='year,global,journal',
-                               user=SCRIPT_NAME)
+
     # open url and parse xml
     try:
         tree = ET.parse(urllib.urlopen(input_uri))
         _print('Opened DOI file ' + input_uri)
     except IOError:
         _print("FATAL ERROR: Could not open URL: " + input_uri, 1)
-        task_update_progress("Failed retreiving DOI data")
-        task_update_status("FAILED")
+        task_update_progress("Failed retrieving DOI data")
         return False
     except ExpatError:
         _print("FATAL ERROR: Could not parse XML from: " + input_uri, 1)
         task_update_progress("Failed parsing DOI data")
-        task_update_status("FAILED")
         return False
 
     root = tree.getroot()
@@ -167,12 +160,11 @@ def bst_arxiv_doi_update(input_uri=None,
                 continue
             if record_xml:
                 new_count += 1
-                _print("* Now we will run the bibupload and bibindex for " +
+                _print("* Now we will run the bibupload for " +
                        "%s record" % rec_id, 5)
                 _print("** We will upload the following xml code %s" %
                        repr(record_xml), 9)
                 bibupload.add(record_xml)
-                bibindex.add(rec_id)
         elif len(rec_id) > 1:
             _print('ERROR: %d records found with matching arXiv ID %s' %
                    (len(rec_id), arxiv))
@@ -192,20 +184,10 @@ def bst_arxiv_doi_update(input_uri=None,
     _print("Records without DOIs requiring appends: %d" % new_count, 1)
     _print("==============================================================", 1)
 
-    if logging:
-        task_update_progress("Logging...")
-        write_list_to_file(log_dir, 'errors', ERRORS)
-        write_list_to_file(log_dir, 'messages', MESSAGES)
+    bibupload.cleanup()
 
     notify_on_errors(problem_dois, log_dir, doi_count, new_count,
                      asana_key, asana_parent_id, skip_results)
-
-    task_update_progress("%s finished. %s DOIs processed, %s to add"
-                         % (SCRIPT_NAME, str(doi_count), str(new_count)))
-    task_update_status("DONE")
-
-    bibupload.__del__()
-    bibindex.__del__()
 
     return True
 
@@ -213,14 +195,14 @@ def bst_arxiv_doi_update(input_uri=None,
 
 
 def _print(string, verbose=3):
-    """ Writes message to log and bibsched log """
+    """Write message to log and bibsched log."""
     MESSAGES.append(string)
     msg = "bst_arxiv_doi_update: " + string
     write_message(msg, None, verbose)
 
 
 def write_list_to_file(output_dir, name, list_to_write):
-    """ Takes a list of strings and writes them to a file """
+    """Take a list of strings and writes them to a file."""
     if list_to_write:
         if name == 'errors':
             _print('ERRORS OCCURRED DURING DOI UPDATE!', 1)
@@ -241,8 +223,10 @@ def write_list_to_file(output_dir, name, list_to_write):
 
 
 def verify_skip_results(types_csv):
-    """ Verifies that the result types to skip are valid
-    selections, returns a list of those types """
+    """Verify that the result types to skip are valid selections.
+
+    Returns a list of those types.
+    """
     result = []
     for skip_type in types_csv.split(','):
         typ = skip_type.strip().lower()
@@ -254,8 +238,7 @@ def verify_skip_results(types_csv):
 
 
 def is_marked_published(record):
-    """ Finds 'Published' in field 980__a for
-    a given record """
+    """Find 'Published' in field 980__a for a given record."""
     fields = record.find_subfields('980__a')
     for field in fields:
         if field.value == 'Published':
@@ -264,16 +247,17 @@ def is_marked_published(record):
 
 
 def append_to_record(rec_id, doi, published_date):
-    """ Attempts to add a DOI to a record, also
-    adds 930 'Published' if not already there and
-    adds the extrapolated PubNote data to 773 """
+    """Attempt to add a DOI to a record.
+
+    Also adds 930 'Published' if not already there and
+    adds the extrapolated PubNote data to 773.
+    """
     record = get_record(recid=rec_id)
     new_record = BibRecord(rec_id)
     # make sure that there is no DOI for this record
     if not record_has_doi(record, rec_id, doi):
         # create new record with only 0247 field, that we will append
         # to the existing record with bibupload function
-        new_record = BibRecord(rec_id)
         new_field = new_record.add_field('0247_')
         new_field.add_subfield('2', 'DOI')
         new_field.add_subfield('a', doi.decode('utf-8'))
@@ -291,14 +275,13 @@ def append_to_record(rec_id, doi, published_date):
     if len(field_773) == 0:
         append_773 = True
         _print("No pubnote, adding field 773 to record...", 7)
+    elif not is_pubnote_identical(field_773, new_field_773):
+        append_773 = True
+        _print("Field 773 already exists for record, " +
+               "differs from DOI extract", 3)
     else:
-        if not is_pubnote_identical(field_773, new_field_773):
-            append_773 = True
-            _print("Field 773 already exists for record, " +
-                   "differs from DOI extract", 3)
-        else:
-            _print("Field 773 already exists, does not " +
-                   "contradict DOI extract.", 6)
+        _print("Field 773 already exists, does not " +
+               "contradict DOI extract.", 6)
 
     if append_773:
         new_field = new_record.add_field('773__')
@@ -312,15 +295,19 @@ def append_to_record(rec_id, doi, published_date):
         new_field = new_record.add_field('260__')
         new_field.add_subfield("c", published_date)
 
-    if len(new_record.record) > 0:
+    if len(new_record.record) > 1:
         return new_record.to_xml()
     else:
         return None
 
 
 def get_record_by_arxiv_id(arxiv):
-    """ Retreives record corresponding to an arXiv ID, in the format
-    arxiv:xxxx.xxxx - returns a list (hopefully with only one item) """
+    """Retrieve record corresponding to an arXiv ID.
+
+    In the format arxiv:xxxx.xxxxx
+
+    Returns a list (hopefully with only one item).
+    """
     # if arxiv doesn't contain "arXiv:" at the beginning, we add it
     if arxiv[:6] != 'arXiv:':
         arxiv = 'arXiv:' + arxiv
@@ -328,8 +315,10 @@ def get_record_by_arxiv_id(arxiv):
 
 
 def create_pubnote(doi, published_date):
-    """ Creates pubnote field values from DOI.
-    Returns a dictionary of 773 subfields """
+    """Create pubnote field values from DOI.
+
+    Returns a dictionary of 773 subfields.
+    """
     field_773 = {}
     try:
         # Example published date: 2013-08-09
@@ -364,9 +353,10 @@ def create_pubnote(doi, published_date):
 
 
 def is_pubnote_identical(fields_773, new_data):
-    """ Compares the current field to
-    the data infered from the DOI.
-    Returns True if a matching field is found"""
+    """Compare the current field to the data inferred from the DOI.
+
+    Returns True if a matching field is found.
+    """
     for field in fields_773:
         remainder = list(new_data.keys())
         for sub in field.subfields:
@@ -384,8 +374,11 @@ def is_pubnote_identical(fields_773, new_data):
 
 
 def record_has_doi(record, rec_id, doi):
-    """ Tests a given record for DOI, returns True if the record has
-    a DOI that matches the one sourced from the DOI feed """
+    """Test a given record for DOI.
+
+    Returns True if the record has a DOI that matches the one
+    from the DOI feed.
+    """
     fields = record.find_fields('0247_')
     for field in fields:
         try:
@@ -414,7 +407,7 @@ def record_has_doi(record, rec_id, doi):
 
 
 def add_dots(string):
-    """ Adds dots to journals """
+    """Add dots to journal titles."""
     out = string[0]
     for index in range(1, len(string)):
         char = string[index]
@@ -429,9 +422,12 @@ def add_dots(string):
 
 def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
                      asana_parent_task_id, skip_results):
-    """ If the dictionary dois is empty, this function does nothing.
+    """Write potential errors to Asana/Email.
+
+    If the dictionary dois is empty, this function does nothing.
     Else it will attempt to write information about DOI errors to either
     Asana or, failing that, emailing the admin.
+
     Parameters:
      * dois - dictionary: 3-part dictionary, with a list of DOIs with errors.
      * log_dor - string: The local directory where logs are stored.
@@ -439,8 +435,8 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
      * count_new - int: How many DOIs have been inserted into Inspire.
      * asana_key - string: The API Key of the user account being used.
      * asana_parent_task_id -  int: ID of the parent task in Asana for this
-                                    information to be appended to. """
-
+                                    information to be appended to.
+    """
     for cid in skip_results:
         if len(dois[cid]) > 0:
             _print("Ignore: %d issues of type '%s' being ignored."
@@ -458,11 +454,13 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
             from asana.asana import AsanaAPI, AsanaException
 
             class AsanaAPIMod(AsanaAPI):
-                """ Extends AsanaAPI """
+
+                """Extends AsanaAPI."""
+
                 def create_unassigned_subtask(self, parent_id, name,
                                               completed=False, assignee=None,
                                               notes=None, followers=None):
-                    """ Modified version of create_subtask """
+                    """Modified version of create_subtask."""
                     if assignee:
                         payload = {'assignee': assignee}
                     else:
@@ -500,11 +498,15 @@ def notify_on_errors(dois, log_dir, count_total, count_new, asana_key,
 
 def send_notification_email(dois, log_dir, count_total, count_new,
                             skip_results):
-    """ If any issues occured during the DOI update, this function
+    """Notify on errors by mail.
+
+    If any issues occured during the DOI update, this function
     notifies the appropriate authorities with details of the error
     Parameters:
      * dois - a dictionary with three categories of problem DOIs
-     * log_dir - the directory where the logs are stored """
+     * log_dir - the directory where the logs are stored
+
+    """
     msg_html = """<p>Message from BibTasklet %s:</p>
 
 <p>Problems have occurred while updating the DOIs of records. In total %d DOIs were
@@ -543,12 +545,12 @@ available here: '%s/'</p>
 
 def send_asana_tasks(dois, log_dir, count_total, count_new, asana, parent,
                      skip_results):
-    """ If any issues occured during the DOI update, this function
-    logs the faulty DOIs to Asana
+    """Log to Asana.
+
     Parameters:
      * dois - a dictionary with three categories of problem DOIs
-     * log_dir - the directory where the logs are stored """
-
+     * log_dir - the directory where the logs are stored
+    """
     date_str = datetime.datetime.now().strftime("%Y-%m-%d at %H:%M")
     msg = """ *** AUTOMATED MESSAGE FROM BIBTASKLET %s ***
 
