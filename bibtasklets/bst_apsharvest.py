@@ -439,6 +439,8 @@ def APS_connect(from_param, until_param=None, page=1, perpage=100):
         params += until_param
 
     params += "&page=" + str(page) + "&per_page=" + str(perpage)
+    # use the published date instead of metadata date
+    params += "&date=published"
     url_to_open = host + function + params
     retries = 0
     while retries < 5:
