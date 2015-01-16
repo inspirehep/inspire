@@ -263,47 +263,34 @@ def convert_files(xml_files, els, prefix="", threshold_date=None):
     for xml_file in xml_files:
         full_xml_filepath = join(prefix, xml_file)
         dom_xml = parse(full_xml_filepath)
-        doi = els.get_publication_information(dom_xml)[-1]
         date = els.get_publication_information(dom_xml)[-2]
         if threshold_date and date < threshold_date:
             continue
-        res = None
-        if doi:
-            write_message("DOI in record: {0}".format(doi))
-            res = perform_request_search(p="doi:{0}".format(doi),
-                                         of="id")
+        doctype = els.get_doctype(dom_xml).lower()
+        if doctype in INTERESTING_DOCTYPES:
+            new_full_xml_filepath = join(dirname(full_xml_filepath),
+                                         "upload.xml")
+            try:
+                converted_xml = els.get_record(
+                    full_xml_filepath, refextract_callback=refextract)
+            except Exception as e:
+                _errors_detected.append(e)
+                error_trace = traceback.format_exc()
+                # Some error happened, lets gracefully quit
+                results[full_xml_filepath] = (StatusCodes.CONVERSION_ERROR,
+                                              error_trace)
+                write_message('Error converting:'
+                              ' \n {0}'.format(error_trace))
+                continue
+            if not exists(new_full_xml_filepath):
+                with open(new_full_xml_filepath, "w") as marcfile:
+                    marcfile.write(converted_xml)
+            results[full_xml_filepath] = (StatusCodes.OK,
+                                          new_full_xml_filepath)
         else:
-            write_message('DOI not found in record:'
-                          ' \n{0}'.format(full_xml_filepath))
-        if res:
-            write_message("DOI found in: {0}".format(res))
-            results[full_xml_filepath] = (StatusCodes.DOI_FOUND, res)
-        else:
-            doctype = els.get_doctype(dom_xml).lower()
-            if doctype in INTERESTING_DOCTYPES:
-                new_full_xml_filepath = join(dirname(full_xml_filepath),
-                                             "upload.xml")
-                try:
-                    converted_xml = els.get_record(
-                        full_xml_filepath, refextract_callback=refextract)
-                except Exception as e:
-                    _errors_detected.append(e)
-                    error_trace = traceback.format_exc()
-                    # Some error happened, lets gracefully quit
-                    results[full_xml_filepath] = (StatusCodes.CONVERSION_ERROR,
-                                                  error_trace)
-                    write_message('Error converting:'
-                                  ' \n {0}'.format(error_trace))
-                    continue
-                if not exists(new_full_xml_filepath):
-                    with open(new_full_xml_filepath, "w") as marcfile:
-                        marcfile.write(converted_xml)
-                results[full_xml_filepath] = (StatusCodes.OK,
-                                              new_full_xml_filepath)
-            else:
-                results[full_xml_filepath] = (StatusCodes.DOCTYPE_WRONG,
-                                              doctype)
-                write_message("Doctype not interesting: {0}".format(doctype))
+            results[full_xml_filepath] = (StatusCodes.DOCTYPE_WRONG,
+                                          doctype)
+            write_message("Doctype not interesting: {0}".format(doctype))
     return results
 
 
