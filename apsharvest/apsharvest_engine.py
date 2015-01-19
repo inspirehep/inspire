@@ -95,7 +95,8 @@ class APSRecordList(list):
         """
         if record.recid not in self.recids:
             super(APSRecordList, self).append(record)
-            self.recids.append(record.recid)
+            if record.recid:
+                self.recids.append(record.recid)
 
 
 class APSHarvestJob(object):
@@ -223,7 +224,7 @@ class APSHarvestJob(object):
                 if os.path.exists(result_file):
                     # File already downloaded recently, lets see if it is the same
                     file_last_modified = get_file_modified_date(result_file)
-                    if not compare_datetime_to_iso8601_date(file_last_modified, record.last_modified):
+                    if record.last_modified and not compare_datetime_to_iso8601_date(file_last_modified, record.last_modified):
                         # File is not older than APS version, we should not download.
                         raise APSHarvesterFileExits
 
@@ -501,7 +502,7 @@ class APSRecord(object):
     """
     Class representing a record to harvest.
     """
-    def __init__(self, recid, doi=None, date=None, last_modified=None):
+    def __init__(self, recid=None, doi=None, date=None, last_modified=None):
         self.recid = recid
         self.doi = doi or get_doi_from_record(self.recid)
         self.date = date

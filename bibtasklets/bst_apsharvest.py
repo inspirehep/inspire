@@ -24,6 +24,7 @@ MARCXML upload of references and attached fulltext and metadata XML for records
 the ALREADY exists in the repository.
 """
 
+import os
 import sys
 import re
 import datetime
@@ -63,7 +64,8 @@ except ImportError:
 def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
                    update_mode="email", from_date="", until_date=None,
                    metadata="yes", fulltext="yes", hidden="yes", match="no",
-                   reportonly="no", threshold_date=None, devmode="no"):
+                   reportonly="no", threshold_date=None, devmode="no",
+                   input_file=""):
     """
     Task to download APS metadata + fulltext given a list of arguments.
 
@@ -173,6 +175,9 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
 
     @param devmode: Activate devmode. Full verbosity and no uploads/mails.
     @type devmode: string
+
+    @param input_file: harvests articles with given file containing one DOI per line.
+    @type input_file: string
     """
     task_update_progress("Parsing input parameters")
 
@@ -219,6 +224,12 @@ def bst_apsharvest(dois="", recids="", query="", records="", new_mode="email",
         reportonly = True
     else:
         reportonly = False
+
+    if input_file:
+        if not os.path.exists(input_file):
+            write_message("Input file {0} does not exist!".format(input_file),
+                          stream=sys.stderr)
+            return False
 
     # Unify all parameters into a dict using locals
     parameters = locals()
@@ -271,6 +282,15 @@ def get_records_to_harvest(parameters):
     final_record_list = APSRecordList()
     new_harvest_date = None
     harvest_from_date = None
+
+    if parameters.get("input_file"):
+        # We get input from file
+        with open(parameters.get("input_file")) as fd:
+            for line in fd.readlines():
+                doi = line.strip()
+                if not doi:
+                    continue
+                final_record_list.append(APSRecord(doi=doi))
 
     if parameters.get("threshold_date"):
         # Input from user. Validate date

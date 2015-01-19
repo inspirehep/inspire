@@ -382,6 +382,9 @@ def get_doi_from_record(recid):
     @return: first DOI found in record
     @rtype: string
     """
+    if not recid:
+        return
+
     record = BibFormatObject(int(recid))
     possible_dois = record.fields(CFG_APSHARVEST_RECORD_DOI_TAG[:-1])
     for doi in possible_dois:
