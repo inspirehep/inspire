@@ -282,6 +282,7 @@ def get_records_to_harvest(parameters):
     final_record_list = APSRecordList()
     new_harvest_date = None
     harvest_from_date = None
+    harvest_until_date = None
 
     if parameters.get("input_file"):
         # We get input from file
@@ -330,15 +331,12 @@ def get_records_to_harvest(parameters):
                 parameters["threshold_date"],
             ))
 
-        # Turn harvest_from_date back into a string (away from datetime object)
-        harvest_from_date = harvest_from_date.strftime("%Y-%m-%d")
-
         status_message = "Checking for new records from APS from %s" % \
                          (harvest_from_date,)
         if parameters.get("until_date"):
             # Input from user. Validate date
             try:
-                validate_date(parameters.get("until_date"))
+                harvest_until_date = validate_date(parameters.get("until_date"))
             except ValueError, e:
                 write_message("Error parsing until_date, use (YYYY-MM-DD): %s" %
                               (str(e),),
@@ -346,11 +344,16 @@ def get_records_to_harvest(parameters):
                 raise
             status_message += " until %s" % (parameters.get("until_date"),)
         else:
+            harvest_until_date = new_harvest_date
             status_message += " until today"
+
         write_message(status_message)
 
+        # Turn dates back into strings (away from datetime object)
+        harvest_from_date = harvest_from_date.strftime("%Y-%m-%d")
+        harvest_until_date = harvest_until_date.strftime("%Y-%m-%d")
         final_record_list = harvest_aps(harvest_from_date,
-                                        parameters.get("until_date"),
+                                        harvest_until_date,
                                         perpage)
     else:
         # We use any given IDs or records from the local Invenio instance.
@@ -462,11 +465,11 @@ def APS_connect(from_param, until_param=None, page=1, perpage=100):
     function = '/content/journals/articles'
 
     from_param = 'from=' + str(from_param)
+    until_param = 'until=' + str(until_param)
+
     params = "?" + from_param
-    if(until_param):
-        until_param = 'until=' + str(until_param)
-        params += "&"
-        params += until_param
+    params += "&"
+    params += until_param
 
     params += "&page=" + str(page) + "&per_page=" + str(perpage)
     # use the published date instead of metadata date
