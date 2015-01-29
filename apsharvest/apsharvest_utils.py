@@ -242,9 +242,7 @@ def validate_date(date_given, date_format="%Y-%m-%d"):
     Returns the date given if valid date format. If not,
     a ValueError exception is raised.
     """
-    # FIXME: use datetime.datetime.strptime(date_given, "%Y-%m-%d")
-    # after upgrading Python => 2.5
-    return datetime.datetime(*(time.strptime(date_given, date_format)[0:6]))
+    return datetime.datetime.strptime(date_given, "%Y-%m-%d")
 
 
 def get_file_modified_date(filepath):
