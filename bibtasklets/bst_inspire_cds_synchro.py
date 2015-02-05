@@ -1,3 +1,23 @@
+# -*- coding: utf-8 -*-
+##
+## This file is part of INSPIRE.
+## Copyright (C) 2013, 2014 CERN.
+##
+## INSPIRE is free software; you can redistribute it and/or
+## modify it under the terms of the GNU General Public License as
+## published by the Free Software Foundation; either version 2 of the
+## License, or (at your option) any later version.
+##
+## INSPIRE is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+## General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+"""Synchronize record IDs between the CERN Document Server (CDS) and Inspire."""
+
 import sys
 import os
 import time
@@ -5,7 +25,7 @@ import shutil
 
 from invenio.intbitset import intbitset
 from invenio.config import CFG_CERN_SITE, CFG_INSPIRE_SITE, CFG_SITE_NAME, CFG_TMPSHAREDDIR
-from invenio.search_engine import perform_request_search, get_collection_reclist, search_pattern
+from invenio.search_engine import get_collection_reclist, search_pattern
 from invenio.search_engine import get_record
 from invenio.bibrecord import record_get_field_instances, record_get_field_values, field_get_subfield_instances, record_add_field, record_xml_output
 from invenio.bibtask import write_message, task_update_progress, task_low_level_submission, task_sleep_now_if_required
@@ -25,6 +45,7 @@ CFG_IMPORT_FILE = os.path.join(CFG_SHARED_PATH, '%s2%s.ids' % (CFG_OTHER_SITE, C
 COUNTER = 0
 NOW = time.strftime('%Y%m%d%H%M%S')
 
+
 def get_out_file():
     global COUNTER
     COUNTER += 1
@@ -32,14 +53,18 @@ def get_out_file():
     print "--> Outputting to %s" % filename
     return open(filename, "w")
 
+
 def get_all_recids():
     if CFG_INSPIRE_SITE:
-        all_recids = get_collection_reclist(CFG_SITE_NAME)
+        all_recids = get_collection_reclist(CFG_SITE_NAME) | get_collection_reclist("Conferences")
     elif CFG_CERN_SITE:
         all_recids = get_collection_reclist(CFG_SITE_NAME) | get_collection_reclist("CERN Articles & Preprints") | get_collection_reclist("CERN Series") | get_collection_reclist("CERN Departments") | get_collection_reclist("CERN Experiments") | get_collection_reclist("CERN R&D Projects")
+        # We exclude all records that is not relevant for CERN/CDS
+        all_recids = all_recids & search_pattern(p='690c:CERN or 595:cds')
     else:
         all_recids = intbitset()
     return all_recids
+
 
 def get_record_ids_to_export():
     all_recids = get_all_recids()
@@ -47,6 +72,7 @@ def get_record_ids_to_export():
     recids_with_an_arxiv_id = search_pattern(p='035__9:"arXiv"')
     recids_with_other_id = search_pattern(p='035__9:%s' % CFG_OTHER_SITE)
     return (recids_with_a_doi | recids_with_an_arxiv_id | recids_with_other_id) & all_recids
+
 
 def get_ids_from_recid(recid):
     record = get_record(recid)
@@ -57,6 +83,7 @@ def get_ids_from_recid(recid):
     dois = [doi for doi in dois if doi.startswith('10.')]
     if len(dois) > 1:
         print >> sys.stderr, "WARNING: record %s have more than one DOI: %s" % (recid, dois)
+        doi = dois[0]
     elif len(dois) == 1:
         doi = dois[0]
 
@@ -66,6 +93,7 @@ def get_ids_from_recid(recid):
     eprints = [an_eprint[len('oai:arXiv.org:'):] for an_eprint in eprints if an_eprint.lower().startswith('oai:arxiv.org:')]
     if len(eprints) > 1:
         print >> sys.stderr, "WARNING: record %s have more than one arXiv eprint: %s" % (recid, eprints)
+        eprint = eprints[0]
     elif len(eprints) == 1:
         eprint = eprints[0]
 
@@ -78,12 +106,14 @@ def get_ids_from_recid(recid):
     reportnumbers = record_get_field_values(record, '037', code='a')
     return [str(recid), doi, eprint, other_id] + reportnumbers
 
+
 def iter_export_rows(recids=None):
     if recids is None:
         recids = get_record_ids_to_export()
     for recid in recids:
         ids = get_ids_from_recid(recid)
         yield '\t'.join(ids)
+
 
 def add_other_id(other_id=None, doi="", eprint="", recid=None, reportnumbers=None, all_recids=None):
     if all_recids is None:
@@ -132,6 +162,7 @@ def add_other_id(other_id=None, doi="", eprint="", recid=None, reportnumbers=Non
         record_add_field(rec, '035', ind1=' ', ind2=' ', subfields=(('9', CFG_OTHER_SITE), ('a', other_id)))
         return record_xml_output(rec)
 
+
 def import_recid_list(input_stream=sys.stdin):
     all_recids = get_all_recids()
     output_file = get_out_file()
@@ -170,7 +201,15 @@ def import_recid_list(input_stream=sys.stdin):
         task_low_level_submission('bibupload', 'bst_inspire_cds_synchro', '-a', output_file.name, '-n')
         write_message("Scheduled bibupload --append %s" % output_file.name)
 
+
 def bst_inspire_cds_synchro():
+    """Synchronize recids between CDS and INSPIRE.
+
+    1. Run this script to create an export of all records relevant for synchronization
+       in a common place (e.g. AFS).
+
+    2. Check for export file then match and import relevant IDs to the correct records.
+    """
     task_update_progress("Phase 1: extracting IDs for %s" % CFG_OTHER_SITE)
     export_file = open(CFG_EXPORT_FILE + '.part', "w")
     for i, row in enumerate(iter_export_rows()):
@@ -183,12 +222,3 @@ def bst_inspire_cds_synchro():
     if os.path.exists(CFG_IMPORT_FILE):
         task_update_progress("Phase 2: importing IDs from %s" % CFG_OTHER_SITE)
         import_recid_list(open(CFG_IMPORT_FILE))
-
-def main():
-    open()
-    for row in iter_export_rows():
-        print row
-
-
-if __name__ == '__main__':
-    main()
