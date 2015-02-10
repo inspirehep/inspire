@@ -82,13 +82,17 @@ def get_all_recids():
     return all_recids
 
 
-def get_record_ids_to_export():
+def get_record_ids_to_export(unmatched_only=False):
     """Return all records with identifiers to sync."""
     all_recids = get_all_recids()
+    recids_with_other_id = search_pattern(p='035__9:%s' % CFG_OTHER_SITE)
     recids_with_a_doi = search_pattern(p='doi:"**"')
     recids_with_an_arxiv_id = search_pattern(p='035__9:"arXiv"')
-    recids_with_other_id = search_pattern(p='035__9:%s' % CFG_OTHER_SITE)
-    return (recids_with_a_doi | recids_with_an_arxiv_id | recids_with_other_id) & all_recids
+    if unmatched_only:
+        all_recids = all_recids - recids_with_other_id
+        return (recids_with_a_doi | recids_with_an_arxiv_id) & all_recids
+    else:
+        return (recids_with_a_doi | recids_with_an_arxiv_id | recids_with_other_id) & all_recids
 
 
 def get_ids_from_recid(recid):
@@ -156,7 +160,11 @@ def add_other_id(other_id=None, doi="", eprint="",
         reportnumbers = []
     if recid is not None:
         query = "existing recid"
-        if int(recid) not in all_recids:
+        try:
+            recid = int(recid)
+        except ValueError:
+            recid = None
+        if recid and recid not in all_recids:
             write_message("WARNING: %s thought that their record %s had recid %s in %s but this seems wrong" %
                           (CFG_OTHER_SITE, other_id, recid, CFG_THIS_SITE),
                           stream=sys.stderr)
@@ -316,7 +324,8 @@ def import_recid_list(input_stream=sys.stdin, batch_limit=500, automatic_upload=
     return output_files
 
 
-def bst_inspire_cds_synchro(skip_extraction=False,
+def bst_inspire_cds_synchro(unmatched_only=True,
+                            skip_extraction=False,
                             batch_limit=500,
                             automatic_upload=False):
     """Synchronize recids between CDS and INSPIRE.
@@ -328,8 +337,14 @@ def bst_inspire_cds_synchro(skip_extraction=False,
     """
     if not skip_extraction:
         task_update_progress("Phase 1: extracting IDs for %s" % CFG_OTHER_SITE)
+        if unmatched_only:
+            # We expose only those that are unmatched
+            recids = get_record_ids_to_export(unmatched_only=True)
+        else:
+            recids = get_record_ids_to_export()
+        write_message("Going to export {0} records.".format(len(recids)))
         export_file = open(CFG_EXPORT_FILE + '.part', "w")
-        for i, row in enumerate(iter_export_rows()):
+        for i, row in enumerate(iter_export_rows(recids)):
             print >> export_file, row
             if i % 100 == 0:
                 task_sleep_now_if_required(can_stop_too=True)
