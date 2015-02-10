@@ -255,7 +255,7 @@ class Template(DefaultTemplate):
         if searchvalue:
             header = ''
         else:
-            header = '''%(findtip)s <a href="%(siteurl)s/help/search-tips%(langlink)s">%(msg_search_tips)s</a>''' %  {
+            header = '''%(findtip)s <a href="%(siteurl)s/info/hep/search-tips">%(msg_search_tips)s</a>''' %  {
                 'findtip' : _('Use "find " for SPIRES-style search'),
                 'langlink' :  ln != CFG_SITE_LANG and '?ln=' + ln or '',
                 'siteurl' : CFG_BASE_URL,
@@ -372,7 +372,7 @@ class Template(DefaultTemplate):
 
             help_links = '''
             %(also)s
-            <a href="%(siteurl)s/help/search-tips%(langlink)s">
+            <a href="%(siteurl)s/info/hep/search-tips">
             %(msg_search_tips)s</a> and
             <a href="%(siteurl)s/help%(langlink)s">
             %(msg_help)s</a>''' % {
@@ -1190,7 +1190,7 @@ class Template(DefaultTemplate):
                 </td>
                 <td class="searchboxbody" align="left" rowspan="2" valign="top">
                   <small><small>
-                  <a href="%(siteurl)s/help/search-tips%(langlink)s">%(search_tips)s</a><br/>
+                  <a href="%(siteurl)s/info/hep/search-tips">%(search_tips)s</a><br/>
                   %(advanced_search)s
                 </td>
               </tr>
