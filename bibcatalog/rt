@@ -1,41 +1,41 @@
-#!/usr/bin/env perl -w
+#!/usr/bin/env perl
 # BEGIN BPS TAGGED BLOCK {{{
-# 
+#
 # COPYRIGHT:
-#  
-# This software is Copyright (c) 1996-2009 Best Practical Solutions, LLC 
+#
+# This software is Copyright (c) 1996-2009 Best Practical Solutions, LLC
 #                                          <jesse@bestpractical.com>
-# 
+#
 # (Except where explicitly superseded by other copyright notices)
-# 
-# 
+#
+#
 # LICENSE:
-# 
+#
 # This work is made available to you under the terms of Version 2 of
 # the GNU General Public License. A copy of that license should have
 # been provided with this software, but in any event can be snarfed
 # from www.gnu.org.
-# 
+#
 # This work is distributed in the hope that it will be useful, but
 # WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 # General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301 or visit their web page on the internet at
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
-# 
-# 
+#
+#
 # CONTRIBUTION SUBMISSION POLICY:
-# 
+#
 # (The following paragraph is not intended to limit the rights granted
 # to you to modify and distribute this software under the terms of
 # the GNU General Public License and is only of importance to you if
 # you choose to contribute your changes and enhancements to the
 # community by submitting them to Best Practical Solutions, LLC.)
-# 
+#
 # By intentionally submitting any modifications, corrections or
 # derivatives to this work, or any other work intended for use with
 # Request Tracker, to Best Practical Solutions, LLC, you confirm that
@@ -44,7 +44,7 @@
 # royalty-free, perpetual, license to use, copy, create derivative
 # works based on those contributions, and sublicense and distribute
 # those contributions and any derivatives thereof.
-# 
+#
 # END BPS TAGGED BLOCK }}}
 # Designed and implemented for Best Practical Solutions, LLC by
 # Abhijit Menon-Sen <ams@wiw.org>
@@ -235,10 +235,10 @@ sub help {
 sub list {
     my ($q, $type, %data);
     my $orderby = $config{orderby};
-    
+
     if ($config{orderby}) {
          $data{orderby} = $config{orderby};
-    } 
+    }
     my $bad = 0;
 
     while (@ARGV) {
@@ -273,9 +273,9 @@ sub list {
         }
     }
     if (!defined $q) {
-        $q = $config{query}; 
+        $q = $config{query};
     }
-    
+
     $type ||= "ticket";
     unless ($type && defined $q) {
         my $item = $type ? "query string" : "object type";
@@ -370,7 +370,7 @@ sub edit {
     %set = %add = %del = ();
     my $slurped = 0;
     my $bad = 0;
-    
+
     while (@ARGV) {
         $_ = shift @ARGV;
 
@@ -509,7 +509,7 @@ sub edit {
                         $k->{$key} = delete $set{lc $key};
                     }
                 }
-                
+
                 # Then update the others.
                 foreach $key (keys %set) { vpush($k, $key, $set{$key}) }
                 foreach $key (keys %add) {
@@ -936,7 +936,7 @@ sub submit {
             file => $file || "$HOME/.rt_sessions",
             sids => { }
         };
-       
+
         # The current session is identified by the currently configured
         # server and user.
         ($s, $u) = @config{"server", "user"};
@@ -1466,10 +1466,10 @@ Text:
 
     The details of the syntax and arguments for each action are given by
     "rt help <action>". Some actions may be referred to by more than one
-    name ("create" is the same as "new", for example).  
+    name ("create" is the same as "new", for example).
 
     You may also call "rt shell", which will give you an 'rt>' prompt at
-    which you can issue commands of the form "<action> [options] 
+    which you can issue commands of the form "<action> [options]
     [arguments]".  See "rt help shell" for details.
 
     Objects are identified by a type and an ID (which can be a name or a
@@ -1552,7 +1552,7 @@ Text:
     the list must be a single argument (i.e., no spaces). For example,
     "user/root,1-3,5,7-10,ams" is a list of ten users; the same list
     can also be written as "user/ams,root,1,2,3,5,7,8-10".
-    
+
     Examples:
 
         ticket/1
@@ -1731,7 +1731,7 @@ Text:
         -l      Longer description.
 
         In addition,
-        
+
         -o +/-<field>   Orders the returned list by the specified field.
         -S var=val      Submits the specified variable with the request.
         -t type         Specifies the type of object to look for. (The
@@ -1928,7 +1928,7 @@ Text:
 
     RT3 uses an SQL-like syntax to specify object selection constraints.
     See the <RT:...> documentation for details.
-    
+
     (XXX: I'm going to have to write it, aren't I?)
 
 --
@@ -1944,7 +1944,7 @@ Text:
     commented text and interspersed blank lines allowed for convenience.
     Field names may appear more than once in a form; a comma-separated
     list of multiple field values may also be specified directly.
-    
+
     Field values can be wrapped as in RFC822, with leading whitespace.
     The longest sequence of leading whitespace common to all the lines
     is removed (preserving further indentation). There is no limit on
@@ -1999,12 +1999,12 @@ Text:
 
         rt shell
 
-    Opens an interactive shell, at which you can issue commands of 
+    Opens an interactive shell, at which you can issue commands of
     the form "<action> [options] [arguments]".
 
     To exit the shell, type "quit" or "exit".
 
-    Commands can be given at the shell in the same form as they would 
+    Commands can be given at the shell in the same form as they would
     be given at the command line without the leading 'rt' invocation.
 
     Example:
@@ -2025,13 +2025,13 @@ Text:
 
         rt <take|untake|steal> <ticket-id>
 
-    Sets the owner of the specified ticket to the current user, 
-    assuming said user has the bits to do so, or releases the 
-    ticket.  
-    
-    'Take' is used on tickets which are not currently owned 
-    (Owner: Nobody), 'steal' is used on tickets which *are* 
-    currently owned, and 'untake' is used to "release" a ticket 
+    Sets the owner of the specified ticket to the current user,
+    assuming said user has the bits to do so, or releases the
+    ticket.
+
+    'Take' is used on tickets which are not currently owned
+    (Owner: Nobody), 'steal' is used on tickets which *are*
+    currently owned, and 'untake' is used to "release" a ticket
     (reset its Owner to Nobody).  'Take' cannot be used on
     tickets which are currently owned.
 
@@ -2052,7 +2052,7 @@ Title: quit
 Title: exit
 Text:
 
-    Use "quit" or "exit" to leave the shell.  Only valid within shell 
+    Use "quit" or "exit" to leave the shell.  Only valid within shell
     mode.
 
     Example:
