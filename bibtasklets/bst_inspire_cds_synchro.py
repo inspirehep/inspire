@@ -38,6 +38,7 @@ if CFG_INSPIRE_SITE:
     CFG_OTHER_SITE = "CDS"
     CFG_THIS_URL = "https://inspirehep.net/record"
     CFG_OTHER_URL = "https://cds.cern.ch/record"
+    CERN_RELEVANT_PAPER = get_collection_reclist("CERN")
 elif CFG_CERN_SITE:
     CFG_THIS_SITE = "CDS"
     CFG_OTHER_SITE = "Inspire"
@@ -125,6 +126,16 @@ def get_ids_from_recid(recid):
         subfields = dict(field_get_subfield_instances(field))
         if subfields.get('9', '').upper() == CFG_OTHER_SITE.upper() and subfields.get('a'):
             other_id = subfields['a']
+    if CFG_INSPIRE_SITE and not other_id:
+        for field in record_get_field_instances(record, '595'):
+            subfields = dict(field_get_subfield_instances(field))
+            if "CDS" in subfields.get('a', '').upper():
+                other_id = subfields.get('a', 0).split("-")[-1]
+                try:
+                    int(other_id)
+                except ValueError:
+                    # Not an integer, we move on
+                    other_id = ''
     reportnumbers = record_get_field_values(record, '037', code='a')
 
     system_number = ""
@@ -229,6 +240,22 @@ def add_other_id(other_id=None, doi="", eprint="",
                 if stored_recid and int(stored_recid) != int(other_id):
                     write_message("ERROR: %s record %s matches %s record %s which already points back to a different record %s in %s" % (CFG_OTHER_SITE, other_id, CFG_THIS_SITE, recid, stored_recid, CFG_OTHER_SITE), stream=sys.stderr)
                 return
+
+        if CFG_INSPIRE_SITE:
+            fields = record_get_field_instances(record, '595')
+            for field in fields:
+                subfields = dict(field_get_subfield_instances(field))
+                if "CDS" in subfields.get('a', '').upper():
+                    stored_recid = subfields.get('a', 0).split("-")[-1]
+                    try:
+                        stored_recid = int(stored_recid)
+                    except ValueError:
+                        # Not an integer, we move on and add the new ID.
+                        continue
+                    if stored_recid and int(stored_recid) != int(other_id):
+                        write_message("ERROR: %s record %s matches %s record %s which already points back to a different record %s in %s" % (CFG_OTHER_SITE, other_id, CFG_THIS_SITE, recid, stored_recid, CFG_OTHER_SITE), stream=sys.stderr)
+                    return
+
         write_message("Matched {1}/{0} to {3}/{2} with {4}".format(
             other_id,
             CFG_OTHER_URL,
@@ -238,7 +265,15 @@ def add_other_id(other_id=None, doi="", eprint="",
         ))
         rec = {}
         record_add_field(rec, '001', controlfield_value='%s' % recid)
-        record_add_field(rec, '035', ind1=' ', ind2=' ', subfields=(('9', CFG_OTHER_SITE), ('a', other_id)))
+        if CFG_INSPIRE_SITE:
+            if recid in CERN_RELEVANT_PAPER:
+                write_message("CERN relevant paper: adding 035")
+                record_add_field(rec, '035', ind1=' ', ind2=' ', subfields=(('9', CFG_OTHER_SITE), ('a', other_id)))
+            else:
+                write_message("Non-CERN relevant paper: adding 595")
+                record_add_field(rec, '595', ind1=' ', ind2=' ', subfields=(('9', "CERN"), ('a', "CDS-{0}".format(other_id))))
+        else:
+            record_add_field(rec, '035', ind1=' ', ind2=' ', subfields=(('9', CFG_OTHER_SITE), ('a', other_id)))
         return record_xml_output(rec)
 
 
