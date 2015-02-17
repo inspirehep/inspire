@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2015 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -27,13 +27,13 @@ def format_element(bfo):
     bai = bfo.fields('035__')
 
     for item in bai:
-        if item.has_key('9') and item['9'] == 'ORCID' and item.has_key('a'):
+        if '9' in item and item['9'] == 'ORCID' and 'a' in item:
             orcid = item['a']
             if "http" in orcid:
-                return "<a href=%s>%s</a>" % (orcid, orcid)
+                return '<a href="%s">%s</a>' % (orcid, orcid)
             else:
                 link = "http://orcid.org/" + orcid
-                return "<a href=%s>%s</a>" % (link, orcid)
+                return '<a href="%s">%s</a>' % (link, orcid)
 
 
 def escape_values(bfo):
