@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013 CERN.
+## Copyright (C) 2013, 2015 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -29,7 +29,7 @@ def format_element(bfo, css_class=''):
     if native_name:
         native_name = '(' + native_name + ')'
         if css_class:
-            return '<span class="' + css_class + '"> ' + native_name + "</span>"
+            return '<span class="%s"> %s</span>' % (css_class, native_name,)
         else:
             return native_name
     return ''
