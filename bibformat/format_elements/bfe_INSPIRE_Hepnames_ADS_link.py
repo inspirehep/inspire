@@ -26,7 +26,6 @@ def format_element(bfo):
     """
 
     import re
-    from cgi import escape
     re_last_first = re.compile(
         '^(?P<last>[^,]+)\s*,\s*(?P<first_names>[^\,]*)(?P<extension>\,?.*)$')
     re_initials = re.compile(r'(?P<initial>\w)([\w`\']+)?.?\s*', re.UNICODE)
@@ -57,7 +56,7 @@ def format_element(bfo):
     else:
         link = "%sauthor=%s" % (ADSURL, bfo.field('100__q'))
 
-    return escape(link)
+    return link
 
 
 # pylint: disable=W0613
