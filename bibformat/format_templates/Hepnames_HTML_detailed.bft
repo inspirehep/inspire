@@ -10,7 +10,7 @@
 <a href="/search?ln=en&amp;cc=HepNames&amp;ln=en&amp;cc=HepNames&amp;p=701%3A%22<BFE_FIELD tag="100__a" />%22">[Students]</a>
 <a href="http://arxiv.org/find/all/1/au:<BFE_INSPIRE_HEPNAMES_ARXIV />/0/1/0/all/0/1?per_page=100">[arXiv]</a>
 <!-- http://arxiv.org/find/all/1/au:Brooks_T/0/1/0/all/0/1?per_page=100 -->
-<a href="<BFE_INSPIRE_HEPNAMES_ADS_LINK />">[ADS]</a>
+<a href="<BFE_INSPIRE_HEPNAMES_ADS_LINK escape="8" />">[ADS]</a>
 
 <br /><br />
 
