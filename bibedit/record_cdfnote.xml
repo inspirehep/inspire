@@ -1,0 +1,69 @@
+<!-- BibEdit-Template-Name: cdfnote -->
+<!-- BibEdit-Template-Description: CDF internal note -->
+<record>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">CDFNote-####</subfield>
+    <subfield code="9">CDF</subfield>
+  </datafield>
+  <datafield tag="037" ind1=" " ind2=" ">
+    <subfield code="a">CDF-####</subfield>
+  </datafield>
+  <datafield tag="037" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:other reportnr like FERMILAB-CONF-96-331-E</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title</subfield>
+  </datafield>
+  <datafield tag="269" ind1=" " ind2=" ">
+    <subfield code="c">VOLATILE:YYYY-MM-DD</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:number of pages</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:comment</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:INSPIRE-subject</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="9">VOLATILE:CDF</subfield>
+  </datafield>
+  <datafield tag="693" ind1=" " ind2=" ">
+    <subfield code="a">Fermilab Tevatron</subfield>
+    <subfield code="e">FNAL-TEV-CDF</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+  </datafield>
+  <datafield tag="710" ind1=" " ind2=" ">
+    <subfield code="g">CDF</subfield>
+  </datafield>
+  <datafield tag="773" ind1=" " ind2=" ">
+    <subfield code="w">VOLATILE:CNUM</subfield>
+    <subfield code="x">VOLATILE:publication information free-text</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external link)</subfield>
+    <subfield code="y">VOLATILE:Fulltext</subfield>
+  </datafield>
+  <datafield tag="FFT" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:http:</subfield>
+    <subfield code="d">VOLATILE:Fulltext</subfield>
+    <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">CDF-NOTE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CDF-INTERNAL-NOTE</subfield>
+  </datafield>
+</record>
