@@ -438,7 +438,6 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
               <xsl:call-template name="furtherAuthor">
                 <xsl:with-param name="node" select="."/>
               </xsl:call-template>
-              <author></author>
             </xsl:for-each>
                 </xsl:if>
 
