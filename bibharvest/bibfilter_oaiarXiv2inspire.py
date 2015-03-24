@@ -353,6 +353,14 @@ def main():
                     record_replace_field(record, '773', new_field, field[4])
                     break
 
+        # 710 Remove collaboration from a 710__g
+        for field in record_get_field_instances(record, '710'):
+            for value in field_get_subfield_values(field, 'g'):
+                subfields = [('g', value.replace("collaboration", "").replace("Collaboration", "").strip())]
+                new_field = create_field(subfields, global_position=field[4])
+                record_replace_field(record, '710', new_field, field[4])
+                break
+
         if not recid or recid == -1:
             # Record (probably) does not exist, flag for inserting into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
