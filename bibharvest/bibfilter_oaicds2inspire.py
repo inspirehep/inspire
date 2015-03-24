@@ -682,13 +682,13 @@ def apply_filter(rec):
     # 710 Collaboration
     for field in record_get_field_instances(rec, '710'):
         subs = field_get_subfield_instances(field)
+        new_subs = []
         for idx, (key, value) in enumerate(subs[:]):
-            if key == '5':
-                subs.pop(idx)
-            elif value.startswith('CERN. Geneva'):
-                subs.pop(idx)
-        if len(subs) == 0:
-            record_delete_field(rec, '710', field_position_global=field[4])
+            if key == "g" and not value.startswith('CERN. Geneva'):
+                new_subs.append((key, value.replace("collaboration", "").replace("Collaboration", "").strip()))
+        record_delete_field(rec, tag="710",
+                            field_position_global=field[4])
+        record_add_field(rec, "710", subfields=new_subs)
 
     # 773 journal translations
     journals = get_journals()
