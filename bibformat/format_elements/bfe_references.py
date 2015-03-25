@@ -21,7 +21,7 @@
 """BibFormat element - Prints references
 """
 
-from invenio.search_engine import search_unit, get_record
+from invenio.search_engine import search_unit, get_record, search_pattern
 from invenio.bibformat import format_record
 
 def format_element(bfo, reference_prefix, reference_suffix):
@@ -76,7 +76,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
         if clean_report:
             hits = search_unit(f='reportnumber', p=clean_report)
         if clean_journal and len(hits)!=1:
-            hits = search_unit(f='journal', p=clean_journal)
+            hits = search_pattern(f='journal', p=clean_journal, ap=1)
         if reference.has_key('a') and len(hits)!=1:
             hits = search_unit(p=reference['a'][0])
         if reference.has_key('0') and len(hits)!=1:
