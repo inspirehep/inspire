@@ -422,7 +422,6 @@ $(function () {
    <div class="feedbackboxbody">
  Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>, the High Energy Physics information system.
  Please direct questions, comments or concerns to <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
- <p style="color:red; margin: 2px 0px; font-size: 110%%; font-weight: bold;">We are currently facing an issue with the author searches and citation summaries: some of the information displayed might not be accurate. We apologize for the inconvenience and we will keep you updated through Twitter.</p>
    </div>
   </td>
  </tr>
