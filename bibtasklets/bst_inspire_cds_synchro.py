@@ -359,7 +359,7 @@ def import_recid_list(input_stream=sys.stdin, batch_limit=500, automatic_upload=
     return output_files
 
 
-def bst_inspire_cds_synchro(unmatched_only=True,
+def bst_inspire_cds_synchro(unmatched_only=False,
                             skip_extraction=False,
                             batch_limit=500,
                             automatic_upload=False):
