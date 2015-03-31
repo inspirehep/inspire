@@ -1,26 +1,26 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-##
-## This file is part of INSPIRE.
-## Copyright (C) 2014 CERN.
-##
-## INSPIRE is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License as
-## published by the Free Software Foundation; either version 2 of the
-## License, or (at your option) any later version.
-##
-## INSPIRE is distributed in the hope that it will be useful, but
-## WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# This file is part of INSPIRE.
+# Copyright (C) 2014, 2015 CERN.
+#
+# INSPIRE is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# INSPIRE is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 """
     name:           bibfilter_oaipos2inspire
-    decription:     Program to filter and analyse MARCXML records
+    description:    Program to filter and analyse MARCXML records
                     from PoS oaiharvest, download the fulltexs,
                     and create the xml files for bibupload.
 
@@ -40,8 +40,8 @@ from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
 from xml.dom.minidom import parse
-from harvestingkit.utils import (record_add_field,
-                                 record_xml_output)
+from harvestingkit.bibrecord import (record_add_field,
+                                     record_xml_output)
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from invenio.config import (CFG_TMPSHAREDDIR,
@@ -69,11 +69,11 @@ from invenio.apsharvest_utils import (create_work_folder,
 base_url = "http://pos.sissa.it/contribution?id="
 
 
-# ==============================| Main |==============================
 def main(args):
+    """Run the filtering."""
     if len(args) != 1:
-        print("usage: python bibfilter_oaipos2inspire.py input_filename")
-        raise Exception("Wrong usage!!")
+        print("Usage: python bibfilter_oaipos2inspire.py input_filename")
+        sys.exit(1)
     input_filename = args[0]
 
     out_folder = create_work_folder(CFG_POS_OUT_DIRECTORY)
@@ -98,7 +98,6 @@ def main(args):
         print("Querying with: %s" % (query,))
         results = perform_request_search(p=query, of="id")
 
-        #harvest fulltext
         url = base_url + identifier
         session = requests.session()
         r = session.get(url)
@@ -191,7 +190,7 @@ def main(args):
 
 
 def write_record_to_file(filename, record_list):
-    """Writes a new MARCXML file to specified path from BibRecord list."""
+    """Write a new MARCXML file to specified path from BibRecord list."""
     if len(record_list) > 0:
         out = []
         out.append("<collection>")
