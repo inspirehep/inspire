@@ -52,11 +52,20 @@ def bst_webcoll_postprocess(recids=[]):
             recids[:10],
             len(recids))
         )
+        cache.set("webcoll_pending_recids", recids)
         session = requests.Session()
-        addapter = requests.adapters.HTTPAdapter(max_retries=3)
-        session.mount(CFG_WEBCOLL_POST_REQUEST_URL, addapter)
-        response = session.post(CFG_WEBCOLL_POST_REQUEST_URL,
-                                data={'recids': recids})
+        try:
+            addapter = requests.adapters.HTTPAdapter(max_retries=3)
+            session.mount(CFG_WEBCOLL_POST_REQUEST_URL, addapter)
+            response = session.post(CFG_WEBCOLL_POST_REQUEST_URL,
+                                    data={'recids': recids})
+        except Exception as err:
+            write_message("Post request failed!")
+            write_message(err)
+            return
+        finally:
+            session.close()
+
         if response.ok:
             write_message("Post request sent successfully")
             cache.set("webcoll_pending_recids", [])
@@ -64,7 +73,6 @@ def bst_webcoll_postprocess(recids=[]):
             write_message("Post request failed!")
             write_message(response.text)
             cache.set("webcoll_pending_recids", recids)
-        session.close()
     else:
         write_message("No recids to POST callback for to {0}.".format(
             CFG_WEBCOLL_POST_REQUEST_URL,
