@@ -12,6 +12,8 @@ CFG_ETCDIR/twitter-credentials.txt a four-lines text file containing in order:
 import time
 import sys
 try:
+    import requests.packages.urllib3
+    requests.packages.urllib3.disable_warnings()
     import twitter
 except:
     import warnings
