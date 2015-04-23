@@ -414,8 +414,7 @@ def main():
                         fields_to_add.append(("246", [field]))
                 else:
                     corrected_fields = []
-                    if has_field_origin(new_field_list, "arXiv", "9") \
-                       and has_field_origin(existing_field_list, "arXiv", "9"):
+                    if has_field_origin(new_field_list, "arXiv", "9"):
                         for field in existing_field_list:
                             if not "arXiv" in field_get_subfield_values(field, "9"):
                                 corrected_fields.append(field)
