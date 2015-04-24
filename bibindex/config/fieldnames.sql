@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.17-MariaDB, for Linux (x86_64)
 --
 -- Host: inspire01    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.5.35-MariaDB-log
+-- Server version	10.0.17-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -10,7 +10,6 @@
 /*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -255,14 +254,14 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (55,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (56,'en','ln','earliest date');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (57,'en','ln','conference start date');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (58,'en','ln','experiment name');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (59,'en','ln','referstox');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-09 22:07:18
+-- Dump completed on 2015-04-24 10:18:51
