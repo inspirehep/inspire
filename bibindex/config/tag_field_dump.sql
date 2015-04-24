@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.73, for redhat-linux-gnu (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.17-MariaDB, for Linux (x86_64)
 --
 -- Host: inspire01    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	5.5.35-MariaDB-log
+-- Server version	10.0.17-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -10,7 +10,6 @@
 /*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -193,6 +192,8 @@ INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (172,'report n
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (173,'conference start date','111__x','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (174,'experiment name','119__a','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (175,'journal title','130__a','');
+INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (176,'experiment','419__a','');
+INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (177,'city, inst','371__b','');
 
 --
 -- Dumping data for table `field`
@@ -255,6 +256,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (54,'journal page','journalpag
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (56,'earliest date','earliestdate');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (57,'conference start date','conferencestartdate');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (58,'experiment name','experimentname');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (59,'referstox','referstox');
 
 --
 -- Dumping data for table `field_tag`
@@ -448,14 +450,19 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (6,172,101);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (57,173,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (58,174,0);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (2,175,101);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (11,174,101);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (16,176,101);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (1,176,255);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (1,174,255);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,149,101);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,177,102);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-09 22:07:11
+-- Dump completed on 2015-04-24 10:18:39
