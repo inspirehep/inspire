@@ -57,12 +57,20 @@ def submit_bibindex_task(to_update, indexes, user, priority=3):
                                      '-i', ','.join(recids))
 
 
-def submit_bibrank_task(to_update, methods, user, priority=3):
+def submit_bibrank_task(to_update, methods, user, priority=3, disable_citation_losses_check=False):
     recids = [str(r) for r in to_update]
-    return task_low_level_submission('bibrank', user,
+    if disable_citation_losses_check:
+        return task_low_level_submission('bibrank', user,
+                                     '-w', methods,
+                                     '-P', str(priority),
+                                     '--disable-citation-losses-check',
+                                     '-i', ','.join(recids))
+    else:
+        return task_low_level_submission('bibrank', user,
                                      '-w', methods,
                                      '-P', str(priority),
                                      '-i', ','.join(recids))
+
 
 
 def submit_refextract_task(to_update, user, priority=3):
