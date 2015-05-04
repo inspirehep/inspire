@@ -21,14 +21,14 @@ Move texkeys from $$z to $$a if there is no $$a
 """
 def check_record(record):
     """
-    Move texkeys from $$z to $$a if there is no $$a
+    Move one texkey from $$z to $$a if there is no $$a
     """
     from invenio.bibrecord import record_modify_subfield
     message = ""
-    all_a_keys = list(record.iterfield_filter("035__a", "9", "SPIRESTeX")) \
-               + list(record.iterfield_filter("035__a", "9", "INSPIRETeX"))
-    all_z_keys = list(record.iterfield_filter("035__z", "9", "SPIRESTeX")) \
-               + list(record.iterfield_filter("035__z", "9", "INSPIRETeX"))
+    all_a_keys = list(record.iterfield("035__a", ("9", "SPIRESTeX"))) \
+               + list(record.iterfield("035__a", ("9", "INSPIRETeX")))
+    all_z_keys = list(record.iterfield("035__z", ("9", "SPIRESTeX"))) \
+               + list(record.iterfield("035__z", ("9", "INSPIRETeX")))
 
     if all_a_keys:
         pass
@@ -37,4 +37,6 @@ def check_record(record):
         message = "Move TexKey from z to a: %s" % value
         record_modify_subfield(record, "035", "a", value,
            position[2], field_position_local=position[1])
+        record_modify_subfield(record, "035", "9", "INSPIRETeX",
+           position[3], field_position_local=position[1])
         record.set_amended(message)

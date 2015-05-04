@@ -25,13 +25,12 @@ def check_record(record):
     """
     from invenio.bibrecord import record_modify_subfield
     message = ""
-    all_a_keys = list(record.iterfield_filter("035__a", "9", "SPIRESTeX")) \
-               + list(record.iterfield_filter("035__a", "9", "INSPIRETeX"))
-
+    all_a_keys = list(record.iterfield("035__a", ("9", "SPIRESTeX"))) \
+               + list(record.iterfield("035__a", ("9", "INSPIRETeX")))
     if len(all_a_keys)>1:
         message = "Move additional TexKeys from a to z:"
         for position, value in all_a_keys[:-1]:
-            message = "%s %s" % (message, value)
+            message += " %s" % value
             record_modify_subfield(record, "035", "z", value, 
                 position[2], field_position_local=position[1])
             record.set_amended(message)
