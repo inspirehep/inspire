@@ -335,7 +335,7 @@ class Template(DefaultTemplate):
                    'msg_browse' : _('Browse'),
                    'msg_easy_search' : _('Easy Search'),
                    'example_query_html': example_html,
-                   'searchvalue' : searchvalue,
+                   'searchvalue' : cgi.escape(searchvalue, True),
                    'middle_option' : middle_option
                   }
 
@@ -951,7 +951,7 @@ class Template(DefaultTemplate):
                'header' : header,
                'msg_search' : msg_search,
                'example_query_html': example_html,
-               'keywords' : keywords,
+               'keywords' : cgi.escape(keywords, True),
                'search_url' : '/search?p1=QUERY&amp;op1=a&amp;p2=KEYWORD&amp;action_search=Search&amp;cc=Jobs',
                'msg_header' : msg_header,
                'rank_select' : rank_select,
