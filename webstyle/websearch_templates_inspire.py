@@ -335,7 +335,7 @@ class Template(DefaultTemplate):
                    'msg_browse' : _('Browse'),
                    'msg_easy_search' : _('Easy Search'),
                    'example_query_html': example_html,
-                   'searchvalue' : cgi.escape(searchvalue, True),
+                   'searchvalue' : searchvalue,
                    'middle_option' : middle_option
                   }
 
