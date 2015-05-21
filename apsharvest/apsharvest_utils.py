@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
-##
-## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
-##
-## INSPIRE is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License as
-## published by the Free Software Foundation; either version 2 of the
-## License, or (at your option) any later version.
-##
-## INSPIRE is distributed in the hope that it will be useful, but
-## WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# This file is part of INSPIRE.
+# Copyright (C) 2013, 2014, 2015 CERN.
+#
+# INSPIRE is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# INSPIRE is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 import os
 import sys
@@ -300,7 +300,7 @@ def compare_datetime_to_iso8601_date(date_obj, iso8601_date):
 
 
 def create_work_folder(base_folder):
-    """Returns the path of a working folder with a naming schema.
+    """Return the path of a working folder with a naming schema.
 
     Will return the path of a folder with a naming schema using dates
     in the specified base folder, with increment.
@@ -327,7 +327,7 @@ def create_folders(new_folder):
 
 
 def write_record_to_file(filename, record_list):
-    """Writes a new MARCXML file to specified path from BibRecord list."""
+    """Write a new MARCXML file to specified path from BibRecord list."""
     from invenio.bibrecord import record_xml_output
 
     if len(record_list) > 0:
@@ -464,7 +464,7 @@ def submit_bibupload_for_records(mode, new_filename, silent):
 
 def is_beyond_threshold_date(threshold_date, fulltext_file):
     """
-    Checks the given fulltext file to see if the published date is
+    Check the given fulltext file to see if the published date is
     beyond the threshold or not. Returns True if it is beyond and
     False if not.
     """
@@ -488,7 +488,7 @@ def is_beyond_threshold_date(threshold_date, fulltext_file):
 
 
 def submit_records_via_ftp(filename, location=""):
-    """Submits given file to FTP server as defined.
+    """Submit given file to FTP server as defined.
 
     The FTP server uploaded to is controlled with the config variables:
 
@@ -503,20 +503,15 @@ def submit_records_via_ftp(filename, location=""):
     """
     from invenio.config import (CFG_FTP_SERVER,
                                 CFG_FTP_AUTHENTICATION_FILE,)
-
-    try:
-        ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
-        ftp.upload(filename, location)
-        ftp.close()
-        write_message("%s successfully uploaded to FTP server" % filename)
-    except Exception as e:
-        write_message("Failed to upload %s to FTP server: %s\n%s"
-                      % (filename, str(e), traceback.format_exc()))
+    ftp = FtpHandler(CFG_FTP_SERVER, netrc_file=CFG_FTP_AUTHENTICATION_FILE)
+    ftp.upload(filename, location)
+    ftp.close()
+    write_message("%s successfully uploaded to FTP server" % filename)
 
 
 def submit_records_via_mail(subject, body, toaddr):
     """
-    Performs the call to mailutils.send_email to attach XML and submit
+    Perform the call to mailutils.send_email to attach XML and submit
     via e-mail to the desired receipient (CFG_APSHARVEST_EMAIL).
 
     @param subject: email subject.
