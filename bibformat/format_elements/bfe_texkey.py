@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2015 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -42,10 +42,10 @@ def get_spires_texkey(bfo):
         source = keys.get('9')
         if source and source in ('SPIRESTeX', 'INSPIRETeX'):
             texkey = keys.get('a')
-            if texkey:
-                return texkey
-            else:
-                texkey = keys.get('z','')
+            if not texkey:
+                texkey = keys.get('z', '')
+    # some keys incorrectly contain whitespace
+    texkey = texkey.replace(' ', '')
     return texkey
 
 def get_generated_texkey(bfo):
