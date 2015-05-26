@@ -20,7 +20,12 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 <!-- BibEdit-Template-Description: book -->
 <record>
   <datafield tag="020" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:ISBN</subfield>
+    <subfield code="a">VOLATILE:ISBN (without dashes!)</subfield>
+    <subfield code="b">VOLATILE:Print</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:ISBN (without dashes!)</subfield>
+    <subfield code="b">VOLATILE:Online</subfield>
   </datafield>
   <datafield tag="024" ind1="7" ind2=" ">
     <subfield code="a">VOLATILE:e.g 10.1103/example.doi.for.inspire</subfield>
@@ -34,6 +39,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="e">VOLATILE:ed.</subfield>
     <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
   </datafield>
   <datafield tag="242" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:translated title (English)</subfield>
@@ -64,6 +72,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   </datafield>
   <datafield tag="520" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>

@@ -26,6 +26,10 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="a">VOLATILE:e.g 10.1103/example.doi.for.inspire</subfield>
     <subfield code="2">VOLATILE:DOI</subfield>
   </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:external record identifier</subfield>
+    <subfield code="9">VOLATILE:source</subfield>
+  </datafield>
   <datafield tag="041" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:language (if not English)</subfield>
   </datafield>
@@ -35,13 +39,19 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
   </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
+  </datafield>
   <datafield tag="242" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:translated title (English)</subfield>
     <subfield code="b">VOLATILE:translated subtitle (English)</subfield>
   </datafield>
   <datafield tag="245" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:Original title</subfield>
-    <subfield code="b">VOLATILE:subtitle</subfield>
+    <subfield code="a">VOLATILE:Title of Proceedings if different from Conference itself</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Proceedings, Title (acronym)</subfield>
+    <subfield code="b">VOLATILE:City, Country, Date (e.g. September 24–28, 2013)</subfield>
   </datafield>
   <datafield tag="260" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:place of publication</subfield>
@@ -63,6 +73,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   </datafield>
   <datafield tag="520" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
@@ -101,7 +114,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="a">VOLATILE:CORE</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
-    <subfield code="a">PROCEEDINGS</subfield>
+    <subfield code="a">Proceedings</subfield>
   </datafield>
   <datafield tag="FFT" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:http:</subfield>

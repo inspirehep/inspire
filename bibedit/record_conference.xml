@@ -22,11 +22,10 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="111" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:conference title</subfield>
     <subfield code="b">VOLATILE:subtitle</subfield>
-    <subfield code="d">VOLATILE:date from - to</subfield>
-    <subfield code="x">VOLATILE:start date</subfield>
+    <subfield code="x">VOLATILE:start date YYYY-MM-DD</subfield>
+    <subfield code="y">VOLATILE:end date YYYY-MM-DD</subfield>
     <subfield code="c">VOLATILE:city, country</subfield>
     <subfield code="e">VOLATILE:acronym</subfield>
-    <subfield code="g">VOLATILE:cnum Cyy-mm-dd[.n]</subfield>
   </datafield>
   <datafield tag="270" ind1=" " ind2=" ">
     <subfield code="b">VOLATILE:extra place info</subfield>
@@ -37,6 +36,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="411" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:conf series</subfield>
     <subfield code="n">VOLATILE:nr in series</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:public note</subfield>
   </datafield>
   <datafield tag="505" ind1=" " ind2=" ">
     <subfield code="t">VOLATILE:session titles</subfield>
@@ -49,13 +51,14 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="b">VOLATILE:alternative titles, acronyms (for searching)</subfield>
   </datafield>
   <datafield tag="500" ind1=" " ind2=" ">
-    <subfield code="o">VOLATILE:public note</subfield>
+    <subfield code="a">VOLATILE:public note</subfield>
   </datafield>
   <datafield tag="595" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:hidden note</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
-    <subfield code="a">VOLATILE:arxiv category</subfield>
+    <subfield code="a">VOLATILE:subject</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
   </datafield>
   <datafield tag="653" ind1="1" ind2=" ">
     <subfield code="a">VOLATILE:free keywords</subfield>
