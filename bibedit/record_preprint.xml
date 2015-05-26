@@ -25,7 +25,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="041" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:language (if not English)</subfield>
   </datafield>
-    <datafield tag="084" ind1=" " ind2=" ">
+  <datafield tag="084" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:pacs</subfield>
     <subfield code="2">VOLATILE:PACS</subfield>
   </datafield>
@@ -33,6 +33,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
     <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
   </datafield>
   <datafield tag="242" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Translated title (English)</subfield>
@@ -46,8 +49,14 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="300" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:11</subfield>
   </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:public note</subfield>
+  </datafield>
   <datafield tag="520" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
@@ -74,7 +83,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   </datafield>
   <datafield tag="773" ind1=" " ind2=" ">
     <subfield code="w">VOLATILE:CNUM</subfield>
-    <subfield code="t">VOLATILE:Presented at</subfield>
+    <subfield code="q">VOLATILE:conf acronym (if no CNUM exists)</subfield>
+    <subfield code="t">VOLATILE:name of conference (if no CNUM exists)</subfield>
+    <subfield code="p">VOLATILE:journal</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="u">VOLATILE:http: (for external link)</subfield>

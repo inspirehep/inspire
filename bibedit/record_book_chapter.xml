@@ -31,6 +31,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
   </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
+  </datafield>
   <datafield tag="242" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:translated title (English)</subfield>
     <subfield code="b">VOLATILE:translated subtitle (English)</subfield>
