@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2015 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -19,7 +19,6 @@
 """BibFormat element - Prints INSPIRE jobs contact name HEPNAMES search
 """
 
-from urllib import quote_plus
 
 def format_element(bfo, style="", separator=''):
     """
@@ -61,54 +60,54 @@ def format_element(bfo, style="", separator=''):
                 fyear = fdate[:4]
 
     if smonth == '01':
-        smonth = smonth.replace('01','Jan')
+        smonth = smonth.replace('01', 'Jan')
     elif smonth == '02':
-        smonth = smonth.replace('02','Feb')
+        smonth = smonth.replace('02', 'Feb')
     elif smonth == '03':
-        smonth = smonth.replace('03','Mar')
+        smonth = smonth.replace('03', 'Mar')
     elif smonth == '04':
-        smonth = smonth.replace('04','Apr')
+        smonth = smonth.replace('04', 'Apr')
     elif smonth == '05':
-        smonth = smonth.replace('05','May')
+        smonth = smonth.replace('05', 'May')
     elif smonth == '06':
-        smonth = smonth.replace('06','Jun')
+        smonth = smonth.replace('06', 'Jun')
     elif smonth == '07':
-        smonth = smonth.replace('07','Jul')
+        smonth = smonth.replace('07', 'Jul')
     elif smonth == '08':
-        smonth = smonth.replace('08','Aug')
+        smonth = smonth.replace('08', 'Aug')
     elif smonth == '09':
-        smonth = smonth.replace('09','Sep')
+        smonth = smonth.replace('09', 'Sep')
     elif smonth == '10':
-        smonth = smonth.replace('10','Oct')
+        smonth = smonth.replace('10', 'Oct')
     elif smonth == '11':
-        smonth = smonth.replace('11','Nov')
+        smonth = smonth.replace('11', 'Nov')
     elif smonth == '12':
-        smonth = smonth.replace('12','Dec')
+        smonth = smonth.replace('12', 'Dec')
 
     if fmonth == '01':
-        fmonth = fmonth.replace('01','Jan')
+        fmonth = fmonth.replace('01', 'Jan')
     elif fmonth == '02':
-        fmonth = fmonth.replace('02','Feb')
+        fmonth = fmonth.replace('02', 'Feb')
     elif fmonth == '03':
-        fmonth = fmonth.replace('03','Mar')
+        fmonth = fmonth.replace('03', 'Mar')
     elif fmonth == '04':
-        fmonth = fmonth.replace('04','Apr')
+        fmonth = fmonth.replace('04', 'Apr')
     elif fmonth == '05':
-        fmonth = fmonth.replace('05','May')
+        fmonth = fmonth.replace('05', 'May')
     elif fmonth == '06':
-        fmonth = fmonth.replace('06','Jun')
+        fmonth = fmonth.replace('06', 'Jun')
     elif fmonth == '07':
-        fmonth = fmonth.replace('07','Jul')
+        fmonth = fmonth.replace('07', 'Jul')
     elif fmonth == '08':
-        fmonth = fmonth.replace('08','Aug')
+        fmonth = fmonth.replace('08', 'Aug')
     elif fmonth == '09':
-        fmonth = fmonth.replace('09','Sep')
+        fmonth = fmonth.replace('09', 'Sep')
     elif fmonth == '10':
-        fmonth = fmonth.replace('10','Oct')
+        fmonth = fmonth.replace('10', 'Oct')
     elif fmonth == '11':
-        fmonth = fmonth.replace('11','Nov')
+        fmonth = fmonth.replace('11', 'Nov')
     elif fmonth == '12':
-        fmonth = fmonth.replace('12','Dec')
+        fmonth = fmonth.replace('12', 'Dec')
 
     if printaddress in fulladdress:
         if not printaddress.has_key('d'):
@@ -123,6 +122,7 @@ def format_element(bfo, style="", separator=''):
                 ##year doesnt match. dont test month
                 out.append(sday+' '+smonth+' '+syear+' - '+fday+' '+fmonth+' '+fyear)
     return separator.join(out)
+
 
 def escape_values(bfo):
     """
