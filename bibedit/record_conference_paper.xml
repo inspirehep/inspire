@@ -23,6 +23,10 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="a">VOLATILE:e.g 10.1103/example.doi.for.inspire</subfield>
     <subfield code="2">VOLATILE:DOI</subfield>
   </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:external record identifier</subfield>
+    <subfield code="9">VOLATILE:source</subfield>
+  </datafield>
   <datafield tag="041" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:language (if not English)</subfield>
   </datafield>
@@ -34,6 +38,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
     <subfield code="m">VOLATILE:email</subfield>
     <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
   </datafield>
   <datafield tag="242" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:Translated title (English)</subfield>
@@ -47,6 +54,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="300" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:999</subfield>
   </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:public note</subfield>
+  </datafield>
   <datafield tag="520" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:abstract</subfield>
   </datafield>
@@ -57,6 +67,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="542" ind1=" " ind2=" ">
     <subfield code="f">VOLATILE:copyright statement</subfield>
     <subfield code="u">VOLATILE:url of copyright statement</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
   </datafield>
   <datafield tag="650" ind1="1" ind2="7">
     <subfield code="a">VOLATILE:subject</subfield>
@@ -86,8 +99,8 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
     <subfield code="n">VOLATILE:issue</subfield>
     <subfield code="p">VOLATILE:journal</subfield>
-    <subfield code="q">VOLATILE:conf acronym</subfield>
-    <subfield code="t">VOLATILE:Presented at</subfield>
+    <subfield code="q">VOLATILE:conf acronym (if no CNUM exists)</subfield>
+    <subfield code="t">VOLATILE:name of conference (if no CNUM exists)</subfield>
     <subfield code="v">VOLATILE:volume</subfield>
     <subfield code="w">VOLATILE:CNUM</subfield>
     <subfield code="x">VOLATILE:freetext publication info</subfield>
