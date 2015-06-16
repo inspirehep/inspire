@@ -13,7 +13,7 @@ START::DEFP()---<record>
 411a::REP(EOL,)::IFDEFP(CONFSUBMIT_SNAM,,0)---<datafield tag="411" ind1=" " ind2=" "><subfield code="a"><:CONFSUBMIT_SNAM::CONFSUBMIT_SNAM:></subfield>
 411n::REP(EOL,)::IFDEFP(CONFSUBMIT_SNR,,0)---<subfield code="n"><:CONFSUBMIT_SNR::CONFSUBMIT_SNR:></subfield>
 411_end::REP(EOL,)::IFDEFP(CONFSUBMIT_SNAM,,0)---</datafield>
-65017a::REP(EOL,)::MINLW(82)---<datafield tag="650" ind1="1" ind2="7"><subfield code="a"><:CONFSUBMIT_FIEL*::CONFSUBMIT_FIEL:></subfield></datafield>
+65017a::REP(EOL,)::MINLW(82)---<datafield tag="650" ind1="1" ind2="7"><subfield code="a"><:CONFSUBMIT_FIEL*::CONFSUBMIT_FIEL:></subfield><subfield code="2">INSPIRE</subfield></datafield>
 6531a::DEFP()::SHAPE()::MINLW(121)---<datafield tag="653" ind1="1" ind2=" "><subfield code="9">submitter</subfield><subfield code="a"><:CONFSUBMIT_FREE*::CONFSUBMIT_FREE:></subfield></datafield>
 520a::REP(EOL,)::MINLW(82)---<datafield tag="520" ind1=" " ind2=" "><subfield code="a"><:CONFSUBMIT_ABST::CONFSUBMIT_ABST:></subfield></datafield>
 500a::REP(EOL,)::MINLW(82)---<datafield tag="500" ind1=" " ind2=" "><subfield code="a"><:CONFSUBMIT_ADD::CONFSUBMIT_ADD:></subfield></datafield>
