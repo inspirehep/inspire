@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2015 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -346,7 +346,7 @@ def download_feed(feed_url, batch_size, delete_zip, new_sources,
                 new_sources.append(outFilename)
             except InvenioFileDownloadError as err:
                 _errors_detected.append(err)
-                write_message("URL could not be opened: %s" + fileUrl)
+                write_message("URL could not be opened: %s" % fileUrl)
                 write_message(str(err))
                 write_message(traceback.format_exc()[:-1])
                 task_update_status("CERROR")
