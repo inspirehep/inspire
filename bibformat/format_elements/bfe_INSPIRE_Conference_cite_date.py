@@ -36,7 +36,12 @@ MONTH = {'01': 'January',
          '11': 'November',
          '12': 'December'}
 
-SHORTMONTH = {m[:3]: m for m in MONTH.values()}
+# FIXME: requires python 2.7
+# SHORTMONTH = {m[:3]: m for m in MONTH.values()}
+
+SHORTMONTH = {}
+for m in MONTH.values():
+    SHORTMONTH[m[:3]] = m
 
 monre = re.compile(r'\b(%s)\b' % '|'.join(SHORTMONTH.keys()))
 
