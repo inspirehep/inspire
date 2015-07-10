@@ -1,0 +1,5 @@
+<name>INSPIRE_BibTeX_abstract</name>
+<description>Creates BibTeX format of a record including its abstract</description>
+<pre>
+<BFE_INSPIRE_BIBTEX width="80" show_abstract="True" />
+</pre>

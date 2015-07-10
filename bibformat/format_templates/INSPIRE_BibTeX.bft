@@ -1,6 +1,5 @@
-<name>BibTeX</name>
-<description>Creates BibTeX format of a record.</description>
-
+<name>INSPIRE_BibTeX</name>
+<description>Creates BibTeX format of a record without its abstract</description>
 <pre>
-<BFE_INSPIRE_BIBTEX width="80" />
+<BFE_INSPIRE_BIBTEX width="80" show_abstract="False" />
 </pre>
