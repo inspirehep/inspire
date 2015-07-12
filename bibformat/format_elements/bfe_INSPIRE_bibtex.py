@@ -169,12 +169,16 @@ def format_element(bfo, width="50", show_abstract=False):
         if not bookid:
             rn = bfo.field("773__r")
             if rn:
-                bookid = search_pattern(p='reportnumber:' + rn)[0]
+                bookids = search_pattern(p='reportnumber:' + rn)
+                if bookids:
+                    bookids = bookid[0]
         # 3) isbn:[773__z]  (245 $$a: $$b + editors)
         if not bookid:
             isbn = bfo.field("773__z")
             if isbn:
-                bookid = search_pattern(p='isbn:' + rn)[0]
+                bookids = search_pattern(p='isbn:' + rn)
+                if bookids:
+                    bookid = bookids[0]
         if bookid:
             if not isinstance(bookid, int):
                 bookid = int(bookid)
