@@ -45,7 +45,7 @@ def format_element(bfo, width="50", show_abstract=False):
     # These are typically added programmatically, so stupid string matching is
     # ok. If this assumption changes, turn this into a list of regexps to apply
     # for a match test.
-    note_values_skip = ["* Temporary entry *", "* Brief entry *"]
+    # note_values_skip = ["* Temporary entry *", "* Brief entry *"]
 
     width = int(width)
     if width < 30:
@@ -88,12 +88,23 @@ def format_element(bfo, width="50", show_abstract=False):
     elif 'arxiv' in collections:
         entry_type = 'article'
 
+    # exclude certain collections:
+    if set(['hepnames', 'journals', 'experiment',
+            'jobs', 'conferences', 'institution']) & set(collections):
+        nullentry = '@misc{'
+        nullentry += texified('key', recID)
+        nullentry += texified('note',
+                              'not a cited reference in the BibTeX sense')
+        nullentry += texified('howpublished', bfo.field('909COo'))
+        nullentry = nullentry.rstrip(',') + '\n}'
+        return nullentry
+
     # Irrespective of type, check for complete journal info -> @article
     origentry = entry_type
     for j in bfo.fields("773__"):
         if j.get('p', '') and j.get('v', '') \
            and j.get('c', '') and j.get('y', ''):
-                entry_type = 'article'
+            entry_type = 'article'
 
     out += entry_type + "{"
 
@@ -162,19 +173,23 @@ def format_element(bfo, width="50", show_abstract=False):
             bt = re.sub(r'(?<!\\)([#_&%$])', r'\\\1', booktitle)
             out += texified("booktitle", '{' + bt + '}')
     # bookchapter, retrieve book's title and editor info
-    if entry_type in ('incollection'):
+    if entry_type in ('incollection',):
         # 1) recid:[773__0]  (245 $$a: $$b + editors)
         bookid = bfo.field("773__0")
         # 2) reportnumber:[773__r]  (245 $$a: $$b + editors)
         if not bookid:
             rn = bfo.field("773__r")
             if rn:
-                bookid = search_pattern(p='reportnumber:' + rn)[0]
+                bookids = search_pattern(p='reportnumber:' + rn)
+                if bookids:
+                    bookid = bookids[0]
         # 3) isbn:[773__z]  (245 $$a: $$b + editors)
         if not bookid:
             isbn = bfo.field("773__z")
             if isbn:
-                bookid = search_pattern(p='isbn:' + rn)[0]
+                bookids = search_pattern(p='isbn:' + isbn)
+                if bookids:
+                    bookid = bookids[0]
         if bookid:
             if not isinstance(bookid, int):
                 bookid = int(bookid)
@@ -238,8 +253,7 @@ def format_element(bfo, width="50", show_abstract=False):
     # Collaboration
     out += texified("collaboration", ", ".join(
         set(re.sub(r'(.+)?\s+[Cc]ollaboration', r'\1', c)
-            for c in bfo.fields("710__g")))
-    )
+            for c in bfo.fields("710__g"))))
 
     yearset = False
     # School
@@ -452,14 +466,14 @@ def format_element(bfo, width="50", show_abstract=False):
                         bfo,
                         separator=', ',
                         limit='1000',
-                        skip=eprints[0])
-                    )
+                        skip=eprints[0]))
+
 #    if entry_type == "inproceedings" and :
 #        pubnote = bfo.field("500__a")
 #        out += texified("note", pubnote)
 
     # ISBN
-    if entry_type in ['book', 'proceeedings']:
+    if entry_type in ['book', 'proceedings']:
         isbn = bfo.fields("020__a")
         # Inspire frequently has multiple ISBN for different types, e.g.
         # 001242544 020__ $$a9781927763124$$bebook
@@ -487,12 +501,13 @@ def format_element(bfo, width="50", show_abstract=False):
         abstract = bfo.field("520__a")
         if len(abstract) > 1000:
             abstract = abstract[:1000] + '...'
-        out += texified("abstract", '{' + abstract + '}')
+        if abstract:
+            out += texified("abstract", '{' + abstract + '}')
 
     # remove trailing comma and close @entry
     out = out.rstrip(',') + '\n}'
 
-    highbitwarning = '''
+    highbitwarning = r'''
 %%% contains utf-8, see: http://inspirehep.net/info/faq/general#utf8
 %%% add \usepackage[utf8]{inputenc} to your latex preamble
 
