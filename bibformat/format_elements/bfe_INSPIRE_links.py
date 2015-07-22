@@ -60,6 +60,10 @@ def format_element(bfo, default='', separator='; ', style='', \
         if ident.get('9', '') == 'CDS' and ident.get('a', None) is not None:
             links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
 
+        if ident.get('9', '') == 'HAL' and ident.get('a', None) is not None:
+            links.append('<a href="https://hal.archives-ouvertes.fr/' + ident['a'] + '"> HAL Archives Ouvertes </a>')
+
+
     # ADS links
     identifiers = bfo.fields('037__')
     current_links = bfo.field('8564_y')
