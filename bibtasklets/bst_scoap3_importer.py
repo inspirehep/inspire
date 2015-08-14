@@ -69,7 +69,7 @@ def bst_scoap3_importer():
         if not line.strip():
             continue
         task_sleep_now_if_required(can_stop_too=True)
-        recid, arxiv_id, cr_date, checksum, link, type, doi = [x.strip() for x in line.split(',')]
+        recid, arxiv_id, cr_date, checksum, link, file_format, doi = [x.strip() for x in line.split(',')]
         write_message(line.strip())
         if checksum == "None":
             write_message("... no PDF. Skipping")
@@ -88,20 +88,19 @@ def bst_scoap3_importer():
         rec = {}
         inspire_record = inspire_record[0]
         record = BibRecDocs(inspire_record)
-        for doc in record.list_latest_files():
-            if doc.format in ('.pdf', '.pdf;pdfa'):
-                if doc.bibdoc.doctype == 'SCOAP3':
-                    if doc.checksum == checksum:
-                        write_message("... OK: file alredy attached to INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
-                    else:
-                        write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
-                        action = "UPDATE"
-                    break
+        for doc in record.list_latest_files('SCOAP3'):
+            if doc.format == file_format:
+                if doc.checksum == checksum:
+                    write_message("... OK: file alredy attached to INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
+                else:
+                    write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
+                    action = "UPDATE"
+                break
         else:
             write_message("... OK: need to add new file to INSPIRE record %s" % inspire_record)
             action = "APPEND"
         if action:
-            if type == '.pdf;pdfa':
+            if file_format == '.pdf;pdfa':
                 record_add_field(rec, 'FFT', subfields=[('a', link), ('n', 'scoap3-fulltext'), ('f', '.pdf;pdfa'), ('t', 'SCOAP3'), ('d', 'Article from SCOAP3')])
             else:
                 record_add_field(rec, 'FFT', subfields=[('a', link), ('n', 'scoap3-fulltext'), ('t', 'SCOAP3'), ('d', 'Article from SCOAP3')])
