@@ -186,10 +186,11 @@ def format_element(
                     # avoid trailing comma for single name author
                     author['display'] = author['display'].rstrip(', ')
 
-                    # multi-letter initial (in particular Russian Yu.)
+                    # multi-letter initial (in particular Russian Yu., Ya. ...)
+                    # http://usefulenglish.ru/vocabulary/russian-names-in-english-en
                     author['display'] = re.sub(
-                        r'\bYu\.',
-                        r'{\\relax Yu}.', author['display'])
+                        r'\bY([aeou])\.',
+                        r'{\\relax Y\1}.', author['display'])
 
             if print_links.lower() == "yes":
                 # if there is an ID, search using that.

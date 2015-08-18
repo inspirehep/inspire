@@ -157,7 +157,7 @@ def format_element(bfo, width="50", show_abstract=False):
     title = bfe_title.format_element(bfo=bfo, brief="yes")
     if title:
         # don't escape "$", assume it's a math delimiter
-        title = re.sub(r'(?<!\\)([#_&%])', r'\\\1', title)
+        title = re.sub(r'(?<!\\)([#&%])', r'\\\1', title)
         title = '{' + title + '}'
         out += texified("title", title)
 
