@@ -61,17 +61,13 @@ def unzip(zipped_file, base_directory=None,
     if not base_directory:
         from invenio.config import CFG_TMPSHAREDDIR
         base_directory = os.path.join(CFG_TMPSHAREDDIR, 'apsharvest')
+    if not os.path.isdir(base_directory):
+        os.makedirs(base_directory)
+
     # We create a temporary directory to extract our stuff in
-    try:
-        output_directory = mkdtemp(suffix=suffix,
-                                   prefix=prefix,
-                                   dir=base_directory)
-    except Exception, e:
-        try:
-            os.removedirs(output_directory)
-        except TypeError:
-            pass
-        raise e
+    output_directory = mkdtemp(suffix=suffix,
+                               prefix=prefix,
+                               dir=base_directory)
     return _do_unzip(zipped_file, output_directory)
 
 
