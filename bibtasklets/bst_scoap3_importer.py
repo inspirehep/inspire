@@ -126,6 +126,6 @@ def bst_scoap3_importer():
         remove(name_new)
     if line_count_update:
         id = task_low_level_submission("bibupload", "admin", "-N", "SCOAP3-import", "-c", name_update)
-        write_message("Scheduled bibupload --correct %s with ID #%s" % (name_new, id))
+        write_message("Scheduled bibupload --correct %s with ID #%s" % (name_update, id))
     else:
         remove(name_update)
