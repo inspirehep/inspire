@@ -1,22 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-##
-## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
-##
-## INSPIRE is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License as
-## published by the Free Software Foundation; either version 2 of the
-## License, or (at your option) any later version.
-##
-## INSPIRE is distributed in the hope that it will be useful, but
-## WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# This file is part of INSPIRE.
+# Copyright (C) 2013, 2014, 2015 CERN.
+#
+# INSPIRE is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# INSPIRE is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
 """
     name:           bibfilter_oaicds2inspire
     decription:     Program to filter and analyse MARCXML records
@@ -25,6 +26,7 @@
 
                     Based on bibfilter_oaiarXiv2inspire
 """
+
 from tempfile import mkstemp
 
 import os
@@ -84,8 +86,8 @@ def main(args):
     usage:
                     bibfilter_oaicds2inspire [-nh] MARCXML-FILE
     options:
-                -n  forces the script not to check if the record exists in the database
-                    (useful when re-harvesting existing record)
+                -n  forces the script not to check if the record exists in the
+                    database (useful when re-harvesting existing record)
     """
     try:
         opts, args = getopt.getopt(sys.argv[1:], "nh", [])
@@ -136,7 +138,7 @@ def main(args):
         try:
             recid = record['001'][0][3]
             res = attempt_record_match(recid)
-        except (KeyError, IndexError) as err:
+        except (KeyError, IndexError):
             _print('Error: Cannot process record without 001:recid')
             error_records.append(record)
             continue
@@ -146,7 +148,7 @@ def main(args):
             # No record found
             # Step 2: Appply filter to transform CDS MARC to Inspire MARC
             insert_records.append(apply_filter(record))
-            #insert_records.append(record)
+            # insert_records.append(record)
         else:
             _print("Record %s found: %r" % (recid, res))
 
@@ -161,7 +163,6 @@ def main(args):
     # Output results. Create new files, if necessary.
     if input_filename[-4:].lower() == '.xml':
         input_filename = input_filename[:-4]
-
 
     write_record_to_file("%s.insert.xml" % (input_filename,), insert_records)
     _print("%s.insert.xml" % (input_filename,))
@@ -545,7 +546,7 @@ def apply_filter(rec):
                     sf = [('9', 'CERN'), ('b', val)]
                     record_add_field(rec, '595', subfields=sf)
         for key, val in field[0]:
-            if key in ['a', '9'] and not val.startswith('SIS-'):
+            if key in ['a'] and not val.startswith('SIS-'):
                 record_add_field(rec, '037', subfields=[('a', val)])
     record_delete_fields(rec, "088")
 
