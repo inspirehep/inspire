@@ -29,6 +29,6 @@ def index(req, id=0):
     rows.
     """
     req.content_type = 'application/json'
-    return dumps(run_sql("""SELECT id, citer, citee, type,
+    return dumps(run_sql("""SELECT id, citee, citer, type,
         DATE_FORMAT(action_date, '%%Y-%%m-%%d %%H:%%i:%%s')
         FROM rnkCITATIONLOG WHERE id>%s ORDER BY id LIMIT 10000""", (id, )))
