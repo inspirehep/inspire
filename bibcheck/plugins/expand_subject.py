@@ -20,8 +20,9 @@
 Expand single letter subjects - get mapping from KB
 """
 from invenio.bibknowledge import get_kb_mappings
+from invenio.config import CFG_BIBEDIT_KB_SUBJECTS
 subjects = {}
-for item in get_kb_mappings(kb_name='Subjects'):
+for item in get_kb_mappings(kb_name=CFG_BIBEDIT_KB_SUBJECTS):
     subjects[item['key']] = item['value']
 
 def check_record(record):
