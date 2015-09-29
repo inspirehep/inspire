@@ -60,7 +60,10 @@ def format_element(bfo, width="", caption="yes", max_plots="3"):
 
     for doc in bibarchive.list_bibdocs(doctype="Plot"):
         for _file in doc.list_latest_files():
-            if _file.subformat == "context":
+            if _file.subformat == "context" or _file.format == '.png.context':
+                # FIXME: for some weird reasons sometimes the file is attacched
+                # as .png;context, sometimes as .png.context. This seems to
+                # a problem in BibUpload.
                 # Ignore context files
                 continue
 
