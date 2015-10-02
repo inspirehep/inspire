@@ -185,18 +185,18 @@ function openSrchWindow(winputid) {
 <form name="referenceinp" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
 
 
-<input type=hidden value="1" id="fieldcnt" name="storecnt">
-<INPUT type=hidden value=spires@slac.stanford.edu   name=to id=tofield>
+<input type="hidden" value="1" id="fieldcnt" name="storecnt">
+<INPUT type="hidden" value="HEP_ref_user@inspirehep.net" name="to" id="tofield">
 <!--<input type="hidden" name="debug" value="1">-->
-<INPUT type=hidden value=spires@slac.stanford.edu   name=form_contact id=fcfield>
-<INPUT type=hidden value="CITATION updates form INSPIRE" name=subject>
-<INPUT type=hidden name=response_msg value="thank you for using this form, you should soon see a response email">
-<INPUT type=hidden name=email_msg_file value="/spires/hepnames/inspcite_msg.file">
-<input type="hidden" name="recid" id="recid" value= "<BFE_RECORD_ID />">
-<input type=hidden name=dateupd value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">'>
-<input type=hidden name=targfield id=targfield value="">
-<input type=hidden name=targfieldtwo id=targfieldtwo value="">
-<input type=hidden name=targfldthree id=targfldthree value="">
+<INPUT type="hidden" value="help@inspirehep.net" name="form_contact" id="fcfield">
+<INPUT type="hidden" value="CITATION updates form INSPIRE" name="subject">
+<INPUT type="hidden" name="response_msg" value="thank you for using this form, you should soon see a response email">
+<INPUT type="hidden" name="email_msg_file" value="/spires/hepnames/inspcite_msg.file">
+<input type="hidden" name="recid" id="recid" value="<BFE_RECORD_ID />">
+<input type="hidden" name="dateupd" value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">'>
+<input type="hidden" name="targfield" id="targfield" value="">
+<input type="hidden" name="targfieldtwo" id="targfieldtwo" value="">
+<input type="hidden" name="targfldthree" id="targfldthree" value="">
 
 <div id="detailedrecordshortreminder">
   <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
