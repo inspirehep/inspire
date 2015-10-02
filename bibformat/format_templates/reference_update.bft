@@ -44,8 +44,8 @@ function make_table_row(id_number) {
 
     document.getElementById('fieldcnt').value=cnt;
     retval = '<tr id="tr'+id_number+'"><td></td><td><input id="button_'+id_number+'" type="image" onclick="insertRowAfter('+id_number+'); return false;" value = "+" src="/img/add.png"> </td>';
-    retval += '<td><input type="text" style="background-color: #FDFDF0;" class="cite_search_box" name="cite" size="35" id="' + inpid + '" ></td><td align="left"><a href="#" onclick="openSrchWindow('+ sq + inpid + sq + '); return false;" ><img src="/img/search.png"  border=0 > Search for Citation</a></td></tr>';
-    retval += '<input type="hidden" name="subf" id="' + sbid + '"> <input type="hidden" name="jmarc" id="' + mcid + '">'
+    retval += '<td><input type="text" style="background-color: #FDFDF0;" class="cite_search_box" name="cite" size="35" id="' + inpid + '" /></td><td align="left"><a href="#" onclick="openSrchWindow('+ sq + inpid + sq + '); return false;" ><img src="/img/search.png"  border="0" /> Search for Citation</a></td></tr>';
+    retval += '<input type="hidden" name="subf" id="' + sbid + '"> <input type="hidden" name="jmarc" id="' + mcid + '" />'
     return retval
 }
 
@@ -171,7 +171,7 @@ function openSrchWindow(winputid) {
      document.getElementById('targfield').value = winputid;
      document.getElementById('targfieldtwo').value = subfretid;
      document.getElementById('targfldthree').value = pubnretid;
-     var urlvar = '/search?ln=en&p=' + searchvar + '&action_search=Search&c=HEP&of=hca';
+     var urlvar = '/search?ln=en&amp;p=' + searchvar + '&amp;action_search=Search&amp;c=HEP&amp;of=hca';
 
      citefind = window.open(urlvar,"citefind","left=450px,top=20,width=600,height=700,toolbar=1,resizeable=1,scrollbars=1");
      citefind.focus();
@@ -182,28 +182,28 @@ function openSrchWindow(winputid) {
 </head>
 <h1>Detailed reference correction</h1>
 
-<form name="referenceinp" method="post" onSubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
+<form name="referenceinp" method="post" onsubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
 
 
-<input type="hidden" value="1" id="fieldcnt" name="storecnt">
-<INPUT type="hidden" value="HEP_ref_user@inspirehep.net" name="to" id="tofield">
+<input type="hidden" value="1" id="fieldcnt" name="storecnt" />
+<input type="hidden" value="HEP_ref_user@inspirehep.net" name="to" id="tofield" />
 <!--<input type="hidden" name="debug" value="1">-->
-<INPUT type="hidden" value="help@inspirehep.net" name="form_contact" id="fcfield">
-<INPUT type="hidden" value="CITATION updates form INSPIRE" name="subject">
-<INPUT type="hidden" name="response_msg" value="thank you for using this form, you should soon see a response email">
-<INPUT type="hidden" name="email_msg_file" value="/spires/hepnames/inspcite_msg.file">
-<input type="hidden" name="recid" id="recid" value="<BFE_RECORD_ID />">
-<input type="hidden" name="dateupd" value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">'>
-<input type="hidden" name="targfield" id="targfield" value="">
-<input type="hidden" name="targfieldtwo" id="targfieldtwo" value="">
-<input type="hidden" name="targfldthree" id="targfldthree" value="">
+<input type="hidden" value="help@inspirehep.net" name="form_contact" id="fcfield" />
+<input type="hidden" value="CITATION updates form INSPIRE" name="subject" />
+<input type="hidden" name="response_msg" value="thank you for using this form, you should soon see a response email" />
+<input type="hidden" name="email_msg_file" value="/spires/hepnames/inspcite_msg.file" />
+<input type="hidden" name="recid" id="recid" value="<BFE_RECORD_ID />" />
+<input type="hidden" name="dateupd" value='<BFE_FIELD prefix="- as of date-upd: " tag="961c">' />
+<input type="hidden" name="targfield" id="targfield" value="" />
+<input type="hidden" name="targfieldtwo" id="targfieldtwo" value="" />
+<input type="hidden" name="targfldthree" id="targfldthree" value="" />
 
 <div id="detailedrecordshortreminder">
   <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
    <BFE_INSPIRE_TITLE_BRIEF prefix="" suffix="" default="" escape="" highlight="no" brief="yes" />
   </a>
   <br />
-  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br>
+  <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br />
   <BFE_REPORT_NUMBERS prefix=" " suffix=", " separator=", " default="" escape="" />
   <BFE_JOURNAL_PUBLICATION_TITLE prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
   <BFE_JOURNAL_PUBLICATION_VOLUME prefix="" suffix="," separator=" " nbMax="" default="" escape="" />
@@ -211,34 +211,34 @@ function openSrchWindow(winputid) {
   <BFE_JOURNAL_PUBLICATION_YEAR prefix="" suffix="; " separator=" " nbMax="" default="" escape="" />
   <BFE_JOURNAL_PUBLICATION_DOI prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
   <BFE_FIELD prefix="<small>Date-Upd:" tag="961c" suffix="</small>"/><br />
-   <BFE_INSPIRE_ARXIV prefix="<a href=http://www.arxiv.org/pdf/" suffix=" target=blank />PDF</a> from arXiv " default="" escape=""
-      category="yes" links="no" mirrors="no"/> &nbsp; 
+   <BFE_INSPIRE_ARXIV prefix='<a href="http://arXiv.org/pdf/' suffix='" target="blank">PDF</a> from arXiv ' default="" escape=""
+      category="no" links="no" mirrors="no"/> &nbsp;
       <BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" target="blank" show_icons="no" default="" separator="  "/>
 
 </div>
 <div style="clear:both;height:1px">&nbsp;</div>
 <br />
 <table>
-        <TR><TD class=left><span class="form_label">Your Email</span></TD><TD class=right><INPUT size=35 name="username" id="username"><small><strong>&nbsp;Required</strong></small></TD></TR>
-        <TR><TD class=left><span class="form_label">Your Name</span></TD><TD class=right><INPUT size=35 name=realname id=realname><span class="form_label_optional">(Optional)</span></TD></TR>
-        <tr><TD class=left><span class="form_label">Comments</span></TD><TD class=right><textarea name="usercomment" id=usercomment rows="4" cols="35" wrap="virtual"></textarea><span class="form_label_optional">(Optional)</span></TD></TR>
+        <tr><td class="left"><span class="form_label">Your Email</span></td><td class="right"><input size="35" name="username" id="username" /><small><strong>&nbsp;Required</strong></small></td></tr>
+        <tr><td class="left"><span class="form_label">Your Name</span></td><td class="right"><input size="35" name="realname" id="realname" /><span class="form_label_optional">(Optional)</span></td></tr>
+        <tr><td class="left"><span class="form_label">Comments</span></td><td class="right"><textarea name="usercomment" id="usercomment" rows="4" cols="35" wrap="virtual"></textarea><span class="form_label_optional">(Optional)</span></td></tr>
 </table>
 
 <br />
-<a href=/help/reference_corrections > <b> HELP</b> with this form</a>&nbsp; &nbsp;
+<a href="/help/reference_corrections" > <b> HELP</b> with this form</a>&nbsp; &nbsp;
 <br />
 <br />
 <input type="submit" name="submit" value="Send" class="formbutton" />
-<br>
+<br />
 
-<small> Click on <img src="/img/add.png" alt="+"> to insert new references below existing reference</small>
-<br>
+<small> Click on <img src="/img/add.png" alt="+" /> to insert new references below existing reference</small>
+<br />
 
 <table id="t0"><tr id="tr0"><td></td><td><input type="image" id="t0" onclick="insertRowAfter(0); return false;" src="/img/add.png" alt="Search for Reference" ></td>
 <input type="hidden" name="irn" id="irn" value= "<BFE_SPIRES_IRN />">
-<td><input type="text" class="cite_search_box" name="cite" id="x0" size="35" value=""></td><td align="left">
+<td><input type="text" class="cite_search_box" name="cite" id="x0" size="35" value="" /></td><td align="left">
     <a href="#" onclick="openSrchWindow('x0'); return false;" ><img src="/img/search.png"  border=0 alt="+"> Search for Citation</a>
-<input type="hidden" name="subf" id="sx0"> <input type="hidden" name="jmarc" id="mx0">
+<input type="hidden" name="subf" id="sx0"> <input type="hidden" name="jmarc" id="mx0" />
 </td></tr></table>
 
 <BFE_REFERENCEINP prefix="" suffix="" default="" escape="" reference_suffix="" reference_prefix=""/>
