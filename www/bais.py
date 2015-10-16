@@ -56,11 +56,18 @@ def index(req, p=""):
         record = get_record(recid)
         author_name = get_author_name(record)
         bai = get_bai(record)
-        body.append('<li><a href="%(siteurl)s/record/%(recid)s">%(author_name)s</a> -> <a href="%(siteurl)s/author/profile/%(bai)s">%(bai)s</a></li>' % {
-            'siteurl': escape(CFG_SITE_URL, True),
-            'recid': recid,
-            'author_name': escape(author_name, True),
-            'bai': escape(bai, True)})
+        if bai:
+            body.append('<li><a href="%(siteurl)s/record/%(recid)s">%(author_name)s</a> -> <a href="%(siteurl)s/author/profile/%(bai)s">%(bai)s</a></li>' % {
+                'siteurl': escape(CFG_SITE_URL, True),
+                'recid': recid,
+                'author_name': escape(author_name, True),
+                'bai': escape(bai, True)})
+        else:
+            body.append('<li><strong><a href="%(siteurl)s/record/%(recid)s">%(author_name)s</a></strong> ->></li>' % {
+                'siteurl': escape(CFG_SITE_URL, True),
+                'recid': recid,
+                'author_name': escape(author_name, True)})
+
     body.append("</ol>")
     body = '\n'.join(body)
 
