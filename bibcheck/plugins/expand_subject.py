@@ -34,4 +34,4 @@ def check_record(record):
             if subjects.has_key(value):
                 record.amend_field(position[:3], subjects[value])
             else:
-                record.set_amended('single letter subject without mapping: %s' % value)
+                record.warn('single letter subject without mapping: %s' % value)
