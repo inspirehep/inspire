@@ -23,6 +23,8 @@ __revision__ = \
 
 import cgi
 import re
+from urlparse import urlparse, parse_qs
+from json import dumps as js_escape
 
 from invenio.config import \
      CFG_SITE_LANG, \
@@ -45,6 +47,7 @@ from invenio.dateutils import convert_datestruct_to_dategui, \
      convert_datecvs_to_datestruct
 from invenio.webstyle_templates import Template as DefaultTemplate
 from invenio.urlutils import auto_version_url
+from invenio.webuser import isUserAdmin, collect_user_info
 
 class Template(DefaultTemplate):
     """INSPIRE style templates."""
@@ -560,48 +563,51 @@ $(function () {
         record_collection = ""
         page_type = ""
 
-        parsed_uri = urlparse(req.uri)
+        parsed_uri = urlparse(req.unparsed_uri)
 
-        record_page_match = re.match("^/record/(?P<recid>[0-9]+)(/(?P<page_type>.*)?)?$", parsed_uri.path)
+        # HACK: I know it's horrible code. :-(
+        record_page_match = re.match("^/record/(?P<recid>[0-9]+)(/(?P<page_type>.+)?)?$", parsed_uri.path)
         if record_page_match:
             record_collection = guess_primary_collection_of_a_record(record_page_match.group('recid'))
-            page_type = record_page_match.group('page_type'):
+            page_type = record_page_match.group('page_type') or 'detailed'
+        if re.match("^/search/?$", parsed_uri.path):
+            cc = parse_qs(parsed_uri.query).get('cc', [CFG_SITE_NAME])
+            record_collection = cc.pop()
         collection_page_match = re.match("^/$|^/collection/(?P<collection>.+)/?$", parsed_uri.path)
         if collection_page_match:
             record_collection = collection_page_match.groupdict().get('collection', CFG_SITE_NAME)
-
-
-          custom_variables = """
+        if record_collection:
+            custom_variables = """\
 _paq.push(['setCustomVariable',
           1, // Index, the number from 1 to 5 where this custom variable name is stored
           "Collection", // Name, the name of the variable
-          "%(collection_name)s", // Value
+          %(collection_name)s, // Value
           "page" // Scope of the custom variable
           ]);
           """ % {
-            'collection_name': record_collection
-          }
+                'collection_name': js_escape(record_collection)
+            }
 
-          if record_page_match.group('page_type'):
-            custom_variables += """
+        if page_type:
+            custom_variables += """\
 _paq.push(['setCustomVariable',
           2,
           "Type",
-          "%(page_type)s",
+          %(page_type)s,
           "page"
           ]);
 _paq.push(['setCustomVariable',
           3,
           "CollectionType",
-          "%(page_collection_type)s",
+          %(page_collection_type)s,
           "page"
           ]);
           """ % {
-            'page_type': record_page_match.group('page_type'),
-            'page_collection_type': record_collection + record_page_match.group('page_type')
-          }
+                'page_type': js_escape(page_type),
+                'page_collection_type': js_escape(record_collection + page_type)
+            }
 
-        out = """
+        out = """\
 <div class="pagefooter">
 %(pagefooteradd)s
 <!-- replaced page footer -->
@@ -622,6 +628,32 @@ _paq.push(['setCustomVariable',
  </div>
 <!-- replaced page footer -->
 </div>
+""" % {
+          'siteurl' : CFG_BASE_URL,
+          'sitesecureurl' : CFG_SITE_SECURE_URL,
+          'ln' : ln,
+          'langlink': '?ln=' + ln,
+
+          'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
+          'sitesupportemail' : 'feedback@inspirehep.net',
+
+          'msg_search' : _("Search"),
+          'msg_help' : _("Help"),
+
+          'msg_terms': _("Terms of use"),
+          'msg_privacy': _("Privacy policy"),
+
+          'msg_poweredby' : _("Powered by"),
+          'msg_maintainedby' : _("Problems/Questions to"),
+
+          'msg_lastupdated' : msg_lastupdated,
+          'languagebox' : self.tmpl_language_selection_box(req, ln),
+          'version' : self.trim_version(CFG_VERSION),
+
+          'pagefooteradd' : pagefooteradd,
+          }
+        if not isUserAdmin(collect_user_info(req)):
+            out += """\
 <!-- Piwik -->
 <script type="text/javascript">
   try {
@@ -646,33 +678,12 @@ _paq.push(['setCustomVariable',
 </script>
 <noscript><p><img src="//piwik.inspirehep.net/piwik.php?idsite=8&amp;rec=1&amp;bots=1" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
+""" % {'custom_variables': custom_variables}
+
+        out += """\
 </body>
 </html>
-        """ % {
-          'siteurl' : CFG_BASE_URL,
-          'sitesecureurl' : CFG_SITE_SECURE_URL,
-          'ln' : ln,
-          'langlink': '?ln=' + ln,
-
-          'sitename' : CFG_SITE_NAME_INTL.get(ln, CFG_SITE_NAME),
-          'sitesupportemail' : 'feedback@inspirehep.net',
-
-          'msg_search' : _("Search"),
-          'msg_help' : _("Help"),
-
-          'msg_terms': _("Terms of use"),
-          'msg_privacy': _("Privacy policy"),
-
-          'msg_poweredby' : _("Powered by"),
-          'msg_maintainedby' : _("Problems/Questions to"),
-
-          'msg_lastupdated' : msg_lastupdated,
-          'languagebox' : self.tmpl_language_selection_box(req, ln),
-          'version' : self.trim_version(CFG_VERSION),
-
-          'pagefooteradd' : pagefooteradd,
-          'custom_variables': custom_variables
-          }
+"""
         return out
 
     def trim_version(self, version = CFG_VERSION):
