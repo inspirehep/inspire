@@ -23,7 +23,7 @@ split the field, copying the other subfields
 @param filter: optional filter
 
 Example:
-check_record(record, ['65017a', ], filter_sf=('2', 'INSPIRE'))
+check_record(record, ['65017a', ], filter_sf=['2', 'INSPIRE'])
 65017 $$2arXiv$$agr-qc
 65017 $$2INSPIRE$$aGravitation and Cosmology$$aAstrophysics
 65017 $$2arXiv$$ahep-th
@@ -60,7 +60,7 @@ def fields_to_split(record, tag, ind1, ind2, sfcode, filter_sf):
                 to_split[field[4]] = (parts, rest_before, rest_after)
     return to_split
 
-def check_record(record, fields, filter_sf=(None, None)):
+def check_record(record, fields, filter_sf=[None, None]):
     """ Split fields """
     from invenio.bibrecord import record_delete_field
     from invenio.bibrecord import record_add_field
@@ -73,7 +73,7 @@ def check_record(record, fields, filter_sf=(None, None)):
         ind1 = marc[3].replace('_', ' ')
         ind2 = marc[4].replace('_', ' ')
         sfcode = marc[5]
-        to_split = fields_to_split(record, tag, ind1, ind2, sfcode, filter_sf)
+        to_split = fields_to_split(record, tag, ind1, ind2, sfcode, tuple(filter_sf))
 
         if not to_split:
             continue
