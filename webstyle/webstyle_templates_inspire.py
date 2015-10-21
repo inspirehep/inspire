@@ -555,13 +555,22 @@ $(function () {
             msg_lastupdated = ""
 
         # Prepare Piwik custom variables if we are in a detailed record page
-        record_page_re = re.compile("^/record/(?P<recid>[0-9]+)/?(?P<page_type>.*)")
 
         custom_variables = ""
+        record_collection = ""
+        page_type = ""
 
-        record_page_match = record_page_re.match(req.uri)
+        parsed_uri = urlparse(req.uri)
+
+        record_page_match = re.match("^/record/(?P<recid>[0-9]+)(/(?P<page_type>.*)?)?$", parsed_uri.path)
         if record_page_match:
-          record_collection = guess_primary_collection_of_a_record(record_page_match.group('recid'))
+            record_collection = guess_primary_collection_of_a_record(record_page_match.group('recid'))
+            page_type = record_page_match.group('page_type'):
+        collection_page_match = re.match("^/$|^/collection/(?P<collection>.+)/?$", parsed_uri.path)
+        if collection_page_match:
+            record_collection = collection_page_match.groupdict().get('collection', CFG_SITE_NAME)
+
+
           custom_variables = """
 _paq.push(['setCustomVariable',
           1, // Index, the number from 1 to 5 where this custom variable name is stored
