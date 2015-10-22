@@ -292,11 +292,11 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 
         <!-- Preparing data : is this a thesis ? (we can find this in the abstract)-->
         <xsl:variable name="commentslow">
-          <xsl:value-of select="translate(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments,$ucletters,$lcletters)"/>
+          <xsl:text> </xsl:text><xsl:value-of select="translate(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments,$ucletters,$lcletters)"/><xsl:text> </xsl:text>
         </xsl:variable>
 
         <xsl:variable name="lkrmatch">
-          <xsl:value-of select="normalize-space(translate(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments, $ucletters, $lcletters))"/>
+          <xsl:text> </xsl:text><xsl:value-of select="normalize-space(translate(./OAI-PMH:metadata/arXiv:arXiv/arXiv:comments, $ucletters, $lcletters))"/><xsl:text> </xsl:text>
         </xsl:variable>
 
         <xsl:variable name="detectPR">accepted@appear@press@publ@review@submitted></xsl:variable>
