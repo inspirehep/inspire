@@ -1,0 +1,13 @@
+<!-- BibEdit-Template-Name: data set -->
+<!-- BibEdit-Template-Description: data set in Inspire -->
+<record>
+  <datafield tag="024" ind1="7" ind2=" ">
+    <subfield code="2">VOLATILE:DOI</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="t">VOLATILE:DATASET</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="9">VOLATILE:author</subfield>
+  </datafield>
+</record>
