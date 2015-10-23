@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
+## Copyright (C) 2013, 2014, 2015 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -17,37 +17,40 @@
 ## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
+import datetime
 import os
 import re
-import datetime
 import time
-import pytz
 from cgi import escape
+
+import pytz
+from invenio.bibtask import write_message
+from invenio.config import CFG_SITE_URL
 from invenio.search_engine import perform_request_search
 from invenio.search_engine_utils import get_fieldvalues
-from invenio.bibtask import write_message
 
 chicago_timezone = pytz.timezone('America/Chicago')
 
-SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal', 'workbook', 'bachelors', 'masters', 'design', 'loi', 'pbar', 'nal', 'annual', 'upc', 'ap', 'en', 'exp', 'lu', 'habil', 'vlhcpub']
+SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal',
+           'workbook', 'bachelors', 'masters', 'design',
+           'loi', 'pbar', 'nal', 'annual', 'upc', 'ap',
+           'en', 'exp', 'lu', 'habil', 'vlhcpub']
 SERIES2 = ['PUB', 'CONF']
-#serieses = ['thesis']
+
 SERIES1.sort()
 
 CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
 
+
 def bst_fermilab():
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
 
-    for series in SERIES1 :
+    for series in SERIES1:
         reports = []
         authorId = False
         search = "find r fermilab-" + series + "-*"
-        #search = "find recid 1261432"
-        #print search
         result = perform_request_search(p=search, cc='HEP')
-        for recid in result :
-            #print recid
+        for recid in result:
             reportValues = get_fieldvalues(recid, '037__a')
             author = get_fieldvalues(recid, '100__a')
             authorId = get_fieldvalues(recid, '100__i')
@@ -55,139 +58,167 @@ def bst_fermilab():
             title = get_fieldvalues(recid, '245__a')
             experiment = get_fieldvalues(recid, '693__e')
 
-            if author :
+            if author:
                 author = author[0]
-            else :
+            else:
                 author = ''
-            if title :
+            if title:
                 title = '<i>' + title[0][:100] + '</i>'
-            else :
+            else:
                 title = ''
-            if experiment :
+            if experiment:
                 experiment = experiment[0]
-            else :
+            else:
                 experiment = ''
-            if authorAff :
+            if authorAff:
                 authorAff = authorAff[0]
-            else :
+            else:
                 authorAff = ''
-            #print "author = ", author
-            #print "title = ", title
-            #print "authorId = ", authorId
-            #print "experiment = ", experiment
-            if authorId :
+            if authorId:
                 authorId = authorId[0]
-            for report in reportValues :
+            for report in reportValues:
                 if re.match('FERMILAB-' + series, report, re.IGNORECASE):
-                    y = [report, str(recid), author, title, authorId, experiment, authorAff]
-                    #print "y = ", y
+                    y = [report, str(recid), author, title,
+                         authorId, experiment, authorAff]
                     reports.append(y)
         reports.sort(reverse=True)
 
-        filename = os.path.join(CFG_FERMILAB_PATH, 'fermilab-reports-' + series + '.html')
+        filename = os.path.join(CFG_FERMILAB_PATH,
+                                'fermilab-reports-' + series + '.html')
         output = open(filename, 'w')
-        output.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\n')
-        output.write('          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">\n')
-        output.write('<html xmlns="http://www.w3.org/1999/xhtml">\n')
-        output.write('<head>\n')
-        output.write('<title>Fermilab Technical Publications: ')
-        output.write(escape(series))
-        output.write('</title>\n')
-        output.write('<meta http-equiv="content-type" content="text/html;charset=utf-8" />\n')
-        output.write('</head>\n')
-        output.write('<body>\n')
-        output.write('<a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>\n')
-        output.write('<br /><br />')
-        dateTimeStamp = '<i>Updated ' + chicago_timezone.fromutc(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S') + '</i>\n'
-        output.write(dateTimeStamp)
-        output.write('<br />\n<table>\n')
-        for report in reports :
-            #print "report =", report
+        output.write('''
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Fermilab Technical Publications: %(series)s</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+</head>
+<body>
+  <a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>
+  <br /><br /><i>Updated %(dateTimeStamp)s</i>
+  <br />
+  <table>''' % {'series': escape(series),
+                'dateTimeStamp': chicago_timezone.fromutc(
+                    datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S')})
+        for report in reports:
             if report[4]:
                 search2 = '035__a:' + report[4]
-                #print "search2 =", search2
                 result = perform_request_search(p=search2, cc='HepNames')
-                #print report[4], result
-                report[2] = '<a href="http://inspirehep.net/record/' + str(result[0]) + '">'+report[2]+'</a>'
-            line = '<tr><td><a href="http://inspirehep.net/record/'+report[1]+'">'+report[0]+'</a></td>\
-                    <td>'+report[2]+'</td><td>'+report[3]+'</td></tr>\n'
-            if re.search(r'THESIS', report[0]):
+                report[2] = '<a href="%(site)s/record/%(recid)s">%(rep2)s</a>'\
+                            % {'site': CFG_SITE_URL,
+                               'recid': str(result[0]),
+                               'rep2': report[2]}
+            line = '''
+    <tr>
+      <td><a href="%(site)s/record/%(rep1)s">%(rep0)s</a></td>
+      <td>%(rep2)s</td>
+      <td>%(rep3)s</td>
+    </tr>''' % {'site': CFG_SITE_URL,
+                'rep0': report[0],
+                'rep1': report[1],
+                'rep2': report[2],
+                'rep3': report[3]}
+            if re.search(r'THESIS|MASTERS|BACHELORS', report[0]):
                 if report[5]:
                     search2 = '119__a:' + report[5]
-                    result = perform_request_search(p=search2, cc='Experiments')
-                    if result: result = result[0]
+                    result = perform_request_search(p=search2,
+                                                    cc='Experiments')
+                    if result:
+                        result = result[0]
                     collaboration = get_fieldvalues(result, '710__g')
                     if collaboration:
                         collaboration = collaboration[0]
-                        collaboration = collaboration.replace(' Collaboration', '')
+                        collaboration = collaboration.replace(' Collaboration',
+                                                              '')
                         report[5] = report[5] + ' (' + collaboration + ')'
                     if result:
-                        report[5] = '<a href="http://inspirehep.net/record/' + str(result) + '">'+report[5]+'</a>'
-                line = '<tr><td><a href="http://inspirehep.net/record/'+report[1]+'">'+report[0]+'</a></td>\
-                        <td>'+report[2]+'</td><td>'+report[5]+'</td><td>'+report[6]+'</td><td>'+report[3]+'</td></tr>\n'
+                        report[5] = '<a href="%(site)s/record/%(recid)s">%(rep5)s</a>' \
+                                    % {'site': CFG_SITE_URL,
+                                       'recid': str(result),
+                                       'rep5': report[5]}
+
+                line = '''
+    <tr>
+      <td><a href="%(site)s/record/%(rep1)s">%(rep0)s</a></td>
+      <td>%(rep2)s</td>
+      <td>%(rep5)s</td>
+      <td>%(rep6)s</td>
+      <td>%(rep3)s</td>
+    </tr>''' % {'site': CFG_SITE_URL,
+                'rep0': report[0],
+                'rep1': report[1],
+                'rep2': report[2],
+                'rep3': report[3],
+                'rep5': report[5],
+                'rep6': report[6]}
             output.write(line)
-        output.write('</table>\n')
-        output.write('</body>\n')
-        output.write('</html>\n')
+        output.write('''
+  </table>
+</body>
+</html>
+''')
         output.close()
         write_message('\\rm fermilab-reports-' + series + '.html')
         write_message('cp %s .' % filename)
 
     reports = []
-    currentyear = time.strftime('%Y')
-    for series in SERIES2 :
-        #print series
-        for year in range(1970, time.localtime()[0]+1) :
-            #print year
+    for series in SERIES2:
+        for year in range(1970, time.localtime()[0]+1):
             dd = str(year)
             dd = re.sub(r"19", "", dd)
             dd = re.sub(r"20", "", dd)
             search = "find r fermilab-" + series + "-" + dd + "*"
-            #print search
             result = perform_request_search(p=search, cc='HEP')
-            for recid in result :
+            for recid in result:
                 reportValues = get_fieldvalues(recid, '037__a')
                 author = get_fieldvalues(recid, '100__a')
                 title = get_fieldvalues(recid, '245__a')
-                if author :
+                if author:
                     author = author[0]
-                else :
+                else:
                     author = ''
-                if title :
+                if title:
                     title = title[0][:100]
-                else :
+                else:
                     title = ''
-                for report in reportValues :
-                    #print 'report = ' + report
-                    #print 'FERMILAB-' + series
-                    if re.match('FERMILAB-' + series, report, re.IGNORECASE) :
+                for report in reportValues:
+                    if re.match('FERMILAB-' + series, report, re.IGNORECASE):
                         number = re.sub("FERMILAB-" + series + "-", "", report)
                         y = [year, number, report, str(recid), author, title]
-                        #print 'y = ' , y
                         reports.append(y)
     reports.sort(reverse=True)
-    #print reports
 
     filename = os.path.join(CFG_FERMILAB_PATH, 'fermilab-reports-preprints.html')
     output = open(filename, 'w')
-    output.write('<html>\n')
-    output.write('<header>\n')
-    output.write('<title>Fermilab Technical Publications: ')
-    output.write('preprints')
-    output.write('</title>\n')
-    output.write('</header>\n')
-    output.write('<body>\n')
-    output.write('<a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>\n')
-    output.write('<br /><br />')
-    dateTimeStamp = '<i>Updated ' + chicago_timezone.fromutc(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S') + '</i>\n'
-    output.write(dateTimeStamp)
-    output.write('<br />\n<table>\n')
-    for report in reports :
-        line = '<tr><td><a href="http://inspirehep.net/record/' + report[3] + '">' + report[2] + '</a></td><td>'+report[4]+'</td><td>'+report[5]+'</td></tr>\n'
+    output.write('''
+<html>
+<header>
+<title>Fermilab Technical Publications: preprints</title>
+</header>
+<body>
+  <a href="http://bss.fnal.gov/techpubs/fermilab_spires.html">Fermilab Technical Publications</a>
+  <br /><br /><i>Updated %(dateTimeStamp)s</i>
+  <br />
+  <table>
+''' % {'dateTimeStamp': chicago_timezone.fromutc(datetime.datetime.utcnow()).strftime('%Y-%m-%d %H:%M:%S')})
+    for report in reports:
+        line = '''
+    <tr>
+        <td><a href="%(site)s/record/%(rep3)s">%(rep2)s</a></td>
+        <td>%(rep4)s</td><td>%(rep5)s</td>
+    </tr>
+        ''' % {'site': CFG_SITE_URL,
+               'rep2': report[2],
+               'rep3': report[3],
+               'rep4': report[4],
+               'rep5': report[5]}
         output.write(line)
-    output.write('</table>\n')
-    output.write('</body>\n')
-    output.write('</html>\n')
+    output.write('''
+  </table>
+</body>
+</html>
+''')
     output.close()
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
     write_message('\\rm fermilab-reports-preprints.html')
