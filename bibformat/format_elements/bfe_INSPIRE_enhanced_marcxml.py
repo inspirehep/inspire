@@ -168,7 +168,6 @@ def format_element(bfo, oai=0):
                     # We remove this very record, since it can be a proceedings
                     recids.remove(recid)
                 if len(recids) == 1:
-                    if recids
                     subfields.append(('0', str(recids.pop())))
             elif code == 'p':
                 # Journal title
