@@ -35,7 +35,10 @@ CFG_EXPORTED_COLLECTIONS = ['HEP', 'HepNames', 'Institutions', 'Conferences',
                             'Jobs', 'Experiments']
 
 def bst_dump_records():
-    os.makedirs(os.path.join(CFG_WEBDIR, 'dumps'))
+    try:
+        os.makedirs(os.path.join(CFG_WEBDIR, 'dumps'))
+    except OSError:
+        pass
     html_index = open(os.path.join(CFG_WEBDIR, 'dumps', '.inspire-dump.html'), "w")
     print >> html_index, "<html><head><title>INSPIRE Dump</title></head><body><ul>"
     for collection in CFG_EXPORTED_COLLECTIONS:
