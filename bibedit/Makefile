@@ -1,7 +1,7 @@
 include ../config.mk
 -include ../config-local.mk
 
-XMLRECORDFILES = record_*.xml
+XMLRECORDFILES = record_*.xml volatile_*.xml
 XMLRECORDDIR = $(ETCDIR)/bibedit/record_templates
 XMLFIELDFILES = field_*.xml
 XMLFIELDDIR = $(ETCDIR)/bibedit/field_templates
