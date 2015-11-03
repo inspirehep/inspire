@@ -43,6 +43,8 @@ CHANGES = [
     (('a', 'Malecki, Piotr'), ('i', 'INSPIRE-00219707', 'INSPIRE-00219719')),
     (('a', 'Beddall, Andrew'), ('i', 'INSPIRE-00211268', 'INSPIRE-00065527')),
     (('a', 'Bendavid, Joshua'), ('i', 'INSPIRE-00305138', 'INSPIRE-00307617')),
+    (('a', 'De La Cruz, Begona'), ('i', 'INSPIRE-00091968', 'INSPIRE-00075124')),
+    (('a', 'Meyer, Joerg'), ('i', 'INSPIRE-00220381', 'INSPIRE-00107296')),
     ]
 
 
