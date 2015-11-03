@@ -74,17 +74,11 @@ def submit_email_ticket(title, paper, authors, description, dataset_file,
     from email import Encoders
     from invenio.config import CFG_MISCUTIL_SMTP_HOST, CFG_MISCUTIL_SMTP_PORT
 
-    curators = (
-        "laura.rueda@cern.ch",
-        "patricia.herterich@cern.ch",
-        "sunje.dallmeier-tiessen@cern.ch"
-    )
-
     msg = MIMEMultipart()
     msg['Subject'] = "New dataset submission from {0}".format(submitter_name).encode("utf-8")
     msg['From'] = submitter_email
-    msg['To'] = ', '.join(curators)
-
+    msg['To'] = "inspire-data-submission@cern.ch"
+    
     text = """
     Title: %s
     Original paper: %s
