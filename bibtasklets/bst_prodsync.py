@@ -44,13 +44,17 @@ from invenio.intbitset import intbitset
 
 import redis
 
+import gzip
+
+
+CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync.xml.gz"
 
 def bst_prodsync():
     if CFG_REDIS_HOST_LABS:
         r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     else:
-        write_message("Redis disabled, writing output into %s" % os.path.join(CFG_TMPSHAREDDIR, "prodsync.xml"))
-        r = open(os.path.join(CFG_TMPSHAREDDIR, "prodsync.xml"), "a")
+        write_message("Redis disabled, appeding output to %s" % CFG_OUTPUT_PATH)
+        r = gzip.open(CFG_OUTPUT_PATH, "a")
     future_lastrun = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     lastrun_path = os.path.join(CFG_TMPSHAREDDIR, 'prodsync_lastrun.txt')
     try:
@@ -67,11 +71,11 @@ def bst_prodsync():
     time_estimator = get_time_estimator(tot)
     for i, recid in enumerate(modified_records):
         if CFG_REDIS_HOST_LABS:
-            r.rpush('records', [format_record(recid, 'xme')])
+            r.rpush('records', [format_record(recid, 'xme')[0]])
             # Client should simply use http://redis.io/commands/blpop
         else:
             # NOTE: just for debugging purposes
-            print >> r, format_record(recid, 'xme')
+            print >> r, format_record(recid, 'xme')[0]
         task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimator()[1]))))
     write_message("Pushed %s records" % tot)
     open(lastrun_path, "w").write(future_lastrun)
