@@ -45,6 +45,10 @@ CHANGES = [
     (('a', 'Bendavid, Joshua'), ('i', 'INSPIRE-00305138', 'INSPIRE-00307617')),
     (('a', 'De La Cruz, Begona'), ('i', 'INSPIRE-00091968', 'INSPIRE-00075124')),
     (('a', 'Meyer, Joerg'), ('i', 'INSPIRE-00220381', 'INSPIRE-00107296')),
+    (('a', 'Pastore, Fernanda'), ('i', 'INSPIRE-00221618', 'INSPIRE-00221629')),
+    (('a', 'Kumar, Vineet'), ('i', 'INSPIRE-00170162', 'INSPIRE-00536498')),
+    (('a', 'Thompson, Paul'), ('i', 'INSPIRE-00224430', 'INSPIRE-00185894')),
+    (('a', 'Giorgi, Francesco Michelangelo'), ('i', 'INSPIRE-00214779', 'INSPIRE-00537048')),
     ]
 
 
