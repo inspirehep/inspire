@@ -1,0 +1,13 @@
+<!-- BibEdit-Template-Name: experiment -->
+<!-- BibEdit-Template-Description: experiment -->
+<record>
+  <datafield tag="046" ind1=" " ind2=" ">
+    <subfield code="x">VOLATILE:yes</subfield>
+  </datafield>
+  <datafield tag="702" ind1=" " ind2=" ">
+    <subfield code="z">VOLATILE:current</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="y">VOLATILE:home page</subfield>
+  </datafield>
+</record>
