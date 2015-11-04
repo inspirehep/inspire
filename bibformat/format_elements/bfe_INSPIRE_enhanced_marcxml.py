@@ -176,7 +176,7 @@ def format_element(bfo, oai=0):
                     subfields.append(('1', str(recids.pop())))
             elif code == 'z':
                 # ISBN
-                recids = find_isbn({'isbn': value})
+                recids = find_isbn({'ISBN': value})
                 if len(recids) == 1:
                     subfields.append(('0', str(recids.pop())))
 
