@@ -38,7 +38,7 @@ from invenio.dateutils import get_time_estimator
 
 from invenio.bibformat_engine import format_record
 
-from invenio.bibtask import task_update_progress, write_message
+from invenio.bibtask import task_update_progress, write_message, task_sleep_now_if_required
 
 from invenio.intbitset import intbitset
 
@@ -76,6 +76,11 @@ def bst_prodsync():
         else:
             # NOTE: just for debugging purposes
             print >> r, format_record(recid, 'xme')[0]
-        task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimator()[1]))))
+        time_estimation = time_estimator()[1]
+        if (i + 1) % 100 == 0:
+            task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
+            if not CFG_REDIS_HOST_LABS:
+                r.flush()
+            task_sleep_now_if_required()
     write_message("Pushed %s records" % tot)
     open(lastrun_path, "w").write(future_lastrun)
