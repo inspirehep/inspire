@@ -40,7 +40,7 @@ def reference2citation_element(subfields):
         elif code == 't':
             citation_element['title'] = value
         elif code == 'i':
-            citation_element['isbn'] = value
+            citation_element['ISBN'] = value
         elif code == 'r':
             citation_element['report_num'] = value
         elif code == 'y':
@@ -73,7 +73,7 @@ def get_matched_id(subfields):
         recids = find_reportnumber(citation_element)
         if len(recids) == 1:
             return recids.pop()
-    if 'isbn' in citation_element:
+    if 'ISBN' in citation_element:
         recids = find_isbn(citation_element)
         if len(recids) == 1:
             return recids.pop()
