@@ -373,6 +373,13 @@ $(function () {
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="%(ln_iso_639_a)s" xml:lang="%(ln_iso_639_a)s">
 <head>
+ <style>
+   @media print {
+    a[href]:after {
+    content: none !important;
+    }
+   }
+ </style>
  <title>%(headertitle)s - INSPIRE-HEP</title>
  <link rev="made" href="mailto:%(sitesupportemail)s" />
  <link rel="stylesheet" href="%(inspire_css)s" type="text/css" />
