@@ -194,6 +194,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
             if not exists(package):
                 index = package_list.index(package)
                 link = links[index]
+                link = link.replace(' ', '%20')
                 try:
                     message = ("Downloading %s to %s\n" % (link,
                                                            package))
@@ -339,6 +340,7 @@ def download_feed(feed_url, batch_size, delete_zip, new_sources,
             write_message("Not downloading %s, already found %s in %s\n" %
                           (fileUrl, existing_files[0], outFilename))
         else:
+            fileUrl = fileUrl.replace(' ', '%20')
             try:
                 write_message("Downloading %s to %s\n" % (fileUrl,
                                                           outFilename))
