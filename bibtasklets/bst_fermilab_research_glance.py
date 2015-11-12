@@ -56,7 +56,7 @@ def create_table():
     """HTML generation by lxml.html tree."""
 
     divisions = ['All', 'E', 'CMS', 'T', 'A', 'AE', 'PPD', 'AD/APC',
-                 'TD', 'CD', 'Other']
+                 'TD', 'CD', 'ND', 'LBN', 'Other']
     pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN']
     dates = [YEAR_2, YEAR_1, YEAR, MONTH_2, MONTH_1, MONTH]
     years = [YEAR_2, YEAR_1, YEAR]
@@ -159,15 +159,20 @@ def create_table():
     )
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "T: Particle Physics Division \
-Theoretical Physics Department papers"), E.TD({'class': 'l'}, "AD/APC: \
-Accelerator Division and Accelerator Physics Center papers"))
+Theoretical Physics Department papers"),
+                      E.TD({'class': 'l'}, "AD/APC: Accelerator Division \
+and Accelerator Physics Center papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "AT: Fermilab Center for Particle \
-Astrophysics theoretical papers"), E.TD({'class': 'l'}, "TD: Technical \
-Division papers"))
+Astrophysics theoretical papers"),
+                      E.TD({'class': 'l'}, "TD: Technical Division papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "AE: Fermilab Center for Particle \
-Astrophysics experimental papers"), E.TD({'class': 'l'}, "CD: Computing \
+Astrophysics experimental papers"),
+                      E.TD({'class': 'l'}, "CD: Computing Sector papers"))
+    table2.append(glos_tr_td)
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "ND: Neutrino Division papers"),
+                      E.TD({'class': 'l'}, "LBN: Long Baseline Neutrino \
 Sector papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, " "), E.TD({'class': 'l'}, " "))
@@ -177,14 +182,17 @@ Sector papers"))
     glos_tr_td = E.TR(E.TD({'class': 'l'}, " "), E.TD({'class': 'l'}, " "))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "PUB: Paper intended for \
-publication in a journal"), E.TD({'class': 'l'}, "TM: Technical memo"))
+publication in a journal"),
+                      E.TD({'class': 'l'}, "TM: Technical memo"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "CONF: Paper written as part of a \
-conference"), E.TD({'class': 'l'}, "FN: Physics note - short paper not \
+conference"),
+                      E.TD({'class': 'l'}, "FN: Physics note - short paper not \
 fitting the other categories"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "THESIS: Ph.D. thesis based on \
-work done at Fermilab"), E.TD({'class': 'l'}, ""))
+work done at Fermilab"),
+                      E.TD({'class': 'l'}, ""))
     table2.append(glos_tr_td)
 
     body.append(table)
