@@ -18,21 +18,22 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints all the publication information in one go
 
-LaTeX formats require some elements to be displayed differently depending on 
+LaTeX formats require some elements to be displayed differently depending on
 whether other elements were present or not.  It wasn't obvious how to do that
-in the Invenio templating system, so this format element is a facade for 
+in the Invenio templating system, so this format element is a facade for
 those others and handles the decision logic.
 """
 
-from invenio.bibformat_elements import bfe_report_numbers, bfe_INSPIRE_publi_coden
+from invenio.bibformat_elements import bfe_report_numbers, bfe_INSPIRE_publi_coden, bfe_INSPIRE_latex_doi
 from invenio.bibformat_engine import eval_format_element, get_format_element
 
 
 pubnoteFE = get_format_element('bfe_inspire_publi_info',  with_built_in_params=True)
 arxivFE   = get_format_element('bfe_inspire_arxiv',       with_built_in_params=True)
+doiFE     = get_format_element('bfe_inspire_latex_doi')
 
 
-def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp;", pubnotesuf="&nbsp;", pubnotesep=", ", 
+def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp;", pubnotesuf="&nbsp;", pubnotesep=", ",
                         arxivlinks="yes", arxivcategory="yes", arxivprepubnote="<br />", arxivsufpubnote="<br />", arxivprenopub="<br />", arxivsufnopub="<br />",
                         reportpre="", reportsuf="", reportlimit="1", reportsep='', reportext=''):
     """Aggregates pubnote, arxive, and %% CITATION %% display"""
@@ -41,6 +42,8 @@ def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp
     pubnote_w = ''
     arxiv     = ''
     arxiv_w   = ''
+    doi       = ''
+    doi_w     = ''
     repno     = ''
     repno_w   = ''
     pcnt_pre  = arxivprenopub + "%%CITATION = "
@@ -57,22 +60,25 @@ def format_element(bfo, pubnotestyle="eu", pubnotemark="html", pubnotepre="&nbsp
     else:
         arxiv_w = wrap(arxiv, arxivprenopub, arxivsufnopub)
 
-    # Get the report number, if there's no pubnote or arxiv number
-    if pubnote or arxiv:
-        out = pubnote_w + arxiv_w
+    doi = eval_format_element(doiFE, bfo)[0]
+    doi_w = wrap(doi, pubnotepre + "doi:", pubnotesuf)
+
+    # Get the report number, if there's no pubnote or arxiv number or doi
+    if pubnote or arxiv or doi:
+        out = pubnote_w + doi_w + arxiv_w
     else:
         repno   = bfe_report_numbers.get_report_numbers_formatted(bfo, reportsep, reportlimit, reportext)
         repno_w = wrap(repno, reportpre, reportsuf)
         out     = repno_w
 
     # Get the %%CITATION line last
-    out += get_cite_line(arxiv, pubnote, repno, bfo, pcnt_pre, pcnt_suf)
+    out += get_cite_line(arxiv, doi, pubnote, repno, bfo, pcnt_pre, pcnt_suf)
     return out
 
 
 def wrap(val, pre, suf):
     """Wrap value in prefix and suffix - but only if its non-empty.
-    
+
     @param val A string to wrap
     @param pre The part to go in front of val
     @param suf The part to go in back of val
@@ -83,20 +89,23 @@ def wrap(val, pre, suf):
         return val
 
 
-def get_cite_line(arxiv='', pubnote='', repno='', bfo=None, pcnt_pre="%%CITATION = ", pcnt_suf=";%%"):
+def get_cite_line(arxiv='', doi='', pubnote='', repno='', bfo=None, pcnt_pre="%%CITATION = ", pcnt_suf=";%%"):
     """Return %% CITATION line.
-       
+
     Parameters are given in the order of their preference, ie
     @param arxiv If given, will be used
     @param pubnote If no arxiv and pubnote, pubnote used
     @param repno If no arxiv or pubnote and repno given, repno used
     @param bfo Some BFO to extract data from
-    @param pcnt_pre The part at the front of the citation line 
+    @param pcnt_pre The part at the front of the citation line
     @param pcnt_suf The part at the back of the citation line
     """
     cite_line = ''
-    if arxiv:
-        # We prefer to cite things by their arxiv id
+    if doi:
+        # We prefer to cite things by their DOI
+        cite_line = "doi:%s" % doi
+    elif arxiv:
+        # and then by their arxiv id
         cite_line = arxiv.split(' ')[0].upper()
     elif pubnote and not cite_line:
         # But we'll use the pubnote (ie, coden-formatted reference) if it's ok
@@ -108,7 +117,7 @@ def get_cite_line(arxiv='', pubnote='', repno='', bfo=None, pcnt_pre="%%CITATION
     elif bfo:
         # or if we're really desparate, we'll get the inspire internal recid
         cite_line = "INSPIRE-"+str(bfo.recID)
-    else: 
+    else:
         # but if no bfo passed in, no recid available
         return ''
 
