@@ -22,7 +22,7 @@
 
 import datetime
 import time
-
+import tarfile
 import os
 
 from invenio.config import CFG_TMPSHAREDDIR
@@ -47,15 +47,18 @@ import redis
 import gzip
 
 
-CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync.xml.gz"
+CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 
 def bst_prodsync():
+    now = datetime.datetime.now()
+    future_lastrun = now.strftime('%Y-%m-%d %H:%M:%S')
     if CFG_REDIS_HOST_LABS:
         r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     else:
         write_message("Redis disabled, appeding output to %s" % CFG_OUTPUT_PATH)
-        r = gzip.open(CFG_OUTPUT_PATH, "a")
-    future_lastrun = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
+        r = gzip.open(prodsyncname, "w")
+        print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
     lastrun_path = os.path.join(CFG_TMPSHAREDDIR, 'prodsync_lastrun.txt')
     try:
         last_run = open(lastrun_path).read().strip()
@@ -69,6 +72,7 @@ def bst_prodsync():
         modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
     tot = len(modified_records)
     time_estimator = get_time_estimator(tot)
+    write_message("Adding %s new or modified records" % tot)
     for i, recid in enumerate(modified_records):
         if CFG_REDIS_HOST_LABS:
             r.rpush('records', [format_record(recid, 'xme')[0]])
@@ -83,4 +87,14 @@ def bst_prodsync():
                 r.flush()
             task_sleep_now_if_required()
     write_message("Pushed %s records" % tot)
+    if not CFG_REDIS_HOST_LABS:
+        print >> r, '</collection>'
+        r.close()
+        prodsync_tarname = CFG_OUTPUT_PATH + '.tar'
+        write_message("Adding %s to %s" % (prodsyncname, prodsync_tarname))
+        prodsync_tar = tarfile.open(prodsync_tarname, 'a')
+        prodsync_tar.add(prodsyncname)
+        prodsync_tar.close()
+        os.remove(prodsyncname)
+        write_message("DONE!")
     open(lastrun_path, "w").write(future_lastrun)

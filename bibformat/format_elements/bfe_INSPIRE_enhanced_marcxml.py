@@ -25,12 +25,29 @@ from invenio.bibrank_citation_indexer import get_tags_config as _get_tags_config
 from invenio.refextract_linker import find_doi, find_journal, find_reportnumber, find_book, find_isbn
 from invenio.dbquery import run_sql
 
-def get_institution_ids(text, INSTITUTION_CACHE={}):
+INSTITUTION_CACHE = {}
+def get_institution_ids(text):
     # HACK: I know... I am sorry for that. It's for a good cause
     # FIXME: use redis
+    global INSTITUTION_CACHE
     if text not in INSTITUTION_CACHE:
         INSTITUTION_CACHE[text] = perform_request_search(cc='Institutions', p='institution:"%s"' % text)
     return INSTITUTION_CACHE[text]
+
+HEPNAME_CACHE = {}
+def get_hepname_id(personid):
+    global HEPNAME_CACHE
+    if personid not in HEPNAME_CACHE:
+        canonical_name = get_personid_canonical_id().get(personid)
+        HEPNAME_CACHE[personid] = (perform_request_search(p='035__a:"%s"' % canonical_name[0], cc='HepNames')[:1] or [None])[0]
+    return HEPNAME_CACHE[personid]
+
+CANONICAL_NAME_CACHE = {}
+def get_personid_canonical_id():
+    global CANONICAL_NAME_CACHE
+    if not CANONICAL_NAME_CACHE:
+        CANONICAL_NAME_CACHE = dict(run_sql("SELECT personid, data FROM aidPERSONIDDATA WHERE tag='canonical_name'"))
+    return CANONICAL_NAME_CACHE
 
 def reference2citation_element(subfields):
     citation_element = {}
@@ -101,21 +118,21 @@ def format_element(bfo, oai=0):
     record = bfo.get_record()
     recid = bfo.recID
 
+    if '100' in record or '700' in record:
+        signatures = dict((name, (personid, flag)) for name, personid, flag in run_sql("SELECT name, personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND flag>-2", (recid, )))
+
     # Let's add signatures
     for field in record_get_field_instances(record, '100') + record_get_field_instances(record, '700'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
             author_name = subfield_dict['a']
-            rows = run_sql("SELECT personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND name=%s AND flag>-2", (recid, author_name))
-            if rows:
-                personid, flag = rows[0]
-                canonical_name = run_sql("SELECT data FROM aidPERSONIDDATA WHERE personid=%s AND tag='canonical_name'", (personid, ))
-                if canonical_name:
-                    id = perform_request_search(p='035__a:"%s"' % canonical_name[0], cc='HepNames')
-                    if id:
-                        subfields.append(('x', '%i' % id[0]))
-                        subfields.append(('y', '%i' % (flag > 0)))
+            personid, flag = signatures.get(author_name, (None, None))
+            if personid:
+                hepname_id = get_hepname_id(personid)
+                if hepname_id:
+                    subfields.append(('x', '%i' % hepname_id))
+                    subfields.append(('y', '%i' % (flag > 0)))
 
         # And matched affiliations
         if 'u' in subfield_dict:
