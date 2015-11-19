@@ -52,13 +52,6 @@ CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 def bst_prodsync():
     now = datetime.datetime.now()
     future_lastrun = now.strftime('%Y-%m-%d %H:%M:%S')
-    if CFG_REDIS_HOST_LABS:
-        r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
-    else:
-        write_message("Redis disabled, appeding output to %s" % CFG_OUTPUT_PATH)
-        prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
-        r = gzip.open(prodsyncname, "w")
-        print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
     lastrun_path = os.path.join(CFG_TMPSHAREDDIR, 'prodsync_lastrun.txt')
     try:
         last_run = open(lastrun_path).read().strip()
@@ -70,6 +63,17 @@ def bst_prodsync():
     except IOError:
         # Default to the epoch
         modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
+
+    if not modified_records:
+        write_message("Nothing to do")
+        return True
+    if CFG_REDIS_HOST_LABS:
+        r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
+    else:
+        write_message("Redis disabled, appeding output to %s" % CFG_OUTPUT_PATH)
+        prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
+        r = gzip.open(prodsyncname, "w")
+        print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
     tot = len(modified_records)
     time_estimator = get_time_estimator(tot)
     write_message("Adding %s new or modified records" % tot)
