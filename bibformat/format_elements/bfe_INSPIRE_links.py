@@ -61,7 +61,9 @@ def format_element(bfo, default='', separator='; ', style='', \
             links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
 
         if ident.get('9', '') == 'HAL' and ident.get('a', None) is not None:
-            links.append('<a href="https://hal.archives-ouvertes.fr/' + ident['a'] + '"> HAL Archives Ouvertes </a>')
+            from invenio.webuser import isUserAdmin
+            if isUserAdmin(bfo.user_info):
+                links.append('<a href="https://hal.archives-ouvertes.fr/' + ident['a'] + '"> HAL Archives Ouvertes </a>')
 
 
     # ADS links
