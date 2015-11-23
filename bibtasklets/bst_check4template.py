@@ -57,7 +57,7 @@ def read_record(filename):
     """
 
     path_templates = CFG_BIBEDIT_RECORD_TEMPLATES_PATH
-    template = codecs.EncodedFile(codecs.open('%s%s%s.xml' %
+    template = codecs.EncodedFile(codecs.open('%s%s%s' %
                (path_templates, os.sep, filename), mode='r'), 'utf8')
     xmlrecords = template.read()
     recs = create_records(xmlrecords, verbose=1)
@@ -80,7 +80,7 @@ def read_templates(collection):
         write_message('ERROR: collection %s not available' % collection)
         return subfields
 
-    filename = 'volatile_check_ignore_' + TEMPLATE_TYPES[collection][0]
+    filename = 'volatile_check_' + TEMPLATE_TYPES[collection][0] + '.xml_ignore'
     sf_ignore = {}
     for record in read_record(filename):
         for tag in record.keys():
@@ -97,7 +97,7 @@ def read_templates(collection):
 
     ignore_tags = ['980', 'FFT']
     for typ in TEMPLATE_TYPES[collection][1:]:
-        filename = 'record_' + typ
+        filename = 'record_' + typ + '.xml'
         for record in read_record(filename):
             for tag in record.keys():
                 if tag in ignore_tags:
