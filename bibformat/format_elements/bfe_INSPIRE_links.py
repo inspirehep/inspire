@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -83,7 +83,7 @@ def format_element(bfo, default='', separator='; ', style='', \
             if url["9"].lower() == "zblatt":
                 links.append('<a ' + style + ' href="http://www.zentralblatt-math.org/zmath/en/search/?an=' + url["a"] + '">zbMATH</a>')
             if url["9"].lower() == "euclid":
-                links.append('<a ' + style + ' href="http://projecteuclid.org/euclid.cmp/=' + url["a"] + '">Project Euclid</a>')
+                links.append('<a ' + style + ' href="http://projecteuclid.org/' + url["a"] + '">Project Euclid</a>')
 
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
