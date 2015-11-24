@@ -282,9 +282,8 @@ def convert_files(xml_files, els, prefix="", threshold_date=None):
                 write_message('Error converting:'
                               ' \n {0}'.format(error_trace))
                 continue
-            if not exists(new_full_xml_filepath):
-                with open(new_full_xml_filepath, "w") as marcfile:
-                    marcfile.write(converted_xml)
+            with open(new_full_xml_filepath, "w") as marcfile:
+                marcfile.write(converted_xml)
             results[full_xml_filepath] = (StatusCodes.OK,
                                           new_full_xml_filepath)
         else:
