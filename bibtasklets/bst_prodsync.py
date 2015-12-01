@@ -45,32 +45,40 @@ from invenio.intbitset import intbitset
 import redis
 
 import gzip
+import zlib
 
 
 CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 
-def bst_prodsync():
+def bst_prodsync(method='afs'):
+    """
+    Synchronize to either 'afs' or 'redis'
+    """
+    if not CFG_REDIS_HOST_LABS:
+        method = 'afs'
+    write_message("Prodsync started using %s method" % method)
     now = datetime.datetime.now()
     future_lastrun = now.strftime('%Y-%m-%d %H:%M:%S')
-    lastrun_path = os.path.join(CFG_TMPSHAREDDIR, 'prodsync_lastrun.txt')
+    lastrun_path = os.path.join(CFG_TMPSHAREDDIR, 'prodsync_%s_lastrun.txt' % method)
     try:
         last_run = open(lastrun_path).read().strip()
+        write_message("Syncing records modified since %s" % last_run)
         modified_records = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (last_run, )))
         for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
-            modified_records.add(citee)
             modified_records.add(citer)
         modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
     except IOError:
         # Default to the epoch
         modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
+        write_message("Syncing all records")
 
     if not modified_records:
         write_message("Nothing to do")
         return True
-    if CFG_REDIS_HOST_LABS:
+    if method == 'redis':
         r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     else:
-        write_message("Redis disabled, appeding output to %s" % CFG_OUTPUT_PATH)
+        write_message("Appeding output to %s" % CFG_OUTPUT_PATH)
         prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
         r = gzip.open(prodsyncname, "w")
         print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
@@ -78,20 +86,19 @@ def bst_prodsync():
     time_estimator = get_time_estimator(tot)
     write_message("Adding %s new or modified records" % tot)
     for i, recid in enumerate(modified_records):
-        if CFG_REDIS_HOST_LABS:
-            r.rpush('records', [format_record(recid, 'xme')[0]])
-            # Client should simply use http://redis.io/commands/blpop
+        if method == 'redis':
+            r.rpush('legacy_records', zlib.compress(format_record(recid, 'xme')[0]))
+            # Client should simply use http://redis.io/commands/lpop
         else:
-            # NOTE: just for debugging purposes
             print >> r, format_record(recid, 'xme')[0]
         time_estimation = time_estimator()[1]
         if (i + 1) % 100 == 0:
             task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
-            if not CFG_REDIS_HOST_LABS:
+            if method == 'afs':
                 r.flush()
             task_sleep_now_if_required()
     write_message("Pushed %s records" % tot)
-    if not CFG_REDIS_HOST_LABS:
+    if method == 'afs':
         print >> r, '</collection>'
         r.close()
         prodsync_tarname = CFG_OUTPUT_PATH + '.tar'
@@ -100,5 +107,5 @@ def bst_prodsync():
         prodsync_tar.add(prodsyncname)
         prodsync_tar.close()
         os.remove(prodsyncname)
-        write_message("DONE!")
     open(lastrun_path, "w").write(future_lastrun)
+    write_message("DONE!")
