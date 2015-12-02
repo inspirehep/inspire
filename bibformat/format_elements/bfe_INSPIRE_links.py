@@ -23,18 +23,26 @@
 does not include arXiv.
 """
 
-from invenio.messages import gettext_set_language
+from invenio.bibdocfile import bibdocfile_url_to_bibdoc
 from invenio.config import CFG_SITE_URL
+from invenio.messages import gettext_set_language
 
 try:
     from invenio.config import CFG_BASE_URL
 except ImportError:
     CFG_BASE_URL = CFG_SITE_URL
 
-from invenio.bibdocfile import bibdocfile_url_to_bibdoc
+
+ADSABS = 'http://adsabs.harvard.edu/abs/'
+CDS = 'http://cds.cern.ch/record/'
+EUCLID = 'http://projecteuclid.org/'
+HAL = 'https://hal.archives-ouvertes.fr/'
+KEK = 'http://www-lib.kek.jp/cgi-bin/img_index?'
+MSNET = 'http://www.ams.org/mathscinet-getitem?mr='
+ZBLATT = 'http://www.zentralblatt-math.org/zmath/en/search/?an='
 
 
-def format_element(bfo, default='', separator='; ', style='', \
+def format_element(bfo, default='', separator='; ', style='',
                    show_icons='no', prefix='', suffix=''):
     """ Creates html of links based on metadata
     @param separator (separates instances of links)
@@ -45,45 +53,68 @@ def format_element(bfo, default='', separator='; ', style='', \
     """
     _ = gettext_set_language(bfo.lang)
     if style != "":
-        style = 'class = "' + style + '"'
+        style = ' class="' + style + '"'
 
     links = []
 
-    # KEKSCAN/CDS links
+    # ADS/CDS/KEKSCAN/HAL links
+    # external identifiers in tag 035__a along with service label in 035__9
     identifiers = bfo.fields('035__')
-
+    adslinked = False
     for ident in identifiers:
-        if ident.get('9', '') == 'KEKSCAN' and ident.get('a', None) is not None:
-            out = ident['a'].replace("-", "")
-            links.append('<a href="http://www-lib.kek.jp/cgi-bin/img_index?' + out + '"> KEK scanned document </a>')
+        provenance = ident.get('9', None)
+        extid = ident.get('a', None)
+        if provenance is None or extid is None:
+            continue
 
-        if ident.get('9', '') == 'CDS' and ident.get('a', None) is not None:
-            links.append('<a href="http://cds.cern.ch/record/' + ident['a'] + '"> CERN Document Server </a>')
-
-        if ident.get('9', '') == 'HAL' and ident.get('a', None) is not None:
+        if provenance == 'KEKSCAN':
+            extid = extid.replace("-", "")
+            links.append('<a%s href="%s%s"> KEK scanned document </a>' %
+                         (style, KEK, extid))
+        elif provenance == 'CDS':
+            links.append('<a%s href="%s%s"> CERN Document Server </a>' %
+                         (style, CDS, extid))
+        elif provenance == 'ADS':
+            extid = extid.replace('&', '%26')  # A&A etc.
+            links.append('<a%s href="%s%s"> ADS Abstract Service </a>' %
+                         (style, ADSABS, extid))
+            adslinked = True
+        elif provenance == 'HAL':
             from invenio.webuser import isUserAdmin
             if isUserAdmin(bfo.user_info):
-                links.append('<a href="https://hal.archives-ouvertes.fr/' + ident['a'] + '"> HAL Archives Ouvertes </a>')
+                links.append('<a %s href="%s%s"> HAL Archives Ouvertes </a>' %
+                             (style, HAL, extid))
 
+    # fallback ADS links for arXiv e-prints
+    if not adslinked:
+        identifiers = bfo.fields('037__')
+        current_links = bfo.field('8564_y')
 
-    # ADS links
-    identifiers = bfo.fields('037__')
-    current_links = bfo.field('8564_y')
+        for ident in identifiers:
+            if ident.get('9', '') == 'arXiv' \
+               and not ("ADSABS" in current_links) \
+               and ident.get('a', None) is not None:
+                links.append('<a href="http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch='
+                             + ident.get('a', '') + '">ADS Abstract Service</a>')
 
-    for ident in identifiers:
-        if ident.get('9', '') == 'arXiv' and not ("ADSABS" in current_links) and ident.get('a', None) is not None:
-            links.append('<a href="http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch=' + ident.get('a', '') + '">ADS Abstract Service</a>')
-
-    #links moved to new field 035
+    # external identifiers in tag 035__a along with service label in 035__9
     urls = bfo.fields('035__')
     for url in urls:
-        if "9" in url and "a" in url:
-            if url["9"].lower() == "msnet":
-                links.append('<a ' + style + ' href="http://www.ams.org/mathscinet-getitem?mr=' + url["a"] + '">AMS MathSciNet</a>')
-            if url["9"].lower() == "zblatt":
-                links.append('<a ' + style + ' href="http://www.zentralblatt-math.org/zmath/en/search/?an=' + url["a"] + '">zbMATH</a>')
-            if url["9"].lower() == "euclid":
-                links.append('<a ' + style + ' href="http://projecteuclid.org/' + url["a"] + '">Project Euclid</a>')
+        provenance = url.get('9', None)
+        extid = url.get('a', None)
+        if provenance is None or extid is None:
+            continue
+
+        provenance = provenance.lower()
+        if provenance == "msnet":
+            links.append('<a%s href="%s%s">AMS MathSciNet</a>' %
+                         (style, MSNET, extid))
+        elif provenance == "zblatt":
+            links.append('<a%s href="%s%s">zbMATH</a>' %
+                         (style, ZBLATT, extid))
+        elif provenance == "euclid":
+            links.append('<a%s href="%s%s">Project Euclid</a>' %
+                         (style, EUCLID, extid))
 
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
@@ -91,23 +122,26 @@ def format_element(bfo, default='', separator='; ', style='', \
     urls = bfo.fields('8564_')
     allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS"]
     for url in urls:
-        if url.get("y", "").lower() not in ("msnet", "zblatt", "euclid"):
-            if '.png' not in url.get('u', '') and not \
-               (url.get('y', '').lower().startswith("fermilab") and bfo.field("710__g").lower() in ('atlas collaboration', 'cms collaboration')):
+        if url.get("y", "").lower() not in \
+           ("adsabsfixme", "euclid", "msnet", "zblatt"):
+            if '.png' not in url.get('u', '') and not (
+                    url.get('y', '').lower().startswith("fermilab")
+                    and bfo.field("710__g").lower() in
+                    ('atlas collaboration', 'cms collaboration')):
                 if url.get('y', '').upper() != "DURHAM":
                     if url.get("u", '') and \
                        url.get('y', 'Fulltext').upper() != "DOI" and not \
                        url.get('u', '').startswith(CFG_SITE_URL):
-                        links.append('<a ' + style
-                                     + 'href="' + url.get("u", '') + '">'
+                        links.append('<a' + style
+                                     + ' href="' + url.get("u", '') + '">'
                                      + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
                     elif url.get("u", '').startswith(CFG_SITE_URL) and \
                          (url.get("u", '').lower().endswith(".pdf") or
                           url.get("u", '').lower().endswith('.pdf?subformat=pdfa')) and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
-                        links.append('<a ' + style + 'href="' + url.get("u", '') + '">'
+                        links.append('<a' + style + ' href="' + url.get("u", '') + '">'
                                      + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
 
-    #put it all together
+    # put it all together
     if links:
         if show_icons.lower() == 'yes':
             img = '<img style="border:none" \
@@ -131,13 +165,13 @@ def _lookup_url_name(bfo, abbrev=''):
 
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
 
 
