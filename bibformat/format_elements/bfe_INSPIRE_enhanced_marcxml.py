@@ -39,7 +39,11 @@ def get_hepname_id(personid):
     global HEPNAME_CACHE
     if personid not in HEPNAME_CACHE:
         canonical_name = get_personid_canonical_id().get(personid)
-        HEPNAME_CACHE[personid] = (perform_request_search(p='035__a:"%s"' % canonical_name[0], cc='HepNames')[:1] or [None])[0]
+        if canonical_name is None:
+            HEPNAME_CACHE[personid] = None
+        else:
+            recids = perform_request_search(p='035__a:"%s"' % canonical_name, cc='HepNames')
+            HEPNAME_CACHE[personid] = recids[0] if recids else None
     return HEPNAME_CACHE[personid]
 
 CANONICAL_NAME_CACHE = {}
