@@ -41,6 +41,7 @@ try:
 except ImportError:
     CFG_CONSYNHARVEST_EMAIL = CFG_SITE_SUPPORT_EMAIL
 from invenio.bibtask import (task_update_status,
+                             task_sleep_now_if_required,
                              write_message,
                              task_update_progress)
 try:
@@ -191,6 +192,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         package_list = map(lambda a: join(CFG_CONSYN_OUT_DIRECTORY, a),
                            package_list)
         for package in package_list:
+            task_sleep_now_if_required()
             if not exists(package):
                 index = package_list.index(package)
                 link = links[index]
@@ -223,6 +225,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         xml_files = download_feed(feed_url, batch_size, delete_zip,
                                   new_sources, out_folder, feed_location)
     task_update_progress("Converting files 2/3...")
+    task_sleep_now_if_required()
     results = convert_files(xml_files, els,
                             prefix=consyn_files,
                             threshold_date=threshold_date)
@@ -230,6 +233,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         if status_code == StatusCodes.OK:
             new_files.append(result)
     task_update_progress("Compiling output 3/3...")
+    task_sleep_now_if_required()
     create_collection(batch_size, new_files, new_sources,
                       out_folder, submit)
     if feed_location and not _errors_detected:
@@ -261,6 +265,7 @@ def convert_files(xml_files, els, prefix="", threshold_date=None):
     """Convert the list of publisher XML to MARCXML using given instance."""
     results = {}
     for xml_file in xml_files:
+        task_sleep_now_if_required()
         full_xml_filepath = join(prefix, xml_file)
         dom_xml = parse(full_xml_filepath)
         date = els.get_publication_information(dom_xml)[-2]
@@ -328,6 +333,7 @@ def download_feed(feed_url, batch_size, delete_zip, new_sources,
     xml_files = []
     entries = parse_feed(result_path)
     for fileUrl, fileName in entries:
+        task_sleep_now_if_required()
         # Output location is directory + filename
         outFilename = join(directory, fileName)
         outFilename = outFilename.lstrip()

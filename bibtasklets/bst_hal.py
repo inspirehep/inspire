@@ -30,7 +30,7 @@ from invenio.search_engine import search_pattern
 from invenio.search_engine_utils import get_fieldvalues
 from invenio.bibsched_tasklets.bst_inspire_cds_synchro import get_record_ids_to_export
 from invenio.bibrecord import record_add_field, record_xml_output
-from invenio.bibtask import write_message
+from invenio.bibtask import write_message, task_sleep_now_if_required
 from invenio.bibtaskutils import ChunkedBibUpload
 
 CFG_HAL_API_URL = "http://api.archives-ouvertes.fr/search"
@@ -83,6 +83,7 @@ def bst_hal():
     for i, recid in enumerate(tot_records):
         if i % 1000 == 0:
             write_message("%s records done out of %s" % (i, len(tot_records)))
+            task_sleep_now_if_required()
         dois = get_fieldvalues(recid, tag='0247__a', sort=False)
         arxivs = get_fieldvalues(recid, tag='037__a', sort=False)
         matched_hal = [doi_map[doi] for doi in dois if doi in doi_map]
