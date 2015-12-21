@@ -46,10 +46,12 @@ def bst_cnumcatchup():
     cnums = []
     for r in confupd:
         for c in get_fieldvalues(r, '111__g'):
-            cnums.append(c)
+            if len(c) > 3:
+                cnums.append(c)
     for r in procupd:
         for c in get_fieldvalues(r, '773__w'):
-            cnums.append(c)
+            if len(c) > 3:
+                cnums.append(c)
 
     recs = intbitset()
     for cn in cnums:
