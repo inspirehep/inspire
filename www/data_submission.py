@@ -114,7 +114,7 @@ def data_submission_success(req, title, ticketres=None):
     """Submission confirmation message."""
     body = """
     <br/><b>Thanks for your submission!</b><br/>
-    <p>We will get back to you as soon as the the submission of the dataset <i>%s</i> is processed!</p>
+    <p>We will get back to you as soon as the submission of the dataset <i>%s</i> is processed!</p>
     """ % (wash_url_argument(title, "str"))
 
     return page(req=req, title="Dataset submitted", body=body)
