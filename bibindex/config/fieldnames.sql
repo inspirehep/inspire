@@ -2,7 +2,7 @@
 --
 -- Host: inspire01    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	10.0.17-MariaDB-log
+-- Server version	10.0.22-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -255,6 +255,7 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (56,'en','ln'
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (57,'en','ln','conference start date');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (58,'en','ln','experiment name');
 INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (59,'en','ln','referstox');
+INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (60,'en','ln','reference count');
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -264,4 +265,4 @@ INSERT INTO `fieldname` (`id_field`, `ln`, `type`, `value`) VALUES (59,'en','ln'
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-24 10:18:51
+-- Dump completed on 2016-01-05 13:54:12

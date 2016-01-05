@@ -2,7 +2,7 @@
 --
 -- Host: inspire01    Database: inspirehep
 -- ------------------------------------------------------
--- Server version	10.0.17-MariaDB-log
+-- Server version	10.0.22-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -194,6 +194,7 @@ INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (174,'experime
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (175,'journal title','130__a','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (176,'experiment','419__a','');
 INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (177,'city, inst','371__b','');
+INSERT INTO `tag` (`id`, `name`, `value`, `recjson_value`) VALUES (178,'zip, inst','371__e','');
 
 --
 -- Dumping data for table `field`
@@ -257,6 +258,7 @@ INSERT INTO `field` (`id`, `name`, `code`) VALUES (56,'earliest date','earliestd
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (57,'conference start date','conferencestartdate');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (58,'experiment name','experimentname');
 INSERT INTO `field` (`id`, `name`, `code`) VALUES (59,'referstox','referstox');
+INSERT INTO `field` (`id`, `name`, `code`) VALUES (60,'reference count','referencecount');
 
 --
 -- Dumping data for table `field_tag`
@@ -456,6 +458,7 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (1,176,255);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (1,174,255);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,149,101);
 INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,177,102);
+INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,178,103);
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -465,4 +468,4 @@ INSERT INTO `field_tag` (`id_field`, `id_tag`, `score`) VALUES (30,177,102);
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-24 10:18:39
+-- Dump completed on 2016-01-05 13:53:44
