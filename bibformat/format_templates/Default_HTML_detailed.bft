@@ -12,7 +12,7 @@ highlight="yes" brief="no" />
 <div style="text-align:center">
 <BFE_FIELD tag="242__a" suffix="<br />" />
 <BFE_INSPIRE_AUTHORS suffix="<br />" limit=25 interactive="yes"
-print_affiliations="yes" affiliations_separator=' & ' separator=', '
+print_affiliations="yes" affiliations_separator=' &amp; ' separator=', '
 limit="10" extension="<i> et al.</i>" name_last_first="no"
 affiliation_prefix="<small> (" affiliation_suffix=") </small>" />
 
