@@ -51,7 +51,7 @@ function toggle_abstract(event, element) {
                     element += '(' + source + ')'
                 element += '</a>'
                 element += "<br/>"
-                element += "<span style='display: none;'>" + field.get('a')
+                element += "<span style='display: none;'>" + best_escape(field['a'])
                 element += separator_en + '</span>'
             else:
                 element += prefix_en
@@ -59,7 +59,7 @@ function toggle_abstract(event, element) {
                     element += '(' + source + ')'
                 element += '</a>'
                 element += "<br/>"
-                element += "<span>" + field.get('a')
+                element += "<span>" + best_escape(field['a'])
                 element += separator_en + '</span>'
 
         return element
@@ -94,6 +94,22 @@ function toggle_abstract(event, element) {
         out += toggle_script
 
     return out
+
+
+def best_escape(text):
+    """
+    Try to guess if the text contains HTML or not.
+    In the former case, strips out HTML, while preserving MathML and HTML
+    entities by using functionality available in Harvesting Kit.
+    In the latter case, just escape the text, to make it HTML friendly.
+    """
+    import bs4
+    import cgi
+    from harvestingkit.html_utils import MathMLParser
+    if isinstance(bs4.BeautifulSoup(text, 'lxml').contents[0], bs4.element.NavigableString):
+        return cgi.escape(text)
+    else:
+        return MathMLParser.html_to_text(text)
 
 
 def escape_values(bfo):
