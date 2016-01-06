@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013 CERN.
+## Copyright (C) 2013, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -57,7 +57,6 @@ function toggle_abstract(event, element) {
                 element += prefix_en
                 if source:
                     element += '(' + source + ')'
-                element += '</a>'
                 element += "<br/>"
                 element += "<span>" + best_escape(field['a'])
                 element += separator_en + '</span>'
