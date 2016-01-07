@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -85,17 +85,19 @@ def format_element(bfo, default='', separator='; ', style='',
                 links.append('<a %s href="%s%s"> HAL Archives Ouvertes </a>' %
                              (style, HAL, extid))
 
-    # fallback ADS links for arXiv e-prints
+    # fallback ADS link via arXiv:e-print
     if not adslinked:
         identifiers = bfo.fields('037__')
-        current_links = bfo.field('8564_y')
-
+        eprints = set()  # avoid duplicate links
         for ident in identifiers:
             if ident.get('9', '') == 'arXiv' \
-               and not ("ADSABS" in current_links) \
                and ident.get('a', None) is not None:
-                links.append('<a href="http://adsabs.harvard.edu/cgi-bin/basic_connect?qsearch='
-                             + ident.get('a', '') + '">ADS Abstract Service</a>')
+                eprints.add(ident.get('a', ''))
+        if eprints:
+            adslinked = True
+            for eprint in eprints:
+                links.append('<a href="%s%s">ADS Abstract Service</a>'
+                             % (ADSABS, eprint))
 
     # external identifiers in tag 035__a along with service label in 035__9
     urls = bfo.fields('035__')
@@ -123,23 +125,29 @@ def format_element(bfo, default='', separator='; ', style='',
     allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS"]
     for url in urls:
         if url.get("y", "").lower() not in \
-           ("adsabsfixme", "euclid", "msnet", "zblatt"):
+           ("adsabs", "euclid", "msnet", "zblatt"):
             if '.png' not in url.get('u', '') and not (
-                    url.get('y', '').lower().startswith("fermilab")
-                    and bfo.field("710__g").lower() in
+                    url.get('y', '').lower().startswith("fermilab") and
+                    bfo.field("710__g").lower() in
                     ('atlas collaboration', 'cms collaboration')):
                 if url.get('y', '').upper() != "DURHAM":
                     if url.get("u", '') and \
                        url.get('y', 'Fulltext').upper() != "DOI" and not \
                        url.get('u', '').startswith(CFG_SITE_URL):
-                        links.append('<a' + style
-                                     + ' href="' + url.get("u", '') + '">'
-                                     + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+                        links.append('<a %s href="%s">%s</a>' %
+                                     (style, url.get("u", ''),
+                                      _lookup_url_name(bfo, url.get(
+                                          'y', 'Fulltext'))))
                     elif url.get("u", '').startswith(CFG_SITE_URL) and \
-                         (url.get("u", '').lower().endswith(".pdf") or
-                          url.get("u", '').lower().endswith('.pdf?subformat=pdfa')) and bibdocfile_url_to_bibdoc(url.get('u')).doctype in allowed_doctypes:
-                        links.append('<a' + style + ' href="' + url.get("u", '') + '">'
-                                     + _lookup_url_name(bfo, url.get('y', 'Fulltext')) + '</a>')
+                        (url.get("u", '').lower().endswith(".pdf") or
+                         url.get("u", '').lower().endswith(
+                             '.pdf?subformat=pdfa')) and \
+                            bibdocfile_url_to_bibdoc(url.get('u')).doctype in \
+                            allowed_doctypes:
+                        links.append('<a %s href="%s">%s</a>' %
+                                     (style, url.get("u", ''),
+                                      _lookup_url_name(bfo, url.get(
+                                          'y', 'Fulltext'))))
 
     # put it all together
     if links:
@@ -173,5 +181,3 @@ def escape_values(bfo):
     """
     return 0
 # pylint: enable=W0613
-
-
