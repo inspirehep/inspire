@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015 CERN.
+## Copyright (C) 2015, 2016 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -42,11 +42,14 @@ from invenio.bibtask import task_update_progress, write_message, task_sleep_now_
 
 from invenio.intbitset import intbitset
 
+from invenio.webuser import collect_user_info, get_uid_from_email, get_email_from_username
+
 import redis
 
 import gzip
 import zlib
 
+ADMIN_USER_INFO = collect_user_info(get_uid_from_email(get_email_from_username('admin')))
 
 CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 
@@ -87,10 +90,10 @@ def bst_prodsync(method='afs'):
     write_message("Adding %s new or modified records" % tot)
     for i, recid in enumerate(modified_records):
         if method == 'redis':
-            r.rpush('legacy_records', zlib.compress(format_record(recid, 'xme')[0]))
+            r.rpush('legacy_records', zlib.compress(format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]))
             # Client should simply use http://redis.io/commands/lpop
         else:
-            print >> r, format_record(recid, 'xme')[0]
+            print >> r, format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
         time_estimation = time_estimator()[1]
         if (i + 1) % 100 == 0:
             task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))

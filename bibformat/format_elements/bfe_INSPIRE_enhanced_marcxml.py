@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2015 CERN.
+# Copyright (C) 2015, 2016 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -24,6 +24,8 @@ from invenio.search_engine import perform_request_search
 from invenio.bibrank_citation_indexer import get_tags_config as _get_tags_config, get_recids_matching_query
 from invenio.refextract_linker import find_doi, find_journal, find_reportnumber, find_book, find_isbn
 from invenio.dbquery import run_sql
+from invenio.access_control_engine import acc_authorize_action
+from invenio.config import CFG_BIBFORMAT_HIDDEN_TAGS
 
 INSTITUTION_CACHE = {}
 def get_institution_ids(text):
@@ -120,6 +122,13 @@ def format_element(bfo, oai=0):
          693/710 $0 with Record ID of corresponding experiment
     """
     record = bfo.get_record()
+    # Let's filter hidden fields
+    if acc_authorize_action(bfo.user_info, 'runbibedit')[0]:
+        # not authorized
+        for tag in CFG_BIBFORMAT_HIDDEN_TAGS:
+            if tag in record:
+                del record[tag]
+
     recid = bfo.recID
 
     if '100' in record or '700' in record:

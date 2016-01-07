@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015 CERN.
+## Copyright (C) 2015, 2016 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -55,7 +55,7 @@ def bst_dump_records():
         output = gzip.open(output_path, "w")
         print >> output, "<collection>"
         for recid in get_collection_reclist(collection):
-            print >> output, print_record(recid, 'xm', user_info={})
+            print >> output, print_record(recid, 'xme', user_info={})
         print >> output, "</collection>"
         output.close()
         write_message("Computing checksum")
