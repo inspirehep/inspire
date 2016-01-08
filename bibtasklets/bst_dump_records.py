@@ -27,8 +27,9 @@ import time
 
 from invenio.search_engine import get_collection_reclist
 from invenio.config import CFG_WEBDIR, CFG_SITE_URL
-from invenio.search_engine import print_record
-from invenio.bibtask import write_message, task_update_progress
+from invenio.bibformat_engine import format_record
+from invenio.dateutils import get_time_estimator
+from invenio.bibtask import write_message, task_update_progress, task_sleep_now_if_required
 from invenio.bibdocfile import calculate_md5
 
 CFG_EXPORTED_COLLECTIONS = ['HEP', 'HepNames', 'Institutions', 'Conferences',
@@ -54,8 +55,15 @@ def bst_dump_records():
         output_path = os.path.join(CFG_WEBDIR, 'dumps', '.%s-records.xml.gz' % collection)
         output = gzip.open(output_path, "w")
         print >> output, "<collection>"
-        for recid in get_collection_reclist(collection):
-            print >> output, print_record(recid, 'xme', user_info={})
+        reclist = get_collection_reclist(collection)
+        tot = len(reclist)
+        time_estimator = get_time_estimator(tot)
+        for i, recid in enumerate(reclist):
+            print >> output, format_record(recid, 'xme', user_info={})[0]
+            time_estimation = time_estimator()[1]
+            if (i + 1) % 100 == 0:
+                task_update_progress("%s %s (%s%%) -> %s" % (collection, recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
+                task_sleep_now_if_required()
         print >> output, "</collection>"
         output.close()
         write_message("Computing checksum")
