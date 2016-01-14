@@ -19,7 +19,7 @@
 
 """BibFormat element - Enhanced INSPIRE MARCXML"""
 
-from invenio.bibrecord import record_xml_output, record_get_field_instances, field_get_subfield_instances
+from invenio.bibrecord import record_xml_output, record_get_field_instances, field_get_subfield_instances, record_add_field
 from invenio.search_engine import perform_request_search
 from invenio.bibrank_citation_indexer import get_tags_config as _get_tags_config, get_recids_matching_query
 from invenio.refextract_linker import find_doi, find_journal, find_reportnumber, find_book, find_isbn
@@ -111,12 +111,12 @@ def format_element(bfo, oai=0):
     """Produce MARCXML with enhanced fields.
 
     Adds 100/700 $x with Record ID of linked HepName,
-                 $y with True/False if the signature is claimed
+            /701 $y with True/False if the signature is claimed
                  $z with Record ID of institution
          371/110 $z with Record ID of institution
          502     $z with Record ID of institution
          999C5   $0 with on the fly discovered Record IDs (not for books)
-         773     $0 with Record ID of corresponding Book or Proceeding
+         773     $0 with Record ID of corresponding Book or Proceeding or Report
                  $1 with Record ID of corresponding Journal
                  $2 with Record ID of corresponding Conference
          693/710 $0 with Record ID of corresponding experiment
@@ -135,7 +135,7 @@ def format_element(bfo, oai=0):
         signatures = dict((name, (personid, flag)) for name, personid, flag in run_sql("SELECT name, personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND flag>-2", (recid, )))
 
     # Let's add signatures
-    for field in record_get_field_instances(record, '100') + record_get_field_instances(record, '700'):
+    for field in record_get_field_instances(record, '100') + record_get_field_instances(record, '700') + record_get_field_instances(record, '701'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
@@ -157,7 +157,9 @@ def format_element(bfo, oai=0):
 
     # Thesis institution
     for field in record_get_field_instances(record, '502'):
-        if 'u' in subfield_dict:
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        if 'c' in subfield_dict:
             for code, value in subfields:
                 if code == 'c':
                     ids = get_institution_ids(value)
@@ -209,6 +211,11 @@ def format_element(bfo, oai=0):
                 recids = find_isbn({'ISBN': value})
                 if len(recids) == 1:
                     subfields.append(('0', str(recids.pop())))
+            elif code == 'r':
+                # Report
+                recids = perform_request_search(p='reportnumber:"%s"' % value)
+                if len(recids) == 1:
+                    subfields.append(('0', str(recids.pop())))
 
     # Enhance Experiments
     for field in record_get_field_instances(record, '693'):
@@ -227,6 +234,12 @@ def format_element(bfo, oai=0):
                 recids = perform_request_search(p='119__a:"%s"' % value, cc='Experiments')
                 if len(recids) == 1:
                     subfields.append(('0', str(recids.pop())))
+
+    # Add Creation date:
+    if '961' in record:
+        del record['961']
+    creation_date, modification_date = run_sql("SELECT creation_date, modification_date FROM bibrec WHERE id=%s", (recid,))[0]
+    record_add_field(record, '961', subfields=[('c', creation_date.strftime('%Y-%m-%d')), ('x', modification_date.strftime('%Y-%m-%d'))])
 
     formatted_record = record_xml_output(record)
     if oai:
