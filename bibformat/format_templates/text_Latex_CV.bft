@@ -1,17 +1,17 @@
 <name>LaTeX(CV)</name>
-<description>Creates LaTeX format of a record suitable for inclusion in a CV. 
+<description>Creates LaTeX format of a record suitable for inclusion in a CV.
 N.B.: There is some hanky whitespacing in this template on the line with
 BFE_INSPIRE_AUTHORS and BFE_INSPIRE_ARXIV; this is necessary for the output
 to be correctly formatted; keep this line and its next one together in the
 same relationship.</description>
 %\cite{<BFE_TEXKEY />}
 \item%{<BFE_TEXKEY />}
-{\bf ``<BFE_INSPIRE_TITLE_BRIEF  force_title_case="yes" esctitle="0" />''}
+{\bf ``<BFE_INSPIRE_TITLE_BRIEF  force_title_case="yes" esctitle="4" />''}
   \\{}<BFE_INSPIRE_AUTHORS limit='8' separator=', ' extension=" {\it et al.}" name_last_first="no" print_links="no" suffix="." markup='latex'/><BFE_INSPIRE_ARXIV links="no" category="yes" prefix="
-  \\{}"/>
-  <BFE_INSPIRE_LATEX_DOI prefix="  \\{}" />
-<BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="\\{}" suffix=""/> %(<BFE_INSPIRE_DATE>)
-%\href{<BFE_SERVER_INFO var="absoluterecurl" />}{HEP entry}
+  \\{}"/><BFE_INSPIRE_LATEX_DOI prefix="
+  \\{}" escape="10" /><BFE_INSPIRE_PUBLI_INFO style="us" markup="latex" prefix="
+  \\{}" suffix=""/> %(<BFE_INSPIRE_DATE>)
+%\href{<BFE_SERVER_INFO var="absoluterecurl" escape="10" />}{HEP entry}
 <BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="%", suffix="" />
 
 
