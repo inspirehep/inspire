@@ -70,6 +70,7 @@ def reference2citation_element(subfields):
             citation_element['year'] = value
         elif code == 's':
             try:
+                citation_element['pubnote'] = value
                 journal, volume, page = value.split(',')
                 citation_element['journal_title'] = journal
                 citation_element['volume'] = volume
@@ -90,6 +91,10 @@ def get_matched_id(subfields):
             return recids.pop()
     if 'journal_title' in citation_element and 'year' in citation_element:
         recids = find_journal(citation_element)
+        if len(recids) == 1:
+            return recids.pop()
+    if 'pubnote' in citation_element:
+        recids = perform_request_search(p=citation_element['pubnote'], f='journal')
         if len(recids) == 1:
             return recids.pop()
     if 'report_num' in citation_element:
