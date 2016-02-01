@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -47,10 +47,21 @@ def format_element(bfo):
             tmpout.append(pubinfo.get('v', None))
             if 'y' in pubinfo:
                 tmpout.append('(%s)' % (pubinfo.get('y'),))
+            if number:
+                if number[0].isdigit():
+                    tmpout.append('no.%s,' % number)
+                else:
+                    tmpout.append('%s,' % number)
             tmpout.append(pubinfo.get('c', None))
-            out.append("<strong>%s</strong>" % (" ".join([a for a in tmpout if a]),))
-        if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or "Also in *".lower() in pubinfo['x'].lower()):
+            out.append("<strong>%s</strong>" % (
+                " ".join([a for a in tmpout if a]),))
+        if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or
+                               "Also in *".lower() in pubinfo['x'].lower()):
             out.append("<small>%s</small>" % (pubinfo['x'],))
+    # remove dups, preserve order
+    seen = set()
+    seen_add = seen.add
+    out = [x for x in out if x not in seen and not seen_add(x)]
 
     return newline.join(out)
 
