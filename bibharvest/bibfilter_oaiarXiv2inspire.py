@@ -373,6 +373,17 @@ def main():
                 holdingpen_records.append(record)
                 continue
 
+            current_record_arxiv_id = get_minimal_arxiv_id(record)
+            matched_record_arxiv_id = get_minimal_arxiv_id(existing_record)
+
+            if matched_record_arxiv_id and current_record_arxiv_id != matched_record_arxiv_id:
+                # Warning! Matched record arXiv ID is different than current
+                sys.stdout.write("Matched record has different arXiv ID!")
+                from invenio.bibrank_citation_indexer import record_duplicates_in_asana
+                from invenio.intbitset import intbitset
+                record_duplicates_in_asana(current_record_arxiv_id, intbitset([recid]))
+                continue
+
             # We remove 500 field temporary/brief entry from revision if record already exists
             fields_500 = record_get_field_instances(record, '500', ind1="%", ind2="%")
             if fields_500 is not None:
