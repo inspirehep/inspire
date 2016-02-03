@@ -49,6 +49,17 @@ CHANGES = [
     (('a', 'Kumar, Vineet'), ('i', 'INSPIRE-00170162', 'INSPIRE-00536498')),
     (('a', 'Thompson, Paul'), ('i', 'INSPIRE-00224430', 'INSPIRE-00185894')),
     (('a', 'Giorgi, Francesco Michelangelo'), ('i', 'INSPIRE-00214779', 'INSPIRE-00537048')),
+    (('a', 'Mohanty, Ajit Kumar'), ('i', 'INSPIRE-00170359', 'INSPIRE-00170162')),
+    (('a', 'Liang, Zhihua'), ('i', 'INSPIRE-00219122', 'INSPIRE-00219104')),
+    (('a', 'Navarro, Jose Enrique Garcia'), ('i', 'INSPIRE-00083629', 'INSPIRE-00022084')),
+    (('a', 'Kim, Hyunchul'), ('i', 'INSPIRE-00317156', 'INSPIRE-00350129')),
+    (('a', 'Duren, Michael'), ('i', 'INSPIRE-00213763', 'INSPIRE-00078621')),
+    (('a', 'Ferrando, Belen Salvachua'), ('i', 'INSPIRE-00222878', 'INSPIRE-00222882')),
+    (('a', 'Llacer, Maria Moreno'), ('i', 'INSPIRE-00220759', 'INSPIRE-00332523')),
+    (('a', 'Llacer, Maria Moreno'), ('a', 'Llacer, Maria Moreno', 'Moreno Llácer, María')),
+    (('a', 'Wilson, A.'), ('i', 'INSPIRE-00154108', 'INSPIRE-00301349')),
+    (('a', 'Kim, Hyeon Jin'), ('i', 'INSPIRE-00019770', 'INSPIRE-00020720')),
+    (('a', 'Yu, Jaehoon'), ('i', 'INSPIRE-00226216', 'INSPIRE-00137749')),
     ]
 
 
