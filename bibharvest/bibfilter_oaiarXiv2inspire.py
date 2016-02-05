@@ -389,10 +389,10 @@ def main():
             if fields_500 is not None:
                 record_drop_fields_matching_pattern(record, "^.?((temporary|brief) entry).?$", fields_500, "500")
 
-            # We remove also 980 Thesis/ConferencePaper added in conversion on updates
+            # We remove also 980 Thesis/ConferencePaper/CORE added in conversion on updates
             fields_980 = record_get_field_instances(record, '980', ind1="%", ind2="%")
             if fields_980 is not None:
-                record_drop_fields_matching_pattern(record, "^.?(ConferencePaper|Thesis).?$", fields_980, "980")
+                record_drop_fields_matching_pattern(record, "^.?(ConferencePaper|Thesis|CORE).?$", fields_980, "980")
 
             # Now compare new version with existing one, returning a diff[tag] = (diffcode, [..])
             # None - if field is the same for both records
