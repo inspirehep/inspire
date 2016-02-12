@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-##
-## This file is part of INSPIRE.
-## Copyright (C) 2010, 2011, 2012, 2013, 2014 CERN.
-##
-## INSPIRE is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License as
-## published by the Free Software Foundation; either version 2 of the
-## License, or (at your option) any later version.
-##
-## INSPIRE is distributed in the hope that it will be useful, but
-## WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# This file is part of INSPIRE.
+# Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016 CERN.
+#
+# INSPIRE is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# INSPIRE is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """
     name:           bibfilter_oaiarXiv2inspire
     decription:     Program to filter and analyse MARCXML records
@@ -423,6 +423,16 @@ def main():
                     field_list_246 = record_get_field_instances(existing_record, "246", ind1="%", ind2="%")
                     if not has_field(field, field_list_246):
                         fields_to_add.append(("246", [field]))
+                elif tag == "773":
+                    # Special check for publication notes to make sure we are
+                    # not adding double information.
+                    correct_773 = True
+                    for existing_773 in existing_field_list:
+                        if field_get_subfield_values(existing_773, 'p'):
+                            correct_773 = False
+                        fields_to_correct.append((tag, [existing_773]))
+                    if correct_773:
+                        fields_to_correct.append((tag, new_field_list))
                 else:
                     corrected_fields = []
                     if has_field_origin(new_field_list, "arXiv", "9"):
