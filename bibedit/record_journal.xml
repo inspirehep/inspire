@@ -1,0 +1,97 @@
+<!--
+This file is part of INSPIRE.
+Copyright (C) 2013, 2014
+
+INSPIRE is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+INSPIRE is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+-->
+<!-- BibEdit-Template-Name: journal -->
+<!-- BibEdit-Template-Description: journals -->
+<record>
+  <datafield tag="022" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:ISSN (e.g. 1234-4567)</subfield>
+    <subfield code="b">VOLATILE:Print</subfield>
+  </datafield>
+  <datafield tag="022" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:ISSN (e.g. 1234-4567)</subfield>
+    <subfield code="b">VOLATILE:Online</subfield>
+  </datafield>
+  <datafield tag="030" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CODEN</subfield>
+  </datafield>
+  <datafield tag="065" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:ADS code (e.g. ApJS)</subfield>
+    <subfield code="b">VOLATILE:ADS</subfield>
+  </datafield>
+  <datafield tag="130" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Full journal title</subfield>
+  </datafield>
+  <datafield tag="530" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Short form of related journal (e.g. Phys.Rev.Lett.)</subfield>
+    <subfield code="0">VOLATILE:recid of related journal</subfield>
+    <subfield code="w">VOLATILE:type of relation (a predecessor, b successor, r otherwise related)</subfield>
+    <subfield code="i">VOLATILE:specify relation if $$w is r</subfield>
+  </datafield>
+  <datafield tag="540" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:OA license (e.g. CC-BY-ND)</subfield>
+  </datafield>
+  <datafield tag="643" ind1=" " ind2=" ">
+    <subfield code="b">VOLATILE:Publisher</subfield>
+  </datafield>
+  <datafield tag="667" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Non-public note</subfield>
+  </datafield>
+  <datafield tag="677" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:issue mandatory</subfield>
+    <subfield code="a">VOLATILE:issue not mandatory</subfield>
+    <subfield code="a">VOLATILE:publisher issue as INSPIRE volume</subfield>
+    <subfield code="a">VOLATILE:year as  INSPIRE volume</subfield>
+    <subfield code="n">VOLATILE:note (e.g. until|from  yy/mm)</subfield>
+  </datafield>
+  <datafield tag="677" ind1=" " ind2=" ">
+    <subfield code="d">VOLATILE:DOI stub</subfield>
+  </datafield>
+  <datafield tag="677" ind1=" " ind2=" ">
+    <subfield code="c">VOLATILE:complete coverage</subfield>
+    <subfield code="f">VOLATILE:electronic feeds</subfield>
+    <subfield code="f">VOLATILE:web-scraping</subfield>
+    <subfield code="n">VOLATILE:note (e.g. until|from  yy/mm)</subfield>
+  </datafield>
+  <datafield tag="678" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:historical data</subfield>
+  </datafield>
+  <datafield tag="680" ind1=" " ind2=" ">
+    <subfield code="i">VOLATILE:Public note</subfield>
+  </datafield>
+  <datafield tag="690" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Peer Review</subfield>
+  </datafield>
+  <datafield tag="711" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Journal short form (e.g. Phys.Rev.Lett.)</subfield>
+  </datafield>
+  <datafield tag="730" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Title variant</subfield>
+    <subfield code="b">VOLATILE:Volume letter</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external link)</subfield>
+    <subfield code="w">VOLATILE:urlnote</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:CORE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">JOURNALS</subfield>
+  </datafield>
+</record>
