@@ -23,10 +23,8 @@ exactly one short name (711__a)
 all full names, short names and name variants (730__a) are unique
 """
 from invenio.search_engine import perform_request_search
-#from invenio.search_engine import get_fieldvalues
 def searchforotherjournal(name, recid):
     """Search INSPIRE for other journals with name."""
-#    pattern = 'journalname:"%s"' % name  ##need new index
     pattern = '130__a:"%s" or 730__a:"%s" or 711__a:"%s"' % (name, name, name)
     result = perform_request_search(req=None, cc='Journals', p=pattern)
     try:
@@ -40,21 +38,18 @@ def check_record(record):
     """
     recid = record['001'][0][3]
 
-# ??????????? iterfield or get_fieldvalues ???????????????????
     full_names = []
     short_names = []
     for pos, value in record.iterfield('130__a'):
         full_names.append(value)
     for pos, value in record.iterfield('711__a'):
         short_names.append(value)
-#    full_names = get_fieldvalues(recid,'130__a')
-#    short_names = get_fieldvalues(recid,'711__a')
 
 # exactly one full_name and short name
     if not len(full_names) == 1:
-        record.warn('Number of jounal names: %s. ' % len(full_names))
+        record.set_invalid('Number of jounal names: %s. ' % len(full_names))
     if not len(short_names) == 1:
-        record.warn('Number of jounal short names: %s. ' % len(short_names))
+        record.set_invalid('Number of jounal short names: %s. ' % len(short_names))
 
     all_names = []
 # are the names unique?
@@ -62,14 +57,14 @@ def check_record(record):
         all_names.append(name.upper())
         result = searchforotherjournal(name, recid)
         if result:
-            record.warn('Full name "%s" exists in other record %s. ' % (name, result))
+            record.set_invalid('Full name "%s" exists in other record %s. ' % (name, result))
     for name in short_names:
         all_names.append(name.upper())
         result = searchforotherjournal(name, recid)
         if result:
-            record.warn('Short name "%s" exists in other record %s. ' % (name, result))
+            record.set_invalid('Short name "%s" exists in other record %s. ' % (name, result))
 
-    for pos, name in record.iterfield('730__a'):
+    for pos, name in reversed(list(record.iterfield('730__a'))):
         if name.upper() in all_names:
 # avoid adding variants multiple times
             record.delete_field(pos, 'deleting already existing variant: "%s"' % name)
@@ -77,5 +72,4 @@ def check_record(record):
             all_names.append(name.upper())
             result = searchforotherjournal(name, recid)
             if result:
-                record.warn('Name variant "%s" exists in other record %s. ' % (name, result))
-
+                record.set_invalid('Name variant "%s" exists in other record %s. ' % (name, result))
