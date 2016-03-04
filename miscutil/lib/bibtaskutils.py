@@ -77,7 +77,8 @@ def submit_refextract_task(to_update, user, priority=3):
     recids = [str(r) for r in to_update]
     return task_low_level_submission('refextract', user,
                                      '-P', str(priority),
-                                     '--recids', ','.join(recids))
+                                     '--overwrite',
+                                     '--id', ','.join(recids))
 
 
 class ChunkedTask(object):
