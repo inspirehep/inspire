@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-##
-## This file is part of INSPIRE.
-## Copyright (C) 2015, 2016 CERN.
-##
-## INSPIRE is free software; you can redistribute it and/or
-## modify it under the terms of the GNU General Public License as
-## published by the Free Software Foundation; either version 2 of the
-## License, or (at your option) any later version.
-##
-## INSPIRE is distributed in the hope that it will be useful, but
-## WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-## General Public License for more details.
-##
-## You should have received a copy of the GNU General Public License
-## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
-## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+# This file is part of INSPIRE.
+# Copyright (C) 2015, 2016 CERN.
+#
+# INSPIRE is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# INSPIRE is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 """Continuously synchronizes to Labs via REDIS"""
 
@@ -53,12 +53,14 @@ ADMIN_USER_INFO = collect_user_info(get_uid_from_email(get_email_from_username('
 
 CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 
+
 def bst_prodsync(method='afs'):
     """
     Synchronize to either 'afs' or 'redis'
     """
     if not CFG_REDIS_HOST_LABS:
         method = 'afs'
+
     write_message("Prodsync started using %s method" % method)
     now = datetime.datetime.now()
     future_lastrun = now.strftime('%Y-%m-%d %H:%M:%S')
@@ -78,37 +80,65 @@ def bst_prodsync(method='afs'):
     if not modified_records:
         write_message("Nothing to do")
         return True
-    if method == 'redis':
-        r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
-    else:
-        write_message("Appeding output to %s" % CFG_OUTPUT_PATH)
-        prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
-        r = gzip.open(prodsyncname, "w")
-        print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
+
     tot = len(modified_records)
     time_estimator = get_time_estimator(tot)
     write_message("Adding %s new or modified records" % tot)
-    for i, recid in enumerate(modified_records):
-        if method == 'redis':
-            r.rpush('legacy_records', zlib.compress(format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]))
-            # Client should simply use http://redis.io/commands/lpop
-        else:
-            print >> r, format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
-        time_estimation = time_estimator()[1]
-        if (i + 1) % 100 == 0:
-            task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
-            if method == 'afs':
-                r.flush()
-            task_sleep_now_if_required()
-    write_message("Pushed %s records" % tot)
     if method == 'afs':
-        print >> r, '</collection>'
-        r.close()
-        prodsync_tarname = CFG_OUTPUT_PATH + '.tar'
-        write_message("Adding %s to %s" % (prodsyncname, prodsync_tarname))
-        prodsync_tar = tarfile.open(prodsync_tarname, 'a')
-        prodsync_tar.add(prodsyncname)
-        prodsync_tar.close()
-        os.remove(prodsyncname)
+        afs_sync(modified_records, time_estimator, tot)
+    else:
+        redis_sync(modified_records, time_estimator, tot)
     open(lastrun_path, "w").write(future_lastrun)
     write_message("DONE!")
+
+
+def redis_sync(modified_records, time_estimator, tot):
+    """Sync to redis."""
+    r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
+    for i, recid in enumerate(modified_records):
+        record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
+        if not record:
+            write_message("Error formatting record {0} as 'xme': {1}".format(
+                recid, record
+            ))
+        else:
+            r.rpush('legacy_records', zlib.compress(record))
+        if shall_sleep(recid, i, tot, time_estimator):
+            task_sleep_now_if_required()
+
+
+
+def afs_sync(modified_records, time_estimator, tot):
+    """Sync to AFS."""
+    write_message("Appending output to %s" % CFG_OUTPUT_PATH)
+    prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
+    r = gzip.open(prodsyncname, "w")
+    print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
+    for i, recid in enumerate(modified_records):
+        record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
+        if not record:
+            write_message("Error formatting record {0} as 'xme': {1}".format(
+                recid, record
+            ))
+        else:
+            print >> r, record
+        if shall_sleep(recid, i, tot, time_estimator):
+            r.flush()
+            task_sleep_now_if_required()
+    print >> r, '</collection>'
+    r.close()
+    prodsync_tarname = CFG_OUTPUT_PATH + '.tar'
+    write_message("Adding %s to %s" % (prodsyncname, prodsync_tarname))
+    prodsync_tar = tarfile.open(prodsync_tarname, 'a')
+    prodsync_tar.add(prodsyncname)
+    prodsync_tar.close()
+    os.remove(prodsyncname)
+
+
+def shall_sleep(recid, i, tot, time_estimator):
+    """Check if we shall sleep"""
+    time_estimation = time_estimator()[1]
+    if (i + 1) % 100 == 0:
+        task_update_progress("%s (%s%%) -> %s" % (recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
+        return True
+    return False
