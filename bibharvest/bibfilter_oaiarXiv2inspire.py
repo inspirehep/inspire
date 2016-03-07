@@ -384,6 +384,17 @@ def main():
                 record_duplicates_in_asana(current_record_arxiv_id, intbitset([recid]))
                 continue
 
+            existing_fields_authors = record_get_field_values(existing_record, tag="100", code="i") + \
+                record_get_field_values(existing_record, tag="700", code="i")
+            new_fields_authors = record_get_field_values(record, tag="100", code="i") + \
+                record_get_field_values(record, tag="700", code="i")
+
+            if len(existing_fields_authors) == 0 and len(new_fields_authors) > 0:
+                # We gotta take the authors below
+                take_authors = True
+            else:
+                take_authors = False
+
             # We remove 500 field temporary/brief entry from revision if record already exists
             fields_500 = record_get_field_instances(record, '500', ind1="%", ind2="%")
             if fields_500 is not None:
@@ -433,6 +444,9 @@ def main():
                         fields_to_correct.append((tag, [existing_773]))
                     if correct_773:
                         fields_to_correct.append((tag, new_field_list))
+                elif (tag == "100" or tag == "700") and take_authors:
+                    ## Take authors since $i is missing
+                    fields_to_correct.append((tag, new_field_list))
                 else:
                     corrected_fields = []
                     if has_field_origin(new_field_list, "arXiv", "9"):
