@@ -55,8 +55,8 @@ def format_element(bfo):
                 else:
                     tmpout.append('%s,' % number)
             tmpout.append(pubinfo.get('c', None))
-            if erratum.lower() in ['erratum', 'addendum', 'reprint', 'corrigendum',
-                                   'publisher-note']:
+            if len(pubinfos) > 1 and erratum.lower() in ['erratum', 'addendum', 'reprint',
+                                                         'corrigendum', 'publisher-note']:
                 errata.append("%s: %s" % (
                     erratum.capitalize(), " ".join([a for a in tmpout if a]),))
             else:
