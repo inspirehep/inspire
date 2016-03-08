@@ -34,10 +34,12 @@ def format_element(bfo):
     # Process pubnotes
     newline = "<br />"
     out = []
+    errata = []
     for pubinfo in pubinfos:
         volume = cgi.escape(pubinfo.get('v', ''))
         number = cgi.escape(pubinfo.get('n', ''))
         pages = cgi.escape(pubinfo.get('c', ''))
+        erratum = cgi.escape(pubinfo.get('m', ''))
         doi = bfo.field('0247_a') or pubinfo.get('a', '')
         if 'p' in pubinfo:
             tmpout = []
@@ -53,11 +55,18 @@ def format_element(bfo):
                 else:
                     tmpout.append('%s,' % number)
             tmpout.append(pubinfo.get('c', None))
-            out.append("<strong>%s</strong>" % (
-                " ".join([a for a in tmpout if a]),))
+            if erratum.lower() in ['erratum', 'addendum', 'reprint', 'corrigendum',
+                                   'publisher-note']:
+                errata.append("%s: %s" % (
+                    erratum.capitalize(), " ".join([a for a in tmpout if a]),))
+            else:
+                out.append("<strong>%s</strong>" % (
+                    " ".join([a for a in tmpout if a]),))
         if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or
                                "Also in *".lower() in pubinfo['x'].lower()):
             out.append("<small>%s</small>" % (pubinfo['x'],))
+    # append errata
+    out += errata
     # remove dups, preserve order
     seen = set()
     seen_add = seen.add
