@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -25,7 +25,8 @@ from invenio.bibformat_elements.bfe_INSPIRE_arxiv import get_arxiv
 #from invenio.bibknowledge import get_kbd_values
 import cgi
 
-def format_element(bfo, style='eu', markup = 'html', separator = ', '):
+
+def format_element(bfo, style='eu', markup='html', separator=', ', suffix=''):
     """
     Displays inline publication information
 
@@ -33,21 +34,23 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
     @param markup takes 'latex' or 'html'(default) which sets the markup used
 
     """
-    
+
     latexperiod = ''
     displayouts = []
+    errata = []
     displaycnt = 0
     backup_out = ''
 
     publication_infos = bfo.fields('773__')
 
-    for publication_info in publication_infos :
+    for publication_info in publication_infos:
         out = ''
         journal_source = cgi.escape(publication_info.get('p', ''))
         volume         = cgi.escape(publication_info.get('v', ''))
         year           = cgi.escape(publication_info.get('y', ''))
         number         = cgi.escape(publication_info.get('n', ''))
         pages          = cgi.escape(publication_info.get('c', ''))
+        erratum        = cgi.escape(publication_info.get('m', ''))
         doi            = bfo.field('0247_a') or publication_info.get('a', '')
         conf_code      = publication_info.get('w')
         latex_p        = markup.lower() == 'latex'
@@ -62,7 +65,7 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
 
             else:
                 if latex_p:
-                    journal_source = journal_source.replace(".",'.\\ ')
+                    journal_source = journal_source.replace(".", '.\\ ')
                     ## but some journal names end in '.', and subsequent steps
                     ## assume we do not end with '\ ', so take it off:
                     ##if journal_source[-2:] == '\ ':
@@ -97,13 +100,13 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
 
             if number:       # preparing number; it's appended below
                 if eu_style_p:
-                    number = ' ' + number + ', '
+                    number = ' no.' + number + ', '
                 else:
                     number = ', no. ' + number
 
             if latex_p:
                 if pages:
-                    dashpos = pages.find('-') 
+                    dashpos = pages.find('-')
                     if dashpos > -1:
                         pages = pages[:dashpos]
 
@@ -121,11 +124,18 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
                         out += ': ' + pages
                 ##out += ' ' + year
                 out += year
-            displaycnt += 1            
-            if displaycnt > 1 :
+            displaycnt += 1
+            if displaycnt > 1:
                 if latex_p:
-                    out = '[' + out + ']'    
-            displayouts.append(out)
+                    out = '[' + out + ']'
+            if len(publication_infos) > 1 and \
+                erratum.lower() in ['erratum', 'addendum', 'corrigendum']:
+                if suffix == '</b>':
+                    errata.append("</b>%s<b>: %s" % (erratum.capitalize(), out,))
+                else:
+                    errata.append("%s: %s" % (erratum.capitalize(), out,))
+            else:
+                displayouts.append(out)
 
         elif conf_code:
             pass
@@ -140,14 +150,16 @@ def format_element(bfo, style='eu', markup = 'html', separator = ', '):
             # there is nothing else
             backup_out = publication_info.get('x')
 
-    if displayouts :
+    displayouts += errata
+
+    if displayouts:
         # determine if there's an arxiv number to decide whether to put a
         # period after the pub-note.  There should be a period after either
         # a pub-note or an Arxiv number, but not two periods, and no period if no pub/arxiv info.
         if latex_p:
             if not get_arxiv(bfo, category="no"):
                 latexperiod = '.'
-                    
+
         return separator.join(displayouts) + latexperiod
     elif backup_out:
         return backup_out

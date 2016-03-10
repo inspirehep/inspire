@@ -5,7 +5,7 @@
 <BFE_CLIENT_INFO var="ln" prefix="?ln=">">
 <BFE_INSPIRE_TITLE_BRIEF force_title_case="yes"/></a></strong>
 <BFE_INSPIRE_AUTHORS limit="1" prefix=" - " print_affiliations="no"
-interactive="no" name_last_first="yes" extension=" <em>et al.</em>"/>
+interactive="no" name_last_first="yes" extension=" <em>et al.</em>"/><br />
 <BFE_INSPIRE_PUBLI_INFO prefix=" "/>
 <BFE_INSPIRE_ARXIV links="no" prefix="" category="yes"/>
 <BFE_REPORT_NUMBERS prefix=""/>

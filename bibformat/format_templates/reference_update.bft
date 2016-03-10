@@ -205,15 +205,11 @@ function openSrchWindow(winputid) {
   <br />
   <BFE_INSPIRE_AUTHORS prefix="" suffix="" extension=" et al." limit="3" print_links="yes" separator="; " print_affiliations="no" highlight="no" interactive="no" /><br />
   <BFE_REPORT_NUMBERS prefix=" " suffix=", " separator=", " default="" escape="" />
-  <BFE_JOURNAL_PUBLICATION_TITLE prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
-  <BFE_JOURNAL_PUBLICATION_VOLUME prefix="" suffix="," separator=" " nbMax="" default="" escape="" />
-  <BFE_JOURNAL_PUBLICATION_PAGE prefix="" suffix="," separator=" " nbMax="" default="" escape="" />
-  <BFE_JOURNAL_PUBLICATION_YEAR prefix="" suffix="; " separator=" " nbMax="" default="" escape="" />
-  <BFE_JOURNAL_PUBLICATION_DOI prefix="" suffix="" separator=" " nbMax="" default="" escape="" />
+  <BFE_INSPIRE_publi_info />
   <BFE_FIELD prefix="<small>Date-Upd:" tag="961c" suffix="</small>"/><br />
-   <BFE_INSPIRE_ARXIV prefix='<a href="http://arXiv.org/pdf/' suffix='" target="blank">PDF</a> from arXiv ' default="" escape=""
+  <BFE_INSPIRE_ARXIV prefix='<a href="http://arXiv.org/pdf/' suffix='" target="blank">PDF</a> from arXiv ' default="" escape=""
       category="no" links="no" mirrors="no"/> &nbsp;
-      <BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" target="blank" show_icons="no" default="" separator="  "/>
+  <BFE_INSPIRE_JOURNAL_LINKS prefix="" suffix="" default="" escape="" style="" target="blank" show_icons="no" default="" separator="  "/>
 
 </div>
 <div style="clear:both;height:1px">&nbsp;</div>
