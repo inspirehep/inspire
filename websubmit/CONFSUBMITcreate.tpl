@@ -4,6 +4,8 @@ START::DEFP()---<record>
 8564u::REP(EOL,)::MINLW(82)---<datafield tag="856" ind1="4" ind2=" "><subfield code="u"><:CONFSUBMIT_URL::CONFSUBMIT_URL:></subfield></datafield>
 111_start::REP(EOL,)::DEFP()---<datafield tag="111" ind1=" " ind2=" ">
 111a::REP(EOL,)::MINLW(31)---<subfield code="a"><:CONFSUBMIT_TITL::CONFSUBMIT_TITL:></subfield>
+111b::REP(EOL,)::MINLW(31)---<subfield code="b"><:CONFSUBMIT_SUBT::CONFSUBMIT_SUBT:></subfield>
+111e::REP(EOL,)::MINLW(31)---<subfield code="e"><:CONFSUBMIT_SHOR::CONFSUBMIT_SHOR:></subfield>
 111x::REP(EOL,)::MINLW(33)---<subfield code="x"><:CONFSUBMIT_SDAT::year:>-<:CONFSUBMIT_SDAT::mm:>-<:CONFSUBMIT_SDAT::dd:></subfield>
 111y::REP(EOL,)::MINLW(33)---<subfield code="y"><:CONFSUBMIT_FDAT::year:>-<:CONFSUBMIT_FDAT::mm:>-<:CONFSUBMIT_FDAT::dd:></subfield>
 111c::REP(EOL,)::RANGE(1,1)::IFDEFP(CONFSUBMIT_STAT,,0)---<subfield code="c"><:CONFSUBMIT_CITY::CONFSUBMIT_CITY:>, <:CONFSUBMIT_STAT::CONFSUBMIT_STAT:>, <:CONFSUBMIT_CNTR::CONFSUBMIT_CNTR:></subfield>
