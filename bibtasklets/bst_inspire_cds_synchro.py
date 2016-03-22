@@ -38,7 +38,6 @@ if CFG_INSPIRE_SITE:
     CFG_OTHER_SITE = "CDS"
     CFG_THIS_URL = "https://inspirehep.net/record"
     CFG_OTHER_URL = "https://cds.cern.ch/record"
-    CERN_RELEVANT_PAPER = get_collection_reclist("CERN")
 elif CFG_CERN_SITE:
     CFG_THIS_SITE = "CDS"
     CFG_OTHER_SITE = "Inspire"
@@ -47,8 +46,25 @@ elif CFG_CERN_SITE:
 
 CFG_SHARED_PATH = '/afs/cern.ch/project/inspire/cds-synchro'
 CFG_EXPORT_FILE = os.path.join(CFG_SHARED_PATH, '%s2%s.ids' % (CFG_THIS_SITE, CFG_OTHER_SITE))
+CFG_CERN_FILE = os.path.join(CFG_SHARED_PATH, 'CERN.ids')
 CFG_IMPORT_FILE = os.path.join(CFG_SHARED_PATH, '%s2%s.ids' % (CFG_OTHER_SITE, CFG_THIS_SITE))
 
+
+def dump_cern_ids():
+    """Write in CFG_CERN_FILE the intbitset with all the IDs of CERN records."""
+    if CFG_CERN_SITE:
+        ids = search_pattern(p='690C_a:CERN')
+        with open(CFG_CERN_FILE, "w") as out:
+            out.write(ids.fastdump())
+
+def load_cern_ids():
+    """Read from CFG_CERN_FILE the intbitset with all the IDs of CERN records."""
+    if CFG_INSPIRE_SITE:
+        with open(CFG_CERN_FILE) as input:
+            return intbitset(input.read())
+
+if CFG_INSPIRE_SITE:
+    CERN_IDS = load_cern_ids()
 
 def get_temporary_file(prefix="cds_inspire_synchro_",
                        suffix=".xml",
@@ -224,6 +240,7 @@ def add_other_id(other_id=None, doi="", eprint="",
             return [other_id] + list(system_number_ids)
         elif len(system_number_ids) == 1:
             recid = system_number_ids[0]
+
     if recid:
         recid = int(recid)
         record = get_record(recid)
@@ -239,7 +256,10 @@ def add_other_id(other_id=None, doi="", eprint="",
                     continue
                 if stored_recid and int(stored_recid) != int(other_id):
                     write_message("ERROR: %s record %s matches %s record %s which already points back to a different record %s in %s" % (CFG_OTHER_SITE, other_id, CFG_THIS_SITE, recid, stored_recid, CFG_OTHER_SITE), stream=sys.stderr)
-                return
+                if CFG_INSPIRE_SITE and int(other_id) not in CERN_IDS:
+                    write_message("INFO: ID was found in 035 but the record is not core CERN hence it should be moved into 595")
+                else:
+                    return
 
         if CFG_INSPIRE_SITE:
             fields = record_get_field_instances(record, '595')
@@ -254,7 +274,10 @@ def add_other_id(other_id=None, doi="", eprint="",
                         continue
                     if stored_recid and int(stored_recid) != int(other_id):
                         write_message("ERROR: %s record %s matches %s record %s which already points back to a different record %s in %s" % (CFG_OTHER_SITE, other_id, CFG_THIS_SITE, recid, stored_recid, CFG_OTHER_SITE), stream=sys.stderr)
-                    return
+                    if int(other_id) in CERN_IDS:
+                        write_message("INFO: ID was found in 595 but the record is core CERN hence it should be moved into 035")
+                    else:
+                        return
 
         write_message("Matched {1}/{0} to {3}/{2} with {4}".format(
             other_id,
@@ -265,8 +288,21 @@ def add_other_id(other_id=None, doi="", eprint="",
         ))
         rec = {}
         record_add_field(rec, '001', controlfield_value='%s' % recid)
+
+        # Let's filter out previous values in 035/595
+        for field in record_get_field_instances(record, '035'):
+            subfields = field_get_subfield_instances(field)
+            subfields_dict = dict(subfields)
+            if subfields_dict.get('a') != str(other_id) or subfields_dict.get('9') != CFG_OTHER_SITE:
+                record_add_field(rec, '035', subfields=subfields)
+        for field in record_get_field_instances(record, '595'):
+            subfields = field_get_subfield_instances(field)
+            subfields_dict = dict(subfields)
+            if subfields_dict.get('a') != "CDS-{0}".format(other_id) or subfields_dict.get('9') != 'CERN':
+                record_add_field(rec, '595', subfields=subfields)
+
         if CFG_INSPIRE_SITE:
-            if recid in CERN_RELEVANT_PAPER:
+            if int(other_id) in CERN_IDS:
                 write_message("CERN relevant paper: adding 035")
                 record_add_field(rec, '035', ind1=' ', ind2=' ', subfields=(('9', CFG_OTHER_SITE), ('a', other_id)))
             else:
@@ -331,16 +367,16 @@ def import_recid_list(input_stream=sys.stdin, batch_limit=500, automatic_upload=
                         task_low_level_submission(
                             'bibupload',
                             'bst_inspire_cds_synchro',
-                            '-a', output_file, '-n')
-                        write_message("Scheduled bibupload --append %s" % output_file)
+                            '-c', output_file, '-n')
+                        write_message("Scheduled bibupload --correct %s" % output_file)
                     task_sleep_now_if_required()
                     current_batch = []
     if len(current_batch) > 0:
         output_file = write_results(current_batch)
         output_files.append(output_file)
         if automatic_upload:
-            task_low_level_submission('bibupload', 'bst_inspire_cds_synchro', '-a', output_file, '-n')
-            write_message("Scheduled bibupload --append %s" % output_file)
+            task_low_level_submission('bibupload', 'bst_inspire_cds_synchro', '-c', output_file, '-n')
+            write_message("Scheduled bibupload --correct %s" % output_file)
     write_message("Matched in total {0} records.".format(i))
 
     if len(current_dupes) > 0:
@@ -372,6 +408,8 @@ def bst_inspire_cds_synchro(unmatched_only=False,
     """
     if not skip_extraction:
         task_update_progress("Phase 1: extracting IDs for %s" % CFG_OTHER_SITE)
+        if CFG_CERN_SITE:
+            dump_cern_ids()
         if unmatched_only:
             # We expose only those that are unmatched
             recids = get_record_ids_to_export(unmatched_only=True)
