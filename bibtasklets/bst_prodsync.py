@@ -85,7 +85,7 @@ def bst_prodsync(method='afs'):
     time_estimator = get_time_estimator(tot)
     write_message("Adding %s new or modified records" % tot)
     if method == 'afs':
-        afs_sync(modified_records, time_estimator, tot)
+        afs_sync(modified_records, time_estimator, tot, now)
     else:
         redis_sync(modified_records, time_estimator, tot)
     open(lastrun_path, "w").write(future_lastrun)
@@ -108,7 +108,7 @@ def redis_sync(modified_records, time_estimator, tot):
 
 
 
-def afs_sync(modified_records, time_estimator, tot):
+def afs_sync(modified_records, time_estimator, tot, now):
     """Sync to AFS."""
     write_message("Appending output to %s" % CFG_OUTPUT_PATH)
     prodsyncname = CFG_OUTPUT_PATH + now.strftime("%Y%m%d%H%M%S") + '.xml.gz'
