@@ -118,6 +118,7 @@ def format_element(bfo, oai=0):
     Adds 100/700 $x with Record ID of linked HepName,
             /701 $y with True/False if the signature is claimed
                  $z with Record ID of institution
+                 $w with BAI of linked Profile
          371/110 $z with Record ID of institution
          502     $z with Record ID of institution
          999C5   $0 with on the fly discovered Record IDs (not for books)
@@ -146,11 +147,13 @@ def format_element(bfo, oai=0):
         if 'a' in subfield_dict:
             author_name = subfield_dict['a']
             personid, flag = signatures.get(author_name, (None, None))
-            if personid:
+            bai = get_personid_canonical_id().get(personid)
+            if bai:
+                subfields.append(('w', bai))
                 hepname_id = get_hepname_id(personid)
                 if hepname_id:
                     subfields.append(('x', '%i' % hepname_id))
-                    subfields.append(('y', '%i' % (flag > 0)))
+                subfields.append(('y', '%i' % (flag > 0)))
 
         # And matched affiliations
         if 'u' in subfield_dict:
