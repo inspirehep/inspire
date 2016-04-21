@@ -72,3 +72,42 @@ def index(req, p=""):
     body = '\n'.join(body)
 
     return page(req=req, body=body, title="HepNames and BAIs for %s" % escape(p, True))
+
+
+def json(req):
+    """
+    Returns all BAI information in a JSON friendly way.
+    """
+    import json
+    from invenio.dbquery import run_sql
+    from invenio.webuser import collect_user_info
+    from invenio.access_control_admin import acc_is_user_in_role, acc_get_role_id
+    if not acc_is_user_in_role(collect_user_info(req), acc_get_role_id('cernintranet')):
+        from invenio.webinterface_handler_config import HTTP_FORBIDDEN
+        req.status = HTTP_FORBIDDEN
+        return ""
+    bais = run_sql("SELECT personid, tag, data FROM aidPERSONIDDATA WHERE tag in ('canonical_name', 'extid:INSPIREID', 'extid:ORCID', 'uid') ORDER BY personid")
+    emails = dict(run_sql("SELECT id, email FROM user"))
+    req.content_type = 'application/json'
+    old_personid = None
+    authors = {}
+    person = {}
+    canonical_name = ""
+    for personid, tag, data in bais:
+        if personid != old_personid:
+            if not person and canonical_name in authors:
+                # We can delete this person
+                del authors[canonical_name]
+            person = {}
+            old_personid = personid
+        if tag == 'canonical_name':
+            authors[data] = person
+            canonical_name = data
+        elif tag == 'uid' and int(data) in emails:
+            person['email'] = emails[int(data)]
+        elif tag == 'extid:INSPIREID':
+            person['INSPIREID'] = data
+        elif tag == 'extid:ORCID':
+            person['ORCID'] = data
+    json.dump(authors, req)
+    return ""
