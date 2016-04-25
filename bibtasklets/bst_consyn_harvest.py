@@ -252,8 +252,7 @@ def extractAll(zipName, delete_zip, directory):
             xml_files_extracted.append(f)
         extract_fld = join(directory, "consyn-files")
         extract_fld = extract_fld.lstrip()
-        if not exists(join(extract_fld, f)):
-            z.extract(f, extract_fld)
+        z.extract(f, extract_fld)
     if delete_zip:
         #delete the zip file after the extraction
         write_message("Deleting zip file: " + zipName + "\n")
