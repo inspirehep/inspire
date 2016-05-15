@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -36,7 +36,7 @@ def format_element(bfo, separator=', ', limit='9999', extension=" etc.", just_on
            skip=['arXiv'], just_one=just_one)
 
 
-def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None, just_one=False):
+def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=None, just_one=False, prefix='', suffix=''):
     """
     Prints the report numbers of the record (037__a and 088__a)
 
@@ -73,10 +73,13 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
         if 'a' in x:
             out.append(x['a'])
 
+    if not out:
+        return
+
     if limit.isdigit() and int(limit) <= len(out):
-        return separator.join(out[:int(limit)]) + extension
+        return prefix + separator.join(out[:int(limit)]) + extension + suffix
     else:
-        return separator.join(out)
+        return prefix + separator.join(out) + suffix
 
 def build_report_number_link(report_number, link_p=True):
     """
