@@ -74,7 +74,7 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
             out.append(x['a'])
 
     if not out:
-        return
+        return ''
 
     if limit.isdigit() and int(limit) <= len(out):
         return prefix + separator.join(out[:int(limit)]) + extension + suffix
