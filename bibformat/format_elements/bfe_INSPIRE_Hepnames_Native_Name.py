@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013, 2015 CERN.
+## Copyright (C) 2013, 2015, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -20,18 +20,18 @@
 """
 
 
-def format_element(bfo, css_class=''):
+def format_element(bfo, css_class='', separator='; '):
     """
     Prints person's native name in hepnames
     """
 
-    native_name = bfo.field("880__a")
-    if native_name:
-        native_name = '(' + native_name + ')'
+    native_names = bfo.fields("880__a")
+    if native_names:
+        native_names = '(' + separator.join(native_names) + ')'
         if css_class:
-            return '<span class="%s"> %s</span>' % (css_class, native_name,)
+            return '<span class="%s"> %s</span>' % (css_class, native_names,)
         else:
-            return native_name
+            return native_names
     return ''
 
 
