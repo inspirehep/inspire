@@ -33,7 +33,7 @@ from invenio.bibtask import write_message, task_update_progress, task_sleep_now_
 from invenio.bibdocfile import calculate_md5
 
 CFG_EXPORTED_COLLECTIONS = ['HEP', 'HepNames', 'Institutions', 'Conferences',
-                            'Jobs', 'Experiments']
+                            'Jobs', 'Experiments', 'Journals', 'Data']
 
 def bst_dump_records():
     try:

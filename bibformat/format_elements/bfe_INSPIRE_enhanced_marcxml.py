@@ -153,7 +153,7 @@ def format_element(bfo, oai=0):
                 hepname_id = get_hepname_id(personid)
                 if hepname_id:
                     subfields.append(('x', '%i' % hepname_id))
-                subfields.append(('y', '%i' % (flag > 0)))
+                subfields.append(('y', '%i' % (flag == 2)))
 
         # And matched affiliations
         if 'u' in subfield_dict:
