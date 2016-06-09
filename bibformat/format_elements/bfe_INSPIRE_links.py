@@ -39,6 +39,7 @@ EUCLID = 'http://projecteuclid.org/'
 HAL = 'https://hal.archives-ouvertes.fr/'
 KEK = 'http://www-lib.kek.jp/cgi-bin/img_index?'
 MSNET = 'http://www.ams.org/mathscinet-getitem?mr='
+OSTI = 'http://www.osti.gov/scitech/biblio/'
 ZBLATT = 'http://www.zentralblatt-math.org/zmath/en/search/?an='
 
 
@@ -69,20 +70,20 @@ def format_element(bfo, default='', separator='; ', style='',
 
         if provenance == 'KEKSCAN':
             extid = extid.replace("-", "")
-            links.append('<a%s href="%s%s"> KEK scanned document </a>' %
+            links.append('<a%s href="%s%s"> KEK scanned document</a>' %
                          (style, KEK, extid))
         elif provenance == 'CDS':
-            links.append('<a%s href="%s%s"> CERN Document Server </a>' %
+            links.append('<a%s href="%s%s"> CERN Document Server</a>' %
                          (style, CDS, extid))
         elif provenance == 'ADS':
             extid = extid.replace('&', '%26')  # A&A etc.
-            links.append('<a%s href="%s%s"> ADS Abstract Service </a>' %
+            links.append('<a%s href="%s%s"> ADS Abstract Service</a>' %
                          (style, ADSABS, extid))
             adslinked = True
         elif provenance == 'HAL':
             from invenio.webuser import isUserAdmin
             if isUserAdmin(bfo.user_info):
-                links.append('<a %s href="%s%s"> HAL Archives Ouvertes </a>' %
+                links.append('<a %s href="%s%s"> HAL Archives Ouvertes</a>' %
                              (style, HAL, extid))
 
     # fallback ADS link via arXiv:e-print
@@ -96,7 +97,7 @@ def format_element(bfo, default='', separator='; ', style='',
         if eprints:
             adslinked = True
             for eprint in eprints:
-                links.append('<a href="%s%s">ADS Abstract Service</a>'
+                links.append('<a href="%s%s"> ADS Abstract Service</a>'
                              % (ADSABS, eprint))
 
     # external identifiers in tag 035__a along with service label in 035__9
@@ -109,14 +110,17 @@ def format_element(bfo, default='', separator='; ', style='',
 
         provenance = provenance.lower()
         if provenance == "msnet":
-            links.append('<a%s href="%s%s">AMS MathSciNet</a>' %
+            links.append('<a%s href="%s%s"> AMS MathSciNet</a>' %
                          (style, MSNET, extid))
         elif provenance == "zblatt":
-            links.append('<a%s href="%s%s">zbMATH</a>' %
+            links.append('<a%s href="%s%s"> zbMATH</a>' %
                          (style, ZBLATT, extid))
         elif provenance == "euclid":
-            links.append('<a%s href="%s%s">Project Euclid</a>' %
+            links.append('<a%s href="%s%s"> Project Euclid</a>' %
                          (style, EUCLID, extid))
+        elif provenance == "osti":
+            links.append('<a%s href="%s%s"> OSTI Information Bridge Server</a>' %
+                         (style, OSTI, extid))
 
     # now look for explicit URLs
     # might want to check that we aren't repeating things from above...
