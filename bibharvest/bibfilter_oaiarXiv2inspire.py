@@ -47,6 +47,7 @@ from invenio.bibupload import retrieve_rec_id
 from invenio.textutils import wash_for_xml, wash_for_utf8
 from invenio.search_engine import perform_request_search
 from invenio.refextract_api import extract_journal_reference
+from invenio.oai_harvest_daemon import create_authorlist_ticket
 
 
 def parse_actions(action_line):
@@ -445,7 +446,19 @@ def main():
                     if correct_773:
                         fields_to_correct.append((tag, new_field_list))
                 elif (tag == "100" or tag == "700") and take_authors:
-                    ## Take authors since $i is missing
+                    # Take authors since $i is missing
+                    # Check if some $$i is missing from new records as well and report it
+                    missing_identifier_fields = []
+                    for field in new_fields_authors:
+                        subfields = dict(field_get_subfield_instances(field))
+                        if "i" not in subfields:
+                            missing_identifier_fields.append(field)
+                    if missing_identifier_fields:
+                        create_authorlist_ticket(
+                            [("700", missing_identifier_fields)],
+                            current_record_arxiv_id, "AUTHORS_long_list",
+                            missing_ids=True
+                        )
                     fields_to_correct.append((tag, new_field_list))
                 else:
                     corrected_fields = []
