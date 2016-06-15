@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -19,8 +19,9 @@
 """BibFormat element - Print titles in the most flexible reasonable fashion
 """
 
+import re
 
-def format_element(bfo, highlight="no", force_title_case="no", brief="no", esctitle='0', oldtitles="no"):
+def format_element(bfo, highlight="no", force_title_case="no", brief="no", esctitle='0', oldtitles="no", mode=None):
     """
     Prints a title, with optional subtitles, and optional highlighting.
 
@@ -29,6 +30,7 @@ def format_element(bfo, highlight="no", force_title_case="no", brief="no", escti
     @param brief If yes, skip printing subtitles; if no, print complete title:subtitle
     @param esctitle How should escaping of titles in the database be handled?
     @param oldtitles Whether to show old titles in output
+    @param mode In mode='tex' apply some TeX sequence escapes to output
     """
 
     out = ''
@@ -58,9 +60,25 @@ def format_element(bfo, highlight="no", force_title_case="no", brief="no", escti
                                         suffix_tag='</span>')
 
     # Force title casing if requested
-    if force_title_case.lower()=="yes" and (out.upper()==out or out.find('THE ')>=0):   #title is allcaps
-        out=' '.join([word.capitalize() for word in out.split(' ')])   # .title() too dumb; don't cap 1 letter words
+    if force_title_case.lower() == "yes" and (out.upper() == out or out.find('THE ') >= 0):
+        #title is allcaps
+        out = ' '.join([word.capitalize() for word in out.split(' ')])
+        # .title() too dumb; don't cap 1 letter words
 
+
+    if mode == 'tex':
+        # TeX escape some common sequences
+        if out.count('$') == 0:
+            out = re.sub(r'(?<!\\)([_%&#])', r'\\\1', out)
+            out = re.sub(r'-+&gt;', r'$\,\to\,$', out)
+            out = re.sub(r'-+>', r'$\,\to\,$', out)
+            out = re.sub(r'(?<!\\)\^', r'\\textasciicircum{}', out)
+            greek = '|'.join(('alpha', 'beta', 'gamma', 'Gamma', 'delta', 'Delta', 'epsilon',
+                              'zeta', 'eta', 'theta', 'Theta', 'kappa', 'lambda', 'Lambda',
+                              'mu', 'nu', 'xi', 'Xi', 'pi', 'Pi', 'rho', 'sigma', 'Sigma',
+                              'tau', 'upsilon', 'Upsilon', 'phi', 'Phi', 'chi', 'psi', 'Psi',
+                              'omega', 'Omega'))
+            out = re.sub(r'\\(' +  greek + r')\b', r'$\\\1$', out)
     return out
 
 
