@@ -34,6 +34,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="100" ind1=" " ind2=" ">
     <subfield code="e">VOLATILE:ed.</subfield>
   </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="j">VOLATILE:ORCID:</subfield>
+  </datafield>
   <datafield tag="300" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:999</subfield>
   </datafield>
@@ -51,6 +54,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   </datafield>
   <datafield tag="700" ind1=" " ind2=" ">
     <subfield code="e">VOLATILE:ed.</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="j">VOLATILE:ORCID:</subfield>
   </datafield>
   <datafield tag="773" ind1=" " ind2=" ">
     <subfield code="m">VOLATILE:Erratum</subfield>
