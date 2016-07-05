@@ -385,10 +385,10 @@ def main():
                 record_duplicates_in_asana(current_record_arxiv_id, intbitset([recid]))
                 continue
 
-            existing_fields_authors = record_get_field_values(existing_record, tag="100", code="i") + \
-                record_get_field_values(existing_record, tag="700", code="i")
-            new_fields_authors = record_get_field_values(record, tag="100", code="i") + \
-                record_get_field_values(record, tag="700", code="i")
+            existing_fields_authors = record_get_field_instances(existing_record, tag="100") + \
+                record_get_field_instances(existing_record, tag="700")
+            new_fields_authors = record_get_field_instances(record, tag="100") + \
+                record_get_field_instances(record, tag="700")
 
             if len(existing_fields_authors) == 0 and len(new_fields_authors) > 0:
                 # We gotta take the authors below
