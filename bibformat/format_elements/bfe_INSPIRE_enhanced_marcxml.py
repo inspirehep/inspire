@@ -48,6 +48,14 @@ def get_hepname_id(personid):
             HEPNAME_CACHE[personid] = recids[0] if recids else None
     return HEPNAME_CACHE[personid]
 
+INSPIRE_ID_CACHE = {}
+def get_hepname_id_from_inspire_id(inspire_id):
+    global INSPIRE_ID_CACHE
+    if inspire_id not in INSPIRE_ID_CACHE:
+        recids = perform_request_search(p='035__a:"%s"' % inspire_id, cc='HepNames')
+        INSPIRE_ID_CACHE[inspire_id] = recids[0] if recids else None
+    return INSPIRE_ID_CACHE[inspire_id]
+
 CANONICAL_NAME_CACHE = {}
 def get_personid_canonical_id():
     global CANONICAL_NAME_CACHE
@@ -120,7 +128,7 @@ def format_element(bfo, oai=0):
                  $z with Record ID of institution
                  $w with BAI of linked Profile
          371/110 $z with Record ID of institution
-         502     $z with Record ID of institution
+         119/502 $z with Record ID of institution
          999C5   $0 with on the fly discovered Record IDs (not for books)
          773     $0 with Record ID of corresponding Book or Proceeding or Report
                  $1 with Record ID of corresponding Journal
@@ -146,14 +154,21 @@ def format_element(bfo, oai=0):
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
             author_name = subfield_dict['a']
-            personid, flag = signatures.get(author_name, (None, None))
-            bai = get_personid_canonical_id().get(personid)
-            if bai:
-                subfields.append(('w', bai))
-                hepname_id = get_hepname_id(personid)
+            if 'i' in subfield_dict:
+                inspire_id = subfield_dict['i']
+                hepname_id = get_hepname_id_from_inspire_id(inspire_id)
                 if hepname_id:
                     subfields.append(('x', '%i' % hepname_id))
-                subfields.append(('y', '%i' % (flag == 2)))
+                    subfields.append(('y', '1'))
+            else:
+                personid, flag = signatures.get(author_name, (None, None))
+                bai = get_personid_canonical_id().get(personid)
+                if bai:
+                    subfields.append(('w', bai))
+                    hepname_id = get_hepname_id(personid)
+                    if hepname_id:
+                        subfields.append(('x', '%i' % hepname_id))
+                    subfields.append(('y', '%i' % (flag == 2)))
 
         # And matched affiliations
         if 'u' in subfield_dict:
@@ -170,6 +185,17 @@ def format_element(bfo, oai=0):
         if 'c' in subfield_dict:
             for code, value in subfields:
                 if code == 'c':
+                    ids = get_institution_ids(value)
+                    if len(ids) == 1:
+                        subfields.append(('z', '%i' % ids[0]))
+
+    # Enhance affiliation in Experiments
+    for field in record_get_field_instances(record, '119'):
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        if 'u' in subfield_dict:
+            for code, value in subfields:
+                if code == 'u':
                     ids = get_institution_ids(value)
                     if len(ids) == 1:
                         subfields.append(('z', '%i' % ids[0]))
