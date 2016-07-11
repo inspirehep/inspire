@@ -85,9 +85,9 @@ def bst_prodsync(method='afs'):
     time_estimator = get_time_estimator(tot)
     write_message("Adding %s new or modified records" % tot)
     if method == 'afs':
-        afs_sync(modified_records, time_estimator, tot, now)
+        afs_sync(reversed(modified_records), time_estimator, tot, now)
     else:
-        redis_sync(modified_records, time_estimator, tot)
+        redis_sync(reversed(modified_records), time_estimator, tot)
     open(lastrun_path, "w").write(future_lastrun)
     write_message("DONE!")
 
