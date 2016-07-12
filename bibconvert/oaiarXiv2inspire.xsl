@@ -170,7 +170,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 
     <xsl:for-each select="$node/arXiv:affiliation">
       <xsl:variable name="knlow"><xsl:value-of select="normalize-space(translate(., $ucletters, $lcletters))"/></xsl:variable>
-      <xsl:if test="not (contains($knlow,'collab') or contains($knlow,'team') or contains($knlow,'group') or contains($knlow, 'for the'))">
+      <xsl:if test="not (contains($knlow,'collab') or contains($knlow,'team') or contains($knlow,'group') or contains($knlow, 'for the '))">
         <subfield code="v"><xsl:value-of select="."/></subfield>
       </xsl:if>
     </xsl:for-each>
@@ -185,16 +185,16 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <xsl:variable name="knlowkn" select="normalize-space(translate($node/arXiv:keyname, $ucletters, $lcletters))" />
     <xsl:variable name="knlow" select="concat($knlowc,$knlowfn,$knlowkn)" />
 
-    <xsl:if test="contains($knlow, 'collab') or contains($knlow, 'team') or contains($knlow,'group') or contains($knlow, 'for the') ">
+    <xsl:if test="contains($knlow, 'collab') or contains($knlow, 'team') or contains($knlow,'group') or contains($knlow, 'for the ') ">
 
       <xsl:choose>
-        <xsl:when test="contains($knlowc, 'collab') or contains($knlowc, 'team') or contains($knlowc,'group') or contains($knlowc, 'for the')">
+        <xsl:when test="contains($knlowc, 'collab') or contains($knlowc, 'team') or contains($knlowc,'group') or contains($knlowc, 'for the ')">
     <xsl:value-of select="$node/arXiv:affiliation"/>
         </xsl:when>
-        <xsl:when test="contains($knlowfn, 'collab') or contains($knlowfn, 'team') or contains($knlowfn,'group') or contains($knlowfn, 'for the')">
+        <xsl:when test="contains($knlowfn, 'collab') or contains($knlowfn, 'team') or contains($knlowfn,'group') or contains($knlowfn, 'for the ')">
     <xsl:value-of select="concat($node/arXiv:keyname , ' ', $node/arXiv:forenames)"/>
         </xsl:when>
-        <xsl:when test="contains($knlowkn, 'collab') or contains($knlowkn, 'team') or contains($knlowkn, 'for the')">
+        <xsl:when test="contains($knlowkn, 'collab') or contains($knlowkn, 'team') or contains($knlowkn, 'for the ')">
     <xsl:value-of select="concat($node/arXiv:forenames, ' ', $node/arXiv:keyname)"/>
         </xsl:when>
         <xsl:otherwise>
@@ -449,9 +449,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
                                                                      or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'TEAM')
                                                                      or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'GROUP')
                                                                      or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'GROUP')
-                                                                     or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE')
-                                                                     or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE')
-                                                                     or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'FOR THE')
+                                                                     or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE ')
+                                                                     or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE ')
+                                                                     or contains(translate(./arXiv:affiliation, $lcletters, $ucletters) , 'FOR THE ')
                                                                      ]"/>
           <xsl:variable name="containingAuthor" select="./OAI-PMH:metadata/arXiv:arXiv/arXiv:authors/arXiv:author[not(
                                                               contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'CONSORTIUM')
@@ -461,8 +461,8 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'TEAM')
                                                               or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'TEAM')
                                                               or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'GROUP')
-                                                              or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE')
-                                                              or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE')
+                                                              or contains(translate(./arXiv:forenames, $lcletters, $ucletters), 'FOR THE ')
+                                                              or contains(translate(./arXiv:keyname, $lcletters, $ucletters) , 'FOR THE ')
                                                               )
                                                               or contains(./arXiv:forenames, 'Collaboration:')
                                                               or contains(./arXiv:forenames, 'Consortium:')]"/>
