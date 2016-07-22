@@ -124,7 +124,7 @@ def format_element(bfo, oai=0):
     """Produce MARCXML with enhanced fields.
 
     Adds 100/700 $x with Record ID of linked HepName,
-            /701 $y with True/False if the signature is claimed
+         701/702 $y with True/False if the signature is claimed
                  $z with Record ID of institution
                  $w with BAI of linked Profile
          371/110 $z with Record ID of institution
@@ -149,7 +149,7 @@ def format_element(bfo, oai=0):
         signatures = dict((name, (personid, flag)) for name, personid, flag in run_sql("SELECT name, personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND flag>-2", (recid, )))
 
     # Let's add signatures
-    for field in record_get_field_instances(record, '100') + record_get_field_instances(record, '700') + record_get_field_instances(record, '701'):
+    for field in record_get_field_instances(record, '100') + record_get_field_instances(record, '700') + record_get_field_instances(record, '701') + record_get_field_instances(record, '702'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
