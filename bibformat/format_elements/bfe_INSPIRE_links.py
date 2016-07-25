@@ -129,7 +129,7 @@ def format_element(bfo, default='', separator='; ', style='',
     allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS"]
     for url in urls:
         if url.get("y", "").lower() not in \
-           ("adsabs", "euclid", "msnet", "zblatt"):
+           ("adsabs", "euclid", "msnet", "osti", "zblatt"):
             if '.png' not in url.get('u', '') and not (
                     url.get('y', '').lower().startswith("fermilab") and
                     bfo.field("710__g").lower() in
