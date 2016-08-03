@@ -16,9 +16,9 @@
 
 <BFE_FIELD prefix="<br />" suffix="<br />" tag="520a" escape="">
 <br />
-<a href="/search?ln=en&p=693__e%3A<BFE_FIELD tag='119__a'/>">HEP articles associated with <BFE_FIELD tag="119__a"/></a><br />
-<a href="/search?ln=en&cc=HepNames&p=693__e%3A<BFE_FIELD tag='119__a'/>">Collaboration members in HepNames</a><br />
-<a href="/search?ln=en&ln=en&p=693__e%3A<BFE_FIELD tag='119__a'/>&of=hcs">Citesummary</a>
+<a href="/search?p=693__e%3A<BFE_INSPIRE_EXP_ACRONYM urlescape='1'/>">HEP articles associated with <BFE_INSPIRE_EXP_ACRONYM/></a><br />
+<a href="/search?cc=HepNames&amp;p=693__e%3A<BFE_INSPIRE_EXP_ACRONYM urlescape='1'/>">Collaboration members in HepNames</a><br />
+<a href="/search?p=693__e%3A<BFE_INSPIRE_EXP_ACRONYM urlescape='1'/>&amp;of=hcs">Citesummary</a>
 <BFE_INSPIRE_EXP_RELATED prefix="<br />Related Experiments: " /><br />
 <BFE_INSPIRE_EXP_COLLABORATION prefix="<br />"/>
 
