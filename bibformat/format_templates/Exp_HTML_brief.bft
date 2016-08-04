@@ -1,6 +1,6 @@
 <name>Exp HTML Brief</name>
 <description>Default HTML brief format for Experiments</description>
-<!-- START REC 11.Brief --!>
+<!-- START REC 11.Brief -->
 <div class="record_body">
 
 <a class = "titlelink" href="<BFE_SERVER_INFO var="recurl">">
