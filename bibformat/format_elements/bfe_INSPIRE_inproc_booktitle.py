@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2015 CERN.
+## Copyright (C) 2015, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -68,7 +68,7 @@ def format_element(bfo):
                 titles = get_fieldvalues(recids[0], '245__a')
                 if titles:
                     booktitle = titles[0]
-                    subtitles = get_fieldvalues(recid, '245__b')
+                    subtitles = get_fieldvalues(recids[0], '245__b')
                     if subtitles:
                         booktitle += ': ' + subtitles[0]
             # 3.b) 111__g:[773__w] 980:CONFERENCES 111 fields
