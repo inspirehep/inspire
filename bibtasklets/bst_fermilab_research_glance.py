@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015 CERN.
+## Copyright (C) 2014, 2015, 2016 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -138,7 +138,7 @@ def create_table():
                     hit_number = E.LI()
                 else:
                     link = search.replace(' ', '+')
-                    link = 'http://inspirehep.net/search?p=' + link
+                    link = 'https://inspirehep.net/search?p=' + link
                     link += '&rg=100&sf=earliestdate'
                     hit_number = E.LI(E.A({'class': 't'}, str(result),
                                           href=link))
