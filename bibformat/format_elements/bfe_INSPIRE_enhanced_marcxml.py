@@ -26,6 +26,7 @@ from invenio.refextract_linker import find_doi, find_journal, find_reportnumber,
 from invenio.dbquery import run_sql
 from invenio.access_control_engine import acc_authorize_action
 from invenio.config import CFG_BIBFORMAT_HIDDEN_TAGS
+from invenio.bibdocfile import BibRecDocs
 
 INSTITUTION_CACHE = {}
 def get_institution_ids(text):
@@ -136,14 +137,34 @@ def format_element(bfo, oai=0):
          693/710 $0 with Record ID of corresponding experiment
     """
     record = bfo.get_record()
+    recid = bfo.recID
+
     # Let's filter hidden fields
     if acc_authorize_action(bfo.user_info, 'runbibedit')[0]:
         # not authorized
         for tag in CFG_BIBFORMAT_HIDDEN_TAGS:
             if tag in record:
                 del record[tag]
+    else:
+        # Let's add bibdoc info
+        bibrecdocs = BibRecDocs(recid)
+        for bibdocfile in bibrecdocs.list_latest_files():
+            fft = [
+                ('a', bibdocfile.fullpath),
+                ('d', bibdocfile.description or ''),
+                ('f', bibdocfile.format or ''),
+                ('n', bibdocfile.name or ''),
+                ('r', bibdocfile.status or ''),
+                ('s', bibdocfile.cd.strftime('%Y-%m-%d %H:%M:%S')),
+                ('t', bibdocfile.get_type()),
+                ('v', str(bibdocfile.version)),
+                ('z', bibdocfile.comment or ''),
+            ]
+            for flag in bibdocfile.flags:
+                fft.append(('o', flag))
+            record_add_field(record, 'FFT', subfields=fft)
 
-    recid = bfo.recID
+    is_institution = 'INSTITUTION' in [collection.upper() for collection in bfo.fields('980__a')]
 
     if '100' in record or '700' in record:
         signatures = dict((name, (personid, flag)) for name, personid, flag in run_sql("SELECT name, personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND flag>-2", (recid, )))
@@ -200,8 +221,8 @@ def format_element(bfo, oai=0):
                     if len(ids) == 1:
                         subfields.append(('z', '%i' % ids[0]))
 
-    # Enhance affiliation in HepNames and Jobs
-    for field in record_get_field_instances(record, '371') + record_get_field_instances(record, '110'):
+    # Enhance affiliation in HepNames and Jobs and Institutions
+    for field in record_get_field_instances(record, '371'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
@@ -210,6 +231,27 @@ def format_element(bfo, oai=0):
                     ids = get_institution_ids(value)
                     if len(ids) == 1:
                         subfields.append(('z', '%i' % ids[0]))
+
+    for field in record_get_field_instances(record, '110'):
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        if is_institution:
+            # We try to resolve obsolete ICNs
+            if 'w' in subfield_dict:
+                for code, value in subfields:
+                    if code == 'w':
+                        ids = get_institution_ids(value)
+                        if len(ids) == 1:
+                            subfields.append(('z', '%i' % ids[0]))
+        else:
+            # In other collections institution is in a
+            if 'a' in subfield_dict:
+                for code, value in subfields:
+                    if code == 'a':
+                        ids = get_institution_ids(value)
+                        if len(ids) == 1:
+                            subfields.append(('z', '%i' % ids[0]))
+
 
     # Enhance citation
     for field in record_get_field_instances(record, '999', ind1='C', ind2='5'):
