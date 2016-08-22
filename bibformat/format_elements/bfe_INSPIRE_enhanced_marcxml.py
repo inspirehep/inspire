@@ -237,9 +237,9 @@ def format_element(bfo, oai=0):
         subfield_dict = dict(subfields)
         if is_institution:
             # We try to resolve obsolete ICNs
-            if 'w' in subfield_dict:
+            if 'x' in subfield_dict:
                 for code, value in subfields:
-                    if code == 'w':
+                    if code == 'x':
                         ids = get_institution_ids(value)
                         if len(ids) == 1:
                             subfields.append(('z', '%i' % ids[0]))
