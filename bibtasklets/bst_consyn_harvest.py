@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015 CERN.
+## Copyright (C) 2014, 2015, 2016 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -18,41 +18,44 @@
 ## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 import traceback
-from xml.dom.minidom import parse
-from os import (remove,
-                makedirs)
-from datetime import datetime
-from os.path import (join,
+
+from os import (makedirs,
+                remove,
+                walk,)
+from os.path import (abspath,
+                     dirname,
                      exists,
-                     dirname)
+                     join)
 from zipfile import (ZipFile,
                      BadZipfile)
-from invenio.filedownloadutils import (download_url,
-                                       InvenioFileDownloadError)
-from harvestingkit.elsevier_package import ElsevierPackage
-from invenio.search_engine import perform_request_search
+from xml.dom.minidom import parse
+from datetime import datetime
 from invenio.apsharvest_utils import (submit_records_via_ftp,
-                                      locate,
                                       submit_records_via_mail)
-from invenio.config import (CFG_TMPSHAREDDIR,
-                            CFG_SITE_SUPPORT_EMAIL)
-try:
-    from invenio.config import CFG_CONSYNHARVEST_EMAIL
-except ImportError:
-    CFG_CONSYNHARVEST_EMAIL = CFG_SITE_SUPPORT_EMAIL
 from invenio.bibtask import (task_update_status,
                              task_sleep_now_if_required,
                              write_message,
                              task_update_progress)
-try:
-    from invenio.config import CFG_CONSYN_OUT_DIRECTORY
-except ImportError:
-    CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
-from invenio.config import CFG_CONSYN_ATOM_KEY
+from invenio.config import (CFG_CONSYN_ATOM_KEY,
+                            CFG_SITE_SUPPORT_EMAIL,
+                            CFG_TMPSHAREDDIR,)
+from invenio.filedownloadutils import (download_url,
+                                       InvenioFileDownloadError)
+from harvestingkit.elsevier_package import ElsevierPackage
 from invenio.refextract_api import (
     extract_references_from_string_xml as refextract
 )
 from invenio.refextract_kbs import get_kbs
+
+try:
+    from invenio.config import CFG_CONSYNHARVEST_EMAIL
+except ImportError:
+    CFG_CONSYNHARVEST_EMAIL = CFG_SITE_SUPPORT_EMAIL
+
+try:
+    from invenio.config import CFG_CONSYN_OUT_DIRECTORY
+except ImportError:
+    CFG_CONSYN_OUT_DIRECTORY = join(CFG_TMPSHAREDDIR, "consynharvest")
 
 INTERESTING_DOCTYPES = ['fla', 'add', 'chp', 'err', 'rev', 'sco', 'ssu', 'pub']
 
@@ -149,7 +152,7 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         import time
         date_format = "%Y-%m-%d"
         try:
-            date = datetime.datetime(*(time.strptime(
+            date = datetime(*(time.strptime(
                 threshold_date, date_format)[0:6])
             )
             threshold_date = date.strftime('%Y-%m-%d')
@@ -171,8 +174,8 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
     consyn_files = consyn_files.lstrip()
 
     if package:
-        xml_files = extract_package(package, batch_size, delete_zip,
-                                    out_folder, new_sources)
+        xml_files = extract_package(package, delete_zip, out_folder,
+                                    new_sources)
     elif package_list_file:
         package_list = []
         with open(package_list_file, 'r') as package_file:
@@ -180,17 +183,14 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
                 line = line.strip()
                 if line:
                     package_list.append(line)
-        xml_files = extract_multiple_packages(
-            package_list, batch_size,
-            delete_zip, new_sources,
-            out_folder
-        )
+        xml_files = extract_multiple_packages(package_list, delete_zip,
+                                              new_sources, out_folder)
     elif feed_file:
         entries = parse_feed(feed_file)
-        links = map(lambda a: a[0], entries)
-        package_list = map(lambda a: a[1], entries)
-        package_list = map(lambda a: join(CFG_CONSYN_OUT_DIRECTORY, a),
-                           package_list)
+        links = [a[0] for a in entries]
+        package_list = [a[1] for a in entries]
+        package_list = [join(CFG_CONSYN_OUT_DIRECTORY, a) for a in
+                        package_list]
         for package in package_list:
             task_sleep_now_if_required()
             if not exists(package):
@@ -210,11 +210,8 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
                     write_message(traceback.format_exc()[:-1])
                     task_update_status("CERROR")
                     continue
-            xml_files = extract_multiple_packages(
-                package_list, batch_size,
-                delete_zip, new_sources,
-                out_folder
-            )
+            xml_files = extract_multiple_packages(package_list, delete_zip,
+                                                  new_sources, out_folder)
     else:
         feeds_folder = join(CFG_CONSYN_OUT_DIRECTORY, 'feeds')
         if not exists(feeds_folder):
@@ -222,8 +219,8 @@ def bst_consyn_harvest(feed_url=None, package=None, feed_file=None,
         date = datetime.now().strftime("%Y.%m.%d")
         feed_location = "feed-%s.xml" % date
         feed_location = join(feeds_folder, feed_location)
-        xml_files = download_feed(feed_url, batch_size, delete_zip,
-                                  new_sources, out_folder, feed_location)
+        xml_files = download_feed(feed_url, delete_zip, new_sources,
+                                  out_folder, feed_location)
     task_update_progress("Converting files 2/3...")
     task_sleep_now_if_required()
     results = convert_files(xml_files, els,
@@ -312,8 +309,18 @@ def parse_feed(feed_file):
     return files
 
 
-def download_feed(feed_url, batch_size, delete_zip, new_sources,
-                  directory, feed_location):
+def find_names_of_existing_files(harvestdir):
+    """
+    returns a set of the names of all files in the directory tree
+    rooted at harvestdir
+    """
+    existingfiles = list()
+    for _, _, files in walk(abspath(harvestdir)):
+        existingfiles.extend([f for f in files if f != 'upload.xml'])
+    return set(existingfiles)
+
+
+def download_feed(feed_url, delete_zip, new_sources, directory, feed_location):
     """ Get list of entries from XML document """
     try:
         task_update_progress("Downloading and extracting files 1/2...")
@@ -331,46 +338,57 @@ def download_feed(feed_url, batch_size, delete_zip, new_sources,
         return
     xml_files = []
     entries = parse_feed(result_path)
+
+    if not entries:
+        return xml_files
+
+    # look what files already exist
+    # there are currently O(10^5) files in the directory tree rooted
+    # at CFG_CONSYN_OUT_DIRECTORY and it is on AFS and takes upwards
+    # of 5 minutes to walk.
+    # might make sense to have a db table with already harvested files
+    task_sleep_now_if_required()
+    allfilenames = find_names_of_existing_files(CFG_CONSYN_OUT_DIRECTORY)
+    task_sleep_now_if_required()
+
     for fileUrl, fileName in entries:
+        if fileName in allfilenames:
+            write_message("Not downloading %s, found file with same name in %s"
+                          % (fileName, CFG_CONSYN_OUT_DIRECTORY,))
+            continue
         task_sleep_now_if_required()
+
         # Output location is directory + filename
         outFilename = join(directory, fileName)
         outFilename = outFilename.lstrip()
 
-        # Check if file has already been fetched
-        existing_files = list(locate(fileName, root=CFG_CONSYN_OUT_DIRECTORY))
+        fileUrl = fileUrl.replace(' ', '%20')
+        try:
+            write_message("Downloading %s to %s\n" % (fileUrl,
+                                                      outFilename))
+            download_url(fileUrl, "zip", outFilename, 5, 60.0)
+            new_sources.append(outFilename)
+        except InvenioFileDownloadError as err:
+            _errors_detected.append(err)
+            write_message("URL could not be opened: %s" % fileUrl)
+            write_message(str(err))
+            write_message(traceback.format_exc()[:-1])
+            task_update_status("CERROR")
+            continue
+        try:
+            xml_files.extend(extractAll(outFilename,
+                                        delete_zip,
+                                        directory))
+        except BadZipfile:
+            _errors_detected.append(err)
+            write_message("Error BadZipfile %s", (outFilename,))
+            task_update_status("CERROR")
+            remove(outFilename)
 
-        if len(existing_files) == 1:
-            write_message("Not downloading %s, already found %s in %s\n" %
-                          (fileUrl, existing_files[0], outFilename))
-        else:
-            fileUrl = fileUrl.replace(' ', '%20')
-            try:
-                write_message("Downloading %s to %s\n" % (fileUrl,
-                                                          outFilename))
-                download_url(fileUrl, "zip", outFilename, 5, 60.0)
-                new_sources.append(outFilename)
-            except InvenioFileDownloadError as err:
-                _errors_detected.append(err)
-                write_message("URL could not be opened: %s" % fileUrl)
-                write_message(str(err))
-                write_message(traceback.format_exc()[:-1])
-                task_update_status("CERROR")
-                continue
-            try:
-                xml_files.extend(extractAll(outFilename,
-                                            delete_zip,
-                                            directory))
-            except BadZipfile:
-                _errors_detected.append(err)
-                write_message("Error BadZipfile %s", (outFilename,))
-                task_update_status("CERROR")
-                remove(outFilename)
     return xml_files
 
 
-def extract_package(package, batch_size, delete_zip,
-                    directory, new_sources):
+def extract_package(package, delete_zip, directory, new_sources):
     try:
         new_sources.append(package)
         return extractAll(package, delete_zip, directory)
@@ -381,13 +399,12 @@ def extract_package(package, batch_size, delete_zip,
         remove(package)
 
 
-def extract_multiple_packages(package_list, batch_size,
-                              delete_zip, new_sources,
+def extract_multiple_packages(package_list, delete_zip, new_sources,
                               directory):
     xml_files_extracted = []
     for package in package_list:
         xml_files_extracted.extend(extract_package(
-            package, batch_size, delete_zip, directory, new_sources)
+            package, delete_zip, directory, new_sources)
         )
     return xml_files_extracted
 
