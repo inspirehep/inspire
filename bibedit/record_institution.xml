@@ -21,7 +21,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 <record>
   <datafield tag="034" ind1=" " ind2=" ">
     <subfield code="d">VOLATILE:longitude</subfield>
-    <subfield code="d">VOLATILE:latitude</subfield>
+    <subfield code="f">VOLATILE:latitude</subfield>
   </datafield>
   <datafield tag="043" ind1=" " ind2=" ">
     <subfield code="t">VOLATILE:time zone (e.g +01)</subfield>
