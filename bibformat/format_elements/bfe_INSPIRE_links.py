@@ -38,6 +38,7 @@ CDS = 'http://cds.cern.ch/record/'
 EUCLID = 'http://projecteuclid.org/'
 HAL = 'https://hal.archives-ouvertes.fr/'
 KEK = 'http://www-lib.kek.jp/cgi-bin/img_index?'
+INIS = 'https://inis.iaea.org/search/search.aspx?orig_q='
 MSNET = 'http://www.ams.org/mathscinet-getitem?mr='
 OSTI = 'http://www.osti.gov/scitech/biblio/'
 ZBLATT = 'http://www.zentralblatt-math.org/zmath/en/search/?an='
@@ -58,7 +59,7 @@ def format_element(bfo, default='', separator='; ', style='',
 
     links = []
 
-    # ADS/CDS/KEKSCAN/HAL links
+    # ADS/CDS/KEKSCAN/INIS/HAL links
     # external identifiers in tag 035__a along with service label in 035__9
     identifiers = bfo.fields('035__')
     adslinked = False
@@ -80,6 +81,10 @@ def format_element(bfo, default='', separator='; ', style='',
             links.append('<a%s href="%s%s"> ADS Abstract Service</a>' %
                          (style, ADSABS, extid))
             adslinked = True
+        elif provenance == 'INIS':
+            extid = extid.replace('&', '%26')  # A&A etc.
+            links.append('<a%s href="%s%s"> INIS Repository</a>' %
+                         (style, INIS, extid))
         elif provenance == 'HAL':
             from invenio.webuser import isUserAdmin
             if isUserAdmin(bfo.user_info):
