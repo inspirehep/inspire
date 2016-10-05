@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -46,7 +46,7 @@ def format_element(bfo, limit, separator='',
     # Process authors to add link, highlight and format affiliation
     output = ""
     cell = "<tr><td>"
-#'<a href="/search?ln=en&cc=Institutions&ln=en&cc=Institutions&p=110__u%3A%22' + author'a']  '%22&action_search=Search&sf=&so=d&rm=&rg=25&sc=0&of=hd">'
+#'<a href="/search?cc=Institutions&amp;p=110__u%3A%22' + author'a']  '%22&action_search=Search&amp;sf=&amp;so=d&amp;rm=&amp;rg=25&amp;sc=0&amp;of=hd">'
     for author in authors:
         if author.has_key('x'):
             output += '<table><tr><td>' + author['x'] + '</td></tr></table>'
