@@ -11,8 +11,17 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints arXiv link name for HepNames
 """
-__revision__ = "$Id$"
+
+from invenio.textutils import translate_to_ascii
 
 def format_element(bfo):
-    out = str(bfo.field('100__a')).replace(", ", "_")
-    return out[:out.find("_")+2]
+    """
+    ensure correct utf-8 handling of first initial and
+    return asciified string <lastname>_<first initial>
+    """
+    out = str(bfo.field('100__a')).decode('utf-8').replace(', ', '_')
+    position = out.find('_')
+    if position >= 0:
+        out = out[:position+2]
+    out = translate_to_ascii([out]).pop()
+    return out
