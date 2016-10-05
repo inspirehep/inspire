@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -39,7 +39,7 @@ def format_element(bfo, style="", separator=', '):
         style = 'class="'+style+'"'
 
     contacts = ['<a '+ style + \
-            ' href="/search?ln=en&amp;cc=HepNames&amp;ln=en&amp;cc=HepNames&amp;p=find+a+%27' \
+            ' href="/search?cc=HepNames&amp;p=find+a+%27' \
             + quote_plus(contact) + '%27&amp;of=hd">' + contact +'</a>'
             for contact in contact_list]
 
