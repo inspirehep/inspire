@@ -41,20 +41,7 @@ GMAPS = googlemaps.Client(key=CFG_GOOGLE_MAPS_API_KEY)
 
 
 def geocode(record):
-    """Uses the Google Maps API to geocode an institution.
-
-    Uses only information about the city the institution is in
-    because it's the only one which is reliably there. In fact,
-    the queries
-
-        034__d:** and not 034__f:**
-
-    and
-
-        371__b:** and 034__d:** and not 034__f:**
-
-    return the same set of results.
-    """
+    """Uses the Google Maps API to geocode an institution."""
     def _get_approximate_address(record):
         city = record_get_field_value(record, '371', code="b")
         zipcode = record_get_field_value(record, '371', code="e")
