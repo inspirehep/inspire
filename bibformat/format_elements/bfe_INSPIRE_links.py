@@ -37,7 +37,7 @@ ADSABS = 'http://adsabs.harvard.edu/abs/'
 CDS = 'http://cds.cern.ch/record/'
 EUCLID = 'http://projecteuclid.org/'
 HAL = 'https://hal.archives-ouvertes.fr/'
-KEK = 'http://www-lib.kek.jp/cgi-bin/img_index?'
+KEK = 'https://lib-extopc.kek.jp/preprints/PDF'
 INIS = 'https://inis.iaea.org/search/search.aspx?orig_q='
 MSNET = 'http://www.ams.org/mathscinet-getitem?mr='
 OSTI = 'http://www.osti.gov/scitech/biblio/'
@@ -71,8 +71,14 @@ def format_element(bfo, default='', separator='; ', style='',
 
         if provenance == 'KEKSCAN':
             extid = extid.replace("-", "")
-            links.append('<a%s href="%s%s"> KEK scanned document</a>' %
-                         (style, KEK, extid))
+            if not extid.startswith('20'):
+                year = '19' + extid[:2]
+            else:
+                year = extid[:4]
+                extid = extid[2:]
+            prefix = exitd[:4]
+            links.append('<a%s href="%s/%s/%s/%s.pdf"> KEK scanned document</a>' %
+                         (style, KEK, year, prefix, extid))
         elif provenance == 'CDS':
             links.append('<a%s href="%s%s"> CERN Document Server</a>' %
                          (style, CDS, extid))
@@ -82,7 +88,6 @@ def format_element(bfo, default='', separator='; ', style='',
                          (style, ADSABS, extid))
             adslinked = True
         elif provenance == 'INIS':
-            extid = extid.replace('&', '%26')  # A&A etc.
             links.append('<a%s href="%s%s"> INIS Repository</a>' %
                          (style, INIS, extid))
         elif provenance == 'HAL':
