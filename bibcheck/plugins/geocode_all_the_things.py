@@ -34,9 +34,10 @@ from invenio.config import CFG_GOOGLE_MAPS_API_KEY
 
 
 GMAPS = googlemaps.Client(key=CFG_GOOGLE_MAPS_API_KEY)
+GEOCODE = 'geocode v1.1'
 
 
-def geocode(record):
+def geocode(record, allfields=False):
     """Uses the Google Maps API to geocode a record."""
     def _get_approximate_address(record):
         def _is_a_conference(record):
@@ -46,30 +47,33 @@ def geocode(record):
             return record_get_field_value(
                 record, '111', code='c').split(', ')
         else:
-            city = record_get_field_value(record, '371', code='b')
-            zipcode = record_get_field_value(record, '371', code='e')
-            country = record_get_field_value(record, '371', code='d')
-            addresses = record_get_field_values(record, '371', code='a')
-
-            result = [el for el in addresses if zipcode not in el]
-            result.extend([city, zipcode, country])
-            result = [el for el in result if el]
-
-            return result
+            city = record_get_field_value(record, '371', code='b') or None
+            zipcode = record_get_field_value(record, '371', code='e') or None
+            country = record_get_field_value(record, '371', code='d') or None
+            address = [city, zipcode, country]
+            if allfields or None in address:
+                addresses = record_get_field_values(record, '371', code='a')
+                if zipcode:
+                    addresses = [el for el in addresses if zipcode not in el]
+                addresses.extend([city, zipcode, country])
+                addresses = [el for el in addresses if el]
+                return addresses
+            return address
 
     approximate_address = _get_approximate_address(record)
     while approximate_address:
         response = GMAPS.geocode(', '.join(approximate_address))
         if response:
             location = response[0]['geometry']['location']
-            return location['lat'], location['lng']
+            loctype = response[0]['geometry']['location_type']
+            return location['lat'], location['lng'], loctype
 
         approximate_address = approximate_address[1:]
 
-    return None, None
+    return None, None, None
 
 
-def check_record(record):
+def check_record(record, allfields=False):
     def _has_no_latitude_or_longitude(record):
         return (
             len(list(record.iterfield('034__f'))) == 0 or
@@ -80,8 +84,8 @@ def check_record(record):
             len(list(record.iterfield('111__c'))) or
             len(list(record.iterfield('371__d'))))
 
-    def _add_latitude_and_longitude(record, latitude, longitude):
-        subfields = [('f', str(latitude)), ('d', str(longitude))]
+    def _add_latitude_and_longitude(record, latitude, longitude, loctype='APPROXIMATE'):
+        subfields = [('2', GEOCODE), ('d', str(longitude)), ('f', str(latitude)), ('q', loctype)]
         record.add_field('034__', '', subfields=subfields)
 
     def _remove_all_latitudes_and_longitudes(record):
@@ -91,6 +95,6 @@ def check_record(record):
     if _has_no_latitude_or_longitude(record) and _should_have_them(record):
         _remove_all_latitudes_and_longitudes(record)
 
-        latitude, longitude = geocode(record)
+        latitude, longitude, loctype = geocode(record, allfields)
         if latitude and longitude:
-            _add_latitude_and_longitude(record, latitude, longitude)
+            _add_latitude_and_longitude(record, latitude, longitude, loctype)
