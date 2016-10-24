@@ -34,7 +34,7 @@ def get_institution_ids(text):
     # FIXME: use redis
     global INSTITUTION_CACHE
     if text not in INSTITUTION_CACHE:
-        INSTITUTION_CACHE[text] = perform_request_search(cc='Institutions', p='institution:"%s"' % text)
+        INSTITUTION_CACHE[text] = perform_request_search(cc='Institutions', p='110__u:"%s" or 110__t:"%s"' % (text, text))
     return INSTITUTION_CACHE[text]
 
 HEPNAME_CACHE = {}
