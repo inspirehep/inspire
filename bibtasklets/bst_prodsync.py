@@ -53,6 +53,24 @@ ADMIN_USER_INFO = collect_user_info(get_uid_from_email(get_email_from_username('
 
 CFG_OUTPUT_PATH = "/afs/cern.ch/project/inspire/PROD/var/tmp-shared/prodsync"
 
+class run_ro_on_slave_db:
+    """
+    Force the usage of the slave DB in read-only mode
+    """
+    def __enter__(self):
+        from invenio import dbquery_config
+        from invenio import dbquery
+        self.old_host = dbquery_config.CFG_DATABASE_HOST
+        dbquery_config.CFG_DATABASE_HOST = dbquery_config.CFG_DATABASE_SLAVE
+        self.old_site_level = dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE
+        dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = 1
+
+    def __exit__(self, type, value, traceback):
+        from invenio import dbquery_config
+        from invenio import dbquery
+        dbquery_config.CFG_DATABASE_HOST = self.old_host
+        dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = self.old_site_level
+
 
 def bst_prodsync(method='afs'):
     """
@@ -96,7 +114,8 @@ def redis_sync(modified_records, time_estimator, tot):
     """Sync to redis."""
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     for i, recid in enumerate(modified_records):
-        record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
+        with run_ro_on_slave_db():
+            record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
         if not record:
             write_message("Error formatting record {0} as 'xme': {1}".format(
                 recid, record
@@ -115,7 +134,8 @@ def afs_sync(modified_records, time_estimator, tot, now):
     r = gzip.open(prodsyncname, "w")
     print >> r, '<collection xmlns="http://www.loc.gov/MARC21/slim">'
     for i, recid in enumerate(modified_records):
-        record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
+        with run_ro_on_slave_db():
+            record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
         if not record:
             write_message("Error formatting record {0} as 'xme': {1}".format(
                 recid, record

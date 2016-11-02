@@ -35,6 +35,26 @@ from invenio.bibdocfile import calculate_md5
 CFG_EXPORTED_COLLECTIONS = ['HEP', 'HepNames', 'Institutions', 'Conferences',
                             'Jobs', 'Experiments', 'Journals', 'Data']
 
+
+class run_ro_on_slave_db:
+    """
+    Force the usage of the slave DB in read-only mode
+    """
+    def __enter__(self):
+        from invenio import dbquery_config
+        from invenio import dbquery
+        self.old_host = dbquery_config.CFG_DATABASE_HOST
+        dbquery_config.CFG_DATABASE_HOST = dbquery_config.CFG_DATABASE_SLAVE
+        self.old_site_level = dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE
+        dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = 1
+
+    def __exit__(self, type, value, traceback):
+        from invenio import dbquery_config
+        from invenio import dbquery
+        dbquery_config.CFG_DATABASE_HOST = self.old_host
+        dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = self.old_site_level
+
+
 def bst_dump_records():
     try:
         os.makedirs(os.path.join(CFG_WEBDIR, 'dumps'))
@@ -59,7 +79,8 @@ def bst_dump_records():
         tot = len(reclist)
         time_estimator = get_time_estimator(tot)
         for i, recid in enumerate(reclist):
-            print >> output, format_record(recid, 'xme', user_info={})[0]
+            with run_ro_on_slave_db():
+                print >> output, format_record(recid, 'xme', user_info={})[0]
             time_estimation = time_estimator()[1]
             if (i + 1) % 100 == 0:
                 task_update_progress("%s %s (%s%%) -> %s" % (collection, recid, (i + 1) * 100 / tot, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time_estimation))))
