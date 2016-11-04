@@ -21,11 +21,12 @@
 
 from cgi import escape
 
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_SITE_SECURE_URL
 from invenio.webpage import page
 from invenio.urlutils import wash_url_argument
 from invenio.search_engine import perform_request_search, get_record
 from invenio.bibrecord import record_get_field_instances, field_get_subfield_instances
+from invenio.intbitset import intbitset
 
 def index(req, p=""):
     """
@@ -58,13 +59,13 @@ def index(req, p=""):
         bai = get_bai(record)
         if bai:
             body.append('<li><a href="%(siteurl)s/record/%(recid)s">%(author_name)s</a> -> <a href="%(siteurl)s/author/profile/%(bai)s">%(bai)s</a></li>' % {
-                'siteurl': escape(CFG_SITE_URL, True),
+                'siteurl': escape(CFG_SITE_SECURE_URL, True),
                 'recid': recid,
                 'author_name': escape(author_name, True),
                 'bai': escape(bai, True)})
         else:
             body.append('<li><strong><a href="%(siteurl)s/record/%(recid)s">%(author_name)s</a></strong> ->></li>' % {
-                'siteurl': escape(CFG_SITE_URL, True),
+                'siteurl': escape(CFG_SITE_SECURE_URL, True),
                 'recid': recid,
                 'author_name': escape(author_name, True)})
 
@@ -72,6 +73,34 @@ def index(req, p=""):
     body = '\n'.join(body)
 
     return page(req=req, body=body, title="HepNames and BAIs for %s" % escape(p, True))
+
+
+def unlinked(req):
+    """
+    Return an id-ordered list of citation log entries of at most 10000
+    rows.
+    """
+    from invenio.dbquery import run_sql
+    from invenio.search_engine import get_fieldvalues, get_collection_reclist
+    useful_personids1 = intbitset(run_sql("SELECT distinct personid FROM aidPERSONIDDATA WHERE tag LIKE 'extid:%'"))
+    useful_personids2 = intbitset(run_sql("SELECT distinct personid from aidPERSONIDPAPERS where flag=2"))
+    linked_personids = intbitset(run_sql("SELECT personid FROM aidPERSONIDDATA WHERE tag='extid:INSPIREID'"))
+    names = dict(run_sql("SELECT personid, data FROM aidPERSONIDDATA WHERE tag='canonical_name'"))
+    matched_names = [name.lower().strip() for name in get_fieldvalues(get_collection_reclist('HepNames'), '035__a')]
+    personid_to_match = (useful_personids1 | useful_personids2) - linked_personids
+
+    body = ['<ol>']
+    for personid in personid_to_match:
+        name = names.get(personid, str(personid))
+        if name.lower().strip() in matched_names:
+            continue
+        body.append('<li><a href="%(siteurl)s/author/profile/%(bai)s" target="_blank">%(bai)s</a></li>' % {
+                'siteurl': escape(CFG_SITE_SECURE_URL, True),
+                'bai': escape(name, True)})
+    body.append('</ol>')
+    body = '\n'.join(body)
+
+    return page(req=req, body=body, title="Unlinked useful BAIs")
 
 
 def json(req):
