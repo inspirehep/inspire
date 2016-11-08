@@ -33,6 +33,14 @@ kekidre = re.compile(r'^https?://www-lib.kek.jp/cgi-bin/img_index\?(\d{2})?(\d{7
 
 def check_record(record):
     """ move 8564_u/y to 035__a/9 """
+    def normalized(kekid):
+        """ normalize 'kekid' by stripping dashes and dropping the leading '19'
+            if present
+        """
+        normid = kekid.replace('-', '')
+        if normid.startswith('19') and len(normid) == 9:
+            normid = normid[-7:]
+        return normid
     delcount = 0
     kekids = set()
     #  look up IDs already present in 035
@@ -40,8 +48,7 @@ def check_record(record):
             record, '035', code='a',
             filter_subfield_code='9',
             filter_subfield_value=provenance):
-        # normalize the ID
-        kekids.add(re.sub(r'-', '', kekid))
+        kekids.add(normalized(kekid))
     for pos, val in record.iterfield('8564_u',
                                      subfield_filter=('y', provenance)):
         if val:
@@ -49,7 +56,7 @@ def check_record(record):
             if kekidmatch:
                 kekid = (kekidmatch.group(1) or '') + kekidmatch.group(2)
                 if kekid not in kekids:
-                    kekids.add(kekid)
+                    kekids.add(normalized(kekid))
                     subfields_to_add = (('9', provenance),
                                         ('a', kekid))
                     record_add_field(record, tag='035', ind1='_', ind2='_',
@@ -61,5 +68,5 @@ def check_record(record):
             else:
                 record.warn('no match for [%s]' % val)
     if len(kekids) > 1:
-        record.warn('more than 1 KEK id present')
+        record.warn('more than 1 KEK id present: %s' % kekids)
 
