@@ -39,7 +39,7 @@ def check_record(record):
     for kekid in record_get_field_values(
             record, '035', code='a',
             filter_subfield_code='9',
-            filter_subfield_values=provenance):
+            filter_subfield_value=provenance):
         # normalize the ID
         kekids.add(re.sub(r'-', '', kekid))
     for pos, val in record.iterfield('8564_u',
