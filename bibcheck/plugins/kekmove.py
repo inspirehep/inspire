@@ -55,7 +55,7 @@ def check_record(record):
             kekidmatch = kekidre.match(val)
             if kekidmatch:
                 kekid = (kekidmatch.group(1) or '') + kekidmatch.group(2)
-                if kekid not in kekids:
+                if normalized(kekid) not in kekids:
                     kekids.add(normalized(kekid))
                     subfields_to_add = (('9', provenance),
                                         ('a', kekid))
