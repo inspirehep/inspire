@@ -53,7 +53,7 @@ CFG_IMPORT_FILE = os.path.join(CFG_SHARED_PATH, '%s2%s.ids' % (CFG_OTHER_SITE, C
 def dump_cern_ids():
     """Write in CFG_CERN_FILE the intbitset with all the IDs of CERN records."""
     if CFG_CERN_SITE:
-        ids = search_pattern(p='690C_a:CERN')
+        ids = search_pattern(p='690C_a:CERN') | search_pattern(p='595__a:CDS')
         with open(CFG_CERN_FILE, "w") as out:
             out.write(ids.fastdump())
 
