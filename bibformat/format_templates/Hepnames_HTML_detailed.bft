@@ -1,10 +1,10 @@
 <name>Hepnames HTML Detail</name>
 <description>Detailed description of hepnames listing</description>
 <div class="detailed_record_info">
-<BFE_INSPIRE_HEPNAMES_NAME css_class="font_weight_bold font_size_large" /> 
+<BFE_INSPIRE_HEPNAMES_NAME css_class="font_weight_bold font_size_large" />
 <BFE_INSPIRE_HEPNAMES_NATIVE_NAME css_class="font_weight_normal" />
 
-<a href= "/search?ln=en&amp;cc=Institutions&amp;p=110__u%3A%22<BFE_FIELD tag="371__a" limit="1" />%22&amp;of=hd"><BFE_FIELD tag="371__a" limit="1" prefix="(" suffix=")"/></a>
+<BFE_INSPIRE_CURRENT_INSTITUTION />
 <br /><BFE_INSPIRE_HEPNAMES_BAI_LINK />
 <a href="http://www.google.com/search?hl=en&amp;q=<BFE_FIELD tag="100__q" />">[Google]</a>
 <a href="/search?ln=en&amp;cc=HepNames&amp;ln=en&amp;cc=HepNames&amp;p=701%3A%22<BFE_FIELD tag="100__a" />%22">[Students]</a>
