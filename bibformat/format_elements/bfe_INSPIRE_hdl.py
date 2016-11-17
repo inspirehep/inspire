@@ -24,12 +24,13 @@ def format_element(bfo, separator=", ", link_prefix='http://hdl.handle.net/'):
     """
     Return an HTML link to the HDL.
     """
-    fields = bfo.field('0247_')
+    fields = bfo.fields('0247_')
     output = []
-    if '2' in fields:
-        if (fields['2'].lower() == 'hdl' and 'a' in fields):
-            output.append('<a href="' + link_prefix + fields['a'] + '">' + fields['a'] + '</a>')
-        return separator.join(set(output))
+    for field in fields:
+        if '2' in field:
+            if (field['2'].lower() == 'hdl' and 'a' in field):
+                output.append('<a href="' + link_prefix + field['a'] + '">' + field['a'] + '</a>')
+    return separator.join(set(output))
 
 
 def escape_values(bfo):
