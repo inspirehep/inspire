@@ -94,35 +94,29 @@ type_codes = (('Published', JOURNAL_PUBLISHED_DICT), ('Review', REVIEW_DICT),
               ('ConferencePaper', CONFERENCE_DICT))
 
 
-def try_dict(mapping, type_code=None, journals=None, dois=None, codes=None):
+def try_dict(mapping, journals=None, dois=None):
     """check if information matches the criteria from mapping"""
-    if type_code not in codes:
-        for key, val in mapping.iteritems():
-            if key in journals:
-                return True
 
-            if val:
-                if any(val in d for d in dois):
-                    return True
+    for journal in journals:
+        if journal in mapping:
+            return True
+
+    for doiprefix in [v for v in mapping.values() if v]:
+        if any(doiprefix in d for d in dois):
+            return True
 
 
 def check_record(record):
     """check that record has proper type code based on pubnote and doi"""
 
-    journals = []
-    dois = []
-    codes = []
-    for key, val in record.iterfields(['001___', '0247_a', '773__p', '980__a']):
-        if key[0] == '001___':
-            recid = val
-        if key[0] == '0247_a':
-            dois.append(val)
-        if key[0] == '773__p':
-            journals.append(val)
-        if key[0] == '980__a':
-            codes.append(val)
+
+    dois = [d for _, d in record.iterfield('0247_a', subfield_filter=('2', 'DOI'))]
+    journals = [p for _, p in record.iterfield('773__p')]
+    codes = [c for _, c in record.iterfield('980__a')]
 
     for type_code, mapping in type_codes:
-        if try_dict(mapping, type_code=type_code, journals=journals, dois=dois, codes=codes):
+        if type_code in codes:
+            continue
+        if try_dict(mapping, journals=journals, dois=dois):
             record.add_field('980__', '', subfields=[('a', type_code)])
-            record.set_amended('adding type code %s to record %s' % (type_code, recid))
+            record.set_amended('adding type code %s to record %s' % (type_code, record.record_id))
