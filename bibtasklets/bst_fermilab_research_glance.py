@@ -28,6 +28,7 @@ from os.path import join
 
 from dateutil.relativedelta import relativedelta
 
+from invenio.config import CFG_WEBDIR
 from invenio.search_engine import perform_request_search
 
 from lxml import etree
@@ -36,7 +37,7 @@ from lxml.html import builder as E
 
 import pytz
 
-CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
+CFG_FERMILAB_PATH = os.path.join(CFG_WEBDIR, "dumps")
 
 CHICAGO_TIMEZONE = pytz.timezone('America/Chicago')
 NOW = CHICAGO_TIMEZONE.fromutc(datetime.datetime.utcnow())

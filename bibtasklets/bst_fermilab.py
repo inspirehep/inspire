@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014, 2015 CERN.
+## Copyright (C) 2013, 2014, 2015, 2016 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -25,7 +25,7 @@ from cgi import escape
 
 import pytz
 from invenio.bibtask import write_message
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_SITE_URL, CFG_WEBDIR
 from invenio.search_engine import perform_request_search
 from invenio.search_engine_utils import get_fieldvalues
 
@@ -39,7 +39,7 @@ SERIES2 = ['PUB', 'CONF']
 
 SERIES1.sort()
 
-CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
+CFG_FERMILAB_PATH = os.path.join(CFG_WEBDIR, "dumps")
 
 
 def bst_fermilab():
