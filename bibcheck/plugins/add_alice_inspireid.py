@@ -52,10 +52,7 @@ def check_records(records):
             subfields_dict = dict(subfields)
             if 'a' in subfields_dict and subfields_dict['a'] in CHANGES:
                 if 'i' in subfields_dict and subfields_dict['i'] != CHANGES[subfields_dict['a']]:
-                    record.set_invalid("Author %s should have INSPIRE ID %s but has already INSPIRE ID %s" % (subfields_dict['a'], CHANGES[subfields_dict['a']], subfields_dict['i'])
+                    record.set_invalid("Author %s should have INSPIRE ID %s but has already INSPIRE ID %s" % (subfields_dict['a'], CHANGES[subfields_dict['a']], subfields_dict['i']))
                 elif not 'i' in subfields_dict:
                     subfields.append(('i', CHANGES[subfields_dict['a']]))
-                    record.set_amended("Added INSPIRE ID %s to author %s" % (CHANGES[subfields_dict['a']], subfields_dict['a'])
-
-
-
+                    record.set_amended("Added INSPIRE ID %s to author %s" % (CHANGES[subfields_dict['a']], subfields_dict['a']))
