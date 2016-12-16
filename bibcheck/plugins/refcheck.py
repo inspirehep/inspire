@@ -102,7 +102,7 @@ class Reference(object):
         """ serialize ref info to string """
         refstring = []
         for tag, key in FIELDS:
-            refstring.extend(['${}{}'.format(tag[-1], val) for val in self.get_all_info(key)])
+            refstring.extend(['${0}{1}'.format(tag[-1], val) for val in self.get_all_info(key)])
         return ', '.join(refstring)
 
 
