@@ -23,14 +23,15 @@
 """
 
 import re
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 
 from invenio.intbitset import intbitset
 from invenio.search_engine import (get_collection_reclist, search_pattern,
                                    search_unit)
 
-FIELDS = (('999C5s', 'pubnote'), ('999C5r', 'repno'), ('999C5a', 'DOI'),
-          ('999C50', 'citedrecid'))
+Reftags = namedtuple('Reftags', 'pubnote repno DOI citedrecid curatorflag')
+FIELDS = Reftags('999C5s', '999C5r', '999C5a', '999C50', '999C59')
+
 
 HEPRECS = get_collection_reclist('HEP')
 
@@ -101,28 +102,24 @@ class Reference(object):
     def stringify(self):
         """ serialize ref info to string """
         refstring = []
-        for tag, key in FIELDS:
-            refstring.extend(['${0}{1}'.format(tag[-1], val) for val in self.get_all_info(key)])
+        for key in FIELDS._fields:
+            refstring.extend(['${0}{1}'.format(FIELDS.__getattribute__(key)[-1], val)
+                              for val in self.get_all_info(key)])
         return ', '.join(refstring)
 
 
 def check_record(record):
     """ check internal consistency of references """
 
-    references = {}
+    references = defaultdict(Reference)
 
     for pos, val in record.iterfield('999C5%'):
-        if pos[1] in references:
-            ref = references[pos[1]]
-        else:
-            ref = references[pos[1]] = Reference()
-
-        for marcfield, name in FIELDS:
-            if pos[0] == marcfield:
-                ref.add_info(name, val)
+        for name in FIELDS._fields:
+            if pos[0] == FIELDS.__getattribute__(name):
+                references[pos[1]].add_info(name, val)
 
     for pos, ref in references.iteritems():
-        allhits = [(k, ref.get_hitset(k)) for k in (f[1] for f in FIELDS[:3])]
+        allhits = [(k, ref.get_hitset(k)) for k in FIELDS._fields[:3]]
         for k, hits in allhits:
             if len(hits) > 1 and len(hits) > len(ref.get_all_info(k)):
                 record.warn('more matches than values for refno %d %s "%s"'
