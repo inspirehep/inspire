@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2011, 2015 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2011, 2015, 2016 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -288,11 +288,29 @@ def format_element(
                      '&amp;ln=' + bfo.lang +
                      '">'+escape(coll)+'</a>' for coll in colls]
 
-        coll_display = " and ".join(colls)
-        if not coll_display.endswith("aboration"):
+        noncollabterms = ('group', 'task force', 'consortium', 'team')
+        noncolls = []
+        truecolls = []
+        for coll in colls:
+            lcoll = coll.lower()
+            noncoll = False
+            for term in noncollabterms:
+                if term in lcoll:
+                    noncolls.append(coll)
+                    noncoll = True
+                    break
+            if noncoll is False:
+                truecolls.append(coll)
+
+        coll_display = " and ".join(truecolls)
+        if truecolls and not coll_display.endswith("aboration"):
             coll_display += " Collaboration"
-            if len(colls) > 1:
+            if len(truecolls) > 1:
                 coll_display += 's'
+        if truecolls and noncolls:
+            coll_display += ' and '
+        if noncolls:
+            coll_display += ' and '.join(noncolls)
         if nb_authors > 1:
             if markup in ('latex', 'bibtex'):
                 coll_display = authors[0] + extension + " [" + \
