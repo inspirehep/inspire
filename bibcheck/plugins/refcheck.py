@@ -94,7 +94,7 @@ class Reference(object):
                 hits |= search_unit(f='reportnumber', p=val)
         elif key == 'DOI':
             for val in self._fields[key][pos]:
-                hits |= search_unit(f='doi', p=val)
+                hits |= search_unit(f='doi', p=val, m='a')
 
         return hits & HEPRECS
 
