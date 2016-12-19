@@ -60,22 +60,31 @@ class Reference(object):
 
         return repno
 
+    @staticmethod
+    def normalize_doi(doi):
+        """ strip 'doi:' prefix from DOIs """
+        if doi.lower().startswith('doi:'):
+            return doi[len('doi:'):]
+        return doi
+
 
     def add_info(self, key, value):
-        """ add pubnote to list of pubnotes """
+        """ add info from subfield to list of values """
         if key == 'repno':
             value = self.normalize_repno(value)
+        elif key == 'DOI':
+            value = self.normalize_doi(value)
         self._fields[key] += [value]
 
 
     def get_info(self, key, pos=0):
-        """ return journal info at position pos """
+        """ return value of subfield at position pos """
         if self._fields[key]:
             return self._fields[key][pos]
 
 
     def get_all_info(self, key):
-        """ return all values for key """
+        """ return all subfield values for key """
         return self._fields[key]
 
 
