@@ -14,4 +14,4 @@ same relationship.</description>
   \\{}" limit="9999" separator=', ' />
 %(<BFE_INSPIRE_DATE>)
 %\href{<BFE_SERVER_INFO var="absoluterecurl" />}{HEP entry}
-<BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="%", suffix="" />
+<BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="%Citations: ", suffix="" />
