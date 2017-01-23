@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2014, 2015 CERN.
+# Copyright (C) 2014, 2015, 2017 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -66,7 +66,7 @@ from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
                                       submit_records_via_ftp)
 
-base_url = "http://pos.sissa.it/contribution?id="
+base_url = "https://pos.sissa.it/contribution?id="
 
 
 def main(args):
