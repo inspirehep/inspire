@@ -36,6 +36,7 @@ from tempfile import mkdtemp
 from os import remove
 from os.path import (join,
                      basename)
+from urlparse import urljoin
 from shutil import copy
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -108,6 +109,8 @@ def main(args):
         for link in links:
             url = urllib.quote(link['href'], safe=":/")
             if url.endswith('.pdf'):
+                # handle relative URLs
+                url = urljoin(base_url, url)
                 found = True
                 filename = join(out_folder, identifier + ".pdf")
                 record_add_field(rec, '856', ind1='4', subfields=[
