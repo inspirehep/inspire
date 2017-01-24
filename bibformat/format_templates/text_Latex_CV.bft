@@ -14,4 +14,5 @@ same relationship.</description>
   \\{}" limit="9999" separator=', ' />
 %(<BFE_INSPIRE_DATE>)
 \inspireurl{<BFE_SERVER_INFO var="absoluterecurl" />}
-<BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="\citations{", suffix="}" />
+<BFE_INSPIRE_CITATION_NUMBER_LATEX prefix="\citations{", suffix="}
+" />
