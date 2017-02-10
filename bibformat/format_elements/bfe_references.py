@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010 CERN, SLAC
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010, 2017 CERN, SLAC
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -78,7 +78,10 @@ def format_element(bfo, reference_prefix, reference_suffix):
         if clean_journal and len(hits)!=1:
             hits = search_pattern(f='journal', p=clean_journal, ap=1)
         if reference.has_key('a') and len(hits)!=1:
-            hits = search_unit(p=reference['a'][0])
+            doi = reference['a'][0]
+            if doi.lower().startswith('doi:'):
+                doi = doi[4:]
+            hits = search_unit(p=doi, f='0247_a', m='a')
         if reference.has_key('0') and len(hits)!=1:
             # check if the record exists in the database
             try:
