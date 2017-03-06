@@ -18,8 +18,9 @@
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 """BibFormat element - Enhanced INSPIRE MARCXML"""
+from zlib import decompress
 
-from invenio.bibrecord import record_xml_output, record_get_field_instances, field_get_subfield_instances, record_add_field
+from invenio.bibrecord import record_xml_output, record_get_field_instances, field_get_subfield_instances, record_add_field, create_record
 from invenio.search_engine import perform_request_search
 from invenio.bibrank_citation_indexer import get_tags_config as _get_tags_config, get_recids_matching_query
 from invenio.refextract_linker import find_doi, find_journal, find_reportnumber, find_book, find_isbn
@@ -121,6 +122,14 @@ def get_matched_id(subfields):
     return None
 
 
+def salvage_deleted_record_from_history(recid):
+    return create_record(decompress(run_sql("SELECT marcxml FROM hstRECORD WHERE id_bibrec=%s ORDER BY job_date DESC LIMIT 1", (recid, ))[0][0]))[0]
+
+
+def is_record_deleted(bfo):
+    return 'DELETED' in [value.upper() for value in bfo.fields('980__%')]
+
+
 def format_element(bfo, oai=0):
     """Produce MARCXML with enhanced fields.
 
@@ -136,16 +145,15 @@ def format_element(bfo, oai=0):
                  $2 with Record ID of corresponding Conference
          693/710 $0 with Record ID of corresponding experiment
     """
-    record = bfo.get_record()
+    can_see_hidden_stuff = not acc_authorize_action(bfo.user_info, 'runbibedit')[0]
     recid = bfo.recID
+    if can_see_hidden_stuff and is_record_deleted(bfo):
+        record = salvage_deleted_record_from_history(recid)
+    else:
+        record = bfo.get_record()
 
     # Let's filter hidden fields
-    if acc_authorize_action(bfo.user_info, 'runbibedit')[0]:
-        # not authorized
-        for tag in CFG_BIBFORMAT_HIDDEN_TAGS:
-            if tag in record:
-                del record[tag]
-    else:
+    if can_see_hidden_stuff:
         # Let's add bibdoc info
         bibrecdocs = BibRecDocs(recid)
         for bibdocfile in bibrecdocs.list_latest_files():
@@ -163,6 +171,12 @@ def format_element(bfo, oai=0):
             for flag in bibdocfile.flags:
                 fft.append(('o', flag))
             record_add_field(record, 'FFT', subfields=fft)
+    else:
+        # not authorized
+        for tag in CFG_BIBFORMAT_HIDDEN_TAGS:
+            if tag in record:
+                del record[tag]
+
 
     is_institution = 'INSTITUTION' in [collection.upper() for collection in bfo.fields('980__a')]
 
