@@ -78,10 +78,14 @@ def format_element(bfo, reference_prefix, reference_suffix):
         if clean_journal and len(hits)!=1:
             hits = search_pattern(f='journal', p=clean_journal, ap=1)
         if reference.has_key('a') and len(hits)!=1:
-            doi = reference['a'][0]
-            if doi.lower().startswith('doi:'):
-                doi = doi[4:]
-            hits = search_unit(p=doi, f='0247_a', m='a')
+            doihdl = reference['a'][0]
+            if doihdl.lower().startswith('doi:') or \
+               doihdl.lower().startswith('hdl:'):
+                doihdl = doihdl[4:]
+                hits = search_unit(p=doihdl, f='0247_a', m='a')
+            else:
+                # not a well formed DOI or handle
+                pass
         if reference.has_key('0') and len(hits)!=1:
             # check if the record exists in the database
             try:
