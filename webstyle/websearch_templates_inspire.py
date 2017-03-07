@@ -627,6 +627,7 @@ class Template(DefaultTemplate):
             <option>Astropart.Phys.</option>
             <option>Astrophys.J.</option>
             <option>Can.J.Phys.</option>
+            <option>Chin.Phys.C</option>
 
             <option>Class.Quant.Grav.</option>
             <option>Comm.Nucl.Part.Phys.</option>
