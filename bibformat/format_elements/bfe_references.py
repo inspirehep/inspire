@@ -56,6 +56,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
             else:
                 ref_out.append("<small>[" + temp_ref + "] </small> ")
             last_o = temp_ref
+
         ref_out.append("</td><td>")
 
         if reference_prefix:
@@ -75,9 +76,9 @@ def format_element(bfo, reference_prefix, reference_suffix):
                 clean_report = reference['r'][0]
         if clean_report:
             hits = search_unit(f='reportnumber', p=clean_report)
-        if clean_journal and len(hits)!=1:
+        if clean_journal and len(hits) != 1:
             hits = search_pattern(f='journal', p=clean_journal, ap=1)
-        if reference.has_key('a') and len(hits)!=1:
+        if reference.has_key('a') and len(hits) != 1:
             doihdl = reference['a'][0]
             if doihdl.lower().startswith('doi:') or \
                doihdl.lower().startswith('hdl:'):
@@ -86,7 +87,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
             else:
                 # not a well formed DOI or handle
                 pass
-        if reference.has_key('0') and len(hits)!=1:
+        if reference.has_key('0') and len(hits) != 1:
             # check if the record exists in the database
             try:
                 recID = int(reference['0'][0])
@@ -97,7 +98,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
             except ValueError:
                 pass
         if len(hits) == 1:
-            ref_out.append('<small>' + format_record(list(hits)[0],'hs') + '</small>')
+            ref_out.append('<small>' + format_record(list(hits)[0], 'hs') + '</small>')
         else:
             if reference.has_key('h'):
                 ref_out.append("<small> " + reference['h'][0] + ".</small>")
@@ -136,11 +137,11 @@ def format_element(bfo, reference_prefix, reference_suffix):
 
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
