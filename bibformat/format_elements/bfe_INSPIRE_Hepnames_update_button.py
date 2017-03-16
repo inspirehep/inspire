@@ -28,7 +28,8 @@ def format_element(bfo, separator='; '):
     except:
         return ''
 
-    url = "http://labs.inspirehep.net/author/update?recid=" + urllib.quote(hepnames_id)
+    url = "http://labs.inspirehep.net/authors/%s/update" %
+urllib.quote(hepnames_id)
     return '<a href="' + url + '">' + '<img src="/img/update.jpg" alt="Update"/></a>'
 
 def escape_values(bfo):
