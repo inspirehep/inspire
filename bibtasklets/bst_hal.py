@@ -39,7 +39,7 @@ CFG_HAL_ROWS = 10000
 def hal_record_iterator():
     start = 0
     while True:
-        res = requests.get(CFG_HAL_API_URL, params={'start': start,
+        res = requests.get(CFG_HAL_API_URL, timeout=60, params={'start': start,
                                              'q': '(arxivId_s:* OR doiId_s:*)',
                                              'fl': 'arxivId_s,halId_s,doiId_s',
                                              'rows': CFG_HAL_ROWS,
