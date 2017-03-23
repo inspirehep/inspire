@@ -38,7 +38,7 @@ from invenio.bibtask import task_low_level_submission, write_message, task_sleep
 def bst_scoap3_importer():
     """Import from SCOAP3."""
     try:
-        request = requests.get('http://repo.scoap3.org/ffts_for_inspire.py/csv')
+        request = requests.get('http://repo.scoap3.org/ffts_for_inspire.py/csv', timeout=60)
     except (HTTPError, ConnectionError, Timeout):
         register_exception()
         return

@@ -32,6 +32,7 @@ import sys
 import requests
 import urllib
 
+from requests.exceptions import ConnectionError, Timeout
 from tempfile import mkdtemp
 from os import remove
 from os.path import (join,
@@ -101,7 +102,12 @@ def main(args):
 
         url = base_url + identifier
         session = requests.session()
-        r = session.get(url)
+        try:
+            r = session.get(url, timeout=60)
+        except ConnectionError, Timeout:
+            register_exception()
+            error_records.append(rec)
+            continue
         parsed_html = BeautifulSoup(r.text)
         links = parsed_html.body.findAll('a')
         found = False
