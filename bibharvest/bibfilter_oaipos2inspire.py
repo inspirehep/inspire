@@ -44,6 +44,7 @@ from datetime import datetime
 from xml.dom.minidom import parse
 from harvestingkit.bibrecord import (record_add_field,
                                      record_xml_output)
+from invenio.errorlib import register_exception
 from invenio.filedownloadutils import (download_url,
                                        InvenioFileDownloadError)
 from invenio.config import (CFG_TMPSHAREDDIR,
@@ -104,7 +105,7 @@ def main(args):
         session = requests.session()
         try:
             r = session.get(url, timeout=60)
-        except ConnectionError, Timeout:
+        except (ConnectionError, Timeout):
             register_exception()
             error_records.append(rec)
             continue
