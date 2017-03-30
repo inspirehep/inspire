@@ -329,7 +329,7 @@ def format_element(bfo, oai=0):
     if '961' in record:
         del record['961']
     creation_date, modification_date = run_sql("SELECT creation_date, modification_date FROM bibrec WHERE id=%s", (recid,))[0]
-    record_add_field(record, '961', subfields=[('c', creation_date.strftime('%Y-%m-%d')), ('x', modification_date.strftime('%Y-%m-%d'))])
+    record_add_field(record, '961', subfields=[('x', creation_date.strftime('%Y-%m-%d')), ('c', modification_date.strftime('%Y-%m-%d'))])
 
     formatted_record = record_xml_output(record)
     if oai:
