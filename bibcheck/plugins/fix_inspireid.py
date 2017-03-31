@@ -60,6 +60,7 @@ CHANGES = [
     (('a', 'Wilson, A.'), ('i', 'INSPIRE-00154108', 'INSPIRE-00301349')),
     (('a', 'Kim, Hyeon Jin'), ('i', 'INSPIRE-00019770', 'INSPIRE-00020720')),
     (('a', 'Yu, Jaehoon'), ('i', 'INSPIRE-00226216', 'INSPIRE-00137749')),
+    (('a', 'Tasevsky, Marek'), ('i', 'INSPIRE-00226974', 'INSPIRE-00224260')),
     ]
 
 
