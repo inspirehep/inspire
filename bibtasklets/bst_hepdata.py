@@ -106,7 +106,11 @@ class HepDataDumper(object):
 def hepdata2marcxml(record):
     out = {}
     record_add_field(out, '024', '7', subfields=[('a', record['doi']), ('2', 'DOI')])
-    record_add_field(out, '245', subfields=[('a', 'Additional data from: %s' % record['paper_title']), ('9', 'HEPDATA')])
+    if record.get('title'):
+        title = 'Data from {title} from: {paper_title}'
+    else:
+        title = 'Additional data from: {paper_title}'
+    record_add_field(out, '245', subfields=[('a', title.format(title=record.get('title'), paper_title=record['paper_title'])), ('9', 'HEPDATA')])
     record_add_field(out, '336', subfields=[('t', 'DATASET')])
     record_add_field(out, '520', subfields=[('h', record['abstract']), ('9', 'HEPDATA')])
     for keyword in record['keywords']:
