@@ -104,15 +104,21 @@ def bst_prodsync(method='afs'):
     write_message("Adding %s new or modified records" % tot)
     if method == 'afs':
         afs_sync(reversed(modified_records), time_estimator, tot, now)
+        open(lastrun_path, "w").write(future_lastrun)
+        write_message("DONE!")
     else:
-        redis_sync(reversed(modified_records), time_estimator, tot)
-    open(lastrun_path, "w").write(future_lastrun)
-    write_message("DONE!")
+        if redis_sync(reversed(modified_records), time_estimator, tot):
+            open(lastrun_path, "w").write(future_lastrun)
+            write_message("DONE!")
+        else:
+            write_message("Skipping prodsync: Redis queue is not yet empty")
 
 
 def redis_sync(modified_records, time_estimator, tot):
     """Sync to redis."""
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
+    if r.llen('legacy_records') != 0:
+        return False
     for i, recid in enumerate(modified_records):
         with run_ro_on_slave_db():
             record = format_record(recid, 'xme', user_info=ADMIN_USER_INFO)[0]
@@ -124,6 +130,7 @@ def redis_sync(modified_records, time_estimator, tot):
             r.rpush('legacy_records', zlib.compress(record))
         if shall_sleep(recid, i, tot, time_estimator):
             task_sleep_now_if_required()
+    return True
 
 
 
