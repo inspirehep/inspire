@@ -1,5 +1,5 @@
 from invenio.search_engine import perform_request_search, get_record
-from invenio.bibauthorid_dbinterface import confirm_papers_to_author, get_all_signatures_of_paper
+from invenio.bibauthorid_dbinterface import confirm_papers_to_author, get_all_signatures_of_paper, trigger_aidtoken_change
 from invenio.bibrecord import record_get_field_instances, field_get_subfield_instances
 from invenio.dbquery import run_sql
 from invenio.bibtask import task_update_progress, task_sleep_now_if_required, write_message
@@ -34,6 +34,7 @@ def autoclaim_paper(recid, orcid_personid_map):
             if signature and (current_personid != personid or flag != 2):
                 write_message("Claiming paper %s to author %s (%s) with personid %s" % (recid, author, orcid, personid))
                 confirm_papers_to_author(personid, [signature])
+                trigger_aidtoken_change(personid, 2)
 
 
 def get_signature_map(recid):
