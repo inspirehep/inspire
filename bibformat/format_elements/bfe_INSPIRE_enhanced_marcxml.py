@@ -20,6 +20,7 @@
 """BibFormat element - Enhanced INSPIRE MARCXML"""
 from zlib import decompress
 
+from invenio.intbitset import intbitset
 from invenio.bibrecord import record_xml_output, record_get_field_instances, field_get_subfield_instances, record_add_field, create_record
 from invenio.search_engine import perform_request_search
 from invenio.bibrank_citation_indexer import get_tags_config as _get_tags_config, get_recids_matching_query
@@ -35,7 +36,8 @@ def get_institution_ids(text):
     # FIXME: use redis
     global INSTITUTION_CACHE
     if text not in INSTITUTION_CACHE:
-        INSTITUTION_CACHE[text] = perform_request_search(cc='Institutions', p='110__u:"%s" or 110__t:"%s"' % (text, text))
+        INSTITUTION_CACHE[text] = intbitset(perform_request_search(cc='Institutions', p='110__u:"%s"' % text)) or \
+            intbitset(perform_request_search(cc='Institutions', p='110__t:"%s"' % text))
     return INSTITUTION_CACHE[text]
 
 HEPNAME_CACHE = {}
