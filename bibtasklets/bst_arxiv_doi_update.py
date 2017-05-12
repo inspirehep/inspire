@@ -381,30 +381,25 @@ def record_has_doi(record, rec_id, doi):
     from the DOI feed.
     """
     fields = record.find_fields('0247_')
+    record_dois = set()
     for field in fields:
-        try:
-            if 'DOI' in field.get_subfield_values('2'):
-                _print('Record %s already has a doi' % str(rec_id), 6)
-                sub_a = field.get_subfield_values('a')
-                if len(sub_a) != 1:
-                    msg = ('Warning: Multiple DOIs (024 7_ $a) found for ' +
-                           'record %d' % rec_id)
-                    ERRORS.append(msg)
-                    _print(msg)
+        if 'DOI' in field.get_subfield_values('2'):
+            for val in field.get_subfield_values('a'):
+                record_dois.add(val)
 
-                if doi in sub_a:
-                    _print('DOI for %s matches current DOI' % str(rec_id), 7)
-                    return True
-                else:
-                    msg = ('ERROR: DOI of record #%d (%s)' % (rec_id, sub_a[0])
-                           + 'is different than the new doi (%s)!' % doi)
-                    ERRORS.append(msg)
-                    _print(msg, 2)
-                    raise DOIError(repr(sub_a))
-        except IndexError:
-            pass
-    _print('No current DOI found for record #%d' % rec_id, 6)
-    return False
+    if not record_dois:
+        _print('No current DOI(s) found for record #%d' % rec_id, 6)
+        return False
+
+    if doi in record_dois:
+        _print('DOI for %s matches a current DOI' % str(rec_id), 7)
+        return True
+    else:
+        msg = ('ERROR: DOI(s) of record #%d (%r)' % (rec_id, record_dois)
+               + 'different than the new doi (%s)!' % doi)
+        ERRORS.append(msg)
+        _print(msg, 2)
+        raise DOIError(repr(record_dois))
 
 
 def add_dots(string):
