@@ -166,7 +166,7 @@ def align_entries(hepname_kb, bai_kb):
         for id_value in set(projected_hepnames.iterkeys()) & set(projected_bais.iterkeys()):
             merged_entry = dict(projected_hepnames[id_value].items())
             for key, value in projected_bais[id_value].iteritems():
-                if key in merged_entry and merged_entry[key] != value:
+                if key in merged_entry and merged_entry[key].upper() != value.upper():
                     write_message("ERROR: conflicting entries {entry1} Vs. {entry2}".format(entry1=format_entry(projected_hepnames[id_value]), entry2=format_entry(projected_bais[id_value])))
                     break
             else:
