@@ -182,6 +182,7 @@ def format_element(bfo, oai=0):
 
     is_institution = 'INSTITUTION' in [collection.upper() for collection in bfo.fields('980__a')]
 
+    signatures = {}
     if '100' in record or '700' in record:
         signatures = dict((name, (personid, flag)) for name, personid, flag in run_sql("SELECT name, personid, flag FROM aidPERSONIDPAPERS WHERE bibrec=%s AND flag>-2", (recid, )))
 
