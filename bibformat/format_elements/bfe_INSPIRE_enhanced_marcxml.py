@@ -238,8 +238,9 @@ def format_element(bfo, oai=0):
                     if len(ids) == 1:
                         subfields.append(('z', '%i' % ids[0]))
 
-    # Enhance affiliation in HepNames and Jobs and Institutions
-    for field in record_get_field_instances(record, '371'):
+    # Enhance affiliation in HepNames and Jobs and Institutions and
+    # naked affiliations in HEP
+    for field in record_get_field_instances(record, '371') + record_get_field_instances(record, '902'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
