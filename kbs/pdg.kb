@@ -36,6 +36,7 @@ S043GZ4---g**Z(4)
 S043KAZ---kappatilde(Z)
 S043LAZ---lambdatilde(Z)
 S043WMG---W ANOMALOUS MAGNETIC MOMENT
+S043A00---c({WWW})/Lambda**2, c({W})/Lambda**2, c({B})/Lambda**2
 S043AQC---a(0)/Lambda**2, a(c)/Lambda**2, a(n)/Lambda**2, kappa(0)W/Lambda**2, kappa(c)W/Lambda**2, f(T,0)/Lambda**4, f(M,i)/Lambda**4, alpha(4), alpha(5), F(S,i)/Lambda**4, F(M,i)/Lambda**4, F(T,i)/Lambda**4
 S044---Z
 S044:Desig=1---Z --> e+ e-
@@ -110,6 +111,7 @@ S044:Desig=81---Z --> Xi_b() X
 S044:Desig=82---Z --> lepton+ lepton- lepton+ lepton-
 S044:Desig=83---Z --> pi0 pi0
 S044:Desig=84---Z --> J/psi(1S) gamma
+S044:Desig=85---Z --> phi gamma
 S044M---Z MASS
 S044W---Z WIDTH
 S044GAM---<N(gamma)>
@@ -210,6 +212,10 @@ S126:Desig=11---H0 --> J/psi gamma
 S126:Desig=12---H0 --> Upsilon(1S) gamma
 S126:Desig=13---H0 --> Upsilon(2S) gamma
 S126:Desig=14---H0 --> Upsilon(3S) gamma
+S126:Desig=15---H0 --> phi(1020) gamma
+S126:Desig=16---H0 --> a a --> 4gamma
+S126:Desig=17---H0 --> e mu
+S126:Desig=18---H0 --> e tau
 S126M---H0 MASS
 S126CP---H0 SPIN AND CP PROPERTIES
 S126W---H0 DECAY WIDTH
@@ -222,6 +228,8 @@ S126SMU---mu+ mu- Final State
 S126STT---tau+ tau- Final State
 S126SZG---Z gamma Final State
 S126STH---t tbar H0 Production
+S126SHH---H0H0 Production
+S126PTH---t H0 associated production cross section
 S055---Neutral Higgs Bosons, Searches for
 S055:Desig=1---H0 --> W W^*
 S055:Desig=2---H0 --> Z Z^*
@@ -251,6 +259,7 @@ S056ZCH---Limits for Z(chi)
 S056ZPS---Limits for Z(psi)
 S056ZET---Limits for Z(eta)
 S056ZOT---Limits for other Z'
+S056ZLF---Searches for Z' with Lepton-Flavor-Violating decays
 S056KKI---Indirect Constraints on Kaluza-Klein Gauge Bosons
 S056EGT---MASS LIMITS for Leptoquarks from Pair Production
 S056ESP---MASS LIMITS for Leptoquarks from Single Production
@@ -725,7 +734,7 @@ S067S13---sin**2(2 * theta) for ``Large'' Delta(m)**2 (nu(mu) ( nubar(mu) ) --> 
 S067RD1---Delta(m)**2 for sin**2(2 * theta) = 1  (nubar(e) -/-> nubar(e))
 S067RS1---sin**2(2 * theta) for ``Large'' Delta(m)**2  (nubar(e) -/-> nubar(e))
 S067DU4---Delta(m)**2 for sin**2(2 * theta) = 1  (nu(mu) --> nu(s))
-S067NUS---Search for nu(mu) --> nu(s)
+S067NUS---Search for nu(mu) or nu(e) --> nu(s)
 S067CPT---<Deltamass**2(21)-Deltambar**2(21)>
 S067CP2---<Deltamass**2(32)-Deltambar**2(32)>
 S077---Heavy Neutral Leptons, Searches for
@@ -774,7 +783,7 @@ Q007:Desig=9---t --> e nu_e b
 Q007:Desig=10---t --> mu nu_mu b
 Q007:Desig=11---t --> q qbar b
 Q007TP---t-Quark Mass (Direct Measurements)
-Q007TP2---t-Quark MSbar Mass from Cross-Section Measurements
+Q007TP2---t-Quark Mass from Cross-Section Measurements
 Q007TP4---t-Quark Pole Mass from Cross-Section Measurements
 Q007CPT---mass(t) - mass(tbar)
 Q007W---t-quark DECAY WIDTH
@@ -785,6 +794,8 @@ Q007TV2---F({V+A})
 Q007TV4---f**R(1)
 Q007TV5---f**L(2)
 Q007TV6---f**R(2)
+Q007CMD---Chromo-magnetic dipole moment mu(t)=g(s)muhat(t)/m(t)
+Q007CED---Chromo-electric dipole moment d(t) = g(s)dhat(t)/m(t)
 Q007SC---Spin Correlation in t tbar Production in p pbar Collisions
 Q007TSC---Spin Correlation in t tbar Production in p p Collisions
 Q007TUG---t-quark FCNC Couplings kappa**utg/Lambda and kappa**ctg/Lambda
@@ -800,17 +811,21 @@ Q007STE---Single t-Quark Production Cross Section in e p Collisions
 Q007TXA---t tbar Production Cross Section in p pbar Collisions at sqrt(s) = 1.8 TeV
 Q007TX---t tbar Production Cross Section in p pbar Collisions at sqrt(s) = 1.96 TeV
 Q007TTA---Ratio of the Production Cross Sections of t tbar gamma to t tbar at sqrt(s) = 1.96 TeV
+Q007TP7---t t Production Cross Section in p p Collisions at sqrt(s) = 7 TeV
 Q007TX7---t tbar Production Cross Section in p p Collisions at sqrt(s) = 7 TeV
 Q007TX8---t tbar Production Cross Section in p p Collisions at sqrt(s) = 8 TeV
-Q007TP7---t t Production Cross Section in p p Collisions at sqrt(s) = 7 TeV
+Q007X13---t tbar Production Cross Section in p p Collisions at sqrt(s) = 13 TeV
 Q007DT8---t tbar t tbar Production Cross Section in p p Collisions at sqrt(s) = 8 TeV
 Q007TW8---t tbar W Production Cross Section in p p Collisions at sqrt(s) = 8 TeV
 Q007TZ8---t tbar Z Production Cross Section in p p Collisions at sqrt(s) = 8 TeV
 Q007FQ7---f(Q(0)): t tbar Fraction of Events with a Veto on Additional Central Jet Activity in p p Collisions at sqrt(s) = 7 TeV
 Q007TJ7---Fraction of t tbar + multi-jet Events in p p Collisions at sqrt(s) = 7 TeV
 Q007AC7---t tbar Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 7 TeV
+Q007AC8---t tbar Charge Asymmetry (A(C)) in p p Collisions at sqrt(s) = 8 TeV
 Q007PL2---t-quark Polarization in t tbar Events in p pbar Collisions at sqrt(s) = 1.96 TeV
 Q007PL7---t-quark Polarization in t tbar Events in p p Collisions at sqrt(s) = 7 TeV
+Q007PL8---t-quark Polarization in t tbar Events in p p Collisions at sqrt(s) = 8 TeV
+Q007A00---t-quark Polarization in Single Top Events in p p Collisions at sqrt(s) = 8 TeV
 Q007TXG---g g --> t tbar Fraction in p pbar Collisions at sqrt(s) = 1.96 TeV
 Q007TFB---A_FB of t tbar in p pbar Collisions at sqrt(s) = 1.96 TeV
 Q007TQ---t-Quark Electric Charge
@@ -916,6 +931,7 @@ S014BET---pi+ pi- gamma PARAMETER beta (D-wave)
 S014AET---pi+ pi- e+ e- DECAY-PLANE ASYMMETRY PARAMETER A(phi)
 S014DP---PARAMETERS FOR eta --> pi+ pi- pi0
 S014A0---alpha PARAMETER FOR eta --> 3pi0
+S014LAM---PARAMETER Lambda IN eta --> mu+ mu- gamma DECAY
 M014---f(0)(500) or sigma  was f(0)(600)
 M014:Desig=1---f_0(400-1200) --> pi pi
 M014:Desig=2---f_0(400-1200) --> K Kbar
@@ -1035,6 +1051,11 @@ M002:Desig=202---eta^'(958) --> pi+ pi- 2pi0
 M002:Desig=203---eta^'(958) --> 3(pi+ pi-)
 M002:Desig=204---eta^'(958) --> pi+ e- nu_e + c.c.
 M002:Desig=205---eta^'(958) --> omega e+ e-
+M002:Desig=207---eta^'(958) --> K+- pi-+
+M002:Desig=208---eta^'(958)   --> pi+- rho(770)-+
+M002:Desig=209---eta^'(958)  --> pi-+ rho+-
+M002:Desig=210---eta^'(958) --> pi-+ rho+-
+M002:Desig=211---eta^'(958) --> (pi+ pi- pi0 ) S-wave
 M002M---eta'(958) MASS
 M002W---eta'(958) WIDTH
 M002A0---Re(alpha) decay parameter
@@ -1106,6 +1127,7 @@ M004:Desig=259---phi(1020) --> eta U --> eta e+ e-
 M004M---phi(1020) MASS
 M004W---phi(1020) WIDTH
 M004D1---pi+ pi- pi0 / rho pi AMPLITUDE RATIO a(1) IN DECAY OF  phi --> pi+ pi- pi0
+M004A00---PARAMETER beta IN phi --> pi0 e+ e- DECAY
 M004BFP---PARAMETER beta IN phi --> eta e+ e- DECAY
 M030---h(1)(1170)
 M030:Desig=1---h_1(1170) --> rho pi
@@ -1324,6 +1346,7 @@ M125:Desig=3---omega(1420) --> e+ e-
 M125:Desig=4---omega(1420) --> omega pi pi
 M125:Desig=5---omega(1420) --> b_1(1235) pi
 M125:Desig=6---omega(1420) --> pi0 gamma
+M125:Desig=7---omega(1420) --> omega eta
 M125M---omega(1420) MASS
 M125W---omega(1420) WIDTH
 M066---f(2)(1430)
@@ -1597,6 +1620,7 @@ M065:Desig=18---rho(1700) --> rho rho
 M065:Desig=20---rho(1700) --> 4pi
 M065:Desig=191---rho(1700) --> K+ K-
 M065:Desig=192---rho(1700) --> pi+ pi- neutrals
+M065:Desig=193---rho(1700) --> omega eta pi0
 M065M0---eta rho0 AND pi+ pi- MODES
 M065M6---eta rho0 MODE
 M065M1---pi pi MODE
@@ -1605,6 +1629,7 @@ M065M2---K Kbar MODE
 M065M4---2 ( pi+ pi- ) MODE
 M065M5---pi+ pi- pi0 pi0 MODE
 M065M7---3( pi+ pi- ) AND 2( pi+ pi- pi0 ) MODES
+M065A00---M065M9 omega eta pi0 mode
 M065W0---eta rho0 AND pi+ pi- MODES
 M065W6---eta rho0 MODE
 M065W1---pi pi MODE
@@ -1944,7 +1969,7 @@ M300J62---X(1650)      IG(JPC) = 0-(??-)
 M300K06---X(1730)      IG(JPC) = ??(??+)
 M300J94---X(1750)      IG(JPC) = ??(1--)
 M300B5---B(X(1750) --> Kbar*(892)0 K0 --> K+- pi-+ K(S)0)/B(X(1750) --> K+ K-)
-M300B6---B(X(1750) --> K*(892)+- K-+ --> K-+ pi+- K(S)0)/B(X(1750) --> K+ K-)
+M300B6---B(X(1750) --> K*(892)+- K-+ --> K(S)0 pi+- K-+)/B(X(1750) --> K+ K-)
 M300JAM---f(2)(1750)      IG(JPC) = 0+(2++)
 M300JA1---Gamma(K Kbar)
 M300JA2---Gamma(gamma gamma)
@@ -2115,7 +2140,6 @@ S010T---K+- MEAN LIFE
 S010DT---(meanlife(K+) - meanlife(K-)) / meanlife(average)
 S010D1---Delta(K+- --> mu+- nu(mu)) RATE DIFFERENCE/SUM
 S010D4---Delta(K+- --> pi+- pi0) RATE DIFFERENCE/SUM
-S010D5---Delta(K+- --> pi+- pi0 gamma) RATE DIFFERENCE/SUM
 S010CPE---Delta(K+- --> pi+- e+ e-) RATE DIFFERENCE/SUM
 S010CP---Delta(K+- --> pi+- mu+ mu-) RATE DIFFERENCE/SUM
 S010CPG---Delta(K+- --> pi+- pi0 gamma) RATE DIFFERENCE/SUM
@@ -2409,6 +2433,7 @@ M095---K*(1680)
 M095:Desig=1---K^*(1680) --> K pi
 M095:Desig=2---K^*(1680) --> K^*(892) pi
 M095:Desig=3---K^*(1680) --> K rho
+M095:Desig=4---K^*(1680) --> K phi
 M095M---K*(1680) MASS
 M095W---K*(1680) WIDTH
 M023---K(2)(1770)
@@ -2437,6 +2462,7 @@ M146:Desig=3---K_2(1820) --> K f_2(1270)
 M146:Desig=4---K_2(1820) --> K phi
 M146:Desig=5---K_2(1820) --> K pi pi
 M146:Desig=6---K_2(1820) --> K omega
+M146:Desig=7---K_2(1820) --> K phi
 M146M---K(2)(1820) MASS
 M146W---K(2)(1820) WIDTH
 M088---K(1830)
@@ -2452,6 +2478,7 @@ M104:Desig=1---K_2^*(1980) --> K pi
 M104:Desig=2---K_2^*(1980) --> K^*(892) pi
 M104:Desig=3---K_2^*(1980) --> K rho
 M104:Desig=4---K_2^*(1980) --> K f_2(1270)
+M104:Desig=5---K_2^*(1980) --> K phi
 M104M---K(2)*(1980) MASS
 M104W---K(2)*(1980) WIDTH
 M035---K(4)*(2045)
@@ -2736,6 +2763,8 @@ S031:Desig=275---D+ --> Kbar_0^*(1680)0 pi+ , Kbar_0^*()0 --> K0S pi0
 S031:Desig=276---D+ --> kappabar()0 pi+ , kappabar()0 --> K0S pi0
 S031:Desig=277---D+ --> K0S pi+ pi0  nonresonant and  kappabar()0 pi+
 S031:Desig=278---D+ --> ( K0S pi0 )(S-wave) pi+
+S031:Desig=279---D+  --> (K- pi+ ) ([0.8 - 1.0]GeV) e+ nu_e
+S031:Desig=280---D+  --> K0S K0S pi+
 S031M---D+- MASS
 S031T---D+- MEAN LIFE
 S031B93---Gamma(c --> e+ anything)/Gamma(c --> anything)
@@ -2752,7 +2781,7 @@ S031A04---A(CP)(K(S)0 pi+- pi+ pi-) in D+ --> K(S)0 pi+ pi+ pi-, D- --> K(S)0 pi
 S031A11---A(CP)(pi+- pi0) in D+- --> pi+- pi0
 S031A12---A(CP)(pi+- eta) in D+- --> pi+- eta
 S031A13---A(CP)(pi+- eta'(958)) in D+- --> pi+- eta'(958)
-S031A15---A_CP(Kbar0 / K0 K+-)
+S031A15---A_CP(Kbar0 / K0 K+-) in D+ --> Kbar0 K+, D- --> K0 K-
 S031A6---A(CP)(K(S)0 K+-) in D+- --> K(S)0 K+-
 S031A1---A(CP)(K+ K- pi+-) in D+- --> K+ K- pi+-
 S031A2---A(CP)(K+- K*0) in D+ --> K+ Kbar*0,  D- --> K- K*0
@@ -2887,7 +2916,7 @@ S032:Desig=116---D0 --> K- pi+ rho0 total
 S032:Desig=117---D0 --> phi rho0
 S032:Desig=123---D0 --> K0S K+ pi-
 S032:Desig=124---D0 --> K^*(892)0 K0S , K^*()0 --> K+ pi-
-S032:Desig=125---D0 --> K^*(892)- K+, K*(892)- --> K(S)0 pi-
+S032:Desig=125---D0 --> K^*(892)- K+ , K^*()- --> K0S pi-
 S032:Desig=126---D0 --> K0S K+ pi- nonresonant
 S032:Desig=127---D0 --> K- pi0 e+ nu_e
 S032:Desig=128---D0 --> Kbar0 pi- e+ nu_e
@@ -2895,7 +2924,7 @@ S032:Desig=129---D0 --> K^*(892)- e+ nu_e
 S032:Desig=130---D0 --> Kbar^*(892)0 pi- e+ nu_e
 S032:Desig=131---D0 --> K+ K- pi+ pi- pi0
 S032:Desig=134---D0 --> (phi rho0)(S-wave) , phi --> K+ K-
-S032:Desig=135---D0 --> K0S eta, eta --> pi+ pi- pi0
+S032:Desig=135---D0 --> K0S eta , eta --> pi+ pi- pi0
 S032:Desig=136---D0 --> K^*(892)0 K- pi+ + c.c.  x  B(K*0 --> K+ pi-)
 S032:Desig=137---D0 --> K^*(892)0 Kbar^*(892)0, K*0 --> K+- pi-+
 S032:Desig=138---D0 --> Kbar^*(892)0 eta, Kbar*(892)0 --> K- pi+, eta --> pi+ pi- pi0
@@ -2946,16 +2975,16 @@ S032:Desig=196---D0 --> K- lepton+ nu_lepton
 S032:Desig=197---D0 --> K- pi+ omega
 S032:Desig=198---D0 --> K+ K- pi+ pi- non-phi
 S032:Desig=199---D0 --> K0S f_0(980), f(0)(980) --> pi+ pi-
-S032:Desig=200---D0 --> K0S f_2(1270), f(2)(1270) --> pi+ pi-
-S032:Desig=201---D0 --> K0S f_0(1370), f(0)(1370) --> pi+ pi-
-S032:Desig=202---D0 --> Kbar^*(892)0 pi0, Kbar*(892)0 --> K(S)0 pi0
-S032:Desig=203---D0 --> K_0^*(1430)- pi+, K(0)*(1430)- --> K(S)0 pi-
+S032:Desig=200---D0 --> K0S f_2(1270) , f_2 --> pi+ pi-
+S032:Desig=201---D0 --> K0S f_0(1370) , f_0() --> pi+ pi-
+S032:Desig=202---D0 --> Kbar^*(892)0 pi0 , Kbar^*()0 --> K0S pi0
+S032:Desig=203---D0 --> K_0^*(1430)- pi+ , K_0^*()- --> K0S pi-
 S032:Desig=204---D0 --> K- pi+ rho0 total
 S032:Desig=205---D0 --> K- pi+ rho0  3-body
-S032:Desig=206---D0 --> K- pi+ omega, omega --> pi+ pi- pi0
-S032:Desig=207---D0 --> Kbar^*(892)0 omega, Kbar*(892)0 --> K- pi+,  omega --> pi+ pi- pi0
-S032:Desig=208---D0 --> K^*(892)0 K-+ pi+- 3-body, K*0 --> K+- pi-+
-S032:Desig=209---D0 --> Kbar^*(892)0 K+ pi-  x  B(Kbar*0 --> K- pi+)
+S032:Desig=206---D0 --> K- pi+ omega , omega --> pi+ pi- pi0
+S032:Desig=207---D0 --> Kbar^*(892)0 omega , Kbar^*()0 --> K- pi+ , omega --> pi+ pi- pi0
+S032:Desig=208---D0 --> K^*(892)0 K-+ pi+- 3-body, K^*()0 --> K+- pi-+
+S032:Desig=209---D0 --> Kbar^*(892)0 K+ pi- , Kbar^*()0 --> K- pi+
 S032:Desig=210---D0 --> K^*(892)0 K- pi+
 S032:Desig=211---D0 --> Kbar^*(892)0 K+ pi-
 S032:Desig=212---D0 --> phi pi0
@@ -3017,28 +3046,28 @@ S032:Desig=267---D0 --> K- K+ mu+ mu-
 S032:Desig=268---D0 --> pi+ pi- e+- mu-+
 S032:Desig=269---D0 --> K- pi+ e+- mu-+
 S032:Desig=270---D0 --> K- K+ e+- mu-+
-S032:Desig=271---D0 --> K- rho(1700)+, rho(1700)+ --> pi+ pi0
-S032:Desig=272---D0 --> K_0^*(1430)- pi+, K(0)*(1430)- --> K- pi0
-S032:Desig=273---D0 --> Kbar_0^*(1430)0 pi0, Kbar(0)*(1430)0 --> K- pi+
-S032:Desig=274---D0 --> K^*(1680)- pi+, K*(1680)- --> K- pi0
-S032:Desig=275---D0 --> K- pi+ phi, phi --> K+ K-
+S032:Desig=271---D0 --> K- rho(1700)+ , rho+ --> pi+ pi0
+S032:Desig=272---D0 --> K_0^*(1430)- pi+ , K_0^*()- --> K- pi0
+S032:Desig=273---D0 --> Kbar_0^*(1430)0 pi0 , Kbar_0^*()0 --> K- pi+
+S032:Desig=274---D0 --> K^*(1680)- pi+ , K^*()- --> K- pi0
+S032:Desig=275---D0 --> K- pi+ phi , phi --> K+ K-
 S032:Desig=276---D0 --> K- pi+ phi
 S032:Desig=277---D0 --> K+ pi- pi0
 S032:Desig=278---D0 --> K^*(892)+ pi-
-S032:Desig=279---D0 --> K^*(1680)- pi+, K*(1680)- --> K(S)0 pi-
+S032:Desig=279---D0 --> K^*(1680)- pi+ , K^*()- --> K0S pi-
 S032:Desig=280---D0 --> phi Kbar^*(892)0
 S032:Desig=281---D0 --> K+ K- Kbar^*(892)0
 S032:Desig=282---D0 --> K+ 2K- pi+ nonresonant
-S032:Desig=283---D0 --> K+ K- Kbar^*(892)0, Kbar*(892)0 --> K- pi+
-S032:Desig=284---D0 --> phi Kbar^*(892)0, phi --> K+ K-, Kbar*(892)0 --> K- pi+
-S032:Desig=285---D0 --> K0S omega, omega --> pi+ pi-
-S032:Desig=286---D0 --> K_2^*(1430)- pi+, K(2)*(1430)- --> K(S)0 pi-
-S032:Desig=287---D0 --> K^*(892)+ pi-, K*(892)+ --> K(S)0 pi+
+S032:Desig=283---D0 --> K+ K- Kbar^*(892)0 , Kbar^*()^0 --> K- pi+
+S032:Desig=284---D0 --> phi Kbar^*(892)0 , phi --> K+ K- , Kbar^*()0 --> K- pi+
+S032:Desig=285---D0 --> K0S omega , omega --> pi+ pi-
+S032:Desig=286---D0 --> K_2^*(1430)- pi+ , K_2^*()- --> K0S pi-
+S032:Desig=287---D0 --> K^*(892)+ pi- , K^*()+ --> K0S pi+
 S032:Desig=288---D0 --> K- 3pi+ 2pi-
 S032:Desig=290---D0 --> K- pi+  or  K- 2pi+ pi-
 S032:Desig=292---D0 --> K0S eta pi0
-S032:Desig=293---D0 --> K0S a_0(980), a(0)(980) --> eta pi0
-S032:Desig=294---D0 --> Kbar^*(892)0 eta , Kbar^*(892)0 --> K0S pi0
+S032:Desig=293---D0 --> K0S a_0(980) , a_0() --> eta pi0
+S032:Desig=294---D0 --> Kbar^*(892)0 eta , Kbar^*()0 --> K0S pi0
 S032:Desig=306---D0 --> Kbar0 pi- mu+ nu_mu
 S032:Desig=307---D0 --> K^*(892)- mu+ nu_mu
 S032:Desig=308---D0 --> pi- mu+ nu_mu
@@ -3061,15 +3090,15 @@ S032:Desig=325---D0 --> K0S f_0(1370), f(0) --> K+ K-
 S032:Desig=326---D0 --> rho+ pi-
 S032:Desig=327---D0 --> rho0 pi0
 S032:Desig=328---D0 --> rho- pi+
-S032:Desig=329---D0 --> f_0(500) pi0, f(0)(500) --> pi+ pi-
-S032:Desig=330---D0 --> f_0(980) pi0, f(0)(980) --> pi+ pi-
+S032:Desig=329---D0 --> f_0(500) pi0, f(0) --> pi+ pi-
+S032:Desig=330---D0 --> f_0(980) pi0, f(0) --> pi+ pi-
 S032:Desig=331---D0 --> ( pi+ pi- )(S-wave) pi0
 S032:Desig=332---D0 --> 0-prongs
 S032:Desig=333---D0 --> 2-prongs
 S032:Desig=334---D0 --> 4-prongs
 S032:Desig=335---D0 --> 6-prongs
-S032:Desig=336---D0 --> K_1(1270)+- K-+, K(1)(1270)+- --> K+- pi+ pi-
-S032:Desig=337---D0 --> K_1(1400)+- K-+, K(1)(1400)+- --> K+- pi+ pi-
+S032:Desig=336---D0 --> K_1(1270)+- K-+, K(1)+- --> K+- pi+ pi-
+S032:Desig=337---D0 --> K_1(1400)+- K-+, K(1)+- --> K+- pi+ pi-
 S032:Desig=338---D0 --> f_0(980) pi+ pi-, f(0) --> K+ K-
 S032:Desig=339---D0 --> K0S pi+ pi-  in D0 --> Dbar0
 S032:Desig=340---D0 --> K^*(892)- anything
@@ -3090,7 +3119,7 @@ S032:Desig=354---D0 --> 2 rho0, perpendicular helicities
 S032:Desig=355---D0 --> 2 rho0, longitudinal helicities
 S032:Desig=356---D0 --> Resonant (pi+ pi-) pi+ pi- {} 3-body total
 S032:Desig=357---D0 --> sigma pi+ pi-
-S032:Desig=358---D0 --> f_0(980) pi+ pi-, f(0) --> pi+ pi-
+S032:Desig=358---D0 --> f_0(980) pi+ pi- , f_0() --> pi+ pi-
 S032:Desig=359---D0 --> f_2(1270) pi+ pi-, f(2) --> pi+ pi-
 S032:Desig=360---D0 --> K- pi+ pi- e+ nu_e
 S032:Desig=361---D0 --> K_1(1270)- e+ nu_e
@@ -3099,44 +3128,66 @@ S032:Desig=363---D0 --> K0L pi0
 S032:Desig=364---D0 --> (K+ pi0)(S-wave) K-
 S032:Desig=365---D0 --> (K- pi0)(S-wave) K+
 S032:Desig=366---D0 --> f_0(980) pi0 , f_0() --> K+ K-
-S032:Desig=367---D0 --> rho(1450)+ pi- , rho(1450)+ --> pi+ pi0
-S032:Desig=368---D0 --> rho(1450)0 pi0 , rho(1450)0 --> pi+ pi-
-S032:Desig=369---D0 --> rho(1450)- pi+ , rho(1450)- --> pi- pi0
-S032:Desig=370---D0 --> rho(1700)+ pi- , rho(1700)+ --> pi+ pi0
-S032:Desig=371---D0 --> rho(1700)0 pi0 , rho(1700)0 --> pi+ pi-
-S032:Desig=372---D0 --> rho(1700)- pi+ , rho(1700)- --> pi- pi0
-S032:Desig=373---D0 --> f_0(1370) pi0, f(0)(1370) --> pi+ pi-
-S032:Desig=374---D0 --> f_0(1500) pi0, f(0)(1500) --> pi+ pi-
-S032:Desig=375---D0 --> f_0(1710) pi0, f(0)(1710) --> pi+ pi-
-S032:Desig=376---D0 --> f_2(1270) pi0, f(2)(1270) --> pi+ pi-
+S032:Desig=367---D0 --> rho(1450)+ pi- , rho+ --> pi+ pi0
+S032:Desig=368---D0 --> rho(1450)0 pi0 , rho0 --> pi+ pi-
+S032:Desig=369---D0 --> rho(1450)- pi+ , rho- --> pi- pi0
+S032:Desig=370---D0 --> rho(1700)+ pi- , rho+ --> pi+ pi0
+S032:Desig=371---D0 --> rho(1700)0 pi0 , rho0 --> pi+ pi-
+S032:Desig=372---D0 --> rho(1700)- pi+ , rho- --> pi- pi0
+S032:Desig=373---D0 --> f_0(1370) pi0 , f_0() --> pi+ pi-
+S032:Desig=374---D0 --> f_0(1500) pi0 , f_0() --> pi+ pi-
+S032:Desig=375---D0 --> f_0(1710) pi0 , f_0() --> pi+ pi-
+S032:Desig=376---D0 --> f_2(1270) pi0, f(2) --> pi+ pi-
 S032:Desig=377---D0 --> pi+ pi- pi0  nonresonant
 S032:Desig=378---D0 --> eta^'(958) pi0
 S032:Desig=379---D0 --> eta^'(958) pi+ pi-
 S032:Desig=380---D0 --> 2eta
 S032:Desig=381---D0 --> eta eta^'(958)
-S032:Desig=382---D0 --> K_0^*(1430)+ pi-, K(0)*(1430)+ --> K(S)0 pi+
-S032:Desig=383---D0 --> K_2^*(1430)+ pi-, K(2)*(1430)+ --> K(S)0 pi+
+S032:Desig=382---D0 --> K_0^*(1430)+ pi-, K(0)*+ --> K(S)0 pi+
+S032:Desig=383---D0 --> K_2^*(1430)+ pi-, K(2)*+ --> K(S)0 pi+
 S032:Desig=384---D0 --> K0S (pi+ pi-)(S-wave)
-S032:Desig=385---D0 --> K_0^*(1430)+ pi-, K(0)*(1430)+ --> K(S)0 pi+
-S032:Desig=386---D0 --> K_2^*(1430)+ pi-, K(2)*(1430)+ --> K(S)0 pi+
+S032:Desig=385---D0 --> K_0^*(1430)+ pi-, K(0)*+ --> K(S)0 pi+
+S032:Desig=386---D0 --> K_2^*(1430)+ pi-, K(2)*+ --> K(S)0 pi+
 S032:Desig=387---D0 --> p e-
 S032:Desig=388---D0 --> pbar e+
 S032:Desig=389---D0 --> X e+ nu_e  (semileptonic)
 S032:Desig=390---D0 --> K0S (2pi0)-S-wave
-S032:Desig=391---D0 --> Kbar^*(1430)0 pi0, Kbar*0 --> K(S)0 pi0
-S032:Desig=392---D0 --> Kbar^*(1680)0 pi0, Kbar*0 --> K(S)0 pi0
-S032:Desig=393---D0 --> K0S f_2(1270), f(2) --> 2pi0
+S032:Desig=391---D0 --> Kbar^*(1430)0 pi0 , Kbar^*()0 --> K0S pi0
+S032:Desig=392---D0 --> Kbar^*(1680)0 pi0 , Kbar^*()0 --> K0S pi0
+S032:Desig=393---D0 --> K0S f_2(1270) , f_2 --> 2pi0
 S032:Desig=394---D0 --> 2K0S, one K(S)0 --> 2pi0
 S032:Desig=395---D0 --> (phi rho0)(D-wave) , phi --> K+ K-
 S032:Desig=396---D0 --> (K^*()0 Kbar^*()0)(S-wave) , K^*()0 --> K+- pi-+
 S032:Desig=397---D0 --> (K- pi+)(P-wave) , (K+ pi-)(S-wave) ,
-S032:Desig=398---D0 --> K_1(1270)+ K- , K_1(1270)+ --> K^*()0 pi+
-S032:Desig=399---D0 --> K_1(1270)+ K- , K_1(1270)+ --> rho0 K+
-S032:Desig=400---D0 --> K_1(1270)- K+ , K_1(1270)- --> Kbar^*()0 pi-
-S032:Desig=401---D0 --> K_1(1270)- K+ , K_1(1270)- --> rho0 K-
-S032:Desig=402---D0 --> K^*(1410)+ K- , K^*(1410)+ --> K^*()0 pi+
-S032:Desig=403---D0 --> K^*(1410)- K+ , K^*(1410)- --> Kbar^*()0 pi-
+S032:Desig=398---D0 --> K_1(1270)+ K- , K_1()+ --> K^*()0 pi+
+S032:Desig=399---D0 --> K_1(1270)+ K- , K_1()+ --> rho0 K+
+S032:Desig=400---D0 --> K_1(1270)- K+ , K_1()- --> Kbar^*()0 pi-
+S032:Desig=401---D0 --> K_1(1270)- K+ , K_1()- --> rho0 K-
+S032:Desig=402---D0 --> K^*(1410)+ K- , K^*()+ --> K^*()0 pi+
+S032:Desig=403---D0 --> K^*(1410)- K+ , K^*()- --> Kbar^*()0 pi-
 S032:Desig=404---D0 --> K+ pi-
+S032:Desig=412---D0 --> K^*(892)+ K- , K^*()+ --> K0S pi+
+S032:Desig=413---D0  --> K^*(892)- K+ , K^*()- --> K0S pi-
+S032:Desig=414---D0   --> K^*(1410)+ K- , K^*()+ --> K0S pi+
+S032:Desig=415---D0  --> K^*(1410)- K+ , K^*()- --> K0S pi-
+S032:Desig=417---D0  --> Kbar^*(1410)0 K0S , Kbar^*()0 --> K- pi+
+S032:Desig=418---D0 --> K^*(1410)0 K0S , K^*()0 --> K+ pi+
+S032:Desig=419---D0 --> ( K0S pi+ )(S-wave) K-
+S032:Desig=420---D0  --> (K- pi+ )(S-wave) K0S
+S032:Desig=421---D0  --> (K+ pi- )(S-wave) K0S
+S032:Desig=422---D0  --> ( K0S pi- )(S-wave) K+
+S032:Desig=423---D0 --> a_0(980)- pi+ , a_0()- --> K0S K-
+S032:Desig=424---D0 --> a_0(1450)- pi+ , a_0()- --> K0S K-
+S032:Desig=425---D0  --> rho(1450)- pi+ , rho()- --> K0S K-
+S032:Desig=426---D0 --> a_0(980)+ pi- , a_0()+ --> K0S K+
+S032:Desig=427---D0 --> a_0(1450)+ pi- , a_0()+ --> K0S K+
+S032:Desig=428---D0   --> rho(1700)+ pi- , rho()+ --> K0S K+
+S032:Desig=429---D0 --> a_2(1320)- pi+ , a_2()- --> K0S K-
+S032:Desig=432---D0 --> K+ pi+ 2pi- via DCS
+S032:Desig=433---D0 --> invisibles
+S032:Desig=434---D0        --> K- pi+ mu+ mu-  ,   675 < mass(mu mu) < 875 MeV
+S032:Desig=435---D0 --> (K0S pi+ ) (791.66 < m < 991.66 MeV) K-
+S032:Desig=436---D0 --> (K0S pi- ) (791.66 < m < 991.66 MeV) K+
 S032M---D0 MASS
 S032DM---mass(D+-) - mass(D0)
 S032T---D0 MEAN LIFE
@@ -3149,6 +3200,7 @@ S032CF1---D0 --> K- pi+ pi0 COHERENCE FACTOR R(K pi pi0)
 S032SP1---D0 --> K- pi+ pi0 AVERAGE RELATIVE STRONG PHASE delta**K pi pi0
 S032CF2---D0 --> K- pi- 2pi+ COHERENCE FACTOR R(K 3pi)
 S032SP2---D0 --> K- pi- 2pi+ AVERAGE RELATIVE STRONG PHASE delta**K 3pi
+S032A82---D0 --> K- pi- 2pi+, R(K 3pi) (y cos(delta**K 3pi) - x sin(delta**K 3pi))
 S032CF3---D0 --> K(S)0 K+ pi- COHERENCE FACTOR R(K(S)0 K pi)
 S032SP3---D0 --> K(S)0 K+ pi- AVERAGE RELATIVE STRONG PHASE delta**K(S)0 K pi
 S032CF4---D0 --> K* K COHERENCE FACTOR R(K* K)
@@ -3156,7 +3208,10 @@ S032SP4---D0 --> K* K AVERAGE RELATIVE STRONG PHASE delta**K* K
 S032A1---A(CP)(K+ K-) in D0, Dbar0 --> K+ K-
 S032A8---A(CP)(K(S)0 K(S)0) in D0, Dbar0 --> K(S)0 K(S)0
 S032A4---A(CP)(pi+ pi-) in D0, Dbar0 --> pi+ pi-
-S032A7---A(CP)(pi0 pi0) in D0, Dbar0 --> pi0 pi0
+S032A7---A_CP(pi0 pi0) in D0, Dbar0 --> pi0 pi0
+S032A00---A_CP(rho gamma) in D0, Dbar0 --> rho gamma
+S032A83---A_CP(phi gamma) in D0, Dbar0 --> phi gamma
+S032A84---A_CP(Kbar*(892)0 gamma) in D0, Dbar0 --> Kbar*(892)0 gamma
 S032A12---A(CP)(pi+ pi- pi0) in D0, Dbar0 --> pi+ pi- pi0
 S032A25---A_CP(rho(770)+ pi- --> pi+ pi- pi0) in D0 --> rho+ pi-, Dbar0 --> rho- pi+
 S032A26---A_CP(rho(770)0 pi0 --> pi+ pi- pi0) in D0, Dbar0 --> rho0 pi0
@@ -3517,7 +3572,7 @@ S034A11---A(CP)(pi+- eta') in D(s)+- --> pi+- eta'
 S034A19---A_CP(eta pi+- pi0) in D(s)+- --> eta pi+- pi0
 S034A17---A_CP(eta' pi+- pi0) in D(s)+- --> eta' pi+- pi0
 S034A01---A(CP)(K+- pi0) in D(s)+- --> K+- pi0
-S034A21---A_CP(Kbar0 / K0 pi+-)
+S034A21---A_CP(Kbar0 / K0 pi+-) in D(s)+ --> Kbar0 pi+, D(s)- --> K0 pi-
 S034A02---A(CP)(K(S)0 pi+-) in D(s)+- --> K(S)0 pi+-
 S034A12---A(CP)(K+- pi+ pi-) in D(s)+- --> K+- pi+ pi-
 S034A03---A(CP)(K+- eta) in D(s)+- --> K+- eta
@@ -3848,7 +3903,7 @@ S041:Desig=262---B+ --> K+ K+ pi- nonresonant
 S041:Desig=263---B+ --> K+ Kbar^*(892)0
 S041:Desig=264---B+ --> D_s^(*)()+ Dbar^**()0
 S041:Desig=265---B+ --> eta_c K+
-S041:Desig=266---B+ --> chi_c0(1P) K+
+S041:Desig=266---B+ --> chi_c0() K+
 S041:Desig=267---B+ --> rho+ gamma
 S041:Desig=268---B+ --> J/psi(1S) phi K+
 S041:Desig=269---B+ --> D^*(2010)+ K0
@@ -3871,7 +3926,7 @@ S041:Desig=285---B+ --> K+ K+ pi-
 S041:Desig=286---B+ --> Dbar0 K+ Kbar0
 S041:Desig=287---B+ --> Dbar^*(2007)0 K+ Kbar0
 S041:Desig=288---B+ --> Dbar0 K+ Kbar^*(892)0
-S041:Desig=289---B+ --> Dbar^*(2007)0 K+ K^*(892)0
+S041:Desig=289---B+ --> Dbar^*(2007)0 K+ Kbar^*(892)0
 S041:Desig=290---B+ --> K^*(892)- e+ e+
 S041:Desig=291---B+ --> rho- e+ e+
 S041:Desig=292---B+ --> K^*(892)- mu+ mu+
@@ -3889,7 +3944,7 @@ S041:Desig=306---B+ --> Kbar0 K+ pi0
 S041:Desig=307---B+ --> K+ pi- pi+ gamma
 S041:Desig=308---B+ --> K^*(892)0 pi+ gamma
 S041:Desig=309---B+ --> K+ rho0 gamma
-S041:Desig=310---B+ --> K+ pi- pi+ gamma nonresonant
+S041:Desig=310---B+ --> (K+ pi-)(NR) pi+ gamma
 S041:Desig=311---B+ --> Sigmabar_c(2455)0 p
 S041:Desig=312---B+ --> Sigmabar_c(2520)0 p
 S041:Desig=313---B+ --> p pbar K+
@@ -4112,7 +4167,7 @@ S041:Desig=538---B+ --> X(3872) K^*(892)+ , X --> psi(2S) gamma
 S041:Desig=539---B+ --> Lambda Lambdabar K^*()+
 S041:Desig=540---B+ --> omega phi K+
 S041:Desig=541---B+ --> X(1812) K+  x  B(X --> omega phi)
-S041:Desig=542---B+ --> chi_c2() pi+ , chi_c2() --> pi+ pi-
+S041:Desig=542---B+ --> chi_c2(2P) pi+ , chi_c2() --> pi+ pi-
 S041:Desig=543---B+ --> b_1()+ K^*()0  x  B(b(1)+ --> omega pi+)
 S041:Desig=544---B+ --> b_1()0 K^*()+  x  B(b(1)0 --> omega pi0)
 S041:Desig=545---B+ --> b_1()+ rho0 , b_1()+ --> omega pi+
@@ -4186,7 +4241,7 @@ S041:Desig=613---B+ --> psi(2S) K0 pi+
 S041:Desig=614---B+ --> D+ Kbar^*()0
 S041:Desig=615---B+ --> D_s()+ K^*()0
 S041:Desig=616---B+ --> D_s^(*)()- K+ lepton+ nu_lepton
-S041:Desig=617---B+ --> J/psi p pbar pi+
+S041:Desig=617---B+ --> J/psi(1S) p pbar pi+
 S041:Desig=618---B+ --> psi(4040) K+
 S041:Desig=619---B+ --> psi(4160) K+
 S041:Desig=620---B+ --> eta_c(2S) K+ , eta_c() --> p pbar
@@ -4246,6 +4301,31 @@ S041:Desig=673---B+ --> [ K+ pi- ](D) K+ pi- pi+
 S041:Desig=674---B+ --> [ K- pi+ ](D) K+ pi- pi+
 S041:Desig=675---B+ --> D_CP(+1)() K+ pi- pi+
 S041:Desig=676---B+ --> [ K- pi+ ](D) pi+ pi- pi+
+S041:Desig=677---B+ --> chi_c2() K0 pi+
+S041:Desig=678---B+ --> chi_c1(1P) K+ pi0
+S041:Desig=679---B+ --> chi_c2() K+ pi0
+S041:Desig=681---B+ --> chi_c1(1P) K+ pi+ pi-
+S041:Desig=682---B+ --> chi_c2() K+ pi+ pi-
+S041:Desig=683---B+ --> X(3872) K+ , X --> chi_c1(1P) pi+ pi-
+S041:Desig=684---B+ --> chi_c1(2P) K+ , chi_c1(2P) --> pi+ pi- chi_c1(1P)
+S041:Desig=685---B+ --> K_0^*(1430)0 pi+ gamma
+S041:Desig=686---B+ --> K^*(1410)+ gamma
+S041:Desig=687---B+ --> D+ K+ pi-
+S041:Desig=688---B+  --> D_2^*(2460)0 K+ , D_2^*()0 --> D+ pi-
+S041:Desig=689---B+ --> [ pi+ pi+ pi- pi- ] (D) K+
+S041:Desig=690---B+ --> K+ tau+ tau-
+S041:Desig=691---B+ --> psi(2S) phi(1020) K+
+S041:Desig=693---B+ --> J/psi(1S) pi+ pi+ pi+ pi- pi-
+S041:Desig=694---B+ --> psi(2S) pi+ pi+ pi-
+S041:Desig=695---B+ --> X(4500) K+ , X --> J/psi(1S) phi
+S041:Desig=696---B+ --> X(4700) K+ , X --> J/psi(1S) phi
+S041:Desig=697---B+ --> J/psi(1S) K_1(1650) , K_1 --> phi K+
+S041:Desig=698---B+ --> J/psi(1S) K^*(1680)+ , K^* --> phi K+
+S041:Desig=699---B+ --> J/psi(1S) K_2^*(1980) , K_2^* --> phi K+
+S041:Desig=700---B+ --> J/psi(1S) K(1830)+ , K(1830)+ --> phi K+
+S041:Desig=701---B+ --> Dbar_1^*(2680)0 pi+ , Dbar_1^*(2680)0 --> D- pi+
+S041:Desig=702---B+ --> Dbar_3^*(2760)0 pi+ , Dbar_3^*(2760)0 pi+ --> D- pi+
+S041:Desig=703---B+ --> Dbar_2^*(3000)0 pi+ , Dbar_2^*(3000)0 pi+ --> D- pi+
 S041M---B+- MASS
 S041T---B+- MEAN LIFE
 S041DT---meanlife(B+)/meanlife(B-)
@@ -4287,16 +4367,15 @@ S041AW5---A(CP)(B+ --> chi(c1)(1P) pi+)
 S041CQ9---A(CP)(B+ --> chi(c0) K+)
 S041AW3---A(CP)(B+ --> chi(c1) K+)
 S041AW4---A(CP)(B+ --> chi(c1) K*(892)+)
+S041A02---A_CP(B+ --> D0 lepton+ nu(lepton))
 S041AD2---A(CP)(B+ --> Dbar0 pi+)
 S041AD3---A(CP)(B+ --> D({CP(+1)}) pi+)
 S041AD4---A(CP)(B+ --> D({CP(-1)}) pi+)
 S041AYA---A_CP([ K-+ pi+- pi+ pi- ](D) pi+)
+S041A00---A_CP(B+ --> [ pi+ pi+ pi- pi- ](D) K+)
 S041AY2---A(CP)(B+ --> Dbar0 K+)
 S041AYB---A_CP([ K-+ pi+- pi+ pi- ](D) K+)
-S041ARX---r(B)(B+ --> D0 K+)
-S041DRX---delta(B)(B+ --> D0 K+)
-S041ARZ---r(B)(B+ --> Dbar0 K*+)
-S041DRZ---delta(B)(B+ --> D0 K*+)
+S041A01---A_CP(B+ --> [ pi+ pi+ pi- pi- ](D) pi+)
 S041AC0---A(CP)(B+ --> [ K- pi+ ](D) K+)
 S041AK2---A(CP)(B+ --> [ K- pi+ pi0 ](D) K+)
 S041AG0---A(CP)(B+ --> [ K+ K- pi0 ](D) K+)
@@ -4335,8 +4414,6 @@ S041AD5---A(CP)(B+ --> Dbar*0 pi+)
 S041AD6---A(CP)(B+ --> (D^*_{CP(+1)})0 pi+)
 S041AD7---A(CP)(B+ --> (D^*_{CP(-1)})0 pi+)
 S041AD8---A(CP)(B+ --> D*0 K+)
-S041ARY---r***(B)(B+ --> D*0 K+)
-S041DRY---delta***(B)(B+ --> D*0 K+)
 S041AC+---A(CP)(B+ --> D({CP(+1)})*0 K+)
 S041AD1---A(CP)(B+ --> D({CP(-1)})* K+)
 S041AD+---A(CP)(B+ --> D(CP(+1)) K*(892)+)
@@ -4426,8 +4503,15 @@ S041CU8---A_CP(B+ --> pi+ mu+ mu-)
 S041CR2---A(CP)(B+ --> K*+ lepton+ lepton-)
 S041CU2---A(CP)(B+ --> K* e+ e-)
 S041CU3---A(CP)(B+ --> K* mu+ mu-)
-S041GAM---gamma(B+ --> D(*)0 K(*)+)
 S041GAD---gamma(B+ --> D K+ pi- pi+, D pi+ pi- pi+)
+S041GGM---gamma
+S041GAM---gamma(B+ --> D(*)0 K(*)+)
+S041ARX---r(B)(B+ --> D0 K+)
+S041DRX---delta(B)(B+ --> D0 K+)
+S041ARZ---r(B)(B+ --> Dbar0 K*+)
+S041DRZ---delta(B)(B+ --> D0 K*+)
+S041ARY---r***(B)(B+ --> D*0 K+)
+S041DRY---delta***(B)(B+ --> D*0 K+)
 S041PB1---B(B+ --> K*+ lepton+ lepton-) (q**2< 2.0 GeV**2/c**4)
 S041PB2---B(B+ --> K*+ lepton+ lepton-) (2.0 < q**2< 4.3 GeV**2/c**4)
 S041PB3---B(B+ --> K*+ lepton+ lepton-) (4.3 < q**2< 8.68 GeV**2/c**4)
@@ -4586,8 +4670,8 @@ S042:Desig=122---B0 --> mu+- tau-+
 S042:Desig=123---B0 --> Sigmabar_c()-- Delta()++
 S042:Desig=124---B0 --> Dbar_2^*(2460)- pi+ , D^*_2()- --> D0 pi-
 S042:Desig=125---B0 --> Dbar_2^*(2460)- rho+
-S042:Desig=126---B0 --> chi_c1() K0
-S042:Desig=127---B0 --> chi_c1() K^*(892)0
+S042:Desig=126---B0 --> chi_c1 K0
+S042:Desig=127---B0 --> chi_c1 K^*(892)0
 S042:Desig=128---B0 --> Dbar0 pi0
 S042:Desig=129---B0 --> Dbar0 eta
 S042:Desig=130---B0 --> Dbar0 eta^'
@@ -4779,8 +4863,8 @@ S042:Desig=324---B0 --> D_s0(2317)- pi+ , D_s0()- --> D_s()- pi0
 S042:Desig=325---B0 --> D_sJ(2457)- K+ , D_sJ()- --> D_s()- pi0
 S042:Desig=326---B0 --> D_sJ(2457)- pi+ , D_sJ()- --> D_s()- pi0
 S042:Desig=327---B0 --> chi_c0() K^*(892)0
-S042:Desig=328---B0 --> chi_c2() K0
-S042:Desig=329---B0 --> chi_c2() K^*(892)0
+S042:Desig=328---B0 --> chi_c2 K0
+S042:Desig=329---B0 --> chi_c2 K^*(892)0
 S042:Desig=330---B0 --> X(3872)- K+
 S042:Desig=331---B0 --> D_1(2420)- pi+ , D_1()- --> D- pi+ pi-
 S042:Desig=332---B0 --> D_1(2420)- pi+ , D_1()- --> D^*()- pi+ pi-
@@ -4892,10 +4976,10 @@ S042:Desig=437---B0 --> h_c(1P) K^*()0
 S042:Desig=438---B0 --> X(4430)+- K-+ , X()+- --> psi(2S) pi+-
 S042:Desig=439---B0 --> X(3915) K0
 S042:Desig=440---B0 --> J/psi(1S) omega K0
-S042:Desig=441---B0 --> chi_c1() K- pi+
-S042:Desig=442---B0 --> X(4051)+ K- , X+ --> chi_c1() pi+
-S042:Desig=443---B0 --> X(4248)+ K- , X+ --> chi_c1() pi+
-S042:Desig=444---B0 --> chi_c1() pi0
+S042:Desig=441---B0 --> chi_c1 pi- K+
+S042:Desig=442---B0 --> X(4051)- K+ , X- --> chi_c1 pi-
+S042:Desig=443---B0 --> X(4248)- K+ , X- --> chi_c1 pi-
+S042:Desig=444---B0 --> chi_c1 pi0
 S042:Desig=445---B0 --> Sigmabar_c(2455)0 N0 , N0 --> p pi-
 S042:Desig=446---B0 --> omega K+ pi- nonresonant
 S042:Desig=447---B0 --> omega (Kpi)(0)*0
@@ -5015,13 +5099,19 @@ S042:Desig=561---B0 --> Dbar^*()- b_1(1235)- , b_1()- --> omega pi-
 S042:Desig=562---B0 --> K^*(892)0 chi , chi --> mu+ mu-
 S042:Desig=563---B0 --> X(3900)+- K-+ , X+- --> J/psi pi+-
 S042:Desig=564---B0 --> X(4200)+- K-+ , X+- --> J/psi pi+-
+S042:Desig=565---B0 --> chi_c1 pi+ pi- K0
+S042:Desig=566---B0 --> chi_c1 pi- pi0 K+
+S042:Desig=567---B0 --> chi_c2 pi- pi0 K+
+S042:Desig=568---B0 --> chi_c2 pi- K+
+S042:Desig=569---B0 --> chi_c2 pi+ pi- K0
+S042:Desig=570---B0 --> phi pi+ pi-
 S042M---B0 MASS
 S042DM---mass(B0) - mass(B+)
 S042T---B0 MEAN LIFE
 S042DT3---meanlife(B0)/meanlife(Bbar0)
 S042DT1---meanlife(B+)/meanlife(B0) (direct measurements)
 S042DT2---meanlife(B+)/meanlife(B0) (inferred from branching fractions)
-S042DGS---sgn(Re(lambda(CP))) DeltaGamma(B(d)0) / Gamma(B(d)0)
+S042DGS---DeltaGamma(B(d)0) / Gamma(B(d)0)
 S042P1---Gamma(L)/Gamma in B0 --> J/psi(1S) K*(892)0
 S042PP0---Gamma((perp))/Gamma in B0 --> J/psi K*0
 S042PP1---phi((parallel)) in B0 --> J/psi K*0
@@ -5189,6 +5279,8 @@ S042CX5---C(K(S) K(S) K(S))(B0 --> K(S) K(S) K(S))
 S042SX5---S(K(S) K(S) K(S))(B0 --> K(S) K(S) K(S))
 S042CKG---C(K(S)0 pi0 gamma)(B0 --> K(S)0 pi0 gamma)
 S042SKG---S(K(S)0 pi0 gamma)(B0 --> K(S)0 pi0 gamma)
+S042CK0---C(K(S)0 pi+ pi- gamma)(B0 --> K(S)0 pi+ pi- gamma)
+S042SK0---S(K(S)0 pi+ pi- gamma)(B0 --> K(S)0 pi+ pi- gamma)
 S042CX4---C(K*(892)0 gamma) (B0 --> K*(892)0 gamma)
 S042SX4---S(K*(892)0 gamma) (B0 --> K*(892)0 gamma)
 S042CEG---C(eta K0 gamma) (B0 --> eta K0 gamma)
@@ -5243,12 +5335,19 @@ S042BTF---sin(2beta(eff))(B0 --> phi K0)
 S042BFK---sin(2beta(eff))(B0 --> phi K^*_0(1430)0)
 S042BTK---sin(2beta(eff))(B0 --> K+ K- K(S)0)
 S042BTM---sin(2beta(eff))(B0 --> [ K(S)0 pi+ pi- ](D(*)) h0)
+S042A01---beta(eff)(B0 --> [ K(S)0 pi+ pi- ](D(*)) h0)
 S042BEF---2beta(eff)(B0 --> J/psi rho0)
 S042LDH---ABS(lambda) (B0 --> [ K(S)0 pi+ pi- ](D(*)) h0)
 S042BGA---ABS(sin(2beta + gamma))
 S042BG0---2 beta + gamma
-S042GAM---gamma(B0 --> D0 K*0)
 S042ALP---alpha
+S042GAM---gamma(B0 --> D0 K*0)
+S042XP---x(+)(B0 --> D K*0)
+S042XM---x(-)(B0 --> D K*0)
+S042YP---y(+)(B0 --> D K*0)
+S042YM---y(-)(B0 --> D K*0)
+S042AR---r(B0)(B0 --> D K*0)
+S042A00---delta(B0)(B0 --> D K*0)
 S042TVA---DeltaS(T)+ (S(lepton-,K(S)0)- - S(lepton+,K(S)0)+)
 S042TVB---DeltaS(T)- (S(lepton-,K(S)0)+ - S(lepton+,K(S)0)-)
 S042TVC---DeltaC(T)+ (C(lepton-,K(S)0)- - C(lepton+,K(S)0)+)
@@ -5261,6 +5360,10 @@ S042TVI---DeltaS(CPT)+ (S(lepton+,K(S)0)- - S(lepton+,K(S)0)+)
 S042TVJ---DeltaS(CPT)- (S(lepton+,K(S)0)+ - S(lepton+,K(S)0)-)
 S042TVK---DeltaC(CPT)+ (C(lepton+,K(S)0)- - C(lepton+,K(S)0)+)
 S042TVL---DeltaC(CPT)- (C(lepton+,K(S)0)+ - C(lepton+,K(S)0)-)
+S042CT7---Deltaa((parallel)) CPT parameter in B0 mixing
+S042CT8---Deltaa((perp)) CPT parameter in B0 mixing
+S042CTX---Deltaa(X) CPT parameter in B0 mixing
+S042CTY---Deltaa(Y) CPT parameter in B0 mixing
 S042RV---B0 --> D*- lepton+ nu(lepton) FORM FACTORS
 S042RA---B0 --> D*- lepton+ nu(lepton) FORM FACTORS
 S042RH---B0 --> D*- lepton+ nu(lepton) FORM FACTORS
@@ -5271,6 +5374,7 @@ S042PB3---B(B0 --> K*0 lepton+ lepton-) (4.3 < q**2< 8.68 GeV**2/c**4)
 S042PB4---B(B0 --> K*0 lepton+ lepton-) (10.09 < q**2< 12.86 GeV**2/c**4)
 S042PB5---B(B0 --> K*0 lepton+ lepton-) (14.18 < q**2< 16.0 GeV**2/c**4)
 S042PB6---B(B0 --> K*0 lepton+ lepton-) (16.0  < q**2< 19.0 GeV**2/c**4)
+S042A02---B(B0 --> K*(892)0 lepton+ lepton-) (15.0 < q**2 < 19.0 GeV**2/c**4)
 S042PB7---B(B0 --> K*0 lepton+ lepton-) (1.0    < q**2< 6.0 GeV**2/c**4)
 S042PB8---B(B0 --> K*0 lepton+ lepton-) (0.0    < q**2< 4.3 GeV**2/c**4)
 S042PB9---B(B0 --> K0 lepton+ lepton-) (q**2< 2.0 GeV**2/c**4)
@@ -5282,6 +5386,7 @@ S042PBE---B(B0 --> K0 lepton+ lepton-) (q**2 > 16.0 GeV**2/c**4)
 S042PBF---B(B0 --> K0 lepton+ lepton-) (1.0    < q**2< 6.0 GeV**2/c**4)
 S042PBG---B(B0 --> K0 lepton+ lepton-) (0.0    < q**2< 4.3 GeV**2/c**4)
 S042PBK---B(B0 --> K0 lepton+ lepton-) (15.0 < q**2< 22.0 GeV**2/c**4)
+S042A03---B(B0 --> K(0,2)*(1430)0 mu+ mu-) (1.10 < q**2< 6.00 GeV**2/c**4)
 S042PBI---F(H)(B0 --> K0 mu+ mu-) (1.1 < q**2< 6.0 GeV**2/c**4)
 S042PBJ---F(H)(B0 --> K0 mu+ mu-) (15.0    < q**2< 22.0 GeV**2/c**4)
 S042PAX---A(P)(B0)
@@ -5518,6 +5623,7 @@ S049FBH---A(FB)(B --> K lepton+ lepton-) (14.18 < q**2< 16.0 GeV**2/c**4)
 S049FBL---A(FB)(B --> K lepton+ lepton-) (16.0 < q**2< 18.0 GeV**2/c**4)
 S049FBM---A(FB)(B --> K lepton+ lepton-) (18.0 < q**2< 22.0 GeV**2/c**4)
 S049FBI---A(FB)(B --> K lepton+ lepton-) (q**2 > 16.0 GeV**2/c**4)
+S049A00---A(FB)(B --> X(s) lepton+ lepton-) (1.0 < q**2 < 6.0 GeV**2/c**4)
 S049FS---F(S)(B --> K lepton+ lepton-) (q**2 > 0.1 GeV**2/c**4)
 S049FBN---A(FB)(B --> K p pbar)  (mass(p pbar) < 2.85 GeV/c**2)
 S049FBO---A(FB)(B --> pi p pbar) (mass(p pbar) < 2.85 GeV/c**2)
@@ -5804,17 +5910,22 @@ S086:Desig=118---B_s()0 --> psi(2S) K- pi+
 S086:Desig=119---B_s()0 --> psi(2S) Kbar^*(892)0
 S086:Desig=120---B_s()0 --> D_s^*()- lepton+ nu_lepton anything
 S086:Desig=121---B_s()0 --> eta^' eta^'
+S086:Desig=122---B_s()0 --> Dbar0 Kbar0
+S086:Desig=123---B_s()0 --> Dbar^*()0 Kbar0
+S086:Desig=124---B_s()0 --> J/psi(1S) phi phi
+S086:Desig=125---B_s()0 --> phi pi+ pi-
+S086:Desig=126---B_s()0 --> phi f_0(980) , f_0(980) --> pi+ pi-
+S086:Desig=127---B_s()0  --> phi f_2(1270) , f_2(1270) --> pi+ pi-
 S086M---B(s)0 MASS
 S086DM---mass(B(s)0) - mass(B)
 S086T---B(s)0 MEAN LIFE
-S086TFS---B(s)0 MEAN LIFE (Flavor specific)
-S086TJP---B(s)0 MEAN LIFE (B(S) --> J/psi phi)
+S086GS---Gamma(B(s)0)
+S086DGS---DeltaGamma(B(s)0)
+S086DRA---DeltaGamma(B(s)0)/Gamma(B(s)0)
 S086TSH---B(sH)0 MEAN LIFE
 S086TSL---B(sL)0 MEAN LIFE
-S086DRA---DeltaGamma(B(s)0)/Gamma(B(s)0)
-S086DGS---DeltaGamma(B(s)0)
-S086GCP---DeltaGamma**CP(s) / Gamma(s)
-S086MLF---1 / Gamma(B(s)0)
+S086TFS---B(s)0 MEAN LIFE (Flavor specific)
+S086TJP---B(s)0 MEAN LIFE (B(S) --> J/psi phi)
 S086P01---Gamma(L)/Gamma in B(s)0 --> D(s)* rho+
 S086P1---Gamma(L)/Gamma in B(s)0 --> J/psi(1S) phi
 S086P08---Gamma(L)/Gamma in B(s)0 --> D(s)*+ D(s)*-
@@ -5822,6 +5933,9 @@ S086P2---Gamma((parallel))/Gamma in B(s)0 --> J/psi(1S) phi
 S086PP0---Gamma((perp))/Gamma in B(s)0 --> J/psi(1S) phi
 S086P03---phi((parallel)) in B(s)0 --> J/psi(1S) phi
 S086P13---phi((perp)) in B(s)0 --> J/psi(1S) phi
+S086A06---Gamma((perp))/Gamma in B(s)0 --> psi(2S) phi
+S086A02---phi((parallel)) in B(s)0 --> psi(2S) phi
+S086A05---phi((perp)) in B(s)0 --> psi(2S) phi
 S086PK1---Gamma(L)/Gamma for B(s)0 --> J/psi(1S) Kbar*(892)0
 S086PK2---Gamma((parallel)) /Gamma for B(s)0 --> J/psi(1S) Kbar*(892)0
 S086PK3---Gamma((parallel)) /Gamma of K*(892)0 in B(s)0 --> psi(2S) Kbar*(892)0
@@ -5865,7 +5979,13 @@ S086CP1---A(CP)(B(s) --> pi+ K-)
 S086CP2---A(CP)(B(s)0 --> [ K+ K- ](D) Kbar*(892)0)
 S086CP3---A(CP)(B(s)0 --> [ pi+ K- ](D) K*(892)0)
 S086CP4---A(CP)(B(s)0 --> [ pi+ pi- ](D) K*(892)0)
+S086A07---A**Delta(B(s) --> phi gamma)
 S086CT1---Deltaa((perp))
+S086CT0---Deltaa((parallel))
+S086A03---Deltaa(X)
+S086A04---Deltaa(Y)
+S086A00---Re(xi)
+S086A01---Im(xi)
 S086PB1---B(B(s) --> phi lepton+ lepton-) (0.1 < q**2< 2.0 GeV**2/c**4)
 S086PB2---B(B(s) --> phi lepton+ lepton-) (2.0 < q**2< 5.0 GeV**2/c**4)
 S086PB3---B(B(s) --> phi lepton+ lepton-) (5.0 < q**2< 8.0 GeV**2/c**4)
@@ -5880,6 +6000,10 @@ S087:Desig=1---B_s^* --> B_s gamma
 S087M---B(s)* MASS
 S087DM---mass(B(s)*) - mass(B(s))
 S087MD---ABS((mass(B(s)*) - mass(B(s))) - (mass(B*) - mass(B)))
+M232---X(5568)+-
+M232:Desig=1---X(5568)+- --> B_s pi+-
+M232M---X(5568)+- MASS
+M232W---X(5568)+- WIDTH
 M187---B(s1)(5830)0
 M187:Desig=1---B_s1(5830)0 --> B^*()+ K-
 M187M---B(s1)(5830)0 MASS
@@ -5916,6 +6040,12 @@ S091:Desig=17---B_c()+ --> J/psi(1S) K+ K- pi+
 S091:Desig=18---B_c()+ --> J/psi(1S) pi+ pi+ pi+ pi- pi-
 S091:Desig=19---B_c()+ --> J/psi(1S) mu+ nu_mu
 S091:Desig=20---B_c()+ --> J/psi(1S) p pbar pi+
+S091:Desig=21---B_c()+ --> p pbar pi+
+S091:Desig=22---B_c()+   --> J/psi(1S) D0 K+
+S091:Desig=23---B_c()+ --> J/psi(1S) D^*(2007)0 K+
+S091:Desig=24---B_c()+ --> J/psi(1S) D^*(2010)+ K^*()0
+S091:Desig=25---B_c()+ --> J/psi(1S) D+ K^*()0
+S091:Desig=26---B_c()+ --> chi_c0 pi+
 S091M---B(c)+ MASS
 S091T---B(c)+ MEAN LIFE
 S091FL1---Gamma(L)/Gamma in B(c)+ --> J/psi D(s)*+
@@ -6209,8 +6339,28 @@ M070:Desig=287---J/psi(1S) --> eta phi(2170) --> eta phi f_0(980) --> eta phi pi
 M070:Desig=288---J/psi(1S) --> phi X(1835) --> phi eta pi+ pi-
 M070:Desig=289---J/psi(1S) --> phi X(1870) --> phi eta pi+ pi-
 M070:Desig=290---J/psi(1S) --> D_s^*()- e+ nu_e + c.c.
+M070:Desig=291---J/psi(1S) --> phi X(1835) --> phi p pbar
+M070:Desig=292---J/psi(1S) --> gamma eta pi0
+M070:Desig=293---J/psi(1S) --> gamma a_0(980)0 --> gamma eta pi0
+M070:Desig=294---J/psi(1S)  --> gamma a_2(1320)0 --> gamma eta pi0
+M070:Desig=295---J/psi(1S) --> phi K+ K-
+M070:Desig=296---J/psi(1S)  --> pi+ pi- K0S K0L
+M070:Desig=297---J/psi(1S) --> pi+ pi- K0S K0S
+M070:Desig=298---J/psi(1S) --> K+ K- K0S K0S
+M070:Desig=299---J/psi(1S) --> K0S pi- K^*(892)+ + c.c.
+M070:Desig=300---J/psi(1S) --> K0S pi- K^*(892)+ + c.c. --> K0S K0S pi+ pi-
+M070:Desig=301---J/psi(1S) --> K0S pi- K_2^*(1430)+ + c.c.
+M070:Desig=302---J/psi(1S) --> K0S pi- K_2^*(1430)+ + c.c. --> K0S K0S pi+ pi-
+M070:Desig=303---J/psi(1S) --> K^*(892)+ K_2^*(1430)- + c.c.
+M070:Desig=304---J/psi(1S) --> K^*(892)+ K_2^*(1430)- + c.c. --> K^*(892)+ K0S pi- + c.c.
+M070:Desig=305---J/psi(1S) --> phi K0S K0S
+M070:Desig=306---J/psi(1S) --> phi f_2^'(1525) --> phi K0S K0S
+M070:Desig=307---J/psi(1S) --> K+ K- f_2^'(1525) --> K+ K- K0S K0S
+M070:Desig=308---J/psi(1S) --> K+ K- f_2^'(1525)
 M070M---J/psi(1S) MASS
 M070W---J/psi(1S) WIDTH
+M070GZ3---J/psi(1S)  Gamma(i) * Gamma(e+ e-)/Gamma(total)
+M070GZ5---J/psi(1S)  Gamma(i) * Gamma(e+ e-)/Gamma(total)
 M056---chi(c0)(1P)
 M056:Desig=1---chi_c0(1P) --> pi+ pi-
 M056:Desig=2---chi_c0(1P) --> K+ K-
@@ -6401,10 +6551,12 @@ M144---h(c)(1P)
 M144:Desig=1---h_c(1P) --> J/psi(1S) pi0
 M144:Desig=2---h_c(1P) --> J/psi(1S) pi pi
 M144:Desig=3---h_c(1P) --> p pbar
-M144:Desig=4---h_c(1P) --> eta_c(1S) gamma
+M144:Desig=4---h_c(1P) --> gamma eta_c(1S)
 M144:Desig=5---h_c(1P) --> pi+ pi- pi0
 M144:Desig=6---h_c(1P) --> 2pi+ 2pi- pi0
 M144:Desig=7---h_c(1P) --> 3pi+ 3pi- pi0
+M144:Desig=8---h_c(1P)  --> gamma eta^'(958)
+M144:Desig=9---h_c(1P)  --> gamma eta
 M144M---h(c)(1P) MASS
 M144W---h(c)(1P) WIDTH
 M057---chi(c2)(1P)
@@ -6701,6 +6853,8 @@ M071:Desig=293---psi(2S) --> K- Lambda Xibar+ + c.c.
 M071:Desig=294---psi(2S) --> Xi(1690)- Xibar+ --> K- Lambda Xibar+ + c.c.
 M071:Desig=295---psi(2S) --> Xi(1820)- Xibar+ --> K- Lambda Xibar+ + c.c.
 M071:Desig=296---psi(2S) --> K- Sigma0 Xibar+ + c.c.
+M071:Desig=297---psi(2S) --> Sigma(1385)- Sigmabar(1385)+
+M071:Desig=298---psi(2S) --> pi0 pi0 K+ K-
 M071M---psi(2S) MASS
 M071DM---mass(psi(2S)) - mass(J/psi(1S))
 M071W---psi(2S) WIDTH
@@ -6816,7 +6970,7 @@ M053:Desig=234---psi(3770) --> K+ K-
 M053M---psi(3770) MASS (MeV)
 M053DM---mass(psi(3770)) - mass(psi(2S))
 M053W---psi(3770) WIDTH
-M212---psi(3823)  was X(3823),
+M212---psi(3823)  was X(3823)
 M212:Desig=1---psi(3823) --> chi_c1 gamma
 M212:Desig=2---psi(3823) --> chi_c2 gamma
 M212M---psi(3823) MASS
@@ -6838,6 +6992,7 @@ M176:Desig=13---X(3872) --> omega J/psi(1S)
 M176:Desig=14---X(3872) --> pi+ pi- eta_c(1S)
 M176:Desig=15---X(3872) --> gamma chi_c2
 M176:Desig=16---X(3872) --> p pbar
+M176:Desig=17---X(3872) --> pi+ pi- chi_c1
 M176M---X(3872) MASS FROM J/psi X MODE
 M176MD0---X(3872) MASS FROM Dbar*0 D0 MODE
 M176DM---mass(X(3872)) - mass(J/psi)
@@ -7058,6 +7213,10 @@ M074:Desig=44---X(4260) --> J/psi K0S K0S
 M074:Desig=45---X(4260) --> J/psi eta pi0
 M074M---X(4260) MASS
 M074W---X(4260) WIDTH
+M233---X(4274)
+M233:Desig=1---X(4274) --> J/psi phi
+M233M---X(4274) MASS
+M233W---X(4274) WIDTH
 M194---X(4350)
 M194:Desig=1---X(4350) --> J/psi phi
 M194:Desig=2---X(4350) --> gamma gamma
@@ -7104,6 +7263,10 @@ M195:Desig=1---X(4430)+- --> pi+ psi(2S)
 M195:Desig=2---X(4430)+- --> pi+ J/psi
 M195M---X(4430)+- MASS
 M195W---X(4430)+- WIDTH
+M234---X(4500)
+M234:Desig=1---X(4500) --> J/psi phi
+M234M---X(4500) MASS
+M234W---X(4500) WIDTH
 M189---X(4660)
 M189:Desig=1---X(4660) --> e+ e-
 M189:Desig=2---X(4660) --> psi(2S) pi+ pi-
@@ -7114,6 +7277,10 @@ M189:Desig=6---X(4660) --> chi_c1() gamma
 M189:Desig=7---X(4660) --> chi_c2() gamma
 M189M---X(4660) MASS
 M189W---X(4660) WIDTH
+M235---X(4700)
+M235:Desig=1---X(4700) --> J/psi phi
+M235M---X(4700) MASS
+M235W---X(4700) WIDTH
 M171---eta(b)(1S)
 M171:Desig=1---eta_b(1S) --> 3h+ 3h-
 M171:Desig=2---eta_b(1S) --> 2h+ 2h-
@@ -7227,6 +7394,20 @@ M049:Desig=156---Upsilon(1S) --> psi(2S) chi_c2()
 M049:Desig=157---Upsilon(1S) --> psi(2S) eta_c(2S)
 M049:Desig=158---Upsilon(1S) --> psi(2S) X(3940)
 M049:Desig=159---Upsilon(1S) --> psi(2S) X(4160)
+M049:Desig=160---Upsilon(1S) --> X(3872)  anything , X --> J/psi(1S) pi+ pi-
+M049:Desig=161---Upsilon(1S) --> X(4260)  anything , X --> J/psi(1S) pi+ pi-
+M049:Desig=162---Upsilon(1S) --> X(4260)  anything , X --> psi(2S) pi+ pi-
+M049:Desig=163---Upsilon(1S) --> X(4360)  anything , X --> psi(2S) pi+ pi-
+M049:Desig=164---Upsilon(1S) --> X(4660)  anything , X --> psi(2S) pi+ pi-
+M049:Desig=165---Upsilon(1S) --> X(4260)  anything , X --> J/psi(1S) K+ K-
+M049:Desig=166---Upsilon(1S) --> X(4140)  anything , X --> J/psi(1S) phi
+M049:Desig=167---Upsilon(1S) --> X(4350)  anything , X --> J/psi(1S) phi
+M049:Desig=168---Upsilon(1S) --> X(3900)+-  anything , X --> J/psi(1S) pi+-
+M049:Desig=169---Upsilon(1S) --> X(4200)+-  anything , X --> J/psi(1S) pi+-
+M049:Desig=170---Upsilon(1S) --> X(4430)+-  anything , X --> J/psi(1S) pi+-
+M049:Desig=171---Upsilon(1S) --> X(4050)+-  anything , X --> psi(2S) pi+-
+M049:Desig=172---Upsilon(1S) --> X(4430)+-  anything , X --> psi(2S) pi+-
+M049:Desig=173---Upsilon(1S) --> X_cs()+-  anything , X --> J/psi K+-
 M049M---Upsilon(1S) MASS
 M049W---Upsilon(1S) WIDTH
 M049R34---Gamma(g g g, gamma g g --> dbar anything)/Gamma(g g g, gamma g g --> anything)
@@ -7251,8 +7432,11 @@ M076:Desig=17---chi_b0(1P) --> J/psi J/psi
 M076:Desig=18---chi_b0(1P) --> J/psi psi(2S)
 M076:Desig=19---chi_b0(1P) --> psi(2S) psi(2S)
 M076M---chi(b0)(1P) MASS
+M076M2---mass(chi(b1)(1P)) - mass(chi(b0)(1P))
 M076DM---gamma ENERGY IN Upsilon(2S) DECAY
 M076B01---B(chi(b0)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b0)(1P))  x  B(Upsilon(1S) --> lepton+ lepton-)
+M076A01---[B(chi(b0)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b0)(1P))] / [B(chi(b1)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b1)(1P))]
+M076A00---B(chi(b0)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b0)(1P))  x  B(Upsilon(1S) --> lepton+ lepton-)
 M077---chi(b1)(1P)
 M077:Desig=1---chi_b1(1P) --> gamma Upsilon(1S)
 M077:Desig=2---chi_b1(1P) --> D0 X
@@ -7306,6 +7490,7 @@ M078M---chi(b2)(1P) MASS
 M078DM2---mass(chi(b2)(1P)) - mass(chi(b1)(1P))
 M078DM---gamma ENERGY IN Upsilon(2S) DECAY
 M078B01---B(chi(b2)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b2)(1P))  x  B(Upsilon(1S) --> lepton+ lepton-)
+M078A00---[B(chi(b2)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b2)(1P))] / [B(chi(b1)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(2S) --> gamma chi(b1)(1P))]
 M078B02---B(chi(b2)(1P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b2)(1P))  x  B(Upsilon(1S) --> lepton+ lepton-)
 M200---eta(b)(2S)
 M200:Desig=1---eta_b(2S) --> hadrons
@@ -7384,6 +7569,8 @@ M052:Desig=153---Upsilon(2S) --> psi(2S) chi_c2()
 M052:Desig=154---Upsilon(2S) --> psi(2S) eta_c(2S)
 M052:Desig=155---Upsilon(2S) --> psi(2S) X(3940)
 M052:Desig=156---Upsilon(2S) --> psi(2S) X(4160)
+M052:Desig=157---Upsilon(2S)  --> chi_c1 anything
+M052:Desig=158---Upsilon(2S)  --> chi_c2 anything
 M052M---Upsilon(2S) MASS
 M052DM3---mass(Upsilon(3S)) - mass(Upsilon(2S))
 M052W---Upsilon(2S) WIDTH
@@ -7413,7 +7600,12 @@ M079:Desig=15---chi_b0(2P) --> 3pi+ 3pi- K+ K- pi0
 M079:Desig=16---chi_b0(2P) --> 4pi+ 4pi-
 M079:Desig=17---chi_b0(2P) --> 4pi+ 4pi- 2pi0
 M079M---chi(b0)(2P) MASS
+M079M2---mass(chi(b1)(2P)) - mass(chi(b0)(2P))
 M079DM---gamma ENERGY IN Upsilon(3S) DECAY
+M079A02---B(chi(b0)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b0)(2P))  x  B(Upsilon(1S) --> lepton+ lepton-)
+M079A00---[B(chi(b0)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b0)(2P))] / [B(chi(b1)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))]
+M079A03---B(chi(b0)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b0)(2P))  x  B(Upsilon(2S) --> lepton+ lepton-)
+M079A01---[B(chi(b0)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b0)(2P))] / [B(chi(b1)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))]
 M080---chi(b1)(2P)
 M080:Desig=1---chi_b1(2P) --> gamma Upsilon(1S)
 M080:Desig=2---chi_b1(2P) --> gamma Upsilon(2S)
@@ -7437,6 +7629,8 @@ M080:Desig=19---chi_b1(2P) --> 4pi+ 4pi- 2pi0
 M080M---chi(b1)(2P) MASS
 M080M2---mass(chi(b1)(2P)) - mass(chi(b0)(2P))
 M080DM---gamma ENERGY IN Upsilon(3S) DECAY
+M080A00---B(chi(b1)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))  x  B(Upsilon(1S) --> lepton+ lepton-)
+M080A01---B(chi(b1)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))  x  B(Upsilon(2S) --> lepton+ lepton-)
 M080R16---B(chi(b1)(2P) --> chi(b1)(1P) pi+ pi-)  x  B(Upsilon(3S) --> chi(b1)(2P) X)
 M080R20---B(chi(b2)(2P) --> p X + pbar X)/B(chi(b1)(2P) --> p X + pbar X)
 M080R21---B(chi(b0)(2P) --> p X + pbar X)/B(chi(b1)(2P) --> p X + pbar X)
@@ -7469,6 +7663,10 @@ M081M---chi(b2)(2P) MASS
 M081M2---mass(chi(b2)(2P)) - mass(chi(b1)(2P))
 M081DM---gamma ENERGY IN Upsilon(3S) DECAY
 M081R16---B(chi(b2)(2P) --> chi(b2)(1P) pi+ pi-)  x  B(Upsilon(3S) --> chi(b2)(2P) X)
+M081A01---B(chi(b2)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b2)(2P))  x  B(Upsilon(1S) --> lepton+ lepton-)
+M081A00---[B(chi(b2)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b2)(2P))] / [B(chi(b1)(2P) --> gamma Upsilon(1S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))]
+M081A02---B(chi(b2)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b2)(2P))  x  B(Upsilon(2S) --> lepton+ lepton-)
+M081A03---[B(chi(b2)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b2)(2P))] / [B(chi(b1)(2P) --> gamma Upsilon(2S))  x  B(Upsilon(3S) --> gamma chi(b1)(2P))]
 M048---Upsilon(3S)
 M048:Desig=1---Upsilon(3S) --> mu+ mu-
 M048:Desig=2---Upsilon(3S) --> e+ e-
@@ -7543,6 +7741,9 @@ M207:Desig=2---X(10610)+- --> Upsilon(2S) pi+
 M207:Desig=3---X(10610)+- --> Upsilon(3S) pi+
 M207:Desig=4---X(10610)+- --> h_b(1P) pi+
 M207:Desig=5---X(10610)+- --> h_b(2P) pi+
+M207:Desig=6---X(10610)+- --> B+ Bbar^*()0 + B^*()+ Bbar0
+M207:Desig=7---X(10610)+- --> B^*()+ Bbar^*()0
+M207:Desig=8---X(10610)+- --> B+ Bbar0
 M207M---X(10610)+- MASS
 M207W---X(10610)+- WIDTH
 M214---X(10610)0
@@ -7556,6 +7757,9 @@ M208:Desig=2---X(10650)+- --> Upsilon(2S) pi+
 M208:Desig=3---X(10650)+- --> Upsilon(3S) pi+
 M208:Desig=4---X(10650)+- --> h_b(1P) pi+
 M208:Desig=5---X(10650)+- --> h_b(2P) pi+
+M208:Desig=6---X(10650)+- --> B+ Bbar^*()0 + B^*()+ Bbar0
+M208:Desig=7---X(10650)+- --> B^*()+ Bbar^*()0
+M208:Desig=8---X(10650)+- --> B+ Bbar0
 M208M---X(10650)+- MASS
 M208W---X(10650)+- WIDTH
 M092---Upsilon(10860)
@@ -7961,6 +8165,7 @@ B018:Desig=181---N(1700) --> Delta(1232) pi
 B018:Desig=182---N(1700) --> N rho
 B018:Desig=184---N(1700) --> p gamma
 B018:Desig=185---N(1700) --> n gamma
+B018:Desig=186---N(1700) --> N omega
 B018RE---N(1700) POLE POSITION: REAL PART
 B018IM---N(1700) POLE POSITION: -2 * IMAGINARY PART
 B018RER---MODULUS ABS(r)
@@ -8007,6 +8212,7 @@ B014RS2---Normalized residue in N pi --> N(1710) --> Lambda K
 B014RS3---Normalized residue in N pi --> N(1710) --> N(1535) pi
 B014M---N(1710) BREIT-WIGNER MASS
 B014W---N(1710) BREIT-WIGNER WIDTH
+B014PA1---N(1710) --> p gamma , helicity-1/2 amplitude A(1/2)
 B014A1---N(1710) --> p gamma , helicity-1/2 amplitude A(1/2)
 B014A2---N(1710) --> n gamma , helicity-1/2 amplitude A(1/2)
 B015---N(1720) 3/2+
@@ -8032,6 +8238,7 @@ B015:Desig=182---N(1720) --> N rho
 B015:Desig=184---N(1720) --> p gamma
 B015:Desig=185---N(1720) --> n gamma
 B015:Desig=186---N(1720) --> p eta
+B015:Desig=187---N(1720) --> N omega
 B015RE---N(1720) POLE POSITION: REAL PART
 B015IM---N(1720) POLE POSITION: -2 * IMAGINARY PART
 B015RER---MODULUS ABS(r)
@@ -8123,11 +8330,12 @@ B087:Desig=4---N(1880) --> Sigma K
 B087:Desig=5---N(1880) --> Delta(1232) pi
 B087:Desig=6---N(1880) --> N rho, S=1/2
 B087:Desig=7---N(1880) --> N sigma
-B087:Desig=8---N(1880) --> p gamma , helicity=1/2
-B087:Desig=9---N(1880) --> n gamma , helicity=1/2
+B087:Desig=8---N(1880) --> p gamma, helicity=1/2
+B087:Desig=9---N(1880) --> n gamma, helicity=1/2
 B087:Desig=10---N(1880) --> N(1535) pi
 B087:Desig=11---N(1880) --> N a_0(980)
 B087:Desig=12---N(1880) --> N pi pi
+B087:Desig=13---N(1880) --> N omega
 B087RE---N(1880) POLE POSITION: REAL PART
 B087IM---N(1880) POLE POSITION: -2 * IMAGINARY PART
 B087RER---MODULUS ABS(r)
@@ -8158,6 +8366,7 @@ B004:Desig=11---N(1895) --> N eta
 B004:Desig=12---N(1895) --> Sigma K
 B004:Desig=13---N(1895) --> p gamma, helicity=1/2
 B004:Desig=14---N(1895) --> n gamma, helicity=1/2
+B004:Desig=15---N(1895) --> N omega
 B004RE---N(1895) POLE POSITION: REAL PART
 B004IM---N(1895) POLE POSITION: -2 * IMAGINARY PART
 B004RER---MODULUS ABS(r)
@@ -8229,6 +8438,8 @@ B017RER---MODULUS ABS(r)
 B017IMR---PHASE theta
 B017M---N(1990) BREIT-WIGNER MASS
 B017W---N(1990) BREIT-WIGNER WIDTH
+B017PA1---N(1990) --> p gamma , helicity-1/2 amplitude A(1/2)
+B017PA2---N(1990) --> p gamma , helicity-3/2 amplitude A(3/2)
 B017A1---N(1990) --> p gamma , helicity-1/2 amplitude A(1/2)
 B017A2---N(1990) --> p gamma , helicity-3/2 amplitude A(3/2)
 B017A3---N(1990) --> n gamma , helicity-1/2 amplitude A(1/2)
@@ -8294,6 +8505,7 @@ B005:Desig=17---N(2060) --> N sigma
 B005:Desig=18---N(2060) --> N(1440) pi
 B005:Desig=19---N(2060) --> N(1520) pi, P-wave
 B005:Desig=20---N(2060) --> N(1680) pi, S-wave
+B005:Desig=21---N(2060) --> N omega
 B005RE---N(2060) POLE POSITION: REAL PART
 B005IM---N(2060) POLE POSITION: -2 * IMAGINARY PART
 B005RER---MODULUS ABS(r)
@@ -8325,6 +8537,7 @@ B132:Desig=8---N(2100) --> N(1535) pi
 B132:Desig=9---N(2100) --> Delta(1232) pi
 B132:Desig=10---N(2100) --> N rho
 B132:Desig=11---N(2100) --> N gamma, helicity=1/2
+B132:Desig=12---N(2100) --> N omega
 B132RE---N(2100) POLE POSITION: REAL PART
 B132IM---N(2100) POLE POSITION: -2 * IMAGINARY PART
 B132RER---MODULUS ABS(r)
@@ -8350,6 +8563,7 @@ B024:Desig=10---N(2120) --> p gamma, helicity=3/2
 B024:Desig=11---N(2120) --> n gamma
 B024:Desig=12---N(2120) --> n gamma, helicity=1/2
 B024:Desig=13---N(2120) --> n gamma, helicity=3/2
+B024:Desig=14---N(2120) --> N omega
 B024RE---N(2120) POLE POSITION: REAL PART
 B024IM---N(2120) POLE POSITION: -2 * IMAGINARY PART
 B024RER---MODULUS ABS(r)
@@ -8415,6 +8629,8 @@ B090RER---MODULUS ABS(r)
 B090IMR---PHASE theta
 B090M---N(2220) BREIT-WIGNER MASS
 B090W---N(2220) BREIT-WIGNER WIDTH
+B090PA1---N(2220) --> p gamma , helicity-1/2 amplitude A(1/2)
+B090PA2---N(2220) --> p gamma , helicity-3/2 amplitude A(3/2)
 B113---N(2250) 9/2-
 B113:Desig=1---N(2250) --> N pi
 B113:Desig=2---N(2250) --> N eta
@@ -8425,6 +8641,8 @@ B113RER---MODULUS ABS(r)
 B113IMR---PHASE theta
 B113M---N(2250) BREIT-WIGNER MASS
 B113W---N(2250) BREIT-WIGNER WIDTH
+B113PA1---N(2250) --> p gamma , helicity-1/2 amplitude A(1/2)
+B113PA2---N(2250) --> p gamma , helicity-3/2 amplitude A(3/2)
 B003---N(2300) 1/2+
 B003M---N(2300) MASS
 B003W---N(2300) WIDTH
@@ -8469,6 +8687,8 @@ B033W++---Delta(1232)++ WIDTH
 B033W+---Delta(1232)+ WIDTH
 B033W0---Delta(1232)0 WIDTH
 B033WD---Delta0-Delta++ WIDTH DIFFERENCE
+B033PA1---Delta(1232) --> N gamma , helicity-1/2 amplitude A(1/2)
+B033PA2---Delta(1232) --> N gamma , helicity-3/2 amplitude A(3/2)
 B033A1---Delta(1232) --> N gamma , helicity-1/2 amplitude A(1/2)
 B033A2---Delta(1232) --> N gamma , helicity-3/2 amplitude A(3/2)
 B033EMR---Delta(1232) --> N gamma, E(2)/M(1) ratio
@@ -8698,6 +8918,8 @@ B013RER---MODULUS ABS(r)
 B013IMR---PHASE theta
 B013M---Delta(1930) BREIT-WIGNER MASS
 B013W---Delta(1930) BREIT-WIGNER WIDTH
+B013PA1---Delta(1930) --> N gamma , helicity-1/2 amplitude A(1/2)
+B013PA2---Delta(1930) --> N gamma , helicity-3/2 amplitude A(3/2)
 B013A1---Delta(1930) --> N gamma , helicity-1/2 amplitude A(1/2)
 B013A2---Delta(1930) --> N gamma , helicity-3/2 amplitude A(3/2)
 B136---Delta(1940) 3/2-
@@ -8791,6 +9013,8 @@ B135RER---MODULUS ABS(r)
 B135IMR---PHASE theta
 B135M---Delta(2200) BREIT-WIGNER MASS
 B135W---Delta(2200) BREIT-WIGNER WIDTH
+B135PA1---Delta(2200) --> N gamma , helicity-1/2 amplitude A(1/2)
+B135PA2---Delta(2200) --> N gamma , helicity-3/2 amplitude A(3/2)
 B123---Delta(2300) 9/2+
 B123:Desig=1---Delta(2300) --> N pi
 B123:Desig=2---Delta(2300) --> Sigma K
@@ -8827,6 +9051,8 @@ B124RER---MODULUS ABS(r)
 B124IMR---PHASE theta
 B124M---Delta(2400) BREIT-WIGNER MASS
 B124W---Delta(2400) BREIT-WIGNER WIDTH
+B124PA1---Delta(2400) --> N gamma , helicity-1/2 amplitude A(1/2)
+B124PA2---Delta(2400) --> N gamma , helicity-3/2 amplitude A(3/2)
 B084---Delta(2420) 11/2+
 B084:Desig=1---Delta(2420) --> N pi
 B084:Desig=2---Delta(2420) --> Sigma K
@@ -8883,6 +9109,8 @@ B037:Desig=1---Lambda(1405) --> Sigma pi
 B037:Desig=2---Lambda(1405) --> N Kbar
 B037:Desig=3---Lambda(1405) --> Lambda gamma
 B037:Desig=4---Lambda(1405) --> Sigma0 gamma
+B037RE---Lambda(1405) POLE POSITION: REAL PART
+B037IM---Lambda(1405) POLE POSITION: -2 * IMAGINARY PART
 B037M1---PRODUCTION EXPERIMENTS
 B037M2---EXTRAPOLATIONS BELOW N Kbar THRESHOLD
 B037W1---PRODUCTION EXPERIMENTS
@@ -8897,27 +9125,42 @@ B038:Desig=6---Lambda(1520) --> Sigma pi pi
 B038:Desig=7---Lambda(1520) --> Sigma(1385) pi
 B038:Desig=8---Lambda(1520) --> Sigma(1385) pi (--> Lambda pi pi)
 B038:Desig=9---Lambda(1520) --> Lambda (pipi)(Swave)
-B038M---Lambda(1520) MASS
-B038W---Lambda(1520) WIDTH
+B038:Desig=11---Lambda(1520) --> Sigma(1385) pi, S-wave
+B038:Desig=12---Lambda(1520) --> Sigma(1385) pi, D-wave
 B038RE---Lambda(1520) POLE POSITION: REAL PART
 B038IM---Lambda(1520) POLE POSITION: -2 * IMAGINARY PART
+B038A00---Normalized residue in N Kbar --> Lambda(1520) --> N Kbar
+B038A01---Normalized residue in N Kbar --> Lambda(1520) --> Sigma pi
+B038A02---Normalized residue in N Kbar --> Lambda(1520) --> Sigma(1385) pi  , S-wave
+B038A03---Normalized residue in N Kbar --> Lambda(1520) --> Sigma(1385) pi  , D-wave
+B038M---Lambda(1520) MASS
+B038W---Lambda(1520) WIDTH
 B101---Lambda(1600) 1/2+
 B101:Desig=1---Lambda(1600) --> N Kbar
 B101:Desig=2---Lambda(1600) --> Sigma pi
-B101M---Lambda(1600) MASS
-B101W---Lambda(1600) WIDTH
+B101:Desig=3---Lambda(1600) --> Sigma(1385) pi
 B101RE---Lambda(1600) POLE POSITION: REAL PART
 B101IM---Lambda(1600) POLE POSITION: -2 * IMAGINARY PART
+B101A00---Normalized residue in N Kbar --> Lambda(1600) --> N Kbar
+B101A01---Normalized residue in N Kbar --> Lambda(1600) --> Sigma pi
+B101A02---Normalized residue in N Kbar --> Lambda(1600) --> Sigma(1385) pi
+B101M---Lambda(1600) MASS
+B101W---Lambda(1600) WIDTH
 B040---Lambda(1670) 1/2-
 B040:Desig=1---Lambda(1670) --> N Kbar
 B040:Desig=2---Lambda(1670) --> Lambda eta
 B040:Desig=3---Lambda(1670) --> Sigma pi
-B040:Desig=4---Lambda(1670) --> Sigma(1385) pi
+B040:Desig=4---Lambda(1670) --> Sigma(1385) pi, D-wave
 B040:Desig=5---Lambda(1670) --> N Kbar^*(892), S=3/2, D-wave
-B040M---Lambda(1670) MASS
-B040W---Lambda(1670) WIDTH
+B040:Desig=6---Lambda(1670) --> N Kbar^*(892), S=1/2, S-wave
 B040RE---Lambda(1670) POLE POSITION: REAL PART
 B040IM---Lambda(1670) POLE POSITION: -2 * IMAGINARY PART
+B040A00---Normalized residue in Kbar N --> Lambda(1670) --> Kbar N
+B040A01---Normalized residue in N Kbar --> Lambda(1670) --> Sigma pi
+B040A02---Normalized residue in N Kbar --> Lambda(1670) --> Lambda eta
+B040A04---Normalized residue in N Kbar --> Lambda(1670) --> Sigma(1385) pi
+B040M---Lambda(1670) MASS
+B040W---Lambda(1670) WIDTH
 B055---Lambda(1690) 3/2-
 B055:Desig=1---Lambda(1690) --> N Kbar
 B055:Desig=2---Lambda(1690) --> Sigma pi
@@ -8925,10 +9168,19 @@ B055:Desig=3---Lambda(1690) --> Lambda pi pi
 B055:Desig=4---Lambda(1690) --> Sigma pi pi
 B055:Desig=5---Lambda(1690) --> Sigma(1385) pi, S-wave
 B055:Desig=6---Lambda(1690) --> Lambda eta
-B055M---Lambda(1690) MASS
-B055W---Lambda(1690) WIDTH
+B055:Desig=9---Lambda(1690) --> Sigma(1385) pi, D-wave
+B055:Desig=10---Lambda(1690) --> N Kbar^*(892), S=1/2, D-wave
+B055:Desig=12---Lambda(1690) --> N Kbar^*(892), S=3/2, S-wave
+B055:Desig=13---Lambda(1690) --> N Kbar^*(892), S=3/2, D-wave
 B055RE---Lambda(1690) REAL PART
 B055IM---Lambda(1690) -2 * IMAGINARY PART
+B055A00---Normalized residue in N Kbar --> Lambda(1690) --> N Kbar
+B055A01---Normalized residue in N Kbar --> Lambda(1690) --> Sigma pi
+B055A02---Normalized residue in N Kbar --> Lambda(1690) --> Lambda eta
+B055A03---Normalized residue in N Kbar --> Lambda(1690) --> Sigma(1385) pi  , S-wave
+B055A04---Normalized residue in N Kbar --> Lambda(1690) --> Sigma(1385) pi  , D-wave
+B055M---Lambda(1690) MASS
+B055W---Lambda(1690) WIDTH
 B164---Lambda(1710) 1/2+
 B164:Desig=1---Lambda(1710) --> N Kbar
 B164:Desig=2---Lambda(1710) --> Sigma pi
@@ -8946,10 +9198,10 @@ B036:Desig=4---Lambda(1800) --> N Kbar^*(892), S=1/2, S-wave
 B036:Desig=5---Lambda(1800) --> N Kbar^*(892), S=3/2, D-wave
 B036:Desig=6---Lambda(1800) --> N Kbar^*(892)
 B036:Desig=7---Lambda(1800) --> Lambda eta
-B036M---Lambda(1800) MASS
-B036W---Lambda(1800) WIDTH
 B036RE---Lambda(1800) POLE POSITION: REAL PART
 B036IM---Lambda(1800) POLE POSITION: -2 * IMAGINARY PART
+B036M---Lambda(1800) MASS
+B036W---Lambda(1800) WIDTH
 B077---Lambda(1810) 1/2+
 B077:Desig=1---Lambda(1810) --> N Kbar
 B077:Desig=2---Lambda(1810) --> Sigma pi
@@ -8957,10 +9209,19 @@ B077:Desig=3---Lambda(1810) --> Sigma(1385) pi
 B077:Desig=4---Lambda(1810) --> N Kbar^*(892), S=1/2, P-wave
 B077:Desig=5---Lambda(1810) --> N Kbar^*(892), S=3/2, P-wave
 B077:Desig=6---Lambda(1810) --> N Kbar^*(892)
-B077M---Lambda(1810) MASS
-B077W---Lambda(1810) WIDTH
+B077:Desig=7---Lambda(1810) --> Lambda eta
+B077:Desig=8---Lambda(1810) --> Xi K
 B077RE---Lambda(1810) POLE POSITION: REAL PART
 B077IM---Lambda(1810) POLE POSITION: -2 * IMAGINARY PART
+B077A00---Normalized residue in N Kbar --> Lambda(1810) --> N Kbar
+B077A01---Normalized residue in N Kbar --> Lambda(1810) --> Sigma pi
+B077A02---Normalized residue in N Kbar --> Lambda(1810) --> Lambda eta
+B077A03---Normalized residue in N Kbar --> Lambda(1810) --> Xi K
+B077A04---Normalized residue in N Kbar --> Lambda(1810) --> Sigma(1385) pi
+B077A07---Normalized residue in N Kbar --> Lambda(1810) --> N Kbar*(892) , S=1/2, P-wave
+B077A08---Normalized residue in N Kbar --> Lambda(1810) --> N Kbar*(892) , S=3/2, P-wave
+B077M---Lambda(1810) MASS
+B077W---Lambda(1810) WIDTH
 B039---Lambda(1820) 5/2+
 B039:Desig=1---Lambda(1820) --> N Kbar
 B039:Desig=2---Lambda(1820) --> Sigma pi
@@ -8970,20 +9231,46 @@ B039:Desig=5---Lambda(1820) --> Sigma(1385) pi, P-wave
 B039:Desig=6---Lambda(1820) --> Sigma(1385) pi, F-wave
 B039:Desig=7---Lambda(1820) --> Sigma(1385) pi
 B039:Desig=8---Lambda(1820) --> N Kbar^*(892), S=3/2, P-wave
-B039M---Lambda(1820) MASS
-B039W---Lambda(1820) WIDTH
+B039:Desig=9---Lambda(1820) --> N Kbar^*(892), S=1/2, F-wave
+B039:Desig=10---Lambda(1820) --> N Kbar^*(892), S=3/2, F-wave
+B039:Desig=11---Lambda(1820) --> Xi K
 B039RE---Lambda(1820) POLE POSITION: REAL PART
 B039IM---Lambda(1820) POLE POSITION: -2 * IMAGINARY PART
+B039A00---Normalized residue in N Kbar --> Lambda(1820) --> N Kbar
+B039A01---Normalized residue in N Kbar --> Lambda(1820) --> Sigma pi
+B039A02---Normalized residue in N Kbar --> Lambda(1820) --> Lambda eta
+B039A03---Normalized residue in N Kbar --> Lambda(1820) --> Xi K
+B039A04---Normalized residue in N Kbar --> Lambda(1820) --> Sigma(1385) pi  , P-wave
+B039A05---Normalized residue in N Kbar --> Lambda(1820) --> Sigma(1385) pi  , F-wave
+B039A06---Normalized residue in N Kbar --> Lambda(1820) --> N Kbar*(892)  , S=1/2 , F-wave
+B039A07---Normalized residue in N Kbar --> Lambda(1820) --> N Kbar*(892)  , S=3/2 , P-wave
+B039A08---Normalized residue in N Kbar --> Lambda(1820) --> N Kbar*(892)  , S=3/2 , F-wave
+B039M---Lambda(1820) MASS
+B039W---Lambda(1820) WIDTH
 B056---Lambda(1830) 5/2-
 B056:Desig=1---Lambda(1830) --> N Kbar
 B056:Desig=2---Lambda(1830) --> Sigma pi
 B056:Desig=3---Lambda(1830) --> Sigma(1385) pi
 B056:Desig=4---Lambda(1830) --> Lambda eta
 B056:Desig=5---Lambda(1830) --> Sigma(1385) pi, D-wave
-B056M---Lambda(1830) MASS
-B056W---Lambda(1830) WIDTH
+B056:Desig=8---Lambda(1830) --> N Kbar^*(892), S=1/2, D-wave
+B056:Desig=9---Lambda(1830) --> N Kbar^*(892), S=3/2, D-wave
+B056:Desig=10---Lambda(1830) --> N Kbar^*(892), S=3/2, G-wave
+B056:Desig=11---Lambda(1830) --> Xi K
+B056:Desig=12---Lambda(1830) --> Sigma(1385) pi , G-wave
 B056RE---Lambda(1830) REAL PART
 B056IM---Lambda(1830) -2 * IMAGINARY PART
+B056A00---Normalized residue in N Kbar --> Lambda(1830) --> N Kbar
+B056A01---Normalized residue in N Kbar --> Lambda(1830) --> Sigma pi
+B056A02---Normalized residue in N Kbar --> Lambda(1830) --> Lambda eta
+B056A05---Normalized residue in N Kbar --> Lambda(1830) --> Xi K
+B056A03---Normalized residue in N Kbar --> Lambda(1830) --> Sigma(1385) pi  , D-wave
+B056A04---Normalized residue in N Kbar --> Lambda(1830) --> Sigma(1385) pi  , G-wave
+B056A06---Normalized residue in N Kbar --> Lambda(1830) --> N Kbar*(892)  , S=1/2 , D-wave
+B056A07---Normalized residue in N Kbar --> Lambda(1830) --> N Kbar*(892)  , S=3/2 , D-wave
+B056A08---Normalized residue in N Kbar --> Lambda(1830) --> N Kbar*(892)  , S=3/2 , G-wave
+B056M---Lambda(1830) MASS
+B056W---Lambda(1830) WIDTH
 B060---Lambda(1890) 3/2+
 B060:Desig=1---Lambda(1890) --> N Kbar
 B060:Desig=2---Lambda(1890) --> Sigma pi
@@ -8994,10 +9281,23 @@ B060:Desig=6---Lambda(1890) --> N Kbar^*(892)
 B060:Desig=7---Lambda(1890) --> N Kbar^*(892), S=1/2
 B060:Desig=8---Lambda(1890) --> Sigma(1385) pi
 B060:Desig=9---Lambda(1890) --> N Kbar^*(892), S=3/2, F-wave
-B060M---Lambda(1890) MASS
-B060W---Lambda(1890) WIDTH
+B060:Desig=11---Lambda(1890) --> Lambda eta
+B060:Desig=13---Lambda(1890) --> Xi K
+B060:Desig=14---Lambda(1890) --> N Kbar^*(892), S=1/2, P-wave
+B060:Desig=15---Lambda(1890) --> N Kbar^*(892), S=3/2, P-wave
 B060RE---Lambda(1890) REAL PART
 B060IM---Lambda(1890) -2 * IMAGINARY PART
+B060RS1---Normalized residue in K N --> Lambda(1890) --> K N
+B060A01---Normalized residue in N Kbar --> Lambda(1890) --> Sigma pi
+B060A05---Normalized residue in N Kbar --> Lambda(1890) --> Lambda eta
+B060A06---Normalized residue in N Kbar --> Lambda(1890) --> Xi K
+B060A07---Normalized residue in N Kbar --> Lambda(1890) --> Sigma(1385) pi , P-wave
+B060A08---Normalized residue in N Kbar --> Lambda(1890) --> Sigma(1385) pi , F-wave
+B060A09---Normalized residue in N Kbar --> Lambda(1890) --> N Kbar*(892)  , S=1/2 , P-wave
+B060A10---Normalized residue in N Kbar --> Lambda(1890) --> N Kbar*(892)  , S=3/2 , P-wave
+B060A11---Normalized residue in N Kbar --> Lambda(1890) --> N Kbar*(892) , S=3/2, F-wave
+B060M---Lambda(1890) MASS
+B060W---Lambda(1890) WIDTH
 B089---Lambda(2000)
 B089:Desig=1---Lambda(2000) --> N Kbar
 B089:Desig=2---Lambda(2000) --> Sigma pi
@@ -9012,6 +9312,19 @@ B027:Desig=1---Lambda(2020) --> N Kbar
 B027:Desig=2---Lambda(2020) --> Sigma pi
 B027:Desig=3---Lambda(2020) --> Lambda omega
 B027:Desig=4---Lambda(2020) --> N Kbar^*(892), S=1/2
+B027:Desig=5---Lambda(2020) --> Lambda eta
+B027:Desig=6---Lambda(2020) --> Sigma(1385) pi, F-wave
+B027:Desig=7---Lambda(2020) --> Sigma(1385) pi, H-wave
+B027:Desig=8---Lambda(2020) --> N Kbar^*(892), S=1/2, F-wave
+B027:Desig=9---Lambda(2020) --> N Kbar^*(892), S=3/2, F-wave
+B027:Desig=10---Lambda(2020) --> N Kbar^*(892), S=3/2, H-wave
+B027RE---Lambda(2020) POLE POSITION: REAL PART
+B027IM---Lambda(2020) POLE POSITION: -2 * IMAGINARY PART
+B027A00---Normalized residue in N Kbar --> Lambda(2020) --> N Kbar
+B027A01---Normalized residue in N Kbar --> Lambda(2020) --> Sigma pi
+B027A02---Normalized residue in N Kbar --> Lambda(2020) --> Lambda eta
+B027A03---Normalized residue in N Kbar --> Lambda(2020) --> Sigma(1385) pi  , F-wave
+B027A04---Normalized residue in N Kbar --> Lambda(2020) --> Sigma(1385) pi  , H-wave
 B027M---Lambda(2020) MASS
 B027W---Lambda(2020) WIDTH
 B165---Lambda(2050) 3/2-
@@ -9032,10 +9345,10 @@ B041:Desig=6---Lambda(2100) --> N Kbar^*(892), S=3/2, D-wave
 B041:Desig=7---Lambda(2100) --> N Kbar^*(892), S=1/2, G-wave
 B041:Desig=8---Lambda(2100) --> N Kbar^*(892)
 B041:Desig=9---Lambda(2100) --> N Kbar^*(892), S=3/2, G-wave
-B041M---Lambda(2100) MASS
-B041W---Lambda(2100) WIDTH
 B041RE---Lambda(2100) POLE POSITION: REAL PART
 B041IM---Lambda(2100) POLE POSITION: -2 * IMAGINARY PART
+B041M---Lambda(2100) MASS
+B041W---Lambda(2100) WIDTH
 B035---Lambda(2110) 5/2+
 B035:Desig=1---Lambda(2110) --> N Kbar
 B035:Desig=2---Lambda(2110) --> Sigma pi
@@ -9045,10 +9358,10 @@ B035:Desig=5---Lambda(2110) --> N Kbar^*(892)
 B035:Desig=6---Lambda(2110) --> Sigma(1385) pi, P-wave
 B035:Desig=7---Lambda(2110) --> N Kbar^*(892), S=1/2
 B035:Desig=8---Lambda(2110) --> N Kbar^*(892), S=3/2, P-wave
-B035M---Lambda(2110) MASS
-B035W---Lambda(2110) WIDTH
 B035RE---Lambda(2110) POLE POSITION: REAL PART
 B035IM---Lambda(2110) POLE POSITION: -2 * IMAGINARY PART
+B035M---Lambda(2110) MASS
+B035W---Lambda(2110) WIDTH
 B112---Lambda(2325) 3/2-
 B112:Desig=1---Lambda(2325) --> N Kbar
 B112:Desig=2---Lambda(2325) --> Lambda omega
@@ -9124,6 +9437,10 @@ B043:Desig=3---Sigma(1385) --> Lambda gamma
 B043:Desig=4---Sigma(1385) --> N Kbar
 B043:Desig=5---Sigma(1385) --> Sigma- gamma
 B043:Desig=6---Sigma(1385) --> Sigma+ gamma
+B043RE+---Sigma(1385) POLE POSITIONS: Sigma(1385)+ REAL PART
+B043IM+---Sigma(1385) POLE POSITIONS: Sigma(1385)+  -IMAGINARY PART
+B043RE----Sigma(1385) POLE POSITIONS: Sigma(1385)- REAL PART
+B043IM----Sigma(1385) POLE POSITIONS: Sigma(1385)-  -IMAGINARY PART
 B043M+---Sigma(1385)+ MASS
 B043M0---Sigma(1385)0 MASS
 B043M----Sigma(1385)- MASS
@@ -9133,10 +9450,6 @@ B043D-0---mass(Sigma(1385)-) - mass(Sigma(1385)0)
 B043W+---Sigma(1385)+ WIDTH
 B043W0---Sigma(1385)0 WIDTH
 B043W----Sigma(1385)- WIDTH
-B043RE+---Sigma(1385) POLE POSITIONS: Sigma(1385)+ REAL PART
-B043IM+---Sigma(1385) POLE POSITIONS: Sigma(1385)+  -IMAGINARY PART
-B043RE----Sigma(1385) POLE POSITIONS: Sigma(1385)- REAL PART
-B043IM----Sigma(1385) POLE POSITIONS: Sigma(1385)-  -IMAGINARY PART
 B023---Sigma(1480) Bumps
 B023:Desig=1---Sigma(1480) --> N Kbar
 B023:Desig=2---Sigma(1480) --> Lambda pi
@@ -9152,16 +9465,28 @@ B000---Sigma(1580) 3/2-
 B000:Desig=1---Sigma(1580) --> N Kbar
 B000:Desig=2---Sigma(1580) --> Lambda pi
 B000:Desig=3---Sigma(1580) --> Sigma pi
+B000:Desig=4---Sigma(1580) --> Sigma(1385) pi, S-wave
+B000:Desig=5---Sigma(1580) --> Sigma(1385) pi, D-wave
+B000:Desig=6---Sigma(1580) --> N Kbar^*(892), S=1/2, D-wave
+B000:Desig=7---Sigma(1580) --> N Kbar^*(892), S=3/2, S-wave
+B000:Desig=8---Sigma(1580) --> N Kbar^*(892), S=3/2, D-wave
+B000RE---Sigma(1580) POLE POSITION: REAL PART
+B000IM---Sigma(1580) POLE POSITION: -2 * IMAGINARY PART
+B000A00---Normalized residue in N Kbar --> Sigma(1580) --> N Kbar
+B000A01---Normalized residue in N Kbar --> Sigma(1580) --> Sigma pi
+B000A02---Normalized residue in N Kbar --> Sigma(1580) --> Lambda pi
+B000A05---Normalized residue in N Kbar --> Sigma(1580) --> Sigma(1385) pi  , S-wave
+B000A06---Normalized residue in N Kbar --> Sigma(1580) --> Sigma(1385) pi  , D-wave
 B000M---Sigma(1580) MASS
 B000W---Sigma(1580) WIDTH
 B032---Sigma(1620) 1/2-
 B032:Desig=1---Sigma(1620) --> N Kbar
 B032:Desig=2---Sigma(1620) --> Sigma pi
 B032:Desig=3---Sigma(1620) --> Lambda pi
-B032M---Sigma(1620) MASS
-B032W---Sigma(1620) WIDTH
 B032RE---Sigma(1620) POLE POSITION: REAL PART
 B032IM---Sigma(1620) POLE POSITION: -2 * IMAGINARY PART
+B032M---Sigma(1620) MASS
+B032W---Sigma(1620) WIDTH
 B078---Sigma(1620) Production Experiments
 B078:Desig=1---Sigma(1620) --> N Kbar
 B078:Desig=2---Sigma(1620) --> Lambda pi
@@ -9175,6 +9500,13 @@ B079---Sigma(1660) 1/2+
 B079:Desig=1---Sigma(1660) --> N Kbar
 B079:Desig=2---Sigma(1660) --> Sigma pi
 B079:Desig=3---Sigma(1660) --> Lambda pi
+B079:Desig=4---Sigma(1660) --> Sigma(1385) pi
+B079RE---Sigma(1660) POLE POSITION: REAL PART
+B079IM---Sigma(1660) POLE POSITION: -2 * IMAGINARY PART
+B079A00---Normalized residue in N Kbar --> Sigma(1660) --> N Kbar
+B079A01---Normalized residue in N Kbar --> Sigma(1660) --> Sigma pi
+B079A02---Normalized residue in N Kbar --> Sigma(1660) --> Lambda pi
+B079A03---Normalized residue in N Kbar --> Sigma(1660) --> Sigma(1385) pi
 B079M---Sigma(1660) MASS
 B079W---Sigma(1660) WIDTH
 B044---Sigma(1670) 3/2-
@@ -9187,10 +9519,20 @@ B044:Desig=6---Sigma(1670) --> Sigma(1385) pi, S-wave
 B044:Desig=7---Sigma(1670) --> Lambda(1405) pi
 B044:Desig=8---Sigma(1670) --> Lambda(1520) pi
 B044:Desig=55---Sigma(1670) --> Sigma(1385) pi
-B044M---Sigma(1670) MASS
-B044W---Sigma(1670) WIDTH
+B044:Desig=56---Sigma(1670) --> Sigma(1385) pi, D-wave
+B044:Desig=57---Sigma(1670) --> N Kbar^*(892), S=1/2, D-wave
+B044:Desig=58---Sigma(1670) --> N Kbar^*(892), S=3/2, S-wave
+B044:Desig=59---Sigma(1670) --> N Kbar^*(892), S=3/2, D-wave
+B044:Desig=60---Sigma(1670) --> Sigma(1385) pi, S-wave
 B044RE---Sigma(1670) POLE POSITION: REAL PART
 B044IM---Sigma(1670) POLE POSITION: -2 * IMAGINARY PART
+B044A00---Normalized residue in N Kbar --> Sigma(1670) --> N Kbar
+B044A01---Normalized residue in N Kbar --> Sigma(1670) --> Sigma pi
+B044A02---Normalized residue in N Kbar --> Sigma(1670) --> Lambda pi
+B044A03---Normalized residue in N Kbar --> Sigma(1670) --> Sigma(1385) pi  ,  S-wave
+B044A04---Normalized residue in N Kbar --> Sigma(1670) --> Sigma(1385) pi  ,  D-wave
+B044M---Sigma(1670) MASS
+B044W---Sigma(1670) WIDTH
 B051---Sigma(1670) Bumps
 B051:Desig=1---Sigma(1670) --> N Kbar
 B051:Desig=2---Sigma(1670) --> Lambda pi
@@ -9224,14 +9566,28 @@ B057:Desig=4---Sigma(1750) --> Sigma pi
 B057:Desig=5---Sigma(1750) --> Sigma(1385) pi, D-wave
 B057:Desig=6---Sigma(1750) --> Lambda(1520) pi
 B057:Desig=7---Sigma(1750) --> N Kbar^*(892), S=1/2
-B057M---Sigma(1750) MASS
-B057W---Sigma(1750) WIDTH
+B057:Desig=8---Sigma(1750) --> N Kbar^*(892), S=3/2, D-wave
 B057RE---Sigma(1750) POLE POSITION: REAL PART
 B057IM---Sigma(1750) POLE POSITION: -2 * IMAGINARY PART
+B057A00---Normalized residue in N Kbar --> Sigma(1750) --> N Kbar
+B057A01---Normalized residue in N Kbar --> Sigma(1750) --> Sigma pi
+B057A02---Normalized residue in N Kbar --> Sigma(1750) --> Lambda pi
+B057A03---Normalized residue in N Kbar --> Sigma(1750) --> Sigma(1385) pi , D-wave
+B057M---Sigma(1750) MASS
+B057W---Sigma(1750) WIDTH
 B100---Sigma(1770) 1/2+
 B100:Desig=1---Sigma(1770) --> N Kbar
 B100:Desig=2---Sigma(1770) --> Lambda pi
 B100:Desig=3---Sigma(1770) --> Sigma pi
+B100:Desig=4---Sigma(1770) --> Sigma(1385) pi
+B100:Desig=5---Sigma(1770) --> N Kbar^*(892), S=1/2, P-wave
+B100:Desig=6---Sigma(1770) --> N Kbar^*(892), S=3/2, P-wave
+B100RE---Sigma(1770) POLE POSITION: REAL PART
+B100IM---Sigma(1770) POLE POSITION: -2 * IMAGINARY PART
+B100A00---Normalized residue in N Kbar --> Sigma(1770) --> N Kbar
+B100A01---Normalized residue in N Kbar --> Sigma(1770) --> Sigma pi
+B100A02---Normalized residue in N Kbar --> Sigma(1770) --> Lambda pi
+B100A03---Normalized residue in N Kbar --> Sigma(1770) --> Sigma(1385) pi
 B100M---Sigma(1770) MASS
 B100W---Sigma(1770) WIDTH
 B045---Sigma(1775) 5/2-
@@ -9245,10 +9601,19 @@ B045:Desig=7---Sigma(1775) --> Sigma pi pi
 B045:Desig=8---Sigma(1775) --> Delta(1232) Kbar, D-wave
 B045:Desig=9---Sigma(1775) --> N Kbar^*(892), S=1/2
 B045:Desig=10---Sigma(1775) --> N Kbar^*(892), S=3/2, D-wave
-B045M---Sigma(1775) MASS
-B045W---Sigma(1775) WIDTH
+B045:Desig=11---Sigma(1775) --> Sigma(1385) pi, G-wave
+B045:Desig=12---Sigma(1775) --> N Kbar^*(892) , S=3/2, G-wave
+B045:Desig=13---Sigma(1775) --> Sigma(1385) pi, D-wave
+B045:Desig=14---Sigma(1775) --> N Kbar^*(892), S=1/2, D-wave
 B045RE---Sigma(1775) POLE POSITION: REAL PART
 B045IM---Sigma(1775) POLE POSITION: -2 * IMAGINARY PART
+B045A00---Normalized residue in N Kbar --> Sigma(1775) --> N Kbar
+B045A01---Normalized residue in N Kbar --> Sigma(1775) --> Sigma pi
+B045A02---Normalized residue in N Kbar --> Sigma(1775) --> Lambda pi
+B045A03---Normalized residue in N Kbar --> Sigma(1775) --> Sigma(1385) pi  ,  D-wave
+B045A04---Normalized residue in N Kbar --> Sigma(1775) --> Sigma(1385) pi  ,  G-wave
+B045M---Sigma(1775) MASS
+B045W---Sigma(1775) WIDTH
 B001---Sigma(1840) 3/2+
 B001:Desig=1---Sigma(1840) --> N Kbar
 B001:Desig=2---Sigma(1840) --> Sigma pi
@@ -9263,10 +9628,10 @@ B067:Desig=4---Sigma(1880) --> N Kbar^*(892), S=1/2, P-wave
 B067:Desig=5---Sigma(1880) --> N Kbar^*(892), S=3/2, P-wave
 B067:Desig=6---Sigma(1880) --> Lambda(1520) pi, D-wave
 B067:Desig=7---Sigma(1880) --> Delta(1232) Kbar, P-wave
-B067M---Sigma(1880) MASS
-B067W---Sigma(1880) WIDTH
 B067RE---Sigma(1880) POLE POSITION: REAL PART
 B067IM---Sigma(1880) POLE POSITION: -2 * IMAGINARY PART
+B067M---Sigma(1880) MASS
+B067W---Sigma(1880) WIDTH
 B167---Sigma(1900) 1/2-
 B167:Desig=1---Sigma(1900) --> N Kbar
 B167:Desig=2---Sigma(1900) --> Sigma pi
@@ -9279,10 +9644,25 @@ B046:Desig=3---Sigma(1915) --> Sigma pi
 B046:Desig=4---Sigma(1915) --> Sigma(1385) pi, P-wave
 B046:Desig=5---Sigma(1915) --> Sigma(1385) pi, F-wave
 B046:Desig=181---Sigma(1915) --> Sigma(1385) pi
-B046M---Sigma(1915) MASS
-B046W---Sigma(1915) WIDTH
+B046:Desig=182---Sigma(1915) --> Xi K
+B046:Desig=183---Sigma(1915) --> N Kbar^*(892), S=1/2, F-wave
+B046:Desig=184---Sigma(1915) --> N Kbar^*(892), S=3/2, P-wave
+B046:Desig=185---Sigma(1915) --> N Kbar^*(892), S=3/2, F-wave
+B046:Desig=186---Sigma(1915) --> Sigma(1385) pi , P-wave
+B046:Desig=187---Sigma(1915) --> Sigma(1385) pi , F-wave
 B046RE---Sigma(1915) POLE POSITION: REAL PART
 B046IM---Sigma(1915) POLE POSITION: -2 * IMAGINARY PART
+B046A00---Normalized residue in N Kbar --> Sigma(1915) --> N Kbar
+B046A01---Normalized residue in N Kbar --> Sigma(1915) --> Sigma pi
+B046A02---Normalized residue in N Kbar --> Sigma(1915) --> Lambda pi
+B046A03---Normalized residue in N Kbar --> Sigma(1915) --> Xi K
+B046A07---Normalized residue in N Kbar --> Lambda(1915) --> Sigma(1385) pi  , P-wave
+B046A08---Normalized residue in N Kbar --> Lambda(1915) --> Sigma(1385) pi  , F-wave
+B046A04---Normalized residue in N Kbar --> Sigma(1915) --> N Kbar*(892)  , S=1/2 , F-wave
+B046A05---Normalized residue in N Kbar --> Sigma(1915) --> N Kbar*(892)  , S=3/2 , P-wave
+B046A06---Normalized residue in N Kbar --> Sigma(1915) --> N Kbar*(892)  , S=3/2 , F-wave
+B046M---Sigma(1915) MASS
+B046W---Sigma(1915) WIDTH
 B168---Sigma(1940) 3/2+
 B168:Desig=1---Sigma(1945) --> N Kbar
 B168:Desig=2---Sigma(1945) --> Sigma pi
@@ -9332,10 +9712,22 @@ B047:Desig=21---Sigma(2030) --> Sigma(1385) pi, F-wave
 B047:Desig=181---Sigma(2030) --> Lambda(1520) pi
 B047:Desig=182---Sigma(2030) --> Delta(1232) Kbar
 B047:Desig=183---Sigma(2030) --> N Kbar^*(892)
-B047M---Sigma(2030) MASS
-B047W---Sigma(2030) WIDTH
+B047:Desig=184---Sigma(2030) --> N Kbar^*(892), S=3/2, H-wave
+B047:Desig=186---Sigma(2030) --> Sigma(1385) pi , F-wave
+B047:Desig=187---Sigma(2030) --> Sigma(1385) pi , H-wave
 B047RE---Sigma(2030) POLE POSITION: REAL PART
 B047IM---Sigma(2030) POLE POSITION: -2 * IMAGINARY PART
+B047A00---Normalized residue in N Kbar --> Sigma(2030) --> N Kbar
+B047A01---Normalized residue in N Kbar --> Sigma(2030) --> Sigma pi
+B047A02---Normalized residue in N Kbar --> Sigma(2030) --> Lambda pi
+B047A03---Normalized residue in N Kbar --> Sigma(2030) --> Xi K
+B047A04---Normalized residue in N Kbar --> Sigma(2030) --> Sigma(1385) pi  , F-wave
+B047A05---Normalized residue in N Kbar --> Sigma(2030) --> Sigma(1385) pi  , H-wave
+B047A06---Normalized residue in N Kbar --> Sigma(2030) --> N Kbar*(892)  , S=1/2 , F-wave
+B047A07---Normalized residue in N Kbar --> Sigma(2030) --> N Kbar*(892)  , S=3/2 , F-wave
+B047A08---Normalized residue in N Kbar --> Sigma(2030) --> N Kbar*(892)  , S=3/2 , H-wave
+B047M---Sigma(2030) MASS
+B047W---Sigma(2030) WIDTH
 B034---Sigma(2070) 5/2+
 B034:Desig=1---Sigma(2070) --> N Kbar
 B034:Desig=2---Sigma(2070) --> Sigma pi
@@ -9435,15 +9827,15 @@ S022AV---electron g-factor(A) / electron g-factor(V) FOR Xi- --> Lambda e- nubar
 B049---Xi(1530) 3/2+
 B049:Desig=1---Xi(1530) --> Xi pi
 B049:Desig=2---Xi(1530) --> Xi gamma
+B049RE0---Xi(1530) POLE POSITIONS: Xi(1530)0 REAL PART
+B049IM0---Xi(1530) POLE POSITIONS: Xi(1530)0 IMAGINARY PART
+B049RE----Xi(1530) POLE POSITIONS: Xi(1530)- REAL PART
+B049IM----Xi(1530) POLE POSITIONS: Xi(1530)- IMAGINARY PART
 B049M0---Xi(1530)0 MASS
 B049M----Xi(1530)- MASS
 B049D---mass(Xi(1530)-) - mass(Xi(1530))
 B049W0---Xi(1530)0 WIDTH
 B049W----Xi(1530)- WIDTH
-B049RE0---Xi(1530) POLE POSITIONS: Xi(1530)0 REAL PART
-B049IM0---Xi(1530) POLE POSITIONS: Xi(1530)0 IMAGINARY PART
-B049RE----Xi(1530) POLE POSITIONS: Xi(1530)- REAL PART
-B049IM----Xi(1530) POLE POSITIONS: Xi(1530)- IMAGINARY PART
 B021---Xi(1620)
 B021:Desig=1---Xi(1620) --> Xi pi
 B021M---Xi(1620) MASS
@@ -9780,6 +10172,7 @@ S058---Xi(c)'+
 S058:Desig=1---Xi_c^'()+ --> Xi_c()+ gamma
 S058M---Xi(c)'+ MASS
 S058D---Xi(c)'+ - Xi(c)+ MASS DIFFERENCE
+S058DM0---Xi(c)'+ - Xi(c)'0 MASS DIFFERENCE
 S059---Xi(c)'0
 S059:Desig=1---Xi_c^'()0 --> Xi_c()0 gamma
 S059M---Xi(c)'0 MASS
@@ -9791,20 +10184,25 @@ B146M+---Xi(c)(2645)+ MASS
 B146M0---Xi(c)(2645)0 MASS
 B146D+---mass(Xi(c)(2645)+) - mass(Xi(c)0)
 B146D0---mass(Xi(c)(2645)0) - mass(Xi(c)+)
-B146DD---mass(Xi(c)(2645)+) - mass(Xi(c)(2645)0)
+B146DD---Xi(c)(2645)+ - Xi(c)(2645)0 MASS DIFFERENCE
 B146W+---Xi(c)(2645)+ WIDTH
 B146W0---Xi(c)(2645)0 WIDTH
 B149---Xi(c)(2790)
 B149:Desig=1---Xi_c(2790) --> Xi_c^' pi
+B149:Desig=2---Xi_c(2790) --> Xi_c pi
 B149M+---Xi(c)(2790)+ MASS
 B149M0---Xi(c)(2790)0 MASS
 B149D+---mass(Xi(c)(2790)+) - mass(Xi(c)0)
 B149D0---mass(Xi(c)(2790)0) - mass(Xi(c)+)
+B149DP+---mass(Xi(c)(2790)+) - mass(Xi(c)'0)
+B149DP0---mass(Xi(c)(2790)0) - mass(Xi(c)'+)
+B149D+0---Xi(c)(2790)+ - Xi(c)(2790)0 MASS DIFFERENCE
 B149W+---Xi(c)(2790)+ WIDTH
 B149W0---Xi(c)(2790)0 WIDTH
 B148---Xi(c)(2815)
 B148:Desig=1---Xi_c(2815) --> Xi_c+ pi+ pi-
 B148:Desig=2---Xi_c(2815) --> Xi_c0 pi+ pi-
+B148:Desig=3---Xi_c(2815) --> Xi_c pi
 B148M+---Xi(c)(2815)+ MASS
 B148M0---Xi(c)(2815)0 MASS
 B148D+---mass(Xi(c)(2815)+) - mass(Xi(c)+)
@@ -9823,17 +10221,27 @@ B130:Desig=4---Xi_c(2970) --> Xi_c() 2pi
 B130:Desig=5---Xi_c(2970) --> Xi_c(2645) pi
 B130M+---Xi(c)(2970)+ MASS
 B130M0---Xi(c)(2970)0 MASS
+B130DM+---mass(Xi(c)(2970)+) - mass(Xi(c)0)
+B130DM0---mass(Xi(c)(2970)0) - mass(Xi(c)+)
+B130D+0---Xi(c)(2970)+ - Xi(c)(2970)0 MASS DIFFERENCE
 B130W+---Xi(c)(2970)+ WIDTH
 B130W0---Xi(c)(2970)0 WIDTH
 B157---Xi(c)(3055)
+B157:Desig=1---Xi_c(3055) --> Sigma++ K-
+B157:Desig=2---Xi_c(3055) --> Lambda D+
 B157M+---Xi(c)(3055)+ MASS
+B157M0---Xi(c)(3055)0 MASS
 B157W+---Xi(c)(3055)+ WIDTH
+B157W0---Xi(c)(3055)0 WIDTH
 B147---Xi(c)(3080)
 B147:Desig=1---Xi_c(3080) --> Lambda_c()+ Kbar pi
 B147:Desig=2---Xi_c(3080) --> Sigma_c(2455) Kbar
 B147:Desig=3---Xi_c(3080) --> Sigma_c(2455) Kbar + Sigma_c(2520) Kbar
 B147:Desig=4---Xi_c(3080) --> Lambda_c()+ Kbar
 B147:Desig=5---Xi_c(3080) --> Lambda_c()+ Kbar pi+ pi-
+B147:Desig=6---Xi_c(3080) --> Lambda D+
+B147:Desig=7---Xi_c(3080) --> Sigma_c(2455)++ K-
+B147:Desig=8---Xi_c(3080) --> Sigma_c(2520)++ K-
 B147M+---Xi(c)(3080)+ MASS
 B147M0---Xi(c)(3080)0 MASS
 B147W+---Xi(c)(3080)+ WIDTH
@@ -9904,6 +10312,14 @@ S040:Desig=40---Lambda_b()0 --> psi(2S) Lambda
 S040:Desig=41---Lambda_b()0 --> p mu- nubar_mu
 S040:Desig=42---Lambda_b()0 --> P_c(4380)+ K- , P_c -->  p J/psi
 S040:Desig=43---Lambda_b()0 --> P_c(4450)+ K- , P_c -->  p J/psi
+S040:Desig=44---Lambda_b()0 --> Lambda0 phi
+S040:Desig=45---Lambda_b()0  --> p psi(2S) K-
+S040:Desig=46---Lambda_b()0 --> p J/psi(1S) pi+ pi- K-
+S040:Desig=47---Lambda_b()0 --> Lambda pi+ pi-
+S040:Desig=48---Lambda_b()0 --> Lambda K+ pi-
+S040:Desig=49---Lambda_b()0 --> Lambda K+ K-
+S040:Desig=50---Lambda_b()0 --> p pi- pi+ pi-
+S040:Desig=51---Lambda_b()0 --> p K- K+ pi-
 S040M---mass(Lambda(b)0)
 S040DM---mass(Lambda(b)0) - mass(B0)
 S040DM2---mass(Lambda(b)0) - mass(B+)
@@ -9926,6 +10342,17 @@ S040CP1---A(CP)(Lambda(b) --> p pi-)
 S040CP2---A(CP)(Lambda(b) --> p K-)
 S040CP3---A(CP)(Lambda(b) --> p Kbar0 pi-)
 S040DCP---DeltaA_CP(J/psi p pi- / K-) == A_CP(J/psi p pi-) - A_CP(J/psi p K-)
+S040A00---A_CP(Lambda(b) --> Lambda K+ pi-)
+S040A05---A_CP(Lambda(b) --> Lambda K+ K-)
+S040270---CP AND T VIOLATION PARAMETERS
+S040TCL---A(c)(Lambda)
+S040TSL---A(s)(Lambda)
+S040TCP---A(c)(phi)
+S040TSP---A(s)(phi)
+S040A06---a(P)(Lambda(b)0 --> p pi- pi+ pi-)
+S040A07---a(P)(Lambda(b)0 --> p K- K+ pi-)
+S040A08---a(CP)(Lambda(b)0 --> p pi- pi+ pi-)
+S040A09---a(CP)(Lambda(b)0 --> p K- K+ pi-)
 S040A01---alpha decay parameter for Lambda(b) --> J/psi Lambda
 S040A02---A**lepton(FB)(mu mu) in Lambda(b) --> Lambda mu+ mu-
 S040A03---A**h(FB)(p pi) in Lambda(b) --> Lambda (p pi) mu+ mu-
@@ -9956,12 +10383,19 @@ S062W----Sigma(b)*- WIDTH
 S062DM---mass(Sigma(b)*) - mass(Sigma(b))
 S060---Xi(b)0, Xi(b)-
 S060:Desig=1---Xi_b --> Xi- lepton- nubar_lepton X   x  B(bbar --> Xi(b))
-S060:Desig=2---Xi_b()- --> J/psi Xi-   x  B(b --> Xi(b)-)
-S060:Desig=3---Xi_b()0 --> p D0 K-   x  B(bbar --> Xi(b))
-S060:Desig=4---Xi_b()0 --> Lambda_c()+ K-  x  B(bbar --> Xi(b))
-S060:Desig=5---Xi_b()0 --> p Kbar0 pi-   x  B(bbar --> Xi(b))/B(bbar --> B0)
-S060:Desig=6---Xi_b()0 --> p K0 K-   x  B(bbar --> Xi(b))/B(bbar --> B0)
-S060:Desig=7---Xi_b()- --> Lambda_b()0 pi-   x  B(b --> Xi(b)-)/B(b --> Lambda(b)0)
+S060:Desig=2---Xi_b --> J/psi Xi-   x  B(b --> Xi(b)-)
+S060:Desig=3---Xi_b --> p D0 K-   x  B(bbar --> Xi(b))
+S060:Desig=4---Xi_b --> Lambda_c()+ K-  x  B(bbar --> Xi(b))
+S060:Desig=5---Xi_b --> p Kbar0 pi-   x  B(bbar --> Xi(b))/B(bbar --> B0)
+S060:Desig=6---Xi_b --> p K0 K-   x  B(bbar --> Xi(b))/B(bbar --> B0)
+S060:Desig=7---Xi_b --> Lambda_b()0 pi-   x  B(b --> Xi(b)-)/B(b --> Lambda(b)0)
+S060:Desig=8---Xi_b --> Lambda pi+ pi-   x  B(b --> Xi(b)0)/B(b --> Lambda(b)0)
+S060:Desig=9---Xi_b --> Lambda K- pi+   x  B(b --> Xi(b)0)/B(b --> Lambda(b)0)
+S060:Desig=10---Xi_b --> Lambda K+ K-   x  B(b --> Xi(b)0)/B(b --> Lambda(b)0)
+S060:Desig=13---Xi_b --> p K- pi-
+S060:Desig=14---Xi_b --> p K- K-
+S060:Desig=15---Xi_b --> p K- K-   x  B(bbar --> Xi(b))
+S060:Desig=16---Xi_b --> p pi- pi-
 S060M----Xi(b)- MASS
 S060M0---Xi(b)0 MASS
 S060DML---mass(Xi(b)-) - mass(Lambda(b)0)
@@ -9988,9 +10422,14 @@ B170DM---mass(Xi(b)*(5955)-) - mass(Xi(b)0) - mass(pi-)
 B170W---Xi(b)*(5955)- WIDTH
 S063---Omega(b)-
 S063:Desig=1---Omega_b()- --> J/psi Omega-   x B(b --> Omega(b))
+S063:Desig=2---Omega_b()- --> p K- K-   x B(bbar --> Omega(b))
+S063:Desig=3---Omega_b()- --> p K- pi-   x B(bbar --> Omega(b))
+S063:Desig=4---Omega_b()- --> p pi- pi-   x B(bbar --> Omega(b))
 S063M---Omega(b)- MASS
 S063DML---mass(Omega(b)-) - mass(Lambda(b)0)
+S063A00---mass(Omega(b)-) - mass(Xi(b)-)
 S063T---Omega(b) MEAN LIFE
+S063A01---tau(Omega(b)-)/tau(Xi(b)-) mean life ratio
 S061---b-baryon ADMIXTURE (Lambda(b), Xi(b), Sigma(b), Omega(b))
 S061:Desig=1---b-baryon  --> Xi- lepton- nubar_lepton  anything
 S061:Desig=2---b-baryon  --> Lambda lepton+ nu_lepton  anything
@@ -10038,7 +10477,7 @@ S046SSQ---Long-lived qtilde (Squark) MASS LIMIT
 S046SBT---btilde (Sbottom) MASS LIMIT
 S046STP---ttilde (Stop) MASS LIMIT
 S046GNO---Heavy gtilde (Gluino) MASS LIMIT
-S046LGN---Long-lived/light gtilde (Gluino) MASS LIMIT
+S046LGN---Long-lived gtilde (Gluino) MASS LIMIT
 S046GTN---LIGHT Gtilde (Gravitino) MASS LIMITS FROM COLLIDER EXPERIMENTS
 S046OTH---Supersymmetry Miscellaneous Results
 S057---Technicolor
