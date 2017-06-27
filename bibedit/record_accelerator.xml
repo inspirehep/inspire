@@ -16,14 +16,12 @@ You should have received a copy of the GNU General Public License
 along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 -->
-<!-- BibEdit-Template-Name: experiment -->
-<!-- BibEdit-Template-Description: experiment -->
+<!-- BibEdit-Template-Name: accelerator -->
+<!-- BibEdit-Template-Description: accelerator -->
 <record>
   <datafield tag="119" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:INSPIRE identifier</subfield>
     <subfield code="b">VOLATILE:accelerator name</subfield>
-    <subfield code="c">VOLATILE:official identifier (e.g. NA61)</subfield>
-    <subfield code="d">VOLATILE:experiment name (e.g. SHINE)</subfield>
     <subfield code="u">VOLATILE:affiliation</subfield>
   </datafield>
   <datafield tag="046" ind1=" " ind2=" ">
@@ -83,6 +81,9 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">VOLATILE:CORE</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">ACCELERATOR</subfield>
   </datafield>
   <datafield tag="980" ind1=" " ind2=" ">
     <subfield code="a">EXPERIMENT</subfield>
