@@ -87,7 +87,7 @@ def get_temporary_file(prefix="cds_inspire_synchro_",
 def get_all_recids():
     """Return all relevant record IDs."""
     if CFG_INSPIRE_SITE:
-        all_recids = get_collection_reclist(CFG_SITE_NAME) | get_collection_reclist("Conferences")
+        all_recids = get_collection_reclist(CFG_SITE_NAME) | get_collection_reclist("Conferences") | get_collection_reclist("For CDS") | get_collection_reclist("CDS Hidden")
     elif CFG_CERN_SITE:
         all_recids = get_collection_reclist(CFG_SITE_NAME) | get_collection_reclist("CERN Articles & Preprints") | get_collection_reclist("CERN Series") | get_collection_reclist("CERN Departments") | get_collection_reclist("CERN Experiments") | get_collection_reclist("CERN R&D Projects")
         # We exclude all records that is not relevant for CERN/CDS
