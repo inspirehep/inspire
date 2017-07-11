@@ -3,7 +3,7 @@
 include ../config.mk
 -include ../config-local.mk
 
-SUBDIRS = lib
+SUBDIRS = lib bin
 
 all:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make all && cd .. ;)

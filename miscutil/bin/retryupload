@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+
+import sys
+import marshal
+from optparse import OptionParser
+
+from invenio.bibrecord import (
+    record_xml_output,
+    create_record,
+    record_add_field,
+    record_get_field_value,
+)
+from invenio.dbquery import run_sql
+from invenio.config import CFG_TMPSHAREDDIR
+
+"""
+Usage: sudo -u apache retryupload --recid 123 --taskid 456
+
+This script is useful to retry a failed upload from Labs, which failed due to
+a temporary EOS error. The script will amend the MARCXML to sport the now
+assigned recid, and will reinitialize the failed task to be run in --replace
+mode.
+"""
+
+usage = __doc__
+
+def get_options(args=None):
+    if args is None:
+        args = sys.argv[1:]
+    parser = OptionParser(usage=usage)
+    parser.add_option("-t", "--taskid", dest="taskid", type="int",
+                      help="ID of the failed task", metavar="FILE")
+    parser.add_option("-i", "--recid", dest="recid", type="int",
+                      help="recid of the desired record")
+
+    (options, args) = parser.parse_args(args)
+
+    if not options.taskid or not options.recid:
+        parser.error("Options --taskid and --recid are mandatory")
+    return options.taskid, options.recid
+
+
+def amend_marcxml(path, recid):
+    with open(path) as marcxml:
+        rec = create_record(marcxml.read())[0]
+    existing_recid = record_get_field_value(rec, "001")
+    if existing_recid:
+        print >> sys.stderr, "WARNING: record has already a recid: %s" % existing_recid
+        return
+    record_add_field(rec, "001", controlfield_value=str(recid))
+    with open(path, "w") as marcxml:
+        marcxml.write(record_xml_output(rec))
+
+
+def amend_task(taskid, recid):
+    res = run_sql("SELECT arguments FROM schTASK WHERE id=%s AND proc LIKE 'bibupload%%'", (taskid, ))
+    if not res:
+        print >> sys.stderr, "ERROR: cannot find biubpload task ID %s" % taskid
+        sys.exit(1)
+    arguments = res[0][0]
+    arguments = list(marshal.loads(arguments))
+    new_arguments = []
+    for argument in arguments:
+        if argument == '--insert':
+            argument = '--replace'
+        elif argument.startswith(CFG_TMPSHAREDDIR):
+            amend_marcxml(argument, recid)
+        new_arguments.append(argument)
+    new_arguments = marshal.dumps(tuple(new_arguments))
+    run_sql("UPDATE schTASK SET arguments=%s, status='WAITING' WHERE id=%s", (new_arguments, taskid))
+
+
+def main():
+    taskid, recid = get_options()
+    amend_task(taskid, recid)
+
+
+if __name__ == "__main__":
+    main()
