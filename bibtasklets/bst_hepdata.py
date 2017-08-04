@@ -93,7 +93,11 @@ class HepDataDumper(object):
         self.new_dump[record['doi']] = record
 
     def _is_hepdata_record_new_or_updated(self, record):
-        return self.old_dump.get(record['doi'], {}) != record
+        newrec = record.copy()
+        newrec.pop(position, '')
+        oldrec = self.old_dump.get(record['doi'], {})
+        oldrec.pop(position, '')
+        return oldrec != newrec
 
     def _close_hepdata_dump(self):
         self.old_dump.close()
