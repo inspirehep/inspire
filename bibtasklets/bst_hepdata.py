@@ -94,9 +94,9 @@ class HepDataDumper(object):
 
     def _is_hepdata_record_new_or_updated(self, record):
         newrec = record.copy()
-        newrec.pop(position, '')
+        newrec.pop('position', '')
         oldrec = self.old_dump.get(record['doi'], {})
-        oldrec.pop(position, '')
+        oldrec.pop('position', '')
         return oldrec != newrec
 
     def _close_hepdata_dump(self):
