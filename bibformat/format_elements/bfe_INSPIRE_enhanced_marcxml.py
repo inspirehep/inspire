@@ -319,6 +319,11 @@ def format_element(bfo, oai=0):
                 recids = perform_request_search(p='119__a:"%s"' % value, cc='Experiments')
                 if len(recids) == 1:
                     subfields.append(('0', str(recids.pop())))
+            elif code == 'a':
+                recids = perform_request_search(p='119__b:"%s"' % value, cc='Experiments')
+                if len(recids) == 1:
+                    subfields.append(('0', str(recids.pop())))
+
 
     # Enhance Experiments
     for field in record_get_field_instances(record, '710'):
