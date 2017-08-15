@@ -74,14 +74,14 @@ class HepDataDumper(object):
             results = requests.get("https://hepdata.net/search/", params=dict(size=chunk_size, page=page), headers={'Accept': 'application/json'}).json()['results']
             if not results:
                 break
-            for i, result in enumerate(results):
+            for result in results:
                 result = json_unicode_to_utf8(result)
                 paper_title = result['title']
                 inspire_id = result['inspire_id']
-                for data in result['data']:
+                for position, data in enumerate(result['data'], 1):
                     data['paper_title'] = paper_title
                     data['inspire_id'] = inspire_id
-                    data['position'] = i+1
+                    data['position'] = position
                     if data['doi']:
                         self._store_record_in_dump(data)
                         if self._is_hepdata_record_new_or_updated(data):
@@ -93,11 +93,7 @@ class HepDataDumper(object):
         self.new_dump[record['doi']] = record
 
     def _is_hepdata_record_new_or_updated(self, record):
-        newrec = record.copy()
-        newrec.pop('position', '')
-        oldrec = self.old_dump.get(record['doi'], {})
-        oldrec.pop('position', '')
-        return oldrec != newrec
+        return self.old_dump.get(record['doi'], {}) != record
 
     def _close_hepdata_dump(self):
         self.old_dump.close()
