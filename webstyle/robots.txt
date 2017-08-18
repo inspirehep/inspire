@@ -18,6 +18,7 @@ Disallow: /journal/
 Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
+Disallow: /youraccount/
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -38,6 +39,7 @@ Disallow: /journal/
 Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
+Disallow: /youraccount/
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -58,6 +60,7 @@ Disallow: /journal/
 Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
+Disallow: /youraccount/
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -80,5 +83,6 @@ Disallow: /journal/
 Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
+Disallow: /youraccount/
 
 Sitemap: http://inspirehep.net/sitemap-index.xml.gz
