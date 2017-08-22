@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
+## Copyright (C) 2013, 2014, 2017 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -17,7 +17,7 @@
 ## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-CFG_APSHARVEST_FULLTEXT_URL = "http://harvest.aps.org/bagit/articles/%(doi)s/apsxml"
+CFG_APSHARVEST_FULLTEXT_URL = "http://harvest.aps.org/v2/journals/articles/%(doi)s"
 CFG_APSHARVEST_REQUEST_TIMEOUT = 7.5
 CFG_APSHARVEST_SEARCH_COLLECTION = "HEP"
 CFG_APSHARVEST_RECORD_DOI_TAG = "0247_a"

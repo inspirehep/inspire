@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
+## Copyright (C) 2013, 2014, 2017 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -16,6 +16,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+
 """APS harvester.
 
 Gets full-text documents from APS via DOI or recid and creates
@@ -461,7 +462,7 @@ def APS_connect(from_param, until_param=None, page=1, perpage=100):
     Manages connection to APS site and return connector.
     """
     host = 'http://harvest.aps.org'
-    function = '/content/journals/articles'
+    function = '/v2/journals/articles'
 
     from_param = 'from=' + str(from_param)
     until_param = 'until=' + str(until_param)
@@ -513,9 +514,9 @@ def harvest_aps(from_param, until_param, perpage):
     data = json.loads(conn.next())
     write_message("Data received from APS: \n%s" % (data,), verbose=5)
     records = []
-    for d in data:
+    for d in data['data']:
         records.append(APSRecord(None,
-                                 d["doi"],
+                                 d["id"],
                                  last_modified=d['metadata_last_modified_at']))
 
     # Check for more pages
@@ -524,9 +525,9 @@ def harvest_aps(from_param, until_param, perpage):
             conn = APS_connect(from_param, until_param, pagenum, perpage)
             data = json.loads(conn.next())
             write_message("Data received from APS: \n%s" % (data,), verbose=5)
-            for d in data:
+            for d in data['data']:
                 records.append(APSRecord(None,
-                                         d["doi"],
+                                         d["id"],
                                          last_modified=d['metadata_last_modified_at']))
 
     return records

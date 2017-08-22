@@ -233,6 +233,7 @@ class APSHarvestJob(object):
                 result_file = download_url(url=url,
                                            download_to_file=result_file,
                                            content_type="zip",
+                                           accept="application/zip",
                                            retry_count=5,
                                            timeout=60.0)
                 write_message("Downloaded %s to %s" % (url, result_file), verbose=2)
@@ -278,8 +279,8 @@ class APSHarvestJob(object):
             if not checksum_validated_files:
                 write_message("Warning: No files found to perform checksum"
                               " validation on inside %s" % (unzipped_folder,))
-            elif len(checksum_validated_files) != 1 or \
-                    not 'fulltext.xml' in checksum_validated_files[0]:
+                continue
+            elif not [name for name in checksum_validated_files if name.endswith('fulltext.xml')]:
                 msg = "Warning: No fulltext file found inside %s for %s" % \
                       (unzipped_folder, record.recid or record.doi)
                 write_message(msg)
@@ -287,7 +288,7 @@ class APSHarvestJob(object):
                 continue
 
             # We have the fulltext file as fulltext.xml as expected.
-            fulltext_file = checksum_validated_files[0]
+            fulltext_file = [name for name in checksum_validated_files if name.endswith('fulltext.xml')][0]
 
             write_message("Harvested record %s (%s)" %
                          (record.recid or "new record", count))
