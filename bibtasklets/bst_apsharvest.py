@@ -502,7 +502,7 @@ def harvest_aps(from_param, until_param, perpage):
     if not conn:
         write_message("Fatal Error: Cannot reach APS servers. Aborting.")
         raise APSHarvesterConnectionError("Cannot connect to APS servers")
-    if conn.headers['link']:
+    if conn.headers.get('link', ''):
         links = conn.headers['link'].split(",")
         for l in links:
             if l.find('rel="next"') > 0:
