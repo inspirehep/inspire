@@ -69,7 +69,7 @@ from harvestingkit.pos_package import PosPackage
 from invenio.apsharvest_utils import (create_work_folder,
                                       submit_records_via_ftp)
 
-base_url = "https://pos.sissa.it/contribution?id="
+base_url = "https://pos.sissa.it"
 
 
 def main(args):
@@ -101,7 +101,7 @@ def main(args):
         print("Querying with: %s" % (query,))
         results = perform_request_search(p=query, of="id")
 
-        url = base_url + identifier
+        url = urljoin(base_url, '/contribution?id=%s' % identifier)
         session = requests.session()
         try:
             r = session.get(url, timeout=60)
@@ -115,7 +115,7 @@ def main(args):
 
         for link in links:
             url = urllib.quote(link['href'], safe=":/")
-            if url.endswith('.pdf'):
+            if url.endswith('/pdf'):
                 # handle relative URLs
                 url = urljoin(base_url, url)
                 found = True
