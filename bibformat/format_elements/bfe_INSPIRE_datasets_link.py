@@ -43,7 +43,7 @@ def format_element(bfo):
     for hep in hep_data:
         if not hepdata_out and hep.get('9', '') == 'HEPDATA':
             # add hepdata link
-            hepdata_out = '| <a href="http://hepdata.cedar.ac.uk/view/ins%s">HepData</a> ' % \
+            hepdata_out = '| <a href="https://hepdata.net/record/ins%s">HepData</a> ' % \
                           (str(bfo.recID),)
         if not dataverse_out and hep.get('9', '') == 'Dataverse':
             # add dataverse link
