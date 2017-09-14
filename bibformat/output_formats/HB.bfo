@@ -6,6 +6,7 @@ HEPNAMES --- Hepnames_HTML_brief.bft
 CONFERENCES --- Conf_HTML_brief.bft
 EXPERIMENT --- Exp_HTML_brief.bft
 JOURNALS --- Journal_Inspire_HTML_brief.bft
+JOURNALSNEW --- Journal_Inspire_HTML_brief.bft
 
 default: Default_HTML_brief.bft
 
