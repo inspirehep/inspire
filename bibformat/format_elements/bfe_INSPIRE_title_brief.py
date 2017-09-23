@@ -60,11 +60,13 @@ def format_element(bfo, highlight="no", force_title_case="no", brief="no", escti
                                         suffix_tag='</span>')
 
     # Force title casing if requested
-    if force_title_case.lower() == "yes" and (out.upper() == out or out.find('THE ') >= 0):
-        #title is allcaps
-        out = ' '.join([word.capitalize() for word in out.split(' ')])
-        # .title() too dumb; don't cap 1 letter words
-
+    if force_title_case.lower() == "yes":
+        uout = out.decode('utf-8')
+        if uout.upper() == uout or uout.find('THE ') >= 0:
+            #title is allcaps
+            uout = u' '.join([word.capitalize() for word in uout.split(' ')])
+            # .title() too dumb; don't cap 1 letter words
+        out = uout.encode('utf-8')
 
     if mode == 'tex':
         # TeX escape some common sequences
@@ -83,11 +85,11 @@ def format_element(bfo, highlight="no", force_title_case="no", brief="no", escti
 
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
