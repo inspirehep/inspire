@@ -24,10 +24,12 @@ import requests
 from tempfile import mkstemp
 
 from invenio.config import CFG_TMPSHAREDDIR
-from invenio.bibtaskutils import ChunkedTask
+from invenio.bibtaskutils import ChunkedTask, ChunkedBibUpload
 from invenio.bibtask import task_low_level_submission
 from invenio.bibrecord import record_add_field, record_xml_output
 from invenio.jsonutils import json_unicode_to_utf8
+from invenio.intbitset import intbitset
+from invenio.search_engine import perform_request_search
 
 
 HEPDATA_DUMP = os.path.join(CFG_TMPSHAREDDIR, 'hepdata_dump.bin')
@@ -35,9 +37,19 @@ HEPDATA_DUMP = os.path.join(CFG_TMPSHAREDDIR, 'hepdata_dump.bin')
 
 def bst_hepdata():
     uploader = ChunkedHepDataUpload()
-    for record in HepDataDumper():
+    dumper = HepDataDumper()
+    for record in dumper:
         marcxml_record = hepdata2marcxml(record)
         uploader.add(marcxml_record)
+    inspire_ids = dumper.inspire_ids
+    current_inspire_ids = intbitset(perform_request_search(p='035__9:HEPDATA'))
+    records_to_amend = inspire_ids - current_inspire_ids
+    id_appender = ChunkedBibUpload(mode='a', user='hepdata')
+    for recid in records_to_amend:
+        rec = {}
+        record_add_field(rec, tag="001", controlfield_value=str(recid))
+        record_add_field(rec, tag="035", subfields=[('a', 'ins%s' % recid), ('9', 'HEPDATA')])
+        id_appender.add(record_xml_output(rec))
 
 
 class ChunkedHepDataUpload(ChunkedTask):
@@ -60,11 +72,11 @@ class ChunkedHepDataUpload(ChunkedTask):
 
         return task_low_level_submission(*args)
 
-
 class HepDataDumper(object):
     def __init__(self):
         self.old_dump = shelve.open(HEPDATA_DUMP, 'c', protocol=-1)
         self.new_dump = shelve.open(HEPDATA_DUMP + '.new', 'n', protocol=-1)
+        self.inspire_ids = intbitset()
 
     def __iter__(self):
         chunk_size = 200
@@ -78,6 +90,7 @@ class HepDataDumper(object):
                 result = json_unicode_to_utf8(result)
                 paper_title = result['title']
                 inspire_id = result['inspire_id']
+                self.inspire_ids.add(int(inspire_id))
                 for position, data in enumerate(result['data'], 1):
                     data['paper_title'] = paper_title
                     data['inspire_id'] = inspire_id
