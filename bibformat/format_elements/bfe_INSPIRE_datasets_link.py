@@ -21,8 +21,6 @@
 """ BibFormat element - adds the Datasets link
 """
 
-__revision__ = "$Id$"
-
 
 from invenio.config import CFG_BASE_URL
 
@@ -39,12 +37,15 @@ def format_element(bfo):
     out += "Data: "
     hepdata_out = ""
     dataverse_out = ""
-    hep_data = bfo.fields('520__')
+    hep_data = bfo.fields('035__')
     for hep in hep_data:
         if not hepdata_out and hep.get('9', '') == 'HEPDATA':
             # add hepdata link
             hepdata_out = '| <a href="https://hepdata.net/record/ins%s">HepData</a> ' % \
                           (str(bfo.recID),)
+
+    hep_dverse = bfo.fields('520__')
+    for hep in hep_dverse:
         if not dataverse_out and hep.get('9', '') == 'Dataverse':
             # add dataverse link
             links = bfo.fields('8564_')
@@ -67,11 +68,11 @@ def format_element(bfo):
 
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
