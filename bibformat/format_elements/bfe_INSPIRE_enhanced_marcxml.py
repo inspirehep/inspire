@@ -67,6 +67,14 @@ def get_personid_canonical_id():
         CANONICAL_NAME_CACHE = dict(run_sql("SELECT personid, data FROM aidPERSONIDDATA WHERE tag='canonical_name'"))
     return CANONICAL_NAME_CACHE
 
+RELATED_JOURNAL_CACHE = {}
+def get_related_journal(journal_name):
+    global RELATED_JOURNAL_CACHE
+    if journal_name not in RELATED_JOURNAL_CACHE:
+        recids = perform_request_search(p='711__a:"%s"' % journal_name, cc='Journals')
+        RELATED_JOURNAL_CACHE[journal_name] = recids[0] if recids else None
+    return RELATED_JOURNAL_CACHE[journal_name]
+
 def reference2citation_element(subfields):
     citation_element = {}
     for code, value in subfields:
@@ -227,6 +235,24 @@ def format_element(bfo, oai=0):
                     if len(ids) == 1:
                         subfields.append(('z', '%i' % ids[0]))
 
+    # Related institution
+    for field in record_get_field_instances(record, '510'):
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        if 'a' in subfield_dict and not '0'in subfield_dict:
+            ids = get_institution_ids(subfield_dict['a'])
+            if len(ids) == 1:
+                subfields.append(('0', '%i' % ids[0]))
+
+    # Related journal
+    for field in record_get_field_instances(record, '530'):
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        if 'a' in subfield_dict and not '0'in subfield_dict:
+            ids = get_institution_ids(subfield_dict['a'])
+            if len(ids) == 1:
+                subfields.append(('0', '%i' % ids[0]))
+
     # Enhance affiliation in Experiments
     for field in record_get_field_instances(record, '119'):
         subfields = field_get_subfield_instances(field)
@@ -280,32 +306,50 @@ def format_element(bfo, oai=0):
             if matched_id:
                 subfields.append(('0', str(matched_id)))
 
+    # Enhance related records
+    for field in (record_get_field_instances(record, '780', ind1='0', ind2='2') +
+                  record_get_field_instances(record, '785', ind1='0', ind2='2') +
+                  record_get_field_instances(record, '787', ind1='0', ind2='8')):
+        subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
+        subfield_citation_dict = {}
+        if subfield_dict.get('r'): # Reportnumber
+            subfield_citation_dict['r'] = subfield_dict['r']
+        if subfield_dict.get('z'): # ISBN
+            subfield_citation_dict['i'] = subfield_dict['z']
+        if 'w' not in subfield_dict:
+            matched_id = get_matched_id(subfield_citation_dict)
+            if matched_id:
+                subfields.append(('w', str(matched_id)))
+
     # Enhance CNUMs and Journals
     for field in record_get_field_instances(record, '773'):
         subfields = field_get_subfield_instances(field)
+        subfield_dict = dict(subfields)
         for code, value in subfields:
             if code == 'w':
                 # Conference CNUMs
                 recids = perform_request_search(p='111__g:"%s"' % value, cc='Conferences')
                 if len(recids) == 1:
                     subfields.append(('2', str(recids.pop())))
-                recids = perform_request_search(p='773__w:"%s" 980:PROCEEDINGS' % value)
-                if recid in recids:
-                    # We remove this very record, since it can be a proceedings
-                    recids.remove(recid)
-                if len(recids) == 1:
-                    subfields.append(('0', str(recids.pop())))
+                if '0' not in subfield_dict:
+                    recids = perform_request_search(p='773__w:"%s" 980:PROCEEDINGS' % value)
+                    if recid in recids:
+                        # We remove this very record, since it can be a proceedings
+                        recids.remove(recid)
+                    if len(recids) == 1:
+                        subfields.append(('0', str(recids.pop())))
             elif code == 'p':
                 # Journal title
                 recids = perform_request_search(p='711__a:"%s"' % value, cc='Journals')
                 if len(recids) == 1:
                     subfields.append(('1', str(recids.pop())))
-            elif code == 'z':
+            elif code == 'z' and '0' not in subfield_dict:
                 # ISBN
                 recids = find_isbn({'ISBN': value})
                 if len(recids) == 1:
                     subfields.append(('0', str(recids.pop())))
-            elif code == 'r':
+            elif code == 'r' and '0' not in subfield_dict:
                 # Report
                 recids = perform_request_search(p='reportnumber:"%s"' % value)
                 if len(recids) == 1:
