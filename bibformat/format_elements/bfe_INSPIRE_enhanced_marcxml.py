@@ -312,13 +312,13 @@ def format_element(bfo, oai=0):
                   record_get_field_instances(record, '787', ind1='0', ind2='8')):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
-        subfield_citation_dict = {}
+        subfield_citation = []
         if subfield_dict.get('r'): # Reportnumber
-            subfield_citation_dict['r'] = subfield_dict['r']
+            subfield_citation.append(('r', subfield_dict['r']))
         if subfield_dict.get('z'): # ISBN
-            subfield_citation_dict['i'] = subfield_dict['z']
-        if 'w' not in subfield_dict:
-            matched_id = get_matched_id(subfield_citation_dict)
+            subfield_citation.append(('i', subfield_dict['z']))
+        if 'w' not in subfield_dict and subfield_citation:
+            matched_id = get_matched_id(subfield_citation)
             if matched_id:
                 subfields.append(('w', str(matched_id)))
 
