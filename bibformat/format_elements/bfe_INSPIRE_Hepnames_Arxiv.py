@@ -23,5 +23,9 @@ def format_element(bfo):
     position = out.find('_')
     if position >= 0:
         out = out[:position+2]
+    out = out.replace('-', '_')
+    out = out.replace("'", "")
+    if out.find(' ') > -1:
+        out = out.rsplit(" ", 1)[1]
     out = translate_to_ascii([out]).pop()
     return out
