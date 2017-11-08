@@ -43,7 +43,7 @@ from invenio.bibtask import task_update_progress, write_message, task_sleep_now_
 from invenio.intbitset import intbitset
 
 from invenio.webuser import collect_user_info, get_uid_from_email, get_email_from_username
-
+from invenio.search_engine import search_pattern
 import redis
 
 import gzip
@@ -72,9 +72,14 @@ class run_ro_on_slave_db:
         dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = self.old_site_level
 
 
-def bst_prodsync(method='afs'):
+def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_collections=''):
     """
     Synchronize to either 'afs' or 'redis'
+
+    with_citations: yes/no, whether records that now matches a record will need to be re-exported.abs
+    with_claims: yes/no, whether record involved in some new claim need to be re-exported.
+    skip_collections: comma-separated-lists of values for which records having 980:VALUE should be ignored,
+        e.g. skip_collections='HEP,HEPNAMES,HEPHIDDEN'
     """
     if not CFG_REDIS_HOST_LABS:
         method = 'afs'
@@ -87,13 +92,20 @@ def bst_prodsync(method='afs'):
         last_run = open(lastrun_path).read().strip()
         write_message("Syncing records modified since %s" % last_run)
         modified_records = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (last_run, )))
-        for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
-            modified_records.add(citer)
-        modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
+        if with_citations.lower() == 'yes':
+            for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
+                modified_records.add(citer)
+        if with_claims.lower() == 'yes':
+            modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
     except IOError:
-        # Default to the epoch
+        # Default to everything
         modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
         write_message("Syncing all records")
+
+    skip_collections = skip_collections.split(',')
+    skip_collections.remove('')
+    for collection in skip_collections:
+        modified_records -= search_pattern(p='980:%s' % collection)
 
     if not modified_records:
         write_message("Nothing to do")
@@ -131,7 +143,6 @@ def redis_sync(modified_records, time_estimator, tot):
         if shall_sleep(recid, i, tot, time_estimator):
             task_sleep_now_if_required()
     return True
-
 
 
 def afs_sync(modified_records, time_estimator, tot, now):
