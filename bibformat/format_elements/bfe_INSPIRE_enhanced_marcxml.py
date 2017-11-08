@@ -296,12 +296,14 @@ def format_element(bfo, oai=0):
                         if len(ids) == 1:
                             subfields.append(('z', '%i' % ids[0]))
 
-
     # Enhance citation
     for field in record_get_field_instances(record, '999', ind1='C', ind2='5'):
         subfields = field_get_subfield_instances(field)
         subfield_dict = dict(subfields)
-        if '0' not in subfield_dict:
+        if '0' in subfield_dict:
+            # Already available recid
+            subfields.append(('z', '1'))
+        else:
             matched_id = get_matched_id(subfields)
             if matched_id:
                 subfields.append(('0', str(matched_id)))
