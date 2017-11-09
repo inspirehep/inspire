@@ -1,5 +1,3 @@
-
-
 from time import strftime
 
 import sys, os
@@ -7,6 +5,7 @@ import redis
 
 from invenio.config import CFG_REDIS_HOST_LABS, CFG_TMPSHAREDDIR
 from invenio.bibformat_elements.bfe_INSPIRE_enhanced_marcxml import get_hepname_id, get_personid_canonical_id
+from invenio.bibsched_tasklets.bst_prodsync import run_on_slave_db
 from invenio.bibtask import write_message
 from invenio.dbquery import run_sql
 
@@ -37,8 +36,8 @@ def bst_claimsync():
     to process all the claims yet, then no new claims will be added)
 
     Note2: in order to set the lastrun to a particular date edit
-    the file %s.
-    """ % (REDIS_KEY, CFG_REDIS_HOST_LABS, LASTRUN_PATH)
+    the file CFG_TMPSHAREDDIR/claimsync_lastrun.txt.
+    """
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     if r.llen(REDIS_KEY) != 0:
         write_message("Skipping prodsync: Redis queue is not yet empty")
@@ -46,17 +45,29 @@ def bst_claimsync():
     now = strftime('%Y-%m-%d %H:%M:%S')
     lastrun = get_lastrun()
     write_message("Syncing claims modified since %s" % lastrun)
-    claims = run_sql("SELECT personid, bibrec, name, flag FROM aidPERSONIDPAPERS WHERE last_updated>=%s AND flag<>0", (lastrun, ))
-    write_message("Adding %s claims" % len(claims))
-    for personid, bibrec, name, flag in claims:
-        bai = bai = get_personid_canonical_id().get(personid)
-        if bai:
-            hepname_id = get_hepname_id(personid)
-            if hepname_id:
-                r.rpush(REDIS_KEY, (bai, hepname_id, bibrec, name, flag))
+    with run_on_slave_db():
+        claims = run_sql("""
+            SELECT personid, bibrec, name, flag
+            FROM aidPERSONIDPAPERS
+            WHERE (
+                last_updated>=%s OR
+                personid IN (
+                    SELECT distinct personid
+                    FROM aidPERSONIDDATA
+                    WHERE last_updated>=DATE_SUB(%s, INTERVAL 2 DAY)
+                )
+            ) AND (flag=2 OR flag=-2)
+        """, (lastrun, lastrun))
+        write_message("Adding %s claims" % len(claims))
+        for personid, bibrec, name, flag in claims:
+            bai = get_personid_canonical_id().get(personid)
+            if bai:
+                hepname_id = get_hepname_id(personid)
+                if hepname_id:
+                    r.rpush(REDIS_KEY, (bai, hepname_id, bibrec, name, flag))
+                else:
+                    write_message("Skipping claim %s because no hepname_id corresponds to it" % ((bai, personid, bibrec, name, flag),), stream=sys.stderr)
             else:
-                write_message("Skipping claim %s because no hepname_id corresponds to it" % ((bai, personid, bibrec, name, flag),), stream=sys.stderr)
-        else:
-            write_message("Skipping claim %s because no BAI corresponds to it" % ((personid, bibrec, name, flag),), stream=sys.stderr)
+                write_message("Skipping claim %s because no BAI corresponds to it" % ((personid, bibrec, name, flag),), stream=sys.stderr)
     set_lastrun(now)
     write_message("DONE!")
