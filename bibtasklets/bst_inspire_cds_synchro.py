@@ -27,7 +27,7 @@ from tempfile import mkstemp
 
 from invenio.intbitset import intbitset
 from invenio.config import CFG_CERN_SITE, CFG_INSPIRE_SITE, CFG_SITE_NAME, CFG_TMPSHAREDDIR
-from invenio.search_engine import get_collection_reclist, search_pattern
+from invenio.search_engine import get_collection_reclist, search_pattern, search_unit
 from invenio.search_engine import get_record
 from invenio.bibrecord import record_get_field_instances, record_get_field_values, field_get_subfield_instances, record_add_field, record_xml_output
 from invenio.bibtask import write_message, task_update_progress, task_low_level_submission, task_sleep_now_if_required
@@ -103,6 +103,8 @@ def get_record_ids_to_export(unmatched_only=False):
     """Return all records with identifiers to sync."""
     all_recids = get_all_recids()
     recids_with_other_id = search_pattern(p='035__9:%s' % CFG_OTHER_SITE)
+    if CFG_INSPIRE_SITE:
+        recids_with_other_id |= search_unit(p='CDS-*', f='595__a', m='a')
     recids_with_a_doi = search_pattern(p='doi:"**"')
     recids_with_an_arxiv_id = search_pattern(p='035__9:"arXiv"')
     if unmatched_only:
