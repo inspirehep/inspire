@@ -21,6 +21,7 @@
 """Continuously synchronizes ORCID tokens to Labs via REDIS"""
 
 import redis
+import json
 
 try:
     from invenio.config import CFG_REDIS_HOST_LABS
@@ -54,7 +55,7 @@ def bst_orcidsync():
     # We first empty the information
     r.ltrim(CFG_REDIS_ORCID_SYNC_KEY, -1, 0)
     for orcid, token, email, name in orcid_data_to_sync():
-        r.lpush(CFG_REDIS_ORCID_SYNC_KEY, (orcid, token, email, name))
+        r.lpush(CFG_REDIS_ORCID_SYNC_KEY, json.dumps((orcid, token, email, name)))
     write_message("%s ORCID entries pushed to Labs" % r.llen(CFG_REDIS_ORCID_SYNC_KEY))
     return True
 

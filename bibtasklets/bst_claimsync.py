@@ -2,6 +2,7 @@ from time import strftime
 
 import sys, os
 import redis
+import json
 
 from invenio.config import CFG_REDIS_HOST_LABS, CFG_TMPSHAREDDIR
 from invenio.bibformat_elements.bfe_INSPIRE_enhanced_marcxml import get_hepname_id, get_personid_canonical_id
@@ -63,7 +64,7 @@ def bst_claimsync():
             if bai:
                 hepname_id = get_hepname_id(personid)
                 if hepname_id:
-                    r.rpush(REDIS_KEY, (bai, hepname_id, bibrec, name, flag))
+                    r.rpush(REDIS_KEY, json.dumps((bai, hepname_id, bibrec, name, flag)))
                 else:
                     write_message("Skipping claim %s because no hepname_id corresponds to it" % ((bai, personid, bibrec, name, flag),), stream=sys.stderr)
             else:
