@@ -606,24 +606,16 @@ def apply_filter(rec):
                 for idx, (key, value) in enumerate(field[0]):
                     if key == 'a':
                         field[0][idx] = ('a', punctuate_authorname(value))
-        if '0' in subs:
-            for idx, (key, value) in enumerate(field[0]):
-                if key == '0':
-                    field[0][idx] = ('h', value.split('|')[-1])
+
     # 700 -> 701 Thesis supervisors
     if 'THESIS' in collections:
         for field in record_get_field_instances(rec, '700'):
-            subs = []
-            for code, val in field[0]:
-                if code != 'e':
-                    subs.append((code, val))
-            record_add_field(rec, '701', subfields=subs)
+            record_add_field(rec, '701', subfields=field[0])
         record_delete_fields(rec, '700')
 
-    # 502 move subfields
-    fields_502 = record_get_field_instances(rec, '502')
-    record_delete_fields(rec, '502')
-    for field in fields_502:
+    # 501 move subfields
+    fields_501 = record_get_field_instances(rec, '502')
+    for idx, field in enumerate(fields_501):
         new_subs = []
         for key, value in field[0]:
             if key == 'a':
@@ -634,7 +626,7 @@ def apply_filter(rec):
                 new_subs.append(('d', value))
             else:
                 new_subs.append((key, value))
-        record_add_field(rec, '502', subfields=new_subs)
+        fields_501[idx] = field_swap_subfields(field, new_subs)
 
     # 650 Translate Categories
     categories = get_categories()
@@ -666,39 +658,27 @@ def apply_filter(rec):
     # 693 Remove if 'not applicable'
     for field in record_get_field_instances(rec, '693'):
         subs = field_get_subfields(field)
-        all_subs = subs.get('a', []) + subs.get('e', []) + subs.get('s', [])
+        all_subs = subs.get('a', []) + subs.get('e', [])
         if 'not applicable' in [x.lower() for x in all_subs]:
             record_delete_field(rec, '693',
                                 field_position_global=field[4])
-            continue
-
         new_subs = []
         experiment_a = ""
         experiment_e = ""
         for (key, value) in subs.iteritems():
-            if key == 'a' or key == 's':
+            if key == 'a':
                 experiment_a = value[0]
-                new_subs.append(('a', value[0]))
+                new_subs.append((key, value[0]))
             elif key == 'e':
                 experiment_e = value[0]
-        if not experiment_a and not experiment_e:
-            continue
-        if experiment_e:
-            if not experiment_a:
-                experiment = experiment_e
-            else:
-                experiment = "%s---%s" % (experiment_a.replace(" ", "-"),
-                                          experiment_e)
-        else:
-            experiment = experiment_a.replace(" ", "-")
+        experiment = "%s---%s" % (experiment_a.replace(" ", "-"),
+                                  experiment_e)
         translated_experiments = translate_config(experiment,
                                                   experiments)
-        if translated_experiments:
-            new_subs.append(("e", translated_experiments))
+        new_subs.append(("e", translated_experiments))
         record_delete_field(rec, tag="693",
                             field_position_global=field[4])
-        if new_subs:
-            record_add_field(rec, "693", subfields=new_subs)
+        record_add_field(rec, "693", subfields=new_subs)
 
     # 710 Collaboration
     for field in record_get_field_instances(rec, '710'):
@@ -709,8 +689,7 @@ def apply_filter(rec):
                 new_subs.append((key, value.replace("collaboration", "").replace("Collaboration", "").strip()))
         record_delete_field(rec, tag="710",
                             field_position_global=field[4])
-        if new_subs:
-            record_add_field(rec, "710", subfields=new_subs)
+        record_add_field(rec, "710", subfields=new_subs)
 
     # 773 journal translations
     journals = get_journals()
@@ -763,9 +742,7 @@ def apply_filter(rec):
                                 url = None
                                 remove = True
                     if url:
-                        newsubs.append(('a', download_url(url=url, timeout=30,
-                                                          suffix=".png",
-                                                          prefix="plot_")))
+                        newsubs.append(('a', url))
                         newsubs.append(('t', 'Plot'))
                         figure_counter += 1
                         if 'y' in subs:
@@ -780,12 +757,7 @@ def apply_filter(rec):
         if not newsubs and 'u' in subs:
             is_fulltext = [s for s in subs['u'] if ".pdf" in s and not "subformat=pdfa" in s]
             if is_fulltext:
-                newsubs = [('t', 'INSPIRE-PUBLIC'), ('a', download_url(
-                    url=subs['u'][0],
-                    timeout=30,
-                    prefix="fulltext_",
-                    suffix=".pdf",
-                ))]
+                newsubs = [('t', 'INSPIRE-PUBLIC'), ('a', subs['u'][0])]
 
         if not newsubs and 'u' in subs:
             remove = True
