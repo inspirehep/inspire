@@ -545,9 +545,6 @@ def apply_filter(rec):
                 if val.startswith('P0') or val.startswith('CM-P0'):
                     sf = [('9', 'CERN'), ('b', val)]
                     record_add_field(rec, '595', subfields=sf)
-                else:
-                    sf = [('z', val)]
-                    record_add_field(rec, '037', subfields=sf)
         for key, val in field[0]:
             if key in ['a'] and not val.startswith('SIS-'):
                 record_add_field(rec, '037', subfields=[('a', val)])
@@ -571,8 +568,6 @@ def apply_filter(rec):
         for key, val in field[0]:
             if key in ['a', '9'] and val.startswith('SIS-'):
                 record_delete_field(rec, '037', field_position_global=field[4])
-            if key == '9':
-                record_add_field(rec, '037', subfields=[('z', val)])
 
     for field in record_get_field_instances(rec, '242'):
         record_add_field(rec, '246', subfields=field[0])
