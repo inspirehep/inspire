@@ -873,7 +873,7 @@ def field_swap_subfields(field, subs):
 
 def attempt_record_match(recid):
     """ Tries to find out if the record is already in Inspire """
-    return perform_request_search(p="035:CDS and 035:%s" % (recid,), of="id")
+    return perform_request_search(p="(035:CDS and 035:%s) or 595__a:CDS-%s" % (recid, recid), of="id", ap=-9)
 
 
 def is_published(record):
