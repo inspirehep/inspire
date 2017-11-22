@@ -174,7 +174,7 @@ def format_element(bfo, oai=0):
                 ('n', bibdocfile.name or ''),
                 ('r', bibdocfile.status or ''),
                 ('s', bibdocfile.cd.strftime('%Y-%m-%d %H:%M:%S')),
-                ('t', bibdocfile.get_type()),
+                ('t', bibdocfile.bibdoc.doctype),
                 ('v', str(bibdocfile.version)),
                 ('z', bibdocfile.comment or ''),
             ]
