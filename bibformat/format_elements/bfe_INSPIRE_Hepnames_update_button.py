@@ -17,6 +17,9 @@ __revision__ = "$Id$"
 
 import urllib
 
+from invenio.config import CFG_LABS_HOSTNAME
+
+
 def format_element(bfo, separator='; '):
     """
     This is the default format for adding an update button
@@ -28,7 +31,8 @@ def format_element(bfo, separator='; '):
     except:
         return ''
 
-    url = "http://labs.inspirehep.net/authors/%s/update" % urllib.quote(hepnames_id)
+    url = "http://%s/authors/%s/update" % (CFG_LABS_HOSTNAME,
+                                          urllib.quote(hepnames_id))
     return '<a href="' + url + '">' + '<img src="/img/update.jpg" alt="Update"/></a>'
 
 def escape_values(bfo):
