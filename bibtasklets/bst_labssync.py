@@ -26,7 +26,7 @@ import requests
 
 from invenio.config import CFG_REDIS_HOST_LABS, CFG_LABS_HOSTNAME
 from invenio.bibtaskutils import ChunkedBibUpload
-from invenio.bibtask import write_message
+from invenio.bibtask import write_message, task_sleep_now_if_required
 from invenio.bibrecord import create_record, record_xml_output
 from invenio.urlutils import make_user_agent_string
 from invenio.errorlib import register_exception
@@ -46,7 +46,7 @@ def bst_labssync():
     s.headers['User-Agent'] = user_agent
     s.headers['Accept'] = 'application/marcxml+xml'
 
-    tot = r.SCARD(CFG_REDIS_KEY)
+    tot = r.scard(CFG_REDIS_KEY)
     if tot == 0:
         write_message("Nothing to do")
         return
@@ -67,6 +67,7 @@ def bst_labssync():
             # Let's strip collection/XML header
             record = record_xml_output(create_record(record)[0])
             uploader.add(record)
+            task_sleep_now_if_required()
         except Exception as err:
             register_exception()
             write_message("ERROR: when retrieving %s: %s" % (elem, err), stream=sys.stderr)
