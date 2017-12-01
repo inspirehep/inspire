@@ -30,7 +30,7 @@ def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='http://d
         fields = bfo.fields(a_tag)
         for field in fields:
             if (a_tag == "773__" or field.get('2', 'DOI') == 'DOI') and 'a' in field:
-                output.append('<a href="' + link_prefix + field['a'] + '">' + field['a'] + '</a>')
+                output.append('<a href="' + link_prefix + field['a'].replace('#', '%23') + '">' + field['a'] + '</a>')
     return separator.join(set(output))
 
 
