@@ -506,7 +506,7 @@ def send_notification_email(dois, log_dir, count_total, count_new,
     msg_html = """<p>Message from BibTasklet %s:</p>
 
 <p>Problems have occurred while updating the DOIs of records. In total %d DOIs were
-processed, of which %d were processed succesfully.</p>
+processed, of which %d were processed successfully.</p>
 
 <p>Further details on these errors can be found in the log files, they should be
 available here: '%s/'</p>
@@ -551,7 +551,7 @@ def send_asana_tasks(dois, log_dir, count_total, count_new, asana, parent,
     msg = """ *** AUTOMATED MESSAGE FROM BIBTASKLET %s ***
 
 Problems have occurred while updating the DOIs of records. In total %d DOIs were
-processed, of which %d were processed succesfully.
+processed, of which %d were processed successfully.
 
 Further details on these errors can be found in the log files, they should be
 available in the following directory: '%s'

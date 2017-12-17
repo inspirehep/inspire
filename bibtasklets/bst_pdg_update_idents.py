@@ -161,7 +161,7 @@ def parse_pdg_line(line):
         elif len(result) is 0:
             continue
         else:
-            # len(result) == 1 hence record found succesfully
+            # len(result) == 1 hence record found successfully
             recid = result[0]
             pdg_values = values[3:]
             return ParseResult.Success, recid, pdg_values
