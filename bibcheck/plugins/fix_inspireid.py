@@ -67,8 +67,9 @@ CHANGES = [
     (('a', 'Richter, R.H.'), ('i', 'INSPIRE-00120026', 'INSPIRE-00120014')),
     (('a', 'Beddell, A.J.'), ('i', 'INSPIRE-00211268', 'INSPIRE-00065527')),
     (('a', 'Smith, Mark'), ('i', 'INSPIRE-00261920', 'INSPIRE-00342046')),
-    (('a', 'Han, Liang'), ('i', 'INSPIRE-00037384', 'INSPIRE-00468525')),
-    (('a', 'Han, L.'), ('i', 'INSPIRE-00037384', 'INSPIRE-00468525')),
+    (('a', 'Han, Liang'), ('i', 'INSPIRE-00468525', 'INSPIRE-00037384')),
+    (('a', 'Han, L.'), ('i', 'INSPIRE-00468525', 'INSPIRE-00037384')),
+    (('a', 'Wang, Dong-Gang'), ('i', 'INSPIRE-00037384', 'INSPIRE-00468525')),
     (('a', 'Stan, Ionel'), ('i', 'INSPIRE-00291820', 'INSPIRE-00434447'))
     ]
 
