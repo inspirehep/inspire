@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2011, 2015, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2011, 2015, 2016, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -379,12 +379,12 @@ def format_element(
             more = separator + separator.join(authors[1:]) + ')'
         else:
             show = separator.join(authors[:int(limit)])
-            more = separator.join(authors[int(limit):len(authors)])
+            more = separator + separator.join(authors[int(limit):len(authors)])
 
         out += show
-        out += ' <span id="more" style="">' + more + '</span>'
-        out += ' <span id="extension"></span>'
-        out += ' <small><i><a id="link" href="#"' + \
+        out += '<span id="more" style="">' + more + '</span>'
+        out += '<span id="extension"></span>'
+        out += '&nbsp;&nbsp;<small><i><a id="link" href="#"' + \
                ' style="color:green;background:white;" onclick="toggle_authors_visibility()" ' + \
                ' style="color:rgb(204,0,0);"></a></i></small>'
         out += '<script>set_up()</script>'
