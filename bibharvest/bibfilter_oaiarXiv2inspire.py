@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016 CERN.
+# Copyright (C) 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2018 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -365,7 +365,9 @@ def main():
         if not recid or recid == -1:
             # Record (probably) does not exist, flag for inserting into database
             # FIXME: Add some automatic deny/accept parameters, perhaps also bibmatch call
-            insert_records.append(record)
+            # inserts are now done on labs
+            pass
+            # insert_records.append(record)
         else:
             # Record exists, fetch existing record
             existing_record = get_record(recid)
