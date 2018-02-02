@@ -91,15 +91,17 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
     try:
         last_run = open(lastrun_path).read().strip()
         write_message("Syncing records modified since %s" % last_run)
-        modified_records = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (last_run, )))
-        if with_citations.lower() == 'yes':
-            for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
-                modified_records.add(citer)
-        if with_claims.lower() == 'yes':
-            modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
+        with run_ro_on_slave_db():
+            modified_records = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (last_run, )))
+            if with_citations.lower() == 'yes':
+                for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
+                    modified_records.add(citer)
+            if with_claims.lower() == 'yes':
+                modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
     except IOError:
         # Default to everything
-        modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
+        with run_ro_on_slave_db():
+            modified_records = intbitset(run_sql("SELECT id FROM bibrec"))
         write_message("Syncing all records")
 
     skip_collections = skip_collections.split(',')
