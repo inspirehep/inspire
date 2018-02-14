@@ -19,6 +19,11 @@ Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
 Disallow: /youraccount/
+Disallow: /record/edit
+Disallow: /record/multiedit
+Disallow: /record/merge
+Disallow: /info/manage
+Disallow: /batchuploader/metadata
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -40,6 +45,11 @@ Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
 Disallow: /youraccount/
+Disallow: /record/edit
+Disallow: /record/multiedit
+Disallow: /record/merge
+Disallow: /info/manage
+Disallow: /batchuploader/metadata
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -61,6 +71,11 @@ Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
 Disallow: /youraccount/
+Disallow: /record/edit
+Disallow: /record/multiedit
+Disallow: /record/merge
+Disallow: /info/manage
+Disallow: /batchuploader/metadata
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -84,5 +99,10 @@ Disallow: /submit
 Disallow: /reference_update.py/
 Disallow: /rss
 Disallow: /youraccount/
+Disallow: /record/edit
+Disallow: /record/multiedit
+Disallow: /record/merge
+Disallow: /info/manage
+Disallow: /batchuploader/metadata
 
 Sitemap: http://inspirehep.net/sitemap-index.xml.gz
