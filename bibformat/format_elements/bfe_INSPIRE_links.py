@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -132,7 +132,7 @@ def format_element(bfo, default='', separator='; ', style='',
             links.append('<a%s href="%s%s"> Project Euclid</a>' %
                          (style, EUCLID, extid))
         elif provenance == "osti":
-            links.append('<a%s href="%s%s"> OSTI Information Bridge Server</a>' %
+            links.append('<a%s href="%s%s"> OSTI.gov Server</a>' %
                          (style, OSTI, extid))
 
     # now look for explicit URLs
