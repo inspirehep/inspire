@@ -65,12 +65,24 @@ CHANGES = [
     (('a', 'Richter, Robert'), ('i', 'INSPIRE-00120014','INSPIRE-00120026')),
     (('a', 'Richter, Rainer Helmut'), ('i', 'INSPIRE-00120026', 'INSPIRE-00120014')),
     (('a', 'Richter, R.H.'), ('i', 'INSPIRE-00120026', 'INSPIRE-00120014')),
-    (('a', 'Beddell, A.J.'), ('i', 'INSPIRE-00211268', 'INSPIRE-00065527')),
+    (('a', 'Beddall, A.J.'), ('i', 'INSPIRE-00211268', 'INSPIRE-00065527')),
     (('a', 'Smith, Mark'), ('i', 'INSPIRE-00261920', 'INSPIRE-00342046')),
     (('a', 'Han, Liang'), ('i', 'INSPIRE-00468525', 'INSPIRE-00037384')),
     (('a', 'Han, L.'), ('i', 'INSPIRE-00468525', 'INSPIRE-00037384')),
     (('a', 'Wang, Dong-Gang'), ('i', 'INSPIRE-00037384', 'INSPIRE-00468525')),
-    (('a', 'Stan, Ionel'), ('i', 'INSPIRE-00291820', 'INSPIRE-00434447'))
+    (('a', 'Stan, Ionel'), ('i', 'INSPIRE-00291820', 'INSPIRE-00434447')),
+    (('a', 'Deng, Jianrong'), ('i','INSPIRE-00046433', 'INSPIRE-00624635')),
+    (('a', 'Martin, Andrew'), ('i', 'INSPIRE-00219939', 'INSPIRE-00105075')),
+    (('a', 'Golovanov, Georgy Anatolievich'), ('i', 'INSPIRE-00038818', 'INSPIRE-00018415')),
+    (('a', 'Shou, Qi-Ye'), ('i', 'INSPIRE-00538694', 'INSPIRE-00565745')),
+    (('u', 'Mainz U.'), ('i', 'INSPIRE-00320516', 'INSPIRE-00336767')),
+    (('a', 'Mc Kee, Shawn Patrick'), ('i', 'INSPIRE-00106342', 'INSPIRE-00260714')),
+    (('a', 'Parodi, Fabrizio'), ('i', 'INSPIRE-00214233', 'INSPIRE-00339598')),
+    (('a', 'Ferretto Parodi, Andrea'), ('i', 'INSPIRE-00339598', 'INSPIRE-00214233')),
+    (('a', 'Liu, Jie'), ('i', 'INSPIRE-00447072', 'INSPIRE-00450250')),
+    (('u', 'U. Zurich'), ('i', 'INSPIRE-00453848', 'INSPIRE-00640989')),
+    (('u', 'Zurich U.'), ('i', 'INSPIRE-00453848', 'INSPIRE-00640989'))
+
     ]
 
 
