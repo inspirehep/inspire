@@ -18,7 +18,20 @@
 # along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
-"""Continuously synchronizes ORCID tokens to Labs via REDIS"""
+"""
+Continuously synchronizes ORCID tokens to Labs via REDIS.
+
+Note: a aidPERSONIDDATA.personid can be associated with multiple identifiers (eg. tag='extid:ORCID', tag='uid').
+On 2018.02.23 15:05:27 in legacy there are 14058 personid with 1 identifier, 6726 personid with 2 and 1 personid with 3 identifier, as per:
+
+SELECT cnt, count(*) FROM (
+SELECT personid, count(*) as cnt FROM aidPERSONIDDATA WHERE tag='uid' OR tag='extid:ORCID' GROUP BY personid
+) AS Q1 GROUP BY cnt;
+
+'1', '14058'
+'2', '6726'
+'3', '1'
+"""
 
 import redis
 import json
@@ -33,6 +46,8 @@ from invenio.webuser import collect_user_info
 from invenio.bibtask import write_message
 
 CFG_REDIS_ORCID_SYNC_KEY = 'legacy_orcid_tokens'
+CFG_REDIS_ORCID_SYNC_KEY_COUNT = 'legacy_orcid_tokens_count'
+
 
 def orcid_data_to_sync():
     """Returns an iterator of data to sync."""
@@ -49,6 +64,25 @@ def orcid_data_to_sync():
             yield orcid.decode('utf8'), token.decode('utf8'), user_info['email'].decode('utf8'), name
 
 
+def count_orcid_data_to_sync():
+    """
+    Count the number of ORCID tokens (and relative data) to be synch'ed (and
+    thus sent to Redis). This is used at Lab's side to check whether the right
+    number of token has been processed.
+
+    Returns (int): a number.
+    """
+    query = """
+        SELECT count(*) FROM (
+            SELECT personid, count(*) AS cnt FROM aidPERSONIDDATA WHERE tag='uid' AND personid IN (
+                SELECT personid FROM aidPERSONIDDATA NATURAL JOIN aidTOKEN WHERE tag='extid:ORCID'
+            ) GROUP BY personid
+        ) AS Q1;    
+    """
+    count = run_sql(query)
+    return int(count[0][0])
+
+
 def bst_orcidsync():
     """Sync to redis."""
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
@@ -57,5 +91,9 @@ def bst_orcidsync():
     for orcid, token, email, name in orcid_data_to_sync():
         r.lpush(CFG_REDIS_ORCID_SYNC_KEY, json.dumps((orcid, token, email, name)))
     write_message("%s ORCID entries pushed to Labs" % r.llen(CFG_REDIS_ORCID_SYNC_KEY))
-    return True
 
+    # Store the total number of tokens to be synch'ed.
+    count = count_orcid_data_to_sync()
+    r.set(CFG_REDIS_ORCID_SYNC_KEY_COUNT, count)
+
+    return True
