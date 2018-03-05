@@ -20,7 +20,7 @@
 """
 
 
-def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='http://dx.doi.org/'):
+def format_element(bfo, tag="0247_,773__", separator=", ", link_prefix='https://doi.org/'):
     """
     Return an HTML link to the DOI.
     """

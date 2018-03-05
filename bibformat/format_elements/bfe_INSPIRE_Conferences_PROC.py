@@ -45,7 +45,7 @@ def format_element(bfo, newline=False, show_doi=False):
                 # check for the DOI and put it in brackets in the output
                 doi = get_fieldvalues(recID, '0247_a')
                 if show_doi and doi:
-                    proceedings.append('<a href="/record/%(ID)s">#%(number)s</a> (DOI: <a href="http://dx.doi.org/%(doi)s">%(doi)s</a>)'
+                    proceedings.append('<a href="/record/%(ID)s">#%(number)s</a> (DOI: <a href="https://doi.org/%(doi)s">%(doi)s</a>)'
                                        % {'ID': recID, 'number': i+1, 'doi': doi[0]})
                 else:
                     proceedings.append('<a href="/record/%(ID)s">#%(number)s</a>' % {'ID': recID, 'number': i+1})

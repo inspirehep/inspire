@@ -65,7 +65,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
         if journal.get('a'):
             if journal.get('p'):
                 journtitle = ' - ' + journal.get('p')
-            links.append('<a ' + final_style + 'href="http://dx.doi.org/'\
+            links.append('<a ' + final_style + 'href="https://doi.org/'\
                          + journal.get('a') + '">Journal Server</a>' + journtitle)
 
     # could look for other publication info and calculate URls here
