@@ -10037,7 +10037,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="u">Washington U., Seattle</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">http://dx.doi.org/10.1016/0550-3213(83)90554-0</subfield>
+    <subfield code="u">https://doi.org/10.1016/0550-3213(83)90554-0</subfield>
     <subfield code="w">10.1016/0550-3213(83)90554-0</subfield>
     <subfield code="y">DOI</subfield>
   </datafield>
@@ -10229,7 +10229,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevC.23.2203</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevC.23.2203</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevC.23.2203</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V23/P2203</subfield>
@@ -10924,7 +10924,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.40.1614</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.40.1614</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.40.1614</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V40/P1614</subfield>
@@ -11138,7 +11138,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1016/j.nuclphysb.2005.07.010</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1016/j.nuclphysb.2005.07.010</subfield>
+    <subfield code="u">https://doi.org/10.1016/j.nuclphysb.2005.07.010</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">hep-ph/0502188</subfield>
@@ -11519,7 +11519,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.24.590</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.24.590</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.24.590</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">81-111</subfield>
@@ -12417,7 +12417,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1016/0550-3213(80)90250-3</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1016/0550-3213(80)90250-3</subfield>
+    <subfield code="u">https://doi.org/10.1016/0550-3213(80)90250-3</subfield>
   </datafield>
   <datafield tag="245" ind1=" " ind2=" ">
     <subfield code="a">INCLUSIVE PARTICLE PRODUCTION IN 100-GEV/C PI- P AND ANTI-P P INTERACTIONS</subfield>
@@ -15198,7 +15198,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.55.2649</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.55.2649</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.55.2649</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V55/P02649/</subfield>
@@ -17190,7 +17190,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.66.687</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.66.687</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.66.687</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V66/P0687/</subfield>
@@ -17381,7 +17381,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.18.2415</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.18.2415</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.18.2415</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V18/P2415</subfield>
@@ -18132,7 +18132,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.44.1729</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.44.1729</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.44.1729</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V44/P1729</subfield>
@@ -20039,7 +20039,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.23.717</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.23.717</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.23.717</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">5703498</subfield>
@@ -20173,7 +20173,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01648792</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01648792</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01648792</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">BI-TP-83-08</subfield>
@@ -20599,7 +20599,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.44.768</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.44.768</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.44.768</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V44/P768</subfield>
@@ -20823,7 +20823,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.52.2701</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.52.2701</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.52.2701</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V52/P2701/</subfield>
@@ -21464,7 +21464,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01588029</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01588029</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01588029</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">CERN-EP-86-20</subfield>
@@ -21649,7 +21649,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.21.831</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.21.831</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.21.831</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V21/P831</subfield>
@@ -21854,7 +21854,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.44.717</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.44.717</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.44.717</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V44/P717/</subfield>
@@ -22116,7 +22116,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.19.1483</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.19.1483</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.19.1483</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V19/P1483</subfield>
@@ -23255,7 +23255,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01450383</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01450383</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01450383</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">RL-78-078</subfield>
@@ -24909,7 +24909,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="y">ADSABS</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.39.1173</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.39.1173</subfield>
     <subfield code="w">10.1103/PhysRevLett.39.1173</subfield>
     <subfield code="y">DOI</subfield>
   </datafield>
@@ -26242,7 +26242,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.44.1027</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.44.1027</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.44.1027</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V44/P1027</subfield>
@@ -26947,7 +26947,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1016/S0375-9474(00)00389-4</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1016/S0375-9474(00)00389-4</subfield>
+    <subfield code="u">https://doi.org/10.1016/S0375-9474(00)00389-4</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">TIFR-TH-00-14</subfield>
@@ -28804,7 +28804,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.18.3320</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.18.3320</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.18.3320</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V18/P3320</subfield>
@@ -30154,7 +30154,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.18.162</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.18.162</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.18.162</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V18/P162</subfield>
@@ -30954,7 +30954,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.17.2332</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.17.2332</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.17.2332</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V17/P2332</subfield>
@@ -31335,7 +31335,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.22.624</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.22.624</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.22.624</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V22/P624</subfield>
@@ -31527,7 +31527,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.26.2202</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.26.2202</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.26.2202</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V26/P2202</subfield>
@@ -32889,7 +32889,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01588033</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01588033</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01588033</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">CERN-EP/86-32</subfield>
@@ -34322,7 +34322,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01573420</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01573420</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01573420</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">IFNUP/AE 01/81</subfield>
@@ -34573,7 +34573,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.24.784</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.24.784</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.24.784</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">80-90</subfield>
@@ -35355,7 +35355,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="y">ADSABS</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.19.764</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.19.764</subfield>
     <subfield code="w">10.1103/PhysRevD.19.764</subfield>
     <subfield code="y">DOI</subfield>
   </datafield>
@@ -36864,7 +36864,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.20.53</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.20.53</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.20.53</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">79-108</subfield>
@@ -37447,7 +37447,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.18.3297</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.18.3297</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.18.3297</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V18/P3297</subfield>
@@ -38442,7 +38442,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.18.1359</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.18.1359</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.18.1359</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">78-026-EXP</subfield>
@@ -39560,7 +39560,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01581593</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01581593</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01581593</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">IIHE-83-09</subfield>
@@ -39892,7 +39892,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.31.1019</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.31.1019</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.31.1019</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V31/P1019/</subfield>
@@ -41256,7 +41256,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="y">ADSABS</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.31.961</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.31.961</subfield>
     <subfield code="w">10.1103/PhysRevD.31.961</subfield>
     <subfield code="y">DOI</subfield>
   </datafield>
@@ -41592,7 +41592,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1142/S0217751X06031107</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1142/S0217751X06031107</subfield>
+    <subfield code="u">https://doi.org/10.1142/S0217751X06031107</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">21/2122/S0217751X06031107.html</subfield>
@@ -42013,7 +42013,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.41.9</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.41.9</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.41.9</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">78-177</subfield>
@@ -45372,7 +45372,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.17.2992</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.17.2992</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.17.2992</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V17/P2992</subfield>
@@ -46833,7 +46833,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/s100520000512</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/s100520000512</subfield>
+    <subfield code="u">https://doi.org/10.1007/s100520000512</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">hep-ph/9912378</subfield>
@@ -47077,7 +47077,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.21.1316</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.21.1316</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.21.1316</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V21/P1316</subfield>
@@ -47690,7 +47690,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.41.1440</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.41.1440</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.41.1440</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V41/P1440</subfield>
@@ -49223,7 +49223,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.27.1075</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.27.1075</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.27.1075</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V27/P1075</subfield>
@@ -49376,7 +49376,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1007/BF01443697</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1007/BF01443697</subfield>
+    <subfield code="u">https://doi.org/10.1007/BF01443697</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">Print-79-0580 (VIENNA)</subfield>
@@ -51368,7 +51368,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1143/PTP.60.929</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1143/PTP.60.929</subfield>
+    <subfield code="u">https://doi.org/10.1143/PTP.60.929</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">link?PTP/60/929</subfield>
@@ -51526,7 +51526,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.30.985</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.30.985</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.30.985</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V30/P985</subfield>
@@ -52248,7 +52248,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="y">ADSABS</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.25.1</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.25.1</subfield>
     <subfield code="w">10.1103/PhysRevD.25.1</subfield>
     <subfield code="y">DOI</subfield>
   </datafield>
@@ -54271,7 +54271,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.19.1503</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.19.1503</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.19.1503</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V19/P1503</subfield>
@@ -54756,7 +54756,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.22.1547</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.22.1547</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.22.1547</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V22/P1547</subfield>
@@ -55522,7 +55522,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevLett.40.997</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevLett.40.997</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevLett.40.997</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V40/P997</subfield>
@@ -55972,7 +55972,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.19.86</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.19.86</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.19.86</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V19/P86</subfield>
@@ -57429,7 +57429,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1134/1.953111</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1134/1.953111</subfield>
+    <subfield code="u">https://doi.org/10.1134/1.953111</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">30/343</subfield>
@@ -58431,7 +58431,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.22.1593</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.22.1593</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.22.1593</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V22/P1593</subfield>
@@ -59596,7 +59596,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.24.559</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.24.559</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.24.559</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">81-015-EXP</subfield>
@@ -60724,7 +60724,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.17.1292</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.17.1292</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.17.1292</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">77-098-EXP</subfield>
@@ -61553,7 +61553,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.17.2310</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.17.2310</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.17.2310</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V17/P2310</subfield>
@@ -61708,7 +61708,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1143/PTP.64.361</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1143/PTP.64.361</subfield>
+    <subfield code="u">https://doi.org/10.1143/PTP.64.361</subfield>
   </datafield>
   <datafield tag="037" ind1=" " ind2=" ">
     <subfield code="a">OCU-69</subfield>
@@ -62424,7 +62424,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.17.1782</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.17.1782</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.17.1782</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V17/P1782</subfield>
@@ -63744,7 +63744,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.32.592</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.32.592</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.32.592</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V32/P592/</subfield>
@@ -66042,7 +66042,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.28.663</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.28.663</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.28.663</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V28/P663</subfield>
@@ -66552,7 +66552,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.46.931</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.46.931</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.46.931</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V46/P931/</subfield>
@@ -66899,7 +66899,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">10.1103/PhysRevD.15.2590</subfield>
     <subfield code="y">DOI</subfield>
-    <subfield code="u">http://dx.doi.org/10.1103/PhysRevD.15.2590</subfield>
+    <subfield code="u">https://doi.org/10.1103/PhysRevD.15.2590</subfield>
   </datafield>
   <datafield tag="856" ind1="4" ind2=" ">
     <subfield code="w">V15/P2590</subfield>

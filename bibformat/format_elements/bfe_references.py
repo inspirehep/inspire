@@ -110,7 +110,7 @@ def format_element(bfo, reference_prefix, reference_suffix):
             if reference.has_key('m'):
                 ref_out.append("<small> "+ reference['m'][0].replace(']]', ']') + ".</small>")
             if reference.has_key('a'):
-                ref_out.append("<small> <a href=\"http://dx.doi.org/" + \
+                ref_out.append("<small> <a href=\"https://doi.org/" + \
                 reference['a'][0] + "\">" + reference['a'][0]+ "</a></small>")
             if reference.has_key('u'):
                 ref_out.append("<small> <a href=" + reference['u'][0] + ">" + \
