@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2013, 2014, 2015 CERN.
+# Copyright (C) 2013, 2014, 2015, 2018 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -49,6 +49,7 @@ from invenio.filedownloadutils import (download_url,
 from invenio.config import (CFG_ETCDIR,
                             CFG_TMPSHAREDDIR)
 from invenio.bibrecord import (create_record,
+                               filter_field_instances,
                                record_get_field_instances,
                                record_add_field,
                                record_xml_output,
@@ -59,7 +60,7 @@ from invenio.bibrecord import (create_record,
                                field_get_subfield_instances,
                                create_field,
                                record_strip_controlfields)
-from invenio.search_engine import perform_request_search
+from invenio.search_engine import perform_request_search, get_record
 from invenio.plotextractor_converter import convert_images
 from invenio.bibtask import write_message
 
@@ -840,7 +841,21 @@ def field_swap_subfields(field, subs):
 
 def attempt_record_match(recid):
     """ Tries to find out if the record is already in Inspire """
-    return perform_request_search(p="(035:CDS and 035:%s) or 595__a:CDS-%s" % (recid, recid), of="id", ap=-9)
+    res = perform_request_search(p="595__a:CDS-%s" % (recid,), of="id", ap=-9)
+    if res:
+        return res
+
+    matches = []
+    res = perform_request_search(p="035:CDS and 035:%s" % (recid,), of="id", ap=-9)
+    if res:
+        for matchid in res:
+            cdsinfo = filter_field_instances(
+                record_get_field_instances(
+                    get_record(matchid), '035'), '9', 'CDS')
+            for field in cdsinfo:
+                if ('a', str(recid)) in field[0] or (str(recid), 'a') in field[0]:
+                    matches.append(matchid)
+    return matches
 
 
 def is_published(record):
