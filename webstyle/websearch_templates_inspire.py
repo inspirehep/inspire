@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -428,7 +428,7 @@ class Template(DefaultTemplate):
                    {'x_sample_search_query': example_query_link},
                    'more': more}
 
-            return example_query_html
+        return example_query_html
 
 
     #disabled at the moment...
