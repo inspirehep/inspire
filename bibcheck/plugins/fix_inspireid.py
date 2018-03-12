@@ -81,7 +81,10 @@ CHANGES = [
     (('a', 'Ferretto Parodi, Andrea'), ('i', 'INSPIRE-00339598', 'INSPIRE-00214233')),
     (('a', 'Liu, Jie'), ('i', 'INSPIRE-00447072', 'INSPIRE-00450250')),
     (('u', 'U. Zurich'), ('i', 'INSPIRE-00453848', 'INSPIRE-00640989')),
-    (('u', 'Zurich U.'), ('i', 'INSPIRE-00453848', 'INSPIRE-00640989'))
+    (('u', 'Zurich U.'), ('i', 'INSPIRE-00453848', 'INSPIRE-00640989')),
+    (('a', 'Unverdorben, Christopher'), ('i', 'INSPIRE-00333620', 'INSPIRE-00530015')),
+    (('a', 'Lumb, Debra'), ('i', 'INSPIRE-00219481', 'INSPIRE-00509017')),
+    (('a', 'Lumb, D.'), ('i', 'INSPIRE-00219481', 'INSPIRE-00509017'))
     ]
 
 
