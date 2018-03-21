@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015, 2016 CERN.
+## Copyright (C) 2014, 2015, 2016, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -132,7 +132,7 @@ def create_table():
                     search += ' ' + division
                 search += ' and de ' + date
                 search = re.sub(r'\s+', ' ', search)
-                result = perform_request_search(p=search, cc="HEP")
+                result = perform_request_search(p=search, cc="Fermilab")
                 result = len(result)
                 if result == 0:
                     hit_number = E.LI()
