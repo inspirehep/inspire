@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014, 2015 CERN.
+## Copyright (C) 2013, 2014, 2015, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -49,7 +49,7 @@ def bst_fermilab():
         reports = []
         authorId = False
         search = "find r fermilab-" + series + "-*"
-        result = perform_request_search(p=search, cc='HEP')
+        result = perform_request_search(p=search, cc='Fermilab')
         for recid in result:
             reportValues = get_fieldvalues(recid, '037__a')
             author = get_fieldvalues(recid, '100__a')
@@ -169,7 +169,7 @@ def bst_fermilab():
             dd = re.sub(r"19", "", dd)
             dd = re.sub(r"20", "", dd)
             search = "find r fermilab-" + series + "-" + dd + "*"
-            result = perform_request_search(p=search, cc='HEP')
+            result = perform_request_search(p=search, cc='Fermilab')
             for recid in result:
                 reportValues = get_fieldvalues(recid, '037__a')
                 author = get_fieldvalues(recid, '100__a')
