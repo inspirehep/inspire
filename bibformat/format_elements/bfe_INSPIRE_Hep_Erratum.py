@@ -64,7 +64,10 @@ def format_element(bfo):
                     " ".join([a for a in tmpout if a]),))
         if 'x' in pubinfo and ("In *".lower() in pubinfo['x'].lower() or
                                "Also in *".lower() in pubinfo['x'].lower()):
-            out.append("<small>%s</small>" % (pubinfo['x'],))
+            pubinfx = pubinfo['x']
+            if pubinfx.startswith('#DONE:'):
+                pubinfx = pubinfx[6:]
+            out.append("<small>%s</small>" % (pubinfx,))
     # append errata
     out += errata
     # remove dups, preserve order
