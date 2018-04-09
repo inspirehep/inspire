@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -53,15 +53,19 @@ def format_element(bfo, separator=', ', link="yes"):
             else:
                 note += 'Conference: ' + conf_name
             # Do not display 773_x when it refers on book chapters
-            if conf.get('x') and not( "In *".lower() in conf.get('x').lower() or "Also in *".lower() in conf.get('x').lower() ):
-                note += ' (' + conf['x'] + ')'
+            if conf.get('x') and not ("In *".lower() in conf.get('x').lower()
+                                      or "Also in *".lower() in conf.get('x').lower()):
+                confx = conf['x']
+                if confx.startswith('#DONE:'):
+                    confx = confx[6:]
+                note += ' (' + confx + ')'
             if conf.get('c') and not conf.get('p'):
             # Only display pages from 773__c field, when there is no 773__p field
             # because when 773__p field exists, 773__c is already displayed in
             # bfe_INSPIRE_Hep_Erratum element (and we don't want to repeat it)
                 note += ', p.' + conf['c']
 
-        if len(note) > 0:
+        if note:
             output.append(note)
 
     return separator.join(output)
