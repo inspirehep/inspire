@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2017 CERN.
+## Copyright (C) 2017, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -48,6 +48,12 @@ def check_record(record):
 
 def isbnchecksum(isbn):
     """ verify checksum of isbnlike string (adapted from isbnlib) """
+
+    try:
+        int(isbn[:-1])
+    except ValueError:
+        return False
+
     if len(isbn) == 10:
         checkval = sum((i + 2) * int(x)
                        for i, x in enumerate(reversed(isbn[:9])))
