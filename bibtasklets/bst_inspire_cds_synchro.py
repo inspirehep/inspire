@@ -23,8 +23,10 @@ import sys
 import os
 import shutil
 
+from datetime import datetime, timedelta
 from tempfile import mkstemp
 
+from invenio.dbquery import run_sql
 from invenio.intbitset import intbitset
 from invenio.config import CFG_CERN_SITE, CFG_INSPIRE_SITE, CFG_SITE_NAME, CFG_TMPSHAREDDIR
 from invenio.search_engine import get_collection_reclist, search_pattern, search_unit
@@ -84,6 +86,15 @@ def get_temporary_file(prefix="cds_inspire_synchro_",
     return filepath
 
 
+def get_modification_datetime(file_path):
+    try:
+        mtime = os.path.getmtime(file_path)
+    except IOError:
+        mtime = 0
+
+    return datetime.fromtimestamp(mtime)
+
+
 def get_all_recids():
     """Return all relevant record IDs."""
     if CFG_INSPIRE_SITE:
@@ -99,7 +110,7 @@ def get_all_recids():
     return all_recids
 
 
-def get_record_ids_to_export(unmatched_only=False):
+def get_record_ids_to_export(unmatched_only=False, since=None):
     """Return all records with identifiers to sync."""
     all_recids = get_all_recids()
     recids_with_other_id = search_pattern(p='035__9:%s' % CFG_OTHER_SITE)
@@ -107,6 +118,9 @@ def get_record_ids_to_export(unmatched_only=False):
         recids_with_other_id |= search_unit(p='CDS-*', f='595__a', m='a')
     recids_with_a_doi = search_pattern(p='doi:"**"')
     recids_with_an_arxiv_id = search_pattern(p='035__9:"arXiv"')
+    if since:
+        modified_recids = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (since, )))
+        all_recids = all_recids & modified_recids
     if unmatched_only:
         all_recids = all_recids - recids_with_other_id
         return (recids_with_a_doi | recids_with_an_arxiv_id) & all_recids
@@ -410,14 +424,17 @@ def bst_inspire_cds_synchro(unmatched_only=False,
     """
     if not skip_extraction:
         task_update_progress("Phase 1: extracting IDs for %s" % CFG_OTHER_SITE)
+        other_last_run = get_modification_datetime(CFG_IMPORT_FILE)
+        this_last_run = get_modification_datetime(CFG_EXPORT_FILE)
+        since = (min(this_last_run, other_last_run) - timedelta(hours=5)).strftime('%Y-%m-%d %H:%M:%S')
         if CFG_CERN_SITE:
             dump_cern_ids()
         if unmatched_only:
             # We expose only those that are unmatched
-            recids = get_record_ids_to_export(unmatched_only=True)
+            recids = get_record_ids_to_export(unmatched_only=True, since=since)
         else:
-            recids = get_record_ids_to_export()
-        write_message("Going to export {0} records.".format(len(recids)))
+            recids = get_record_ids_to_export(since=since)
+        write_message("Going to export {0} modified records since {1}.".format(len(recids), since))
         export_file = open(CFG_EXPORT_FILE + '.part', "w")
         for i, row in enumerate(iter_export_rows(recids)):
             print >> export_file, row
