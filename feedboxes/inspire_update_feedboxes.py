@@ -67,20 +67,23 @@ CFG_TWITTER_BOX_EMPTY_TPL = """
 """
 
 def get_twitter_api(path=CFG_TWITTER_CREDENTIALS_PATH):
-    lines = open(path).readlines()
-    consumer_key = lines[0].strip()
-    consumer_secret = lines[1].strip()
-    access_token_key = lines[2].strip()
-    access_token_secret = lines[3].strip()
-    return twitter.Api(consumer_key=consumer_key, consumer_secret=consumer_secret, access_token_key=access_token_key, access_token_secret=access_token_secret)
+    with open(path, 'r') as consumer:
+        consumer_key = consumer.readline().strip()
+        consumer_secret = consumer.readline().strip()
+
+    return twitter.Api(consumer_key=consumer_key,
+                       consumer_secret=consumer_secret,
+                       application_only_auth=True)
 
 def get_twitter_timeline(api=None, user=CFG_TWITTER_INSPIRE_USER, n=3):
     if api is None:
         api = get_twitter_api()
-    return api.GetUserTimeline(user, include_rts=False, exclude_replies=True)[:3]
+    return api.GetUserTimeline(user, include_rts=False, exclude_replies=True, count=n)
 
 def adapt_urls(text, urls):
-    for url_from, url_to in urls.items():
+    for udict in urls:
+        url_from = udict.get(u'url')
+        url_to = udict.get(u'expanded_url')
         url_from = url_from.encode('utf8')
         url_to = url_to.encode('utf8')
         if url_to.startswith(CFG_SITE_URL) or url_to.startswith(CFG_SITE_SECURE_URL):
@@ -91,12 +94,15 @@ def adapt_urls(text, urls):
     return text
 
 def tweet2html(tweet):
-    tweet_time = tweet.GetCreatedAtInSeconds()
+    tweet_time = tweet.created_at_in_seconds
     tweet = tweet.AsDict()
     text = tweet['text'].encode('utf8')
     urls = tweet.get('urls')
     if urls:
         text = adapt_urls(text, urls)
+    media = tweet.get('media')
+    if media:
+        text = adapt_urls(text, media)
     return '<li class="hanging">%s %s</li>' % (time.strftime("%Y-%m-%d", time.gmtime(tweet_time)), text)
 
 
