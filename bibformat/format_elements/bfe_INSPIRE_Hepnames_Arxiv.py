@@ -19,12 +19,12 @@ def format_element(bfo):
     ensure correct utf-8 handling of first initial and
     return asciified string <lastname>_<first initial>
     """
-    out = str(bfo.field('100__a')).decode('utf-8').replace(', ', '_')
-    position = out.find('_')
+    out = str(bfo.field('100__a')).decode('utf-8')
+    out = out.replace('  ', ' ')
+    out = out.replace(', ', '%2C+')
+    position = out.find('+')
     if position >= 0:
         out = out[:position+2]
-    out = out.replace('-', '_')
-    out = out.replace("'", "")
     if out.find(' ') > -1:
         out = out.rsplit(" ", 1)[1]
     out = translate_to_ascii([out]).pop()
