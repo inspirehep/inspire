@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2016, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -21,9 +21,11 @@
 """BibFormat element - Prints publcation information and link to ejournal
 """
 
+import cgi
+
+
 from invenio.bibformat_elements.bfe_INSPIRE_arxiv import get_arxiv
 #from invenio.bibknowledge import get_kbd_values
-import cgi
 
 
 def format_element(bfo, style='eu', markup='html', separator=', ', suffix=''):
@@ -162,15 +164,17 @@ def format_element(bfo, style='eu', markup='html', separator=', ', suffix=''):
 
         return separator.join(displayouts) + latexperiod
     elif backup_out:
+        if backup_out.startswith('#DONE:'):
+            backup_out = backup_out[6:]
         return backup_out
 
 
 # we know the argument is unused, thanks
-# pylint: disable-msg=W0613
+# pylint: disable=W0613
 def escape_values(bfo):
     """
     Called by BibFormat in order to check if output of this element
     should be escaped.
     """
     return 0
-# pylint: enable-msg=W0613
+# pylint: enable=W0613
