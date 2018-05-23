@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015 CERN.
+## Copyright (C) 2015, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -75,7 +75,7 @@ def index(req, p=""):
     return page(req=req, body=body, title="HepNames and BAIs for %s" % escape(p, True))
 
 
-def unlinked(req):
+def unlinked(req, orcidonly=False):
     """
     Return an id-ordered list of citation log entries of at most 10000
     rows.
@@ -83,7 +83,9 @@ def unlinked(req):
     from invenio.dbquery import run_sql
     from invenio.search_engine import get_fieldvalues, get_collection_reclist
     useful_personids1 = intbitset(run_sql("SELECT distinct personid FROM aidPERSONIDDATA WHERE tag LIKE 'extid:%'"))
-    useful_personids2 = intbitset(run_sql("SELECT distinct personid from aidPERSONIDPAPERS where flag=2"))
+    useful_personids2 = intbitset()
+    if not orcidonly:
+        useful_personids2 = intbitset(run_sql("SELECT distinct personid from aidPERSONIDPAPERS where flag=2"))
     linked_personids = intbitset(run_sql("SELECT personid FROM aidPERSONIDDATA WHERE tag='extid:INSPIREID'"))
     names = dict(run_sql("SELECT personid, data FROM aidPERSONIDDATA WHERE tag='canonical_name'"))
     matched_names = [name.lower().strip() for name in get_fieldvalues(get_collection_reclist('HepNames'), '035__a')]
@@ -100,7 +102,12 @@ def unlinked(req):
     body.append('</ol>')
     body = '\n'.join(body)
 
-    return page(req=req, body=body, title="Unlinked useful BAIs")
+    if orcidonly:
+        title = "Unlinked BAIs with ORCID"
+    else:
+        title = "Unlinked useful BAIs"
+
+    return page(req=req, body=body, title=title)
 
 
 def json(req):
