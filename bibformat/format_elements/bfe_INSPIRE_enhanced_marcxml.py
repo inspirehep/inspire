@@ -52,14 +52,6 @@ def get_hepname_id(personid):
             HEPNAME_CACHE[personid] = recids[0] if recids else None
     return HEPNAME_CACHE[personid]
 
-INSPIRE_ID_CACHE = {}
-def get_hepname_id_from_inspire_id(inspire_id):
-    global INSPIRE_ID_CACHE
-    if inspire_id not in INSPIRE_ID_CACHE:
-        recids = perform_request_search(p='035__a:"%s"' % inspire_id, cc='HepNames')
-        INSPIRE_ID_CACHE[inspire_id] = recids[0] if recids else None
-    return INSPIRE_ID_CACHE[inspire_id]
-
 CANONICAL_NAME_CACHE = {}
 def get_personid_canonical_id():
     global CANONICAL_NAME_CACHE
@@ -200,21 +192,14 @@ def format_element(bfo, oai=0):
         subfield_dict = dict(subfields)
         if 'a' in subfield_dict:
             author_name = subfield_dict['a']
-            if 'i' in subfield_dict:
-                inspire_id = subfield_dict['i']
-                hepname_id = get_hepname_id_from_inspire_id(inspire_id)
+            personid, flag = signatures.get(author_name, (None, None))
+            bai = get_personid_canonical_id().get(personid)
+            if bai:
+                subfields.append(('w', bai))
+                hepname_id = get_hepname_id(personid)
                 if hepname_id:
                     subfields.append(('x', '%i' % hepname_id))
-                    subfields.append(('y', '1'))
-            else:
-                personid, flag = signatures.get(author_name, (None, None))
-                bai = get_personid_canonical_id().get(personid)
-                if bai:
-                    subfields.append(('w', bai))
-                    hepname_id = get_hepname_id(personid)
-                    if hepname_id:
-                        subfields.append(('x', '%i' % hepname_id))
-                    subfields.append(('y', '%i' % (flag == 2)))
+                subfields.append(('y', '%i' % (flag == 2)))
 
         # And matched affiliations
         if 'u' in subfield_dict:
