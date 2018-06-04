@@ -85,7 +85,16 @@ CHANGES = [
     (('a', 'Unverdorben, Christopher'), ('i', 'INSPIRE-00333620', 'INSPIRE-00530015')),
     (('a', 'Lumb, Debra'), ('i', 'INSPIRE-00219481', 'INSPIRE-00509017')),
     (('a', 'Lumb, D.'), ('i', 'INSPIRE-00219481', 'INSPIRE-00509017')),
-    (('a', 'Skovpen, Yuri'), ('i', 'INSPIRE-00517102', 'INSPIRE-00042992'))
+    (('a', 'Skovpen, Yuri'), ('i', 'INSPIRE-00517102', 'INSPIRE-00042992')),
+    (('a', 'Kennedy, Elizabeth'), ('i', 'INSPIRE-00389170', 'INSPIRE-00389690')),
+    (('u', 'Duke U.'), ('i', 'INSPIRE-00046433', 'INSPIRE-00624635')),
+    (('u', 'UC, Irvine'), ('i', 'INSPIRE-00046433', 'INSPIRE-00624635')),
+    (('u', 'Michigan Tech. U.'), ('i', 'INSPIRE-00150592', 'INSPIRE-00255332')),
+    (('a', 'Cabrera Urbán, Susana'), ('i', 'INSPIRE-00307975', 'INSPIRE-00211900')),
+    (('a', 'Cabrera Urban, Susana'), ('i', 'INSPIRE-00307975', 'INSPIRE-00211900')),
+    (('u', 'CERN'), ('i', 'INSPIRE-00023123', 'INSPIRE-00493662')),
+    (('u', 'IRFU, Saclay'), ('i', 'INSPIRE-00220215', 'INSPIRE-00657399')),
+    (('u', 'DAPNIA, Saclay'), ('i', 'INSPIRE-00220215', 'INSPIRE-00657399'))
     ]
 
 
