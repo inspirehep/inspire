@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
+## Copyright (C) 2013, 2014, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -22,12 +22,13 @@
 Inspire PDG Update Identifiers
 """
 
-import sys
 import datetime
-
+import json
+import sys
 from copy import deepcopy
 
 from invenio.search_engine import (perform_request_search,
+                                   get_collection_reclist,
                                    get_record)
 from invenio.bibrecord import (record_get_field_instances,
                                field_get_subfield_values,
@@ -41,7 +42,7 @@ from invenio.bibtask import write_message
 
 MESSAGE_DESCRIPTION = """Updates the PDG identifiers for records included in
 The Review of Particle Physics (http://pdg.lbl.gov/)"""
-MESSAGE_COPYRIGHT = "Part of Inspire (http://www.inspirehep.net) - Copyright (C) 2013 CERN."
+MESSAGE_COPYRIGHT = "Part of Inspire (http://www.inspirehep.net) - Copyright (C) 2013, 2018 CERN."
 SEARCH_TERM = "084:pdg"
 OUTPUT_PREFIX = "PDG-update_"
 
@@ -50,9 +51,8 @@ class ParseResult:
     """ Pseudo-enum type for line parsing:
          * Success - Found recid of record
          * Missing - No recid found
-         * Ambiguous - Multiple records found
          * Invalid - Couldn't parse line """
-    Success, Missing, Ambiguous, Invalid = range(4)
+    Success, Missing, Invalid = range(3)
 
 
 def _print_out(line):
@@ -63,25 +63,19 @@ def _print_verbose(line):
     write_message("* " + line, verbose=3)
 
 
-def get_lines_from_file(input_file):
-    """ given the path to a file, this function will
-    return all lines in the file as a list """
+def get_elements_from_file(input_file):
+    """Deserialize the JSON input file."""
     try:
-        f = open(input_file)
+        with open(input_file) as f:
+            _print_out("Reading from file " + input_file)
+            result = json.load(f)
     except IOError:
         _print_out("Error: Could not open " + input_file + " for reading.")
         sys.exit(2)
 
-    _print_out("Reading from file " + input_file)
-    lines = []
-    for line in f:
-        if not line.startswith('#'):
-            if line is not '':
-                lines.append(line.strip())
+    _print_out(str(len(result)) + " elements parsed from file")
 
-    _print_out(str(len(lines)) + " lines parsed from file")
-
-    return lines
+    return result
 
 
 def write_list_to_file(output_dir, name, list_to_write):
@@ -117,56 +111,28 @@ def write_records_to_file(output_dir, name, records, dry_run):
             write_list_to_file(output_dir, name, out)
 
 
-def parse_pdg_line(line):
-    """Given a line (string) from the PDG update file, this
-    function will attempt to find the recid of the matching
-    record and return it with the parsed PDG data.
+def parse_pdg_element(element, hep_collection=get_collection_reclist('HEP')):
+    """Given an element from the PDG update file, this function will check the
+    validity of the recid and return it with the parsed PDG data.
 
-    Params: string line - the line to be parsed
+    Params: dict element - the element be parsed
+            intbitset hep_collection - all recids in HEP, used for caching
     Return: ParseResult - Status code
-            string recid - record ID
+            int recid - record ID
             list pdg_values - pdg_values
     """
     recid = None
     pdg_values = None
-    values = line.rsplit(',')
-    if len(values) < 3:
+    if set(element.keys()) != set(('inspireId', 'pdgIdList')):
         return ParseResult.Invalid, None, None
 
-    journal, vol, pages = values[:3]
+    recid = int(element['inspireId'])
+    pdg_values = element['pdgIdList']
 
-    search_terms = []
-    if vol is '' and pages is '':
-        search_terms.append("irn " + str(journal))
-    else:
-        search_terms.append("j " + journal + "," + vol + "," + pages)
-        if vol and vol[0].isalpha():
-            search_terms.append("j " + journal + "," + vol[1:] + vol[0] + "," + pages)
-            search_terms.append("j " + journal + "," + vol[1:] + "," + pages)
+    if recid not in hep_collection:
+        return ParseResult.Missing, None, None
 
-        if vol and vol[-1].isalpha():
-            search_terms.append("j " + journal + "," + vol[-1] + vol[:-1] + "," + pages)
-            search_terms.append("j " + journal + "," + vol[:-1] + "," + pages)
-
-        if pages.startswith('R'):
-            search_terms.append("j " + journal + "," + vol + "," + pages[1:])
-    if not search_terms:
-        return ParseResult.Invalid, None, None
-
-    result = None
-    for term in search_terms:
-        result = perform_request_search(p=term)
-        if len(result) > 1:
-            return ParseResult.Ambiguous, None, None
-        elif len(result) is 0:
-            continue
-        else:
-            # len(result) == 1 hence record found successfully
-            recid = result[0]
-            pdg_values = values[3:]
-            return ParseResult.Success, recid, pdg_values
-
-    return ParseResult.Missing, None, None
+    return ParseResult.Success, recid, pdg_values
 
 
 def is_pdg_field(field):
@@ -181,7 +147,7 @@ def create_new_pdg_fields(recids, pdg_data):
     records = {}
     for recid in recids:
         records[recid] = {}
-        record_add_field(records[recid], '001',  controlfield_value=str(recid))
+        record_add_field(records[recid], '001', controlfield_value=str(recid))
         pdg_fields = pdg_data[recid]
         for field in pdg_fields:
             position = record_add_field(records[recid], '084', ' ', ' ')
@@ -277,39 +243,32 @@ def main(input_file, dry_run, output_dir):
         write_list_to_file(output_dir, "bad_record_ids", bad_record_ids)
 
     _print_out("--------------- Input Parsing ---------------")
-    new_lines = get_lines_from_file(input_file)
+    new_elements = get_elements_from_file(input_file)
     new_pdg_data = {}  # Struct {'recid': [pdg_data]}
-    lines_missing = []
-    lines_ambiguous = []
-    lines_invalid = []
+    elements_missing = []
+    elements_invalid = []
     _print_out("Finding records from input file")
-    for i, line in enumerate(new_lines):
-        status, r_id, data = parse_pdg_line(line)
+    for i, element in enumerate(new_elements):
+        status, r_id, data = parse_pdg_element(element)
         if status is ParseResult.Success:
             new_pdg_data[r_id] = data
-            _print_verbose("line #"+str(i)+": Success! Record ID " + str(r_id) + " found for line " + line)
+            _print_verbose("element #{0}: Success! Record ID {1} found for element {2}".format(i, r_id, element))
         elif status is ParseResult.Invalid:
-            lines_invalid.append(line)
-            _print_verbose("line #"+str(i)+": Invalid line: "+line)
+            elements_invalid.append(element)
+            _print_verbose("element #{0}: Invalid element: {1}".format(i, element))
         elif status is ParseResult.Missing:
-            lines_missing.append(line)
-            _print_verbose("line #"+str(i)+": Missing line: "+line)
-        elif status is ParseResult.Ambiguous:
-            lines_ambiguous.append(line)
-            _print_verbose("line #"+str(i)+": Ambiguous line: "+line)
+            elements_missing.append(element)
+            _print_verbose("element #{0}: Missing element: {1}".format(i, element))
 
     _print_out("--------------- Matching records ---------------")
     _print_out("Records matched to PDG data (valid): "+str(len(new_pdg_data)))
-    _print_out("Missing records (not found): "+str(len(lines_missing)))
-    _print_out("Ambiguous (multiple results): "+str(len(lines_ambiguous)))
-    _print_out("Invalid lines (Dodgy data): "+str(len(lines_invalid)))
+    _print_out("Missing records (not found): "+str(len(elements_missing)))
+    _print_out("Invalid elements (Dodgy data): "+str(len(elements_invalid)))
 
-    if len(lines_missing) is not 0:
-        write_list_to_file(output_dir, "missing-records.txt", lines_missing)
-    if len(lines_ambiguous) is not 0:
-        write_list_to_file(output_dir, "ambiguous-records.txt", lines_ambiguous)
-    if len(lines_invalid) is not 0:
-        write_list_to_file(output_dir, "invalid-lines.txt", lines_invalid)
+    if len(elements_missing) is not 0:
+        write_list_to_file(output_dir, "missing-records.txt", elements_missing)
+    if len(elements_invalid) is not 0:
+        write_list_to_file(output_dir, "invalid-elements.txt", elements_invalid)
 
     # These lists contain record IDs of records to have PDG data either:
     #  - add, the PDG data should be appended (record was added to PDG)
@@ -362,7 +321,8 @@ def bst_pdg_update_idents(input_file, dry=False, outdir=CFG_TMPSHAREDDIR):
     Physics (http://pdg.lbl.gov/)
 
     Arguments:
-    input_file - path to the PDG data to be read
+    input_file - path to the PDG data to be read, i.e. a local copy of
+                 http://pdg.lbl.gov/2018/pdgid/PDGIdentifiers-references-current.json
     dry - if True, won't output the final XML (debugging)
     outdir - where files are written to, default CFG_TMPSHAREDDIR
 
