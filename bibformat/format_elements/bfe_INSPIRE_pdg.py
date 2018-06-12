@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -20,7 +20,9 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints HTML link to pdg
 """
-__revision__ = "$Id$"
+
+import cgi
+
 from invenio.bibknowledge import get_kb_mappings
 
 
@@ -51,11 +53,11 @@ def format_element(bfo, separator=' | ', link="yes"):
                 if ch in pdgcode:
                     pdgcode = pdgcode.replace(ch, '/')
             if values:
-                search_link = '<a href="http://pdglive.lbl.gov/view/' + pdgcode + '">'
+                search_link = '<a href="http://pdglive.lbl.gov/view/{0}">'.format(pdgcode)
                 if values[0]['value'] == "THE TEXT IS MISSING FOR THIS NODE.":
                     search_link += pdgcode + ' (Title Unknown)'
                 else:
-                    search_link += values[0]['value']
+                    search_link += cgi.escape(values[0]['value'])
                 search_link += '</a>'
                 pdgcount += 1
                 if pdgcount < 3:
