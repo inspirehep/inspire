@@ -88,7 +88,7 @@ class ResearchGlanceTests(unittest.TestCase):
                          "main table doesn't have 7 rows")
         self.assertEqual(len(tables[0].xpath('tr/td')), 105,
                          "main table doesn't have 105 td elements")
-        rowlabels = ['', 'All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN']
+        rowlabels = ['', 'All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER']
         self.assertEqual([r.getchildren()[0].text_content()
                           for r in tables[0].xpath('tr')],
                          rowlabels,

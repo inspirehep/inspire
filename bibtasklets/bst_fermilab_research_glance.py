@@ -57,7 +57,7 @@ def create_table():
 
     divisions = ['All', 'E', 'CMS', 'T', 'A', 'AE', 'PPD', 'AD/APC',
                  'TD', 'CD', 'ND', 'LBN', 'Other']
-    pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN']
+    pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER']
     dates = [YEAR_2, YEAR_1, YEAR, MONTH_2, MONTH_1, MONTH]
     years = [YEAR_2, YEAR_1, YEAR]
     months = [MONTH_2, MONTH_1, MONTH]
@@ -183,15 +183,20 @@ Sector papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "PUB: Paper intended for \
 publication in a journal"),
-                      E.TD({'class': 'l'}, "TM: Technical memo"))
-    table2.append(glos_tr_td)
-    glos_tr_td = E.TR(E.TD({'class': 'l'}, "CONF: Paper written as part of a \
-conference"),
                       E.TD({'class': 'l'}, "FN: Physics note - short paper not \
 fitting the other categories"))
     table2.append(glos_tr_td)
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "CONF: Paper written as part of a \
+conference"),
+                      E.TD({'class': 'l'}, "SLIDES: Slides presented at a \
+conference or lecture"))
+    table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "THESIS: Ph.D. thesis based on \
 work done at Fermilab"),
+                      E.TD({'class': 'l'}, "POSTER: Poster presented at a \
+conference"))
+    table2.append(glos_tr_td)
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "TM: Technical memo"),
                       E.TD({'class': 'l'}, ""))
     table2.append(glos_tr_td)
 
