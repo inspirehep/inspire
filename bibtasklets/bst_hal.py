@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015 CERN.
+## Copyright (C) 2014, 2015, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -25,6 +25,7 @@ try to match them to record in INSPIRE.
 import requests
 import sys
 
+from invenio.intbitset import intbitset
 from invenio.jsonutils import json_unicode_to_utf8
 from invenio.search_engine import search_pattern
 from invenio.search_engine_utils import get_fieldvalues
@@ -39,11 +40,13 @@ CFG_HAL_ROWS = 10000
 def hal_record_iterator():
     start = 0
     while True:
-        res = requests.get(CFG_HAL_API_URL, timeout=60, params={'start': start,
-                                             'q': '(arxivId_s:* OR doiId_s:*)',
-                                             'fl': 'arxivId_s,halId_s,doiId_s',
-                                             'rows': CFG_HAL_ROWS,
-                                             'sort': 'docid asc'}).json()
+        res = requests.get(CFG_HAL_API_URL, timeout=60, params={
+            'start': start,
+            'q': '(inspireId_s:* OR arxivId_s:* OR doiId_s:*)',
+            'fl': 'inspireId_s,arxivId_s,halId_s,doiId_s',
+            'rows': CFG_HAL_ROWS,
+            'sort': 'docid asc'
+        }).json()
         if res['response']['docs']:
             for row in res['response']['docs']:
                 yield json_unicode_to_utf8(row)
@@ -60,7 +63,14 @@ def get_hal_maps():
     write_message("Getting HAL records...")
     doi_map = {}
     arxiv_map = {}
+    recid_map = {}
     for row in hal_record_iterator():
+        if 'inspireId_s' in row:
+            try:
+                recid = int(row['inspireId_s'][0])
+                recid_map[recid] = row
+            except ValueError:
+                write_message("WARNING: Invalid recid '%s' for HAL record %s" % (row['inspireId_s'][0], row), stream=sys.stderr)
         if 'arxivId_s' in row:
             if row['arxivId_s'][0].isdigit():
                 # we patch 1234.1234 -> arXiv:1234.1234
@@ -69,17 +79,34 @@ def get_hal_maps():
         if 'doiId_s' in row:
             doi_map[row['doiId_s']] = row
     write_message("... DONE")
-    return doi_map, arxiv_map
+    return doi_map, arxiv_map, recid_map
+
+def update_record(recid, hal_id, bibupload):
+    rec = {}
+    record_add_field(rec, '001', controlfield_value=str(recid))
+    record_add_field(rec, '035', subfields=[('a', hal_id), ('9', 'HAL')])
+
+    write_message("Record %s matched HAL record %s" % (recid, hal_id))
+
+    bibupload.add(record_xml_output(rec))
+
 
 def bst_hal():
-    doi_map, arxiv_map = get_hal_maps()
+    doi_map, arxiv_map, recid_map = get_hal_maps()
     matchable_records = get_record_ids_to_export()
     write_message("Total matchable records: %s" % len(matchable_records))
     hal_records = get_hal_records()
     write_message("Already matched records: %s" % len(hal_records))
+    new_inspire_ids = intbitset(recid_map.keys()) - hal_records
+    write_message("New records pushed from Inspire: %s" % len(new_inspire_ids))
     bibupload = ChunkedBibUpload(mode='a', notimechange=True, user='bst_hal')
-    tot_records = matchable_records - hal_records
-    write_message("Records to be checked: %s" % len(tot_records))
+    for recid in new_inspire_ids:
+        hal_id = recid_map[recid]['halId_s']
+        update_record(recid, hal_id, bibupload)
+    write_message('Added HAL ids to all records pushed from Inspire')
+    task_sleep_now_if_required()
+    tot_records = matchable_records - hal_records - new_inspire_ids
+    write_message("Additional records to be checked: %s" % len(tot_records))
     for i, recid in enumerate(tot_records):
         if i % 1000 == 0:
             write_message("%s records done out of %s" % (i, len(tot_records)))
@@ -91,19 +118,13 @@ def bst_hal():
 
         # Let's assert that we matched only one single hal document at most
         matched_hal_id = set(id(entry) for entry in matched_hal)
-        if len(matched_hal) > 1:
+        if len(matched_hal_id) > 1:
             write_message("WARNING: record %s matches more than 1 HAL record: %s" % (recid, matched_hal), stream=sys.stderr)
             continue
         elif not matched_hal:
             continue
         hal_id = matched_hal[0]['halId_s']
 
-        rec = {}
-        record_add_field(rec, '001', controlfield_value=str(recid))
-        record_add_field(rec, '035', subfields=[('a', hal_id), ('9', 'HAL')])
-
-        write_message("Record %s matched HAL record %s" % (recid, hal_id))
-
-        bibupload.add(record_xml_output(rec))
+        update_record(recid, hal_id, bibupload)
 
     return True
