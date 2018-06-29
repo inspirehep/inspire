@@ -39,7 +39,7 @@ EUCLID = 'http://projecteuclid.org/'
 HAL = 'https://hal.archives-ouvertes.fr/'
 INIS = 'https://inis.iaea.org/search/search.aspx?orig_q='
 KEK = 'https://lib-extopc.kek.jp/preprints/PDF'
-MSNET = 'http://www.ams.org/mathscinet-getitem?mr='
+MSNET = 'https://mathscinet.ams.org/mathscinet-getitem?mr='
 OSTI = 'http://www.osti.gov/scitech/biblio/'
 ZBLATT = 'http://www.zentralblatt-math.org/zmath/en/search/?an='
 
