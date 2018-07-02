@@ -100,7 +100,7 @@ def bst_scoap3_importer():
                             allchecksums.add(filev.checksum)
                     if checksum not in allchecksums:
                         write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
-                    action = "UPDATE"
+                        action = "UPDATE"
                 break
         else:
             write_message("... OK: need to add new file to INSPIRE record %s" % inspire_record)
