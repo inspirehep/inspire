@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2018 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -93,7 +93,13 @@ def bst_scoap3_importer():
                 if doc.checksum == checksum:
                     write_message("... OK: file alredy attached to INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
                 else:
-                    write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
+                    # also check all previous version checksums
+                    allchecksums = set()
+                    for doc in record.list_bibdocs(doctype="SCOAP3"):
+                        for filev in doc.list_all_files():
+                            allchecksums.add(filev.checksum)
+                    if checksum not in allchecksums:
+                        write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
                     action = "UPDATE"
                 break
         else:
