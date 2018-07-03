@@ -95,8 +95,8 @@ def bst_scoap3_importer():
                 else:
                     # also check all previous version checksums
                     allchecksums = set()
-                    for doc in record.list_bibdocs(doctype="SCOAP3"):
-                        for filev in doc.list_all_files():
+                    for anydoc in record.list_bibdocs(doctype="SCOAP3"):
+                        for filev in anydoc.list_all_files():
                             allchecksums.add(filev.checksum)
                     if checksum not in allchecksums:
                         write_message("... OK: new revision available for INSPIRE record %s (doc.checksum=%s, checksum=%s)" % (inspire_record, doc.checksum, checksum))
