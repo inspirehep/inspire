@@ -138,7 +138,7 @@ def create_table():
                     hit_number = E.LI()
                 else:
                     link = search.replace(' ', '+')
-                    link = 'https://inspirehep.net/search?p=' + link
+                    link = 'https://inspirehep.net/search?cc=Fermilab&p=' + link
                     link += '&rg=100&sf=earliestdate'
                     hit_number = E.LI(E.A({'class': 't'}, str(result),
                                           href=link))
