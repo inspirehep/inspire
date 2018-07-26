@@ -34,7 +34,7 @@ chicago_timezone = pytz.timezone('America/Chicago')
 SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal',
            'workbook', 'bachelors', 'masters', 'design',
            'loi', 'pbar', 'nal', 'annual', 'upc', 'ap',
-           'en', 'exp', 'lu', 'habil', 'vlhcpub']
+           'en', 'exp', 'lu', 'habil', 'vlhcpub', 'slides', 'poster']
 SERIES2 = ['PUB', 'CONF']
 
 SERIES1.sort()
