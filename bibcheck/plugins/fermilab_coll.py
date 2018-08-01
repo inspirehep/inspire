@@ -20,15 +20,27 @@
 """
 Add 980__a:Fermilab to HEP records with a Fermilab report number
 """
+from operator import itemgetter
 
 def check_records(records):
     for record in records:
         in_coll = False
         has_rn = False
-        for (tag, _, _), value in record.iterfields(['037__a', '037__z', '980__a']):
-            if tag[0:5] == '037__' and 'fermilab' in value.lower():
+        slidepost = False
+        hep = []
+        for pos, value in record.iterfields(['037__a', '037__z', '980__a']):
+            if pos[0][0:5] == '037__' and 'fermilab' in value.lower():
                 has_rn = True
-            if tag == '980__a' and value == 'Fermilab':
-                in_coll = True
+                if 'slides' in value.lower() or 'poster' in value.lower():
+                    slidepost = True
+            if pos[0] == '980__a':
+                if value == 'Fermilab':
+                    in_coll = True
+                if value == 'HEP':
+                    hep.append(pos)
+        if slidepost and hep:
+            for pos in sorted(hep, key=itemgetter(1, 2), reverse=True):
+                    record.delete_field(pos)
         if has_rn and not in_coll:
             record.add_field('980__', '', subfields=[('a', 'Fermilab')])
+
