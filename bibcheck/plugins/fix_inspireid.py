@@ -95,7 +95,8 @@ CHANGES = [
     (('u', 'CERN'), ('i', 'INSPIRE-00023123', 'INSPIRE-00493662')),
     (('u', 'IRFU, Saclay'), ('i', 'INSPIRE-00220215', 'INSPIRE-00657399')),
     (('u', 'DAPNIA, Saclay'), ('i', 'INSPIRE-00220215', 'INSPIRE-00657399')),
-    (('a', 'Tudorache, Alexandra'), ('j', 'ORCID:0000-0001-5384-3843', 'ORCID:0000-0001-6307-1437'))
+    (('a', 'Tudorache, Alexandra'), ('j', 'ORCID:0000-0001-5384-3843', 'ORCID:0000-0001-6307-1437')),
+    (('u', 'Jyvaskyla U.'), ('i', ' INSPIRE-00250377', 'INSPIRE-00493721'))
     ]
 
 
