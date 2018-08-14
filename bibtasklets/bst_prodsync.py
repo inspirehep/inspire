@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2015, 2016 CERN.
+# Copyright (C) 2015, 2016, 2018 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -43,7 +43,7 @@ from invenio.bibtask import task_update_progress, write_message, task_sleep_now_
 from invenio.intbitset import intbitset
 
 from invenio.webuser import collect_user_info, get_uid_from_email, get_email_from_username
-from invenio.search_engine import search_pattern
+from invenio.search_engine import search_pattern, search_unit
 import redis
 
 import gzip
@@ -93,6 +93,9 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
         write_message("Syncing records modified since %s" % last_run)
         with run_ro_on_slave_db():
             modified_records = intbitset(run_sql("SELECT id FROM bibrec WHERE modification_date>=%s", (last_run, )))
+            compacttime = last_run.replace('-', '').replace(' ', '').replace(':', '')
+            notimechangerecs = search_unit("%s->20250101000000" % compacttime, f='005', m='a')
+            modified_records += notimechangerecs
             if with_citations.lower() == 'yes':
                 for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
                     modified_records.add(citer)
