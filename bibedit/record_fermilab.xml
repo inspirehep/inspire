@@ -1,0 +1,121 @@
+<!--
+This file is part of INSPIRE.
+Copyright (C) 2013, 2014, 2018
+
+INSPIRE is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License as
+published by the Free Software Foundation; either version 2 of the
+License, or (at your option) any later version.
+
+INSPIRE is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
+59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+-->
+<!-- BibEdit-Template-Name: fermilab -->
+<!-- BibEdit-Template-Description: article in the Fermilab collection -->
+<record>
+  <datafield tag="024" ind1="7" ind2=" ">
+    <subfield code="a">VOLATILE:e.g. 10.1103/example.doi.for.inspire</subfield>
+    <subfield code="2">VOLATILE:DOI</subfield>
+  </datafield>
+  <datafield tag="041" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:language (if not English)</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:pacs</subfield>
+    <subfield code="2">VOLATILE:PACS</subfield>
+  </datafield>
+  <datafield tag="100" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="j">VOLATILE:ORCID:</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="210" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:title_variation - extra words/phrasings for title </subfield>
+  </datafield>
+  <datafield tag="242" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Translated title (English)</subfield>
+  </datafield>
+  <datafield tag="245" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Original title</subfield>
+  </datafield>
+  <datafield tag="260" ind1=" " ind2=" ">
+    <subfield code="c">VOLATILE:publication date YYYY-MM-DD</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:999</subfield>
+  </datafield>
+  <datafield tag="520" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:abstract</subfield>
+  </datafield>
+  <datafield tag="540" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:terms of use, e.g CC License</subfield>
+    <subfield code="u">VOLATILE:url of file specifying access rights</subfield>
+  </datafield>
+  <datafield tag="542" ind1=" " ind2=" ">
+    <subfield code="f">VOLATILE:copyright statement</subfield>
+    <subfield code="u">VOLATILE:url of copyright statement</subfield>
+  </datafield>
+  <datafield tag="595" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:hidden note</subfield>
+  </datafield>
+  <datafield tag="650" ind1="1" ind2="7">
+    <subfield code="a">VOLATILE:subject</subfield>
+    <subfield code="2">INSPIRE</subfield>
+  </datafield>
+  <datafield tag="653" ind1="1" ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="9">VOLATILE:author</subfield>
+  </datafield>
+  <datafield tag="693" ind1=" " ind2=" ">
+    <subfield code="e">VOLATILE:experiment</subfield>
+  </datafield>
+  <datafield tag="695" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:keyword</subfield>
+    <subfield code="2">VOLATILE:INSPIRE</subfield>
+  </datafield>
+  <datafield tag="700" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Familyname, Firstname</subfield>
+    <subfield code="j">VOLATILE:ORCID:</subfield>
+    <subfield code="m">VOLATILE:email</subfield>
+    <subfield code="u">VOLATILE:Affiliation</subfield>
+  </datafield>
+  <datafield tag="710" ind1=" " ind2=" ">
+    <subfield code="g">VOLATILE:collaboration</subfield>
+  </datafield>
+  <datafield tag="773" ind1=" " ind2=" ">
+    <subfield code="p">VOLATILE:journal</subfield>
+    <subfield code="v">VOLATILE:volume</subfield>
+    <subfield code="n">VOLATILE:issue</subfield>
+    <subfield code="c">VOLATILE:firstpage-lastpage</subfield>
+    <subfield code="m">VOLATILE:Erratum</subfield>
+    <subfield code="q">VOLATILE:conf acronym (if no CNUM exists)</subfield>
+    <subfield code="t">VOLATILE:name of conference (if no CNUM exists)</subfield>
+    <subfield code="w">VOLATILE:CNUM</subfield>
+    <subfield code="y">VOLATILE:year</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2=" ">
+    <subfield code="u">VOLATILE:http: (for external link)</subfield>
+    <subfield code="y">VOLATILE:Fulltext</subfield>
+  </datafield>
+  <datafield tag="FFT" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:http:</subfield>
+    <subfield code="d">VOLATILE:Fulltext</subfield>
+    <subfield code="t">VOLATILE:INSPIRE-PUBLIC</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">Fermilab</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Citeable</subfield>
+  </datafield>
+  <datafield tag="980" ind1=" " ind2=" ">
+    <subfield code="a">VOLATILE:Published</subfield>
+  </datafield>
+</record>
