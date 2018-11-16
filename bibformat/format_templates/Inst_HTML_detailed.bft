@@ -3,8 +3,6 @@
 <div class="detailed_record_info"><table width="100%"><tr><td width="70%">
 
 <BFE_INSPIRE_INST_TITLE prefix="<b>" suffix="</b>" />
-<BFE_FIELD prefix="[Future INSPIRE ID: " suffix="]" default="" escape=""
-extension="" instances_separator=" & " tag="110t"/>
 <BFE_FIELD instances_separator=" " prefix="<br />" tag="110a" escape="">
 <BFE_FIELD instances_separator=" " prefix="<br />"  tag="110b" escape="">
 <br />
