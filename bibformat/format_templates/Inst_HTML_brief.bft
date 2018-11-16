@@ -6,8 +6,6 @@
 <a class = "titlelink" href= "<BFE_SERVER_INFO var="recurl">">
 <BFE_INSPIRE_INST_TITLE />
 </a> 
-<BFE_FIELD prefix="[Future INSPIRE ID: " suffix="]" default="" escape=""
-extension="" instances_separator=" & " tag="110t"/> 
 </strong>
 <br />
 
