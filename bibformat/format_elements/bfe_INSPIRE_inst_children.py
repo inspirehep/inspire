@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011 CERN.
+## Copyright (C) 2006, 2007, 2008, 2009, 2010, 2011, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -44,10 +44,7 @@ def format_element(bfo, separator='; '):
         out += "Subsidiary Institution: "
         for item in children:
             # get the abbreviated name of the institution
-            abbrev = BibFormatObject(item).field('110__t')
-            # if there is no abbreviated name, we try different names
-            if not abbrev:
-                abbrev = BibFormatObject(item).field('110__u')
+            abbrev = BibFormatObject(item).field('110__u')
             if not abbrev:
                 abbrev = BibFormatObject(item).field('110__a')
             if not abbrev:
