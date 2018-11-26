@@ -19,6 +19,7 @@
 <br />
 
 <BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
+<BFE_GRID_ID prefix="GRID record: " suffix="<br />" default="" escape="" style="" separator="; " />
 <BFE_INSPIRE_INST_NAME_VARIANT prefix="Name Variants: " suffix="<br />"/>
 <BFE_FIELD tag="6781_a" prefix="Historical Data: " suffix="<br />" />
 <BFE_FIELD tag="680i" prefix="Notes: " suffix="<br />" />
@@ -27,9 +28,9 @@
 <br />
 <!--
 Search 502a and 502c
-HEP list of <a href="/search?ln=en&ln=en&p=fin+tc+t+and+aff+<BFE_FIELD tag="110u" />"> Ph.D. theses </a> at <BFE_FIELD tag="110u" /> <br /> -->
-HEPNAMES list of <a href="/search?ln=en&cc=HepNames&ln=en&cc=HepNames&p=371__a%3A%27<BFE_FIELD tag="110u" />%27"> people </a> at <BFE_FIELD tag="110u" /> <br />
-EXPERIMENTS list of <a href="/search?ln=en&cc=Experiments&ln=en&cc=Experiments&p=119__u%3A%27<BFE_FIELD tag="110u"/>%27"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
+HEP list of <a href="/search?p=fin+tc+t+and+aff+<BFE_FIELD tag="110u" />"> Ph.D. theses </a> at <BFE_FIELD tag="110u" /> <br /> -->
+HEPNAMES list of <a href="/search?cc=HepNames&p=371__a%3A%27<BFE_FIELD tag="110u" />%27"> people </a> at <BFE_FIELD tag="110u" /> <br />
+EXPERIMENTS list of <a href="/search?cc=Experiments&p=119__u%3A%27<BFE_FIELD tag="110u"/>%27"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
 <!--
 Search people from inst completing experiments
 EXPERIMENTS list of <a href="http://www.slac.stanford.edu/spires/find/experiments/www?sequence=exp&aff=<BFE_FIELD tag="110u" />"> experiments </a> performed by people <b>from</b> <BFE_FIELD tag="110u" /> <br />
