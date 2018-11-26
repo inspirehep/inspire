@@ -39,5 +39,5 @@ Google maps for inst
 <img src="http://maps.google.com/maps/api/staticmap?center=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;markers=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;zoom=13&amp;size=400x400&amp;&maptype=hybrid&amp;sensor=false">
 -->
 &nbsp;
-</td></table>
+</td></tr></table>
 </div>
