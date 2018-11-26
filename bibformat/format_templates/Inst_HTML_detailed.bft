@@ -7,7 +7,7 @@
 <BFE_FIELD instances_separator=" " prefix="<br />"  tag="110b" escape="">
 <br />
 
-<div style="padding-left:10px";>
+<div style="padding-left:10px;" >
 <i>
 <BFE_INSPIRE_INST_ADDRESS  separator="<br />"/>
 </i>
@@ -29,14 +29,14 @@
 <!--
 Search 502a and 502c
 HEP list of <a href="/search?p=fin+tc+t+and+aff+<BFE_FIELD tag="110u" />"> Ph.D. theses </a> at <BFE_FIELD tag="110u" /> <br /> -->
-HEPNAMES list of <a href="/search?cc=HepNames&p=371__a%3A%27<BFE_FIELD tag="110u" />%27"> people </a> at <BFE_FIELD tag="110u" /> <br />
-EXPERIMENTS list of <a href="/search?cc=Experiments&p=119__u%3A%27<BFE_FIELD tag="110u"/>%27"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
+HEPNAMES list of <a href="/search?cc=HepNames&amp;p=371__a%3A%27<BFE_FIELD tag="110u" />%27"> people </a> at <BFE_FIELD tag="110u" /> <br />
+EXPERIMENTS list of <a href="/search?cc=Experiments&amp;p=119__u%3A%27<BFE_FIELD tag="110u"/>%27"> experiments </a> performed <b>at</b> <BFE_FIELD tag="110u" /> <br />
 <!--
 Search people from inst completing experiments
-EXPERIMENTS list of <a href="http://www.slac.stanford.edu/spires/find/experiments/www?sequence=exp&aff=<BFE_FIELD tag="110u" />"> experiments </a> performed by people <b>from</b> <BFE_FIELD tag="110u" /> <br />
+EXPERIMENTS list of <a href="http://www.slac.stanford.edu/spires/find/experiments/www?sequence=exp&amp;aff=<BFE_FIELD tag="110u" />"> experiments </a> performed by people <b>from</b> <BFE_FIELD tag="110u" /> <br />
 
 Google maps for inst
 <img src="http://maps.google.com/maps/api/staticmap?center=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;markers=<BFE_FIELD tag="034__f" />,<BFE_FIELD tag="034__d" />&amp;zoom=13&amp;size=400x400&amp;&maptype=hybrid&amp;sensor=false">
 -->
-&nbsp
-</div>
+&nbsp;
+
