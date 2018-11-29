@@ -23,6 +23,10 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="d">VOLATILE:longitude</subfield>
     <subfield code="f">VOLATILE:latitude</subfield>
   </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="9">VOLATILE:GRID</subfield>
+    <subfield code="a">VOLATILE:e.g. grid.12345.0</subfield>
+  </datafield>
   <datafield tag="043" ind1=" " ind2=" ">
     <subfield code="t">VOLATILE:time zone (e.g +01)</subfield>
   </datafield>
@@ -52,7 +56,7 @@ along with INSPIRE; if not, write to the Free Software Foundation, Inc.,
     <subfield code="g">VOLATILE:hidden name variants</subfield>
   </datafield>
   <datafield tag="510" ind1=" " ind2=" ">
-    <subfield code="a">VOLATILE:name of related inst (newICN)</subfield>
+    <subfield code="a">VOLATILE:name of related inst (ICN, i.e. 110__u)</subfield>
     <subfield code="w">VOLATILE:type of relation: a predecessor, b successor, t parent institute, r for other relations</subfield>
     <subfield code="0">VOLATILE:record nr of related inst</subfield>
     <subfield code="i">VOLATILE:description of relation if $w=r (optional)</subfield>
