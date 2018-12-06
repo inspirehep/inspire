@@ -12,7 +12,7 @@
 
 <small>
 <BFE_INSPIRE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
-<a href="/search?p=693__e%3A<BFE_INSPIRE_EXP_ACRONYM urlescape='1'/>">HEP articles associated with <BFE_INSPIRE_EXP_ACRONYM/></a>
+<a href="/search?p=693__e%3A%22<BFE_INSPIRE_EXP_ACRONYM urlescape='1'/>%22">HEP articles associated with <BFE_INSPIRE_EXP_ACRONYM/></a>
 <BFE_INSPIRE_EXP_COLLABORATION prefix="<br />"/>
 
 </small>
