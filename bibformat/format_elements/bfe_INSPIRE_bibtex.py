@@ -251,9 +251,11 @@ def format_element(bfo, width="50", show_abstract=False):
         out += texified("publisher", ". ".join(publishers))
 
     # Collaboration
-    out += texified("collaboration", ", ".join(
-        set(re.sub(r'(.+)?\s+[Cc]ollaboration', r'\1', c)
-            for c in bfo.fields("710__g"))))
+    unique_collabs = []
+    for coll in [re.sub(r'(.+)?\s+[Cc]ollaboration', r'\1', c) for c in bfo.fields("710__g")]:
+        if coll not in unique_collabs:
+            unique_collabs.append(coll)
+    out += texified("collaboration", ", ".join(unique_collabs))
 
     yearset = False
     # School
