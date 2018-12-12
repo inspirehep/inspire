@@ -1,4 +1,7 @@
 <!-- BibEdit-Template-Name: institution -->
 <!-- BibEdit-Template-Description: institution -->
 <record>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="9">VOLATILE:GRID</subfield>
+  </datafield>
 </record>
