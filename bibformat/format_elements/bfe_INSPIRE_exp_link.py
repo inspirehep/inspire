@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2018 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -20,29 +20,33 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 """BibFormat element - Prints HTML link to exp
 """
-__revision__ = "$Id$"
 
 
 def format_element(bfo, separator=', ', link="yes"):
     """
-    Prints Conference info as best is possible.
+    Prints experiment info as best is possible.
 
-    @param link if yes (default) prints link to SPIRES conference info
-    @param separator  separates multiple conferences
+    @param link if yes (default) prints link to INSPIRE experiment info
+    @param separator  separates multiple experiments
 
     """
 
-    authors = bfo.fields('693__')
-    
+    experiments = bfo.fields('693__e')
+
     # Process authors to add link, highlight and format affiliation
 
     output = []
 
-    for exp in authors:
-        if exp.has_key('e'):
-            output.append('<a href="/search?ln=en&amp;cc=Experiments&amp;p=119__a%3A' + exp['e'] + '&amp;of=hd">' + exp['e'] + '</a>')
+    for exp in experiments:
+        if ' ' in exp:
+            qexp = "%22{0}%22".format(exp)
+        else:
+            qexp = exp
+        output.append('<a href="/search?cc=Experiments&amp;p=119__a%3A' + qexp
+                      + '&amp;of=hd">' + exp + '</a>')
 
     return separator.join(output)
+
 
 def escape_values(bfo):
     """
