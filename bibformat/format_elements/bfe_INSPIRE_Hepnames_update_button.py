@@ -31,7 +31,7 @@ def format_element(bfo, separator='; '):
     except:
         return ''
 
-    url = "http://%s/authors/%s/update" % (CFG_LABS_HOSTNAME,
+    url = "https://%s/submissions/authors/%s" % (CFG_LABS_HOSTNAME,
                                           urllib.quote(hepnames_id))
     return '<a href="' + url + '">' + '<img src="/img/update.jpg" alt="Update"/></a>'
 
