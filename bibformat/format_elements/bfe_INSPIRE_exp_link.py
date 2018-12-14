@@ -31,7 +31,7 @@ def format_element(bfo, separator=', ', link="yes"):
 
     """
 
-    experiments = bfo.fields('693__e')
+    experiments = bfo.fields('693__e', repeatable_subfields_p=True)
 
     # Process authors to add link, highlight and format affiliation
 
