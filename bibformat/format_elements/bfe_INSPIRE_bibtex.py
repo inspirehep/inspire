@@ -118,6 +118,12 @@ def format_element(bfo, width="50", show_abstract=False):
     if not key:
         out += texified("key", recID)
 
+    # Thesis type - special for habilitation
+    if entry_type == 'phdthesis':
+        thesistype = bfo.field("502__b")
+        if thesistype.lower() == "habilitation":
+            out += texified("type", "habilitation")
+
     # Authors
     import invenio.bibformat_elements.bfe_INSPIRE_authors as bfe_authors
     authors = bfe_authors.format_element(bfo=bfo,
