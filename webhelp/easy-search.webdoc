@@ -1,7 +1,7 @@
 ## -*- mode: html; coding: utf-8; -*-
 
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2016, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -238,8 +238,8 @@
     <option value="JINST">JINST</option>
 
     <option value="J.Math.Phys.">J.Math.Phys.</option>
-    <option value="J.Phys.- A -">J.Phys.- A -</option>
-    <option value="J.Phys.- G -">J.Phys.- G -</option>
+    <option value="J.Phys.A">J.Phys.A</option>
+    <option value="J.Phys.G">J.Phys.G</option>
     <option value="J.Phys.Soc.Jap.">J.Phys.Soc.Jap.</option>
     <option value="Jetp Lett.">Jetp Lett.</option>
     <option value="Lett.Math.Phys.">Lett.Math.Phys.</option>
@@ -252,7 +252,7 @@
     <option value="Nucl.Instrum.Meth.">Nucl.Instrum.Meth.</option>
     <option value="Nucl.Phys.">Nucl.Phys.</option>
 
-    <option value="Nucl.Phys.(Proc.Suppl.)">Nucl.Phys.(Proc.Suppl.)</option>
+    <option value="Nucl.Phys.Proc.Suppl.">Nucl.Phys.(Proc.Suppl.)</option>
     <option value="Nuovo Cim.">Nuovo Cim.</option>
     <option value="Part.Accel.">Part.Accel.</option>
     <option value="Phys.Atom.Nucl.">Phys.Atom.Nucl.</option>
@@ -275,7 +275,7 @@
     <option value="Rev.Sci.Instrum.">Rev.Sci.Instrum.</option>
 
     <option value="Riv.Nuovo Cim.">Riv.Nuovo Cim.</option>
-    <option value="Russ.Phys.J.(Sov.Phys.J.)">Russ.Phys.J.(Sov.Phys.J.)</option>
+    <option value="Russ.Phys.J.%22 or %22Sov.Phys.J.">Russ.Phys.J.(Sov.Phys.J.)</option>
     <option value="Sov.J.Nucl.Phys.">Sov.J.Nucl.Phys.</option>
     <option value="Sov.Phys.Jetp">Sov.Phys.Jetp</option>
     <option value="Teor.Mat.Fiz.">Teor.Mat.Fiz.</option>
