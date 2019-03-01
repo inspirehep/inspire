@@ -101,8 +101,8 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
                     modified_records.add(citer)
             if with_claims.lower() == 'yes':
                 modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
-                modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS AS p JOIN aidPERSONIDDATA as d"
-                                                      " ON p.personid = d.personid WHERE d.last_updated>=%s", (last_run, )))
+                modified_records |= intbitset(run_sql('SELECT bibrec FROM aidPERSONIDPAPERS AS p JOIN aidPERSONIDDATA as d'
+                                                      ' ON p.personid = d.personid WHERE d.tag = "canonical_name" and d.last_updated>=%s', (last_run, )))
     except IOError:
         # Default to everything
         with run_ro_on_slave_db():
