@@ -21,24 +21,105 @@
 Checking records in journals collection
 exactly one full name (130__a)
 exactly one short name (711__a)
-all full names, short names and name variants (730__a) are unique
+normalized short name is in name variants (730__a)
+all codens (030__a) and name variants are unique
+Option sort_variants will sort 730 fields by length.
 """
+def normalize_name(name):
+    """No dots, all-caps"""
+    return name.replace('. ', ' ').replace('.', ' ').strip().upper()
 
-from invenio.search_engine import perform_request_search
-def searchforotherjournal(name, recid):
-    """Search INSPIRE for other journals with name."""
-    pattern = '130__a:"%s" or 730__a:"%s" or 711__a:"%s"' % (name, name, name)
+def sorted_keys(dd):
+    """return keys of a dict sorted by list of values"""
+    from operator import itemgetter
+    return [k for k, _ in sorted(dd.items(), key=itemgetter(1))]
+
+def searchforothervariant(name, recid):
+    """Search INSPIRE for other journals with name variant."""
+    from invenio.search_engine import perform_request_search
+
+    norm_name = normalize_name(name)
+
+    pattern = '730__a:"%s" or 030__a:"%s"' % (norm_name, norm_name)
     result = perform_request_search(req=None, cc='Journals', p=pattern)
     try:
         result.remove(int(recid))
     except ValueError:
-        pass  #not indexed yet??
+        pass
     return result
-def check_record(record):
+
+def check_variants(record, sort_variants):
+    """
+    are variants unique?
+    list variants only once, delete more fields if no other subfield (e.g. $$b), set_invalid otherwise
+    normalize variants
+    option to sort variants
+    """
+    from invenio.bibrecord import record_delete_field
+    import copy
+
+    all_variants = []
+    del_fields = []
+    sort_index = {}
+    recid = record.record_id
+
+    for num_f, field in enumerate(record['730']):
+        # get info for field
+        name = ''
+        othersubfields = False
+        position_name = None
+        letter = ' '
+        for num_sf, (code, value) in enumerate(field[0]):
+            if code == 'a':
+                name = value
+                position_name = num_sf
+            else:
+                othersubfields = True
+                if code == 'b':
+                    letter = value
+        if not name:
+            record.set_invalid('field 730 without $$a subfield: %s. ' % (field, ))
+            sort_variants = False
+            continue
+
+        norm_name = normalize_name(name)
+        # is it normalized?
+        if not name == norm_name:
+            record.set_invalid('normalized name variant: "%s" ' % name)
+            field[0][position_name] = ('a', norm_name)
+        if norm_name in all_variants:
+            # avoid adding variants multiple times
+            if othersubfields:
+                # let a human do this
+                record.set_invalid('variant is listed twice: "%s" ' % name)
+            else:
+                record.set_invalid('deleted already existing variant: "%s" ' % name)
+                del_fields.append(field[4])
+        else:
+            all_variants.append(norm_name)
+            result = searchforothervariant(norm_name, recid)
+            if result:
+                record.set_invalid('Name variant "%s" exists in other record %s. ' % (norm_name, result))
+        if sort_variants:
+            # sort by letter ($$b), lenght (longest first), name
+            sort_index[num_f] = (letter, len(norm_name)*-1, norm_name)
+
+    if sort_variants:
+        m730 = copy.deepcopy(record['730'])
+        record['730'] = [m730[num_f] for num_f in sorted_keys(sort_index)]
+        if record['730'] != m730:
+            record.set_invalid('Name variants sorted. ')
+
+    for position in del_fields:
+        record_delete_field(record, '730', field_position_global=position)
+
+    return all_variants
+
+def check_record(record, sort_variants=False):
     """
     Checking journal names
     """
-    recid = record['001'][0][3]
+    recid = record.record_id
 
     full_names = []
     short_names = []
@@ -53,25 +134,21 @@ def check_record(record):
     if not len(short_names) == 1:
         record.set_invalid('Number of jounal short names: %s. ' % len(short_names))
 
-    all_names = []
-    # are the names unique?
-    for name in full_names:
-        all_names.append(name.upper())
-        result = searchforotherjournal(name, recid)
+    # are the codens unique?
+    for pos, name in record.iterfield('030__a'):
+        result = searchforothervariant(name, recid)
         if result:
-            record.set_invalid('Full name "%s" exists in other record %s. ' % (name, result))
-    for name in short_names:
-        all_names.append(name.upper())
-        result = searchforotherjournal(name, recid)
-        if result:
-            record.set_invalid('Short name "%s" exists in other record %s. ' % (name, result))
+            record.set_invalid('CODEN "%s" exists in other record %s. ' % (name, result))
 
-    for pos, name in reversed(list(record.iterfield('730__a'))):
-        if name.upper() in all_names:
-            # avoid adding variants multiple times
-            record.delete_field(pos, 'deleting already existing variant: "%s"' % name)
-        else:
-            all_names.append(name.upper())
-            result = searchforotherjournal(name, recid)
-            if result:
-                record.set_invalid('Name variant "%s" exists in other record %s. ' % (name, result))
+    if '730' in record:
+        all_variants = check_variants(record, sort_variants)
+    else:
+        all_variants = []
+
+    # normalized short_names should be in name variants
+    for name in short_names:
+        norm_name = normalize_name(name)
+        if not norm_name in all_variants:
+            record.add_field('730__a', '', [('a', norm_name),])
+
+    return
