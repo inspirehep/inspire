@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015, 2018 CERN.
+## Copyright (C) 2015, 2018, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -98,10 +98,6 @@ CHANGES = [
     (('a', 'Tudorache, Alexandra'), ('j', 'ORCID:0000-0001-5384-3843', 'ORCID:0000-0001-6307-1437')),
     (('u', 'Jyvaskyla U.'), ('i', 'INSPIRE-00250377', 'INSPIRE-00493721')),
     (('a', 'Zhang, Huaqiao'), ('i', 'INSPIRE-00227070', 'INSPIRE-00227084')),
-    (('i', 'INSPIRE-00317229'), ('a', 'Ahmad, Muhammad', 'Ahmad, Muhammad, 1')),
-    (('i', 'INSPIRE-00365887'), ('a', 'Ahmad, Muhammad', 'Ahmad, Muhammad, 2')),
-    (('i', 'INSPIRE-00536572'), ('a', 'Wang, Jian', 'Wang, Jian, 1')),
-    (('i', 'INSPIRE-00000419'), ('a', 'Wang, Jian', 'Wang, Jian, 2'))
     ]
 
 
