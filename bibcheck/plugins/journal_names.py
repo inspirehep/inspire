@@ -29,11 +29,6 @@ def normalize_name(name):
     """No dots, all-caps"""
     return name.replace('. ', ' ').replace('.', ' ').strip().upper()
 
-def sorted_keys(dd):
-    """return keys of a dict sorted by list of values"""
-    from operator import itemgetter
-    return [k for k, _ in sorted(dd.items(), key=itemgetter(1))]
-
 def searchforothervariant(name, recid):
     """Search INSPIRE for other journals with name variant."""
     from invenio.search_engine import perform_request_search
@@ -55,15 +50,14 @@ def check_variants(record, sort_variants):
     normalize variants
     option to sort variants
     """
-    from invenio.bibrecord import record_delete_field
+    from invenio.bibrecord import record_delete_field, record_add_field
+    from operator import itemgetter
     import copy
 
     all_variants = []
-    del_fields = []
-    sort_index = {}
     recid = record.record_id
 
-    for num_f, field in enumerate(record['730']):
+    for field in record['730']:
         # get info for field
         name = ''
         othersubfields = False
@@ -85,7 +79,7 @@ def check_variants(record, sort_variants):
         norm_name = normalize_name(name)
         # is it normalized?
         if not name == norm_name:
-            record.set_invalid('normalized name variant: "%s" ' % name)
+            record.set_amended('normalized name variant: "%s" ' % name)
             field[0][position_name] = ('a', norm_name)
         if norm_name in all_variants:
             # avoid adding variants multiple times
@@ -93,25 +87,37 @@ def check_variants(record, sort_variants):
                 # let a human do this
                 record.set_invalid('variant is listed twice: "%s" ' % name)
             else:
-                record.set_invalid('deleted already existing variant: "%s" ' % name)
-                del_fields.append(field[4])
+                record.set_amended('deleted already existing variant: "%s" ' % name)
+                record_delete_field(record, '730', field_position_global=field[4])
         else:
             all_variants.append(norm_name)
             result = searchforothervariant(norm_name, recid)
             if result:
                 record.set_invalid('Name variant "%s" exists in other record %s. ' % (norm_name, result))
-        if sort_variants:
-            # sort by letter ($$b), lenght (longest first), name
-            sort_index[num_f] = (letter, len(norm_name)*-1, norm_name)
 
     if sort_variants:
+        # sort by letter ($$b), length (longest first), name
+        sort_index = {}
+        for num_f, field in enumerate(record['730']):
+            # get info for field
+            name = ''
+            letter = ' '
+            for code, value in field[0]:
+                if code == 'a':
+                    name = value
+                elif code == 'b':
+                    letter = value    
+            sort_index[num_f] = (letter, len(name)*-1, name)
+        
         m730 = copy.deepcopy(record['730'])
-        record['730'] = [m730[num_f] for num_f in sorted_keys(sort_index)]
-        if record['730'] != m730:
-            record.set_invalid('Name variants sorted. ')
-
-    for position in del_fields:
-        record_delete_field(record, '730', field_position_global=position)
+        sorted_keys = [k for k, _ in sorted(sort_index.items(), key=itemgetter(1))]
+        m730_sort = [m730[num_f] for num_f in sorted_keys]
+        if m730_sort != m730:
+            # we have to get rid of global positions to really sort it
+            record.set_amended('Name variants sorted. ')
+            record_delete_field(record, '730')
+            for field in m730_sort:
+                record_add_field(record, '730', ind1=' ', ind2=' ', subfields=field[0], controlfield_value='')
 
     return all_variants
 
