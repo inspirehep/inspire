@@ -45,6 +45,7 @@ JOURNAL_PUBLISHED_DICT = {"Ann.Rev.Nucl.Part.Sci.": None,
                           "Astrophys.J.Suppl.": "10.1088/0067-0049/",
                           "Bull.Lebedev Phys.Inst.": None,
                           "Europhys.Lett.": "10.1209/0295-5075",
+                          "JCAP": "10.1088/1475-7516/",
                           "JHEP": "10.1007/JHEP",
                           "Mon.Not.Roy.Astron.Soc.": "10.1093/mnras",
                           "Nature": "10.1038/nature",
@@ -90,7 +91,6 @@ REVIEW_DICT = {"Prog.Part.Nucl.Phys.": "10.1016/j.ppnp.",
                "Rev.Mod.Phys.": "10.1103/RevModPhys.",
                "Astron.Astrophys.Rev.": "10.1007/s00159",
                "Rev.Accel.Sci.Tech.": "10.1142/S17936268"}
-
 
 
 type_codes = (('Published', JOURNAL_PUBLISHED_DICT), ('Review', REVIEW_DICT),
