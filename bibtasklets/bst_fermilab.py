@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014, 2015, 2018 CERN.
+## Copyright (C) 2013, 2014, 2015, 2018, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -33,8 +33,9 @@ chicago_timezone = pytz.timezone('America/Chicago')
 
 SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal',
            'workbook', 'bachelors', 'masters', 'design',
-           'loi', 'eoi', 'pbar', 'nal', 'annual', 'upc', 'ap',
-           'en', 'exp', 'lu', 'habil', 'vlhcpub', 'slides', 'poster']
+           'loi', 'eoi', 'pbar', 'nal', 'annual', 'upc',
+           'ap', 'en', 'exp', 'lu', 'habil', 'vlhcpub',
+           'slides', 'poster', 'code']
 SERIES2 = ['PUB', 'CONF']
 
 SERIES1.sort()
