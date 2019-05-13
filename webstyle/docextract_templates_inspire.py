@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013 CERN.
+## Copyright (C) 2013, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -113,7 +113,7 @@ class Template(object):
                     We don’t have the paper you’re citing in our database.
                     If it’s of relevance for HEP (please see our <a href="https://inspirehep.net/info/hep/collection-policy">collection policy</a>
                     for details), you can suggest that the paper should be added
-                    to INSPIRE by using this <a href="http://www.slac.stanford.edu/spires/hep/additions_form.shtml">form</a>
+                    to INSPIRE by using this <a href="https://labs.inspirehep.net/literature/new">form</a>
                 </li>
             </ol>
         </p>
