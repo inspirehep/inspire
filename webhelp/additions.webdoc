@@ -1,7 +1,7 @@
 ## -*- mode: html; coding: utf-8; -*-
 
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -31,5 +31,5 @@ There is no need to send additions twice.
 <p>
 Please treat additions as you would in SPIRES.  While INSPIRE will soon
 be capable of handling additions in a much more user-friendly
-manner, for the moment please follow the same <a href = "http://www.slac.stanford.edu/spires/hep/additions.shtml">instructions as with SPIRES</a>.
+manner, for the moment please follow the same <a href = "https://labs.inspirehep.net/literature/new">instructions as with SPIRES</a>.
 </p>
