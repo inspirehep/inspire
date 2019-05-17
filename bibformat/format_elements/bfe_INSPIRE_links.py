@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -33,7 +33,7 @@ except ImportError:
     CFG_BASE_URL = CFG_SITE_URL
 
 
-ADSABS = 'http://adsabs.harvard.edu/abs/'
+ADSABS = 'https://ui.adsabs.harvard.edu/abs/'
 CDS = 'http://cds.cern.ch/record/'
 EUCLID = 'http://projecteuclid.org/'
 HAL = 'https://hal.archives-ouvertes.fr/'
