@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015 CERN.
+## Copyright (C) 2014, 2015, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -88,7 +88,8 @@ class ResearchGlanceTests(unittest.TestCase):
                          "main table doesn't have 7 rows")
         self.assertEqual(len(tables[0].xpath('tr/td')), 105,
                          "main table doesn't have 105 td elements")
-        rowlabels = ['', 'All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER']
+        rowlabels = ['', 'All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES',
+                     'POSTER', 'CODE']
         self.assertEqual([r.getchildren()[0].text_content()
                           for r in tables[0].xpath('tr')],
                          rowlabels,

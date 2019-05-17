@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015, 2016, 2018 CERN.
+## Copyright (C) 2014, 2015, 2016, 2018, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -57,7 +57,7 @@ def create_table():
 
     divisions = ['All', 'E', 'CMS', 'T', 'A', 'AE', 'PPD', 'AD/APC',
                  'TD', 'CD', 'ND', 'LBN', 'Other']
-    pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER']
+    pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER', 'CODE']
     dates = [YEAR_2, YEAR_1, YEAR, MONTH_2, MONTH_1, MONTH]
     years = [YEAR_2, YEAR_1, YEAR]
     months = [MONTH_2, MONTH_1, MONTH]
@@ -197,8 +197,9 @@ work done at Fermilab"),
 conference"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "TM: Technical memo"),
-                      E.TD({'class': 'l'}, ""))
+                      E.TD({'class': 'l'}, "CODE: Software code"))
     table2.append(glos_tr_td)
+
 
     body.append(table)
     body.append(glos)
