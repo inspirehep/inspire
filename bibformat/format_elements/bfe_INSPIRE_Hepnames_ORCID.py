@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2014, 2015 CERN.
+## Copyright (C) 2014, 2015, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -32,7 +32,7 @@ def format_element(bfo):
             if "http" in orcid:
                 return '<a href="%s">%s</a>' % (orcid, orcid)
             else:
-                link = "http://orcid.org/" + orcid
+                link = "https://orcid.org/" + orcid
                 return '<a href="%s">%s</a>' % (link, orcid)
 
 
