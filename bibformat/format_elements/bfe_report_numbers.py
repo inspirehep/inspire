@@ -56,9 +56,10 @@ def get_report_numbers_formatted(bfo, separator, limit, extension=" etc.", skip=
                 if keyword.lower() in value.get('a', '').lower() or \
                    value.get('9', '').lower() == keyword.lower():
                     return True
-        if value.get('a', '').lower().startswith("fermilab") and \
-           bfo.field("710__g").lower() in ('atlas', 'cms', 'atlas collaboration', 'cms collaboration'):
-            return True
+        # disabled -- hidden Fermilab report numbers should be in subfield z
+        # if value.get('a', '').lower().startswith("fermilab") and \
+        #    bfo.field("710__g").lower() in ('atlas', 'cms'):
+        #    return True
 
     numbers = bfo.fields("037__")
     numbers.extend(bfo.fields("088__"))
