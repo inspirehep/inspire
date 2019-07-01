@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2018 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2018, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -75,7 +75,7 @@ def format_element(bfo, width="50", show_abstract=False):
         entry_type = 'inproceedings'
     elif 'thesis' in collections:
         # Master thesis has to be identified
-        if bfo.field("502__b") == 'Master':
+        if bfo.field("502__b").lower() in ('master', 'bachelor'):
             entry_type = 'mastersthesis'
         else:
             entry_type = 'phdthesis'
