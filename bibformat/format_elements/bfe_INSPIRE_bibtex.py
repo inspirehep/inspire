@@ -266,7 +266,9 @@ def format_element(bfo, width="50", show_abstract=False):
     yearset = False
     # School
     if entry_type in ['phdthesis', 'mastersthesis']:
-        university = bfo.field("100__u")
+        university = bfo.field("502__c")
+        if not university:
+            university = bfo.field("100__u")
 
         out += texified("school", university)
 
