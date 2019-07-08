@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -432,6 +432,8 @@ $(function () {
    <div class="feedbackboxbody">
  Welcome to <a href="http://www.projecthepinspire.net">INSPIRE</a>, the High Energy Physics information system.
  Please direct questions, comments or concerns to <a href="mailto:feedback@inspirehep.net">feedback@inspirehep.net</a>.
+<p style="color:#B80000; margin: 2px 0px; font-size: 110%%; font-weight: bold;">
+ Inviting beta testers: Interested in trying out new features, providing feedback, and helping to shape the next Inspire?<br /> Please subscribe to our <a href="https://lists.labs.inspirehep.net/subscription/96-XLj554">usability testing</a> mailing list</p>
    </div>
   </td>
  </tr>
