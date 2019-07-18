@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013, 2016 CERN.
+## Copyright (C) 2013, 2016, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -105,7 +105,7 @@ def best_escape(text):
     import bs4
     import cgi
     from harvestingkit.html_utils import MathMLParser
-    if isinstance(bs4.BeautifulSoup(text, 'lxml').contents[0], bs4.element.NavigableString):
+    if isinstance(bs4.BeautifulSoup(text.decode('utf-8'), 'lxml').contents[0], bs4.element.NavigableString):
         return cgi.escape(text)
     else:
         return MathMLParser.html_to_text(text)
