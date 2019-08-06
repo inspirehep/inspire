@@ -189,7 +189,7 @@ function openSrchWindow(winputid) {
 <input type="hidden" value="HEP_ref_user@inspirehep.net" name="to" id="tofield" />
 <!--<input type="hidden" name="debug" value="1">-->
 <input type="hidden" value="help@inspirehep.net" name="form_contact" id="fcfield" />
-<input type="hidden" value="CITATION updates form INSPIRE" name="subject" />
+<input type="hidden" value="CITATION updates form INSPIRE #<BFE_RECORD_ID />" name="subject" />
 <input type="hidden" name="response_msg" value="thank you for using this form, you should soon see a response email" />
 <input type="hidden" name="email_msg_file" value="/spires/hepnames/inspcite_msg.file" />
 <input type="hidden" name="recid" id="recid" value="<BFE_RECORD_ID />" />
