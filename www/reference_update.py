@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -23,21 +23,20 @@
 """
 
 from invenio.bibcatalog import BIBCATALOG_SYSTEM
-from invenio.urlutils import wash_url_argument
-from invenio.config import CFG_SITE_URL
+from invenio.config import CFG_SITE_SECURE_URL, CFG_SITE_URL
+from invenio.urlutils import redirect_to_url, wash_url_argument
 from invenio.webpage import page
-from invenio.urlutils import redirect_to_url
 
 
 def _get_report_numbers(record_id):
-        from invenio.bibformat_engine import BibFormatObject
-        bfo = BibFormatObject(record_id)
-        fields = bfo.fields('037__')
-        report_numbers = []
-        for field in fields:
-            if 'a' in field:
-                report_numbers.append(field['a'])
-        return report_numbers
+    from invenio.bibformat_engine import BibFormatObject
+    bfo = BibFormatObject(record_id)
+    fields = bfo.fields('037__')
+    report_numbers = []
+    for field in fields:
+        if 'a' in field:
+            report_numbers.append(field['a'])
+    return report_numbers
 
 
 ########### RT TICKET RELATED FUNCTIONS ###########
@@ -68,7 +67,7 @@ def submit_reference_arxiv_ticket(record_id, email, comments):
 
     ticket_elements = {
         "arxiv": {
-            "bibedit_link": "%s/record/%s/edit" % (CFG_SITE_URL, record_id),
+            "bibedit_link": "%s/record/%s/edit" % (CFG_SITE_SECURE_URL, record_id),
             "comments": comments,
             "extratext": "New version of the record in arXiv - %s" % report_numbers[0] if report_numbers else ""
         }
@@ -110,7 +109,7 @@ Open record in BibEdit: %s
         comments,
         references,
         url,
-        "%s/record/%s/edit" % (CFG_SITE_URL, record_id)
+        "%s/record/%s/edit" % (CFG_SITE_SECURE_URL, record_id)
     )
 
     subject = "updated refs in published version: #%s (%s)" % (record_id, " ".join(report_numbers))
@@ -140,10 +139,42 @@ Open record in BibEdit: %s
         comments,
         references,
         url,
-        "%s/record/%s/edit" % (CFG_SITE_URL, record_id)
+        "%s/record/%s/edit" % (CFG_SITE_SECURE_URL, record_id)
     )
 
     subject = "new refs: #%s (%s)" % (record_id, " ".join(report_numbers))
+
+    submit_ticket(msg, subject, record_id, queue="HEP_ref_user", email=email)
+
+
+def submit_reference_modify_ticket(record_id, references, email, realname, comments):
+    """ Submit the errors to bibcatalog """
+
+    report_numbers = _get_report_numbers(record_id)
+
+    msg = """
+Name:
+%s
+Comments:
+%s
+
+References:
+%s
+
+Open record in BibEdit: %s
+
+"""
+    msg = msg % (
+        realname,
+        comments,
+        references,
+        "%s/record/%s/edit" % (CFG_SITE_SECURE_URL, record_id)
+    )
+    repnos = ''
+    if report_numbers:
+        repnos = '(' + " ".join(report_numbers) + ')'
+
+    subject = "CITATION updates form INSPIRE #%s %s" % (record_id, repnos)
 
     submit_ticket(msg, subject, record_id, queue="HEP_ref_user", email=email)
 
@@ -242,3 +273,34 @@ def reference_add(req, record_id, references, url, email, comments):
     submit_reference_add_ticket(record_id, references, url, email, comments)
 
     return redirect_to_url(req, "%s/reference_update.py/reference_add_success?record_id=%s" % (CFG_SITE_URL, record_id))
+
+
+def references_modify(req, recid=-1, cite='', username='', realname='',
+                      usercomment='', *args, **kwargs):
+    """
+    Form handler for requests coming from HRF format
+
+    Used to update/modify existing references
+    """
+
+    record_id = wash_url_argument(recid, "int")
+    email = wash_url_argument(username, "str")
+    realname = wash_url_argument(realname, "str")
+    comments = wash_url_argument(usercomment, "str")
+
+    cites = cite
+    cites = [c.replace('**', '\t.......... <== modified/changed') for c in cites]
+    cites = [c + '\t.......... <== modified/added' if c.startswith('$$')
+             else c for c in cites]
+    cites = ['--' if c == '' else c for c in cites]
+
+    citelist = ''
+    for count, ref in enumerate(cites, 1):
+        citelist += "%3d:\t%s\n" % (count, ref)
+
+    submit_reference_modify_ticket(record_id, citelist, email,
+                                   realname, comments)
+
+    return redirect_to_url(
+        req, "%s/reference_update.py/reference_add_success?record_id=%s" %
+        (CFG_SITE_URL, record_id))

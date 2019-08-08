@@ -2,14 +2,14 @@
 <description>user form for updating references</description>
 <head>
 <!-- I include this because it makes things like drop-down boxes in jquery look nicer.  -->
-<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/themes/redmond/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="/img/jquery-ui.css" />
 
 <!--
   These parts make jQuery work properly.  In nature, we want to use the version of jquery installed system-wide.  I
   think it's in /img/js/
   -->
-<script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js'></script>
-<script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js'></script>
+<script type="text/javascript" src='/js/jquery.min.js'></script>
+<script type="text/javascript" src='/js/jquery-ui.min.js'></script>
 
 <!-- Here is where I do my business -->
 
@@ -182,7 +182,7 @@ function openSrchWindow(winputid) {
 </head>
 <h1>Detailed reference correction</h1>
 
-<form name="referenceinp" method="post" onsubmit="return changec();" action="http://www.slac.stanford.edu/cgi-bin/form-mail.pl">
+<form name="referenceinp" method="post" onsubmit="return changec();" action="/reference_update.py/references_modify" id="ref-form">
 
 
 <input type="hidden" value="1" id="fieldcnt" name="storecnt" />
