@@ -210,6 +210,22 @@ def reference_add_success(req, record_id):
     return page(req=req, title="References submitted", body=body)
 
 
+def reference_change_success(req, record_id):
+    body = """
+    <br/><b>Thanks for suggesting reference corrections!</b><br/>
+
+    <p>It will require some time to verify and apply these changes or updates.</p>
+    <p>Note that the journal version is considered the version of record.
+       Inspire receives reference data for most of the common HEP journals
+       directly from their publishers. These supersede references from other
+       sources.</p>
+    <p>Additional or different references from a pre- or post-print will not
+       be considered once publisher references have been received</p>
+    <p><a href='%s/record/%s'>Back to the record</a></p>
+    """ % (CFG_SITE_URL, record_id)
+
+    return page(req=req, title="References submitted", body=body)
+
 ########### POST HANDLERS FROM REFERENCE UPDATE FORMS ###########
 
 
@@ -295,12 +311,12 @@ def references_modify(req, recid=-1, cite='', username='', realname='',
     cites = ['--' if c == '' else c for c in cites]
 
     citelist = ''
-    for count, ref in enumerate(cites, 1):
+    for count, ref in enumerate(cites, 0):
         citelist += "%3d:\t%s\n" % (count, ref)
 
     submit_reference_modify_ticket(record_id, citelist, email,
                                    realname, comments)
 
     return redirect_to_url(
-        req, "%s/reference_update.py/reference_add_success?record_id=%s" %
+        req, "%s/reference_update.py/reference_change_success?record_id=%s" %
         (CFG_SITE_URL, record_id))
