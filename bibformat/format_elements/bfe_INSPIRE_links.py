@@ -110,6 +110,7 @@ def format_element(bfo, default='', separator='; ', style='',
         if eprints:
             adslinked = True
             for eprint in eprints:
+                eprint = eprint.replace('/', '%2F').replace(':', '%3A')
                 links.append('<a href="%s%s"> ADS Abstract Service</a>'
                              % (ADSABS, eprint))
 
