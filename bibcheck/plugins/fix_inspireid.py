@@ -98,6 +98,7 @@ CHANGES = [
     (('a', 'Tudorache, Alexandra'), ('j', 'ORCID:0000-0001-5384-3843', 'ORCID:0000-0001-6307-1437')),
     (('u', 'Jyvaskyla U.'), ('i', 'INSPIRE-00250377', 'INSPIRE-00493721')),
     (('a', 'Zhang, Huaqiao'), ('i', 'INSPIRE-00227070', 'INSPIRE-00227084')),
+    (('a', 'Chen, Geng'), ('j', 'ORCID:0000-0002-7655-9180', 'ORCID:0000-0001-5704-8476'))
     ]
 
 
