@@ -95,7 +95,7 @@ class ResearchGlanceTests(unittest.TestCase):
                          rowlabels,
                          "the row labels are not as expected")
         collabels = ['', 'Date', 'All', 'E', 'CMS', 'T', 'AT', 'AE', 'PPD',
-                     'AD/APC', 'TD', 'CD', 'ND', 'LBN', 'Other']
+                     'AD/APC', 'TD', 'CD', 'CCD', 'OCIO', 'SCD', 'ND', 'LBN', 'Other']
         self.assertEqual([c.text_content()
                           for c in tables[0].xpath('tr')[0].getchildren()],
                          collabels,
