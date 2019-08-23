@@ -1,10 +1,6 @@
 /*
-* -*- mode: text; coding: utf-8; -*-
-
-   $Id$
-
    This file is part of Invenio.
-   Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+   Copyright (C) 2002-2007, 2019 CERN.
 
    Invenio is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License as
@@ -2406,6 +2402,44 @@ input:-moz-placeholder {
 }
 input:-ms-input-placeholder {
   color: #999;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* end of inspire.css */

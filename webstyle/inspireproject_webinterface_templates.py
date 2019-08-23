@@ -6,21 +6,22 @@ def tmpl_jobs_matrix(categories, ranks, counts):
 <table cellpadding="4">
 <tr>
 <td></td>
-<td>Student</td>
+<td>PhD</td>
 <td>Postdoc</td>
 <td>Junior</td>
 <td>Senior</td>
 <td>Staff</td>
 <td>Visitor</td>
+<td>Other</td>
 </tr>"""]
     for cat in categories:
         out.append('<tr><td align="center">%s</td>' % cat)
         for rank in ranks:
             out.append("""
             <td align="center">
-                <a href='/search?p1=rank:"%s"+subject:"%s"+&op1=a&p2=&cc=Jobs'>%s</a>
+                <a href="https://labs.inspirehep.net/jobs?rank={0}&field_of_interest={1}">{2}</a>
             </td>
-            """ % (rank, cat, counts[cat][rank]))
+            """.format(rank, cat, counts[cat][rank]))
         out.append('</td></tr>')
     out.append("</table>")
     return ''.join(out)
