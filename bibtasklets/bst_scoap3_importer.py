@@ -48,10 +48,11 @@ def bst_scoap3_importer():
     last_updated = '1970-01-01'
     recent_uploads = glob(CFG_TMPSHAREDDIR + '/bibupload_scoap3_*.xml')
     timestamp = 0
-    try:
-        timestamp = max([stat(f).st_mtime for f in recent_uploads])
-    except OSError:
-        pass
+    if recent_uploads:
+        try:
+            timestamp = max([stat(f).st_mtime for f in recent_uploads])
+        except OSError:
+            pass
     if timestamp and timestamp > 0:
         last_updated = datetime.strftime(
             datetime.fromtimestamp(timestamp) - timedelta(days=7),
