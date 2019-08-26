@@ -172,7 +172,7 @@ def bst_scoap3_importer():
             inspire_record = perform_request_search(p="doi:%s" % (doi, ),
                                                     cc="HEP")
         else:
-            inspire_record = perform_request_search(p="037:%s or doi:%s" %
+            inspire_record = perform_request_search(p="eprint:%s or doi:%s" %
                                                     (arxiv_id, doi), cc="HEP")
         if len(inspire_record) > 1:
             write_message("ERROR: more than one INSPIRE record matched %s and %s for SCOAP3 record %s: %s" % (arxiv_id, doi, recid, list(inspire_record)), stream=sys.stderr)
