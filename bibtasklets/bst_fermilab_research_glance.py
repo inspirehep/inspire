@@ -56,7 +56,7 @@ def create_table():
     """HTML generation by lxml.html tree."""
 
     divisions = ['All', 'E', 'CMS', 'T', 'A', 'AE', 'PPD', 'AD/APC',
-                 'TD', 'CD', 'ND', 'LBN', 'Other']
+                 'TD', 'CD', 'CCD', 'OCIO', 'SCD', 'ND', 'LBN', 'Other']
     pubtypes = ['All', 'PUB', 'THESIS', 'CONF', 'TM', 'FN', 'SLIDES', 'POSTER', 'CODE']
     dates = [YEAR_2, YEAR_1, YEAR, MONTH_2, MONTH_1, MONTH]
     years = [YEAR_2, YEAR_1, YEAR]
@@ -169,10 +169,19 @@ Astrophysics theoretical papers"),
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "AE: Fermilab Center for Particle \
 Astrophysics experimental papers"),
-                      E.TD({'class': 'l'}, "CD: Computing Sector papers"))
+                      E.TD({'class': 'l'}, "CD: Computing Sector papers (up to \
+2019-08-16, now split into CCD, SCD and OCIO)"))
     table2.append(glos_tr_td)
-    glos_tr_td = E.TR(E.TD({'class': 'l'}, "ND: Neutrino Division papers"),
-                      E.TD({'class': 'l'}, "LBN: Long Baseline Neutrino \
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "CCD: Core Computing Division papers \
+(starting 2019-08-16; previously labeled CD)"),
+                      E.TD({'class': 'l'}, "OCIO: Office of the Chief Information \
+Officer papers (starting 2019-08-16; previously labeled CD)")) 
+    table2.append(glos_tr_td)
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "SCD: Scientific Computing Division \
+papers (starting 2019-08-16; previously labeled CD)"),
+                     E.TD({'class': 'l'}, "ND: Neutrino Division papers"))
+    table2.append(glos_tr_td)
+    glos_tr_td = E.TR(E.TD({'class': 'l'}, "LBN: Long Baseline Neutrino \
 Sector papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, " "), E.TD({'class': 'l'}, " "))
