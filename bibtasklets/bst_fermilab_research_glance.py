@@ -175,7 +175,7 @@ Astrophysics experimental papers"),
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "CCD: Core Computing Division papers \
 (starting 2019-08-16; previously labeled CD)"),
                       E.TD({'class': 'l'}, "OCIO: Office of the Chief Information \
-Officer papers (starting 2019-08-16; previously labeled CD)")) 
+Officer papers (starting 2019-08-16; previously labeled CD)"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "SCD: Scientific Computing Division \
 papers (starting 2019-08-16; previously labeled CD)"),
