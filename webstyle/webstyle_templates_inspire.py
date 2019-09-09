@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -446,7 +446,8 @@ $(function () {
 ::
 <a id="nav-conf" href="%(siteurl)s/collection/Conferences">Conferences</a>
 ::
-<a id="nav-jobs" href="%(siteurl)s/collection/Jobs">Jobs</a>
+<a id="nav-jobs" href="%(siteurl)s/collection/Jobs" target="_blank">
+<span class="tooltip">Jobs<span class="tooltiptext">go to the New Jobs site</span></span></a>
 ::
 <a id="nav-exp" href="%(siteurl)s/collection/Experiments">Experiments</a>
 ::

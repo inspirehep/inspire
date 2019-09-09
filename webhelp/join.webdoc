@@ -1,7 +1,7 @@
 ## -*- mode: html; coding: utf-8; -*-
 
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -18,16 +18,37 @@
 ## 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 <!-- WebDoc-Page-Title: _(Jobs Mailing List)_ -->
-<!-- WebDoc-Page-Revision: $Id$ -->
+
+<div>
+<br />
+  <h2>The Jobs service has moved</h2>
+</div>
+<div>
+<p>Please go to <a href="https://labs.inspirehep.net/jobs">https://labs.inspirehep.net/jobs</a></p>
+</div>
+<div>
+<p>
+To be notified via email of new jobs, please go to
+<a href="https://labs.inspirehep.net/jobs">https://labs.inspirehep.net/jobs</a>
+and on the top right click on button <em>"Subscribe to mailing list"</em>
+</p>
+</div>
+<br /><br /><br /><br /><br /><br /><br /><br />
+
+<h3>obsolete old method</h3>
+
+<div style="font-size:10px">
+
+  <p>kept for historical reasons</p>
 
 <h4>How to sign up for our email list</h4>
 <p>To be notified via email of new jobs 
 please send email to <a href="mailto:listserv@fnal.gov">
 listserv@fnal.gov</a> with the message below and be sure to leave the 
-Subject line blank.
+Subject line blank.</p>
 <p>
 join jobs <i>FirstName LastName</i>
-</p>
+</p><p>
 To leave the list, 
 please send email to <a href="mailto:listserv@fnal.gov">
 listserv@fnal.gov</a> with the message below and be sure to leave the
@@ -35,3 +56,4 @@ Subject line blank.
 </p><p>
 signoff jobs
 </p>
+</div>
