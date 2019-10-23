@@ -20,6 +20,7 @@
 
 <BFE_URL prefix="" suffix="<br />" default="" escape="" style="" separator="; "/>
 <BFE_GRID_ID prefix="GRID record: " suffix="<br />" default="" escape="" style="" separator="; " />
+<BFE_ROR_ID prefix="ROR record: " suffix="<br />" default="" escape="" style="" separator="; " />
 <BFE_INSPIRE_INST_NAME_VARIANT prefix="Name Variants: " suffix="<br />"/>
 <BFE_FIELD tag="6781_a" prefix="Historical Data: " suffix="<br />" />
 <BFE_FIELD tag="680i" prefix="Notes: " suffix="<br />" />
