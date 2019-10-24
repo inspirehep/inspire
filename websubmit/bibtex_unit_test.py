@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2009, 2010, 2011 CERN.
+## Copyright (C) 2009, 2010, 2011, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -187,6 +187,32 @@ class TestBibtex(unittest.TestCase):
         refs = Bibtex.get_references(lines)
         ret = Bibtex.process_references(refs, 'hx')
         self.assertTrue(ret.index(r'@article'))
+
+
+    def test_search_adsbibcode(self):
+        """ test case for an ADS bibcode
+
+        """
+        print '\ntest9\n'
+        lines = r"""
+                \cite{2018A&A...615A..71K}
+        """
+        refs = Bibtex.get_references(lines)
+        ret = Bibtex.process_references(refs, 'hx')
+        self.assertTrue(ret.index(r'@article'))
+
+
+    def test_search_not_adsbibcode(self):
+        """ test case for false ADS bibcode
+
+        """
+        print '\ntest10\n'
+        lines = r"""
+                \cite{2018A&A...615A...71K}
+        """
+        refs = Bibtex.get_references(lines)
+        ret = Bibtex.process_references(refs, 'hx')
+        self.assertTrue(ret.index(r'@MISC'))
 
 
 def main():

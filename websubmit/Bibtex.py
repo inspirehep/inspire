@@ -1,5 +1,5 @@
 ## This file is part of Invenio.
-## Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2018 CERN.
+## Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2018, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -113,21 +113,19 @@ def process_references(references, output_format):
             ref = re.sub(r'\.', ',', ref)
         elif re.search(r'\w\-\w', ref):
             index = 'r'
+        elif re.search(r'\d{4}[\w.&]{15}', ref):
+            index = 'ads'
         if index:
             # hack to match more records
             recid_list = ''
-            if index == 'texkey':
-                p_to_find = '035__z:' + ref
+            if index == 'texkey' or index == 'ads':
+                p_to_find = '035:"' + ref + '"'
                 recid_list = perform_request_search(p=p_to_find)
-                if not recid_list:
-                    #try 035__a
-                    p_to_find = '035__a:' + ref
-                    recid_list = perform_request_search(p=p_to_find)
             else:
                 p_to_find = 'find ' + index + ' ' + ref
                 recid_list = perform_request_search(p=p_to_find)
 
-            if recid_list:
+            if len(recid_list) == 1:
                 bfo = BibFormatObject(recid_list[0])
                 if (output_format == 'hlxu' or
                         output_format == 'hlxe' or
