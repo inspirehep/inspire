@@ -42,10 +42,13 @@ except ValueError:
     )
 
 def check_record(record):
+    rors_in_record = set(ror for (_, ror) in record.iterfield('035__a', ('9', 'ROR')))
     for _, grid in record.iterfield('035__a', ('9', 'GRID')):
         ror = grid_to_ror.get(grid)
         if not ror:
             record.warn('No ROR found for {0}'.format(grid))
+            continue
+        if ror in rors_in_record:
             continue
         record.add_field('035__', '', [('9', 'ROR'), ('a', ror)])
         record.add_field('595__', '', [('a', '{0} from {1}'.format(ror, grid))])
