@@ -5,6 +5,7 @@
 <BFE_INSPIRE_HEPNAMES_NATIVE_NAME css_class="font_weight_normal" />
 
 <BFE_INSPIRE_CURRENT_INSTITUTION />
+<span style="padding-left: 15%"><a class="betalink" href="https://beta.inspirehep.net/authors/<BFE_RECORD_ID />" target="_blank">View on INSPIRE beta</a></span>
 <br /><BFE_INSPIRE_HEPNAMES_BAI_LINK />
 <a href="http://www.google.com/search?hl=en&amp;q=<BFE_FIELD tag="100__q" />">[Google]</a>
 <a href="/search?cc=HepNames&amp;p=701%3A%22<BFE_FIELD tag="100__a" />%22">[Students]</a>

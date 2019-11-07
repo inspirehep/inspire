@@ -257,6 +257,9 @@ class Template(DefaultTemplate):
         hepDataAdditions += """<link rel="stylesheet" href="%s/img/hepdata.css" type="text/css" />""" \
             % (CFG_BASE_URL, )
 
+        labsadditions = """<link rel="stylesheet" href="%s/css/betalink.css" type="text/css" />""" \
+            % (CFG_BASE_URL, )
+
         # load the right message language
         _ = gettext_set_language(ln)
 
@@ -405,6 +408,7 @@ $(function () {
  %(submissionjs)s
  %(metaheaderadd)s
  %(hepDataAdditions)s
+ %(labsadditions)s
 </head>
 
 <body%(body_css_classes)s lang="%(ln_iso_639_a)s">
@@ -510,7 +514,8 @@ $(function () {
 
           'unAPIurl' : cgi.escape('%s/unapi' % CFG_BASE_URL),
           'inspect_templates_message' : inspect_templates_message,
-          'hepDataAdditions' : hepDataAdditions
+          'hepDataAdditions' : hepDataAdditions,
+          'labsadditions': labsadditions,
         }
         return out
 
