@@ -2271,7 +2271,7 @@ table.tips {
     table-layout: auto;
     border-collapse: collapse;
     width: 100%;
-    padding: 0px
+    padding: 0px;
     margin: 0px;
     border: 0px solid #ccc;
 }
@@ -2416,7 +2416,7 @@ input:-ms-input-placeholder {
   color: #fff;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 5px 4px;
   position: absolute;
   z-index: 1;
   bottom: 125%;
