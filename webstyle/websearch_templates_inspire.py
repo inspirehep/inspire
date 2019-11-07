@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2018 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2018, 2019 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -271,6 +271,7 @@ class Template(DefaultTemplate):
         langlink = ln != CFG_SITE_LANG and '?ln=' + ln or ''
         easy_search_link = ""
         middle_option = ""
+        search_on_labs = ""
 
         if collection_id == "HEP":
             # add easy search link
@@ -286,6 +287,10 @@ class Template(DefaultTemplate):
                  selected=of,
                  values=self._add_mark_to_field(value=of, fields=fields, chars=3, ln=ln),
                  css_class=''),)
+            search_on_labs = """
+                <td colspan=2 class="searchboxbody" align="right">
+                  <input class="betalink" formtarget="inspirebetasearch" type="submit" name="searchlabs" value="Search on INSPIRE beta" /></td>
+            """
         # print commentary start:
         if collection_id == "Jobs":
             # print Jobs Search form:
@@ -314,7 +319,7 @@ class Template(DefaultTemplate):
                <tr>
                  <td class="searchboxexample">
                    %(example_query_html)s
-                 </td>
+                 </td>%(searchlabs)s
               </tr>
              </tbody>
              </table>
@@ -335,6 +340,7 @@ class Template(DefaultTemplate):
                    'msg_browse' : _('Browse'),
                    'msg_easy_search' : _('Easy Search'),
                    'example_query_html': example_html,
+                   'searchlabs': search_on_labs,
                    'searchvalue' : searchvalue,
                    'middle_option' : middle_option
                   }

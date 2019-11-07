@@ -5,6 +5,7 @@ include ../config.mk
 
 SUBDIRS = img
 CSSFILES = invenio_inspire.css jobsubmit.css
+NEWCSS = betalink.css
 JSFILES = *.js
 LIBFILES = *.py
 FAVICON = favicon.ico
@@ -22,6 +23,7 @@ test:
 install:
 	$(foreach SUBDIR, $(SUBDIRS), cd $(SUBDIR) && make install && cd .. ;)
 	$(INSTALL) -m 664 $(CSSFILES) $(WEBDIR)/img
+	$(INSTALL) -m 664 $(NEWCSS) $(WEBDIR)/css
 	$(INSTALL) -m 664 $(JSFILES) $(WEBDIR)/js
 	$(INSTALL) -m 664 $(ROBOTSFILES) $(WEBDIR)
 	$(INSTALL) -m 664 $(LIBFILES) $(LIBDIR)/python/invenio
