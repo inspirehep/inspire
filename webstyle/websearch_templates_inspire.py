@@ -288,7 +288,7 @@ class Template(DefaultTemplate):
                  values=self._add_mark_to_field(value=of, fields=fields, chars=3, ln=ln),
                  css_class=''),)
             search_on_labs = """
-                <td colspan=2 class="searchboxbody" align="right">
+                <td colspan="2" class="searchboxbody" align="right">
                   <input class="betalink" formtarget="inspirebetasearch" type="submit" name="searchlabs" value="Search on INSPIRE beta" /></td>
             """
         # print commentary start:
