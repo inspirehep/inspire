@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014, 2017 CERN.
+## Copyright (C) 2013, 2014, 2017, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -511,7 +511,7 @@ def harvest_aps(from_param, until_param, perpage):
                 last_page = int(re.search(r'(?<=(page=))\w+', l).group(0))
 
     # Fetch first page of data
-    data = json.loads(conn.next())
+    data = json.loads(conn.read())
     write_message("Data received from APS: \n%s" % (data,), verbose=5)
     records = []
     for d in data['data']:
@@ -523,7 +523,7 @@ def harvest_aps(from_param, until_param, perpage):
     if last_page > 1:
         for pagenum in range(next_page, last_page+1):
             conn = APS_connect(from_param, until_param, pagenum, perpage)
-            data = json.loads(conn.next())
+            data = json.loads(conn.read())
             write_message("Data received from APS: \n%s" % (data,), verbose=5)
             for d in data['data']:
                 records.append(APSRecord(None,
