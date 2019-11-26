@@ -24,6 +24,7 @@ Disallow: /record/multiedit
 Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
+Disallow: /collection/Jobs Hidden
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -50,6 +51,7 @@ Disallow: /record/multiedit
 Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
+Disallow: /collection/Jobs Hidden
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -76,6 +78,7 @@ Disallow: /record/multiedit
 Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
+Disallow: /collection/Jobs Hidden
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -104,5 +107,6 @@ Disallow: /record/multiedit
 Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
+Disallow: /collection/Jobs Hidden
 
 Sitemap: http://inspirehep.net/sitemap-index.xml.gz
