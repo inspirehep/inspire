@@ -209,11 +209,14 @@ class TestBibtex(unittest.TestCase):
         print '\ntest10\n'
         lines = r"""
                 \cite{2018A&A...615A...71K}
+                \cite{PhysRev.D100.096018}
         """
         refs = Bibtex.get_references(lines)
         ret = Bibtex.process_references(refs, 'hx')
-        self.assertTrue(ret.index(r'@MISC'))
-
+        is_true = '@MISC{2018A&A...615A...71K,' in ret
+        self.assertTrue(is_true)
+        is_true2 = '@article{PhysRev.D100.096018,' in ret
+        self.assertTrue(is_true2)
 
 def main():
     unittest.main()

@@ -102,7 +102,9 @@ def process_references(references, output_format):
     nsmsg = '*** Non-standard form, no INSPIRE lookup performed ***'
     for ref in references:
         index = None
-        if re.search(r'.*\:\d{4}\w\w\w?', ref):
+        if re.search(r'\d{4}[\w.&]{15}', ref):
+            index = 'ads'
+        elif re.search(r'.*\:\d{4}\w\w\w?', ref):
             index = 'texkey'
         elif re.search(r'.*\/\d{7}', ref):
             index = 'eprint'
@@ -113,8 +115,6 @@ def process_references(references, output_format):
             ref = re.sub(r'\.', ',', ref)
         elif re.search(r'\w\-\w', ref):
             index = 'r'
-        elif re.search(r'\d{4}[\w.&]{15}', ref):
-            index = 'ads'
         if index:
             # hack to match more records
             recid_list = ''
