@@ -371,6 +371,16 @@ $(function () {
             metaheaderadd += '<script type="text/javascript" src="%s/js/jobs_filter.js"></script>' % \
                 (CFG_BASE_URL,)
 
+        # viewport for google mobile crawler
+        viewport = ''
+        if req:
+            try:
+                user_agent = req.headers_in.get('User-Agent', '')
+                if 'Googlebot/' in user_agent:
+                    viewport = '<meta name="viewport" content="width=device-width, initial-scale=1" />'
+            except AttributeError:
+                pass
+
         out = """\
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -392,6 +402,7 @@ $(function () {
  <link rel="unapi-server" type="application/xml" title="unAPI" href="%(unAPIurl)s" />
  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  <meta http-equiv="Content-Language" content="%(ln)s" />
+ %(viewport)s
  <meta name="description" content="%(description)s" />
  <meta name="keywords" content="%(keywords)s" />
  <meta name="msvalidate.01" content="EA9805F0F62E4FF22B98853713964B28" />
@@ -513,6 +524,7 @@ $(function () {
           'feedback' : self.tmpl_feedback_box(ln),
 
           'unAPIurl' : cgi.escape('%s/unapi' % CFG_BASE_URL),
+          'viewport' : viewport,
           'inspect_templates_message' : inspect_templates_message,
           'hepDataAdditions' : hepDataAdditions,
           'labsadditions': labsadditions,
