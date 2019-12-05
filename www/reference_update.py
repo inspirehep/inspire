@@ -182,7 +182,10 @@ Open record in BibEdit: %s
 ########### SUCCESS HANDLERS ###########
 
 
-def arxivsuccess(req, record_id):
+def arxivsuccess(req, record_id=None):
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     body = """
         <p>
         <b>Thanks for your submission!</b><br/>
@@ -197,7 +200,10 @@ def arxivsuccess(req, record_id):
     return page(req=req, title="References submitted", body=body)
 
 
-def reference_add_success(req, record_id):
+def reference_add_success(req, record_id=None):
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     body = """
     <br/><b>Thanks for your submission!</b><br/>
 
@@ -210,7 +216,10 @@ def reference_add_success(req, record_id):
     return page(req=req, title="References submitted", body=body)
 
 
-def reference_change_success(req, record_id):
+def reference_change_success(req, record_id=None):
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     body = """
     <br/><b>Thanks for suggesting reference corrections!</b><br/>
 
@@ -229,7 +238,7 @@ def reference_change_success(req, record_id):
 ########### POST HANDLERS FROM REFERENCE UPDATE FORMS ###########
 
 
-def reference_correction(req, record_id, email, comments, problem):
+def reference_correction(req, record_id=None, email='', comments='', problem=''):
     """
     Form handler for requests coming from HRU format
 
@@ -239,6 +248,9 @@ def reference_correction(req, record_id, email, comments, problem):
     possible values are: arxiv, published, or wrong
     @type name: str
     """
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     email = wash_url_argument(email, "str")
     problem = wash_url_argument(problem, "str")
     comments = wash_url_argument(comments, "str")
@@ -255,13 +267,16 @@ def reference_correction(req, record_id, email, comments, problem):
         return redirect_to_url(req, "%s/record/%s/export/hrn" % (CFG_SITE_URL, record_id))
 
 
-def reference_new_published(req, record_id, references, url, email, comments):
+def reference_new_published(req, record_id=None, references='', url='', email='', comments=''):
     """
     Form handler for requests coming from HRN format
 
     Used when there is a new published version
 
     """
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     record_id = wash_url_argument(record_id, "int")
     references = wash_url_argument(references, "str")
     url = wash_url_argument(url, "str")
@@ -273,13 +288,16 @@ def reference_new_published(req, record_id, references, url, email, comments):
     return redirect_to_url(req, "%s/reference_update.py/reference_add_success?record_id=%s" % (CFG_SITE_URL, record_id))
 
 
-def reference_add(req, record_id, references, url, email, comments):
+def reference_add(req, record_id=None, references='', url='', email='', comments=''):
     """
     Form handler for requests coming from HRA format
 
     Used when the record has no references
 
     """
+    if record_id is None:
+        return page(req=req, title="Missing arguments", body="empty request. insufficient information received")
+
     record_id = wash_url_argument(record_id, "int")
     references = wash_url_argument(references, "str")
     url = wash_url_argument(url, "str")
