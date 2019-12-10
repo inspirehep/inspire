@@ -252,13 +252,20 @@ class Template(DefaultTemplate):
 
           - HTML code of the page headers
         """
-        hepDataAdditions = """<script type="text/javascript" src="%s/js/hepdata.js"></script>""" \
-            % (CFG_BASE_URL, )
-        hepDataAdditions += """<link rel="stylesheet" href="%s/img/hepdata.css" type="text/css" />""" \
-            % (CFG_BASE_URL, )
+        hepDataAdditions = ''
+        if False:
+            # /Data collection does no longer display inline data
+            # instead it simply links to HepData. So these are unnecessary
+            hepDataAdditions = """<script type="text/javascript" src="%s/js/hepdata.js"></script>""" \
+                % (CFG_BASE_URL, )
+            hepDataAdditions += """<link rel="stylesheet" href="%s/img/hepdata.css" type="text/css" />""" \
+                % (CFG_BASE_URL, )
 
-        labsadditions = """<link rel="stylesheet" href="%s/css/betalink.css" type="text/css" />""" \
-            % (CFG_BASE_URL, )
+        labsadditions = ''
+        if False:
+            # the css was appended to invenio_inspire.css
+            labsadditions = """<link rel="stylesheet" href="%s/css/betalink.css" type="text/css" />""" \
+                % (CFG_BASE_URL, )
 
         # load the right message language
         _ = gettext_set_language(ln)
