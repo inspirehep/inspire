@@ -102,7 +102,9 @@ def process_references(references, output_format):
     nsmsg = '*** Non-standard form, no INSPIRE lookup performed ***'
     for ref in references:
         index = None
-        if re.search(r'.*\:\d{4}\w\w\w?', ref):
+        if re.search(r'^\d{4}[\w.&]{15}$', ref):
+            index = 'ads'
+        elif re.search(r'.*\:\d{4}\w\w\w?', ref):
             index = 'texkey'
         elif re.search(r'.*\/\d{7}', ref):
             index = 'eprint'
@@ -113,12 +115,10 @@ def process_references(references, output_format):
             ref = re.sub(r'\.', ',', ref)
         elif re.search(r'\w\-\w', ref):
             index = 'r'
-        elif re.search(r'\d{4}[\w.&]{15}', ref):
-            index = 'ads'
         if index:
             # hack to match more records
             recid_list = ''
-            if index == 'texkey' or index == 'ads':
+            if index in ('texkey', 'ads'):
                 p_to_find = '035:"' + ref + '"'
                 recid_list = perform_request_search(p=p_to_find)
             else:
@@ -127,9 +127,7 @@ def process_references(references, output_format):
 
             if len(recid_list) == 1:
                 bfo = BibFormatObject(recid_list[0])
-                if (output_format == 'hlxu' or
-                        output_format == 'hlxe' or
-                        output_format == 'hx'):
+                if output_format in ('hlxu', 'hlxe', 'hx'):
                     formated_rec = format_record(recid_list[0], \
                                                  output_format, 'en')
                     # update bibitem and cite if they don't match
