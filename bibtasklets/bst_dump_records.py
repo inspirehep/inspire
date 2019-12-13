@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015, 2016 CERN.
+## Copyright (C) 2015, 2016, 2019 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -61,7 +61,15 @@ def bst_dump_records():
     except OSError:
         pass
     html_index = open(os.path.join(CFG_WEBDIR, 'dumps', '.inspire-dump.html'), "w")
-    print >> html_index, "<html><head><title>INSPIRE Dump</title></head><body><ul>"
+    print >> html_index, """
+<html>
+    <head>
+        <title>INSPIRE Dump</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <ul>
+"""
     for collection in CFG_EXPORTED_COLLECTIONS:
         task_update_progress(collection)
         print >> html_index, """
