@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2013, 2014, 2015 CERN.
+# Copyright (C) 2013, 2014, 2015, 2019 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -561,7 +561,7 @@ available in the following directory: '%s'
     parent_task = asana.create_unassigned_subtask(parent,
                                                   "DOI Update on %s" % date_str,
                                                   notes=msg)
-    par_id = parent_task['id']
+    par_id = parent_task['gid']
 
     categories = [cat for cat in CATEGORIES if not cat[0] in skip_results]
 
@@ -570,5 +570,5 @@ available in the following directory: '%s'
             msg = "%s\n\nLine Structure: %s" % (desc, structure)
             _parent = asana.create_unassigned_subtask(par_id, title, notes=msg)
             for prt1, prt2, prt3 in dois[cid]:
-                asana.create_unassigned_subtask(_parent['id'],
+                asana.create_unassigned_subtask(_parent['gid'],
                                                 "%s | %s | %s" % (prt1, prt2, prt3))
