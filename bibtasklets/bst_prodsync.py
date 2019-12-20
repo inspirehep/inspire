@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2015, 2016, 2018 CERN.
+# Copyright (C) 2015, 2016, 2018, 2019 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -97,8 +97,7 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
             notimechangerecs = search_unit("%s->20250101000000" % compacttime, f='005', m='a')
             modified_records += notimechangerecs
             if with_citations.lower() == 'yes':
-                for citee, citer in run_sql("SELECT citee, citer FROM rnkCITATIONDICT WHERE last_updated>=%s", (last_run, )):
-                    modified_records.add(citer)
+                modified_records += intbitset(run_sql("SELECT distinct citer FROM rnkCITATIONLOG WHERE action_date>=%s", (last_run, ))
             if with_claims.lower() == 'yes':
                 modified_records |= intbitset(run_sql("SELECT bibrec FROM aidPERSONIDPAPERS WHERE last_updated>=%s", (last_run, )))
                 modified_records |= intbitset(run_sql('SELECT bibrec FROM aidPERSONIDPAPERS AS p JOIN aidPERSONIDDATA as d'
