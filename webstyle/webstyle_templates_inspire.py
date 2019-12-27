@@ -442,11 +442,10 @@ $(function () {
 
 <table class="headerbox"  cellspacing="0">
  <tr>
-  <td align="left">
+  <td align="left" width="60%%">
     <div>
       <a class="img" href="%(siteurl)s/?ln=%(ln)s">
-       <img border="0" src="%(cssurl)s/img/inspire_logo_hep.png" alt="INSPIRE"
- />
+       <img border="0" src="%(cssurl)s/img/inspire_logo_hep.png" alt="INSPIRE" style="max-width:100%%" />
       </a>
     </div>
   </td>
