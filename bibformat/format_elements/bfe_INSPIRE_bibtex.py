@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2018, 2019 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2018, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -320,6 +320,7 @@ def format_element(bfo, width="50", show_abstract=False):
     pagesset = False
     if entry_type in ['article', 'inproceedings']:
         journal_infos = bfo.fields("773__")
+        enote = []
         for journal_info in journal_infos:
             journal_source = cgi.escape(journal_info.get('p', ''))
             volume = cgi.escape(journal_info.get('v', ''))
@@ -382,10 +383,11 @@ def format_element(bfo, width="50", show_abstract=False):
             if displaycnt > 1 and str773:
                 if erratum.lower() in \
                    ('erratum', 'addendum', 'corrigendum', 'reprint'):
-                    str773 = '[%s: %s]' % (erratum, str773,)
+                    enote.append('%s: %s' % (erratum, str773,))
                 else:
-                    str773 = '[' + str773 + ']'
-                erratum_note = texified("note", str773)
+                    enote.append(str773)
+        if enote:
+            erratum_note = texified("note", '[' + '; '.join(enote) + ']')
 
     # Publication/Journal Name for non-article types
     if entry_type in ['book', 'incollection', 'proceedings']:
