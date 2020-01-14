@@ -368,7 +368,7 @@ def format_element(bfo, width="50", show_abstract=False):
                 if displaycnt == 0:
                     pagesset = True
                     out += texified("pages", pages)
-                else:
+                elif str773:
                     str773 += ',' + pages.split('-', 1)[0]
 
             if str773:
