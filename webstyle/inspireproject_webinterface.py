@@ -1,10 +1,11 @@
 import requests
 import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
+from requests import ConnectionError, HTTPError
+
 
 from invenio.webinterface_handler import WebInterfaceDirectory
 from invenio.inspireproject_webinterface_templates import tmpl_jobs_matrix
-from invenio.search_engine import perform_request_search
 from invenio.webpage import page
 from invenio.webuser import collect_user_info
 
@@ -22,15 +23,18 @@ class WebInterfaceInspirePages(WebInterfaceDirectory):
         s = requests.Session()
         for cat in categories:
             for rank in ranks:
-                resp = s.get('https://labs.inspirehep.net/api/jobs?rank={0}&field_of_interest={1}&status=open'.format(rank, cat),
-                            verify=False)
+                try:
+                    resp = s.get('https://labs.inspirehep.net/api/jobs?rank={0}&field_of_interest={1}&status=open'.format(rank, cat),
+                                 verify=False)
+                except ConnectionError:
+                    continue
                 try:
                     resp.raise_for_status()
                 except HTTPError:
                     continue
                 try:
                     respjson = resp.json()
-                except JSONDecodeError:
+                except ValueError:
                     continue
                 counts.setdefault(cat, {})[rank] = respjson['hits'].get('total', 0)
                 # Render the page (including header, footer)
