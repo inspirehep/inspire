@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016, 2019 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2015, 2016, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -266,6 +266,9 @@ class Template(DefaultTemplate):
             # the css was appended to invenio_inspire.css
             labsadditions = """<link rel="stylesheet" href="%s/css/betalink.css" type="text/css" />""" \
                 % (CFG_BASE_URL, )
+
+        if headertitle == 'HEP':
+            pageheaderadd = '<a style="display:block; background-image:url(/img/INSPIRE_logo_Blue_BG.png); background-position-x:left; background-position-y:center; background-size: auto; background-attachment:scroll; background-repeat:no-repeat; background-color:#001529; text-indent:-180px; text-align:center; white-space:pre-wrap; padding:0.8%; padding-left:180px; margin-bottom:0.1%; margin-left:0.5%; margin-top:0.1%; margin-right:0.5%; overflow-x:hidden; overflow-y:hidden; color:rgba(255,255,255,0.85); text-decoration:none; opacity:0.95" onMouseOver="this.style.opacity=\'0.70\'" onMouseOut="this.style.opacity=\'0.95\'" href="https://beta.inspirehep.net/"><span style="margin-left:180px">The next generation of INSPIRE is coming. The current system will be phased out. Explore the new INSPIRE here.</span></a>'
 
         # load the right message language
         _ = gettext_set_language(ln)
