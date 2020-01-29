@@ -1,5 +1,5 @@
 ## This file is part of Invenio.
-## Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2018, 2019 CERN.
+## Copyright (C) 2004, 2005, 2006, 2007, 2008, 2010, 2011, 2018, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -143,10 +143,10 @@ def process_references(references, output_format):
                                                   formated_rec)
                         else:
                             #bibtex
-                            if not re.search(r'\@article\{' + re.escape(ref) + '}', \
+                            if not re.search(r'@[^{]+\{' + re.escape(ref) + '}', \
                                              formated_rec):
-                                formated_rec = re.sub(r'\@article\{(.*)\,', \
-                                                      r'@article{' + ref + ',', \
+                                formated_rec = re.sub(r'@([^{]+)\{(.*)\,', \
+                                                      r'@\1{' + ref + ',', \
                                                       formated_rec)
                     btxt_str = btxt_str + formated_rec + '\n'
                 else:
