@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -39,6 +39,12 @@ def new_dataset(req, title=None, paper=None, authors=None, description=None,
     submitter_name = wash_url_argument(submitter_name, "str")
     submitter_email = wash_url_argument(submitter_email, "str")
     comments = wash_url_argument(comments, "str")
+
+    if dataset_file is None:
+        return redirect_to_url(
+            req,
+            "%s/data_submission.py/data_submission_fail?title=%s" % (CFG_SITE_URL, 'nothing, no dataset specified')
+        )
 
     dataset_file = wash_url_argument(dataset_file, "str")
     tmp_id = str(uuid.uuid1())
