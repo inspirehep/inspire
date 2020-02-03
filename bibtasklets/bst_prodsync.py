@@ -72,14 +72,16 @@ class run_ro_on_slave_db:
         dbquery.CFG_ACCESS_CONTROL_LEVEL_SITE = self.old_site_level
 
 
-def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_collections=''):
+def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_collections='', use_end_marker='no'):
     """
     Synchronize to either 'afs' or 'redis'
 
-    with_citations: yes/no, whether records that now matches a record will need to be re-exported.abs
+    with_citations: yes/no, whether records that now cite a record will need to be re-exported.
     with_claims: yes/no, whether record involved in some new claim need to be re-exported.
     skip_collections: comma-separated-lists of values for which records having 980:VALUE should be ignored,
         e.g. skip_collections='HEP,HEPNAMES,HEPHIDDEN'
+    use_end_marker: yes/no, whether an explicit end marker should be used to allow atomic migration of the batch.
+        This has an effect only if 'method' is 'redis'.
     """
     if not CFG_REDIS_HOST_LABS:
         method = 'afs'
@@ -125,14 +127,15 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
         open(lastrun_path, "w").write(future_lastrun)
         write_message("DONE!")
     else:
-        if redis_sync(reversed(modified_records), time_estimator, tot):
+        end_marker = "END" if use_end_marker.lower() == "yes" else None
+        if redis_sync(reversed(modified_records), time_estimator, tot, end_marker):
             open(lastrun_path, "w").write(future_lastrun)
             write_message("DONE!")
         else:
             write_message("Skipping prodsync: Redis queue is not yet empty")
 
 
-def redis_sync(modified_records, time_estimator, tot):
+def redis_sync(modified_records, time_estimator, tot, end_marker=None):
     """Sync to redis."""
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     if r.llen('legacy_records') != 0:
@@ -148,6 +151,8 @@ def redis_sync(modified_records, time_estimator, tot):
             r.rpush('legacy_records', zlib.compress(record))
         if shall_sleep(recid, i, tot, time_estimator):
             task_sleep_now_if_required()
+    if end_marker:
+        r.rpush('legacy_records', end_marker)
     return True
 
 
