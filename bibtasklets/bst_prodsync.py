@@ -128,14 +128,14 @@ def bst_prodsync(method='afs', with_citations='yes', with_claims='yes', skip_col
         write_message("DONE!")
     else:
         end_marker = "END" if use_end_marker.lower() == "yes" else None
-        if redis_sync(reversed(modified_records), time_estimator, tot, end_marker):
+        if redis_sync(reversed(modified_records), time_estimator, tot, now, end_marker):
             open(lastrun_path, "w").write(future_lastrun)
             write_message("DONE!")
         else:
             write_message("Skipping prodsync: Redis queue is not yet empty")
 
 
-def redis_sync(modified_records, time_estimator, tot, end_marker=None):
+def redis_sync(modified_records, time_estimator, tot, now, end_marker=None):
     """Sync to redis."""
     r = redis.StrictRedis.from_url(CFG_REDIS_HOST_LABS)
     if r.llen('legacy_records') != 0:
@@ -149,6 +149,7 @@ def redis_sync(modified_records, time_estimator, tot, end_marker=None):
             ))
         else:
             r.rpush('legacy_records', zlib.compress(record))
+            r.hset("legacy_records_last_sync", recid, now)
         if shall_sleep(recid, i, tot, time_estimator):
             task_sleep_now_if_required()
     if end_marker:
