@@ -468,7 +468,8 @@ $(function () {
 ::
 <a id="nav-inst" href="%(siteurl)s/collection/Institutions">Institutions</a>
 ::
-<a id="nav-conf" href="%(siteurl)s/collection/Conferences">Conferences</a>
+<a id="nav-conf" href="%(siteurl)s/collection/Conferences" target="_blank">
+<span class="tooltip">Conferences<span class="tooltiptext">go to the New Conferences site</span></span></a>
 ::
 <a id="nav-jobs" href="%(siteurl)s/collection/Jobs" target="_blank">
 <span class="tooltip">Jobs<span class="tooltiptext">go to the New Jobs site</span></span></a>
