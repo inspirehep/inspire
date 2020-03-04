@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014 CERN.
+## Copyright (C) 2013, 2014, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -31,14 +31,12 @@ body
 queue
     HEP_curation
 """
-import datetime
 
-from invenio.bibrecord import (record_get_field_instances,
-                               field_get_subfield_values)
-from invenio.config import CFG_SITE_SECURE_URL
-from invenio.dbquery import run_sql
-from invenio.bibcatalog_utils import (record_in_collection,
-                                      record_id_from_record)
+from invenio.bibcatalog_utils import (record_id_from_record,
+                                      record_in_collection)
+from invenio.bibrecord import (field_get_subfield_values,
+                               record_get_field_instances)
+from invenio.config import CFG_LABS_HOSTNAME, CFG_SITE_SECURE_URL
 
 
 def check_record(ticket, record):  # pylint: disable-msg=W0613
@@ -98,8 +96,11 @@ def generate_ticket(ticket, record):
             break
 
     subject.append("(#%s)" % (recid,))
-    text = 'Curate record here: %s/record/edit/#state=edit&recid=%s' % \
-           (CFG_SITE_SECURE_URL, recid)
+    text = """
+Curate record here: https://%s/workflows/edit_article/%s
+
+                    %s/record/edit/#state=edit&recid=%s
+""" % (CFG_LABS_HOSTNAME, recid, CFG_SITE_SECURE_URL, recid)
 
     ticket.subject = " ".join(subject)
     ticket.body = text.replace('%', '%%')

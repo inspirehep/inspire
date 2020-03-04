@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2014 CERN.
+## Copyright (C) 2014, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -21,7 +21,7 @@
 	a HEP record ticket
 """
 def get_template_data(record):
-	from invenio.config import CFG_SITE_URL
+	from invenio.config import CFG_SITE_URL, CFG_LABS_HOSTNAME
 	from invenio.bibrecord import record_get_field_value, record_get_field_values
 
 	recid = record_get_field_value(record,'001','','','')
@@ -31,5 +31,9 @@ def get_template_data(record):
 		postfix = ' '
 	queue = "HEP_cor"
 	subject = "%s%s(#%s)" % ( ' '.join(report_numbers), postfix, recid)
-	content = "Curate record here: %s/record/edit/#state=edit&recid=%s" % ( CFG_SITE_URL, recid)
+	content = """
+Curate record here: https://%s/workflows/edit_article/%s
+
+                    %s/record/edit/#state=edit&recid=%s
+""" % (CFG_LABS_HOSTNAME, recid, CFG_SITE_URL, recid)
 	return (queue, subject, content)
