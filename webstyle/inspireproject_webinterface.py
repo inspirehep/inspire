@@ -4,6 +4,7 @@ requests.packages.urllib3.disable_warnings()
 from requests import ConnectionError, HTTPError
 
 
+from invenio.config import CFG_LABS_HOSTNAME
 from invenio.webinterface_handler import WebInterfaceDirectory
 from invenio.inspireproject_webinterface_templates import tmpl_jobs_matrix
 from invenio.webpage import page
@@ -24,7 +25,8 @@ class WebInterfaceInspirePages(WebInterfaceDirectory):
         for cat in categories:
             for rank in ranks:
                 try:
-                    resp = s.get('https://labs.inspirehep.net/api/jobs?rank={0}&field_of_interest={1}&status=open'.format(rank, cat),
+                    resp = s.get('https://{0}/api/jobs?rank={1}&field_of_interest={2}&status=open'.format(
+                        CFG_LABS_HOSTNAME, rank, cat),
                                  verify=False)
                 except ConnectionError:
                     continue

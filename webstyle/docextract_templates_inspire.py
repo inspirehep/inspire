@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013, 2019 CERN.
+## Copyright (C) 2013, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -20,6 +20,7 @@
 
 """DocExtract templates for the web API"""
 
+from invenio.config import CFG_LABS_HOSTNAME
 
 class Template(object):
 
@@ -105,17 +106,17 @@ class Template(object):
                         <li>DOIs, e.g. 10.1142/S0217751X13500334</li>
                     </ul>
                     You might even want to create your reference list with the
-                    help of our <a href="http://inspirehep.net/info/hep/tools/bibliography_generate">
+                    help of our <a href="http://old.inspirehep.net/info/hep/tools/bibliography_generate">
                     LaTeX and BibTeX output formats</a> as this increases the likelihood
                     that the references will be extracted and linked correctly.
                 </li>
                 <li>
                     We don’t have the paper you’re citing in our database.
-                    If it’s of relevance for HEP (please see our <a href="https://inspirehep.net/info/hep/collection-policy">collection policy</a>
+                    If it’s of relevance for HEP (please see our <a href="https://%s/help/knowledge-base/content-policy/">collection policy</a>
                     for details), you can suggest that the paper should be added
-                    to INSPIRE by using this <a href="https://labs.inspirehep.net/literature/new">form</a>
+                    to INSPIRE by using this <a href="https://%s/literature/new">form</a>
                 </li>
             </ol>
         </p>
-        """
+        """ % (CFG_LABS_HOSTNAME, CFG_LABS_HOSTNAME,)
         return head + references_html + foot
