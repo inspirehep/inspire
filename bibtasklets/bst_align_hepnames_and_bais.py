@@ -42,12 +42,12 @@ def build_hepnames_knowledge():
                 value = value.strip()
                 if code == '9':
                     if id_type and id_type != value.upper():
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid IDs".format(recid=recid), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid IDs".format(recid=recid), stream=sys.stderr)
                         break
                     id_type = value.upper()
                 if code == 'a':
                     if id_value and id_value != value:
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid IDs".format(recid=recid), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid IDs".format(recid=recid), stream=sys.stderr)
                         break
                     id_value = value
             if not id_type or not id_value:
@@ -56,19 +56,19 @@ def build_hepnames_knowledge():
             else:
                 if id_type == 'BAI':
                     if not valid_bai(id_value):
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid BAI: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid BAI: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
                         continue
                 elif id_type == 'INSPIRE':
                     if not valid_inspire(id_value):
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid INSPIRE: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid INSPIRE: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
                         continue
                 elif id_type == 'ORCID':
                     if not valid_orcid(id_value):
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid ORCID: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid ORCID: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
                         continue
                 elif id_type == 'KAKEN':
                     if not valid_kaken(id_value):
-                        write_message("ERROR: http://inspirehep.net/record/{recid} has invalid KAKEN: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
+                        write_message("ERROR: http://old.inspirehep.net/record/{recid} has invalid KAKEN: {value}".format(recid=recid, value=id_value), stream=sys.stderr)
                         continue
                 ids[id_type] = id_value.upper()
                 if id_type == 'BAI':
@@ -96,7 +96,7 @@ def build_bai_knowledge():
         if personid not in ret:
             ret[personid] = {'personid': personid}
         if tag in ret[personid]:
-            write_message("ERROR: http://inspirehep.net/author/profile/{personid} has invalid IDs".format(personid=personid), stream=sys.stderr)
+            write_message("ERROR: http://old.inspirehep.net/author/profile/{personid} has invalid IDs".format(personid=personid), stream=sys.stderr)
             continue
         ret[personid][tag] = data.upper()
         if tag == 'BAI':
@@ -106,9 +106,9 @@ def build_bai_knowledge():
 
 def format_entry(entry):
     if 'recid' in entry:
-        return "http://inspirehep.net/record/{recid} ({ids})".format(recid=entry['recid'], ids=', '.join(["%s:%s" % item for item in entry.items()]))
+        return "http://old.inspirehep.net/record/{recid} ({ids})".format(recid=entry['recid'], ids=', '.join(["%s:%s" % item for item in entry.items()]))
     elif 'personid' in entry:
-        return "http://inspirehep.net/author/profile/{personid} ({ids})".format(personid=entry['personid'], ids=', '.join(["%s:%s" % item for item in entry.items()]))
+        return "http://old.inspirehep.net/author/profile/{personid} ({ids})".format(personid=entry['personid'], ids=', '.join(["%s:%s" % item for item in entry.items()]))
     assert False
 
 

@@ -1,3 +1,6 @@
+from invenio.config import CFG_LABS_HOSTNAME
+
+
 def tmpl_jobs_matrix(categories, ranks, counts):
     out = ["""<p>We are listing the number of job offers per field.</p>
 
@@ -19,9 +22,9 @@ def tmpl_jobs_matrix(categories, ranks, counts):
         for rank in ranks:
             out.append("""
             <td align="center">
-                <a href="https://labs.inspirehep.net/jobs?rank={0}&field_of_interest={1}">{2}</a>
+                <a href="https://{0}/jobs?rank={1}&field_of_interest={2}">{3}</a>
             </td>
-            """.format(rank, cat, counts[cat][rank]))
+            """.format(CFG_LABS_HOSTNAME, rank, cat, counts[cat][rank]))
         out.append('</td></tr>')
     out.append("</table>")
     return ''.join(out)
