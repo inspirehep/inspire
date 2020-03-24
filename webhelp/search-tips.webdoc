@@ -1,7 +1,7 @@
 ## -*- mode: html; coding: utf-8; -*-
 
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -218,7 +218,7 @@ will restrict the search to match only on the initial or the exact given name.
 
       <p>We have a new author identification system. When you find a paper and click on an author's name, you
 will be taken to the author's
-<a href="http://inspirehep.net/author/J.R.Ellis.1/">
+<a href="http://old.inspirehep.net/author/J.R.Ellis.1/">
 publication profile page</a>. Each author profile page is connected to a signature
 consisting of initials, family name and a number (e.g., j.r.ellis.1 for John Ellis) which can also be used
 for searching.   </p>
@@ -533,7 +533,7 @@ provides a simple way to search on journal references.</p>
       <p>Using author-count, "ac" described <a href="#author_count">above</a> can help narrow the result set
          to the full-collaboration papers (and exclude conference papers).</p>
       <p>More information on experiments in INSPIRE can be found in the
-         <a href="http://inspirehep.net/collection/Experiments">EXPERIMENTS database</a>.</p>
+         <a href="http://old.inspirehep.net/collection/Experiments">EXPERIMENTS database</a>.</p>
      </td>
    </tr>
  </table>
@@ -805,16 +805,16 @@ style="font-size:65%" href="#top">[Back to top]</a></h5>
      </td>
      <td class="tips-rhs">
        <table>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+b">b</a></td><td>Book</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+c">c</a></td><td>Conference paper</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+core">core</a></td><td>work concerning HEP</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+i">i</a></td><td>Introductory</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+l">l</a></td><td>Lectures</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+note">note</a></td><td>experimental note</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+p">p</a></td><td>Published (in a refereed journal)</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+proceedings">proceedings</a></td><td>collected volume of a conference proceedings</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+r">r</a></td><td>Review</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+tc+t">t</a></td><td>Thesis</td></tr>       </table>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+b">b</a></td><td>Book</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+c">c</a></td><td>Conference paper</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+core">core</a></td><td>work concerning HEP</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+i">i</a></td><td>Introductory</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+l">l</a></td><td>Lectures</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+note">note</a></td><td>experimental note</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+p">p</a></td><td>Published (in a refereed journal)</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+proceedings">proceedings</a></td><td>collected volume of a conference proceedings</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+r">r</a></td><td>Review</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+tc+t">t</a></td><td>Thesis</td></tr>       </table>
      </td>
    </tr>
  </table>
@@ -838,20 +838,20 @@ style="font-size:65%" href="#top">[Back to top]</a></h5>
      </td>
      <td class="tips-rhs">
        <table>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+a">a</a></td><td>Astrophysics</td><td>astro-ph</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+b">b</a></td><td>Beams (accelerators)</td><td>physics.acc-ph</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+c">c</a></td><td>Computing</td><td>cs</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+e">e</a></td><td>Experiment-HEP</td><td>hep-ex</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+g">g</a></td><td>Gravitation and Cosmology</td><td>gr-qc</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+i">i</a></td><td>Instrumentation</td><td>physics.ins-det</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+l">l</a></td><td>Lattice</td><td>hep-lat</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+m">m</a></td><td>Math and Math Physics</td><td>math/math-ph</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+n">n</a></td><td>Theory-Nucl</td><td>nucl-th</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+o">o</a></td><td>Other</td><td>Biographies, annual reports, etc.</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+p">p</a></td><td>Phenomenology-HEP</td><td>hep-ph</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+q">q</a></td><td>General physics</td><td>e.g., cond-mat and quant-ph</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+t">t</a></td><td>Theory-HEP</td><td>hep-th</td></tr>
-        <tr><td><a href="http://inspirehep.net/search?p=find+fc+x">x</a></td><td>Experiment-Nucl</td><td>nucl-ex</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+a">a</a></td><td>Astrophysics</td><td>astro-ph</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+b">b</a></td><td>Beams (accelerators)</td><td>physics.acc-ph</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+c">c</a></td><td>Computing</td><td>cs</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+e">e</a></td><td>Experiment-HEP</td><td>hep-ex</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+g">g</a></td><td>Gravitation and Cosmology</td><td>gr-qc</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+i">i</a></td><td>Instrumentation</td><td>physics.ins-det</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+l">l</a></td><td>Lattice</td><td>hep-lat</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+m">m</a></td><td>Math and Math Physics</td><td>math/math-ph</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+n">n</a></td><td>Theory-Nucl</td><td>nucl-th</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+o">o</a></td><td>Other</td><td>Biographies, annual reports, etc.</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+p">p</a></td><td>Phenomenology-HEP</td><td>hep-ph</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+q">q</a></td><td>General physics</td><td>e.g., cond-mat and quant-ph</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+t">t</a></td><td>Theory-HEP</td><td>hep-th</td></tr>
+        <tr><td><a href="http://old.inspirehep.net/search?p=find+fc+x">x</a></td><td>Experiment-Nucl</td><td>nucl-ex</td></tr>
        </table>
      </td>
    </tr>
@@ -868,14 +868,14 @@ style="font-size:65%" href="#top">[Back to top]</a></h5>
        <p>Both these SPIRES-era searches are simply lookups to other databases. </p>
 <p> Whois searches for people should be
 done in the
-          <a href="http://inspirehep.net/collection/HepNames">HEPNAMES</a> database, where either author searching as
+          <a href="http://old.inspirehep.net/collection/HepNames">HEPNAMES</a> database, where either author searching as
 described
 above can be done, e.g.
-<a href="https://inspirehep.net/search?cc=HepNames&amp;p=find+a+j+beacom">find a j beacom</a> or simply
-<a href="https://inspirehep.net/search?cc=HepNames&amp;p=beacom">beacom</a>. </p>
+<a href="https://old.inspirehep.net/search?cc=HepNames&amp;p=find+a+j+beacom">find a j beacom</a> or simply
+<a href="https://old.inspirehep.net/search?cc=HepNames&amp;p=beacom">beacom</a>. </p>
 <p>          Whereis searches for places should be done in the <a
-href="http://inspirehep.net/collection/Institutions">INSTITUTIONS</a> database, e.g.
-<a href="https://inspirehep.net/search?cc=Institutions&amp;p=cern">cern</a>.
+href="http://old.inspirehep.net/collection/Institutions">INSTITUTIONS</a> database, e.g.
+<a href="https://old.inspirehep.net/search?cc=Institutions&amp;p=cern">cern</a>.
        </p>
      </td>
    </tr>
@@ -887,11 +887,11 @@ href="http://inspirehep.net/collection/Institutions">INSTITUTIONS</a> database, 
    <tr>
      <td class="tips-lhs">
      <p>BibTeX:
-     <a href="https://inspirehep.net/search?p=find+a+higgs&amp;of=hx">find a higgs</a> </p>
+     <a href="https://old.inspirehep.net/search?p=find+a+higgs&amp;of=hx">find a higgs</a> </p>
      <p>Regular LaTeX:
-     <a href="https://inspirehep.net/search?p=find+a+higgs&amp;of=hlxe">find a higgs</a> </p>
+     <a href="https://old.inspirehep.net/search?p=find+a+higgs&amp;of=hlxe">find a higgs</a> </p>
      <p>CV LaTeX:
-     <a href="https://inspirehep.net/search?p=find+a+higgs&amp;of=tlcv">find a higgs</a> </p>
+     <a href="https://old.inspirehep.net/search?p=find+a+higgs&amp;of=tlcv">find a higgs</a> </p>
      </td>
      <td class="tips-rhs">
 <p>INSPIRE currently supports a variety of output formats and sorting options

@@ -2,7 +2,7 @@
 <!-- $Id$
 
      This file is part of Invenio.
-     Copyright (C) 2007, 2008, 2009, 2010, 2011 CERN.
+     Copyright (C) 2007, 2008, 2009, 2010, 2011, 2020 CERN.
 
      Invenio is free software; you can redistribute it and/or
      modify it under the terms of the GNU General Public License as
@@ -216,7 +216,7 @@ RSS for JOB
           </xsl:if>
         </title>
         <link>
-          <xsl:text>http://inspirehep.net/record/</xsl:text>
+          <xsl:text>http://old.inspirehep.net/record/</xsl:text>
           <xsl:value-of select="controlfield[@tag='001']"/>
         </link>
         <xsl:if test="datafield[@tag='270']/subfield[@code='m']">
@@ -426,7 +426,7 @@ RSS for INSTITUTIONS
               <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text>http://inspirehep.net/collection/Institutions</xsl:text>
+              <xsl:text>http://old.inspirehep.net/collection/Institutions</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </link>
@@ -503,14 +503,14 @@ RSS for CONFERENCES
         <link>
           <xsl:choose>
 	    <xsl:when test="controlfield[@tag='001']">
-	      <xsl:text>http://inspirehep.net/record/</xsl:text>
+	      <xsl:text>http://old.inspirehep.net/record/</xsl:text>
 	      <xsl:value-of select="controlfield[@tag='001']" />
 	    </xsl:when>
             <xsl:when test="datafield[@tag='856' and @ind1='4']/subfield[@code='u']">
               <xsl:value-of select="datafield[@tag='856' and @ind1='4']/subfield[@code='u']"/>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:text>http://inspirehep.net/collection/Conferences</xsl:text>
+              <xsl:text>http://old.inspirehep.net/collection/Conferences</xsl:text>
             </xsl:otherwise>
           </xsl:choose>
         </link>
