@@ -523,10 +523,10 @@ def format_element(bfo, width="50", show_abstract=False):
     out = out.rstrip(',') + '\n}'
 
     highbitwarning = r'''
-%%% contains utf-8, see: %s/info/faq/general#utf8
+%%% contains utf-8, see: {0}/info/faq/general#utf8
 %%% add \usepackage[utf8]{inputenc} to your latex preamble
 
-''' % (CFG_SITE_URL,)
+'''.format(CFG_SITE_URL)
     # FIXME: transcribe chars above \u007F to TeX sequence ?
     # if re.search(ur'[\u0080-\uFFFF]', out, re.UNICODE):
     #     out = highbitwarning + out
