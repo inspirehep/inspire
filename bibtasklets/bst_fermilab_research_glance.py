@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015, 2016, 2018, 2019 CERN.
+## Copyright (C) 2014, 2015, 2016, 2018, 2019, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -28,6 +28,7 @@ from os.path import join
 
 from dateutil.relativedelta import relativedelta
 
+from invenio.config import CFG_SITE_SECURE_URL
 from invenio.search_engine import perform_request_search
 
 from lxml import etree
@@ -138,7 +139,7 @@ def create_table():
                     hit_number = E.LI()
                 else:
                     link = search.replace(' ', '+')
-                    link = 'https://inspirehep.net/search?cc=Fermilab&p=' + link
+                    link = CFG_SITE_SECURE_URL + '/search?cc=Fermilab&p=' + link
                     link += '&rg=100&sf=earliestdate'
                     hit_number = E.LI(E.A({'class': 't'}, str(result),
                                           href=link))
@@ -179,7 +180,7 @@ Officer papers (starting 2019-08-16; previously labeled CD)"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "SCD: Scientific Computing Division \
 papers (starting 2019-08-16; previously labeled CD)"),
-                     E.TD({'class': 'l'}, "ND: Neutrino Division papers"))
+                      E.TD({'class': 'l'}, "ND: Neutrino Division papers"))
     table2.append(glos_tr_td)
     glos_tr_td = E.TR(E.TD({'class': 'l'}, "LBN: Long Baseline Neutrino \
 Sector papers"))

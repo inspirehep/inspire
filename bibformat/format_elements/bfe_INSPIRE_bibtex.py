@@ -26,7 +26,7 @@ import cgi
 import re
 
 from invenio.bibformat_elements import bfe_report_numbers as bfe_repno
-from invenio.config import CFG_SITE_LANG
+from invenio.config import CFG_SITE_LANG, CFG_SITE_URL, CFG_SITE_SECURE_URL
 from invenio.search_engine import get_fieldvalues, search_pattern
 
 
@@ -310,7 +310,8 @@ def format_element(bfo, width="50", show_abstract=False):
             if url.lower().endswith(
                     ('.png', '.jpg', '.jpeg', '.gif', '.eps')):
                 continue
-            if url.startswith(('http://inspirehep.net/', 'https://inspirehep.net/')):
+            if url.startswith((CFG_SITE_URL, CFG_SITE_SECURE_URL,
+                               'http://inspirehep.net/', 'https://inspirehep.net/')):
                 continue
 
             out += texified("url", url)
@@ -522,10 +523,10 @@ def format_element(bfo, width="50", show_abstract=False):
     out = out.rstrip(',') + '\n}'
 
     highbitwarning = r'''
-%%% contains utf-8, see: http://inspirehep.net/info/faq/general#utf8
+%%% contains utf-8, see: %s/info/faq/general#utf8
 %%% add \usepackage[utf8]{inputenc} to your latex preamble
 
-'''
+''' % (CFG_SITE_URL,)
     # FIXME: transcribe chars above \u007F to TeX sequence ?
     # if re.search(ur'[\u0080-\uFFFF]', out, re.UNICODE):
     #     out = highbitwarning + out
