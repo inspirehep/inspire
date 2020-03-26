@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2015 CERN.
+# Copyright (C) 2015, 2020 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -20,6 +20,7 @@
 import csv
 
 from invenio.search_engine import perform_request_search, get_fieldvalues
+from invenio.config import CFG_SITE_SECURE_URL
 from invenio.dbquery import run_sql
 from invenio.webpage import page
 from invenio.bibsched_tasklets.bst_prodsync import run_ro_on_slave_db
@@ -64,12 +65,12 @@ def index(req, doi_prefix=""):
 </pre>
 </p>
 <p>The <tt>doi_prefix</tt> can be provided directly as a URL query argument. E.g.:
-<a href="/doi2orcid.py?doi_prefix=10.1088">https://inspirehep.net/doi2orcid.py?doi_prefix=10.1088</a>.
+<a href="/doi2orcid.py?doi_prefix=10.1088">%s/doi2orcid.py?doi_prefix=10.1088</a>.
 </p>
 <form>
 <label for="doi_prefix">Enter the DOI Prefix: </label><input type="text" name="doi_prefix" placeholder="e.g. 10.1088" />
 <input type="submit" />
-"""
+""" % (CFG_SITE_SECURE_URL,)
         return page(req=req, title="DOI 2 ORCID tool", body=body)
     req.content_type = 'text/csv; charset=utf-8'
     req.headers_out['content-disposition'] = 'attachment; filename=%s.csv' % doi_prefix
