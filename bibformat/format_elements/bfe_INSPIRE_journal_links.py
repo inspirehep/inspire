@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -79,7 +79,7 @@ def format_element(bfo, default = '', separator = '; ', style = '', \
                   _lookup_url_name(bfo, url.get('y', 'Fulltext')) +'</a>'
             for url in urls if url.get("u") and \
                   url.get('y', 'Fulltext').upper() != "DOI" and not \
-                  url.get('u').startswith(CFG_SITE_URL)])
+                  url.get('u').startswith((CFG_SITE_URL, 'http://inspirehep.net/'))])
 
     #put it all together
     if links:
