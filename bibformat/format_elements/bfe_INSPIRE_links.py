@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018, 2019 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -144,26 +144,28 @@ def format_element(bfo, default='', separator='; ', style='',
     for url in urls:
         if url.get("y", "").lower() not in \
            ("adsabs", "euclid", "msnet", "osti", "zblatt"):
-            if '.png' not in url.get('u', '') and not (
+            urllink = url.get('u', '')
+            urllink = urllink.replace('://inspirehep.net/', '://old.inspirehep.net/')
+            if '.png' not in urllink and not (
                     url.get('y', '').lower().startswith("fermilab") and
                     bfo.field("710__g").lower() in
                     ('atlas collaboration', 'cms collaboration')):
                 if url.get('y', '').upper() != "DURHAM":
-                    if url.get("u", '') and \
+                    if urllink and \
                        url.get('y', 'Fulltext').upper() != "DOI" and not \
-                       url.get('u', '').startswith(CFG_SITE_URL):
+                       urllink.startswith(CFG_SITE_URL):
                         links.append('<a %s href="%s">%s</a>' %
-                                     (style, url.get("u", ''),
+                                     (style, urllink,
                                       _lookup_url_name(bfo, url.get(
                                           'y', 'Fulltext'))))
-                    elif url.get("u", '').startswith(CFG_SITE_URL) and \
-                        (url.get("u", '').lower().endswith(".pdf") or
-                         url.get("u", '').lower().endswith(
+                    elif urllink.startswith(CFG_SITE_URL) and \
+                        (urllink.lower().endswith(".pdf") or
+                         urllink.lower().endswith(
                              '.pdf?subformat=pdfa')) and \
-                            bibdocfile_url_to_bibdoc(url.get('u')).doctype in \
+                            bibdocfile_url_to_bibdoc(urllink).doctype in \
                             allowed_doctypes:
                         links.append('<a %s href="%s">%s</a>' %
-                                     (style, url.get("u", ''),
+                                     (style, urllink,
                                       _lookup_url_name(bfo, url.get(
                                           'y', 'Fulltext'))))
 
