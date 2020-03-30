@@ -25,6 +25,9 @@ Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
 Disallow: /collection/Jobs Hidden
+Disallow: /collection/HEP
+Disallow: /collection/Jobs
+Disallow: /collection/Conferences
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -52,6 +55,9 @@ Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
 Disallow: /collection/Jobs Hidden
+Disallow: /collection/HEP
+Disallow: /collection/Jobs
+Disallow: /collection/Conferences
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -79,6 +85,9 @@ Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
 Disallow: /collection/Jobs Hidden
+Disallow: /collection/HEP
+Disallow: /collection/Jobs
+Disallow: /collection/Conferences
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -108,5 +117,8 @@ Disallow: /record/merge
 Disallow: /info/manage
 Disallow: /batchuploader/metadata
 Disallow: /collection/Jobs Hidden
+Disallow: /collection/HEP
+Disallow: /collection/Jobs
+Disallow: /collection/Conferences
 
-Sitemap: http://inspirehep.net/sitemap-index.xml.gz
+Sitemap: http://old.inspirehep.net/sitemap-index.xml.gz
