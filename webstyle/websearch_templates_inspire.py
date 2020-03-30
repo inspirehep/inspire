@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2018, 2019 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2011, 2018, 2019, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -289,7 +289,7 @@ class Template(DefaultTemplate):
                  css_class=''),)
             search_on_labs = """
                 <td colspan="2" class="searchboxbody" align="right">
-                  <input class="betalink" formtarget="inspirebetasearch" type="submit" name="searchlabs" value="Search on INSPIRE beta" /></td>
+                  <input class="betalink" formtarget="inspirebetasearch" type="submit" name="searchlabs" value="Search the new INSPIRE" /></td>
             """
         # print commentary start:
         if collection_id == "Jobs":
