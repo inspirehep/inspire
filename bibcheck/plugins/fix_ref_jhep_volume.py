@@ -130,10 +130,14 @@ def wrong_pubnote(pbn, source, fuzzy=False):
     article-id contains a letter in the middle. 1st 2 digits are month.
     """
     bug_type = ''
+    rendered_pbn = 'x' in pbn # comes most likely from arxiv - don't trust it
+
     if pbn['p'].upper() in ['JCAP', 'JHEP', 'J.STAT.MECH.']:
         try:
             wrong_volume = int(pbn['v'][-2:]) > 12
         except (KeyError, ValueError):
+            wrong_volume = True
+        if len(pbn['v']) != 4:
             wrong_volume = True
         if fuzzy and source == 'reference':
             if pbn['v'][-2:] == pbn['v'][:2]:
@@ -151,10 +155,11 @@ def wrong_pubnote(pbn, source, fuzzy=False):
         else:
             wrong_pbn = True
             bug_type = 'PTEP'
-    elif pbn['p'] == 'MDPI Physics' and source == 'reference':
-        # mostly wrong
-        wrong_pbn = True
-        bug_type = 'Physics'
+    elif pbn['p'] == 'Physics':
+        if source == 'reference' or rendered_pbn:
+            # mostly wrong
+            wrong_pbn = True
+            bug_type = 'Physics'
 
     return bug_type
 
@@ -414,6 +419,9 @@ def get_candidates_by_journal_year_artid(ref_pbn):
         # maybe it's correct - make it Y2020 complient and add the correct search to candidates
         pattern = '773__p:"%s" and 773__c:"%s" and 773__v:"%s"' % (journal, artid, volume)
         candidates = perform_request_search(p=pattern)
+        # maybe it's mixed up - switch volume and artid
+        pattern = '773__p:"%s" and 773__c:"%s" and 773__v:"%s"' % (journal, volume, artid)
+        candidates += perform_request_search(p=pattern)
         # ignore the potentially wrong volume, use only the year
         pattern = '773__p:"%s" and 773__c:"%s" and 773__y:"%s"' % (journal, artid, year)
         candidates += perform_request_search(p=pattern)
@@ -472,7 +480,10 @@ def guess_citation(ref_pbn, bug_type, text, debug=False):
 
 
 def pubnotes_from_recid(recid, debug=False):
-    """ return journal pubnotes (773__c,v,p,y) as list of dicts """
+    """
+    return journal pubnotes as list of dicts
+    if there are at least p,v,c
+    """
     record = get_record(recid)
     pbns = []
     pubnotes = record.get('773', [])
@@ -482,9 +493,8 @@ def pubnotes_from_recid(recid, debug=False):
     for subfield in pubnotes:
         pbn = {'y': ''}
         for code, value in subfield[0]:
-            if code in ['p', 'v', 'c', 'y']:
-                pbn[code] = value
-        if len(pbn) == 4:
+            pbn[code] = value
+        if 'p' in pbn and 'v' in pbn and 'c' in pbn:
             pbns.append(pbn)
     return pbns
 
