@@ -116,6 +116,32 @@ def derive_year_from_YYMM(volume):
     return year
 
 
+def to_yymm(ref_pbn):
+    """ looks as if the year is missing in the volume """
+    volume = ref_pbn['v']
+    if len(volume) == 2 and len(ref_pbn['y']) == 4:
+        volume = ref_pbn['y'][2:] + volume
+    return volume
+
+
+def guess_year(ref_pbn):
+    """ best guess for the year """
+    volume = ref_pbn['v']
+    try:
+        year_from_y = int(ref_pbn['y'])
+    except ValueError:
+        year_from_y = 0
+
+    if volume[:2] == volume[2:]:
+        # this is a known bug - year is repeated as month e.g. 1515
+        year = derive_year_from_YYMM(volume)
+    elif 1980 < year_from_y < 2040:
+        year = ref_pbn['y']
+    else:
+        year = volume
+    return year
+
+
 def wrong_pubnote(pbn, source, fuzzy=False):
     """
     For JHEP etc.:
@@ -411,11 +437,7 @@ def get_candidates_by_journal_year_artid(ref_pbn):
 
     candidates = []
     if volume and artid:
-        if volume[:2] == volume[2:]:
-            # this is a known bug - year is repeated as month e.g. 1515
-            year = derive_year_from_YYMM(volume)
-        else:
-            year = volume
+        year = guess_year(ref_pbn)
         # maybe it's correct - make it Y2020 complient and add the correct search to candidates
         pattern = '773__p:"%s" and 773__c:"%s" and 773__v:"%s"' % (journal, artid, volume)
         candidates = perform_request_search(p=pattern)
@@ -425,7 +447,7 @@ def get_candidates_by_journal_year_artid(ref_pbn):
         # ignore the potentially wrong volume, use only the year
         pattern = '773__p:"%s" and 773__c:"%s" and 773__y:"%s"' % (journal, artid, year)
         candidates += perform_request_search(p=pattern)
-    return candidates
+    return set(candidates)
 
 
 def guess_citation(ref_pbn, bug_type, text, debug=False):
@@ -438,6 +460,7 @@ def guess_citation(ref_pbn, bug_type, text, debug=False):
     multiple_results = False
 
     if bug_type == 'JHEP':
+        ref_pbn['v'] = to_yymm(ref_pbn)
         candidates = get_candidates_by_journal_year_artid(ref_pbn)
     elif bug_type == 'PTEP':
         candidates = get_candidates_by_artid_substring(ref_pbn, debug)
