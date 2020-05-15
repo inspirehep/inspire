@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2017 CERN.
+# Copyright (C) 2017, 2020 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -20,6 +20,8 @@
 import os
 import shelve
 import requests
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 from tempfile import mkstemp
 
@@ -81,9 +83,21 @@ class HepDataDumper(object):
     def __iter__(self):
         chunk_size = 200
         page = 0
+
+        retry_strategy = Retry(total=5,
+                               backoff_factor=2,
+                               status_forcelist=[429, 500, 502, 503, 504],
+                               method_whitelist=["GET", "POST"])
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        s = requests.Session()
+        s.mount("https://", adapter)
+        s.headers.update({'Accept': 'application/json'})
+
         while True:
             page += 1
-            results = requests.get("https://hepdata.net/search/", params=dict(size=chunk_size, page=page), headers={'Accept': 'application/json'}).json()['results']
+            resp = s.get("https://hepdata.net/search/", params=dict(size=chunk_size, page=page), timeout=60)
+            resp.raise_for_status()
+            results = resp.json()['results']
             if not results:
                 break
             for result in results:
