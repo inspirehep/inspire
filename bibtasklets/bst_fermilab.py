@@ -45,7 +45,13 @@ SERIES1.sort()
 CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
 
 
-def bst_fermilab():
+def _print(string, verbose=3):
+    """Write message to log and bibsched log."""
+    MESSAGES.append(string)
+    msg = "bst_fermilab: " + string
+    write_message(msg, None, verbose)
+
+def bst_fermilab(log_dir=CFG_TMPSHAREDDIR, logging=True):
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
 
     errors = []
@@ -233,22 +239,20 @@ def bst_fermilab():
     write_message('\\rm fermilab-reports-preprints.html')
     write_message('cp %s .' % filename)
 
-    if errors:
+    if ERRORS:
         send_notification_email(errors)
 
-
-def send_notification_email(errorlist):
+def send_notification_email(errors):
     """Notify on errors by mail."""
 
     msg_html = """<p>Message from BibTasklet bst_fermilab:</p>
 <p>Problems have occurred in %d author identifier(s):'</p>
 
-""" % (len(errorlist))
-    for e in errorlist:
+""" % (len(errors))
+    for e in errors:
         msg_html += e + "<br>"
     send_email(fromaddr=CFG_SITE_ADMIN_EMAIL, toaddr='cleggm1@fnal.gov,hoc@fnal.gov',
                subject="Issues from BibTasklet bst_fermilab", html_content=msg_html)
-
-
+                     
 if __name__ == "__main__":
     bst_fermilab()
