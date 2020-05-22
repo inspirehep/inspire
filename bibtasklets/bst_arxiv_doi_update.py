@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2013, 2014, 2015, 2019 CERN.
+# Copyright (C) 2013, 2014, 2015, 2019, 2020 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -27,6 +27,8 @@ import datetime
 
 from invenio.bibtaskutils import ChunkedBibUpload
 from invenio.docextract_record import get_record, BibRecord
+from invenio.docextract_convert_journals import mangle_value
+from invenio.refextract_kbs import get_kbs
 from invenio.search_engine import perform_request_search
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_ADMIN_EMAIL)
@@ -344,6 +346,10 @@ def create_pubnote(doi, published_date):
         else:
             field_773['p'] = add_dots(segments[0])
             field_773['v'] = segments[1]
+
+        # normalize journal name via knowledgebase
+        jkb = get_kbs()['journals']
+        field_773['p'] = mangle_value(jkb, field_773['p'])
 
         field_773['c'] = segments[2]
 
