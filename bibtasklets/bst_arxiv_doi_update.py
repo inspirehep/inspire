@@ -27,8 +27,7 @@ import datetime
 
 from invenio.bibtaskutils import ChunkedBibUpload
 from invenio.docextract_record import get_record, BibRecord
-from invenio.docextract_convert_journals import mangle_value
-from invenio.refextract_kbs import get_kbs
+from invenio.docextract_convert_journals import normalize_journal_name
 from invenio.search_engine import perform_request_search
 from invenio.config import (CFG_TMPSHAREDDIR,
                             CFG_SITE_ADMIN_EMAIL)
@@ -348,8 +347,7 @@ def create_pubnote(doi, published_date):
             field_773['v'] = segments[1]
 
         # normalize journal name via knowledgebase
-        jkb = get_kbs()['journals']
-        field_773['p'] = mangle_value(jkb, field_773['p'])
+        field_773['p'] = normalize_journal_name(field_773['p'])
 
         field_773['c'] = segments[2]
 
