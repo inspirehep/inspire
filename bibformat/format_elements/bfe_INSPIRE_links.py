@@ -140,7 +140,7 @@ def format_element(bfo, default='', separator='; ', style='',
     # might want to check that we aren't repeating things from above...
     # Note: excluding self-links
     urls = bfo.fields('8564_')
-    allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS"]
+    allowed_doctypes = ["INSPIRE-PUBLIC", "SCOAP3", "PoS", "CDS"]
     for url in urls:
         if url.get("y", "").lower() not in \
            ("adsabs", "euclid", "msnet", "osti", "zblatt"):
