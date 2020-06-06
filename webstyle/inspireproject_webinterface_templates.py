@@ -24,7 +24,7 @@ def tmpl_jobs_matrix(categories, ranks, counts):
             <td align="center">
                 <a href="https://{0}/jobs?rank={1}&field_of_interest={2}">{3}</a>
             </td>
-            """.format(CFG_LABS_HOSTNAME, rank, cat, counts[cat][rank]))
+            """.format(CFG_LABS_HOSTNAME, rank, cat, counts[cat].get(rank, 0)))
         out.append('</td></tr>')
     out.append("</table>")
     return ''.join(out)

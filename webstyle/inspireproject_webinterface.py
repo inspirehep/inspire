@@ -3,6 +3,7 @@ import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 from requests import ConnectionError, HTTPError
 
+from collections import defaultdict
 
 from invenio.config import CFG_LABS_HOSTNAME
 from invenio.webinterface_handler import WebInterfaceDirectory
@@ -20,7 +21,7 @@ class WebInterfaceInspirePages(WebInterfaceDirectory):
                       'nucl-ex', 'nucl-th', 'physics', 'physics.acc-ph',
                       'physics.ins-det', 'quant-ph', 'physics.atom-ph', 'nlin')
         ranks = ('PHD', 'POSTDOC', 'JUNIOR', 'SENIOR', 'STAFF', 'VISITOR', 'OTHER')
-        counts = {}
+        counts = defaultdict(dict)
         s = requests.Session()
         for cat in categories:
             for rank in ranks:
