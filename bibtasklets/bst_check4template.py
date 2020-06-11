@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2013, 2014, 2015 CERN.
+## Copyright (C) 2013, 2014, 2015, 2020 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -39,11 +39,9 @@ from invenio.bibedit_config import CFG_BIBEDIT_RECORD_TEMPLATES_PATH
 
 TEMPLATE_TYPES = {'HEP': ['HEP', 'article', 'book_chapter', 'book', 'thesis',
                           'conference_paper', 'preprint', 'proceedings'],
-                  'Conferences' : ['conference', 'conference'],
                   'HepNames' : ['hepnames', 'hepnames'],
                   'Experiments': ['experiment', 'experiment'],
                   'Institutions': ['institution', 'institution'],
-                  'Jobs': ['jobs', 'jobs'],
                   'Data': ['data', 'data_template']
                  }
 
