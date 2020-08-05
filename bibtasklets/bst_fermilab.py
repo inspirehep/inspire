@@ -48,9 +48,10 @@ CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
 def bst_fermilab():
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
 
+    errors = []
+
     for series in SERIES1:
         reports = []
-        errors = []
         authorId = False
         search = "find r fermilab-" + series + "-*"
         result = perform_request_search(p=search, cc='Fermilab')
@@ -235,6 +236,7 @@ def bst_fermilab():
     if errors:
         send_notification_email(errors)
 
+
 def send_notification_email(errorlist):
     """Notify on errors by mail."""
 
@@ -246,6 +248,7 @@ def send_notification_email(errorlist):
         msg_html += e + "<br>"
     send_email(fromaddr=CFG_SITE_ADMIN_EMAIL, toaddr='cleggm1@fnal.gov,hoc@fnal.gov',
                subject="Issues from BibTasklet bst_fermilab", html_content=msg_html)
-                     
+
+
 if __name__ == "__main__":
     bst_fermilab()
