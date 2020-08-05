@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2013, 2014, 2015, 2018, 2019 CERN.
+## Copyright (C) 2013, 2014, 2015, 2018, 2019, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -25,9 +25,11 @@ from cgi import escape
 
 import pytz
 from invenio.bibtask import write_message
-from invenio.config import CFG_SITE_URL
+from invenio.config import (CFG_SITE_ADMIN_EMAIL,
+                            CFG_SITE_URL)
 from invenio.search_engine import perform_request_search
 from invenio.search_engine_utils import get_fieldvalues
+from invenio.mailutils import send_email
 
 chicago_timezone = pytz.timezone('America/Chicago')
 
@@ -35,7 +37,7 @@ SERIES1 = ['thesis', 'misc', 'tm', 'fn', 'proposal',
            'workbook', 'bachelors', 'masters', 'design',
            'loi', 'eoi', 'pbar', 'nal', 'annual', 'upc',
            'ap', 'en', 'exp', 'lu', 'habil', 'vlhcpub',
-           'slides', 'poster', 'code']
+           'slides', 'poster', 'code', 'crada']
 SERIES2 = ['PUB', 'CONF']
 
 SERIES1.sort()
@@ -45,6 +47,8 @@ CFG_FERMILAB_PATH = "/afs/cern.ch/project/inspire/public/fermilab"
 
 def bst_fermilab():
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
+
+    errors = []
 
     for series in SERIES1:
         reports = []
@@ -106,10 +110,14 @@ def bst_fermilab():
             if report[4]:
                 search2 = '035__a:' + report[4]
                 result = perform_request_search(p=search2, cc='HepNames')
-                report[2] = '<a href="%(site)s/record/%(recid)s">%(rep2)s</a>'\
-                            % {'site': CFG_SITE_URL,
-                               'recid': str(result[0]),
-                               'rep2': report[2]}
+                if len(result) == 1:
+                    report[2] = '<a href="%(site)s/record/%(recid)s">%(rep2)s</a>'\
+                                % {'site': CFG_SITE_URL,
+                                   'recid': str(result[0]),
+                                   'rep2': report[2]}
+                else:
+                    errors.append('HEP record: ' + report[4] + ' | Problem Id: ' + report[1] + \
+                                   ' | Number of results in HEPNames: ' + len(result))
             line = '''
     <tr>
       <td><a href="%(site)s/record/%(rep1)s">%(rep0)s</a></td>
@@ -224,6 +232,22 @@ def bst_fermilab():
     write_message('cd /afs/fnal.gov/files/expwww/bss/html/techpubs')
     write_message('\\rm fermilab-reports-preprints.html')
     write_message('cp %s .' % filename)
+
+    if errors:
+        send_notification_email(errors)
+
+
+def send_notification_email(errorlist):
+    """Notify on errors by mail."""
+
+    msg_html = """<p>Message from BibTasklet bst_fermilab:</p>
+<p>Problems have occurred in %d author identifier(s):'</p>
+
+""" % (len(errorlist))
+    for e in errorlist:
+        msg_html += e + "<br>"
+    send_email(fromaddr=CFG_SITE_ADMIN_EMAIL, toaddr='cleggm1@fnal.gov,hoc@fnal.gov',
+               subject="Issues from BibTasklet bst_fermilab", html_content=msg_html)
 
 
 if __name__ == "__main__":
