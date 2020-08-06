@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2015, 2018 CERN.
+## Copyright (C) 2014, 2015, 2018, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -25,6 +25,8 @@ try to match them to record in INSPIRE.
 import requests
 import sys
 
+from simplejson import JSONDecodeError
+
 from invenio.intbitset import intbitset
 from invenio.jsonutils import json_unicode_to_utf8
 from invenio.search_engine import search_pattern
@@ -35,25 +37,37 @@ from invenio.bibtask import write_message, task_sleep_now_if_required
 from invenio.bibtaskutils import ChunkedBibUpload
 
 CFG_HAL_API_URL = "http://api.archives-ouvertes.fr/search"
-CFG_HAL_ROWS = 10000
+CFG_HAL_ROWS = 5000
 
 def hal_record_iterator():
-    start = 0
+    i = 0
+    s = requests.Session()
+    cursormark = '*'
     while True:
-        res = requests.get(CFG_HAL_API_URL, timeout=60, params={
-            'start': start,
+        res = s.get(CFG_HAL_API_URL, timeout=60, params={
             'q': '(inspireId_s:* OR arxivId_s:* OR doiId_s:*)',
             'fl': 'inspireId_s,arxivId_s,halId_s,doiId_s',
             'rows': CFG_HAL_ROWS,
-            'sort': 'docid asc'
-        }).json()
-        if res['response']['docs']:
-            for row in res['response']['docs']:
-                yield json_unicode_to_utf8(row)
-            start += CFG_HAL_ROWS
-            write_message("%s out of %s" % (start, res['response']['numFound']))
-        else:
-            return
+            'sort': 'docid asc',
+            'cursorMark': cursormark
+        })
+        res.raise_for_status()
+        oldcursormark = cursormark
+        try:
+            res = res.json()
+        except JSONDecodeError:
+            write_message("Failed json parsing at chunk=%s with response=%s...." %
+                          (i, res.content[:250]))
+            raise
+        cursormark = res.get('nextCursorMark', '')
+
+        for doc in res.get('response', {}).get('docs', []):
+            yield json_unicode_to_utf8(doc)
+        i += CFG_HAL_ROWS
+        write_message("%s out of %s" % (i, res.get('response', {}).get('numFound', 0)))
+        if oldcursormark == cursormark:
+            break
+
 
 def get_hal_records():
     return search_pattern(p='035__9:"HAL"')
@@ -80,6 +94,7 @@ def get_hal_maps():
             doi_map[row['doiId_s']] = row
     write_message("... DONE")
     return doi_map, arxiv_map, recid_map
+
 
 def update_record(recid, hal_id, bibupload):
     rec = {}
