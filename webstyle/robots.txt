@@ -28,6 +28,8 @@ Disallow: /collection/Jobs Hidden
 Disallow: /collection/HEP
 Disallow: /collection/Jobs
 Disallow: /collection/Conferences
+Disallow: /collection/Institutions
+Disallow: /collection/Experiments
 
 User-Agent: bingbot
 Disallow: /cgi-bin/
@@ -58,6 +60,8 @@ Disallow: /collection/Jobs Hidden
 Disallow: /collection/HEP
 Disallow: /collection/Jobs
 Disallow: /collection/Conferences
+Disallow: /collection/Institutions
+Disallow: /collection/Experiments
 
 User-Agent: Twitterbot
 Disallow: /cgi-bin/
@@ -88,6 +92,8 @@ Disallow: /collection/Jobs Hidden
 Disallow: /collection/HEP
 Disallow: /collection/Jobs
 Disallow: /collection/Conferences
+Disallow: /collection/Institutions
+Disallow: /collection/Experiments
 
 User-agent: *
 Disallow: /cgi-bin/
@@ -120,5 +126,7 @@ Disallow: /collection/Jobs Hidden
 Disallow: /collection/HEP
 Disallow: /collection/Jobs
 Disallow: /collection/Conferences
+Disallow: /collection/Institutions
+Disallow: /collection/Experiments
 
 Sitemap: http://old.inspirehep.net/sitemap-index.xml.gz
