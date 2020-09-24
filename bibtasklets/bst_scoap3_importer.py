@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2014, 2018, 2019 CERN.
+## Copyright (C) 2014, 2018, 2019, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -36,6 +36,8 @@ from invenio.search_engine import perform_request_search
 
 import requests
 from requests.exceptions import ConnectionError, HTTPError, Timeout
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 from sickle import Sickle
 
@@ -152,6 +154,13 @@ def bst_scoap3_importer():
     line_count_update = 0  # to avoid empty bibupload
 
     s = requests.Session()
+    retry_strategy = Retry(total=5,
+                           backoff_factor=2,
+                           status_forcelist=[429, 500, 502, 503, 504],
+                           method_whitelist=["GET", "POST"])
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    s.mount("https://", adapter)
+
     for sid in newids:
         task_sleep_now_if_required(can_stop_too=True)
         values = _get_record_metadata(sid)
