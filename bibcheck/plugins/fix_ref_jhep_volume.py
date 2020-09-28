@@ -550,6 +550,11 @@ def get_pubnote_from_inspire(ref_pbn, bug_type, recid, debug=False):
 
     return pubnote
 
+def add_noncurator(ref_subfields):
+    if not ('9','NONCURATOR') in ref_subfields:
+        ref_subfields.append(('9','NONCURATOR'))
+    if ('9','CURATOR') in ref_subfields:
+        ref_subfields.remove(('9','CURATOR'))
 
 def check_record(record, tickets=True, fuzzy=False):
     """
@@ -588,12 +593,14 @@ def check_record(record, tickets=True, fuzzy=False):
                     (confirmation_reason, inspire_pubnote, reference['mark_line']))
                 else:
                     m999[0][reference['position_pbn']] = ('s', inspire_pubnote)
+                    add_noncurator(m999[0])
                     record.set_amended('R %s: %s %s  <-  %s' %
                                        (confirmation_reason, reference['curator'],
                                         inspire_pubnote, reference['mark_line']))
                 if reference['subfield_0'] and not \
                    (reference['subfield_0'].isdigit() and int(reference['subfield_0']) == recid_citation):
                     m999[0].remove(('0', reference['subfield_0']))
+                    add_noncurator(m999[0])
                     record.set_amended('    deleting $$0%s' % reference['subfield_0'])
             else:
                 if tickets:
@@ -656,6 +663,7 @@ def analyse_refs(recid, debug):
                     inspire_pubnote, recid, reference['mark_line'])
                 else:
                     m999[0][reference['position_pbn']] = ('s', inspire_pubnote)
+                    add_noncurator(m999[0])
                     update_refs = True
                     log_text += 'R %s: %s %s   <-%s  %s\n' % \
                     (confirmation_reason, reference['curator'], \
@@ -663,6 +671,7 @@ def analyse_refs(recid, debug):
                 if reference['subfield_0'] and not \
                    (reference['subfield_0'].isdigit() and int(reference['subfield_0']) == recid_citation):
                     m999[0].remove(('0', reference['subfield_0']))
+                    add_noncurator(m999[0])
                     update_refs = True
                     log_text += '    %s deleting $$0%s\n' % (recid, reference['subfield_0'])
             else:
@@ -713,9 +722,9 @@ def get_recids_1616(journal):
 def main():
     import codecs
     # journal = 'JCAP'
-    # journal = 'JHEP'
+    journal = 'JHEP'
     # journal = 'J.Stat.Mech.'
-    journal = 'PTEP'
+    # journal = 'PTEP'
     # journal = 'MDPI'
 
     debug = False
@@ -723,13 +732,13 @@ def main():
     if journal == 'MDPI':
         recids = get_recids_startpbn(['MDPI Physics,', ])
     elif journal in ['JHEP', 'JCAP', 'J.Stat.Mech.']:
-        recids = get_recids_2016(journal)
-        # recids = get_recids_1616(journal)
+        # recids = get_recids_2016(journal)
+        recids = get_recids_1616(journal)
     elif journal == 'PTEP':
         recids = get_recids_PTEP()
 
     # recids = ['1312698', '1744693', '1745959', '1725570']
-    recids = ['1242133']
+    recids = ['1819342','1780167']
 
     print 'Analysing %s records' % len(recids)
     # recids = list(recids)[-100:]
