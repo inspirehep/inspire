@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##
 ## This file is part of INSPIRE.
-## Copyright (C) 2015, 2016, 2019 CERN.
+## Copyright (C) 2015, 2016, 2019, 2020 CERN.
 ##
 ## INSPIRE is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -33,7 +33,7 @@ from invenio.bibtask import write_message, task_update_progress, task_sleep_now_
 from invenio.bibdocfile import calculate_md5
 
 CFG_EXPORTED_COLLECTIONS = ['HEP', 'HepNames', 'Institutions', 'Conferences',
-                            'Jobs', 'Experiments', 'Journals', 'Data']
+                            'Experiments', 'Journals', 'Data']
 
 
 class run_ro_on_slave_db:
