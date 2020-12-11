@@ -85,6 +85,8 @@ def format_element(bfo, width="50", show_abstract=False):
         entry_type = 'book'
     elif 'bookchapter' in collections:
         entry_type = 'incollection'
+    elif 'techreport' in collections:
+        entry_type = 'techreport'
     elif 'arxiv' in collections:
         entry_type = 'article'
 
