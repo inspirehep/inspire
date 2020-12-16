@@ -117,7 +117,7 @@ def bst_fermilab():
                                    'rep2': report[2]}
                 else:
                     errors.append('HEP record: ' + report[4] + ' | Problem Id: ' + report[1] + \
-                                   ' | Number of results in HEPNames: ' + len(result))
+                                   ' | Number of results in HEPNames: ' + str(len(result)))
             line = '''
     <tr>
       <td><a href="%(site)s/record/%(rep1)s">%(rep0)s</a></td>
