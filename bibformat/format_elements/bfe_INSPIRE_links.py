@@ -3,7 +3,7 @@
 ## $Id$
 ##
 ## This file is part of Invenio.
-## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018, 2019, 2020 CERN.
+## Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2015, 2016, 2018, 2019, 2020, 2021 CERN.
 ##
 ## Invenio is free software; you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
@@ -41,7 +41,7 @@ INIS = 'https://inis.iaea.org/search/search.aspx?orig_q='
 KEK = 'https://lib-extopc.kek.jp/preprints/PDF'
 MSNET = 'https://mathscinet.ams.org/mathscinet-getitem?mr='
 OSTI = 'http://www.osti.gov/scitech/biblio/'
-ZBLATT = 'http://www.zentralblatt-math.org/zmath/en/search/?an='
+ZBLATT = 'https://www.zbmath.org/?q='
 
 
 def format_element(bfo, default='', separator='; ', style='',
