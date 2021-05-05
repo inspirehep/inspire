@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of INSPIRE.
-# Copyright (C) 2017, 2020 CERN.
+# Copyright (C) 2017, 2020, 2021 CERN.
 #
 # INSPIRE is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -81,7 +81,7 @@ class HepDataDumper(object):
         self.inspire_ids = intbitset()
 
     def __iter__(self):
-        chunk_size = 200
+        chunk_size = 100
         page = 0
 
         retry_strategy = Retry(total=5,
